@@ -3,8 +3,7 @@ package org.frameworkset.web.request.async;
 import java.util.PriorityQueue;
 import java.util.concurrent.Callable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.servlet.mvc.NativeWebRequest;
 
@@ -33,7 +32,7 @@ public class DeferredResult<T> {
 
 	private static final Object RESULT_NONE = new Object();
 
-	private static final Log logger = LogFactory.getLog(DeferredResult.class);
+	protected static final Logger logger = Logger.getLogger(DeferredResult.class);
 
 
 	private final Long timeout;

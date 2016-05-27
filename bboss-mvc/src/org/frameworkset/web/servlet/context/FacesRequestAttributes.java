@@ -21,8 +21,7 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.ReflectionUtils;
@@ -47,8 +46,8 @@ public class FacesRequestAttributes implements RequestAttributes {
 	/**
 	 * We'll create a lot of these objects, so we don't want a new logger every time.
 	 */
-	private static final Log logger = LogFactory.getLog(FacesRequestAttributes.class);
-
+	private static final Logger logger = Logger.getLogger(FacesRequestAttributes.class);
+	
 	private final FacesContext facesContext;
 
 
@@ -137,10 +136,10 @@ public class FacesRequestAttributes implements RequestAttributes {
 
 	@Override
 	public void registerDestructionCallback(String name, Runnable callback, int scope) {
-		if (logger.isWarnEnabled()) {
+		 
 			logger.warn("Could not register destruction callback [" + callback + "] for attribute '" + name +
 					"' because FacesRequestAttributes does not support such callbacks");
-		}
+		 
 	}
 
 	@Override

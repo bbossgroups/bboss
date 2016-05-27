@@ -9,8 +9,7 @@ import java.util.concurrent.RejectedExecutionException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.frameworkset.schedule.AsyncTaskExecutor;
 import org.frameworkset.schedule.SimpleAsyncTaskExecutor;
 import org.frameworkset.util.Assert;
@@ -43,7 +42,7 @@ public final class WebAsyncManager {
 
 	private static final Object RESULT_NONE = new Object();
 
-	private static final Log logger = LogFactory.getLog(WebAsyncManager.class);
+	private static final Logger logger = Logger.getLogger(WebAsyncManager.class);
 
 	private static final UrlPathHelper urlPathHelper = new UrlPathHelper();
 

@@ -2,8 +2,7 @@ package org.frameworkset.web.request.async;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.frameworkset.web.servlet.mvc.NativeWebRequest;
 
 /**
@@ -14,8 +13,7 @@ import org.frameworkset.web.servlet.mvc.NativeWebRequest;
  */
 class DeferredResultInterceptorChain {
 
-	private static final Log logger = LogFactory.getLog(DeferredResultInterceptorChain.class);
-
+	private static final Logger logger = Logger.getLogger(DeferredResultInterceptorChain.class);
 	private final List<DeferredResultProcessingInterceptor> interceptors;
 
 	private int preProcessingIndex = -1;

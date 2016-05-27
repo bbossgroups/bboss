@@ -1,6 +1,5 @@
 package org.frameworkset.web.filter;
 
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,24 +8,14 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.codehaus.jackson.map.deser.impl.PropertyValue;
+import org.apache.log4j.Logger;
 import org.frameworkset.spi.BeanNameAware;
 import org.frameworkset.spi.DisposableBean;
 import org.frameworkset.spi.InitializingBean;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.beans.BeanWrapper;
 import org.frameworkset.util.beans.BeansException;
-import org.frameworkset.util.io.Resource;
-import org.frameworkset.util.io.ResourceEditor;
-import org.frameworkset.util.io.ResourceLoader;
-import org.frameworkset.web.servlet.NestedServletException;
 import org.frameworkset.web.servlet.context.ServletContextAware;
-import org.frameworkset.web.servlet.support.ServletContextResourceLoader;
-import org.omg.CORBA.Environment;
-
-import com.frameworkset.util.StringUtil;
 
 /**
  * Simple base implementation of {@link javax.servlet.Filter} which treats
@@ -59,7 +48,8 @@ public abstract class GenericFilterBean implements
 		Filter, BeanNameAware,  ServletContextAware, InitializingBean, DisposableBean {
 
 	/** Logger available to subclasses */
-	protected final Log logger = LogFactory.getLog(getClass());
+	protected static final Logger logger = Logger.getLogger(GenericFilterBean.class);
+
 
 	/**
 	 * Set of required properties (Strings) that must be supplied as

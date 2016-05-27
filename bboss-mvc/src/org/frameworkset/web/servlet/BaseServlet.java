@@ -14,8 +14,7 @@ import javax.servlet.jsp.JspFactory;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.frameworkset.http.CorsUtils;
 import org.frameworkset.spi.support.LocaleContext;
 import org.frameworkset.spi.support.LocaleContextHolder;
@@ -38,7 +37,8 @@ public abstract class BaseServlet extends HttpServlet{
 			ClassUtils.hasMethod(HttpServletResponse.class, "getStatus");
 
 	/** Logger available to subclasses */
-	protected final Log logger = LogFactory.getLog(getClass());
+	protected static final Logger logger = Logger.getLogger(BaseServlet.class);
+	
 	/** Should we dispatch an HTTP TRACE request to {@link #doService}? */
 	private boolean dispatchTraceRequest = false;
 	/** Expose LocaleContext and RequestAttributes as inheritable for child threads? */

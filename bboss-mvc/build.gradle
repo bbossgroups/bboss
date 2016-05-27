@@ -35,7 +35,7 @@ dependencies {
             [group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],
             [group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.10',transitive: true],
             [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],
-            [group: 'commons-logging', name: 'commons-logging', version: '1.1', transitive: false],
+            //[group: 'commons-logging', name: 'commons-logging', version: '1.1', transitive: false],
             [group: 'commons-collections', name: 'commons-collections', version: '3.2.1', transitive: false],
             [group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],
             [group: 'commons-beanutils', name: 'commons-beanutils', version: '1.7.0', transitive: false],
