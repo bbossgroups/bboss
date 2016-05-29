@@ -1437,6 +1437,22 @@ public class DispatchServlet extends BaseServlet {
 		
 		
 	}
+	
+	protected void initWebsockets(ServletConfig config)
+	{
+		messagesources = config.getInitParameter("messagesources");
+		if(messagesources == null)
+		{
+			messagesources = DispatchServlet.getDefaultStrategies().getProperty("messageSource.basename","/WEB-INF/messages");
+		}
+		useCodeAsDefaultMessage = config.getInitParameter("useCodeAsDefaultMessage");
+		if(useCodeAsDefaultMessage == null)
+		{
+			useCodeAsDefaultMessage = DispatchServlet.getDefaultStrategies().getProperty("messageSource.useCodeAsDefaultMessage","true");
+		}
+		
+		
+	}
 	private Map<String,String> parserIocLifeCycleEventListenerParams(String iocLifeCycleEventListenerParams)
 	{
 		Map<String,String> paramMap = new HashMap<String,String>();
@@ -1518,6 +1534,7 @@ public class DispatchServlet extends BaseServlet {
 			initRequestToViewNameTranslator(this.webApplicationContext);
 			initViewResolvers(this.webApplicationContext);
 			initGloabelHandlerInterceptors(this.webApplicationContext);
+			initWebsockets(config);
 		} catch (Exception e1) {
 			logger.warn("Init WebApplicationContext:",e1);
 		}

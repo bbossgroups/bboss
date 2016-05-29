@@ -29,7 +29,7 @@ public class ServletWebSocketHandlerRegistry implements WebSocketHandlerRegistry
 	public ServletWebSocketHandlerRegistry(ThreadPoolTaskScheduler sockJsTaskScheduler) {
 		this.sockJsTaskScheduler = sockJsTaskScheduler;
 	}
-
+	 
 	@Override
 	public WebSocketHandlerRegistration addHandler(WebSocketHandler webSocketHandler, String... paths) {
 		ServletWebSocketHandlerRegistration registration =
@@ -91,5 +91,7 @@ public class ServletWebSocketHandlerRegistry implements WebSocketHandlerRegistry
 //		}
 //		return hm;
 	}
+
+	
 
 }
