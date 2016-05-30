@@ -56,6 +56,7 @@ import org.frameworkset.web.request.async.WebAsyncManager;
 import org.frameworkset.web.request.async.WebAsyncUtils;
 import org.frameworkset.web.servlet.context.RequestContextHolder;
 import org.frameworkset.web.servlet.context.WebApplicationContext;
+import org.frameworkset.web.servlet.handler.AbstractHandlerMapping;
 import org.frameworkset.web.servlet.handler.AbstractUrlHandlerMapping;
 import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
@@ -1440,17 +1441,30 @@ public class DispatchServlet extends BaseServlet {
 	
 	protected void initWebsockets(ServletConfig config)
 	{
-		messagesources = config.getInitParameter("messagesources");
-		if(messagesources == null)
-		{
-			messagesources = DispatchServlet.getDefaultStrategies().getProperty("messageSource.basename","/WEB-INF/messages");
-		}
-		useCodeAsDefaultMessage = config.getInitParameter("useCodeAsDefaultMessage");
-		if(useCodeAsDefaultMessage == null)
-		{
-			useCodeAsDefaultMessage = DispatchServlet.getDefaultStrategies().getProperty("messageSource.useCodeAsDefaultMessage","true");
+		String WebSocketLoader = "org.frameworkset.web.socket.config.WebSocketLoader";
+		Method publishAllWebService = null;
+		try {
+			
+			Class clazz = Class.forName(WebSocketLoader);
+			publishAllWebService = clazz.getMethod("loadMvcWebSocketService", ClassLoader.class,AbstractHandlerMapping.class,ServletConfig.class);
+			
+			
+//			WSLoader.publishAllWebService(this.getClass().getClassLoader(),config);
+			
+		} catch (Throwable e) {
+			logger.debug(" Not found "+WebSocketLoader + " or "+e.getMessage()+" in classpath,Ignore publish  WebSocket Services.");
 		}
 		
+		try {
+			if(publishAllWebService != null)
+			{
+				logger.debug("Publish WebSocket Services start.");
+				publishAllWebService.invoke(null, this.getClass().getClassLoader(),this.annotationMethodHandlerAdapter,config);
+				logger.debug("Publish WebSocket Services  finished.");
+			}
+		} catch (Exception e) {
+			logger.debug("Publish WebSocket Services failed:",e);
+		} 
 		
 	}
 	private Map<String,String> parserIocLifeCycleEventListenerParams(String iocLifeCycleEventListenerParams)

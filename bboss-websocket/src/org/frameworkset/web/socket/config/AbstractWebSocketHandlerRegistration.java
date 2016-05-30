@@ -9,7 +9,6 @@ import org.frameworkset.util.Assert;
 import org.frameworkset.util.LinkedMultiValueMap;
 import org.frameworkset.util.MultiValueMap;
 import org.frameworkset.util.ObjectUtils;
-import org.frameworkset.web.servlet.handler.HandlerMeta;
 import org.frameworkset.web.socket.handler.DefaultHandshakeHandler;
 import org.frameworkset.web.socket.handler.HandshakeHandler;
 import org.frameworkset.web.socket.handler.HandshakeInterceptor;
@@ -18,7 +17,7 @@ import org.frameworkset.web.socket.handler.WebSocketTransportHandler;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.frameworkset.web.socket.sockjs.SockJsService;
 
-public abstract class AbstractWebSocketHandlerRegistration<M> extends HandlerMeta  implements WebSocketHandlerRegistration {
+public abstract class AbstractWebSocketHandlerRegistration<M>   implements WebSocketHandlerRegistration {
 
 	private final TaskScheduler sockJsTaskScheduler;
 

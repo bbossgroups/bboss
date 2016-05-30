@@ -76,9 +76,7 @@ import org.apache.oro.text.regex.PatternMatcherInput;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 import org.apache.oro.text.regex.StringSubstitution;
-import org.codehaus.jackson.JsonParser.Feature;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
+import org.frameworkset.json.JacksonObjectMapperWrapper;
 import org.frameworkset.util.CollectionUtils;
 import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.util.ObjectUtils;
@@ -100,6 +98,7 @@ public class SimpleStringUtil  {
 
 	// 空串常量
 	public static final String BLANK = "";
+	private static JacksonObjectMapperWrapper objectMapper = new JacksonObjectMapperWrapper();
 
 	/**
 	 * A constant passed to the {@link #split split()}methods indicating that
@@ -2587,63 +2586,64 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		// TODO Auto-generated method stub
 
 //		String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'人寿保险','department':'xxx','position':'主管' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'人寿保险','department':'xxx','position':'主管' }]";
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
-		try {
-			T value = mapper.readValue(jsonString, toclass);
-			return value;
-			
-			
-		} catch (Exception e) {
-			throw new IllegalArgumentException(jsonString,e);
-		}
+//		ObjectMapper mapper = new ObjectMapper();
+//		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+//		try {
+//			T value = mapper.readValue(jsonString, toclass);
+//			return value;
+//			
+//			
+//		} catch (Exception e) {
+//			throw new IllegalArgumentException(jsonString,e);
+//		}
+    	return objectMapper.json2Object(jsonString,toclass,ALLOW_SINGLE_QUOTES);
 		
 		
 	
 	}
-    public static <T> T json2Object(String jsonString,TypeReference<T> ref) {
-		return json2Object(jsonString,ref,true);
-		
-	
-	}
-    public static <T> T json2Object(String jsonString,TypeReference<T> ref,boolean ALLOW_SINGLE_QUOTES) {
-		// TODO Auto-generated method stub
-
-//		String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'人寿保险','department':'xxx','position':'主管' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'人寿保险','department':'xxx','position':'主管' }]";
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
-		try {
-			T value = mapper.readValue(jsonString, ref);
-			return value;
-			
-			
-		} catch (Exception e) {
-			throw new IllegalArgumentException(jsonString,e);
-		}
-		
-	
-	}
+//    public static <T> T json2Object(String jsonString,TypeReference<T> ref) {
+//		return json2Object(jsonString,ref,true);
+//		
+//	
+//	}
+//    public static <T> T json2Object(String jsonString,TypeReference<T> ref,boolean ALLOW_SINGLE_QUOTES) {
+//		// TODO Auto-generated method stub
+//
+////		String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'人寿保险','department':'xxx','position':'主管' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'人寿保险','department':'xxx','position':'主管' }]";
+//		ObjectMapper mapper = new ObjectMapper();
+//		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+//		try {
+//			T value = mapper.readValue(jsonString, ref);
+//			return value;
+//			
+//			
+//		} catch (Exception e) {
+//			throw new IllegalArgumentException(jsonString,e);
+//		}
+//		
+//	
+//	}
     
     public static <T> T json2Object(String jsonString,Class<T> toclass) {
 		// TODO Auto-generated method stub
-		return json2Object(jsonString,toclass,true);
+		return objectMapper.json2Object(jsonString,toclass,true);
 		
 	
 	}
     
     public static String object2json(Object object,boolean ALLOW_SINGLE_QUOTES) {
-    	ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
-		try {
-			String value = mapper.writeValueAsString(object);
-			
-			return value;
-			
-			
-		} catch (Exception e) {
-			throw new IllegalArgumentException("错误的json序列化操作",e);
-		}
-		
+//    	ObjectMapper mapper = new ObjectMapper();
+//		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+//		try {
+//			String value = mapper.writeValueAsString(object);
+//			
+//			return value;
+//			
+//			
+//		} catch (Exception e) {
+//			throw new IllegalArgumentException("错误的json序列化操作",e);
+//		}
+    	return objectMapper.object2json(  object,  ALLOW_SINGLE_QUOTES);
 		
 	
 	}
@@ -2656,87 +2656,87 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	}
     
     public static void object2json(Object object,Writer writer,boolean ALLOW_SINGLE_QUOTES) {
-    	ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
-		try {
-			mapper.writeValue(writer,object);
-			
-			
-			
-			
-		} catch (Exception e) {
-			throw new IllegalArgumentException("错误的json序列化操作",e);
-		}
+//    	ObjectMapper mapper = new ObjectMapper();
+//		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+//		try {
+//			mapper.writeValue(writer,object);
+//			
+//			
+//			
+//			
+//		} catch (Exception e) {
+//			throw new IllegalArgumentException("错误的json序列化操作",e);
+//		}
 		
-		
+    	objectMapper.object2json(object,writer,ALLOW_SINGLE_QUOTES);
 	
 	}
     
     public static void object2json(Object object,Writer writer) {
-    	object2json(object,writer,true) ;
+    	objectMapper.object2json(object,writer,true) ;
 	}
     
     public static void object2json(Object object,OutputStream writer,boolean ALLOW_SINGLE_QUOTES) {
-    	ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
-		try {
-			mapper.writeValue(writer,object);
-			
-			
-			
-			
-		} catch (Exception e) {
-			throw new IllegalArgumentException("错误的json序列化操作",e);
-		}
-		
+//    	ObjectMapper mapper = new ObjectMapper();
+//		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+//		try {
+//			mapper.writeValue(writer,object);
+//			
+//			
+//			
+//			
+//		} catch (Exception e) {
+//			throw new IllegalArgumentException("错误的json序列化操作",e);
+//		}
+    	objectMapper.object2json(object,writer,ALLOW_SINGLE_QUOTES);
 		
 	
 	}
     
     public static void object2json(Object object,OutputStream writer) {
-    	object2json(object,writer,true) ;
+    	objectMapper.object2json(object,writer,true) ;
 	}
     
     public static void object2json(Object object,File writer,boolean ALLOW_SINGLE_QUOTES) {
-    	ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
-		try {
-			mapper.writeValue(writer,object);
-			
-			
-			
-			
-		} catch (Exception e) {
-			throw new IllegalArgumentException("错误的json序列化操作",e);
-		}
-		
+//    	ObjectMapper mapper = new ObjectMapper();
+//		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+//		try {
+//			mapper.writeValue(writer,object);
+//			
+//			
+//			
+//			
+//		} catch (Exception e) {
+//			throw new IllegalArgumentException("错误的json序列化操作",e);
+//		}
+    	  objectMapper.object2json(object,writer,ALLOW_SINGLE_QUOTES);
 		
 	
 	}
     
     public static void object2json(Object object,File writer) {
-    	object2json(object,writer,true) ;
+    	objectMapper.object2json(object,writer,true) ;
 	}
     
     public static byte[] object2jsonAsbyte(Object object,boolean ALLOW_SINGLE_QUOTES) {
-    	ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
-		try {
-			return mapper.writeValueAsBytes(object);
-			
-			
-			
-			
-		} catch (Exception e) {
-			throw new IllegalArgumentException("错误的json序列化操作",e);
-		}
+//    	ObjectMapper mapper = new ObjectMapper();
+//		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+//		try {
+//			return mapper.writeValueAsBytes(object);
+//			
+//			
+//			
+//			
+//		} catch (Exception e) {
+//			throw new IllegalArgumentException("错误的json序列化操作",e);
+//		}
 		
-		
+    	return objectMapper.object2jsonAsbyte(  object,  ALLOW_SINGLE_QUOTES);
 	
 	}
     
     public static byte[] object2jsonAsbyte(Object object) {
-    	return object2jsonAsbyte(object,true) ;
+    	return objectMapper.object2jsonAsbyte(object,true) ;
 	}
     
     

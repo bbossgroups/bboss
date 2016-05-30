@@ -138,13 +138,13 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	}
 
 	@Override
-	protected boolean supports(Class<?> clazz) {
+	public boolean supports(Class<?> clazz) {
 		// should not be called, since we override canRead/Write instead
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	protected Object readInternal(Class<?> clazz, HttpInputMessage inputMessage)
+	public Object readInternal(Class<?> clazz, HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotReadableException {
 		JavaType javaType = getJavaType(clazz);
 		try {
@@ -156,7 +156,7 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	}
 
 	@Override
-	protected void writeInternal(Object o, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
+	public void writeInternal(Object o, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotWritableException {
 
 		MediaType contenttype = outputMessage.getHeaders().getContentType();

@@ -4,12 +4,15 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.servlet.ServletConfig;
+
 import org.apache.log4j.Logger;
 import org.frameworkset.schedule.ThreadPoolTaskScheduler;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
+import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
+import org.frameworkset.web.socket.handler.HandshakeInterceptor;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
-import org.frameworkset.websocket.HandshakeInterceptor;
 
 import com.frameworkset.util.StringUtil;
 
@@ -26,7 +29,7 @@ public class WebSocketLoader {
 	/**
 	 * 需要确保mvc分派器在webservice服务引擎之前启动，否则获取不到任何在mvc框架中配置的webservice服务
 	 */
-	public static void loadMvcWebSocketService(ClassLoader classLoader)
+	public static void loadMvcWebSocketService(ClassLoader classLoader,HandlerMappingsTable mapping,ServletConfig config)
 	{
 		
 		try {
@@ -36,7 +39,7 @@ public class WebSocketLoader {
 			Method m = clas.getMethod("getWebApplicationContext", null);
 			org.frameworkset.spi.BaseApplicationContext context = (BaseApplicationContext)m.invoke(null, null);
 			 
-			loadWebSocketService(context,classLoader);
+			loadWebSocketService(context,classLoader, mapping);
 		} catch (Exception e) {
 			logger.warn(e.getMessage(),e);
 		}
@@ -72,7 +75,7 @@ public class WebSocketLoader {
 	    	temp.setAllowedOrigins(allowedOrigins_);
 	    }
 	}
-	public static void loadWebSocketService(BaseApplicationContext context,ClassLoader classLoader)
+	public static void loadWebSocketService(BaseApplicationContext context,ClassLoader classLoader,HandlerMappingsTable mapping)
 	{
 		if(context == null)
 			return;
@@ -98,6 +101,7 @@ public class WebSocketLoader {
 					continue;
 				else {
 					registerWebSocketHandlers(context,wspro,registry);
+					
 				}
 			}
 			catch(Exception e)
@@ -108,6 +112,7 @@ public class WebSocketLoader {
 			}
 			
 		}
+		registry.registHandlerMapping(mapping);
 		
 	}
 

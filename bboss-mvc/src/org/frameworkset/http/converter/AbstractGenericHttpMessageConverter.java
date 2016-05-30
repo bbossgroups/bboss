@@ -98,7 +98,7 @@ public abstract class AbstractGenericHttpMessageConverter<T> extends AbstractHtt
 	}
 
 	@Override
-	protected void writeInternal(T t,  HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
+	public void writeInternal(T t,  HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotWritableException {
 
 		writeInternal(t, null, outputMessage,inputMessage);

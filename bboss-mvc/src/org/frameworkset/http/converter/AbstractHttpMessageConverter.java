@@ -314,7 +314,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 * @param clazz the class to test for support
 	 * @return {@code true} if supported; {@code false} otherwise
 	 */
-	protected abstract boolean supports(Class<?> clazz);
+	public abstract boolean supports(Class<?> clazz);
 
 	/**
 	 * Abstract template method that reads the actual object. Invoked from {@link #read}.
@@ -324,7 +324,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 * @throws IOException in case of I/O errors
 	 * @throws HttpMessageNotReadableException in case of conversion errors
 	 */
-	protected abstract T readInternal(Class<? extends T> clazz, HttpInputMessage inputMessage)
+	public abstract T readInternal(Class<? extends T> clazz, HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotReadableException;
 
 	/**
@@ -334,7 +334,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 * @throws IOException in case of I/O errors
 	 * @throws HttpMessageNotWritableException in case of conversion errors
 	 */
-	protected abstract void writeInternal(T t, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
+	public abstract void writeInternal(T t, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotWritableException;
 	public boolean isdefault()
 	{

@@ -17,6 +17,8 @@ package org.frameworkset.web.servlet;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.frameworkset.web.servlet.handler.HandlerMeta;
+
 /**
  * <p>Title: HandlerMapping.java</p> 
  * <p>Description: </p>
@@ -70,5 +72,8 @@ public interface HandlerMapping {
 
 
 	void destroy();
+
+
+	void registerWebSocketHandler(String pattern, HandlerMeta httpHandler)  throws Exception;
 
 }

@@ -161,7 +161,7 @@ public abstract class AbstractJackson2HttpMessageConverter extends AbstractGener
 	}
 
 	@Override
-	protected boolean supports(Class<?> clazz) {
+	public boolean supports(Class<?> clazz) {
 		// should not be called, since we override canRead/Write instead
 		throw new UnsupportedOperationException();
 	}
@@ -169,7 +169,7 @@ public abstract class AbstractJackson2HttpMessageConverter extends AbstractGener
 	
 
 	@Override
-	protected Object readInternal(Class<?> clazz, HttpInputMessage inputMessage)
+	public Object readInternal(Class<?> clazz, HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotReadableException {
 
 		JavaType javaType = getJavaType(clazz, null);
