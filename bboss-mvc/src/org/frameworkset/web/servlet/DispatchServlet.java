@@ -1445,13 +1445,12 @@ public class DispatchServlet extends BaseServlet {
 		Method publishAllWebService = null;
 		try {
 			
-			Class clazz = Class.forName(WebSocketLoader);
-			publishAllWebService = clazz.getMethod("loadMvcWebSocketService", ClassLoader.class,AbstractHandlerMapping.class,ServletConfig.class);
+			publishAllWebService = Class.forName(WebSocketLoader).getMethod("loadMvcWebSocketService", ClassLoader.class,HandlerMappingsTable.class,ServletConfig.class);
 			
 			
 //			WSLoader.publishAllWebService(this.getClass().getClassLoader(),config);
 			
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			logger.debug(" Not found "+WebSocketLoader + " or "+e.getMessage()+" in classpath,Ignore publish  WebSocket Services.");
 		}
 		
@@ -1459,7 +1458,7 @@ public class DispatchServlet extends BaseServlet {
 			if(publishAllWebService != null)
 			{
 				logger.debug("Publish WebSocket Services start.");
-				publishAllWebService.invoke(null, this.getClass().getClassLoader(),this.annotationMethodHandlerAdapter,config);
+				publishAllWebService.invoke(null, this.getClass().getClassLoader(),this.handlerMappings,config);
 				logger.debug("Publish WebSocket Services  finished.");
 			}
 		} catch (Exception e) {

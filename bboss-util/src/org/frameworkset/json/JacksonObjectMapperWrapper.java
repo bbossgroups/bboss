@@ -8,9 +8,9 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 	
 	public JacksonObjectMapperWrapper()
 	{
-		String cl = "com.fasterxml.jackson.databind.ObjectMapper";
+		 
 		try {
-			Class.forName(cl);//探测jackson版本
+			 
 			jacksonObjectMapper = (JacksonObjectMapper) Class.forName("org.frameworkset.json.Jackson2ObjectMapper").newInstance();
 		} catch (ClassNotFoundException e) {
 			 
@@ -18,11 +18,15 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 			 
 		} catch (IllegalAccessException e) {
 			 
+		} catch (NoClassDefFoundError e) {
+			
+		}catch (Exception e) {
+			
 		}
 		if(jacksonObjectMapper == null)
 		{
 			try {
-				Class.forName(cl);//探测jackson版本
+				
 				jacksonObjectMapper = (JacksonObjectMapper) Class.forName("org.frameworkset.json.Jackson1ObjectMapper").newInstance();
 			} catch (ClassNotFoundException e) {
 				 
@@ -30,6 +34,10 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 				 
 			} catch (IllegalAccessException e) {
 				 
+			} catch (NoClassDefFoundError e) {
+				
+			}catch (Exception e) {
+				
 			}
 		}
 	}

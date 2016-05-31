@@ -13,12 +13,11 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	public MappingJacksonHttpMessageConverter()
 	{
 		String jacson2Class = "org.frameworkset.http.converter.json.MappingJackson2HttpMessageConverter";
-		try {
-			Class clazz = Class.forName(jacson2Class);
-			if(clazz != null					)
-			{
-				convert = (AbstractHttpMessageConverter<Object>) clazz.newInstance();
-			}
+		try {			
+			
+			
+				convert = (AbstractHttpMessageConverter<Object>) Class.forName(jacson2Class).newInstance();
+			
 		} catch (ClassNotFoundException e) {
 			
 		} catch (InstantiationException e) {
@@ -26,20 +25,33 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 		} catch (IllegalAccessException e) {
 			
 		}
+		 catch (NoClassDefFoundError e) {
+			
+		}
+		
+		catch (Exception e) {
+			
+		}
 		if(convert  == null)
 		{
 			jacson2Class = "org.frameworkset.http.converter.json.MappingJackson1HttpMessageConverter";
 			try {
-				Class clazz = Class.forName(jacson2Class);
-				if(clazz != null					)
-				{
-					convert = (AbstractHttpMessageConverter) clazz.newInstance();
-				}
+				
+				
+				
+				convert = (AbstractHttpMessageConverter) Class.forName(jacson2Class).newInstance();
+				
 			} catch (ClassNotFoundException e) {
 				
 			} catch (InstantiationException e) {
 				
 			} catch (IllegalAccessException e) {
+				
+			}
+			 catch (NoClassDefFoundError e) {
+					
+				}
+			catch (Exception e) {
 				
 			}
 		}
