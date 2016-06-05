@@ -5,7 +5,7 @@ sourceSets {
         }
         resources {
             srcDirs 'src-velocity'
-            include 'bboss-velocity.properties'
+            include '**/*.properties'
         }
        
        
