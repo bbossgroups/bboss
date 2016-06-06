@@ -75,13 +75,13 @@ import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.util.MethodParameter;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-import bsh.Interpreter;
-
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.spi.assemble.CurrentlyInCreationException;
+
+import bsh.Interpreter;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  * @author biaoping.yin 改类充分使用java.lang.reflection中提供的功能，提供以下工具： 从对象中获取对应属性的值
@@ -142,7 +142,7 @@ public class ValueObjectUtil {
 		char.class ,
 		byte.class ,
 		Class.class,
-		java.sql.Timestamp.class,java.sql.Date.class,java.util.Date.class
+		java.sql.Timestamp.class,java.sql.Date.class,java.util.Date.class,java.util.Locale.class
 		};
 	private static final Logger log = Logger.getLogger(ValueObjectUtil.class);
 
