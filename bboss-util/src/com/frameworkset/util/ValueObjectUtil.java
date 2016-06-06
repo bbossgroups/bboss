@@ -126,6 +126,24 @@ public class ValueObjectUtil {
 		Class.class,BigInteger.class,BigDecimal.class,
 		java.sql.Timestamp.class,java.sql.Date.class,java.util.Date.class
 		};
+	
+	
+	/**
+	 * 用于序列化机制识别基础数据类型   
+	 */
+	public static final Class[] simplePrimaryTypes = {String.class,
+		int.class ,
+		long.class,		
+		boolean.class ,
+//		BigFile.class,
+		float.class ,
+		short.class ,
+		double.class,
+		char.class ,
+		byte.class ,
+		Class.class,
+		java.sql.Timestamp.class,java.sql.Date.class,java.util.Date.class
+		};
 	private static final Logger log = Logger.getLogger(ValueObjectUtil.class);
 
 //	private static final SimpleDateFormat format = new SimpleDateFormat(
@@ -5529,6 +5547,29 @@ public class ValueObjectUtil {
     	return false;
     	
     }
+    /**
+     * 判断类type是否是基础数据类型
+     * @param type
+     * @return
+     */
+    public static boolean isSimplePrimaryType(Class type)
+    {
+    	if(!type.isArray())
+    	{
+    		
+	    	for(Class primaryType:ValueObjectUtil.simplePrimaryTypes)
+	    	{
+	    		if(primaryType == type)
+	    			return true;
+	    	}
+	    	if(type.isEnum())
+    			return true;
+	    	return false;
+    	}
+    	return false;
+    	
+    }
+    
     
     public static boolean isCollectionType(Class type)
     {
