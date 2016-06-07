@@ -8,7 +8,7 @@ import org.frameworkset.web.socket.inf.WebSocketHandler;
 public class WebSocketRegistryMeta {
 	private List<HandshakeInterceptor> interceptors = null;
 	private String allowedOrigins = null;
-	private WebSocketHandler webSocketHandler;
+	private WebSocketHandler websocketHandler;
 	private String websocketUrl;
 	private String sockJSUrl;
 	public WebSocketRegistryMeta() {
@@ -26,12 +26,7 @@ public class WebSocketRegistryMeta {
 	public void setAllowedOrigins(String allowedOrigins) {
 		this.allowedOrigins = allowedOrigins;
 	}
-	public WebSocketHandler getWebSocketHandler() {
-		return webSocketHandler;
-	}
-	public void setWebSocketHandler(WebSocketHandler webSocketHandler) {
-		this.webSocketHandler = webSocketHandler;
-	}
+	 
 	public String getWebsocketUrl() {
 		return websocketUrl;
 	}
@@ -43,6 +38,12 @@ public class WebSocketRegistryMeta {
 	}
 	public void setSockJSUrl(String sockJSUrl) {
 		this.sockJSUrl = sockJSUrl;
+	}
+	public WebSocketHandler getWebsocketHandler() {
+		return websocketHandler;
+	}
+	public void setWebsocketHandler(WebSocketHandler websocketHandler) {
+		this.websocketHandler = websocketHandler;
 	}
 
 }

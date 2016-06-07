@@ -54,7 +54,7 @@ public class WebSocketLoader {
 	
 	private static  void registerWebSocketHandlers(BaseApplicationContext context,Pro wspro,WebSocketHandlerRegistry registry) {
 		WebSocketRegistryMeta webSocketRegistryMeta  = context.getTBeanObject(wspro.getName(), WebSocketRegistryMeta.class);
-		WebSocketHandler handler = webSocketRegistryMeta.getWebSocketHandler();
+		WebSocketHandler handler = webSocketRegistryMeta.getWebsocketHandler();
 		String url = webSocketRegistryMeta.getWebsocketUrl();
 		String[] urls = url.split(",");
 		HandshakeInterceptor[] iterceptors = null;

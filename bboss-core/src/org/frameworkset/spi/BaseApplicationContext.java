@@ -474,6 +474,26 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		this(AssembleCallback.classpathprex, "", (InputStream)instream,isfile, init);
 	}
 	
+	/**
+	 * Destroy the given bean instance (typically coming from {@link #createBean}),
+	 * applying the {@link org.springframework.beans.factory.DisposableBean} contract as well as
+	 * registered {@link DestructionAwareBeanPostProcessor DestructionAwareBeanPostProcessors}.
+	 * <p>Any exception that arises during destruction should be caught
+	 * and logged instead of propagated to the caller of this method.
+	 * @param existingBean the bean instance to destroy
+	 */
+	public void destroyBean(Object existingBean)
+	{
+		if(existingBean instanceof DisposableBean)
+		{
+			try {
+				((DisposableBean)existingBean).destroy();
+			} catch (Exception e) {
+				log.error("", e);
+			}
+		}
+	}
+	
 	public boolean isfile()
 	{
 		return this.isfile;
@@ -2041,7 +2061,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 	}
 
-	public Object createBean(Class clazz) throws BeanInstanceException {
+	public <T> T createBean(Class<? extends T> clazz) throws BeanInstanceException {
 
 		return createBean(clazz, null);
 
@@ -2061,11 +2081,11 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 	
 
-	public Object createBean(Class clazz, BeanInf providerManagerInfo)
+	public <T> T createBean(Class<? extends T> clazz, BeanInf providerManagerInfo)
 			throws BeanInstanceException {
 
 		try {
-			Object ret = clazz.newInstance();
+			T ret = clazz.newInstance();
 
 			return initBean(ret, providerManagerInfo);
 		} catch (InstantiationException e) {
@@ -2082,7 +2102,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 	}
 
-	public Object initBean(Object bean, BeanInf providerManagerInfo)
+	public <T> T initBean(T bean, BeanInf providerManagerInfo)
 			throws BeanInstanceException {
 
 		try {

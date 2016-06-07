@@ -63,7 +63,9 @@ dependencies {
     	[group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: false],
     	[group: 'org.glassfish.tyrus.bundles', name: 'tyrus-standalone-client', version: "1.9", transitive: false],
     	 [group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
-            [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false]
+            [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],
+            [group: 'org.apache.tomcat', name: 'tomcat-websocket',version:'8.0.32', transitive: false ]
+		
     )
    
     
