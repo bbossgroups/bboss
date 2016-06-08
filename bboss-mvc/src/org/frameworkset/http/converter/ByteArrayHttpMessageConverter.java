@@ -66,7 +66,7 @@ public class ByteArrayHttpMessageConverter extends AbstractHttpMessageConverter<
 	}
 
 	@Override
-	protected void writeInternal(byte[] bytes, HttpOutputMessage outputMessage,HttpInputMessage inputMessage) throws IOException {
+	public void writeInternal(byte[] bytes, HttpOutputMessage outputMessage,HttpInputMessage inputMessage) throws IOException {
 		FileCopyUtils.copy(bytes, outputMessage.getBody());
 	}
 	 

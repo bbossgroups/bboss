@@ -21,6 +21,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.frameworkset.util.Assert;
 import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.HandlerInterceptor;
 import org.frameworkset.web.servlet.HandlerMapping;
@@ -42,8 +43,27 @@ public abstract class AbstractHandlerMapping  extends WebApplicationObjectSuppor
 	private  List interceptors = new ArrayList();
 
 	private HandlerInterceptor[] adaptedInterceptors;
+	/**
+	 * Register the specified handler for the given URL path.
+	 * @param urlPath the URL the bean should be mapped to
+	 * @param handler the handler instance or handler bean name String
+	 * (a bean name will automatically be resolved into the corresponding handler bean)
+	 * @throws Exception 
+	 */
+	public void registerWebSocketHandler( String urlPath, HandlerMeta handler) throws Exception {
+		Assert.notNull(urlPath, "URL path must not be null");
+		Assert.notNull(handler, "Handler object must not be null");
+//		HttpRequestHandler resolvedHandler = handler;
+
+		 
+		// URL paths found: Let's consider it a handler.
+		 
+//		meta.setPathNames(getApplicationContext().getProBean(beanName).getMvcpaths());
+		registerHandler(urlPath, handler);
+	}
 	
-	
+	protected abstract HandlerMeta registerHandler(String urlPath, HandlerMeta meta) throws Exception, IllegalStateException ;
+
 	public void destroy()
 	{
 		this.defaultHandler = null;

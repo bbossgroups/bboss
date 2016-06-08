@@ -55,7 +55,7 @@ public abstract class AbstractWireFeedHttpMessageConverter<T extends WireFeed> e
 
 	@Override
 	@SuppressWarnings("unchecked")
-	protected T readInternal(Class<? extends T> clazz, HttpInputMessage inputMessage)
+	public T readInternal(Class<? extends T> clazz, HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotReadableException {
 		WireFeedInput feedInput = new WireFeedInput();
 		MediaType contentType = inputMessage.getHeaders().getContentType();
@@ -75,7 +75,7 @@ public abstract class AbstractWireFeedHttpMessageConverter<T extends WireFeed> e
 	}
 
 	@Override
-	protected void writeInternal(T wireFeed, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
+	public void writeInternal(T wireFeed, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotWritableException {
 		String wireFeedEncoding = wireFeed.getEncoding();
 		if (!StringUtil.hasLength(wireFeedEncoding)) {

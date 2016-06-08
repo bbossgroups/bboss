@@ -34,7 +34,7 @@ project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.install)
 project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.install)
 dependencies {
     compile(
-    				project(':bboss-mvc'),
+    		//project(':bboss-mvc'),
             [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
             [group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],
             //[group: 'javaee', name: 'javaee-api', version: '5', transitive: false],
@@ -62,9 +62,9 @@ dependencies {
             [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false]
     )*/
     //bboss_taglib编译时，需要依赖bboss_htmlparser的编译输出
-    bboss_taglibRuntime sourceSets.bboss_htmlparser.output
+    bboss_taglibCompile sourceSets.bboss_htmlparser.output
     //bboss_tabpane编译时，需要依赖bboss_taglib的编译输出
-    bboss_tabpaneRuntime sourceSets.bboss_taglib.output
+    bboss_tabpaneCompile sourceSets.bboss_taglib.output
 }
 
 sourceSets.bboss_htmlparser { set ->

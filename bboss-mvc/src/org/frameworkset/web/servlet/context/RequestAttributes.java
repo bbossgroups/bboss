@@ -52,10 +52,23 @@ public interface RequestAttributes {
 
 
 	/**
+	 * Name of the standard reference to the request object: "request".
+	 * @see #resolveReference
+	 */
+	String REFERENCE_REQUEST = "request";
+
+	/**
+	 * Name of the standard reference to the session object: "session".
+	 * @see #resolveReference
+	 */
+	String REFERENCE_SESSION = "session";
+
+
+	/**
 	 * Return the value for the scoped attribute of the given name, if any.
 	 * @param name the name of the attribute
 	 * @param scope the scope identifier
-	 * @return the current attribute value, or <code>null</code> if not found
+	 * @return the current attribute value, or {@code null} if not found
 	 */
 	Object getAttribute(String name, int scope);
 
@@ -100,6 +113,9 @@ public interface RequestAttributes {
 	 * facade's {@link #removeAttribute(String, int)} method, any registered
 	 * destruction callback should be disabled as well, assuming that the
 	 * removed object will be reused or manually destroyed.
+	 * <p><b>NOTE:</b> Callback objects should generally be serializable if
+	 * they are being registered for a session scope. Otherwise the callback
+	 * (or even the entire session) might not survive web app restarts.
 	 * @param name the name of the attribute to register the callback for
 	 * @param callback the destruction callback to be executed
 	 * @param scope the scope identifier
@@ -107,15 +123,24 @@ public interface RequestAttributes {
 	void registerDestructionCallback(String name, Runnable callback, int scope);
 
 	/**
+	 * Resolve the contextual reference for the given key, if any.
+	 * <p>At a minimum: the HttpServletRequest/PortletRequest reference for key
+	 * "request", and the HttpSession/PortletSession reference for key "session".
+	 * @param key the contextual key
+	 * @return the corresponding object, or {@code null} if none found
+	 */
+	Object resolveReference(String key);
+
+	/**
 	 * Return an id for the current underlying session.
-	 * @return the session id as String (never <code>null</code>
+	 * @return the session id as String (never {@code null})
 	 */
 	String getSessionId();
 
 	/**
 	 * Expose the best available mutex for the underlying session:
 	 * that is, an object to synchronize on for the underlying session.
-	 * @return the session mutex to use (never <code>null</code>
+	 * @return the session mutex to use (never {@code null})
 	 */
 	Object getSessionMutex();
 

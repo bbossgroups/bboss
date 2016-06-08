@@ -1,0 +1,30 @@
+<property name="testWebsocket" class="org.frameworkset.web.socket.config.WebSocketRegistryMeta" enablewebsocket="true"
+	f:websocketUrl="/websocket.page" f:sockJSUrl="/sockjs/websck/info">
+	
+	<property name="webSocketHandler" class=""  f:supportsPartialMessages="true"/>
+	<!--<property name="HandshakeHandler" class="" /> 这个属性需要框架内置设置 -->
+	<property name="handshakeInterceptors">
+		<list componentType="bean">
+			<property class="com.milanosoft.RCS.web.webSocket.interceptor.HandshakeInterceptor"/>
+			<property class="com.milanosoft.RCS.web.webSocket.interceptor.HandshakeInterceptor1"/>
+		</list>
+	</property>
+	
+	<property name="allowedOrigins" value="*"/>
+		
+</property>
+
+<property name="testWebsocket" class="org.frameworkset.web.socket.config.WebSocketRegistryMeta"  
+	f:websocketUrl="/websocket.page" f:sockJSUrl="/sockjs/websck/info">
+	
+	<property name="webSocketHandler" class="" f:supportsPartialMessages="true"/>
+	<property name="allowedOrigins" value="*"/>
+	<!--<property name="HandshakeHandler" class="" /> 这个属性需要框架内置设置 -->
+	<property name="handshakeInterceptors">
+		<list componentType="bean">
+			<property class="com.milanosoft.RCS.web.webSocket.interceptor.HandshakeInterceptor"/>
+			<property class="com.milanosoft.RCS.web.webSocket.interceptor.HandshakeInterceptor1"/>
+		</list>
+	</property>
+	
+</property>

@@ -16,6 +16,7 @@
 package org.frameworkset.web.servlet.mvc;
 
 import java.security.Principal;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -33,7 +34,31 @@ import org.frameworkset.web.servlet.context.RequestAttributes;
 public interface WebRequest extends RequestAttributes {
 
 	/**
-	 * Return the request parameter of the given name, or <code>null</code> if none.
+	 * Return the request header of the given name, or {@code null} if none.
+	 * <p>Retrieves the first header value in case of a multi-value header.
+	 * @since 3.0
+	 * @see javax.servlet.http.HttpServletRequest#getHeader(String)
+	 */
+	String getHeader(String headerName);
+
+	/**
+	 * Return the request header values for the given header name,
+	 * or {@code null} if none.
+	 * <p>A single-value header will be exposed as an array with a single element.
+	 * @since 3.0
+	 * @see javax.servlet.http.HttpServletRequest#getHeaders(String)
+	 */
+	String[] getHeaderValues(String headerName);
+
+	/**
+	 * Return a Iterator over request header names.
+	 * @since 3.0
+	 * @see javax.servlet.http.HttpServletRequest#getHeaderNames()
+	 */
+	Iterator<String> getHeaderNames();
+
+	/**
+	 * Return the request parameter of the given name, or {@code null} if none.
 	 * <p>Retrieves the first parameter value in case of a multi-value parameter.
 	 * @see javax.servlet.http.HttpServletRequest#getParameter(String)
 	 */
@@ -41,11 +66,18 @@ public interface WebRequest extends RequestAttributes {
 
 	/**
 	 * Return the request parameter values for the given parameter name,
-	 * or <code>null</code> if none.
+	 * or {@code null} if none.
 	 * <p>A single-value parameter will be exposed as an array with a single element.
 	 * @see javax.servlet.http.HttpServletRequest#getParameterValues(String)
 	 */
 	String[] getParameterValues(String paramName);
+
+	/**
+	 * Return a Iterator over request parameter names.
+	 * @see javax.servlet.http.HttpServletRequest#getParameterNames()
+	 * @since 3.0
+	 */
+	Iterator<String> getParameterNames();
 
 	/**
 	 * Return a immutable Map of the request parameters, with parameter names as map keys
@@ -53,7 +85,7 @@ public interface WebRequest extends RequestAttributes {
 	 * <p>A single-value parameter will be exposed as an array with a single element.
 	 * @see javax.servlet.http.HttpServletRequest#getParameterMap()
 	 */
-	Map getParameterMap();
+	Map<String, String[]> getParameterMap();
 
 	/**
 	 * Return the primary Locale for this request.
@@ -110,6 +142,15 @@ public interface WebRequest extends RequestAttributes {
 	 *   model.addAttribute(...);
 	 *   return "myViewName";
 	 * }</pre>
+	 * <p><strong>Note:</strong> you can use either
+	 * this {@code #checkNotModified(long)} method; or
+	 * {@link #checkNotModified(String)}. If you want enforce both
+	 * a strong entity tag and a Last-Modified value,
+	 * as recommended by the HTTP specification,
+	 * then you should use {@link #checkNotModified(String, long)}.
+	 * <p>If the "If-Modified-Since" header is set but cannot be parsed
+	 * to a date value, this method will ignore the header and proceed
+	 * with setting the last-modified timestamp on the response.
 	 * @param lastModifiedTimestamp the last-modified timestamp that
 	 * the application determined for the underlying resource
 	 * @return whether the request qualifies as not modified,
@@ -119,6 +160,73 @@ public interface WebRequest extends RequestAttributes {
 	boolean checkNotModified(long lastModifiedTimestamp);
 
 	/**
+	 * Check whether the request qualifies as not modified given the
+	 * supplied {@code ETag} (entity tag), as determined by the application.
+	 * <p>This will also transparently set the appropriate response headers,
+	 * for both the modified case and the not-modified case.
+	 * <p>Typical usage:
+	 * <pre class="code">
+	 * public String myHandleMethod(WebRequest webRequest, Model model) {
+	 *   String eTag = // application-specific calculation
+	 *   if (request.checkNotModified(eTag)) {
+	 *     // shortcut exit - no further processing necessary
+	 *     return null;
+	 *   }
+	 *   // further request processing, actually building content
+	 *   model.addAttribute(...);
+	 *   return "myViewName";
+	 * }</pre>
+	 * <p><strong>Note:</strong> you can use either
+	 * this {@code #checkNotModified(String)} method; or
+	 * {@link #checkNotModified(long)}. If you want enforce both
+	 * a strong entity tag and a Last-Modified value,
+	 * as recommended by the HTTP specification,
+	 * then you should use {@link #checkNotModified(String, long)}.
+	 * @param etag the entity tag that the application determined
+	 * for the underlying resource. This parameter will be padded
+	 * with quotes (") if necessary.
+	 * @return whether the request qualifies as not modified,
+	 * allowing to abort request processing and relying on the response
+	 * telling the client that the content has not been modified
+	 */
+	boolean checkNotModified(String etag);
+
+	/**
+	 * Check whether the request qualifies as not modified given the
+	 * supplied {@code ETag} (entity tag) and last-modified timestamp,
+	 * as determined by the application.
+	 * <p>This will also transparently set the "ETag" and "Last-Modified"
+	 * response headers, for both the modified case and the not-modified case.
+	 * <p>Typical usage:
+	 * <pre class="code">
+	 * public String myHandleMethod(WebRequest webRequest, Model model) {
+	 *   String eTag = // application-specific calculation
+	 *   long lastModified = // application-specific calculation
+	 *   if (request.checkNotModified(eTag, lastModified)) {
+	 *     // shortcut exit - no further processing necessary
+	 *     return null;
+	 *   }
+	 *   // further request processing, actually building content
+	 *   model.addAttribute(...);
+	 *   return "myViewName";
+	 * }</pre>
+	 * <p><strong>Note:</strong> The HTTP specification recommends
+	 * setting both ETag and Last-Modified values, but you can also
+	 * use {@code #checkNotModified(String)} or
+	 * {@link #checkNotModified(long)}.
+	 * @param etag the entity tag that the application determined
+	 * for the underlying resource. This parameter will be padded
+	 * with quotes (") if necessary.
+	 * @param lastModifiedTimestamp the last-modified timestamp that
+	 * the application determined for the underlying resource
+	 * @return whether the request qualifies as not modified,
+	 * allowing to abort request processing and relying on the response
+	 * telling the client that the content has not been modified
+	 * @since 4.2
+	 */
+	boolean checkNotModified(String etag, long lastModifiedTimestamp);
+
+	/**
 	 * Get a short description of this request,
 	 * typically containing request URI and session id.
 	 * @param includeClientInfo whether to include client-specific
@@ -126,5 +234,7 @@ public interface WebRequest extends RequestAttributes {
 	 * @return the requested description as String
 	 */
 	String getDescription(boolean includeClientInfo);
+
+ 
 
 }

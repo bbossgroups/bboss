@@ -75,13 +75,13 @@ import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.util.MethodParameter;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-import bsh.Interpreter;
-
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.spi.assemble.CurrentlyInCreationException;
+
+import bsh.Interpreter;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  * @author biaoping.yin 改类充分使用java.lang.reflection中提供的功能，提供以下工具： 从对象中获取对应属性的值
@@ -125,6 +125,24 @@ public class ValueObjectUtil {
 		byte.class ,
 		Class.class,BigInteger.class,BigDecimal.class,
 		java.sql.Timestamp.class,java.sql.Date.class,java.util.Date.class
+		};
+	
+	
+	/**
+	 * 用于序列化机制识别基础数据类型   
+	 */
+	public static final Class[] simplePrimaryTypes = {String.class,
+		int.class ,
+		long.class,		
+		boolean.class ,
+//		BigFile.class,
+		float.class ,
+		short.class ,
+		double.class,
+		char.class ,
+		byte.class ,
+		Class.class,
+		java.sql.Timestamp.class,java.sql.Date.class,java.util.Date.class,java.util.Locale.class
 		};
 	private static final Logger log = Logger.getLogger(ValueObjectUtil.class);
 
@@ -5529,6 +5547,29 @@ public class ValueObjectUtil {
     	return false;
     	
     }
+    /**
+     * 判断类type是否是基础数据类型
+     * @param type
+     * @return
+     */
+    public static boolean isSimplePrimaryType(Class type)
+    {
+    	if(!type.isArray())
+    	{
+    		
+	    	for(Class primaryType:ValueObjectUtil.simplePrimaryTypes)
+	    	{
+	    		if(primaryType == type)
+	    			return true;
+	    	}
+	    	if(type.isEnum())
+    			return true;
+	    	return false;
+    	}
+    	return false;
+    	
+    }
+    
     
     public static boolean isCollectionType(Class type)
     {

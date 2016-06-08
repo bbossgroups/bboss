@@ -29,6 +29,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
 
 
 public abstract class ObjectUtils {
@@ -43,6 +45,27 @@ public abstract class ObjectUtils {
 	private static final String EMPTY_ARRAY = ARRAY_START + ARRAY_END;
 	private static final String ARRAY_ELEMENT_SEPARATOR = ", ";
 
+	public static boolean isEmpty(Object obj) {
+		if (obj == null) {
+			return true;
+		}
+
+		if (obj.getClass().isArray()) {
+			return Array.getLength(obj) == 0;
+		}
+		if (obj instanceof CharSequence) {
+			return ((CharSequence) obj).length() == 0;
+		}
+		if (obj instanceof Collection) {
+			return ((Collection) obj).isEmpty();
+		}
+		if (obj instanceof Map) {
+			return ((Map) obj).isEmpty();
+		}
+
+		// else
+		return false;
+	}
 
 	/**
 	 * Return whether the given throwable is a checked exception:

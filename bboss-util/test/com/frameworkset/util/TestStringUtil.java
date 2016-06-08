@@ -41,4 +41,11 @@ public class TestStringUtil {
 		System.out.println(SimpleStringUtil.tostring(null));
 	}
 	
+	@org.junit.Test
+	public void testIntObjecttoJson()
+	{
+		 
+		System.out.println(SimpleStringUtil.object2json(1));
+	}
+	
 }

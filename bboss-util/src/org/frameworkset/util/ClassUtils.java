@@ -700,7 +700,7 @@ public class ClassUtils
 	 * @see java.lang.Class#getMethod
 	 */
 	public static boolean hasMethod(Class clazz, String methodName,
-			Class[] paramTypes)
+			Class... paramTypes)
 	{
 
 		return (getMethodIfAvailable(clazz, methodName, paramTypes) != null);
@@ -723,7 +723,7 @@ public class ClassUtils
 	 * @see java.lang.Class#getMethod
 	 */
 	public static Method getMethodIfAvailable(Class clazz, String methodName,
-			Class[] paramTypes)
+			Class... paramTypes)
 	{
 
 		Assert.notNull(clazz, "Class must not be null");

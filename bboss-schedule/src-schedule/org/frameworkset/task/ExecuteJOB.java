@@ -1,7 +1,6 @@
 package org.frameworkset.task;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 import org.apache.log4j.Logger;

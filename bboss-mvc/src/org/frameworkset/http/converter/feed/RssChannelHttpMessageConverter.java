@@ -40,7 +40,7 @@ public class RssChannelHttpMessageConverter extends AbstractWireFeedHttpMessageC
 	}
 
 	@Override
-	protected boolean supports(Class<?> clazz) {
+	public boolean supports(Class<?> clazz) {
 		return Channel.class.isAssignableFrom(clazz);
 	}
 	 

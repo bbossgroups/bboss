@@ -45,7 +45,10 @@ public class HandlerMappingsTable implements DisposableBean{
 		
 		this.handlerMapping = handlerMapping;
 	}
-	
+	public void registerWebSocketHandler(String pattern, HandlerMeta httpHandler) throws Exception
+	{
+		handlerMapping.registerWebSocketHandler(  pattern,   httpHandler);
+	}
 	public HandlerExecutionChain getHandler(HttpServletRequest request,String servletName) throws Exception
 	{
 //		HandlerExecutionChain handler;

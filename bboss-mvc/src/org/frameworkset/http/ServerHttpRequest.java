@@ -15,9 +15,13 @@
  */
 package org.frameworkset.http;
 
+import java.net.InetSocketAddress;
 import java.net.URI;
+import java.security.Principal;
 
 import org.frameworkset.util.annotations.HttpMethod;
+
+ 
 
 /**
  * <p>Title: ServerHttpRequest.java</p> 
@@ -28,8 +32,9 @@ import org.frameworkset.util.annotations.HttpMethod;
  * @author biaoping.yin
  * @version 1.0
  */
-public interface ServerHttpRequest  extends HttpInputMessage {
+public interface ServerHttpRequest  extends HttpRequest,  HttpInputMessage {
 
+	public static final String JSONPCALLBACK_PARAM_NAME = "jsonp_callback";
 	/**
 	 * Return the HTTP method of the request.
 	 * @return the HTTP method as an HttpMethod enum value
@@ -41,5 +46,28 @@ public interface ServerHttpRequest  extends HttpInputMessage {
 	 * @return the URI of the request
 	 */
 	URI getURI();
+	/**
+	 * Return a {@link java.security.Principal} instance containing the name of the
+	 * authenticated user. If the user has not been authenticated, the method returns
+	 * <code>null</code>.
+	 */
+	Principal getPrincipal();
+	
+
+	/**
+	 * Return the address on which the request was received.
+	 */
+	InetSocketAddress getLocalAddress();
+
+	/**
+	 * Return the address of the remote client.
+	 */
+	InetSocketAddress getRemoteAddress();
+
+	/**
+	 * Return a control that allows putting the request in asynchronous mode so the
+	 * response remains open until closed explicitly from the current or another thread.
+	 */
+	ServerHttpAsyncRequestControl getAsyncRequestControl(ServerHttpResponse response);
 
 }

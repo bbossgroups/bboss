@@ -69,14 +69,14 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Obj
 	}
 
 	@Override
-	protected String readInternal(Class clazz, HttpInputMessage inputMessage) throws IOException {
+	public String readInternal(Class clazz, HttpInputMessage inputMessage) throws IOException {
 		MediaType contentType = inputMessage.getHeaders().getContentType();
 		Charset charset = contentType.getCharSet() != null ? contentType.getCharSet() : DEFAULT_CHARSET;
 		return FileCopyUtils.copyToString(new InputStreamReader(inputMessage.getBody(), charset));
 	}
 
 	@Override
-	protected Long getContentLength(Object data, MediaType contentType) {
+	public Long getContentLength(Object data, MediaType contentType) {
 		String s = null;
 		if(data instanceof String)
 		{
@@ -100,7 +100,7 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Obj
 	}
 
 	@Override
-	protected void writeInternal(Object data, HttpOutputMessage outputMessage,HttpInputMessage inputMessage) throws IOException {
+	public void writeInternal(Object data, HttpOutputMessage outputMessage,HttpInputMessage inputMessage) throws IOException {
 		if (writeAcceptCharset) {
 			outputMessage.getHeaders().setAcceptCharset(getAcceptedCharsets());
 		}

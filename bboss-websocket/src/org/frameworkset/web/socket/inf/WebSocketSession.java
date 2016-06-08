@@ -29,9 +29,9 @@ public interface WebSocketSession {
 	 * Return the map with attributes associated with the WebSocket session.
 	 *
 	 * <p>When the WebSocketSession is created, on the server side, the map can be
-	 * through a {@link org.springframework.web.socket.server.HandshakeInterceptor}.
+	 * through a {@link org.frameworkset.web.socket.server.HandshakeInterceptor}.
 	 * On the client side, the map can be populated by passing attributes to the
-	 * {@link org.springframework.web.socket.client.WebSocketClient} handshake
+	 * {@link org.frameworkset.web.socket.client.WebSocketClient} handshake
 	 * methods.
 	 */
 	Map<String, Object> getAttributes();

@@ -209,7 +209,7 @@ public class XMLHttpMessageConverter  extends AbstractHttpMessageConverter<Objec
 	}
 	
 	@Override
-	protected void writeInternal(Object s, HttpOutputMessage outputMessage,HttpInputMessage inputMessage) throws IOException {
+	public void writeInternal(Object s, HttpOutputMessage outputMessage,HttpInputMessage inputMessage) throws IOException {
 		if (writeAcceptCharset) {
 			outputMessage.getHeaders().setAcceptCharset(getAcceptedCharsets());
 		}
