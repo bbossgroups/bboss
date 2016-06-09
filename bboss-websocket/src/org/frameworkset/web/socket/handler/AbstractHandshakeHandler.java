@@ -83,22 +83,22 @@ public class AbstractHandshakeHandler  implements HandshakeHandler, Lifecycle {
 	private static RequestUpgradeStrategy initRequestUpgradeStrategy() {
 		String className;
 		if (tomcatWsPresent) {
-			className = "org.frameworkset.web.socket.server.standard.TomcatRequestUpgradeStrategy";
+			className = "org.frameworkset.web.socket.container.TomcatRequestUpgradeStrategy";
 		}
 		else if (jettyWsPresent) {
-			className = "org.frameworkset.web.socket.server.jetty.JettyRequestUpgradeStrategy";
+			className = "org.frameworkset.web.socket.container.JettyRequestUpgradeStrategy";
 		}
 		else if (undertowWsPresent) {
-			className = "org.frameworkset.web.socket.server.standard.UndertowRequestUpgradeStrategy";
+			className = "org.frameworkset.web.socket.container.UndertowRequestUpgradeStrategy";
 		}
 		else if (glassfishWsPresent) {
-			className = "org.frameworkset.web.socket.server.standard.GlassFishRequestUpgradeStrategy";
+			className = "org.frameworkset.web.socket.container.GlassFishRequestUpgradeStrategy";
 		}
 		else if (weblogicWsPresent) {
-			className = "org.frameworkset.web.socket.server.standard.WebLogicRequestUpgradeStrategy";
+			className = "org.frameworkset.web.socket.container.WebLogicRequestUpgradeStrategy";
 		}
 		else if (websphereWsPresent) {
-			className = "org.frameworkset.web.socket.server.standard.WebSphereRequestUpgradeStrategy";
+			className = "org.frameworkset.web.socket.container.WebSphereRequestUpgradeStrategy";
 		}
 		else {
 			throw new IllegalStateException("No suitable default RequestUpgradeStrategy found");
