@@ -54,6 +54,9 @@ dependencies {
 		[group: 'org.glassfish.tyrus', name: 'tyrus-server', version: '1.3.5', transitive: false ],
 		[group: 'org.glassfish.tyrus', name: 'tyrus-container-servlet', version: '1.3.5', transitive: false ],
 		[group: 'javax', name: 'javaee-web-api', version: '7.0', transitive: false ],
+		[group: 'org.eclipse.jetty.websocket', name: 'websocket-server', version: '9.3.7.v20160115', transitive: true ] ,
+		[group: 'org.eclipse.jetty.websocket', name: 'websocket-client', version: '9.3.7.v20160115', transitive: false ],
+		[group: 'org.eclipse.jetty', name: 'jetty-client', version: '9.3.7.v20160115', transitive: false ],
     )
    
     

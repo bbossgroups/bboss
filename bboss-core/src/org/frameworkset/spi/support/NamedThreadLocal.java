@@ -21,15 +21,15 @@ import org.frameworkset.util.Assert;
 
 
 /**
- * <p>Title: NamedThreadLocal.java</p> 
- * <p>Description: </p>
- * <p>bboss workgroup</p>
- * <p>Copyright (c) 2007</p>
- * @Date 2010-9-24 下午04:59:51
- * @author biaoping.yin
- * @version 1.0
+ * {@link ThreadLocal} subclass that exposes a specified name
+ * as {@link #toString()} result (allowing for introspection).
+ *
+ * @author Juergen Hoeller
+ * @since 2.5.2
+ * @see NamedInheritableThreadLocal
  */
-public class NamedThreadLocal extends ThreadLocal {
+public class NamedThreadLocal<T> extends ThreadLocal<T> {
+
 	private final String name;
 
 
@@ -42,7 +42,10 @@ public class NamedThreadLocal extends ThreadLocal {
 		this.name = name;
 	}
 
+	@Override
 	public String toString() {
 		return this.name;
 	}
+
+ 
 }
