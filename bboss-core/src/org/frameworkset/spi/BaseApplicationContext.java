@@ -2463,6 +2463,30 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		throw new NullPointerException(this.getConfigfile() + "中不存在[" + parent+","+name + "]，类型为"+nodetype+"的内部property节点");	
 			
 	}
+	public String[] getDependenciesForBean(String beanName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public String[] getDependentBeans(String beanName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public String[] getBeanNamesForType(Class<Lifecycle> class1, boolean b, boolean c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public boolean isFactoryBean(String beanNameToRegister) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	public boolean containsSingleton(String beanNameToRegister) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	public Class<?> getType(String beanNameToCheck) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }
