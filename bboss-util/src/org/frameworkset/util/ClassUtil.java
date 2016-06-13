@@ -671,7 +671,8 @@ public class ClassUtil
 	    	int idx = name.indexOf("$$EnhancerByCGLIB$$") ;
 	    	if(idx < 0)
 	    	{
-	    		this.clazz = clazz;
+	    			this.clazz = clazz;
+	    		
 	    	}
 	    	else
 	    	{

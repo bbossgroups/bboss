@@ -65,4 +65,11 @@ public class UnmodifiableListPreSerial implements PreSerial<List> {
 		return this.clazz;
 	}
 
+	@Override
+	public String getVClazz() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
 }

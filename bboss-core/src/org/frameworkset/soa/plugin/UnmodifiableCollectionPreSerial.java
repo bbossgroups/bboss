@@ -65,4 +65,9 @@ public class UnmodifiableCollectionPreSerial implements PreSerial<Collection> {
 		return this.clazz;
 	}
 
+	public String getVClazz() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

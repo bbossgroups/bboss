@@ -31,6 +31,12 @@ public interface PreSerial<T> {
 	 * @return
 	 */
 	public String getClazz();
+	
+	/**
+	 * 获取值类型，将会设置到
+	 * @return
+	 */
+	public String getVClazz();
 	/**
 	 * 在序列化之前调用prehandle方法预处理对象
 	 * @param object

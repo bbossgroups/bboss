@@ -63,4 +63,9 @@ public class UnmodifiableMapPreSerial implements PreSerial<Map> {
 		// TODO Auto-generated method stub
 		return this.clazz;
 	}
+
+	public String getVClazz() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
