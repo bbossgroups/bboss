@@ -190,24 +190,25 @@ public class SerialFactory {
 
 	private MagicClass buildMagicClass(String preclazz )
 	{
-		MagicClass magicClass = new MagicClass();
+		MagicClass magicClass = null;
 //		magicClass.setPreserial("org.frameworkset.soa.plugin.UnmodifiableRandomAccessListPreSerial");
 		
 		try {
-			magicClass.setPreserial(preclazz);
+			
 			PreSerial preSerial = (PreSerial)Class.forName(preclazz).newInstance();
-			 
+			 magicClass = new MagicClass();
+			 magicClass.setPreserial(preclazz);
 			magicClass.setPreserialObject(preSerial);
 			magicClass.setMagicclass(preSerial.getClazz());
 			magicClass.setMagicnumber(preSerial.getClazz());
 			this.defaultmagicclassesByMagicNumber.put(preSerial.getClazz(), magicClass);
 			this.defaultPlugins.put(preSerial.getClazz(), magicClass);
 		} catch (InstantiationException e) {
-			 
+			 log.debug("buildMagicClass ["+preclazz+"] InstantiationException:"+e.getMessage());
 		} catch (IllegalAccessException e) {
-			 
+			log.error("buildMagicClass ["+preclazz+"] IllegalAccessException:"+e.getMessage());
 		} catch (ClassNotFoundException e) {
-			 
+			log.error("buildMagicClass ["+preclazz+"] ClassNotFoundException:"+e.getMessage());
 		}
 		return magicClass;
 	}
