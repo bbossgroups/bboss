@@ -1340,8 +1340,12 @@ public class ClassUtils
 		Type type = types[posistion];
 		if (type instanceof ParameterizedType)
 		{
-
-			Type zzz = ((ParameterizedType) type).getActualTypeArguments()[0];
+			Type[] types_ = ((ParameterizedType) type).getActualTypeArguments();
+			if(types_ == null || types_.length == 0)
+			{
+				return null;
+			}
+			Type zzz = types_[0];
 			return zzz instanceof Class?(Class) zzz:null;
 
 		}
@@ -1366,7 +1370,12 @@ public class ClassUtils
 		if (type instanceof ParameterizedType)
 		{
 
-			Type zzz = ((ParameterizedType) type).getActualTypeArguments()[0];
+			Type[] types = ((ParameterizedType) type).getActualTypeArguments();
+			if(types == null || types.length == 0)
+			{
+				return null;
+			}
+			Type zzz = types[0];
 			return zzz instanceof Class?(Class) zzz:null;
 
 		}
@@ -1387,28 +1396,28 @@ public class ClassUtils
 		}
 
 		// for(int i = 0; i < types.length; i ++)
+		 
+		Type type = types[posistion];
+		if (type instanceof ParameterizedType)
 		{
-			Type type = types[posistion];
-			if (type instanceof ParameterizedType)
+
+			Type[] ptypes = ((ParameterizedType) type)
+					.getActualTypeArguments();
+
+			Class[] genericParameterTypes = new Class[ptypes.length];
+			int i = 0;
+			for (Type zzz : ptypes)
 			{
-
-				Type[] ptypes = ((ParameterizedType) type)
-						.getActualTypeArguments();
-
-				Class[] genericParameterTypes = new Class[ptypes.length];
-				int i = 0;
-				for (Type zzz : ptypes)
+				if(zzz instanceof Class)
 				{
-					if(zzz instanceof Class)
-					{
-						genericParameterTypes[i] = (Class) zzz;
-						i++;
-					}
+					genericParameterTypes[i] = (Class) zzz;
+					i++;
 				}
-				return resizeClasses(genericParameterTypes,i);
-
 			}
+			return resizeClasses(genericParameterTypes,i);
+
 		}
+		 
 		return null;
 
 	}
