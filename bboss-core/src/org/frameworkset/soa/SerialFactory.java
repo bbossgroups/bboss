@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
@@ -34,6 +35,7 @@ import org.frameworkset.spi.assemble.Pro;
  * @version 1.0
  */
 public class SerialFactory {
+	private static Logger log = Logger.getLogger(SerialFactory.class);
 	private Map<String,MagicClass> magicclassesByName = new HashMap<String,MagicClass>();
 	private Map<String,MagicClass> magicclassesByMagicNumber = new HashMap<String,MagicClass>();
 	/**
@@ -50,7 +52,14 @@ public class SerialFactory {
 		"org.frameworkset.soa.plugin.UnmodifiableMapPreSerial",
 		"org.frameworkset.soa.plugin.UnmodifiableSetPreSerial",
 		"org.frameworkset.soa.plugin.UnmodifiableSortedMapPreSerial",
-		"org.frameworkset.soa.plugin.UnmodifiableSortedSetPreSerial"
+		"org.frameworkset.soa.plugin.UnmodifiableSortedSetPreSerial",
+		
+		"org.frameworkset.hibernate.serial.PersistentBagSerial",
+		"org.frameworkset.hibernate.serial.PersistentList",
+		"org.frameworkset.hibernate.serial.PersistentMap",
+		"org.frameworkset.hibernate.serial.PersistentSet",
+		"org.frameworkset.hibernate.serial.PersistentSortedMap",
+		"org.frameworkset.hibernate.serial.PersistentSortedSet",
 	};
 	private static SerialFactory serialFactory;
 	public static SerialFactory getSerialFactory()
@@ -181,25 +190,25 @@ public class SerialFactory {
 
 	private MagicClass buildMagicClass(String preclazz )
 	{
-		MagicClass magicClass = new MagicClass();
-		magicClass.setPreserial("org.frameworkset.soa.plugin.UnmodifiableRandomAccessListPreSerial");
+		MagicClass magicClass = null;
+//		magicClass.setPreserial("org.frameworkset.soa.plugin.UnmodifiableRandomAccessListPreSerial");
+		
 		try {
+			
 			PreSerial preSerial = (PreSerial)Class.forName(preclazz).newInstance();
-			 
+			 magicClass = new MagicClass();
+			 magicClass.setPreserial(preclazz);
 			magicClass.setPreserialObject(preSerial);
 			magicClass.setMagicclass(preSerial.getClazz());
 			magicClass.setMagicnumber(preSerial.getClazz());
 			this.defaultmagicclassesByMagicNumber.put(preSerial.getClazz(), magicClass);
 			this.defaultPlugins.put(preSerial.getClazz(), magicClass);
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			 log.debug("buildMagicClass ["+preclazz+"] InstantiationException:"+e.getMessage());
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("buildMagicClass ["+preclazz+"] IllegalAccessException:"+e.getMessage());
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("buildMagicClass ["+preclazz+"] ClassNotFoundException:"+e.getMessage());
 		}
 		return magicClass;
 	}

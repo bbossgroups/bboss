@@ -728,7 +728,9 @@ public class ObjectSerializable {
 			if(magicclass.getPreserialObject() != null)
 			{
 				obj = magicclass.getPreserialObject().prehandle(obj);
-				handleObjectClass = obj.getClass().getName();
+				handleObjectClass = magicclass.getPreserialObject().getVClazz();
+				if(handleObjectClass == null)
+					handleObjectClass = obj.getClass().getName();
 				if(handleObjectClass.equals(className))
 					handleObjectClass = null;
 					
