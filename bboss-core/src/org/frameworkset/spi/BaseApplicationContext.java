@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.assemble.BaseTXManager;
@@ -52,6 +53,7 @@ import org.frameworkset.spi.cglib.CGLibUtil;
 import org.frameworkset.spi.cglib.SimpleCGLibProxy;
 import org.frameworkset.spi.cglib.SynCGLibProxy;
 import org.frameworkset.spi.cglib.SynTXCGLibProxy;
+import org.frameworkset.spi.support.DefaultLifecycleProcessor;
 import org.frameworkset.spi.support.DelegatingMessageSource;
 import org.frameworkset.spi.support.HotDeployResourceBundleMessageSource;
 import org.frameworkset.spi.support.MessageSource;
@@ -81,13 +83,16 @@ import com.frameworkset.util.SimpleStringUtil;
  */
 public abstract class  BaseApplicationContext extends DefaultResourceLoader implements
 		MessageSource, ResourcePatternResolver, ResourceLoader {
+ 
+	/** Reference to the JVM shutdown hook, if registered */
+	private static Thread shutdownHook;
 	static
 	{
 		try {
 			Class r = Runtime.getRuntime().getClass();
 			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
 					new Class[] { Thread.class });
-			Thread t = new Thread(
+			shutdownHook  = new Thread(
 					new Runnable(){
 
 						public void run() {
@@ -96,7 +101,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 						}
 						
 					});
-			m.invoke(Runtime.getRuntime(), new Object[] { t });
+			m.invoke(Runtime.getRuntime(), new Object[] { shutdownHook });
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -758,6 +763,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 					rootFiles.clear();
 					rootFiles = null;
 				}
+				
 			}
 			catch(Exception e)
 			{
@@ -766,6 +772,11 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			catch(Throwable e)
 			{
 				log.warn("",e);
+			}
+			finally
+			{
+				if(shutdownHook != null)
+					Runtime.getRuntime().removeShutdownHook(shutdownHook);
 			}
 			
 		}
@@ -2465,28 +2476,103 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 	public String[] getDependenciesForBean(String beanName) {
 		// TODO Auto-generated method stub
-		return null;
+		return providerManager.getDependenciesForBean(  beanName);
 	}
 	public String[] getDependentBeans(String beanName) {
 		// TODO Auto-generated method stub
-		return null;
+		return providerManager.getDependentBeans(beanName);
 	}
-	public String[] getBeanNamesForType(Class<Lifecycle> class1, boolean b, boolean c) {
+	public String[] getBeanNamesForType(Class<Lifecycle> class1, boolean includeNonSingletons, boolean allowEagerInit) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return this.providerManager.getBeanNamesForType(class1,includeNonSingletons,allowEagerInit);
 	}
 	public boolean isFactoryBean(String beanNameToRegister) {
-		// TODO Auto-generated method stub
-		return false;
+		return providerManager.isFactoryBean(beanNameToRegister);
 	}
 	public boolean containsSingleton(String beanNameToRegister) {
 		// TODO Auto-generated method stub
-		return false;
+		return this.singleDestorys.contains(beanNameToRegister);
 	}
 	public Class<?> getType(String beanNameToCheck) {
 		// TODO Auto-generated method stub
-		return null;
+		return providerManager.getType(beanNameToCheck);
 	}
+	protected LifecycleProcessor lifecycleProcessor;
+	protected LifecycleProcessor initLifecycleProcessor() {
+		 
+		DefaultLifecycleProcessor defaultProcessor = new DefaultLifecycleProcessor();
+		defaultProcessor.setApplicationContext(this);
+		this.lifecycleProcessor = defaultProcessor;
+		return defaultProcessor;
+			// registerSingleton(LIFECYCLE_PROCESSOR_BEAN_NAME, this.lifecycleProcessor);
+			  
+	}
+	
+	/**
+	 * Finish the refresh of this context, invoking the LifecycleProcessor's
+	 * onRefresh() method and publishing the
+	 * {@link org.springframework.context.event.ContextRefreshedEvent}.
+	 */
+	public void startProcessor() {
+		if(this.active.compareAndSet(false, true))
+			return;
+		// Initialize lifecycle processor for this context.
+		initLifecycleProcessor();
+
+		// Propagate refresh to lifecycle processor first.
+		getLifecycleProcessor().onRefresh();
+
+		 
+	}
+	/** Flag that indicates whether this context is currently active */
+	private final AtomicBoolean active = new AtomicBoolean();
+
+	/** Flag that indicates whether this context has been closed already */
+	private final AtomicBoolean closed = new AtomicBoolean();
+
+	public void stopProcessor() {
+		if (this.active.get() && this.closed.compareAndSet(false, true)) {
+			if (log.isInfoEnabled()) {
+				log.info("Closing " + this);
+			}
+
+			 
+
+			// Stop all Lifecycle beans, to avoid delays during individual destruction.
+			try {
+				if(lifecycleProcessor != null)
+				{
+					lifecycleProcessor.onClose();
+					lifecycleProcessor = null;
+				}
+			}
+			catch (Throwable ex) {
+				log.warn("Exception thrown from LifecycleProcessor on context close", ex);
+			}
+
+			 
+		 
+
+			this.active.set(false);
+		}
+	}
+	public boolean isProcessorActive() {
+		return this.active.get();
+	}
+	/**
+	 * Return the internal LifecycleProcessor used by the context.
+	 * @return the internal LifecycleProcessor (never {@code null})
+	 * @throws IllegalStateException if the context has not been initialized yet
+	 */
+	LifecycleProcessor getLifecycleProcessor() throws IllegalStateException {
+		if (this.lifecycleProcessor == null) {
+			throw new IllegalStateException("LifecycleProcessor not initialized - " +
+					"call 'refresh' before invoking lifecycle methods via the context: " + this);
+		}
+		return this.lifecycleProcessor;
+	}
+
 	
 
 }

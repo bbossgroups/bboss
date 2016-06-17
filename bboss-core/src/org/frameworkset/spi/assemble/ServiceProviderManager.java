@@ -25,9 +25,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -35,6 +37,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
+import org.frameworkset.spi.Lifecycle;
 import org.frameworkset.spi.assemble.RefID.Index;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
 import org.xml.sax.InputSource;
@@ -753,6 +756,48 @@ public class ServiceProviderManager {
         }
         return pro;
     }
+    
+    public String[] getBeanNamesForType(Class<Lifecycle> class1, boolean includeNonSingletons, boolean allowEagerInit) {
+		// TODO Auto-generated method stub
+		Set<Entry<String,Pro>> entrySet = this.properties.entrySet();
+		Iterator<Entry<String, Pro>> iterator = entrySet.iterator();
+		List<String> names = new ArrayList<String>();
+		while(iterator.hasNext())
+		{
+			Entry<String, Pro> entry = iterator.next();
+			Pro pro = entry.getValue();
+			if(pro.isType(class1))
+			{
+				names.add(entry.getKey());
+			}
+				
+		}
+		return names.toArray(new String[names.size()]);
+	}
+    
+    public String[] getDependenciesForBean(String beanName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public String[] getDependentBeans(String beanName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	 
+	public boolean isFactoryBean(String beanNameToRegister) {
+		Pro pro = this.getPropertyBean(beanNameToRegister);
+		if(pro != null)
+			return pro.isFactoryBean();
+		return false;
+	}
+	 
+	public Class<?> getType(String beanNameToCheck) {
+		// TODO Auto-generated method stub
+		Pro pro = this.getPropertyBean(beanNameToCheck);
+		if(pro != null)
+			return pro.getType();
+		return null;
+	}
     
     /**
      * 根据引用的维度获取其对应的Pro对象
