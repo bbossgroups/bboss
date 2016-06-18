@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 import org.frameworkset.http.converter.HttpMessageConverter;
+import org.frameworkset.spi.SmartLifecycle;
 import org.frameworkset.web.HttpRequestHandler;
 import org.frameworkset.web.servlet.HandlerAdapter;
 import org.frameworkset.web.servlet.ModelAndView;
@@ -34,7 +35,7 @@ import org.frameworkset.web.servlet.handler.HandlerMeta;
  * @author biaoping.yin
  * @version 1.0
  */
-public class HttpRequestHandlerAdapter  implements HandlerAdapter {
+public class HttpRequestHandlerAdapter  implements HandlerAdapter,SmartLifecycle  {
 
 	public boolean supports(HandlerMeta handler) {
 		return (handler.getHandler() instanceof HttpRequestHandler);

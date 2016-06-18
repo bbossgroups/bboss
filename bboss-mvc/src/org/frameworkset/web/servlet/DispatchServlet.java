@@ -616,6 +616,7 @@ public class DispatchServlet extends BaseServlet {
 //			// triggering initial onRefresh manually here.
 //			onRefresh(wac);
 //		}
+		startLifeCycleProcessor(  wac);
 
 		if (this.publishContext) {
 			// Publish the context as a servlet context attribute.
@@ -629,6 +630,10 @@ public class DispatchServlet extends BaseServlet {
 
 		return wac;
 	}
+	private void startLifeCycleProcessor(WebApplicationContext wac) {
+		
+	}
+
 	/**
 	 * Prefix for the ServletContext attribute for the WebApplicationContext.
 	 * The completion is the servlet name.
