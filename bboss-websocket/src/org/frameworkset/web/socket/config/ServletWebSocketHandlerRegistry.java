@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.frameworkset.schedule.TaskScheduler;
 import org.frameworkset.schedule.ThreadPoolTaskScheduler;
+import org.frameworkset.spi.LifecycleProcessor;
 import org.frameworkset.util.MultiValueMap;
 import org.frameworkset.web.HttpRequestHandler;
 import org.frameworkset.web.servlet.HandlerMapping;
@@ -69,27 +70,27 @@ public class ServletWebSocketHandlerRegistry implements WebSocketHandlerRegistry
 	 * Return a {@link HandlerMapping} with mapped {@link HttpRequestHandler}s.
 	 */
 	public void registHandlerMapping(HandlerMappingsTable mapping) {
-		Map<String, Object> urlMap = new LinkedHashMap<String, Object>();
+		Map<String, HandlerMeta> urlMap = new LinkedHashMap<String, HandlerMeta>();
 		for (ServletWebSocketHandlerRegistration registration : this.registrations) {
 			MultiValueMap<HandlerMeta, String> mappings = registration.getMappings();
 			for (HandlerMeta httpHandler : mappings.keySet()) {
 				for (String pattern : mappings.get(httpHandler)) {
-					//urlMap.put(pattern, httpHandler);
-					try {
-						mapping.registerWebSocketHandler(pattern, httpHandler);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					urlMap.put(pattern, httpHandler);
+					
 				}
 			}
 		}
-//		WebSocketHandlerMapping hm = new WebSocketHandlerMapping();
-//		hm.setUrlMap(urlMap);
+		
+		WebSocketHandlerMapping websocketHandlerMapping = new WebSocketHandlerMapping();
+		websocketHandlerMapping.setUrlMap(urlMap);
 //		hm.setOrder(this.order);
-//		if (this.urlPathHelper != null) {
-//			hm.setUrlPathHelper(this.urlPathHelper);
-//		}
+		if (this.urlPathHelper != null) {
+			websocketHandlerMapping.setUrlPathHelper(this.urlPathHelper);
+		}
+		websocketHandlerMapping.initApplicationContext();
+		mapping.setWebsocketHandlerMapping(websocketHandlerMapping);
+		LifecycleProcessor lifecycleProcessor = new WebsocketLifecycleProcessor(websocketHandlerMapping);
+		mapping.setWebsocketLifecycleProcessor(lifecycleProcessor);
 //		return hm;
 	}
 

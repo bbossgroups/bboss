@@ -74,6 +74,6 @@ public interface HandlerMapping {
 	void destroy();
 
 
-	void registerWebSocketHandler(String pattern, HandlerMeta httpHandler)  throws Exception;
+//	void registerWebSocketHandler(String pattern, HandlerMeta httpHandler)  throws Exception;
 
 }

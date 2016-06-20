@@ -27,7 +27,6 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.http.converter.HttpMessageConverter;
-import org.frameworkset.spi.SmartLifecycle;
 import org.frameworkset.util.AntPathMatcher;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ParameterNameDiscoverer;
@@ -56,7 +55,7 @@ import org.frameworkset.web.util.WebUtils;
  * @author biaoping.yin
  * @version 1.0
  */
-public class AnnotationMethodHandlerAdapter  extends WebContentGenerator implements HandlerAdapter,SmartLifecycle {
+public class AnnotationMethodHandlerAdapter  extends WebContentGenerator implements HandlerAdapter{
 
 	/**
 	 * Log category to use when no mapped handler is found for a request.

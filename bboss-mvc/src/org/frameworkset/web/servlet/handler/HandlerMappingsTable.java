@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.DisposableBean;
+import org.frameworkset.spi.LifecycleProcessor;
 import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.HandlerMapping;
 
@@ -34,8 +35,12 @@ import org.frameworkset.web.servlet.HandlerMapping;
 public class HandlerMappingsTable implements DisposableBean{
 //	private List<HandlerMapping> handlerMappings;
 	HandlerMapping handlerMapping;
+	
+	HandlerMapping websocketHandlerMapping;
 	private static Logger logger = Logger.getLogger(HandlerMappingsTable.class);
 	private boolean scanAllMappings = true;
+
+	private LifecycleProcessor websocketLifecycleProcessor;
 
 	public  HandlerMapping getHandlerMapping() {
 		return handlerMapping;
@@ -45,10 +50,10 @@ public class HandlerMappingsTable implements DisposableBean{
 		
 		this.handlerMapping = handlerMapping;
 	}
-	public void registerWebSocketHandler(String pattern, HandlerMeta httpHandler) throws Exception
-	{
-		handlerMapping.registerWebSocketHandler(  pattern,   httpHandler);
-	}
+//	public void registerWebSocketHandler(String pattern, HandlerMeta httpHandler) throws Exception
+//	{
+//		websocketHandlerMapping.registerWebSocketHandler(  pattern,   httpHandler);
+//	}
 	public HandlerExecutionChain getHandler(HttpServletRequest request,String servletName) throws Exception
 	{
 //		HandlerExecutionChain handler;
@@ -95,7 +100,29 @@ public class HandlerMappingsTable implements DisposableBean{
 //		}
 		if(handlerMapping != null)
 			handlerMapping.destroy();
+		if(websocketHandlerMapping != null)
+		{
+			websocketHandlerMapping.destroy();
+		}
 		
 	}
+
+	public HandlerMapping getWebsocketHandlerMapping() {
+		return websocketHandlerMapping;
+	}
+
+	public void setWebsocketHandlerMapping(HandlerMapping websocketHandlerMapping) {
+		this.websocketHandlerMapping = websocketHandlerMapping;
+	}
+	
+	public void setWebsocketLifecycleProcessor(LifecycleProcessor websocketLifecycleProcessor)
+	{
+		this.websocketLifecycleProcessor = websocketLifecycleProcessor;
+	}
+
+	public LifecycleProcessor getWebsocketLifecycleProcessor() {
+		return websocketLifecycleProcessor;
+	}
+
 
 }

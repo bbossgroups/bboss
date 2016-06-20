@@ -35,7 +35,7 @@ import org.frameworkset.web.servlet.handler.HandlerMeta;
  * @author biaoping.yin
  * @version 1.0
  */
-public class HttpRequestHandlerAdapter  implements HandlerAdapter,SmartLifecycle  {
+public class HttpRequestHandlerAdapter  implements HandlerAdapter  {
 
 	public boolean supports(HandlerMeta handler) {
 		return (handler.getHandler() instanceof HttpRequestHandler);

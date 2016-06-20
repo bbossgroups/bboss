@@ -39,6 +39,7 @@ import javax.servlet.jsp.PageContext;
 import org.apache.log4j.Logger;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.LifeCycleProcessorExecutor;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.event.IocLifeCycleEventListener;
@@ -56,7 +57,6 @@ import org.frameworkset.web.request.async.WebAsyncManager;
 import org.frameworkset.web.request.async.WebAsyncUtils;
 import org.frameworkset.web.servlet.context.RequestContextHolder;
 import org.frameworkset.web.servlet.context.WebApplicationContext;
-import org.frameworkset.web.servlet.handler.AbstractHandlerMapping;
 import org.frameworkset.web.servlet.handler.AbstractUrlHandlerMapping;
 import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
@@ -616,7 +616,7 @@ public class DispatchServlet extends BaseServlet {
 //			// triggering initial onRefresh manually here.
 //			onRefresh(wac);
 //		}
-		startLifeCycleProcessor(  wac);
+		
 
 		if (this.publishContext) {
 			// Publish the context as a servlet context attribute.
@@ -630,9 +630,21 @@ public class DispatchServlet extends BaseServlet {
 
 		return wac;
 	}
-	private void startLifeCycleProcessor(WebApplicationContext wac) {
-		
+	private LifeCycleProcessorExecutor lifeCycleProcessorExecutor;
+	private void startLifeCycleProcessor() {
+		if(lifeCycleProcessorExecutor != null)
+		{
+			lifeCycleProcessorExecutor.startProcessor();
+		}
 	}
+	
+	private void stopLifeCycleProcessor() {
+		if(lifeCycleProcessorExecutor != null)
+		{
+			lifeCycleProcessorExecutor.stopProcessor();
+		}
+	}
+
 
 	/**
 	 * Prefix for the ServletContext attribute for the WebApplicationContext.
@@ -1347,7 +1359,7 @@ public class DispatchServlet extends BaseServlet {
 	 * Return this servlet's WebApplicationContext.
 	 */
 	public final WebApplicationContext getWebApplicationContext() {
-		return this.webApplicationContext;
+		return webApplicationContext;
 	}
 	/**
 	 * Render the given ModelAndView. This is the last stage in handling a request.
@@ -1464,6 +1476,11 @@ public class DispatchServlet extends BaseServlet {
 			{
 				logger.debug("Publish WebSocket Services start.");
 				publishAllWebService.invoke(null, this.getClass().getClassLoader(),this.handlerMappings,config);
+				if(handlerMappings.getWebsocketLifecycleProcessor() != null)
+				{
+					this.lifeCycleProcessorExecutor = new LifeCycleProcessorExecutor();
+					this.lifeCycleProcessorExecutor.setLifecycleProcessor(handlerMappings.getWebsocketLifecycleProcessor());
+				}
 				logger.debug("Publish WebSocket Services  finished.");
 			}
 		} catch (Exception e) {
@@ -1553,6 +1570,7 @@ public class DispatchServlet extends BaseServlet {
 			initViewResolvers(this.webApplicationContext);
 			initGloabelHandlerInterceptors(this.webApplicationContext);
 			initWebsockets(config);
+			startLifeCycleProcessor(  );
 		} catch (Exception e1) {
 			logger.warn("Init WebApplicationContext:",e1);
 		}
@@ -2193,6 +2211,11 @@ public class DispatchServlet extends BaseServlet {
 		 
 		if(httpRequestHandlerAdapter != null)
 			this.httpRequestHandlerAdapter.destroy();
+		
+		stopLifeCycleProcessor();
+		if(webApplicationContext != null)
+			this.webApplicationContext.destroy();
+		
 		 
 	}
 }
