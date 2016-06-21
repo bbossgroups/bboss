@@ -21,6 +21,7 @@ import org.frameworkset.http.ServerHttpResponse;
 import org.frameworkset.http.ServletServerHttpRequest;
 import org.frameworkset.http.ServletServerHttpResponse;
 import org.frameworkset.util.Assert;
+import org.frameworkset.web.socket.container.RequestUpgradeStrategy;
 import org.frameworkset.web.socket.endpoint.StandardToWebSocketExtensionAdapter;
 import org.frameworkset.web.socket.endpoint.StandardWebSocketHandlerAdapter;
 import org.frameworkset.web.socket.endpoint.StandardWebSocketSession;

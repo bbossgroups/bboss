@@ -77,6 +77,8 @@ public class HandlerMappingsTable implements DisposableBean{
 					servletName + "'");
 		}
 		HandlerExecutionChain handler = handlerMapping.getHandler(request);
+		if(handler == null)
+			handler = this.websocketHandlerMapping.getHandler(request);
 		return handler;
 	}
 

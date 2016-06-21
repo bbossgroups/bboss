@@ -18,6 +18,7 @@ import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.annotations.HttpMethod;
 import org.frameworkset.web.socket.WebSocketHttpHeaders;
+import org.frameworkset.web.socket.container.RequestUpgradeStrategy;
 import org.frameworkset.web.socket.inf.Lifecycle;
 import org.frameworkset.web.socket.inf.SubProtocolCapable;
 import org.frameworkset.web.socket.inf.WebSocketExtension;

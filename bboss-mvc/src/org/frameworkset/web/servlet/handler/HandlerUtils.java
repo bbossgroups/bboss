@@ -163,11 +163,11 @@ public abstract class HandlerUtils {
 			assertTokenMethod = clazz.getMethod("assertDToken", ServletRequest.class,
 					ServletResponse.class, MethodData.class);
 		} catch (ClassNotFoundException e) {
-			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter failed:",e);
+			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter ClassNotFoundException:"+e.getMessage());
 		} catch (NoSuchMethodException e) {
-			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter failed:",e);
+			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter NoSuchMethodException:"+e.getMessage());
 		} catch (Exception e) {
-			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter failed:",e);
+			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter failed:"+e.getMessage());
 		}
 		
 	}
