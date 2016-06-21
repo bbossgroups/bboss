@@ -34,9 +34,9 @@ public class WebSocketHandlerMapping  extends AbstractUrlHandlerMapping  impleme
 	public void start() {
 		if (!isRunning()) {
 			this.running = true;
-			for (Object handler : getUrlMap().values()) {
-				if (handler instanceof Lifecycle) {
-					((Lifecycle) handler).start();
+			for (HandlerMeta handler : getUrlMap().values()) {
+				if (handler.getHandler() instanceof Lifecycle) {
+					((Lifecycle) handler.getHandler()).start();
 				}
 			}
 		}
@@ -46,9 +46,9 @@ public class WebSocketHandlerMapping  extends AbstractUrlHandlerMapping  impleme
 	public void stop() {
 		if (isRunning()) {
 			this.running = false;
-			for (Object handler : getUrlMap().values()) {
-				if (handler instanceof Lifecycle) {
-					((Lifecycle) handler).stop();
+			for (HandlerMeta handler : getUrlMap().values()) {
+				if (handler.getHandler() instanceof Lifecycle) {
+					((Lifecycle) handler.getHandler()).stop();
 				}
 			}
 		}
@@ -94,7 +94,7 @@ public class WebSocketHandlerMapping  extends AbstractUrlHandlerMapping  impleme
 	 * This is particularly useful for adding or overriding entries in child
 	 * bean definitions.
 	 */
-	public Map<String, ?> getUrlMap() {
+	public Map<String, HandlerMeta> getUrlMap() {
 		return this.urlMap;
 	}
 

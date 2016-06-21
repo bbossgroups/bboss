@@ -432,7 +432,7 @@ public class DispatchServlet extends BaseServlet {
 		else if(this.simpleControllerHandlerAdapter.supports(handler))
 			return this.simpleControllerHandlerAdapter;
 		else if(this.httpRequestHandlerAdapter.supports(handler))
-			return simpleControllerHandlerAdapter;
+			return httpRequestHandlerAdapter;
 		throw new ServletException("No adapter for handler [" + handler.getHandlerName()  +
 				"]: Does your handler implement a supported interface like Controller?");
 	}

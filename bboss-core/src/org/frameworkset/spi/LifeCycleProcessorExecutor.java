@@ -38,7 +38,7 @@ public class LifeCycleProcessorExecutor {
 	 * {@link org.springframework.context.event.ContextRefreshedEvent}.
 	 */
 	public void startProcessor() {
-		if(this.active.compareAndSet(false, true))
+		if(!this.active.compareAndSet(false, true))
 			return;
 		// Initialize lifecycle processor for this context.
 		initLifecycleProcessor();

@@ -24,6 +24,7 @@ import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.ServerHttpResponse;
 import org.frameworkset.http.ServletServerHttpRequest;
 import org.frameworkset.http.ServletServerHttpResponse;
+import org.frameworkset.spi.Lifecycle;
 import org.frameworkset.spi.support.NamedThreadLocal;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtils;
@@ -33,7 +34,6 @@ import org.frameworkset.web.socket.handler.HandshakeFailureException;
 import org.frameworkset.web.socket.handler.jetty.JettyWebSocketHandlerAdapter;
 import org.frameworkset.web.socket.handler.jetty.JettyWebSocketSession;
 import org.frameworkset.web.socket.handler.jetty.WebSocketToJettyExtensionConfigAdapter;
-import org.frameworkset.web.socket.inf.Lifecycle;
 import org.frameworkset.web.socket.inf.WebSocketExtension;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 

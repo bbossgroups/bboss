@@ -239,7 +239,7 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 
 
 	public boolean supports(HandlerMeta handler) {
-		return getMethodResolver(handler.getHandlerClass()).hasHandlerMethods();
+		return !handler.isWebsocket() && getMethodResolver(handler.getHandlerClass()).hasHandlerMethods();
 	}
 	
 	

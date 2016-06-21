@@ -6,10 +6,10 @@ import javax.servlet.ServletContext;
 
 import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.ServerHttpResponse;
+import org.frameworkset.spi.Lifecycle;
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.servlet.context.ServletContextAware;
 import org.frameworkset.web.socket.inf.CloseStatus;
-import org.frameworkset.web.socket.inf.Lifecycle;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.frameworkset.web.socket.sockjs.SockJsException;
 import org.frameworkset.web.socket.sockjs.SockJsSession;

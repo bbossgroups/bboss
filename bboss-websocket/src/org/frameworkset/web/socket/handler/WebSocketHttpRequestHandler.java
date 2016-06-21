@@ -18,10 +18,10 @@ import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.ServerHttpResponse;
 import org.frameworkset.http.ServletServerHttpRequest;
 import org.frameworkset.http.ServletServerHttpResponse;
+import org.frameworkset.spi.Lifecycle;
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.HttpRequestHandler;
 import org.frameworkset.web.servlet.context.ServletContextAware;
-import org.frameworkset.web.socket.inf.Lifecycle;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 
 public class WebSocketHttpRequestHandler  implements HttpRequestHandler, Lifecycle, ServletContextAware {

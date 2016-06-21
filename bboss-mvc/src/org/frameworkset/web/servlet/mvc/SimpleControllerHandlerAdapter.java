@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 import org.frameworkset.http.converter.HttpMessageConverter;
-import org.frameworkset.spi.SmartLifecycle;
 import org.frameworkset.web.servlet.Controller;
 import org.frameworkset.web.servlet.DispatchServlet;
 import org.frameworkset.web.servlet.HandlerAdapter;
@@ -45,7 +44,7 @@ public class SimpleControllerHandlerAdapter  implements HandlerAdapter  {
 	private HttpMessageConverter[] messageConverters;
 	private static final String mname = "handleRequest";
 	public boolean supports(HandlerMeta handler) {
-		return (handler.getHandler() instanceof Controller);
+		return !handler.isWebsocket() && (handler.getHandler() instanceof Controller);
 	}
 	
 	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response,PageContext pageContext, HandlerMeta handlerMeta)
