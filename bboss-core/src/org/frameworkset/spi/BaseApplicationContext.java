@@ -773,8 +773,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			}
 			finally
 			{
-				if(shutdownHook != null)
-					Runtime.getRuntime().removeShutdownHook(shutdownHook);
+//				if(shutdownHook != null)
+//					Runtime.getRuntime().removeShutdownHook(shutdownHook);
 			}
 			
 		}
