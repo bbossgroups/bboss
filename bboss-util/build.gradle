@@ -72,6 +72,7 @@ sourceSets.bboss_util { set ->
 
     def jarSourcesTask = task("${set.name}SourceJar", type: Jar) {
         classifier = "sources"
+       
         from set.allJava
     }
 
@@ -96,12 +97,17 @@ sourceSets.bboss_util { set ->
 sourceSets.bboss_rt { set ->
     def jarTask = task("${set.name}Jar", type: Jar) {
         baseName = "bboss-rt"
+         manifest {
+            attributes 'Main-Class': 'org.frameworkset.runtime.CommonLauncher'
+             
+        }
         from set.output
     }
 
     def jarSourcesTask = task("${set.name}SourceJar", type: Jar) {
         baseName = "bboss-rt"
         classifier = "sources"
+       
         from set.allJava
     }
 

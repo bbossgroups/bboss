@@ -3,6 +3,7 @@ package org.frameworkset.web.socket.handler;
 import javax.servlet.ServletContext;
 
 import org.frameworkset.web.servlet.context.ServletContextAware;
+import org.frameworkset.web.socket.container.RequestUpgradeStrategy;
 
 public class DefaultHandshakeHandler extends AbstractHandshakeHandler implements ServletContextAware {
 

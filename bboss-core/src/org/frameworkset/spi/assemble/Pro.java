@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.frameworkset.soa.SerialFactory.MagicClass;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
+import org.frameworkset.spi.Lifecycle;
 import org.frameworkset.spi.async.annotation.Async;
 
 import com.frameworkset.orm.annotation.RollbackExceptions;
@@ -2170,6 +2171,35 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	public void setEnablerpc(boolean enablerpc) {
 		this.enablerpc = enablerpc;
 	}
+	
+	
+	public String[] getDependenciesForBean( ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public String[] getDependentBeans( ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	 
+	public boolean isFactoryBean( ) {
+		
+		return getFactory_bean() != null || getFactory_class() != null;
+		 
+	}
+
+	public boolean isType(Class<Lifecycle> class1) {
+		if(!isFactoryBean( ) )
+		{
+			if(this.getType() != null)
+			{
+				return class1.isAssignableFrom(getType());
+			}
+		}
+		return false;
+	}
+	 
+	 
 	
 
 }

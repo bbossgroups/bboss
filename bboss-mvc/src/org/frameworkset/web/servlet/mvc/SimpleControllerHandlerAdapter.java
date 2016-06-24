@@ -40,11 +40,11 @@ import org.frameworkset.web.servlet.view.UrlBasedViewResolver;
  * @author biaoping.yin
  * @version 1.0
  */
-public class SimpleControllerHandlerAdapter  implements HandlerAdapter{
+public class SimpleControllerHandlerAdapter  implements HandlerAdapter  {
 	private HttpMessageConverter[] messageConverters;
 	private static final String mname = "handleRequest";
 	public boolean supports(HandlerMeta handler) {
-		return (handler.getHandler() instanceof Controller);
+		return !handler.isWebsocket() && (handler.getHandler() instanceof Controller);
 	}
 	
 	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response,PageContext pageContext, HandlerMeta handlerMeta)

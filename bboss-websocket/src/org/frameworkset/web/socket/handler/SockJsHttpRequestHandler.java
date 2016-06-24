@@ -6,22 +6,22 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.ServerHttpResponse;
 import org.frameworkset.http.ServletServerHttpRequest;
 import org.frameworkset.http.ServletServerHttpResponse;
+import org.frameworkset.spi.Lifecycle;
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.HttpRequestHandler;
 import org.frameworkset.web.servlet.HandlerMapping;
 import org.frameworkset.web.servlet.context.ServletContextAware;
-import org.frameworkset.web.socket.inf.Lifecycle;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.frameworkset.web.socket.sockjs.CorsConfiguration;
 import org.frameworkset.web.socket.sockjs.CorsConfigurationSource;
 import org.frameworkset.web.socket.sockjs.SockJsException;
 import org.frameworkset.web.socket.sockjs.SockJsService;
-import javax.servlet.jsp.PageContext;
 
 /**
  * An {@link HttpRequestHandler} that allows mapping a {@link SockJsService} to requests

@@ -55,7 +55,7 @@ import org.frameworkset.web.util.WebUtils;
  * @author biaoping.yin
  * @version 1.0
  */
-public class AnnotationMethodHandlerAdapter  extends WebContentGenerator implements HandlerAdapter {
+public class AnnotationMethodHandlerAdapter  extends WebContentGenerator implements HandlerAdapter{
 
 	/**
 	 * Log category to use when no mapped handler is found for a request.
@@ -239,7 +239,7 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 
 
 	public boolean supports(HandlerMeta handler) {
-		return getMethodResolver(handler.getHandlerClass()).hasHandlerMethods();
+		return !handler.isWebsocket() && getMethodResolver(handler.getHandlerClass()).hasHandlerMethods();
 	}
 	
 	

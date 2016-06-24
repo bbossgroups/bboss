@@ -21,10 +21,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.util.Assert;
 import org.frameworkset.util.ObjectUtils;
 import org.frameworkset.util.beans.BeansException;
-import org.frameworkset.web.HttpRequestHandler;
 
 import com.frameworkset.spi.assemble.BeanInstanceException;
 

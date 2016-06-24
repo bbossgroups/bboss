@@ -81,13 +81,16 @@ import com.frameworkset.util.SimpleStringUtil;
  */
 public abstract class  BaseApplicationContext extends DefaultResourceLoader implements
 		MessageSource, ResourcePatternResolver, ResourceLoader {
+ 
+	/** Reference to the JVM shutdown hook, if registered */
+	private static Thread shutdownHook;
 	static
 	{
 		try {
 			Class r = Runtime.getRuntime().getClass();
 			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
 					new Class[] { Thread.class });
-			Thread t = new Thread(
+			shutdownHook  = new Thread(
 					new Runnable(){
 
 						public void run() {
@@ -96,7 +99,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 						}
 						
 					});
-			m.invoke(Runtime.getRuntime(), new Object[] { t });
+			m.invoke(Runtime.getRuntime(), new Object[] { shutdownHook });
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -758,6 +761,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 					rootFiles.clear();
 					rootFiles = null;
 				}
+				
 			}
 			catch(Exception e)
 			{
@@ -766,6 +770,11 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			catch(Throwable e)
 			{
 				log.warn("",e);
+			}
+			finally
+			{
+//				if(shutdownHook != null)
+//					Runtime.getRuntime().removeShutdownHook(shutdownHook);
 			}
 			
 		}
@@ -2465,28 +2474,30 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 	public String[] getDependenciesForBean(String beanName) {
 		// TODO Auto-generated method stub
-		return null;
+		return providerManager.getDependenciesForBean(  beanName);
 	}
 	public String[] getDependentBeans(String beanName) {
 		// TODO Auto-generated method stub
-		return null;
+		return providerManager.getDependentBeans(beanName);
 	}
-	public String[] getBeanNamesForType(Class<Lifecycle> class1, boolean b, boolean c) {
+	public String[] getBeanNamesForType(Class<Lifecycle> class1, boolean includeNonSingletons, boolean allowEagerInit) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return this.providerManager.getBeanNamesForType(class1,includeNonSingletons,allowEagerInit);
 	}
 	public boolean isFactoryBean(String beanNameToRegister) {
-		// TODO Auto-generated method stub
-		return false;
+		return providerManager.isFactoryBean(beanNameToRegister);
 	}
 	public boolean containsSingleton(String beanNameToRegister) {
 		// TODO Auto-generated method stub
-		return false;
+		return this.singleDestorys.contains(beanNameToRegister);
 	}
 	public Class<?> getType(String beanNameToCheck) {
 		// TODO Auto-generated method stub
-		return null;
+		return providerManager.getType(beanNameToCheck);
 	}
+	
+
 	
 
 }
