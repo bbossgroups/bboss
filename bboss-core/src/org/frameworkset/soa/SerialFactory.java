@@ -206,9 +206,9 @@ public class SerialFactory {
 		} catch (InstantiationException e) {
 			 log.debug("buildMagicClass ["+preclazz+"] InstantiationException:"+e.getMessage());
 		} catch (IllegalAccessException e) {
-			log.error("buildMagicClass ["+preclazz+"] IllegalAccessException:"+e.getMessage());
+			log.debug("buildMagicClass ["+preclazz+"] IllegalAccessException:"+e.getMessage());
 		} catch (ClassNotFoundException e) {
-			log.error("buildMagicClass ["+preclazz+"] ClassNotFoundException:"+e.getMessage());
+			log.debug("buildMagicClass ["+preclazz+"] ClassNotFoundException:"+e.getMessage());
 		}
 		return magicClass;
 	}
