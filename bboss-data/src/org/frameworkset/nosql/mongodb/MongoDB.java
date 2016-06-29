@@ -471,5 +471,12 @@ public class MongoDB {
 	public DB getDB(String dbname) {
 		return this.mongoclient.getDB(dbname);
 	}
+	
+	public  DBCollection getDBCollection(String dbname,String table)
+	{
+		DB db = this.getDB(dbname);
+		return db.getCollection(table);
+		
+	}
 
 }

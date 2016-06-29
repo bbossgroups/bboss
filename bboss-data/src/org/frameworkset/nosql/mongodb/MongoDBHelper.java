@@ -5,6 +5,7 @@ import org.frameworkset.spi.DefaultApplicationContext;
 
 import com.frameworkset.util.StringUtil;
 import com.mongodb.DB;
+import com.mongodb.DBCollection;
 
 public class MongoDBHelper {
 	public static final String defaultMongoDB = "default";
@@ -103,6 +104,17 @@ public class MongoDBHelper {
 	public static DB getDB(String dbname)
 	{
 		return getDB(defaultMongoDB,dbname);
+		
+	}
+	
+	
+	public static DBCollection getDBCollection(String poolname,String dbname,String table)
+	{
+		return getMongoDB(poolname).getDB( dbname ).getCollection(table);
+	}
+	public static DBCollection getDBCollection(String dbname,String table)
+	{
+		return getDBCollection(defaultMongoDB,dbname,table);
 		
 	}
 	
