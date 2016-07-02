@@ -57,8 +57,8 @@ public class TestStringUtil {
 			HashMap map = SimpleStringUtil.json2Object(tet, HashMap.class);
 			System.out.println(map);
 			tet = "{\"date\":\"2016 Jul  2 11:28:45\",\"router\":\"175.10.31.66\",\"program\":\"kt-macscan\",\"unixtime\":\"1467430132\",\"msg_kunteng\":\"hiwifi_ac#011{\\\"d\\\":[{\\\"rssi\\\":\\\"-87\\\",\\\"macaddr\\\":\\\"DC9B9CDDD165\\\"},{\\\"rssi\\\":\\\"-75\\\",\\\"macaddr\\\":\\\"08FD0E10531F\\\"},{\\\"rssi\\\":\\\"-86\\\",\\\"macaddr\\\":\\\"40E230331C0A\\\"}],\\\"s\\\":\\\"scan\\\",\\\"v\\\":\\\"1\\\"} \\\"127.0.0.1\\\" \\\"60ACC8010598\\\"\"}";
-			 map = SimpleStringUtil.json2Object(tet, HashMap.class);
-			System.out.println(map);
+			MacMsg MacMsg = SimpleStringUtil.json2Object(tet, MacMsg.class);
+			System.out.println(MacMsg.getMsg_kunteng());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

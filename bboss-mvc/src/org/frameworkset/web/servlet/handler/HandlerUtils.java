@@ -99,7 +99,6 @@ import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
 import org.frameworkset.util.annotations.wraper.RequestParamWraper;
 import org.frameworkset.util.annotations.wraper.ResponseBodyWraper;
 import org.frameworkset.web.HttpMediaTypeNotAcceptableException;
-import org.frameworkset.web.HttpMediaTypeNotSupportedException;
 import org.frameworkset.web.HttpSessionRequiredException;
 import org.frameworkset.web.bind.MissingServletRequestParameterException;
 import org.frameworkset.web.bind.ServletRequestDataBinder;
@@ -1455,6 +1454,7 @@ public abstract class HandlerUtils {
 				builder.append(paramName);
 			}
 			contentType = MediaType.TEXT_PLAIN;
+			inputMessage.getHeaders().setContentType(contentType);
 			logger.warn(
 					"Cannot extract parameter (" + builder.toString()
 							+ "): no Content-Type found");
