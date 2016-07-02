@@ -1454,7 +1454,8 @@ public abstract class HandlerUtils {
 				builder.append(' ');
 				builder.append(paramName);
 			}
-			throw new HttpMediaTypeNotSupportedException(
+			contentType = MediaType.TEXT_PLAIN;
+			logger.warn(
 					"Cannot extract parameter (" + builder.toString()
 							+ "): no Content-Type found");
 		}
