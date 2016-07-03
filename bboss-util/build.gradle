@@ -1,5 +1,5 @@
 sourceSets {
-    bboss_util {
+    main {
         java {
             srcDirs 'src' exclude 'log4j.properties'
             srcDirs 'src-asm'
@@ -9,12 +9,7 @@ sourceSets {
         compileClasspath = configurations.compile
 
     }
-    bboss_rt {
-        java {
-            srcDirs 'src-rt'
-        }
-        //compileClasspath = configurations.compileOnly
-    }
+   
     test {
         java {
             srcDir 'test'
@@ -23,10 +18,8 @@ sourceSets {
     }
 }
 
-jar {
-    classifier = "all"
-}
-
+ 
+project.tasks.compileJava.dependsOn(project(':bboss-rt').tasks.install)
 project.tasks.compileJava.dependsOn(project(':bboss-velocity').tasks.install)
 
 dependencies {
@@ -65,189 +58,3 @@ dependencies {
     
 }
 
-sourceSets.bboss_util { set ->
-    def jarTask = task("${set.name}Jar", type: Jar) {
-        from set.output
-    }
-
-    def jarSourcesTask = task("${set.name}SourceJar", type: Jar) {
-        classifier = "sources"
-       
-        from set.allJava
-    }
-
-    def docTask = task("${set.name}Doc", type: Javadoc) {
-        classpath = set.compileClasspath
-        source set.allJava
-        destinationDir=file("build/docs/${set.name}")
-    }
-
-    def jarDocTask = task("${set.name}DocJar", type: Jar, dependsOn: docTask) {
-        classifier = "javadoc"
-        from docTask.destinationDir
-    }
-
-    artifacts {
-        archives jarTask
-        archives jarSourcesTask
-        archives jarDocTask
-    }
-}
-
-sourceSets.bboss_rt { set ->
-    def jarTask = task("${set.name}Jar", type: Jar) {
-        baseName = "bboss-rt"
-         manifest {
-            attributes 'Main-Class': 'org.frameworkset.runtime.CommonLauncher'
-             
-        }
-        from set.output
-    }
-
-    def jarSourcesTask = task("${set.name}SourceJar", type: Jar) {
-        baseName = "bboss-rt"
-        classifier = "sources"
-       
-        from set.allJava
-    }
-
-    def docTask = task("${set.name}Doc", type: Javadoc) {
-        source set.allJava
-        destinationDir=file("build/docs/${set.name}")
-    }
-
-    def jarDocTask = task("${set.name}DocJar", type: Jar, dependsOn: docTask) {
-        baseName = "bboss-rt"
-        classifier = "javadoc"
-        from docTask
-    }
-
-    artifacts {
-        archives jarTask
-        archives jarSourcesTask
-        archives jarDocTask
-    }
-}
-
-/**artifacts {
-	    archives    bboss_utilJar, bboss_utilSourceJar,bboss_utilDocJar,bboss_rtJar, bboss_rtSourceJar,bboss_rtDocJar
-	}*/
-	
- 
-  ext.uploadtocenter=uploadArchivesToMavenCenter.equals("true")	
-if(uploadtocenter)
-{
-	signing {
-	        //required { uploadtocenter }
-	        sign configurations.archives
-	 }
-}
-uploadArchives {
-	  repositories {
-	   
-		    mavenDeployer {
-		     
-			if(uploadtocenter)
-			{	  
-				
-				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-		     	repository(url: sonatype_url) {
-		     		
-				         authentication(userName: sonatype_username, password: sonatype_password)
-				}
-			}
-			else
-			{
-				repository(url: "file://"+mvn_repo)
-			}
-			 
- 			addFilter('bboss_util') {artifact, file ->
-            	artifact.name == 'bboss-util'
-	        }
-	        addFilter('bboss_rt') {artifact, file ->
-	            artifact.name == 'bboss-rt'
-	        }
-	      pom('bboss_util').project {
-	        name project.name
-	        packaging 'jar'
-	        // optionally artifactId can be defined here 
-	        description PROJ_DESCRIPTION
-	        url PROJ_WEBSITEURL
-
-	        scm {
-	          connection scm_connection
-	          developerConnection scm_developerConnection
-	          url scm_url
-	        }
-
-	        licenses {
-	          license {
-	            name PROJ_LICENCE_NAME
-	            url PROJ_LICENCE_URL
-	          }
-	        }
-
-	        developers {
-	          developer {
-	            id DEVELOPER_ID
-	            name DEVELOPER_NAME
-	            email DEVELOPER_EMAIL
-	          }
-	        }
-	      }
-	      
-	      pom('bboss_rt').project {
-	        name project.name
-	        packaging 'jar'
-	        // optionally artifactId can be defined here 
-	        description PROJ_DESCRIPTION
-	        url PROJ_WEBSITEURL
-
-	        scm {
-	          connection scm_connection
-	          developerConnection scm_developerConnection
-	          url scm_url
-	        }
-
-	        licenses {
-	          license {
-	            name PROJ_LICENCE_NAME
-	            url PROJ_LICENCE_URL
-	          }
-	        }
-
-	        developers {
-	          developer {
-	            id DEVELOPER_ID
-	            name DEVELOPER_NAME
-	            email DEVELOPER_EMAIL
-	          }
-	        }
-	      }
-	      
-	    }
-	 }
-}
-publishing {
-    publications {
-        utilJava(MavenPublication) {
-            from components.java
-            artifactId 'bboss-util'
-            artifact bboss_utilJar
-            artifact bboss_utilSourceJar
-            artifact bboss_utilDocJar
-        }
-
-        rtmavenJava(MavenPublication) {
-        	 from components.java
-            artifactId 'bboss-rt'
-            artifact bboss_rtJar
-            artifact bboss_rtSourceJar
-            artifact bboss_rtDocJar
-        }
-
-    }
-    repositories {
-        mavenLocal()    
-    }
-}

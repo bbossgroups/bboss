@@ -34,8 +34,7 @@ public class LifeCycleProcessorExecutor {
 	
 	/**
 	 * Finish the refresh of this context, invoking the LifecycleProcessor's
-	 * onRefresh() method and publishing the
-	 * {@link org.springframework.context.event.ContextRefreshedEvent}.
+	 * onRefresh() method and 
 	 */
 	public void startProcessor() {
 		if(!this.active.compareAndSet(false, true))

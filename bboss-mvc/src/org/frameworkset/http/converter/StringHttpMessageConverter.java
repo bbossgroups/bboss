@@ -148,7 +148,7 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Obj
 		return ValueConstants.datatype_string;
 	}
 	
-	protected boolean canWrite(MediaType mediaType) {
+	public boolean canWrite(MediaType mediaType) {
 		if (mediaType == null || MediaType.ALL.equals(mediaType)) {
 			return false;
 		}

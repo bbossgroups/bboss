@@ -82,7 +82,7 @@ public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConv
 		this.objectMapper = objectMapper;
 	}
 	
-	protected boolean canWrite(MediaType mediaType) {
+	public boolean canWrite(MediaType mediaType) {
 		if (mediaType == null || MediaType.ALL.equals(mediaType)) {
 			return false;
 		}

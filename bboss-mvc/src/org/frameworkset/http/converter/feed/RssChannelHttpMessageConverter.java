@@ -54,7 +54,7 @@ public class RssChannelHttpMessageConverter extends AbstractWireFeedHttpMessageC
 		else
 			return false;
 	}
-	protected   boolean canWrite(MediaType mediaType)
+	public   boolean canWrite(MediaType mediaType)
 	{
 		return true;
 	}

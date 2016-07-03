@@ -61,7 +61,7 @@ public class ByteArrayHttpMessageConverter extends AbstractHttpMessageConverter<
 	}
 
 	@Override
-	protected Long getContentLength(byte[] bytes, MediaType contentType) {
+	public Long getContentLength(byte[] bytes, MediaType contentType) {
 		return (long) bytes.length;
 	}
 
@@ -81,7 +81,7 @@ public class ByteArrayHttpMessageConverter extends AbstractHttpMessageConverter<
 			return false;
 	}
 	
-	protected boolean canWrite(MediaType mediaType)
+	public boolean canWrite(MediaType mediaType)
 	{
 		return true;
 	}

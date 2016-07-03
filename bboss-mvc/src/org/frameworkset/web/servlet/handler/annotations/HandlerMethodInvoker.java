@@ -260,8 +260,52 @@ public class HandlerMethodInvoker {
 		try {
 			return method.invoke(target.getHandler(), args);
 		} catch (InvocationTargetException ex) {
+			if(logger.isDebugEnabled())
+			{
+				try {
+					StringBuilder b = new StringBuilder();
+					b.append("args:");
+					if(args != null && args.length > 0)
+					{
+						int i = 0;
+						for(Object arg:args)
+						{
+							b.append("arg[").append(i).append("]=").append(arg).append("\n");
+							i ++;
+						}
+					}
+					
+					logger.debug(b.toString());
+				} catch (Exception e) {
+					 
+				}
+			}
 			ReflectionUtils.rethrowException(ex.getTargetException());
 		}
+		catch (IllegalArgumentException ex) {
+			if(logger.isDebugEnabled())
+			{
+				try {
+					StringBuilder b = new StringBuilder();
+					b.append("args:");
+					if(args != null && args.length > 0)
+					{
+						int i = 0;
+						for(Object arg:args)
+						{
+							b.append("arg[").append(i).append("]=").append(arg).append("\n");
+							i ++;
+						}
+					}
+					
+					logger.debug(b.toString());
+				} catch (Exception e) {
+					 
+				}
+			}
+			ReflectionUtils.rethrowException(ex);
+		}
+		
 		throw new IllegalStateException("Should never get here");
 	}
 

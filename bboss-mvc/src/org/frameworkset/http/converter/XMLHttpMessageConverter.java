@@ -114,7 +114,7 @@ public class XMLHttpMessageConverter  extends AbstractHttpMessageConverter<Objec
 			
 		}
 	}
-	protected boolean canWrite(MediaType mediaType) {
+	public boolean canWrite(MediaType mediaType) {
 		if (mediaType == null || MediaType.ALL.equals(mediaType)) {
 			return false;
 		}
@@ -133,7 +133,7 @@ public class XMLHttpMessageConverter  extends AbstractHttpMessageConverter<Objec
 	 *                  {@code Content-Type} header.
 	 * @return true if the supported media types include the media type, or if the media type is {@code null}
 	 */
-	protected boolean canRead(MediaType mediaType) {
+	public boolean canRead(MediaType mediaType) {
 		if (mediaType == null) {
 			return false;
 		}
@@ -187,7 +187,7 @@ public class XMLHttpMessageConverter  extends AbstractHttpMessageConverter<Objec
 		}
 	}
 	
-	protected Long getContentLength(Object s, MediaType contentType) {
+	public Long getContentLength(Object s, MediaType contentType) {
 		if(s instanceof String)
 		{
 			if (contentType != null && contentType.getCharSet() != null) {

@@ -448,8 +448,24 @@ public class MongoDB {
 			return null;
 		}
 	}
+	
+	public static WriteResult insert(DBCollection collection, List<? extends DBObject> arr) {
+
+		try {
+			return collection.insert(arr);
+		} catch (WriteConcernException e) {
+			log.debug("insert:", e);
+			return null;
+		}
+	}
 
 	public static WriteResult insert(WriteConcern concern, DBCollection collection, DBObject... arr) {
+
+		return collection.insert(arr, concern);
+
+	}
+	
+	public static WriteResult insert(WriteConcern concern, DBCollection collection, List<? extends DBObject> arr) {
 
 		return collection.insert(arr, concern);
 

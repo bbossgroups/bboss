@@ -1,0 +1,27 @@
+sourceSets {
+    
+    main {
+        java {
+            srcDirs 'src'
+        }
+        //compileClasspath = configurations.compileOnly
+    }
+    test {
+        java {
+            srcDir 'test'
+        }
+         
+    }
+}
+
+dependencies {
+    compile(
+    	 
+            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+            
+    )
+
+ 
+}
+
+ 

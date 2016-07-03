@@ -77,7 +77,7 @@ configure(allprojects) { project ->
 }
 
  
-configure(subprojects - [project(":bboss-util"),project(":bboss-taglib")]) { subproject ->
+configure(subprojects) { subproject ->
 	task sourcesJar(type: Jar) {
 		classifier = "sources"	
 		from sourceSets.main.allJava
