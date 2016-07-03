@@ -7,7 +7,7 @@ import javax.websocket.Extension;
 
 import org.frameworkset.web.socket.inf.WebSocketExtension;
 /**
- * Adapt an instance of {@link org.springframework.web.socket.WebSocketExtension} to
+ * Adapt an instance of {@link WebSocketExtension} to
  * the {@link javax.websocket.Extension} interface.
  *
  * @author Rossen Stoyanchev

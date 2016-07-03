@@ -1443,7 +1443,7 @@ public abstract class HandlerUtils {
 	private static Object readWithMessageConverters(Class paramType,
 			String paramName, HttpInputMessage inputMessage,
 			HttpMessageConverter[] messageConverters,RequestBodyWraper requestBody) throws Exception {
-
+		
 		MediaType contentType = inputMessage.getHeaders().getContentType();
 		if (contentType == null) {
 			StringBuilder builder = new StringBuilder(
@@ -1459,6 +1459,7 @@ public abstract class HandlerUtils {
 					"Cannot extract parameter (" + builder.toString()
 							+ "): no Content-Type found");
 		}
+		logger.debug("Read http request body with contenttype:"+ contentType);
 
 //		List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
 		HttpMessageConverter defaultmessageConverter = null;
@@ -1474,7 +1475,7 @@ public abstract class HandlerUtils {
 					if (logger.isDebugEnabled()) {
 						logger.debug("Reading [" + paramType.getName()
 								+ "] as \"" + contentType + "\" using ["
-								+ messageConverter + "]");
+								+ messageConverter.getClass().getName() + "]");
 					}
 					return messageConverter.read(paramType, inputMessage);
 				}

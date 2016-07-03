@@ -155,7 +155,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 * @return {@code true} if the supported media types include the media type,
 	 * or if the media type is {@code null}
 	 */
-	protected boolean canRead(MediaType mediaType) {
+	public boolean canRead(MediaType mediaType) {
 		if (mediaType == null) {
 			return true;
 		}
@@ -186,7 +186,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 * @return {@code true} if the supported media types are compatible with the media type,
 	 * or if the media type is {@code null}
 	 */
-	protected boolean canWrite(MediaType mediaType) {
+	public boolean canWrite(MediaType mediaType) {
 		if (mediaType == null || MediaType.ALL.equals(mediaType)) {
 			return true;
 		}
@@ -255,7 +255,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 * type was not provided, calls {@link #getContentLength}, and sets the corresponding headers
 	 * @since 4.2
 	 */
-	protected void addDefaultHeaders(HttpHeaders headers, T t, MediaType contentType) throws IOException{
+	public void addDefaultHeaders(HttpHeaders headers, T t, MediaType contentType) throws IOException{
 		
 		
 		if (headers.getContentType() == null) {
@@ -292,7 +292,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 * @param t the type to return the content type for
 	 * @return the content type, or {@code null} if not known
 	 */
-	protected MediaType getDefaultContentType(T t) throws IOException {
+	public MediaType getDefaultContentType(T t) throws IOException {
 		List<MediaType> mediaTypes = getSupportedMediaTypes();
 		return (!mediaTypes.isEmpty() ? mediaTypes.get(0) : null);
 	}
@@ -304,7 +304,7 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 * @param t the type to return the content length for
 	 * @return the content length, or {@code null} if not known
 	 */
-	protected Long getContentLength(T t, MediaType contentType) throws IOException {
+	public Long getContentLength(T t, MediaType contentType) throws IOException {
 		return null;
 	}
 

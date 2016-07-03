@@ -55,7 +55,7 @@ public class AtomFeedHttpMessageConverter extends AbstractWireFeedHttpMessageCon
 		else
 			return false;
 	}
-	protected   boolean canWrite(MediaType mediaType)
+	public   boolean canWrite(MediaType mediaType)
 	{
 		return true;
 	}

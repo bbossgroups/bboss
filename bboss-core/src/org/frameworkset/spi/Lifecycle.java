@@ -12,9 +12,9 @@ package org.frameworkset.spi;
  * apply within each container, e.g. for a stop/restart scenario at runtime.
  *
  * <p>Can be used for direct invocations or for management operations via JMX.
- * In the latter case, the {@link org.springframework.jmx.export.MBeanExporter}
+ * In the latter case, the  
  * will typically be defined with an
- * {@link org.springframework.jmx.export.assembler.InterfaceBasedMBeanInfoAssembler},
+ * ,
  * restricting the visibility of activity-controlled components to the Lifecycle
  * interface.
  *
@@ -27,8 +27,7 @@ package org.frameworkset.spi;
  * @since 2.0
  * @see SmartLifecycle
  * @see ConfigurableApplicationContext
- * @see org.springframework.jms.listener.AbstractMessageListenerContainer
- * @see org.springframework.scheduling.quartz.SchedulerFactoryBean
+
  */
 public interface Lifecycle {
 
@@ -53,7 +52,7 @@ public interface Lifecycle {
 	 * <p>In the case of a container, this will propagate the stop signal to all components
 	 * that apply.
 	 * @see SmartLifecycle#stop(Runnable)
-	 * @see org.springframework.beans.factory.DisposableBean#destroy()
+	 * @see DisposableBean#destroy()
 	 */
 	void stop();
 

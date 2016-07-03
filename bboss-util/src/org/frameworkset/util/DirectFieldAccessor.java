@@ -20,8 +20,7 @@ import org.frameworkset.util.beans.BeanWrapper;
  * @since 2.0
  * @see #setExtractOldValueForEditor
  * @see BeanWrapper
- * @see org.springframework.validation.DirectFieldBindingResult
- * @see org.springframework.validation.DataBinder#initDirectFieldAccess()
+ 
  */
 public class DirectFieldAccessor {
 	/** The wrapped object */

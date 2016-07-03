@@ -67,7 +67,7 @@ public class WebSocketHandlerMapping  extends AbstractUrlHandlerMapping  impleme
 //	 * Map URL paths to handler bean names.
 //	 * This is the typical way of configuring this HandlerMapping.
 //	 * <p>Supports direct URL matches and Ant-style pattern matches. For syntax
-//	 * details, see the {@link org.springframework.util.AntPathMatcher} javadoc.
+//	 * details, see the {@link AntPathMatcher} javadoc.
 //	 * @param mappings properties with URLs as keys and bean names as values
 //	 * @see #setUrlMap
 //	 */
@@ -79,7 +79,7 @@ public class WebSocketHandlerMapping  extends AbstractUrlHandlerMapping  impleme
 	 * Set a Map with URL paths as keys and handler beans (or handler bean names)
 	 * as values. Convenient for population with bean references.
 	 * <p>Supports direct URL matches and Ant-style pattern matches. For syntax
-	 * details, see the {@link org.springframework.util.AntPathMatcher} javadoc.
+	 * details, see the {@linkAntPathMatcher} javadoc.
 	 * @param urlMap map with URLs as keys and beans as values
 	 * @see #setMappings
 	 */

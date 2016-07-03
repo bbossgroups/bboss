@@ -13,7 +13,7 @@ sourceSets {
          
     }
 }
-
+project.tasks.compileJava.dependsOn(project(':bboss-taglib').tasks.install)
 dependencies {
     compile(
     	 

@@ -4,7 +4,7 @@ public class MacMsg {
 	private String date;
 	private String router;
 	private String program;
-	private long unixtime;
+	private String unixtime;
 	private String msg_kunteng;
 	
 
@@ -43,12 +43,12 @@ public class MacMsg {
 	}
 
 
-	public long getUnixtime() {
+	public String getUnixtime() {
 		return unixtime;
 	}
 
 
-	public void setUnixtime(long unixtime) {
+	public void setUnixtime(String unixtime) {
 		this.unixtime = unixtime;
 	}
 

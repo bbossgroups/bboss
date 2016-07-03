@@ -479,7 +479,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 	/**
 	 * Destroy the given bean instance (typically coming from {@link #createBean}),
-	 * applying the {@link org.springframework.beans.factory.DisposableBean} contract as well as
+	 * applying the {@link DisposableBean} contract as well as
 	 * registered {@link DestructionAwareBeanPostProcessor DestructionAwareBeanPostProcessors}.
 	 * <p>Any exception that arises during destruction should be caught
 	 * and logged instead of propagated to the caller of this method.
