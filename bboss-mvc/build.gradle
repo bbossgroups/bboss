@@ -59,7 +59,7 @@ dependencies {
             [group: 'javax.faces', name: 'jsf-api', version: '2.1', transitive: false],
             [group: 'com.sun.faces', name: 'jsf-impl', version: '2.1.0', transitive: false],
             [group: 'jstl', name: 'jstl', version: '1.2', transitive: false],
-            [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: true],
+            [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: false],
     )
     /**
     compileOnly (
