@@ -14,7 +14,8 @@ buildscript {
 configure(allprojects) { project ->
 	group = PROJ_GROUP
 	version = PROJ_VERSION	
-	
+	ext.jacksonversion = jacksonversion
+	ext.mongodbversion = mongodbversion
 	apply plugin: "java"
 	apply plugin: "maven-publish"
 	apply plugin: "eclipse"
