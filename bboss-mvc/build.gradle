@@ -21,10 +21,10 @@ sourceSets {
 project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.install)
 dependencies {
     compile (
-    		[group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.7.4',transitive: false],
-            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.7.4',transitive: false],
-            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4',transitive: false],
-            [group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.7.4',transitive: false],
+    		[group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonversion}",transitive: false],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonversion}",transitive: false],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonversion}",transitive: false],
+            [group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: "${jacksonversion}",transitive: false],
              
             [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
             [group: 'com.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
@@ -59,7 +59,7 @@ dependencies {
             [group: 'javax.faces', name: 'jsf-api', version: '2.1', transitive: false],
             [group: 'com.sun.faces', name: 'jsf-impl', version: '2.1.0', transitive: false],
             [group: 'jstl', name: 'jstl', version: '1.2', transitive: false],
-            [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: true],
+            [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: false],
     )
     /**
     compileOnly (

@@ -30,11 +30,11 @@ dependencies {
    
     compile  (
 			
-			[group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.7.4',transitive: false],
-            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.7.4',transitive: false],
-            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4',transitive: false],
-            [group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.7.4',transitive: false],
-             [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
+			  [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonversion}",transitive: false],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonversion}",transitive: false],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonversion}",transitive: false],
+            [group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: "${jacksonversion}",transitive: false],
+              [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
              [group: 'org.ow2.asm', name: 'asm', version: '5.0.3', transitive: false],
            [group: 'com.bbossgroups', name: 'bboss-mvc', version: "${version}", transitive: false],
            [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
