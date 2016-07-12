@@ -3,6 +3,7 @@ package org.frameworkset.http.converter.json;
 import java.io.IOException;
 
 import org.frameworkset.http.MediaType;
+import org.frameworkset.http.ServerHttpRequest;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class MappingJackson2HttpMessageConverter  extends AbstractJackson2HttpMessageConverter {
 
 	private String jsonPrefix;
-
 
 	/**
 	 * Construct a new {@link MappingJackson2HttpMessageConverter} using default configuration

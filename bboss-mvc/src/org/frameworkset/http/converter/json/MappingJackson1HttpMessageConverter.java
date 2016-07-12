@@ -52,14 +52,14 @@ import org.frameworkset.util.annotations.ValueConstants;
  * @since 3.0
  * @see org.frameworkset.web.servlet.view.json.MappingJacksonJsonView
  */
-public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConverter<Object> {
+public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConverter<Object>  implements JsonConvertInf{
 
 
-	public static final String JSONPCALLBACK_PARAM_NAME = "jsonp_callback";
+	private String jsonpCallback = ServerHttpRequest.JSONPCALLBACK_PARAM_NAME;
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	private boolean prefixJson = false;
-	private String jsonpCallback = ServerHttpRequest.JSONPCALLBACK_PARAM_NAME;
+
 	
 
 	/**
@@ -243,5 +243,13 @@ public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConv
 				return true;
 		else
 			return false;
+	}
+
+	public String getJsonpCallback() {
+		return jsonpCallback;
+	}
+
+	public void setJsonpCallback(String jsonpCallback) {
+		this.jsonpCallback = jsonpCallback;
 	}
 }

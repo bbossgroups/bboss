@@ -7,12 +7,15 @@ import org.frameworkset.http.HttpHeaders;
 import org.frameworkset.http.HttpInputMessage;
 import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.MediaType;
+import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.converter.AbstractHttpMessageConverter;
 import org.frameworkset.http.converter.HttpMessageNotReadableException;
 import org.frameworkset.http.converter.HttpMessageNotWritableException;
 
-public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConverter<Object>{
+public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConverter<Object> implements JsonConvertInf{
 	private AbstractHttpMessageConverter<Object> convert;
+	
+	public static final String JSONPCALLBACK_PARAM_NAME = "jsonp_callback";
 	public MappingJacksonHttpMessageConverter()
 	{
 		String jacson2Class = "org.frameworkset.http.converter.json.MappingJackson2HttpMessageConverter";
@@ -157,6 +160,12 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	public MediaType getDefaultAcceptedMediaType() {
 		// TODO Auto-generated method stub
 		return convert.getDefaultAcceptedMediaType();
+	}
+	
+	 
+
+	public void setJsonpCallback(String jsonpCallback) {
+		((JsonConvertInf)convert).setJsonpCallback(jsonpCallback);
 	}
 
 }

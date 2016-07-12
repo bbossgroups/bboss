@@ -33,8 +33,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-public abstract class AbstractJackson2HttpMessageConverter extends AbstractGenericHttpMessageConverter<Object>
-		implements GenericHttpMessageConverter<Object> {
+public abstract class AbstractJackson2HttpMessageConverter extends AbstractGenericHttpMessageConverter<Object> 
+		implements GenericHttpMessageConverter<Object>,JsonConvertInf {
 	private String jsonpCallback = ServerHttpRequest.JSONPCALLBACK_PARAM_NAME;
 	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
@@ -367,6 +367,10 @@ public abstract class AbstractJackson2HttpMessageConverter extends AbstractGener
 				return true;
 		else
 			return false;
+	}
+ 
+	public void setJsonpCallback(String jsonpCallback) {
+		this.jsonpCallback = jsonpCallback;
 	}
 
 }
