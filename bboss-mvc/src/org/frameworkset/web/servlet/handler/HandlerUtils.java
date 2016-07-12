@@ -3016,73 +3016,93 @@ public abstract class HandlerUtils {
 	public static String[] determineUrlsForHandler(
 			BaseApplicationContext context, String beanName, Map cachedMappings) {
 
-		Pro beaninfos = context.getProBean(beanName);
-		if (!beaninfos.isBean())
-			return null;
-		final Class<?> handlerType = beaninfos.getBeanClass();
-		if (handlerType == null)
-			return null;
-		// ListableBeanFactory bf = (context instanceof
-		// ConfigurableApplicationContext ?
-		// ((ConfigurableApplicationContext) context).getBeanFactory() :
-		// context);
-		// GenericBeanFactoryAccessor bfa = new GenericBeanFactoryAccessor(bf);
-		boolean iscontroller = beanName != null && beanName.startsWith("/");
+		try {
+			Pro beaninfos = context.getProBean(beanName);
+			if (!beaninfos.isBean())
+				return null;
+			final Class<?> handlerType = beaninfos.getBeanClass();
+			if (handlerType == null)
+				return null;
+			// ListableBeanFactory bf = (context instanceof
+			// ConfigurableApplicationContext ?
+			// ((ConfigurableApplicationContext) context).getBeanFactory() :
+			// context);
+			// GenericBeanFactoryAccessor bfa = new GenericBeanFactoryAccessor(bf);
+			boolean iscontroller = beanName != null && beanName.startsWith("/");
 
-		String[] paths = null;
-		HandlerMapping mapping = null;
-		if (iscontroller)// 路径对应url地址直接解析路径
-		{
-			paths = beanName.split(",");
+			String[] paths = null;
+			HandlerMapping mapping = null;
+			if (iscontroller)// 路径对应url地址直接解析路径
+			{
+				paths = beanName.split(",");
 
-		} else// 否则判断组件是否使用了HandlerMapping注解和Controller注解
-		{
-			// 获取类级url和controller映射关系
-			mapping = AnnotationUtils.findAnnotation(handlerType,
-					HandlerMapping.class);
-			if (mapping != null) {
-				// @HandlerMapping found at type level
-				if (cachedMappings != null)
-					cachedMappings.put(handlerType, mapping);
-				paths = mapping.value();
-			}
-			// else if (AnnotationUtils.findAnnotation(handlerType,
-			// Controller.class) == null) {
-			// return null;
-			// }
-		}
-
-		Set<String> urls = new LinkedHashSet<String>();
-
-		if (paths != null && paths.length > 0) {
-			final Set<Method> handlerMethods = new LinkedHashSet<Method>();
-			Method[] methods = handlerType.getMethods();
-			for (Method method : methods) {
-				if (HandlerUtils.isHandlerMethod(handlerType, method)) {
-
-					handlerMethods.add(ClassUtils.getMostSpecificMethod(method,
-							handlerType));
+			} else// 否则判断组件是否使用了HandlerMapping注解和Controller注解
+			{
+				// 获取类级url和controller映射关系
+				mapping = AnnotationUtils.findAnnotation(handlerType,
+						HandlerMapping.class);
+				if (mapping != null) {
+					// @HandlerMapping found at type level
+					if (cachedMappings != null)
+						cachedMappings.put(handlerType, mapping);
+					paths = mapping.value();
 				}
-			}
-			// @HandlerMapping specifies paths at type level
-			for (String path : paths) {
-
-				// if(mapping.restful())
-				{
-					addUrlsForRestfulPath(urls, path, handlerMethods);
-				}
-				// else
-				// {
-				// addUrlsForPath(urls, path);
+				// else if (AnnotationUtils.findAnnotation(handlerType,
+				// Controller.class) == null) {
+				// return null;
 				// }
 			}
 
-			return StringUtil.toStringArray(urls);
-		} else {
-			// actual paths specified by @HandlerMapping at method level
-			// 对应设置了controller注解的控制器，要求里面的url处理方法必须设置HandleMaping注解并且制定相应的url否则忽略相应的方法
-			return determineUrlsForHandlerMethods(handlerType);
+			Set<String> urls = new LinkedHashSet<String>();
+
+			if (paths != null && paths.length > 0) {
+				final Set<Method> handlerMethods = new LinkedHashSet<Method>();
+				Method[] methods = handlerType.getMethods();
+				for (Method method : methods) {
+					if (HandlerUtils.isHandlerMethod(handlerType, method)) {
+
+						handlerMethods.add(ClassUtils.getMostSpecificMethod(method,
+								handlerType));
+					}
+				}
+				// @HandlerMapping specifies paths at type level
+				for (String path : paths) {
+
+					// if(mapping.restful())
+					{
+						addUrlsForRestfulPath(urls, path, handlerMethods);
+					}
+					// else
+					// {
+					// addUrlsForPath(urls, path);
+					// }
+				}
+
+				return StringUtil.toStringArray(urls);
+			} else {
+				// actual paths specified by @HandlerMapping at method level
+				// 对应设置了controller注解的控制器，要求里面的url处理方法必须设置HandleMaping注解并且制定相应的url否则忽略相应的方法
+				return determineUrlsForHandlerMethods(handlerType);
+			}
+		} catch (NoClassDefFoundError e) {
+			if(logger.isDebugEnabled())
+			{
+				logger.debug("determineUrlsForHandler failed:",e);
+			}
 		}
+		catch (Exception e) {
+			if(logger.isDebugEnabled())
+			{
+				logger.debug("determineUrlsForHandler failed:",e);
+			}
+		}
+		catch (Throwable e) {
+			if(logger.isDebugEnabled())
+			{
+				logger.debug("determineUrlsForHandler failed:",e);
+			}
+		}
+		return null;
 		// }
 		// else if (AnnotationUtils.findAnnotation(handlerType,
 		// Controller.class) != null) {
