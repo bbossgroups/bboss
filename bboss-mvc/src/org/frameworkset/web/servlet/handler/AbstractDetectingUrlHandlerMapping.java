@@ -135,9 +135,17 @@ public abstract class AbstractDetectingUrlHandlerMapping extends AbstractUrlHand
 			}
 			catch(Exception e)
 			{
-//				if (logger.) 
+				if (logger.isDebugEnabled()) 
 				{
-					logger.error("Detect Handler bean name '" + beanName + "' failed: " + e.getMessage(),e);
+					logger.debug("Detect Handler bean name '" + beanName + "' failed: " + e.getMessage(),e);
+				}
+			}
+			
+			catch(Throwable e)
+			{
+				if (logger.isDebugEnabled()) 
+				{
+					logger.debug("Detect Handler bean name '" + beanName + "' failed: " + e.getMessage(),e);
 				}
 			}
 			
