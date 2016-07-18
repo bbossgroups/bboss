@@ -51,8 +51,8 @@ dependencies {
             [group: 'rome', name: 'rome', version: '1.0', transitive: false],
             [group: 'net.sf.jasperreports', name: 'jasperreports', version: '3.7.6', transitive: false],
             [group: 'org.apache.poi', name: 'poi', version: '3.0.2-FINAL', transitive: false],
-            [group: 'org.eclipse.birt.runtime.3_7_1', name: 'com.lowagie.text', version: '2.1.7', transitive: false],
-            [group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6.12', transitive: false],
+           [group: 'com.lowagie', name: 'itext', version: '4.2.1', transitive: false],
+          [group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6.12', transitive: false],
             [group: 'jdom', name: 'jdom', version: '1.0', transitive: false],
             
             [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],

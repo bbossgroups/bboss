@@ -4,6 +4,18 @@ http://www.bbossgroups.com
 # bboss group project blog:
 http://yin-bp.iteye.com/
 
+# bboss版本构建方法
+gradle install
+
+
+开发工程生成方法：
+
+gradle eclipse
+
+gradle idea
+
+亦可以直接通过idea或者eclipse gradle插件将下载的bboss源码工程导入eclipse或者idea
+
 # bboss 源码
 github托管地址： 
 
