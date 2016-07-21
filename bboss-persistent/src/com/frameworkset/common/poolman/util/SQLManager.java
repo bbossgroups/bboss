@@ -614,7 +614,7 @@ public class SQLManager extends PoolManager{
 		tempConf.setUsername(username);
 		tempConf.setPassword(password);
 		tempConf.setValidationQuery(validationQuery);
-		tempConf.setTxIsolationLevel("READ_COMMITTED");
+		//tempConf.setTxIsolationLevel("READ_COMMITTED");
 		tempConf.setJndiName("jndi-"+poolname);
 		tempConf.setInitialConnections(10);
 		tempConf.setMinimumSize(10);
@@ -738,7 +738,7 @@ public class SQLManager extends PoolManager{
 		tempConf.setPassword(password);
 		tempConf.setReadOnly(null);
 	
-		tempConf.setTxIsolationLevel("READ_COMMITTED");
+		//tempConf.setTxIsolationLevel("READ_COMMITTED");
 		tempConf.setValidationQuery(validationQuery);
 		tempConf.setJndiName("jndi-"+poolname);
 		tempConf.setInitialConnections(10);
@@ -788,7 +788,7 @@ public class SQLManager extends PoolManager{
 		tempConf.setPassword(password);
 		tempConf.setReadOnly(readOnly);
 	
-		tempConf.setTxIsolationLevel("READ_COMMITTED");
+		//tempConf.setTxIsolationLevel("READ_COMMITTED");
 		tempConf.setValidationQuery(validationQuery);
 		tempConf.setJndiName("jndi-"+poolname);
 		tempConf.setInitialConnections(10);
