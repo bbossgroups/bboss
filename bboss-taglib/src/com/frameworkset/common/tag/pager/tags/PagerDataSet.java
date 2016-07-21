@@ -406,7 +406,11 @@ public class PagerDataSet extends PagerTagSupport {
 			if(stack.size() == 0)
 				return null;
 			PagerDataSet dataSet = (PagerDataSet)this.stack.peek();
-			return dataSet.getPagerContext();
+			if(dataSet != this)
+				return dataSet.getPagerContext();
+			else
+				return null;
+			
 		}
 		else
 		{
@@ -648,7 +652,11 @@ public class PagerDataSet extends PagerTagSupport {
         			if(stack.size() == 0)
         				return null;
         			PagerDataSet dataSet = (PagerDataSet)this.stack.peek();
-        			return dataSet.getClassDataValue(rowid);
+        			if(dataSet != this)
+        				return dataSet.getClassDataValue(rowid);
+        			else
+        				return theClassDataList.get(rowid);
+        			
         		}
 		}
 		catch(Exception e)
@@ -765,19 +773,28 @@ public class PagerDataSet extends PagerTagSupport {
 	public Object getValue(int rowid, String colName, String subColName) {
 		if(!this.needPeak())
 		{
-			Object referObj = getValue(rowid, colName);
-			if (referObj == null)
-				return null;
-			ClassData referData = new ClassData(referObj);
-			return getValue(referData, subColName);
+			return _getValue(  rowid,   colName,   subColName);
 		}
 		else
 		{
 			if(stack.size() == 0)
 				return null;
 			PagerDataSet dataSet = (PagerDataSet)this.stack.peek();
-			return dataSet.getValue( rowid,  colName,  subColName);
+			if(dataSet != this)
+				return dataSet.getValue( rowid,  colName,  subColName);
+			else
+				return _getValue(  rowid,   colName,   subColName);
+			
 		}
+	}
+	
+	private Object _getValue(int rowid, String colName, String subColName)
+	{
+		Object referObj = getValue(rowid, colName);
+		if (referObj == null)
+			return null;
+		ClassData referData = new ClassData(referObj);
+		return getValue(referData, subColName);
 	}
 
 	/**
@@ -2224,7 +2241,11 @@ public class PagerDataSet extends PagerTagSupport {
 			else
 			{
 				PagerDataSet dataSet = (PagerDataSet)stack.peek();
-				return dataSet.size();
+				if(dataSet != this)
+					return dataSet.size();
+				else
+					return theClassDataList == null ? 0 : theClassDataList.size();
+				
 			}
 		}
 	}
@@ -3502,7 +3523,10 @@ public class PagerDataSet extends PagerTagSupport {
 			if(stack.size() == 0)
 				return -1;
 			PagerDataSet dataSet = (PagerDataSet)stack.peek();
-			return dataSet.getRowid();
+			if(dataSet != this)
+				return dataSet.getRowid();
+			else
+				return rowid;
 			
 		}
 		return this.rowid;
@@ -3520,7 +3544,11 @@ public class PagerDataSet extends PagerTagSupport {
 		}
 		// 根据索引获取字段的值
 		PagerDataSet dataSet = (PagerDataSet) this.stack.elementAt(index);
-		return dataSet.getRowid();
+		if(dataSet != this)
+			return dataSet.getRowid();
+		else
+			return rowid;
+		
 	}
 	
 	/**
