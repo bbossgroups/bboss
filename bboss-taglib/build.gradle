@@ -18,6 +18,7 @@ sourceSets {
 
 project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.install)
 project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.install)
+project.tasks.compileJava.dependsOn(project(':bboss-htmlparser').tasks.install)
 dependencies {
     compile(
     		
