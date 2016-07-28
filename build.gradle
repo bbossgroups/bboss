@@ -43,6 +43,11 @@ configure(allprojects) { project ->
 		sourceCompatibility = JAVADOC_SOURCE_LEVEL
 		targetCompatibility = JAVADOC_COMPILER_LEVEL
 		options.encoding = 'UTF-8'
+		// disable the crazy super-strict doclint tool in Java 8
+        // noinspection SpellCheckingInspection
+		if (JavaVersion.current().isJava8Compatible()) {
+			options.addStringOption('Xdoclint:none', '-quiet')
+		}
 	}
 
 	jar {
