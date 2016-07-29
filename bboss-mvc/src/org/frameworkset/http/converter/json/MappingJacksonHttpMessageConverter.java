@@ -7,7 +7,6 @@ import org.frameworkset.http.HttpHeaders;
 import org.frameworkset.http.HttpInputMessage;
 import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.MediaType;
-import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.converter.AbstractHttpMessageConverter;
 import org.frameworkset.http.converter.HttpMessageNotReadableException;
 import org.frameworkset.http.converter.HttpMessageNotWritableException;
@@ -166,6 +165,18 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 
 	public void setJsonpCallback(String jsonpCallback) {
 		((JsonConvertInf)convert).setJsonpCallback(jsonpCallback);
+	}
+	
+	/**
+	 * Indicate whether the JSON output by this view should be prefixed with ")]}', ". Default is false.
+	 * <p>Prefixing the JSON string in this manner is used to help prevent JSON Hijacking.
+	 * The prefix renders the string syntactically invalid as a script so that it cannot be hijacked.
+	 * This prefix should be stripped before parsing the string as JSON.
+	 * @see #setJsonPrefix
+	 */
+	public void setPrefixJson(boolean prefixJson) {
+		
+		((JsonConvertInf)convert).setPrefixJson(prefixJson);
 	}
 
 }
