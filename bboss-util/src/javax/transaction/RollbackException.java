@@ -16,11 +16,7 @@
 package javax.transaction;
 
 public class RollbackException extends Exception {
-    public RollbackException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
-
+    
 	public RollbackException(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub

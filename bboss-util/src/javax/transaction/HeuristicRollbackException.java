@@ -18,11 +18,7 @@ package javax.transaction;
 public class HeuristicRollbackException extends Exception
 {
 
-    public HeuristicRollbackException(String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
+     
 
 	public HeuristicRollbackException(String message, Throwable cause) {
 		super(message, cause);
