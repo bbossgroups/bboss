@@ -22,13 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.RollbackException;
-
-import oracle.sql.BLOB;
-import oracle.sql.CLOB;
-
 
 import org.junit.Test;
 
@@ -39,10 +33,11 @@ import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.SQLParams;
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
-import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.orm.transaction.TransactionManager;
-import com.frameworkset.util.StringUtil;
+
+import oracle.sql.BLOB;
+import oracle.sql.CLOB;
 /**
  * 
  * <p>Title: TestLob.java</p>
@@ -322,53 +317,53 @@ public class TestLob {
 		
 	}
 
-	
-	public void downloadFileFromBlob(String fileid, final HttpServletRequest request,
-			final HttpServletResponse response) throws Exception
-	{
-		try
-		{
-			SQLExecutor.queryByNullRowHandler(new NullRowHandler() {
-				
-				public void handleRow(Record record) throws Exception
-				{
-
-					StringUtil.sendFile(request, response, record
-							.getString("filename"), record
-							.getBlob("filecontent"));
-				}
-			}, "select * from filetable where fileid=?", fileid);
-		}
-		catch (Exception e)
-		{
-			throw e;
-		}
-	}
-	
 //	
-	public void downloadFileFromClob(String fileid, final HttpServletRequest request,
-			final HttpServletResponse response) throws Exception
-	{
-
-		try
-		{
-			SQLExecutor.queryByNullRowHandler(new NullRowHandler() {
-				@Override
-				public void handleRow(Record record) throws Exception
-				{
-
-					StringUtil.sendFile(request, response, record
-							.getString("filename"), record
-							.getClob("filecontent"));
-				}
-			}, "select * from CLOBFILE where fileid=?", fileid);
-		}
-		catch (Exception e)
-		{
-			throw e;
-		}
-		
-	}
+//	public void downloadFileFromBlob(String fileid, final HttpServletRequest request,
+//			final HttpServletResponse response) throws Exception
+//	{
+//		try
+//		{
+//			SQLExecutor.queryByNullRowHandler(new NullRowHandler() {
+//				
+//				public void handleRow(Record record) throws Exception
+//				{
+//
+//					StringUtil.sendFile(request, response, record
+//							.getString("filename"), record
+//							.getBlob("filecontent"));
+//				}
+//			}, "select * from filetable where fileid=?", fileid);
+//		}
+//		catch (Exception e)
+//		{
+//			throw e;
+//		}
+//	}
+//	
+////	
+//	public void downloadFileFromClob(String fileid, final HttpServletRequest request,
+//			final HttpServletResponse response) throws Exception
+//	{
+//
+//		try
+//		{
+//			SQLExecutor.queryByNullRowHandler(new NullRowHandler() {
+//				@Override
+//				public void handleRow(Record record) throws Exception
+//				{
+//
+//					StringUtil.sendFile(request, response, record
+//							.getString("filename"), record
+//							.getClob("filecontent"));
+//				}
+//			}, "select * from CLOBFILE where fileid=?", fileid);
+//		}
+//		catch (Exception e)
+//		{
+//			throw e;
+//		}
+//		
+//	}
 //    @BeforeClass
     public static void createTable()
     {

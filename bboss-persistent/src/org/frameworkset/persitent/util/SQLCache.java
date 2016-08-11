@@ -69,7 +69,7 @@ public class SQLCache {
 		}
 		return false;
 	}
-	public PoolManResultSetMetaData getPoolManResultSetMetaData(String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
+	public PoolManResultSetMetaData getPoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
 	{
 		PoolManResultSetMetaData meta = null;
 		Map<String, SoftReference<PoolManResultSetMetaData>> dbmetas = metas.get(dbname);
@@ -92,7 +92,7 @@ public class SQLCache {
 			meta = (PoolManResultSetMetaData) wr.get();
 			
 			if (meta == null) {				
-				meta = PoolManResultSetMetaData.getCopy(rsmetadata);
+				meta = PoolManResultSetMetaData.getCopy(db,rsmetadata);
 				SoftReference<PoolManResultSetMetaData> wr1 = new SoftReference<PoolManResultSetMetaData>(meta);				
 				dbmetas.put(sqlkey, wr1);
 			}
@@ -100,13 +100,13 @@ public class SQLCache {
 			{
 				if(needRefreshMeta(meta,rsmetadata))
 				{
-					meta = PoolManResultSetMetaData.getCopy(rsmetadata);
+					meta = PoolManResultSetMetaData.getCopy(db,rsmetadata);
 					wr = new SoftReference<PoolManResultSetMetaData>(meta);
 					dbmetas.put(sqlkey, wr);
 				}
 			}
 		} else {
-			meta = PoolManResultSetMetaData.getCopy(rsmetadata);
+			meta = PoolManResultSetMetaData.getCopy(db,rsmetadata);
 			wr = new SoftReference<PoolManResultSetMetaData>(meta);
 			dbmetas.put(sqlkey, wr);
 		}

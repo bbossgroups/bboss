@@ -49,20 +49,19 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import oracle.jdbc.driver.OracleResultSet;
-import oracle.sql.BLOB;
-import oracle.sql.CLOB;
-
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.common.poolman.util.SQLUtil;
-import com.frameworkset.orm.adapter.DB.PagineSql;
 import com.frameworkset.orm.engine.model.Domain;
 import com.frameworkset.orm.engine.model.SchemaType;
 import com.frameworkset.orm.platform.PlatformOracleImpl;
+
+import oracle.jdbc.driver.OracleResultSet;
+import oracle.sql.BLOB;
+import oracle.sql.CLOB;
 
 /**
  * This code should be used for an Oracle database pool.

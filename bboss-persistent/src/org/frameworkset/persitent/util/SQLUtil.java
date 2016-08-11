@@ -675,9 +675,9 @@ public class SQLUtil {
 	 * @return
 	 * @throws SQLException
 	 */
-	public PoolManResultSetMetaData getPoolManResultSetMetaData(String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
+	public PoolManResultSetMetaData getPoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
 	{
-		return this.cache.getPoolManResultSetMetaData(dbname, sqlkey, rsmetadata);
+		return this.cache.getPoolManResultSetMetaData(db,dbname, sqlkey, rsmetadata);
 	}
 
 	public List getListSQLs(String sqlname) {

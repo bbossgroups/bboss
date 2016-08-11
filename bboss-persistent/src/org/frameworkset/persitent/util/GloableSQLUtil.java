@@ -119,10 +119,10 @@ public class GloableSQLUtil extends SQLUtil {
 	}
 
 	@Override
-	public PoolManResultSetMetaData getPoolManResultSetMetaData(String dbname,
+	public PoolManResultSetMetaData getPoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,String dbname,
 			String sqlkey, ResultSetMetaData rsmetadata) throws SQLException {
 		// TODO Auto-generated method stub
-		return super.getPoolManResultSetMetaData(dbname, sqlkey, rsmetadata);
+		return super.getPoolManResultSetMetaData(db,dbname, sqlkey, rsmetadata);
 	}
 
 	

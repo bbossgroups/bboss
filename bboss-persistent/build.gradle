@@ -37,15 +37,16 @@ dependencies {
            [group: 'commons-logging', name: 'commons-logging', version: '1.1', transitive: false],
            [group: 'commons-collections', name: 'commons-collections', version: '3.2.1', transitive: false],
             [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],
-             [group: 'javaee', name: 'javaee-api', version: '5', transitive: false],
+           
     )
-    compileOnly(
-    fileTree(dir: 'lib', include: '**/*.jar'),
+    compile(
+    		fileTree(dir: 'lib', include: '**/*.jar'),
              
             [group: 'xjavadoc', name: 'xjavadoc', version: '1.1', transitive: false],
             
              [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
-            
+             [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: false],
+              [group: 'javax.transaction', name: 'jta', version: '1.1', transitive: false],
     )
     testCompile (
             

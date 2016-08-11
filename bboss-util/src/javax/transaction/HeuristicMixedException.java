@@ -18,7 +18,23 @@ package javax.transaction;
 public class HeuristicMixedException  extends Exception
 {
 
-    public HeuristicMixedException()
+    public HeuristicMixedException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause);
+		// TODO Auto-generated constructor stub
+	}
+
+	public HeuristicMixedException(String message, Throwable cause) {
+		super(message, cause);
+		// TODO Auto-generated constructor stub
+	}
+
+	public HeuristicMixedException(Throwable cause) {
+		super(cause);
+		// TODO Auto-generated constructor stub
+	}
+
+	public HeuristicMixedException()
     {
     }
 

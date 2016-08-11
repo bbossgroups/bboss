@@ -98,22 +98,22 @@ public class NewSQLInfo
 		this.sqlstruction = sqlstruction;
 	}
 	
-	public PoolManResultSetMetaData getPoolManResultSetMetaData(String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
+	public PoolManResultSetMetaData getPoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
 	{
 		if(this.oldsql != null && this.oldsql.getSqlutil() != null)
 		{
 			if(oldsql.istpl())//如果sql语句是一个
 			{
-				return this.oldsql.getSqlutil().getPoolManResultSetMetaData(dbname, sqlkey, rsmetadata);
+				return this.oldsql.getSqlutil().getPoolManResultSetMetaData(db,dbname, sqlkey, rsmetadata);
 			}
 			else
 			{
-				return this.oldsql.getSqlutil().getPoolManResultSetMetaData(dbname, oldsql.getSqlname(), rsmetadata);
+				return this.oldsql.getSqlutil().getPoolManResultSetMetaData(db,dbname, oldsql.getSqlname(), rsmetadata);
 			}
 		}
 		else
 		{
-			return SQLUtil.getGlobalSQLUtil().getPoolManResultSetMetaData(dbname, sqlkey, rsmetadata);
+			return SQLUtil.getGlobalSQLUtil().getPoolManResultSetMetaData(db,dbname, sqlkey, rsmetadata);
 		}
 	}
 	

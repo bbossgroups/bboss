@@ -83,11 +83,18 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     private String _sqlState;
     private int _sqlVendorCode;
 
+    public static PoolManResultSetMetaData getCopy(com.frameworkset.orm.adapter.DB db,java.sql.ResultSetMetaData original) throws java.sql.SQLException {
+        if (original instanceof PoolManResultSetMetaData)
+            return (PoolManResultSetMetaData)original;
+        else
+            return new PoolManResultSetMetaData(db,original);
+    }
+    
     public static PoolManResultSetMetaData getCopy(java.sql.ResultSetMetaData original) throws java.sql.SQLException {
         if (original instanceof PoolManResultSetMetaData)
             return (PoolManResultSetMetaData)original;
         else
-            return new PoolManResultSetMetaData(original);
+            return new PoolManResultSetMetaData(null,original);
     }
     public static class WrapInteger
     {
@@ -135,9 +142,9 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     
     public static String buildUUColname(String name,int id)
     {
-        return new StringBuffer(name).append(col_uuid_split ).append(id).toString();
+        return new StringBuilder(name).append(col_uuid_split ).append(id).toString();
     }
-    private PoolManResultSetMetaData(java.sql.ResultSetMetaData other) throws java.sql.SQLException {
+    private PoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,java.sql.ResultSetMetaData other) throws java.sql.SQLException {
 
         _columnCount = other.getColumnCount();
 
@@ -172,13 +179,13 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         
 
         for (int c = 0; c < _columnCount; c++) {
-
-            _columnTypeName[c] = other.getColumnTypeName(c + 1);
+        	int rc = c + 1;
+            _columnTypeName[c] = other.getColumnTypeName(rc);
 
             if (_columnClassName != null) {
                 // this only works on JDBC compliant drivers
                 try {
-                    _columnClassName[c] = other.getColumnClassName(c + 1);
+                    _columnClassName[c] = other.getColumnClassName(rc);
                 } catch (java.sql.SQLException x) {
                     _columnClassName = null; // don't try again!
                     _sqlReason = x.getMessage();
@@ -190,9 +197,9 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 
             }
 
-            _scale[c] = other.getScale(c + 1);
+            _scale[c] = other.getScale(rc);
 
-            _columnLabel[c] = other.getColumnLabel(c + 1);
+            _columnLabel[c] = other.getColumnLabel(rc);
             _columnLabel_upper[c] =  _columnLabel[c].toUpperCase();
            if(JDBCPool.nameMapping)
            {
@@ -209,36 +216,69 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
             {
                 wi.increament(c);
             }
-            _autoIncrement[c] = other.isAutoIncrement(c + 1);
-            _columnDisplaySize[c] = other.getColumnDisplaySize(c + 1);
+            _autoIncrement[c] = other.isAutoIncrement(rc);
+            _columnDisplaySize[c] = other.getColumnDisplaySize(rc);
 
             try {
-                _catalogName[c] = other.getCatalogName(c + 1);
+                _catalogName[c] = other.getCatalogName(rc);
             } catch (Exception e) {
             }
             if (_catalogName[c] == null)
                 _catalogName[c] = "";
 
-            _columnName[c] = other.getColumnName(c + 1);
-            _writable[c] = other.isWritable(c + 1);
-            _searchable[c] = other.isSearchable(c + 1);
-            _columnType[c] = other.getColumnType(c + 1);
-            _currency[c] = other.isCurrency(c + 1);
+            _columnName[c] = other.getColumnName(rc);
+            
+            if(db != null)
+            {
+            	_writable[c] = db.isWritebable(other,rc);
+            	_searchable[c] = db.isSearchable(other,rc);
+            	 _signed[c] = db.isSigned(other,rc);
+            	 _definitelyWritable[c] = db.isDefinitelyWritable(other,rc);
+            }
+            else
+            {
+            	try {
+					_writable[c] = other.isWritable(rc);
+				} catch (Exception e) {
+					
+				}
+            	try {
+            		 _searchable[c] = other.isSearchable(rc);
+				} catch (Exception e) {
+					
+				}
+            	
+            	try {
+            		 _signed[c] = other.isSigned(rc);
+				} catch (Exception e) {
+					
+				}
+            	try {
+            		_definitelyWritable[c] = other.isDefinitelyWritable(rc);
+				} catch (Exception e) {
+					
+				}
+            	 
+            	 
+            }
+           
+            _columnType[c] = other.getColumnType(rc);
+            _currency[c] = other.isCurrency(rc);
 
             try {
-                _tableName[c] = other.getTableName(c + 1);
+                _tableName[c] = other.getTableName(rc);
             } catch (Exception e) {
             }
             if (_tableName[c] == null)
                 _tableName[c] = "";
 
-            _nullable[c] = other.isNullable(c + 1);
-            _signed[c] = other.isSigned(c + 1);
-            _readOnly[c] = other.isReadOnly(c + 1);
-            _definitelyWritable[c] = other.isDefinitelyWritable(c + 1);
+            _nullable[c] = other.isNullable(rc);
+          
+            _readOnly[c] = other.isReadOnly(rc);
+           
             try
             {
-                _precision[c] = other.getPrecision(c + 1);
+                _precision[c] = other.getPrecision(rc);
             }
             catch(Exception e)
             {
@@ -246,13 +286,13 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
             }
 
             try {
-                _schemaName[c] = other.getSchemaName(c + 1);
+                _schemaName[c] = other.getSchemaName(rc);
             } catch (Exception e) {
             }
             if (_schemaName[c] == null)
                 _schemaName[c] = "";
 
-            _caseSensitive[c] = other.isCaseSensitive(c + 1);
+            _caseSensitive[c] = other.isCaseSensitive(rc);
         }
         
         for (int c = 0; c < _columnCount; c++) {

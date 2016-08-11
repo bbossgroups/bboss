@@ -65,6 +65,7 @@ public class DBFactory
     public static final String  DBAccess = "msaccess";
 
     public static final String  DBDerby =  "derby";
+    public static final String  DBHive =  "hive";
 
     public static final String  DBNone = "";
     public static final String  SQLITEX = "sqlitex";
@@ -75,6 +76,8 @@ public class DBFactory
      */
     static
     {
+    	
+    	
         adapters.put("com.ibm.as400.access.AS400JDBCDriver", DBDB2400.class);
         adapters.put("COM.ibm.db2.jdbc.app.DB2Driver", DBDB2App.class);
         adapters.put("COM.ibm.db2.jdbc.net.DB2Driver", DBDB2Net.class);
@@ -139,6 +142,9 @@ public class DBFactory
         adapters.put("org.h2.Driver", DBH2.class);
         adapters.put("h2", DBH2.class);
         adapters.put("", DBNone.class);
+        
+        adapters.put("org.apache.hive.jdbc.HiveDriver", DBHive.class);
+    	adapters.put(DBHive, DBHive.class);
     }
 
     /**

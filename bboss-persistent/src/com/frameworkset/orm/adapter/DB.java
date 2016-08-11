@@ -41,6 +41,7 @@ import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -57,7 +58,6 @@ import com.frameworkset.common.poolman.handle.ValueExchange;
 import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.common.poolman.security.DESDBPasswordEncrypt;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
-import com.frameworkset.orm.adapter.DB.PagineSql;
 import com.frameworkset.orm.engine.model.Domain;
 import com.frameworkset.orm.engine.model.SchemaType;
 import com.frameworkset.orm.platform.Platform;
@@ -95,7 +95,7 @@ import com.frameworkset.util.SimpleStringUtil;
  * @author <a href="mailto:vido@ldh.org">Augustin Vidovic</a>
  * @version $Id: DB.java,v 1.34 2005/01/31 19:43:55 tfischer Exp $
  */
-public abstract class DB implements Serializable, IDMethod,Platform
+public abstract class DB implements  IDMethod,Platform
 {
 	public static final String NULL_SCHEMA = "NULL_SCHEMA";
     /** date format used in getDateString() */
@@ -159,6 +159,10 @@ public abstract class DB implements Serializable, IDMethod,Platform
         return '\'';
     }
     
+    public boolean isWritebable(java.sql.ResultSetMetaData other,int idx) throws SQLException
+    {
+    	return other.isWritable(idx);
+    }
     public String sysdate()
     {
     	return "sysdate";
@@ -1241,6 +1245,23 @@ public abstract class DB implements Serializable, IDMethod,Platform
 					 ;
 					return newsql.toString();
 			    	
-			    } 
+			    }
+
+			public boolean isSearchable(ResultSetMetaData other, int i) throws SQLException {
+				// TODO Auto-generated method stub
+				return other.isSearchable(i);
+			}
+
+			public boolean isSigned(ResultSetMetaData other, int rc) throws SQLException {
+				// TODO Auto-generated method stub
+				return other.isSigned(rc);
+			}
+
+			public boolean isDefinitelyWritable(ResultSetMetaData other, int rc) throws SQLException {
+				// TODO Auto-generated method stub
+				return other.isDefinitelyWritable(rc);
+			}
+			  
+			  
         
 }

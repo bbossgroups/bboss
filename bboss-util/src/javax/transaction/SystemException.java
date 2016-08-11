@@ -25,7 +25,22 @@ public class SystemException extends Exception {
         super(message);
     }
 
-    public SystemException(int errorCode)
+    public SystemException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+		super(message, cause);
+		// TODO Auto-generated constructor stub
+	}
+
+	public SystemException(String message, Throwable cause) {
+		super(message, cause);
+		// TODO Auto-generated constructor stub
+	}
+
+	public SystemException(Throwable cause) {
+		super(cause);
+		// TODO Auto-generated constructor stub
+	}
+
+	public SystemException(int errorCode)
     {
         this.errorCode = errorCode;
     }

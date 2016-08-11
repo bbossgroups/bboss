@@ -1117,13 +1117,14 @@ public class StatementInfo {
 		String key = getSql();
 		if(pagine)
 			key = key + "__pagine" ;
+	
 		if(pool.getJDBCPoolMetadata().cachequerymetadata())
 		{
-			meta = this.newsqlinfo.getPoolManResultSetMetaData(dbname, key, rs.getMetaData());			
+			meta = this.newsqlinfo.getPoolManResultSetMetaData(pool.getDbAdapter(),dbname, key, rs.getMetaData());			
 		}
 		else
 		{
-			meta = PoolManResultSetMetaData.getCopy(rs.getMetaData());
+			meta = PoolManResultSetMetaData.getCopy(pool.getDbAdapter(),rs.getMetaData());
 		}
 		
 	}
