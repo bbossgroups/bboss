@@ -77,6 +77,7 @@ import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 import org.apache.oro.text.regex.StringSubstitution;
 import org.frameworkset.json.JacksonObjectMapperWrapper;
+import org.frameworkset.json.JsonTypeReference;
 import org.frameworkset.util.CollectionUtils;
 import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.util.ObjectUtils;
@@ -2601,15 +2602,15 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		
 	
 	}
-//    public static <T> T json2Object(String jsonString,TypeReference<T> ref) {
-//		return json2Object(jsonString,ref,true);
-//		
-//	
-//	}
-//    public static <T> T json2Object(String jsonString,TypeReference<T> ref,boolean ALLOW_SINGLE_QUOTES) {
-//		// TODO Auto-generated method stub
-//
-////		String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'人寿保险','department':'xxx','position':'主管' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'人寿保险','department':'xxx','position':'主管' }]";
+    public static Object json2Object(String jsonString,JsonTypeReference ref) {
+		return json2Object(jsonString,ref,true);
+		
+	
+	}
+    public static Object json2Object(String jsonString,JsonTypeReference ref,boolean ALLOW_SINGLE_QUOTES) {
+		// TODO Auto-generated method stub
+
+//		String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'人寿保险','department':'xxx','position':'主管' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'人寿保险','department':'xxx','position':'主管' }]";
 //		ObjectMapper mapper = new ObjectMapper();
 //		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
 //		try {
@@ -2620,9 +2621,10 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 //		} catch (Exception e) {
 //			throw new IllegalArgumentException(jsonString,e);
 //		}
-//		
-//	
-//	}
+    	return objectMapper.json2Object(jsonString, ref, ALLOW_SINGLE_QUOTES);
+		
+	
+	}
     
     public static <T> T json2Object(String jsonString,Class<T> toclass) {
 		// TODO Auto-generated method stub
