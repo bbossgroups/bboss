@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.frameworkset.json.JsonTypeReference;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+
 public class TestStringUtil {
 	@org.junit.Test
 	public void testJsontoObject()
@@ -68,6 +72,17 @@ public class TestStringUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	@SuppressWarnings("unchecked")
+	@org.junit.Test
+	public void testListObjectSerial()
+	{
+		List<Integer> dd = new ArrayList<Integer>();
+		dd.add(1);
+		dd.add(2);
+		String json = SimpleStringUtil.object2json(dd);
+		dd =  (List<Integer>) StringUtil.json2Object(json,new JsonTypeReference(new TypeReference<List<Integer>>(){}));
+		System.out.println(dd);
 	}
 	
 	
