@@ -86,73 +86,60 @@ configure(subprojects) { subproject ->
 	}
 	
  
-ext.uploadtocenter=uploadArchivesToMavenCenter.equals("true")
-if(uploadtocenter)
-{
-	signing {
-	        //required { uploadtocenter }
-	        sign configurations.archives
-	 }
-}
-uploadArchives {
+	ext.uploadtocenter=uploadArchivesToMavenCenter.equals("true")
+	if(uploadtocenter)
+	{
+		signing {
+		        //required { uploadtocenter }
+		        sign configurations.archives
+		 }
+	}
+	uploadArchives {
 	  repositories {
-	   
 		    mavenDeployer {
-		     
-			if(uploadtocenter)
-			{	  
-				
 				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-		     	repository(url: sonatype_url) {
-		     		
+		     	repository(url: sonatype_url) {		     		
 				         authentication(userName: sonatype_username, password: sonatype_password)
 				}
-			}
-			else
-			{
-				repository(url: "file://"+mvn_repo)
-			}
-			
-			
-			 	
-	      pom.project {
-	        name project.name
-	        packaging 'jar'
-	        // optionally artifactId can be defined here 
-	        description PROJ_DESCRIPTION
-	        url PROJ_WEBSITEURL
-
-	        scm {
-	          connection scm_connection
-	          developerConnection scm_developerConnection
-	          url scm_url
-	        }
-
-	        licenses {
-	          license {
-	            name PROJ_LICENCE_NAME
-	            url PROJ_LICENCE_URL
-	          }
-	        }
-
-	        developers {
-	          developer {
-	            id DEVELOPER_ID
-	            name DEVELOPER_NAME
-	            email DEVELOPER_EMAIL
-	          }
-	        }
-	      }
-	    }
-	  }
-	}
+		      	pom.project {
+			        name project.name
+			        packaging 'jar'
+			        // optionally artifactId can be defined here 
+			        description PROJ_DESCRIPTION
+			        url PROJ_WEBSITEURL
+	
+			        scm {
+			          connection scm_connection
+			          developerConnection scm_developerConnection
+			          url scm_url
+			        }
+	
+			        licenses {
+			          license {
+			            name PROJ_LICENCE_NAME
+			            url PROJ_LICENCE_URL
+			          }
+			        }
+	
+			        developers {
+			          developer {
+			            id DEVELOPER_ID
+			            name DEVELOPER_NAME
+			            email DEVELOPER_EMAIL
+			          }
+			        }
+		      	}//pom
+	    	}//mavenDeployer
+	  	}//repositories
+	}//uploadArchives
+	
+	
 	
 	publishing {
+			
 		publications {
 			mavenJava(MavenPublication) {
-				
-				from components.java
-				
+				from components.java				
 				artifact sourcesJar
 				artifact javaDocJar
 				
