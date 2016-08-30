@@ -232,12 +232,12 @@ public class Foreach extends Directive
             }
             if (counterInitialValue != 1)
             {
-                rsvc.getLog().warn("The "+RuntimeConstants.COUNTER_INITIAL_VALUE+
+               /** rsvc.getLog().warn("The "+RuntimeConstants.COUNTER_INITIAL_VALUE+
                     " property has been deprecated. It will be removed"+
                     " (along with $velocityCount itself) in Velocity 2.0. "+
                     " Instead, please use $foreach.index to access"+
                     " the 0-based loop index and $foreach.count"+
-                    " to access the 1-based loop counter.");
+                    " to access the 1-based loop counter.");*/
             }
         }
 
