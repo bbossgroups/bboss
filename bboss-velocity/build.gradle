@@ -5,7 +5,7 @@ sourceSets {
         }
         resources {
             srcDirs 'src-velocity'
-            include '**/*.properties'
+            exclude '**/*.java'
         }
        
        
