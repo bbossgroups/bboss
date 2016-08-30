@@ -6,9 +6,10 @@ import java.io.Writer;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import java.lang.reflect.Type;
 public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	ObjectMapper mapper = new ObjectMapper();
+ 
 
 	 /* (non-Javadoc)
 	 * @see org.frameworkset.json.JacksonObjectMapper#json2Object(java.lang.String, java.lang.Class)
@@ -67,14 +68,22 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 //		
 //		}
 	
-	public   Object json2Object(String jsonString,JsonTypeReference ref,boolean ALLOW_SINGLE_QUOTES) {
+	public   <T> T json2ObjectWithType(String jsonString,final JsonTypeReference<T> ref,boolean ALLOW_SINGLE_QUOTES) {
 		// TODO Auto-generated method stub
 
 //		String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'人寿保险','department':'xxx','position':'主管' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'人寿保险','department':'xxx','position':'主管' }]";
 		ObjectMapper mapper = new ObjectMapper();
-		TypeReference ref_ = (TypeReference)ref.getTypeReference();
+		TypeReference<?> ref_ = new TypeReference<Object>(){
+			@Override
+			public Type getType() {
+				// TODO Auto-generated method stub
+				return ref.getType();
+			}
+
+			 
+		};  
 		try {
-			Object value = mapper.readValue(jsonString, ref_);
+			T value = mapper.readValue(jsonString, ref_);
 			return value;
 			
 			

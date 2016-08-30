@@ -81,7 +81,7 @@ public class TestStringUtil {
 		dd.add(1);
 		dd.add(2);
 		String json = SimpleStringUtil.object2json(dd);
-		dd =  (List<Integer>) StringUtil.json2Object(json,new JsonTypeReference(new TypeReference<List<Integer>>(){}));
+		dd =  (List<Integer>) StringUtil.json2ObjectWithType(json,new JsonTypeReference<List<Integer>>(){});
 		System.out.println(dd);
 	}
 	

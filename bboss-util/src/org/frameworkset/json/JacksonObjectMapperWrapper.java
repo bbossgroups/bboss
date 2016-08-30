@@ -64,13 +64,13 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 			
 		
 		}
-	  public   Object json2Object(String jsonString,JsonTypeReference ref) {
-			return json2Object(jsonString,ref,true);
+	  public    <T> T json2ObjectWithType(String jsonString,final JsonTypeReference<T> ref) {
+			return json2ObjectWithType(jsonString,ref,true);
 			
 		
 		}
 	  
-	  public   Object json2Object(String jsonString,JsonTypeReference ref,boolean ALLOW_SINGLE_QUOTES) {
+	  public   <T> T json2ObjectWithType(String jsonString,final JsonTypeReference<T> ref,boolean ALLOW_SINGLE_QUOTES) {
 			// TODO Auto-generated method stub
 
 //			String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'人寿保险','department':'xxx','position':'主管' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'人寿保险','department':'xxx','position':'主管' }]";
@@ -84,7 +84,7 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 //			} catch (Exception e) {
 //				throw new IllegalArgumentException(jsonString,e);
 //			}
-		  return jacksonObjectMapper.json2Object( jsonString,ref,ALLOW_SINGLE_QUOTES);
+		  return jacksonObjectMapper.json2ObjectWithType( jsonString,ref,ALLOW_SINGLE_QUOTES);
 			
 		
 		}
