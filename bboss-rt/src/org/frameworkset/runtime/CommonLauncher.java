@@ -294,8 +294,17 @@ public class CommonLauncher
     {
     	StringBuilder buidler = new StringBuilder();
 		for(int i =0 ;args != null && i < args.length; i++)
+		{
+			if(args[i].startsWith("--conf="))
+			{
+				propertfile=args[i].substring("--conf=".length());
+				if(!propertfile.startsWith("/"))
+					propertfile = "/"+propertfile;
+			}
 			buidler.append(args[i]).append(" ");
+		}
 		System.out.println("laucher args:"+buidler);
+		System.out.println("use config file:"+propertfile);
         run(args);
         
         
