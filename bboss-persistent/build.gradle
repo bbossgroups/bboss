@@ -42,11 +42,16 @@ dependencies {
     compile(
     		fileTree(dir: 'lib', include: '**/*.jar'),
              
-            [group: 'xjavadoc', name: 'xjavadoc', version: '1.1', transitive: false],
             
-             [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
-             [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: false],
+             
               [group: 'javax.transaction', name: 'jta', version: '1.1', transitive: false],
+    )
+    compileOnly(
+    	  [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: false],
+    	   [group: 'xjavadoc', name: 'xjavadoc', version: '1.1', transitive: false],
+    	   [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
+           
+           
     )
     testCompile (
             

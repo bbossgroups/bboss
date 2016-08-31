@@ -9,7 +9,7 @@ sourceSets {
            srcDir 'src'  include 'aop.properties'
             
         }
-         compileClasspath = configurations.compile
+         
     }
     test {
         java {
