@@ -38,3 +38,4 @@ bboss-taglib/.project
 /.settings/
 
 *.class
+/gradle/
