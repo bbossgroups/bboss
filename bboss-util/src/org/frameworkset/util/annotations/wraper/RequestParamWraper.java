@@ -15,8 +15,12 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
+import java.util.Locale;
+
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.RequestParam;
+
+import com.frameworkset.util.SimpleStringUtil;
 
 /**
  * <p>RequestParamWraper.java</p>
@@ -58,12 +62,15 @@ public class RequestParamWraper {
 	 */
 	private String charset;
 	
+	private Locale locale;
+	
 	/**
 	 * 参数转换字符集
 	 * @return
 	 */
 	private String convertcharset;
 	public RequestParamWraper(RequestParam param) {
+		
 		/**
 		 * 参数名称，默认为""
 		 * @return
@@ -80,6 +87,17 @@ public class RequestParamWraper {
 		 * 日期格式
 	     */
 		 dateformat = param.dateformat();
+		 if(SimpleStringUtil.isNotEmpty(param.locale() ))
+		 {
+			 try
+			 {
+				 locale = new Locale(param.locale());
+			 }
+			 catch(Exception e)
+			 {
+				 
+			 }
+		 }
 		 defaultvalue = AnnotationUtils.converDefaultValue(param.defaultvalue());
 		/**
 		 * 解码字符集
@@ -150,6 +168,9 @@ public class RequestParamWraper {
 	 */
 	public String convertcharset(){
 		return this.convertcharset;
+	}
+	public Locale getLocale() {
+		return locale;
 	}
 
 }

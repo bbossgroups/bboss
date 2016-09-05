@@ -64,6 +64,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -662,6 +663,12 @@ public class ValueObjectUtil {
 
 		return editor.getValueFromObject(obj);
 	}
+	public final static Object typeCast(Object obj, Class toType,String dateformat )
+			throws NoSupportTypeCastException, NumberFormatException,
+			IllegalArgumentException
+			{
+				return  typeCast( obj,   toType,  dateformat,(Locale )null);
+			}
 
 	/**
 	 * 将obj对象从类型type转换到类型toType 支持字符串向其他基本类行转换: 支持的类型:
@@ -676,14 +683,14 @@ public class ValueObjectUtil {
 	 * @throws ClassCastException
 	 *             ,NumberFormatException,IllegalArgumentException
 	 */
-	public final static Object typeCast(Object obj, Class toType,String dateformat)
+	public final static Object typeCast(Object obj, Class toType,String dateformat,Locale locale)
 			throws NoSupportTypeCastException, NumberFormatException,
 			IllegalArgumentException {
 		if(toType == null)
 			return obj;
 		if (obj == null)
 			return null;
-		return typeCast(obj, obj.getClass(), toType,dateformat);
+		return typeCast(obj, obj.getClass(), toType,dateformat,  locale);
 	}
 	
 	public final static Object typeCastWithDateformat(Object obj, Class toType,SimpleDateFormat dateformat)
@@ -697,13 +704,13 @@ public class ValueObjectUtil {
 	public final static Object typeCast(Object obj, Class toType)
 	throws NoSupportTypeCastException, NumberFormatException,
 	IllegalArgumentException{
-		return typeCast( obj, toType,(String )null);
+		return typeCast( obj, toType,(String )null,(Locale )null);
 	}
 	public final static Object typeCast(Object obj, Class type, Class toType)
 	throws NoSupportTypeCastException, NumberFormatException,
 	IllegalArgumentException
 	{
-		return typeCast(obj, type, toType,null);
+		return typeCast(obj, type, toType,null,(Locale )null);
 	}
 	
 	public static byte[] getByteArrayFromBlob(Blob blob) throws SQLException
@@ -1059,6 +1066,12 @@ public class ValueObjectUtil {
 //		return null;
 			
 	}
+	public final static Object typeCast(Object obj, Class type, Class toType,String dateformat )
+			throws NoSupportTypeCastException, NumberFormatException,
+			IllegalArgumentException 
+			{
+		return typeCast(  obj,   type,   toType,  dateformat,(Locale )null);
+			}
 	/**
 	 * 将obj对象从类型type转换到类型toType 支持字符串向其他基本类行转换: 支持的类型:
 	 * int,char,short,double,float,long,boolean,byte
@@ -1072,7 +1085,7 @@ public class ValueObjectUtil {
 	 * @throws ClassCastException
 	 *             ,NumberFormatException,IllegalArgumentException
 	 */
-	public final static Object typeCast(Object obj, Class type, Class toType,String dateformat)
+	public final static Object typeCast(Object obj, Class type, Class toType,String dateformat,Locale locale)
 			throws NoSupportTypeCastException, NumberFormatException,
 			IllegalArgumentException {
 		if (obj == null)
@@ -1312,7 +1325,7 @@ public class ValueObjectUtil {
 		 * 基本类型转换和基本类型之间相互转换
 		 */
 		if (!type.isArray() && !toType.isArray()) {
-			arrayObj = basicTypeCast(obj, type, toType,dateformat);
+			arrayObj = basicTypeCast(obj, type, toType,dateformat,  locale);
 		}
 
 		/**
@@ -1609,7 +1622,7 @@ public class ValueObjectUtil {
 			NumberFormatException 
 			{
 		return  basicTypeCast( obj, type,
-				toType,null);
+				toType,null,(Locale )null);
 			}
 	
 //	public static SimpleDateFormat getDateFormat(
@@ -1632,11 +1645,11 @@ public class ValueObjectUtil {
 //					"yyyy-MM-dd HH:mm:ss");
 	}
 	public static SimpleDateFormat getDateFormat(
-			String dateformat)
+			String dateformat,Locale locale)
 	{
 		if(dateformat == null || dateformat.equals(""))
 			return  getDefaultDateFormat();
-		SimpleDateFormat f = DataFormatUtil.getSimpleDateFormat(dateformat);
+		SimpleDateFormat f = DataFormatUtil.getSimpleDateFormat(dateformat,  locale);
 //		if(f != null)
 //			return f;
 		
@@ -1694,6 +1707,12 @@ public class ValueObjectUtil {
 		
 		return false;
 	}
+	public final static Object basicTypeCast(Object obj, Class type,
+			Class toType,String dateformat ) throws NoSupportTypeCastException,
+			NumberFormatException {
+		return basicTypeCast(  obj,   type,
+				  toType,  dateformat,(Locale )null);
+	}
 	/**
 	 * Description:基本的数据类型转圜
 	 * 
@@ -1706,7 +1725,7 @@ public class ValueObjectUtil {
 	 * 
 	 */
 	public final static Object basicTypeCast(Object obj, Class type,
-			Class toType,String dateformat) throws NoSupportTypeCastException,
+			Class toType,String dateformat,Locale locale) throws NoSupportTypeCastException,
 			NumberFormatException {
 		if (obj == null)
 			return null;
@@ -1793,14 +1812,14 @@ public class ValueObjectUtil {
 			{
 				
 				if(!"".equals(obj))
-					return getDateFormat(dateformat).format(obj);
+					return getDateFormat(dateformat,  locale).format(obj);
 				return null;
 			}
 			
 			return obj.toString();
 		}
 		
-		Object date = convertObjToDate( obj,toType,dateformat);
+		Object date = convertObjToDate( obj,toType,dateformat,locale);
 		if(date != null)
 			return date;
 		
@@ -2017,12 +2036,16 @@ public class ValueObjectUtil {
 			return BigInteger.valueOf(((Float)obj).longValue());
 		return new BigInteger(obj.toString());
 	}
-	public static Object convertObjToDate(Object obj,Class toType,String dateformat)
+	public static Object convertObjToDate(Object obj,Class toType,String dateformat )
+	{
+		return  convertObjToDate(  obj,  toType,  dateformat,(Locale )null);
+	}
+	public static Object convertObjToDate(Object obj,Class toType,String dateformat,Locale locale)
 	{
 		if(dateformat == null)
 			return convertObjToDateWithDateformat(obj,toType,null);
 		else
-			return convertObjToDateWithDateformat(obj,toType,ValueObjectUtil.getDateFormat(dateformat));
+			return convertObjToDateWithDateformat(obj,toType,ValueObjectUtil.getDateFormat(dateformat,  locale));
 	}
 	public static Object convertObjToDateWithDateformat(Object obj,Class toType,SimpleDateFormat dateformat)
 	{
@@ -2613,12 +2636,15 @@ public class ValueObjectUtil {
 				type).append("]向[").append(toType).append("]的转换").append(",value is").append(obj).toString());
 
 	}
-	public static Object convertObjectToDateArray(Object obj,Class type,Class toType,String dateformat)
+	public static Object convertObjectToDateArray(Object obj,Class type,Class toType,String dateformat){
+		return   convertObjectToDateArray(  obj,  type,  toType,  dateformat,null);
+	}
+	public static Object convertObjectToDateArray(Object obj,Class type,Class toType,String dateformat,Locale locale)
 	{
 		if(dateformat == null)
 			return convertObjectToDateArrayWithDateFormat(obj,type,toType,ValueObjectUtil.getDefaultDateFormat());
 		else
-			return convertObjectToDateArrayWithDateFormat(obj,type,toType,ValueObjectUtil.getDateFormat(dateformat));
+			return convertObjectToDateArrayWithDateFormat(obj,type,toType,ValueObjectUtil.getDateFormat(dateformat,  locale));
 	}
 	public static Object convertObjectToDateArrayWithDateFormat(Object obj,Class type,Class toType,SimpleDateFormat dateformat)
 	{
@@ -5592,14 +5618,18 @@ public class ValueObjectUtil {
 		}
 		
 	}
-	
+	public static void typeCastCollection(Object values,
+			Collection targetContainer, Class elementType,String dateformat) {
+		 typeCastCollection(  values,
+				  targetContainer,   elementType,  dateformat,null);
+	}
 	/**
 	 * @param values
 	 * @param targetContainer
 	 * @param objectType
 	 */
 	public static void typeCastCollection(Object values,
-			Collection targetContainer, Class elementType,String dateformat) {
+			Collection targetContainer, Class elementType,String dateformat,Locale locale) {
 		if(values == null)
 			return;
 		if(values.getClass().isArray())
@@ -5607,7 +5637,7 @@ public class ValueObjectUtil {
 			for(int i = 0 ;  i < Array.getLength(values);i ++)
 			{
 				Object v = Array.get(values,i);
-				targetContainer.add(ValueObjectUtil.typeCast(v, elementType,dateformat));
+				targetContainer.add(ValueObjectUtil.typeCast(v, elementType,dateformat,  locale));
 			}
 		}
 		else
@@ -5628,13 +5658,18 @@ public class ValueObjectUtil {
 			return valueto;
 		}
 	}
+	public static Object typeCastCollection(Object values,
+			Class targetContainerType, Class elementType,String dateformat ) {
+		return typeCastCollection(  values,
+				  targetContainerType,   elementType,  dateformat,null);
+	}
 	/**
 	 * @param values
 	 * @param targetContainer
 	 * @param objectType
 	 */
 	public static Object typeCastCollection(Object values,
-			Class targetContainerType, Class elementType,String dateformat) {
+			Class targetContainerType, Class elementType,String dateformat,Locale locale) {
 		if(values == null)
 			return null;
 		Collection targetContainer = createCollection( targetContainerType);
@@ -5643,12 +5678,12 @@ public class ValueObjectUtil {
 			for(int i = 0 ;  i < Array.getLength(values);i ++)
 			{
 				Object v = Array.get(values,i);
-				targetContainer.add(ValueObjectUtil.typeCast(v, elementType,dateformat));
+				targetContainer.add(ValueObjectUtil.typeCast(v, elementType,dateformat,  locale));
 			}
 		}
 		else
 		{
-			targetContainer.add(ValueObjectUtil.typeCast(values, elementType,dateformat));
+			targetContainer.add(ValueObjectUtil.typeCast(values, elementType,dateformat,  locale));
 		}
 		return targetContainer;
 		

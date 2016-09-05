@@ -279,6 +279,22 @@ public class DataFormatUtil {
 			return temp;
 		}
 	}
+	public static SimpleDateFormat getSimpleDateFormat( String dateFormat,Locale locale)
+	{
+		DataFormat dataFormatUtil = getDateformatThreadLocal();
+		if(dataFormatUtil == null)
+		{
+			
+			SimpleDateFormat format = locale == null ?new SimpleDateFormat(dateFormat):new SimpleDateFormat(dateFormat, locale);
+			 
+			return format;
+		}
+		else
+		{
+			SimpleDateFormat temp = dataFormatUtil.getSimpleDateFormat(dateFormat,locale);
+			return temp;
+		}
+	}
 	public static SimpleDateFormat getSimpleDateFormat( String dateFormat,Locale locale,String timeZone)
 	{
 		DataFormat dataFormatUtil = getDateformatThreadLocal();

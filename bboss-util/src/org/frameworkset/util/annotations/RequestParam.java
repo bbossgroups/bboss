@@ -34,6 +34,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface RequestParam {
+	String locale() default "";
 	/**
 	 * 参数名称，默认为""
 	 * @return

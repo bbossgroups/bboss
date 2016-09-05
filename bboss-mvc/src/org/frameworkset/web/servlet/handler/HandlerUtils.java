@@ -25,12 +25,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -604,6 +606,7 @@ public abstract class HandlerUtils {
 		List<MethodParameter> methodParameters = methodParameter_
 				.getMultiAnnotationParams();
 		String dateformat = null;
+		Locale locale = null;
 
 		for (MethodParameter methodParameter : methodParameters) {
 			String requestParamName = ParameterUtil.getParameterName(methodParameter,  request, 0);
@@ -617,6 +620,7 @@ public abstract class HandlerUtils {
 					dateformat = requestParam.dateformat();
 //					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
 //						dateformat = null;
+					locale = requestParam.getLocale();
 					paramValue = evaluateStringParam(requestParam, request,
 							requestParamName, type, editor);
 				} else {
@@ -634,7 +638,7 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.PATHVARIABLE) {
 				if (methodParameter.getPathVariable() != null) {
 					dateformat = methodParameter.getPathVariable().dateformat();
-
+					locale = methodParameter.getPathVariable().getLocale();
 				}
 				if (pathVarDatas != null) {
 					if (methodParameter.getPathVariable() != null) {
@@ -677,7 +681,7 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.PAGECONTEXT_APPLICATION_SCOPE) {
 				if (methodParameter.getAttribute() != null) {
 					dateformat = methodParameter.getAttribute().dateformat();
-
+					locale = methodParameter.getAttribute().getLocale();
 				}
 				paramValue = pageContext.getAttribute(requestParamName,
 						PageContext.APPLICATION_SCOPE);
@@ -685,7 +689,7 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.PAGECONTEXT_PAGE_SCOPE) {
 				if (methodParameter.getAttribute() != null) {
 					dateformat = methodParameter.getAttribute().dateformat();
-
+					locale = methodParameter.getAttribute().getLocale();
 				}
 				paramValue = pageContext.getAttribute(requestParamName,
 						PageContext.PAGE_SCOPE);
@@ -693,7 +697,7 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.PAGECONTEXT_REQUEST_SCOPE) {
 				if (methodParameter.getAttribute() != null) {
 					dateformat = methodParameter.getAttribute().dateformat();
-
+					locale = methodParameter.getAttribute().getLocale();
 				}
 				paramValue = pageContext.getAttribute(requestParamName,
 						PageContext.REQUEST_SCOPE);
@@ -701,6 +705,7 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.PAGECONTEXT_SESSION_SCOPE) {
 				if (methodParameter.getAttribute() != null) {
 					dateformat = methodParameter.getAttribute().dateformat();
+					locale = methodParameter.getAttribute().getLocale();
 
 				}
 				paramValue = pageContext.getAttribute(requestParamName,
@@ -709,7 +714,7 @@ public abstract class HandlerUtils {
 			} else if (methodParameter.getDataBindScope() == Scope.COOKIE) {
 				if (methodParameter.getCookieValue() != null) {
 					dateformat = methodParameter.getCookieValue().dateformat();
-
+					locale = methodParameter.getCookieValue().getLocale();
 				}
 				paramValue = resolveCookieValue(methodParameter, request);
 				// userEditor = false;
@@ -724,6 +729,7 @@ public abstract class HandlerUtils {
 				if (methodParameter.getRequestHeader() != null) {
 					dateformat = methodParameter.getRequestHeader()
 							.dateformat();
+					locale = methodParameter.getRequestHeader().getLocale();
 
 				}
 				paramValue = resolveRequestHeader(methodParameter, request);
@@ -761,12 +767,12 @@ public abstract class HandlerUtils {
 							if(!ValueObjectUtil.isCollectionType(type))
 							{
 								paramValue = ValueObjectUtil.typeCast(paramValue,
-										type, dateformat);
+										type, dateformat,locale);
 							}
 							else
 							{
 								Class elementType = methodInfo.getGenericParameterType(methodParameter_.getParameterIndex());
-								paramValue = ValueObjectUtil.typeCastCollection(paramValue, type, elementType, dateformat);
+								paramValue = ValueObjectUtil.typeCastCollection(paramValue, type, elementType, dateformat,locale);
 							}
 						}
 						else
@@ -1663,8 +1669,7 @@ public abstract class HandlerUtils {
 		Enumeration<String> headerValues = webRequest.getHeaders(headerName);
 		if (headerValues != null) {
 			List<String> result = new ArrayList<String>();
-			for (Enumeration<String> iterator_ = webRequest
-					.getHeaders(headerName); iterator_.hasMoreElements();) {
+			for (Enumeration<String> iterator_ = headerValues; iterator_.hasMoreElements();) {
 				result.add(iterator_.nextElement());
 			}
 			headerValue = (result.size() == 1 ? result.get(0) : result
@@ -3824,72 +3829,143 @@ public abstract class HandlerUtils {
 				) throws IOException,
 				HttpMediaTypeNotAcceptableException {
 			HttpMessageConverter defaultMessageConverter = null;
-			String datatype = responsebodyAnno.datatype();
-			MediaType responseMediaType = responsebodyAnno.getResponseMediaType();
-			if(responsebodyAnno.isEval())
+			MediaType responseMediaType = null;
+			List<MediaType> allSupportedMediaTypes = null;
+			if(responsebodyAnno != null)
 			{
-				List<MediaType> acceptedMediaTypes = inputMessage.getHeaders()
-						.getAccept();
-				for(int i = 0; acceptedMediaTypes != null && i < acceptedMediaTypes.size();i ++)
+				String datatype = responsebodyAnno.datatype();
+				  responseMediaType = responsebodyAnno.getResponseMediaType();
+				if(responsebodyAnno.isEval())
 				{
-					MediaType mediaType = acceptedMediaTypes.get(i);
-					if(mediaType.isJson())
+					List<MediaType> acceptedMediaTypes = inputMessage.getHeaders()
+							.getAccept();
+					for(int i = 0; acceptedMediaTypes != null && i < acceptedMediaTypes.size();i ++)
 					{
-						responseMediaType = HttpMessageConverter.jsonmediatypes[0];
-						datatype = ValueConstants.datatype_json;
-						break;
-					}
-					else if(mediaType.isJsonp())
-					{
-						responseMediaType = HttpMessageConverter.jsonmediatypes[0];
-						datatype = ValueConstants.datatype_jsonp;
-						break;
-					}
-					
-				}
-			}
-			
-			Class<?> returnValueType = returnValue.getClass();
-			List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
-			if (getMessageConverters() != null) {
-				
-				
-					for (HttpMessageConverter messageConverter : getMessageConverters()) {
-						if(defaultMessageConverter == null && messageConverter.isdefault())
-							defaultMessageConverter = messageConverter;
-						if (messageConverter.canWrite(datatype))
-						
-//						if (messageConverter.canWrite(returnValueType,
-//								acceptedMediaType)) 
+						MediaType mediaType = acceptedMediaTypes.get(i);
+						if(mediaType.isJson())
 						{
-							messageConverter.write(returnValue,
-									responseMediaType, outputMessage,
-									inputMessage );
-							// if (logger.isDebugEnabled()) {
-							// MediaType contentType = outputMessage
-							// .getHeaders().getContentType();
-							// if (contentType == null) {
-							// contentType = acceptedMediaType;
-							// }
-							// logger
-							// .debug("Written [" + returnValue
-							// + "] as \"" + contentType
-							// + "\" using ["
-							// + messageConverter + "]");
-							// }
-							this.responseArgumentUsed = true;
-							return;
+							responseMediaType = HttpMessageConverter.jsonmediatypes[0];
+							datatype = ValueConstants.datatype_json;
+							break;
+						}
+						else if(mediaType.isJsonp())
+						{
+							responseMediaType = HttpMessageConverter.jsonmediatypes[0];
+							datatype = ValueConstants.datatype_jsonp;
+							break;
 						}
 						
 					}
+				}
 				
-				if(defaultMessageConverter != null)
-				{
-					defaultMessageConverter.write(returnValue,
-							defaultMessageConverter.getDefaultAcceptedMediaType(), outputMessage,
-							inputMessage );
-					this.responseArgumentUsed = true;
-					return;
+				Class<?> returnValueType = returnValue.getClass();
+				allSupportedMediaTypes = new ArrayList<MediaType>();
+				if (getMessageConverters() != null) {
+					
+					
+						for (HttpMessageConverter messageConverter : getMessageConverters()) {
+							if(defaultMessageConverter == null && messageConverter.isdefault())
+								defaultMessageConverter = messageConverter;
+							if (messageConverter.canWrite(datatype))
+							
+	//						if (messageConverter.canWrite(returnValueType,
+	//								acceptedMediaType)) 
+							{
+								messageConverter.write(returnValue,
+										responseMediaType, outputMessage,
+										inputMessage );
+								// if (logger.isDebugEnabled()) {
+								// MediaType contentType = outputMessage
+								// .getHeaders().getContentType();
+								// if (contentType == null) {
+								// contentType = acceptedMediaType;
+								// }
+								// logger
+								// .debug("Written [" + returnValue
+								// + "] as \"" + contentType
+								// + "\" using ["
+								// + messageConverter + "]");
+								// }
+								this.responseArgumentUsed = true;
+								return;
+							}
+							
+						}
+					
+					if(defaultMessageConverter != null)
+					{
+						defaultMessageConverter.write(returnValue,
+								defaultMessageConverter.getDefaultAcceptedMediaType(), outputMessage,
+								inputMessage );
+						this.responseArgumentUsed = true;
+						return;
+					}
+				}
+			}
+			else
+			{
+				List<MediaType> acceptedMediaTypes = inputMessage.getHeaders()
+				.getAccept();
+				boolean usecustomMediaTypeByMethod = false;
+				if (acceptedMediaTypes.isEmpty()) {
+					if (responseMediaType == null)
+						acceptedMediaTypes = Collections
+								.singletonList(MediaType.ALL);
+					else
+						acceptedMediaTypes = Collections
+								.singletonList(responseMediaType);
+		
+				} else {
+					if (responseMediaType != null) {
+						acceptedMediaTypes.clear();
+						acceptedMediaTypes.add(responseMediaType);
+						usecustomMediaTypeByMethod = true;
+					} else {
+						MediaType.sortByQualityValue(acceptedMediaTypes);
+					}
+				}
+				Class<?> returnValueType = returnValue.getClass();
+				allSupportedMediaTypes = new ArrayList<MediaType>();
+				if (getMessageConverters() != null) {
+					
+					for (MediaType acceptedMediaType : acceptedMediaTypes) {
+						for (HttpMessageConverter messageConverter : getMessageConverters()) {
+							if(defaultMessageConverter == null && messageConverter.isdefault())
+								defaultMessageConverter = messageConverter;
+//							if (messageConverter.canWrite(returnValueType))
+//							
+							if (messageConverter.canWrite(returnValueType,
+									acceptedMediaType)) 
+							{
+								messageConverter.write(returnValue,
+										responseMediaType, outputMessage,
+										inputMessage );
+								// if (logger.isDebugEnabled()) {
+								// MediaType contentType = outputMessage
+								// .getHeaders().getContentType();
+								// if (contentType == null) {
+								// contentType = acceptedMediaType;
+								// }
+								// logger
+								// .debug("Written [" + returnValue
+								// + "] as \"" + contentType
+								// + "\" using ["
+								// + messageConverter + "]");
+								// }
+								this.responseArgumentUsed = true;
+								return;
+							}
+							
+						}
+					}
+					if(defaultMessageConverter != null)
+					{
+						defaultMessageConverter.write(returnValue,
+								defaultMessageConverter.getDefaultAcceptedMediaType(), outputMessage,
+								inputMessage );
+						this.responseArgumentUsed = true;
+						return;
+					}
 				}
 			}
 			

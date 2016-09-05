@@ -32,6 +32,16 @@ public class ResponseEntity<T> extends HttpEntity<T> {
 
 	/**
 	 * Create a new {@code ResponseEntity} with the given body and status code, and no headers.
+	 
+	 * @param statusCode the status code
+	 */
+	public ResponseEntity(HttpStatus statusCode) {
+		super((T)null);
+		this.statusCode = statusCode;
+	}
+	
+	/**
+	 * Create a new {@code ResponseEntity} with the given body and status code, and no headers.
 	 * @param body the entity body
 	 * @param statusCode the status code
 	 */
@@ -39,6 +49,7 @@ public class ResponseEntity<T> extends HttpEntity<T> {
 		super(body);
 		this.statusCode = statusCode;
 	}
+
 
 	/**
 	 * Create a new {@code HttpEntity} with the given headers and status code, and no body.

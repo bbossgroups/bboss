@@ -34,6 +34,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Attribute {
+	String locale() default "";
 	String name()  default "";
 	boolean required() default false;
 	String editor() default "";

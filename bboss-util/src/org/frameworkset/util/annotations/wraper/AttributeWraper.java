@@ -15,9 +15,13 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
+import java.util.Locale;
+
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.Attribute;
 import org.frameworkset.util.annotations.AttributeScope;
+
+import com.frameworkset.util.SimpleStringUtil;
 
 /**
  * 
@@ -41,6 +45,7 @@ public class AttributeWraper {
 	 * @return
 	 */
 	private String dateformat;
+	private Locale locale;
 	public AttributeWraper(Attribute attr)
 	{
 		required = attr.required();
@@ -49,7 +54,17 @@ public class AttributeWraper {
 		this.scope = attr.scope();
 		this.dateformat =  AnnotationUtils.converDefaultValue(attr.dateformat());
 		this.defaultvalue = AnnotationUtils.converDefaultValue(attr.defaultvalue());
-		
+		if(SimpleStringUtil.isNotEmpty(attr.locale() ))
+		 {
+			 try
+			 {
+				 locale = new Locale(attr.locale());
+			 }
+			 catch(Exception e)
+			 {
+				 
+			 }
+		 }
 //		name = attr。name();
 //		required =  attr。required();
 //		editor =  attr。editor() ;
@@ -78,6 +93,9 @@ public class AttributeWraper {
 	}
 	public String dateformat() {
 		return dateformat;
+	}
+	public Locale getLocale() {
+		return locale;
 	}
 
 }

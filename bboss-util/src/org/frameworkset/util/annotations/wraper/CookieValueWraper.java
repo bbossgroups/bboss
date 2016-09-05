@@ -15,8 +15,12 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
+import java.util.Locale;
+
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.CookieValue;
+
+import com.frameworkset.util.SimpleStringUtil;
 
 
 /**
@@ -30,6 +34,7 @@ import org.frameworkset.util.annotations.CookieValue;
  * @version 1.0
  */
 public class CookieValueWraper {
+	private Locale locale;
 	public CookieValueWraper( CookieValue  cookieValue)
 	{
 		name = cookieValue.name();
@@ -37,6 +42,17 @@ public class CookieValueWraper {
 		editor = cookieValue.editor();
 		defaultvalue = AnnotationUtils.converDefaultValue(cookieValue.defaultvalue());
 		dateformat = AnnotationUtils.converDefaultValue(cookieValue.dateformat());
+		if(SimpleStringUtil.isNotEmpty(cookieValue.locale() ))
+		 {
+			 try
+			 {
+				 locale = new Locale(cookieValue.locale());
+			 }
+			 catch(Exception e)
+			 {
+				 
+			 }
+		 }
 	}
 	
 	/**
@@ -104,6 +120,10 @@ public class CookieValueWraper {
 	 */
 	public String dateformat(){
 		return dateformat;
+	}
+
+	public Locale getLocale() {
+		return locale;
 	}
 
 }

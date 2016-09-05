@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface CookieValue {
-
+	String locale() default "";
 	/**
 	 * The name of the cookie to bind to.
 	 */

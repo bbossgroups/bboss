@@ -15,8 +15,12 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
+import java.util.Locale;
+
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.RequestHeader;
+
+import com.frameworkset.util.SimpleStringUtil;
 
 /**
  * <p>RequestHeaderWraper.java</p>
@@ -53,6 +57,7 @@ public class RequestHeaderWraper {
 	private   String  editor;
 
 	private   String dateformat;
+	private Locale locale;
 	public RequestHeaderWraper(RequestHeader header) {
 		/**
 		 * The name of the request header to bind to.
@@ -78,6 +83,17 @@ public class RequestHeaderWraper {
 		  editor = header.editor();
 
 		dateformat = AnnotationUtils.converDefaultValue(header.dateformat());
+		if(SimpleStringUtil.isNotEmpty(header.locale() ))
+		 {
+			 try
+			 {
+				 locale = new Locale(header.locale());
+			 }
+			 catch(Exception e)
+			 {
+				 
+			 }
+		 }
 	}
 	/**
 	 * The name of the request header to bind to.
@@ -112,6 +128,9 @@ public class RequestHeaderWraper {
 
 	public String dateformat(){
 		return this.dateformat;
+	}
+	public Locale getLocale() {
+		return locale;
 	}
 
 }

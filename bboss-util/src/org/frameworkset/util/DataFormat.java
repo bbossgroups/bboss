@@ -98,6 +98,32 @@ public class DataFormat {
 		}
 		return format;
 	}
+	public SimpleDateFormat getSimpleDateFormat(String dateFormat,Locale locale)
+	{
+		initdateformat();
+		SimpleDateFormat format = null;
+		if(locale == null)
+		{
+			String key = dateFormat;
+			format = this.dateformat.get(key);
+			if(format != null)
+				return format;
+			format = new SimpleDateFormat(dateFormat);
+			 
+			dateformat.put(key, format);
+		}
+		else
+		{
+			String key =  new StringBuilder().append(dateFormat).append("_").append(locale.toString()).toString();
+			format = this.dateformat.get(key);
+			if(format != null)
+				return format;
+			format = new SimpleDateFormat(dateFormat,locale);
+			 
+			dateformat.put(key, format);
+		}
+		return format;
+	}
 	
 	public SimpleDateFormat getSimpleDateFormat(String dateFormat,Locale locale,String tz)
 	{

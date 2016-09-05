@@ -15,8 +15,12 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
+import java.util.Locale;
+
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.PathVariable;
+
+import com.frameworkset.util.SimpleStringUtil;
 
 /**
  * <p>PathVariableWraper.java</p>
@@ -54,7 +58,9 @@ public class PathVariableWraper {
 	 * @return
 	 */
 	private String dateformat;
+	private Locale locale;
 	public PathVariableWraper(PathVariable pv) {
+		
 		 value = pv.value();
 		 editor = pv.editor();
 		 defaultvalue = AnnotationUtils.converDefaultValue(pv.defaultvalue());
@@ -80,6 +86,17 @@ public class PathVariableWraper {
 		 * @return
 		 */
 		 dateformat = AnnotationUtils.converDefaultValue(pv.dateformat());
+		 if(SimpleStringUtil.isNotEmpty(pv.locale() ))
+		 {
+			 try
+			 {
+				 locale = new Locale(pv.locale());
+			 }
+			 catch(Exception e)
+			 {
+				 
+			 }
+		 }
 	}
 	
 	public String value(){
@@ -120,6 +137,10 @@ public class PathVariableWraper {
 	 */
 	public String dateformat(){
 		return this.dateformat;
+	}
+
+	public Locale getLocale() {
+		return locale;
 	}
 
 }

@@ -59,5 +59,6 @@ public @interface RequestHeader {
 	String  editor() default "";
 
 	String dateformat()default ValueConstants.DEFAULT_NONE;
+	String locale() default "";
 
 }

@@ -15,11 +15,14 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
+import java.util.Locale;
+
 import org.frameworkset.util.annotations.AnnotationUtils;
 
 import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.util.ColumnEditorInf;
 import com.frameworkset.util.EditorInf;
+import com.frameworkset.util.SimpleStringUtil;
 
 /**
  * <p>ColumnWraper.java</p>
@@ -45,6 +48,7 @@ public class ColumnWraper {
 	private boolean inited;
 	private boolean ignoreCUDbind = false;
 	private boolean ignorebind = false;
+	private Locale locale;
 	public ColumnWraper(Column column) {
 		dataformat =  AnnotationUtils.converDefaultValue(column.dataformat());
 		editorparams =  AnnotationUtils.converDefaultValue(column.editorparams());
@@ -55,6 +59,17 @@ public class ColumnWraper {
 		this.editor = AnnotationUtils.converDefaultValue(column.editor());
 		this.ignoreCUDbind = column.ignoreCUDbind();
 		this.ignorebind = column.ignorebind();
+		if(SimpleStringUtil.isNotEmpty(column.locale() ))
+		 {
+			 try
+			 {
+				 locale = new Locale(column.locale());
+			 }
+			 catch(Exception e)
+			 {
+				 
+			 }
+		 }
 	}
 	public String dataformat(){
 		return dataformat;
@@ -104,6 +119,9 @@ public class ColumnWraper {
 	
 	public boolean ignorebind() {
 		return ignorebind;
+	}
+	public Locale getLocale() {
+		return locale;
 	}
 
 }
