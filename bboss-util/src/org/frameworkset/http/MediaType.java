@@ -557,5 +557,63 @@ public class MediaType extends MimeType implements Serializable {
 			return super.compareParameters(mediaType1, mediaType2);
 		}
 	};
+	
+	public static MediaType convertMediaType(String type,String charset)
+	{
+		MediaType temp = null;		 
+		
+//		String type =  datatype();
+//		String charset =  charset();
+		if(type == null)
+		{
+			if(charset != null)
+			{
+				temp = new MediaType("text","html",Charset.forName(charset));
+			}
+			else
+			{
+				temp = new MediaType("text","html",Charset.forName("UTF-8"));
+			}
+		}
+		else if(type.equals("json"))
+		{
+			if(charset != null)
+			{
+				temp = new MediaType("application","json",Charset.forName(charset));
+			}
+			else
+				temp = new MediaType("application","json",Charset.forName("UTF-8"));
+		}
+		else if(type.equals("jsonp"))
+		{
+			if(charset != null)
+			{
+				temp = new MediaType("application","jsonp",Charset.forName(charset));
+			}
+			else
+				temp = new MediaType("application","jsonp",Charset.forName("UTF-8"));
+		}
+		
+		else if(type.equals("xml"))
+		{
+			if(charset != null)
+			{
+				temp = new MediaType("application","xml",Charset.forName(charset));
+			}
+			else
+				temp = new MediaType("application","xml",Charset.forName("UTF-8"));
+		}
+		else if(type.equals("javascript"))
+		{
+			if(charset != null)
+			{
+				temp = new MediaType("application","javascript",Charset.forName(charset));
+			}
+			else
+				temp = new MediaType("application","javascript",Charset.forName("UTF-8"));
+		}
+			//javascript
+		return temp;
+	}
 
 }
