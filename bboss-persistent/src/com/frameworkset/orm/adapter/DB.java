@@ -50,6 +50,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.util.annotations.DateFormateMeta;
 
 import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.SQLExecutor;
@@ -832,25 +833,31 @@ public abstract class DB implements  IDMethod,Platform
 		    
 	    }
 	    
-	    public java.sql.Date getDate(String date,String format) throws ParseException
+	    public java.sql.Date getDate(String date,DateFormateMeta  dateFormateMeta) throws ParseException
 	    {
-	        if(format == null || format.equals(""))
+	    	String format = null;
+	        if(dateFormateMeta == null )
 	        {
 	            format = this.getJavaDateFormat();
 	        }
-	        SimpleDateFormat f = new SimpleDateFormat(format);
+	        else
+	        	format = dateFormateMeta.getDateformat();
+	        SimpleDateFormat f = dateFormateMeta == null?new SimpleDateFormat(format):new SimpleDateFormat(format,dateFormateMeta.getLocale());
 	        Date _date = f.parse(date);
 	        java.sql.Date ret = new java.sql.Date(_date.getTime());
 	        return ret;
 	    }
 	    
-	    public Timestamp getTimestamp(String timestamp,String format) throws ParseException
+	    public Timestamp getTimestamp(String timestamp,DateFormateMeta dateFormateMeta) throws ParseException
         {
-            if(format == null || format.equals(""))
-            {
-                format = this.getJavaDateFormat();
-            }
-            SimpleDateFormat f = new SimpleDateFormat(format);
+	    	String format = null;
+	        if(dateFormateMeta == null )
+	        {
+	            format = this.getJavaDateFormat();
+	        }
+	        else
+	        	format = dateFormateMeta.getDateformat();
+	        SimpleDateFormat f = dateFormateMeta == null?new SimpleDateFormat(format):new SimpleDateFormat(format,dateFormateMeta.getLocale());
             Date date = f.parse(timestamp);
             Timestamp timestamp_ = new Timestamp(date.getTime());
             return timestamp_;

@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -40,6 +41,7 @@ import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
+import org.frameworkset.util.annotations.DateFormateMeta;
 import org.frameworkset.util.annotations.wraper.ColumnWraper;
 
 import com.frameworkset.common.poolman.sql.IdGenerator;
@@ -979,7 +981,8 @@ public class SQLParams
 		ClassInfo beanInfo = ClassUtil.getClassInfo(bean.getClass());
 		params.setOldsql(sql);
 		String name = null;
-		String dataformat = null;
+		DateFormateMeta dataformat = null;
+ 
 		String charset = null;
 		Object value =  null;
 		Class type = null;
@@ -1105,7 +1108,8 @@ public class SQLParams
 						if(editor == null || editor instanceof ColumnToFieldEditor)
 						{
 
-							dataformat = column.dataformat();
+							dataformat = column.getDateFormateMeta();
+							 
 							charset = column.charset();
 							
 							String type_ = column.type();
@@ -1154,11 +1158,12 @@ public class SQLParams
 					}
 					
 					sqltype = SQLParams.getParamJavaType(name,type);
-					params.addSQLParam(name, value, sqltype, dataformat,charset);
+					params.addSQLParamWithDateFormateMeta(name, value, sqltype, dataformat,charset);
 					
 				}
 				name = null; value = null; sqltype = null; 
 				dataformat = null;
+				 
 				charset = null;
 				
 				
@@ -1180,7 +1185,18 @@ public class SQLParams
 		return params;
 		
 	}
-    private Object handleData(String name,Object value, String type,String dataformat) throws SetSQLParamException 
+	 private Object handleData(String name,Object value, String type,String dataformat) throws SetSQLParamException 
+	 {
+		 if(dataformat == null || dataformat.equals(""))
+			 return handleDataWithDateFormateMeta(name,value, type,(DateFormateMeta)null);
+		 else
+		 {
+			 DateFormateMeta dd = new DateFormateMeta();
+			 dd.setDateformat(dataformat);
+			 return handleDataWithDateFormateMeta(name,value, type,dd);
+		 }
+	 }
+    private Object handleDataWithDateFormateMeta(String name,Object value, String type,DateFormateMeta dataformat) throws SetSQLParamException 
     {
         if(type.equals(STRING))  
         {
@@ -1266,18 +1282,18 @@ public class SQLParams
             }
             catch (Exception e)
             {
-                throw new SetSQLParamException("非法绑定变量的值或格式：name"                        
-                        + "="
-                        + name 
-                        + ",value"                        
-                        + "="
-                        + value
-                        + ",type"                        
-                        + "="
-                        + type
-                        + ",dataformat"                        
-                        + "="
-                        + dataformat
+                throw new SetSQLParamException(new StringBuilder().append("非法绑定变量的值或格式：name")
+                		.append( "=")
+                		.append( name)
+                		.append( ",value")
+                		.append( "=")
+                		.append( value)
+                		.append( ",type")
+                		.append( "=")
+                		.append( type)
+                		.append( ",dataformat")
+                		.append( "=")
+                		.append( dataformat).toString()
                         ,e);
             }
         }
@@ -1392,6 +1408,10 @@ public class SQLParams
     {
     	addSQLParam(name, value, -100,type,dataformat,charset) ;
     }
+    public void addSQLParamWithDateFormateMeta(String name, Object value, String type,DateFormateMeta dataformat,String charset) throws SetSQLParamException
+    {
+    	addSQLParamWithDateFormateMeta(name, value, -100,type,dataformat,charset) ;
+    }
     /**
      * 添加sql参数，由DefaultDataInfoImpl进行处理
      * @param name
@@ -1405,6 +1425,53 @@ public class SQLParams
     	addSQLParam(name, value, size,type,dataformat,(String )null);
         
     }
+    public void addSQLParamWithDateFormateMeta(String name, Object value, long size,String type,DateFormateMeta dataformat,String charset) throws SetSQLParamException
+    {   
+        if(sqlparams == null)
+        {
+            sqlparams = new HashMap<String,Param>();
+        }
+        Param param = new Param();
+        Object data_ = null;
+        if(type == null)
+        {
+            type = STRING;
+        }
+        type = type.toLowerCase();
+        if(value == null)
+        {
+        	if(!type.equals(OBJECT))
+        	{
+	            data_ = new Integer(this.converttypeToSqltype(type));
+	            type = NULL;            
+        	}
+        }
+        else
+        {            
+        	
+            data_ = handleDataWithDateFormateMeta(name,value, type,dataformat);
+            if(type.equals(DATE))
+        	{
+        		type = TIMESTAMP;
+        	}
+        }
+        param.setName(name);
+        if(size < 0)
+        {
+        	param.setData(data_);
+        }
+        else
+        {
+        	param.setData(new Object[] {data_,size});
+        }
+        param.setType(type);
+        param.setCharset(charset);
+        String method = this.converttypeToMethod(type);
+        param.setMethod(method);
+        param.setDataformat(dataformat.getDateformat());
+        this.sqlparams.put(param.getName(), param);
+    }
+     
     /**
      * 添加sql参数，由DefaultDataInfoImpl进行处理
      * @param name

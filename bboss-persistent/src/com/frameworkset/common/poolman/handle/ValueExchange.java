@@ -16,6 +16,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 import org.frameworkset.util.annotations.wraper.ColumnWraper;
 
@@ -1550,14 +1551,14 @@ public class ValueExchange {
 		return ret;
 	}
 	
-	public static String toStringDate(Date date, String dataformat) {
+	public static String toStringDate(Date date, String dataformat,Locale locale) {
 		//进行转换函数处理
 		if(date == null)
 			return null;
 		if(dataformat != null && !"".equals(dataformat)){
-			return ValueObjectUtil.getDateFormat(dataformat).format(date);
+			return ValueObjectUtil.getDateFormat(dataformat,locale).format(date);
 		}else {
-			return ValueObjectUtil.getDateFormat(null).format(date);
+			return ValueObjectUtil.getDateFormat(null,locale).format(date);
 		}
 	}
 	
@@ -1662,14 +1663,14 @@ public class ValueExchange {
 	}
 
 	public static String toStringTimeStamp(Timestamp timestamp,
-			String dataformat) {
+			String dataformat,Locale locale) {
 		//进行转换函数处理
 		if(timestamp == null)
 			return null;
 		if(dataformat != null && !"".equals(dataformat)){
-			return ValueObjectUtil.getDateFormat(dataformat).format(timestamp);
+			return ValueObjectUtil.getDateFormat(dataformat,  locale).format(timestamp);
 		}else {
-			return ValueObjectUtil.getDateFormat(null).format(timestamp);
+			return ValueObjectUtil.getDateFormat(null,  locale).format(timestamp);
 		}
 	}
 	

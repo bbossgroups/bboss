@@ -185,40 +185,22 @@ public class TestPreparedBatch {
 				tm.rollback();
 			}
 		} catch (SQLException e) {
-			try {
-				tm.rollback();
-			} catch (RollbackException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			 
 			e.printStackTrace();
 		} catch (TransactionException e) {
-			try {
-				tm.rollback();
-			} catch (RollbackException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
+			 			e.printStackTrace();
 		} catch (RollbackException e) {
-			try {
-				tm.rollback();
-			} catch (RollbackException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			 
 			e.printStackTrace();
 		}
 		catch (Exception e) {
-			try {
-				tm.rollback();
-			} catch (RollbackException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			 
 			e.printStackTrace();
 		}
-		
+		finally
+		{
+			tm.release();
+		}
 		
 		 
 		
