@@ -36,7 +36,7 @@ public class HttpEntity<T> {
 
 	private final HttpHeaders headers;
 
-	private final T body;
+	protected final T body;
 
 
 	/**

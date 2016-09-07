@@ -1672,8 +1672,9 @@ public abstract class HandlerUtils {
 			for (Enumeration<String> iterator_ = headerValues; iterator_.hasMoreElements();) {
 				result.add(iterator_.nextElement());
 			}
-			headerValue = (result.size() == 1 ? result.get(0) : result
-					.toArray());
+			if(result.size() > 0)
+				headerValue = (result.size() == 1 ? result.get(0) : result
+						.toArray());
 			// return headerValue;
 		}
 		// if (headerValue == null ) {
@@ -3814,7 +3815,15 @@ public abstract class HandlerUtils {
 				outputMessage.getHeaders().putAll(entityHeaders);
 			}
 			Object body = responseEntity.getBody();
+			
 			if (body != null) {
+				if(responsebodyAnno == null)
+				{
+					if(responseEntity instanceof ResponseEntity)
+					{
+						responsebodyAnno = ((ResponseEntity)responseEntity).getReponseBodyWraper();
+					}
+				}
 				writeWithMessageConverters(  responsebodyAnno,body, inputMessage, outputMessage 
 						 );
 			} else {
@@ -3932,26 +3941,14 @@ public abstract class HandlerUtils {
 						for (HttpMessageConverter messageConverter : getMessageConverters()) {
 							if(defaultMessageConverter == null && messageConverter.isdefault())
 								defaultMessageConverter = messageConverter;
-//							if (messageConverter.canWrite(returnValueType))
-//							
+ 							
 							if (messageConverter.canWrite(returnValueType,
 									acceptedMediaType)) 
 							{
 								messageConverter.write(returnValue,
 										responseMediaType, outputMessage,
 										inputMessage );
-								// if (logger.isDebugEnabled()) {
-								// MediaType contentType = outputMessage
-								// .getHeaders().getContentType();
-								// if (contentType == null) {
-								// contentType = acceptedMediaType;
-								// }
-								// logger
-								// .debug("Written [" + returnValue
-								// + "] as \"" + contentType
-								// + "\" using ["
-								// + messageConverter + "]");
-								// }
+								 
 								this.responseArgumentUsed = true;
 								return;
 							}

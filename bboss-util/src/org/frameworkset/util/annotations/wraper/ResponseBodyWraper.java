@@ -17,7 +17,6 @@ package org.frameworkset.util.annotations.wraper;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.nio.charset.Charset;
 import java.sql.Blob;
 
 import org.frameworkset.http.FileBlob;
@@ -141,62 +140,21 @@ public class ResponseBodyWraper {
 		charset =AnnotationUtils.converDefaultValue( body.charset());
 		this.responseMediaType = convertMediaType();
 	}
+	public ResponseBodyWraper(String datatype,String charset,Class bodyType) {
+		this.datatype = datatype;
+		 if(this.datatype == null)
+			this.datatype = this.evalDataType(bodyType);
+		 
+	
+		 this.charset =charset;
+		this.responseMediaType = convertMediaType();
+	}
 	private MediaType convertMediaType()
 	{
-		MediaType temp = null;		 
 		
 		String type =  datatype();
 		String charset =  charset();
-		if(type == null)
-		{
-			if(charset != null)
-			{
-				temp = new MediaType("text","html",Charset.forName(charset));
-			}
-			else
-			{
-				temp = new MediaType("text","html",Charset.forName("UTF-8"));
-			}
-		}
-		else if(type.equals("json"))
-		{
-			if(charset != null)
-			{
-				temp = new MediaType("application","json",Charset.forName(charset));
-			}
-			else
-				temp = new MediaType("application","json",Charset.forName("UTF-8"));
-		}
-		else if(type.equals("jsonp"))
-		{
-			if(charset != null)
-			{
-				temp = new MediaType("application","jsonp",Charset.forName(charset));
-			}
-			else
-				temp = new MediaType("application","jsonp",Charset.forName("UTF-8"));
-		}
-		
-		else if(type.equals("xml"))
-		{
-			if(charset != null)
-			{
-				temp = new MediaType("application","xml",Charset.forName(charset));
-			}
-			else
-				temp = new MediaType("application","xml",Charset.forName("UTF-8"));
-		}
-		else if(type.equals("javascript"))
-		{
-			if(charset != null)
-			{
-				temp = new MediaType("application","javascript",Charset.forName(charset));
-			}
-			else
-				temp = new MediaType("application","javascript",Charset.forName("UTF-8"));
-		}
-			//javascript
-		return temp;
+		return MediaType.convertMediaType(type, charset);
 	}
 	/**
 	 * 指定响应的数据类型

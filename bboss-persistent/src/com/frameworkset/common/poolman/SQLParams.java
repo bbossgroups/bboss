@@ -1468,7 +1468,8 @@ public class SQLParams
         param.setCharset(charset);
         String method = this.converttypeToMethod(type);
         param.setMethod(method);
-        param.setDataformat(dataformat.getDateformat());
+        if(dataformat != null)
+        	param.setDataformat(dataformat.getDateformat());
         this.sqlparams.put(param.getName(), param);
     }
      
