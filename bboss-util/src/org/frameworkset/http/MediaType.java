@@ -564,7 +564,7 @@ public class MediaType extends MimeType implements Serializable {
 		
 //		String type =  datatype();
 //		String charset =  charset();
-		if(type == null)
+		if(type == null )
 		{
 			if(charset != null)
 			{
@@ -611,6 +611,17 @@ public class MediaType extends MimeType implements Serializable {
 			}
 			else
 				temp = new MediaType("application","javascript",Charset.forName("UTF-8"));
+		}
+		else if(type.equals("String") || type.equals("text")  ||type.equals("html")||type.equals("htm")  )
+		{
+			if(charset != null)
+			{
+				temp = new MediaType("text","html",Charset.forName(charset));
+			}
+			else
+			{
+				temp = new MediaType("text","html",Charset.forName("UTF-8"));
+			}
 		}
 			//javascript
 		return temp;
