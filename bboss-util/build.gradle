@@ -34,9 +34,7 @@ dependencies {
             [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonversion}",transitive: false],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonversion}",transitive: false],
             
-             [group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.10', transitive: false],
-            [group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.10', transitive: false],
-            [group: 'log4j', name: 'log4j', version: '1.2.17', transitive: false],
+           [group: 'log4j', name: 'log4j', version: '1.2.17', transitive: false],
             [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
             //[group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
             //[group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],
@@ -51,6 +49,8 @@ dependencies {
            
             //[group: 'com.uwyn', name: 'jhighlight', version: '1.0', transitive: false],
             //[group: 'bsh', name: 'bsh', version: '2.0b1', transitive: false],
+              [group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.10', transitive: false],
+            [group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.10', transitive: false],
             
     )
     
