@@ -21,6 +21,7 @@ import java.net.URL;
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
+import org.frameworkset.spi.assemble.soa.SOAServiceProviderManager;
 
 /**
  * <p>Title: SOAApplicationContext.java</p> 
@@ -125,7 +126,7 @@ public class SOAApplicationContext extends DefaultApplicationContext {
     {
     	try
     	{
-	    	providerManager = new ServiceProviderManager(this);
+	    	providerManager = _getServiceProviderManager();//new ServiceProviderManager(this);
 	    	providerManager.setSerial(serial);
 	    	if(this.instream == null)
 	    	{
@@ -239,6 +240,12 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 		return refvalue;
 		
     }
+
+	@Override
+	protected ServiceProviderManager _getServiceProviderManager() {
+		// TODO Auto-generated method stub
+		return new SOAServiceProviderManager(this);
+	}
 	
 	
 

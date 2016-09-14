@@ -354,7 +354,7 @@ public class ServiceProviderManager {
         	}
             LinkConfigFile linkconfigFile = new LinkConfigFile(url, managerImport.getFile(), parentFile);
 
-            ProviderParser handler = new ProviderParser(this.getApplicationContext(),url, linkconfigFile);
+            ProviderParser handler = _buildProviderParser(url,linkconfigFile);//new ProviderParser(this.getApplicationContext(),url, linkconfigFile);
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setNamespaceAware(false);
             factory.setValidating(false);
@@ -398,7 +398,7 @@ public class ServiceProviderManager {
     	Reader reader = null;
     		try
     		{
-            ProviderParser handler = new ProviderParser(this.getApplicationContext());
+            ProviderParser handler = _buildProviderParser();
             handler.setSerial(this.serial);
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setNamespaceAware(false);
@@ -434,13 +434,21 @@ public class ServiceProviderManager {
 
     }
     
+    protected ProviderParser _buildProviderParser()
+    {
+    	return new ProviderParser(this.getApplicationContext());
+    }
     
+    protected ProviderParser _buildProviderParser(String url,LinkConfigFile linkconfigFile)
+    {
+    	return new ProviderParser(this.getApplicationContext(),url, linkconfigFile);
+    }
     private void parseXML(InputStream in) {
 //    	InputStream in = null;
 //    	ByteArrayInputStream sr = null;
     		try
     		{
-            ProviderParser handler = new ProviderParser(this.getApplicationContext());
+            ProviderParser handler = _buildProviderParser();
             handler.setSerial(this.serial);
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setNamespaceAware(false);
@@ -483,7 +491,7 @@ public class ServiceProviderManager {
 //    	ByteArrayInputStream sr = null;
     		try
     		{
-            ProviderParser handler = new ProviderParser(this.getApplicationContext());
+            ProviderParser handler = _buildProviderParser();
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setNamespaceAware(false);
             factory.setValidating(false);
@@ -956,6 +964,11 @@ public class ServiceProviderManager {
     }
     private boolean started = true;
 	public synchronized void destroy() {
+		_destroy();
+		
+	}
+	
+	protected void _destroy() {
 		if(!started)
 			return;
 		started = false;

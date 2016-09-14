@@ -84,7 +84,7 @@ public class ProviderParser extends DefaultHandler
 
 	private Map<String,Pro> properties = new HashMap<String,Pro>();
     
-    private BaseApplicationContext applicationContext;  
+    protected BaseApplicationContext applicationContext;  
     
     
 
@@ -478,6 +478,11 @@ public class ProviderParser extends DefaultHandler
 
     }
     
+    protected Pro _buildPro()
+    {
+    	return new Pro(applicationContext);
+    }
+    
     @SuppressWarnings("unchecked")
     private void setFAttr(Pro property,Attributes attributes)
     {
@@ -510,7 +515,7 @@ public class ProviderParser extends DefaultHandler
     		
     		else if(name.startsWith("f:"))//通过property的属性来制定对象中field的值
     		{
-    			Pro f = new Pro(applicationContext);
+    			Pro f = this._buildPro();// new Pro(applicationContext);
     			
     			f.setName(name.substring(2));
     			
@@ -814,7 +819,7 @@ public class ProviderParser extends DefaultHandler
         if (name.equals("p") || name.equals("property"))
         {    
 
-        	Pro p = new Pro(applicationContext);
+        	Pro p = this._buildPro();// new Pro(applicationContext);
         	startProperty(p,s1, s2, name, attributes);
         	this.traceStack.push(p);
 
@@ -996,7 +1001,7 @@ public class ProviderParser extends DefaultHandler
         else if (name.equals("reference"))
         {
             ProviderManagerInfo providerManagerInfo = (ProviderManagerInfo) this.traceStack.peek();
-            Pro ref = new Pro(applicationContext);
+            Pro ref = this._buildPro();// new Pro(applicationContext);
             String fieldname = attributes.getValue("fieldname");
             if(fieldname == null)
                 fieldname = attributes.getValue("name");;

@@ -330,7 +330,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		}
 		if(init)
 		{
-			providerManager = new ServiceProviderManager(this);
+			providerManager = _getServiceProviderManager();
 			providerManager.init(docbaseType, docbase, configfile);
 		}
 		else
@@ -351,7 +351,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
     {
     	try
     	{
-	    	providerManager = new ServiceProviderManager(this);
+	    	providerManager = _getServiceProviderManager();
 	    	if(this.instream == null)
 	    	{
 	    		providerManager.init(docbaseType, docbase, configfile);
@@ -395,7 +395,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		}
 		if(init)
 		{
-			providerManager = new ServiceProviderManager(this,charset);
+			providerManager = _getServiceProviderManagerWithCharset(charset);//new ServiceProviderManager(this,charset);
 			providerManager.init(docbaseType, docbase, configfile);
 		}
 		else
@@ -425,7 +425,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		}
 		if(init)
 		{
-			providerManager = new ServiceProviderManager(this);
+			providerManager = _getServiceProviderManager();
 			providerManager.init(docbaseType, docbase, 
 					instream);
 		}
@@ -455,7 +455,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		{
 			this.needRecordFile = false;
 		}
-		providerManager = new ServiceProviderManager(this);
+		providerManager = _getServiceProviderManager();
 //		providerManager.init(docbaseType, docbase, 
 //				instream);
 		providerManager.init(docbaseType, "", configfile,instream);
@@ -470,11 +470,20 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		this.isfile = false;
 		this.configfile = path;
 		this.needRecordFile = false;
-		providerManager = new ServiceProviderManager(this);
+		providerManager = _getServiceProviderManager();
 		providerManager.init(AssembleCallback.classpathprex, "", configfile,file);
 	}
 	public BaseApplicationContext(InputStream instream, boolean isfile,boolean init) {
 		this(AssembleCallback.classpathprex, "", (InputStream)instream,isfile, init);
+	}
+	
+	protected ServiceProviderManager _getServiceProviderManager()
+	{
+		return new ServiceProviderManager(this); 
+	}
+	protected ServiceProviderManager _getServiceProviderManagerWithCharset(String charset)
+	{
+		return new ServiceProviderManager(this,charset); 
 	}
 	
 	/**

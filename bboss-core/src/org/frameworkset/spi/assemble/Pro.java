@@ -65,13 +65,13 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	 * 插件必须实现接口
 	 * org.frameworkset.spi.assemble.plugin.IocPlugin<T,R>
 	 */
-	private String iocplugin;
+	protected String iocplugin;
 	
 
 	private Map<String, String> mvcpaths;
 	private Map<String, String> WSAttributes;
 	private Map<String, String> RMIAttributes;
-	private String configFile;
+	protected String configFile;
 
 	private Map<String, String> SOAAttributes;
 	
@@ -110,9 +110,9 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	// this.uuid = this.name;
 	//		
 	// }
-	private static Logger log = Logger.getLogger(Pro.class);
+	protected static Logger log = Logger.getLogger(Pro.class);
 	private String name;
-	private boolean bean = false;
+	protected boolean bean = false;
 	private boolean singlable = true;
 
 	private boolean isfreeze = false;
@@ -234,7 +234,14 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 		this.singlable = singlable;
 	}
 
-	Class cls = null;
+	protected Class cls = null;
+	protected void _buildType() throws ClassNotFoundException
+	{
+		synchronized (this) {
+			if (cls == null)
+				cls = BeanAccembleHelper.getClass(clazz);
+		}
+	}
 
 	public Class getType() {
 
@@ -244,29 +251,8 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 				return cls;
 			if (clazz == null || clazz.equals(""))
 				return null;
-			// return cls = String.class;
-			synchronized (this) {
-				if (cls != null)
-					return cls;
-				// if(clazz.equals("int") )
-				// return cls = int.class;
-				// if(clazz.equals("integer") )
-				// return cls = Integer.class;
-				// if(clazz.equals("float") )
-				// return cls = float.class;
-				// if(clazz.equals("double") )
-				// return cls = double.class;
-				// if(clazz.equals("short") )
-				// return cls = short.class;
-				// if(clazz.equals("char") )
-				// return cls = char.class;
-				// if(clazz.equals("string") )
-				// return cls = String.class;
-				// if(clazz.equals("boolean") )
-				// return cls = boolean.class;
-
-				cls = BeanAccembleHelper.getClass(clazz);
-			}
+			 
+			_buildType();
 			return cls;
 		}
 
@@ -278,8 +264,8 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 
 	}
 
-	private Object beaninstance;
-	BeanAccembleHelper accember = new BeanAccembleHelper();
+	protected Object beaninstance;
+	protected BeanAccembleHelper accember = new BeanAccembleHelper();
 
 	public Object getBean() {
 		return getBean((CallContext) null,true);
@@ -288,6 +274,17 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	public boolean useiocplugin()
 	{
 		return this.iocplugin != null;
+	}
+	
+	protected void _buildBean(CallContext context,boolean convertcontainer)
+	{
+		synchronized (this) {
+			if (beaninstance == null)
+			{
+				_initBean(context, convertcontainer);
+				
+			}
+		}
 	}
 
 	/**
@@ -301,43 +298,8 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 			if(!convertcontainer)
 				return value;
 			if (beaninstance == null) {
-				synchronized (this) {
-					if (beaninstance != null)
-						return beaninstance;
-				
-					if (bean) {
-						if(useiocplugin())//pro
-						{
-							Object _beaninstance = accember.getBean(this, context);
-							if(magicclass != null && magicclass.getPreserialObject() != null)
-							{
-								_beaninstance = magicclass.getPreserialObject().posthandle(_beaninstance);
-							}
-							beaninstance = _beaninstance;
-						}
-						else if(value != null)
-						{							
-							Object _beaninstance = processValue(context, convertcontainer);
-							if(magicclass != null && magicclass.getPreserialObject() != null)
-							{
-								_beaninstance = magicclass.getPreserialObject().posthandle(_beaninstance);
-							}
-							beaninstance = _beaninstance;							 
-						}
-						else
-						{
-							Object _beaninstance = accember.getBean(this, context);
-							if(magicclass != null && magicclass.getPreserialObject() != null)
-							{
-								_beaninstance = magicclass.getPreserialObject().posthandle(_beaninstance);
-							}
-							beaninstance = _beaninstance;
-						}
-					} else {
-						beaninstance = this.getTrueValue(context);
-					}
-					return beaninstance;
-				}
+				_buildBean(context,convertcontainer);
+				return beaninstance;
 			} else {
 				return beaninstance;
 			}
@@ -373,7 +335,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	 * 容器类型配置元数据处理
 	 * @return
 	 */
-	private Object processValue(CallContext context,boolean convertcontainer)
+	protected Object processValue(CallContext context,boolean convertcontainer)
 	{
 		if(value == null)
 			return null;
@@ -519,21 +481,27 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 		return getBean(null, type);
 
 	}
-
+	protected void _initTBean(CallContext context, Class type)
+	{
+		synchronized (this) {
+			if (beaninstance == null)
+			{
+				
+				if (this.isBean()) {
+					beaninstance = accember.getBean(this, context);
+				} else {
+					beaninstance = this.getTrueValue(context);
+				}
+			}
+			
+		}
+	}
 	public <T> T getBean(CallContext context, Class<T> type) {
 		if (this.isSinglable()) // 单列模式
 		{
 			if (beaninstance == null) {
-				synchronized (this) {
-					if (beaninstance != null)
-						return (T) beaninstance;
-					if (this.isBean()) {
-						beaninstance = accember.getBean(this, context);
-					} else {
-						beaninstance = this.getTrueValue(context);
-					}
-					return (T) beaninstance;
-				}
+				_initTBean(  context,   type);
+				return (T) beaninstance;
 			} else {
 				return (T) beaninstance;
 			}
@@ -563,7 +531,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 		return this.refid != null && !this.refid.equals("");
 	}
 	
-	private Object value;
+	protected Object value;
 	private String xpath;
 
 	/**
@@ -581,7 +549,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	/**
 	 * 值类型
 	 */
-	private String clazz;
+	protected String clazz;
 	private String description;
 
 	/**
@@ -1060,7 +1028,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 
 	}
 	
-	private MagicClass magicclass = null;
+	protected MagicClass magicclass = null;
 	
 	/**
 	 * 
@@ -1563,13 +1531,8 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 		if (this.isSinglable()) // 单列模式
 		{
 			if (beaninstance == null) {
-				synchronized (this) {
-					if (beaninstance != null)
-						return beaninstance;
-					beaninstance = accember.getRefValue(this, context,
-							defaultValue);
-					return beaninstance;
-				}
+				_buildRefValue(  context,   defaultValue);
+				return beaninstance;
 			} else {
 				return beaninstance;
 			}
@@ -1577,12 +1540,49 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 			return accember.getRefValue(this, context, defaultValue);
 		}
 	}
+	protected void _buildRefValue(CallContext context, Object defaultValue)
+	{
+		synchronized (this) {
+			if (beaninstance == null)
+			{
+				
+				beaninstance = accember.getRefValue(this, context,
+						defaultValue);
+			}
+			
+		}
+	}
 
 	public Class getBeanClass() {
 		// TODO Auto-generated method stub
 		return this.getType();
 	}
-	 private Class factoryClass;
+	protected Class factoryClass;
+	 protected void _buildFactoryClass() throws ClassNotFoundException
+	 {
+		 synchronized (this) {
+				if (factoryClass == null)
+					
+				// if(clazz.equals("int") )
+				// return cls = int.class;
+				// if(clazz.equals("integer") )
+				// return cls = Integer.class;
+				// if(clazz.equals("float") )
+				// return cls = float.class;
+				// if(clazz.equals("double") )
+				// return cls = double.class;
+				// if(clazz.equals("short") )
+				// return cls = short.class;
+				// if(clazz.equals("char") )
+				// return cls = char.class;
+				// if(clazz.equals("string") )
+				// return cls = String.class;
+				// if(clazz.equals("boolean") )
+				// return cls = boolean.class;
+
+				factoryClass = BeanAccembleHelper.getClass(this.getFactory_class());
+			}
+	 }
 	 public Class getFactoryClass()
 	 {
 		 try {
@@ -1592,28 +1592,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 				if (factory_class == null || factory_class.equals(""))
 					return null;
 				// return cls = String.class;
-				synchronized (this) {
-					if (factoryClass != null)
-						return factoryClass;
-					// if(clazz.equals("int") )
-					// return cls = int.class;
-					// if(clazz.equals("integer") )
-					// return cls = Integer.class;
-					// if(clazz.equals("float") )
-					// return cls = float.class;
-					// if(clazz.equals("double") )
-					// return cls = double.class;
-					// if(clazz.equals("short") )
-					// return cls = short.class;
-					// if(clazz.equals("char") )
-					// return cls = char.class;
-					// if(clazz.equals("string") )
-					// return cls = String.class;
-					// if(clazz.equals("boolean") )
-					// return cls = boolean.class;
-
-					factoryClass = BeanAccembleHelper.getClass(this.getFactory_class());
-				}
+				_buildFactoryClass();
 				return factoryClass;
 			}
 
@@ -2047,14 +2026,105 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	}
 	
 	
-	 private Class iocpluginClass;
+	 protected Class iocpluginClass;
 	 public static final int pro_type = 0;
 	 public static final int promap_type = 1;
 	 public static final int prolist_type = 2;
 	 public static final int proarray_type = 3;
 	 public static final int proset_type = 4;
-	 private int iocinputtype = pro_type;
-	 private Object iocinputData ;
+	 protected int iocinputtype = pro_type;
+	 protected Object iocinputData ;
+	 
+	 protected void _initIocpluginClass() throws ClassNotFoundException
+	 {		 
+			 				 
+			iocpluginClass = Class.forName(iocplugin);
+			Class inputtype = firstgenericTypes(iocpluginClass);
+			if(inputtype != null)
+			{
+				if(inputtype == Pro.class)
+				{
+					this.iocinputtype =  pro_type;
+					iocinputData = this;
+				}
+				else if(inputtype == ProMap.class)
+				{
+					this.iocinputtype =  promap_type;
+					iocinputData = this.getMap();
+				}
+				else if(inputtype == ProList.class)
+				{
+					this.iocinputtype =  prolist_type;
+					iocinputData = this.getList();
+				}
+				else if(inputtype == ProArray.class)
+				{
+					this.iocinputtype =  proarray_type;
+					iocinputData = this.getArray();
+				}
+				else if(inputtype == ProSet.class)
+				{
+					this.iocinputtype =  proset_type;
+					iocinputData = this.getSet();
+				}
+				else
+				{
+					String error = new StringBuilder().append("iocplugin[").append(iocplugin).append("]@").append(this.configFile).append("'s first genericType[").append(inputtype.getCanonicalName()).append("] is not support by bboss ioc,please change iocplugin class defined.").toString(); 
+					log.error(error);
+					throw new java.lang.IllegalArgumentException(error);
+				}
+				
+			}
+			else
+			{
+				iocinputData = this;
+			}
+		 
+	 }
+	 
+	 protected void _initBean(CallContext context,boolean convertcontainer)
+		{		
+			if (bean) {
+				if(useiocplugin())//pro
+				{
+					Object _beaninstance = accember.getBean(this, context);
+					if(magicclass != null && magicclass.getPreserialObject() != null)
+					{
+						_beaninstance = magicclass.getPreserialObject().posthandle(_beaninstance);
+					}
+					beaninstance = _beaninstance;
+				}
+				else if(value != null)
+				{							
+					Object _beaninstance = processValue(context, convertcontainer);
+					if(magicclass != null && magicclass.getPreserialObject() != null)
+					{
+						_beaninstance = magicclass.getPreserialObject().posthandle(_beaninstance);
+					}
+					beaninstance = _beaninstance;							 
+				}
+				else
+				{
+					Object _beaninstance = accember.getBean(this, context);
+					if(magicclass != null && magicclass.getPreserialObject() != null)
+					{
+						_beaninstance = magicclass.getPreserialObject().posthandle(_beaninstance);
+					}
+					beaninstance = _beaninstance;
+				}
+			} else {
+				beaninstance = this.getTrueValue(context);
+			}		
+		}
+	 protected void _buildIocpluginClass() throws ClassNotFoundException
+	 {
+		 synchronized (this) {
+			if (iocpluginClass == null)
+			{				 
+				_initIocpluginClass();
+			}
+		 }
+	 }
 	 public Class getIocpluginClass()
 	 {
 		 try {
@@ -2064,53 +2134,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 				if (this.iocplugin == null || iocplugin.equals(""))
 					return null;
 				
-				synchronized (this) {
-					if (iocpluginClass != null)
-						return iocpluginClass;
-					
-
-					iocpluginClass = Class.forName(iocplugin);
-					Class inputtype = firstgenericTypes(iocpluginClass);
-					if(inputtype != null)
-					{
-						if(inputtype == Pro.class)
-						{
-							this.iocinputtype =  pro_type;
-							iocinputData = this;
-						}
-						else if(inputtype == ProMap.class)
-						{
-							this.iocinputtype =  promap_type;
-							iocinputData = this.getMap();
-						}
-						else if(inputtype == ProList.class)
-						{
-							this.iocinputtype =  prolist_type;
-							iocinputData = this.getList();
-						}
-						else if(inputtype == ProArray.class)
-						{
-							this.iocinputtype =  proarray_type;
-							iocinputData = this.getArray();
-						}
-						else if(inputtype == ProSet.class)
-						{
-							this.iocinputtype =  proset_type;
-							iocinputData = this.getSet();
-						}
-						else
-						{
-							String error = "iocplugin["+iocplugin+"]@"+this.configFile+"'s first genericType["+inputtype.getCanonicalName()+"] is not support by bboss ioc,please change iocplugin class defined."; 
-							log.error(error);
-							throw new java.lang.IllegalArgumentException(error);
-						}
-						
-					}
-					else
-					{
-						iocinputData = this;
-					}
-				}
+				_buildIocpluginClass();
 				return iocpluginClass;
 			}
 

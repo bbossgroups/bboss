@@ -88,11 +88,16 @@ public class SOAApplicationContextTest {
 	
 		SOAMethodCall object = context.getTBeanObject("soamethodcall",SOAMethodCall.class);
 		System.out.println(object);
-		String xmlcontent = ObjectSerializable.convertSOAMethodCallToXMLMethod(object, ObjectSerializable.CHARSET_UTF_8);
+		String xmlcontent = ObjectSerializable.toXML(object, ObjectSerializable.CHARSET_UTF_8);
 		System.out.println(xmlcontent);
 		
-		context  = new SOAApplicationContext(xmlcontent);
-		object = context.getTBeanObject("soamethodcall",SOAMethodCall.class);
+		context  = new SOAApplicationContext(xmlcontent,false);
+		context.setSerial(true);
+		context.init();
+		object = context.getTBeanObject("_dflt_",SOAMethodCall.class);
+		System.out.println(object);
+		object = ObjectSerializable.toBean( xmlcontent,SOAMethodCall.class);
+		System.out.println(object);
 		
 		
 		
@@ -156,9 +161,9 @@ public class SOAApplicationContextTest {
 			"</call>"+
 		"</esb>";
 		bean.setArrays(content.getBytes() );
-		String xmlcontent = ObjectSerializable.convertBeanObjectToXML("beanarray",bean, bean.getClass());
+		String xmlcontent = ObjectSerializable.toXML( bean );
 		System.out.println(xmlcontent);
-		ArrayBean bean1 = ObjectSerializable.convertXMLToBeanObject("beanarray",xmlcontent,ArrayBean.class);
+		ArrayBean bean1 = ObjectSerializable.toBean( xmlcontent,ArrayBean.class);
 		System.out.println(new String(bean1.getArrays()));
 		bean1.getE().printStackTrace();
 		
@@ -170,9 +175,9 @@ public class SOAApplicationContextTest {
 		FileBean bean = new FileBean();
 		
 		bean.setFile(ValueObjectUtil.getClassPathFile("org/frameworkset/soa/datasource-sql.xml"));
-		String xmlcontent = ObjectSerializable.convertBeanObjectToXML("beanfile",bean, bean.getClass());
+		String xmlcontent = ObjectSerializable.toXML(bean);
 		System.out.println(xmlcontent);
-		FileBean bean1 = ObjectSerializable.convertXMLToBeanObject("beanfile",xmlcontent,FileBean.class);
+		FileBean bean1 = ObjectSerializable.toBean( xmlcontent,FileBean.class);
 //		System.out.println(ValueObjectUtil.getFileContent(bean1.getFile(),"UTF-8"));
 	}
 	@Test
@@ -229,10 +234,10 @@ public class SOAApplicationContextTest {
 		beans.add(fbean);
 		beans.add(bean);
 		
-		String xmlcontent = ObjectSerializable.convertBeanObjectToXML("listObject",beans, List.class);
+		String xmlcontent = ObjectSerializable.toXML(beans);
 		System.out.println(xmlcontent);
 		
-		List copybeans = ObjectSerializable.convertXMLToBeanObject("listObject", xmlcontent, List.class);
+		List copybeans = ObjectSerializable.toBean(xmlcontent, List.class);
 		System.out.println(copybeans.size());
 		
 	}
@@ -241,10 +246,10 @@ public class SOAApplicationContextTest {
 	{
 		Map mapdata = new HashMap();
 		mapdata.put("data", "datavalue");
-		String xmlcontent = ObjectSerializable.convertBeanObjectToXML("mapObject",mapdata, Map.class);
+		String xmlcontent = ObjectSerializable.toXML(mapdata);
 		System.out.println(xmlcontent);
 		
-		Map copybeans = ObjectSerializable.convertXMLToBeanObject("mapObject", xmlcontent, Map.class);
+		Map copybeans = ObjectSerializable.toBean( xmlcontent, Map.class);
 		System.out.println(copybeans.size());
 	}
 		
