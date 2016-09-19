@@ -15,12 +15,15 @@ import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.Lifecycle;
 import org.frameworkset.spi.async.annotation.Async;
+import org.frameworkset.util.tokenizer.TextGrammarParser;
+import org.frameworkset.util.tokenizer.TextGrammarParser.GrammarToken;
 
 import com.frameworkset.orm.annotation.RollbackExceptions;
 import com.frameworkset.orm.annotation.Transaction;
 import com.frameworkset.orm.annotation.TransactionType;
 import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.util.EditorInf;
+import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
@@ -654,8 +657,46 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	public Object getValue() {
 		return value;
 	}
-
-	public void setValue(Object value) {
+	private String evalValue(String value,PropertiesContainer configPropertiesFile)
+	{
+		
+		if(SimpleStringUtil.isEmpty(value))
+			return value;
+		List<GrammarToken> tokens = TextGrammarParser.parser(value, "${", '}');
+		StringBuilder re = new StringBuilder();
+		for(int i = 0; tokens != null && i < tokens.size(); i ++)
+		{
+			GrammarToken token = tokens.get(i);
+			if(token.texttoken())
+				re.append(token.getText());
+			else
+			{
+				String varvalue = configPropertiesFile.getProperty(token.getText());
+				if(varvalue != null)
+					re.append(varvalue);
+				else
+				{
+					re.append("${").append(token.getText()).append("}");
+				}
+			}
+		}
+		return re.toString();
+		
+	}
+	public void setValue(String value,PropertiesContainer configPropertiesFile) {
+		modify();
+		if(configPropertiesFile != null && configPropertiesFile.size() > 0)
+		{
+			
+			this.value = evalValue(  value,  configPropertiesFile);
+		}
+		else
+		{
+			this.value = value;
+		}
+	}
+	
+	public void setCollectionValue(Object value) {
 		modify();
 		this.value = value;
 	}

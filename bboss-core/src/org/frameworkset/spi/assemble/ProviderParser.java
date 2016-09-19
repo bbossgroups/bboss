@@ -70,14 +70,14 @@ public class ProviderParser extends DefaultHandler
 {
     private Stack traceStack;
 
-    private StringBuffer currentValue;
+    private StringBuilder currentValue;
 
     private Map managers;
 
     private List mangerimports;
     
     private boolean serial = false;
-
+    protected PropertiesContainer configPropertiesFile;
     public void setSerial(boolean serial) {
 		this.serial = serial;
 	}
@@ -104,7 +104,7 @@ public class ProviderParser extends DefaultHandler
         traceStack = new Stack();
         managers = new HashMap();
         mangerimports = new ArrayList();
-//        currentValue = new StringBuffer();
+        currentValue = new StringBuilder();
         this.file = file;
         this.parent = parent;
         this.applicationContext = applicationContext;
@@ -121,7 +121,7 @@ public class ProviderParser extends DefaultHandler
 //	        this.file = applicationContext.getConfigfile();
 //	        this.parent = applicationContext.getp;
         }
-//        currentValue = new StringBuffer();
+        currentValue = new StringBuilder();
         this.applicationContext = applicationContext;
 //        isSOAApplicationContext = applicationContext instanceof SOAApplicationContext;
         traceStack = new Stack();
@@ -129,8 +129,7 @@ public class ProviderParser extends DefaultHandler
 
     public void characters(char[] ch, int start, int length)
     {    	
-    	if(currentValue == null)
-    		currentValue = new StringBuffer();
+    	
         currentValue.append(ch, start, length);
     }
     /**
@@ -179,27 +178,29 @@ public class ProviderParser extends DefaultHandler
 //	        		_value = currentValue.toString();
 //	        	else
 //	        		_value = currentValue.toString().trim();
-	        	if(this.currentValue != null)
+	        	if(this.currentValue.length() > 0)
 	        	{
 	        		if(this.serial)
 	        		{
 	        			
 	        			_value = this.currentValue.toString();
 	        			
-	    	            {
-	    	        		p.setValue(_value);
+	    	            
+	    	        		p.setValue(_value,configPropertiesFile);
+	    	        		 currentValue.delete(0, currentValue.length());
 //	    	            	currentValue.delete(0, currentValue.length());
-	    	        		this.currentValue = null;
-	    	            }
+//	    	        		this.currentValue = null;
+	    	            
 	        		}
 	        		else
 	        		{
 	        			_value = this.currentValue.toString().trim();
 	        			if(_value.length() > 0)
 	    	            {
-	    	        		p.setValue(_value);
+	    	        		p.setValue(_value,configPropertiesFile);
 //	    	            	currentValue.delete(0, currentValue.length());
-	    	        		this.currentValue = null;
+//	    	        		this.currentValue = null;
+	    	        		 currentValue.delete(0, currentValue.length());
 	    	            }
 	        		}
 	        	}
@@ -324,7 +325,7 @@ public class ProviderParser extends DefaultHandler
              Pro pro = (Pro) this.traceStack.peek();
 //             List l = java.util.Collections.unmodifiableList(list);
              list.freeze();
-             pro.setValue(list);
+             pro.setCollectionValue(list);
              pro.setList(true);
 
          }
@@ -334,7 +335,7 @@ public class ProviderParser extends DefaultHandler
              Pro pro = (Pro) this.traceStack.peek();
 //             Map t = java.util.Collections.unmodifiableMap(map);
              map.freeze();
-             pro.setValue(map);
+             pro.setCollectionValue(map);
              pro.setMap(true);
 
          }
@@ -350,7 +351,7 @@ public class ProviderParser extends DefaultHandler
              Pro pro = (Pro) this.traceStack.peek();
 //             List l = java.util.Collections.unmodifiableList(list);
              array.freeze();
-             pro.setValue(array);
+             pro.setCollectionValue(array);
              pro.setArray(true);
 
          }
@@ -361,7 +362,7 @@ public class ProviderParser extends DefaultHandler
              Pro pro = (Pro) this.traceStack.peek();
 //             Set t = java.util.Collections.unmodifiableSet(set);
              set.freeze();
-             pro.setValue(set);
+             pro.setCollectionValue(set);
              pro.setSet(true);
 
          }
@@ -441,7 +442,8 @@ public class ProviderParser extends DefaultHandler
                 
 //                System.out.println(currentValue);
 //                currentValue.delete(0, currentValue.length());
-            	this.currentValue = null;
+//            	this.currentValue = null;
+            	 currentValue.delete(0, currentValue.length());
                 return ;
             }
             Object p = this.traceStack.peek();
@@ -473,7 +475,8 @@ public class ProviderParser extends DefaultHandler
         }
 
 //       currentValue.delete(0, currentValue.length());
-       this.currentValue = null;
+//       this.currentValue = null;
+    	 currentValue.delete(0, currentValue.length());
        
 
     }
@@ -484,7 +487,7 @@ public class ProviderParser extends DefaultHandler
     }
     
     @SuppressWarnings("unchecked")
-    private void setFAttr(Pro property,Attributes attributes)
+    protected void setFAttr(Pro property,Attributes attributes)
     {
     	if(attributes == null || attributes.getLength() == 0)
     		return;
@@ -527,7 +530,7 @@ public class ProviderParser extends DefaultHandler
     			}
     			else
     			{
-    				f.setValue(value);
+    				f.setValue(value,configPropertiesFile);
     			}
     			//增加xpath信息
     			f.setXpath(property.getXpath() + Pro.REF_TOKEN + f.getName());
@@ -737,7 +740,7 @@ public class ProviderParser extends DefaultHandler
 
         if (value != null)
         {
-            p.setValue(value);
+            p.setValue(value,configPropertiesFile);
         }
         if (clazz != null && !clazz.equals(""))
         {
@@ -813,9 +816,11 @@ public class ProviderParser extends DefaultHandler
     }
     public void startElement(String s1, String s2, String name, Attributes attributes)
     {
-    	    	
-//        currentValue.delete(0, currentValue.length());
-    	currentValue = null;
+    	   
+    	if(currentValue.length() > 0)
+    		currentValue.delete(0, currentValue.length());
+//    	currentValue = null;
+    	 
         if (name.equals("p") || name.equals("property"))
         {    
 
@@ -1025,7 +1030,7 @@ public class ProviderParser extends DefaultHandler
             ref.setName(fieldname);
             ref.setRefid(refid);
             ref.setReftype(reftype);
-            ref.setValue(value);
+            ref.setValue(value,configPropertiesFile);
             ref.setClazz(clazz);
             providerManagerInfo.addReference(ref);
 
@@ -1082,7 +1087,7 @@ public class ProviderParser extends DefaultHandler
             Param param = new Param(applicationContext);
             param.setClazz(paramType);
             param.setRefid(refid);
-            param.setValue(value);
+            param.setValue(value,configPropertiesFile);
             Object o = traceStack.peek();
             if (o instanceof SynchronizedMethod)
             {
@@ -1100,7 +1105,7 @@ public class ProviderParser extends DefaultHandler
         else if (name.equals("description"))
         {
 //            this.currentValue.delete(0, this.currentValue.length());
-        	this.currentValue = null;
+        	 currentValue.delete(0, currentValue.length());
 //            Object p = this.traceStack.peek();
 //            if(p instanceof Pro)
 //            {
@@ -1118,6 +1123,14 @@ public class ProviderParser extends DefaultHandler
             editor.setEditor(clazz);
             Pro currentElement = (Pro)this.traceStack.peek();
             currentElement.setEditor(editor);            
+        }
+        else if(name.equals("config"))
+        {
+        	if(this.configPropertiesFile == null)
+        		configPropertiesFile = new PropertiesContainer();
+        	String file = attributes.getValue("file");
+        	if(file != null)
+        		this.configPropertiesFile.addConfigPropertiesFile(file);
         }
         else
         {

@@ -15,10 +15,15 @@
  */
 package org.frameworkset.spi.assemble.soa;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.LinkConfigFile;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProviderParser;
+import org.frameworkset.spi.assemble.ServiceProviderManager;
+import org.xml.sax.Attributes;
 
 /**
  * 
@@ -71,6 +76,79 @@ public class SOAProviderParser extends ProviderParser
     protected Pro _buildPro()
     {
     	return new SOAPro(applicationContext);
+    }
+    
+    protected void setFAttr(Pro property,Attributes attributes)
+    {
+    	if(attributes == null || attributes.getLength() == 0)
+    		return;
+    	int length = attributes.getLength();
+    	
+    	Map<String,Object> extendsAttributes = new HashMap<String,Object>();
+    	Map<String,String> SOAAttributes = new HashMap<String,String>();
+    	
+    	for(int i = 0; i < length; i ++)
+    	{
+    		String name = attributes.getQName(i);
+    		if(name.equals("n") || name.equals("name"))
+    		{
+    			continue;
+    		}
+    		
+    		else if(name.startsWith("s:"))//soa:
+    		{
+    			
+    			SOAAttributes.put(name, attributes.getValue(i));
+    		}
+    		else if( name.equals("cs") || name.equals("v") || name.equals("class") || name.equals("value"))
+    		{
+    			continue;
+    		}
+    		
+    		else if(name.startsWith("f:"))//通过property的属性来制定对象中field的值
+    		{
+    			Pro f = this._buildPro();// new Pro(applicationContext);
+    			
+    			f.setName(name.substring(2));
+    			
+    			String value = attributes.getValue(i);
+    			if(value.startsWith(ServiceProviderManager.SERVICE_PREFIX) 
+    					|| value.startsWith(ServiceProviderManager.ATTRIBUTE_PREFIX))
+    			{
+    				f.setRefid(value);
+    			}
+    			else
+    			{
+    				f.setValue(value,configPropertiesFile);
+    			}
+    			//增加xpath信息
+    			f.setXpath(property.getXpath() + Pro.REF_TOKEN + f.getName());
+    			property.addReferenceParam(f);
+    		}
+//    		else if(name.startsWith("path:"))
+//    		{
+//    			pathAttributes.put(name,attributes.getValue(i));
+//    		}
+//    		else if(name.startsWith("ws:"))
+//    		{
+//    			WSAttributes.put(name, attributes.getValue(i));
+//    		}
+//    		
+//    		else if(name.startsWith("rmi:"))
+//    		{
+//    			
+//    			RMIAttributes.put(name, attributes.getValue(i));
+//    		}
+    			
+    		else if(!Pro.isFixAttribute(name))
+    		{
+    		    extendsAttributes.put(name, attributes.getValue(i));
+    		}
+    		    
+    	}
+    	
+    	property.setExtendsAttributes(extendsAttributes);
+//    	return null;
     }
       
 }

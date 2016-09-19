@@ -3,7 +3,9 @@ package org.frameworkset.spi.assemble.soa;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.assemble.BeanAccembleHelper;
+import org.frameworkset.spi.assemble.CannotModifyException;
 import org.frameworkset.spi.assemble.Pro;
+import org.frameworkset.spi.assemble.PropertiesContainer;
 
 public class SOAPro extends Pro {
 
@@ -54,6 +56,16 @@ public class SOAPro extends Pro {
 		} else {
 			beaninstance = this.getTrueValue(context);
 		}
+		
+	}
+
+	@Override
+	public void setValue(String value, PropertiesContainer configPropertiesFile) {
+		modify();
+		this.value = value;
+	}
+	
+	protected void modify() {
 		
 	}
 	 

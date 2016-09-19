@@ -1,0 +1,18 @@
+<properties>
+	<config file="org/frameworkset/spi/variable/ioc-var.properties"/>
+	<config file="org/frameworkset/spi/variable/ioc-var1.properties"/>
+	<property name="test.beans"
+	    f:varValue="aaa${varValue}aaa" 
+	    f:intValue="2"
+		long="1" int="1" boolean="true" string="${varValue1}string" object="object"
+		class="org.frameworkset.spi.variable.VariableBean">
+		<construction>
+			<property ><![CDATA[${varValue1}ccc]]></property>
+			<property value="ddd${varValue2}"/>
+		</construction>
+		<property name="varValue1" ><![CDATA[${varValue1}ccc]]></property>
+		<property name="varValue2" value="ddd${varValue2}"/>
+	</property>
+	
+	 
+</properties>
