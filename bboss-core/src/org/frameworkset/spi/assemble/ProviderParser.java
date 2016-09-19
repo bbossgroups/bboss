@@ -553,7 +553,14 @@ public class ProviderParser extends DefaultHandler
     			
     		else if(!Pro.isFixAttribute(name))
     		{
-    		    extendsAttributes.put(name, attributes.getValue(i));
+    			String value = attributes.getValue(i);
+    			if(configPropertiesFile != null && configPropertiesFile.size() > 0)
+    			{
+    				
+    				 value = Pro.evalValue(  value,  configPropertiesFile);
+    			}
+    			
+    		    extendsAttributes.put(name, value);
     		}
     		    
     	}

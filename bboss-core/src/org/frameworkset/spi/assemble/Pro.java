@@ -657,7 +657,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	public Object getValue() {
 		return value;
 	}
-	private String evalValue(String value,PropertiesContainer configPropertiesFile)
+	public static String evalValue(String value,PropertiesContainer configPropertiesFile)
 	{
 		
 		if(SimpleStringUtil.isEmpty(value))

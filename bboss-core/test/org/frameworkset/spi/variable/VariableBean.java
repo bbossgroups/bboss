@@ -12,5 +12,10 @@ public class VariableBean extends BeanInfoAware{
 		System.out.println("varValue1:"+varValue1);
 		System.out.println("varValue2:"+varValue2);
 	}
+	
+	public String getExteral(String attr)
+	{
+		return super.beaninfo.getStringExtendAttribute(attr);
+	}
 
 }

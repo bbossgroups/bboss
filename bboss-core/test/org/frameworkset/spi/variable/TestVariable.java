@@ -10,7 +10,7 @@ public class TestVariable {
 	{
 		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/variable/ioc-var.xml");
 		VariableBean variableBean = context.getTBeanObject("test.beans", VariableBean.class);
-		System.out.println("");
+		System.out.println(variableBean.getExteral("string"));
 	}
 
 }
