@@ -1173,6 +1173,10 @@ public class ProviderParser extends DefaultHandler
 
 	}
 
+	public PropertiesContainer getConfigPropertiesFile() {
+		return configPropertiesFile;
+	}
+
     
     
     

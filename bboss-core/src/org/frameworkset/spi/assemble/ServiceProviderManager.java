@@ -372,6 +372,7 @@ public class ServiceProviderManager {
                 parentFile.addLinkConfigFile(linkconfigFile);
             linkconfigFile.setMgrServices(handler.getManagers());
             linkconfigFile.setProperties(handler.getProperties());
+            linkconfigFile.setConfigPropertiesFile(handler.getConfigPropertiesFile());
             this.managerimports.put(linkconfigFile.getIdentity(), linkconfigFile);
             if(handler.getMangerimports() != null && handler.getMangerimports().size() > 0)
             	this.batchLoad(handler.getMangerimports(), linkconfigFile);

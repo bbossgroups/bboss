@@ -57,6 +57,8 @@ public class LinkConfigFile {
 	 * 配置文件相对路径
 	 */
 	private String configFile ;
+	private List<String> configPropertiesFiles;
+	private List<String> configPropertiesFileFullPaths;
 	private Map properties = new HashMap();
 	
 	/**
@@ -73,6 +75,7 @@ public class LinkConfigFile {
 	 * Map<mgrid,ProviderManagerInfo>
 	 */
 	private Map mgrServices = null;
+	 protected PropertiesContainer configPropertiesFile;
 	/**
 	 * 配置文件导入的管理配置文件
 	 * List<LinkConfigFile>
@@ -185,6 +188,15 @@ public class LinkConfigFile {
 		
 		return this.properties != null && this.properties.size() > 0;
 	}
-	
+
+	public PropertiesContainer getConfigPropertiesFile() {
+		return configPropertiesFile;
+	}
+
+	public void setConfigPropertiesFile(PropertiesContainer configPropertiesFile) {
+		this.configPropertiesFile = configPropertiesFile;
+	}
+
+	 
 	
 }
