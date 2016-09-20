@@ -93,22 +93,35 @@ public class ProviderParser extends DefaultHandler
         return properties;
     }
 
-    LinkConfigFile parent;
+    LinkConfigFile linkfile;
 
     private String file;
 
     private static Logger log = Logger.getLogger(ProviderParser.class);
 
-    public ProviderParser(BaseApplicationContext applicationContext,String file, LinkConfigFile parent)
+    public ProviderParser(BaseApplicationContext applicationContext,String file, LinkConfigFile linkfile)
     {
         traceStack = new Stack();
         managers = new HashMap();
         mangerimports = new ArrayList();
         currentValue = new StringBuilder();
         this.file = file;
-        this.parent = parent;
+        this.linkfile = linkfile;
         this.applicationContext = applicationContext;
+        mergeParentConfigProperties();
 //        isSOAApplicationContext = applicationContext instanceof SOAApplicationContext;
+    }
+    
+    protected void mergeParentConfigProperties()
+    {
+    	if(this.linkfile != null && linkfile.getParent() != null)
+    	{
+    		if( linkfile.getParent().hasConfigProperties())
+    		{
+	    		configPropertiesFile = new PropertiesContainer();
+	    		configPropertiesFile.mergeParentConfigProperties(linkfile.getParent().getConfigPropertiesFile());
+    		}
+    	}
     }
     
     public ProviderParser(BaseApplicationContext applicationContext)
@@ -1160,11 +1173,11 @@ public class ProviderParser extends DefaultHandler
     
     public void throwable(String message)
     {
-        if(parent == null)
+        if(linkfile == null)
             throw new IllegalArgumentException("editor 节点没有指定class属性。对应的配置文件为：" + this.file);
         else
         {
-            throw new IllegalArgumentException("editor 节点没有指定class属性。对应的配置文件为：" + this.parent.toString(this.file) );
+            throw new IllegalArgumentException("editor 节点没有指定class属性。对应的配置文件为：" + this.linkfile.toString(this.file) );
         }
     }
     

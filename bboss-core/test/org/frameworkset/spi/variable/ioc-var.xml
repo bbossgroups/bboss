@@ -1,5 +1,5 @@
 <properties>
-	<config file="org/frameworkset/spi/variable/ioc-var.properties"/>
+	
 	<config file="org/frameworkset/spi/variable/ioc-var1.properties"/>
 	<property name="test.beans"
 	    f:varValue="aaa${varValue}aaa" 

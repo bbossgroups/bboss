@@ -11,6 +11,17 @@ public class TestVariable {
 		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/variable/ioc-var.xml");
 		VariableBean variableBean = context.getTBeanObject("test.beans", VariableBean.class);
 		System.out.println(variableBean.getExteral("string"));
+		System.out.println(variableBean.getVarValue());
+	}
+	
+	
+	@Test
+	public void testParent()
+	{
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/variable/parent-var.xml");
+		VariableBean variableBean = context.getTBeanObject("test.beans", VariableBean.class);
+		System.out.println(variableBean.getExteral("string"));
+		System.out.println(variableBean.getVarValue());
 	}
 
 }

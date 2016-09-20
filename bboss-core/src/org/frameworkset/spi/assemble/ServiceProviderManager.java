@@ -28,8 +28,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -195,15 +195,23 @@ public class ServiceProviderManager {
         }
 		
 	}
+    protected ManagerImportWrapper sortManagerImports(List<ManagerImport> mis)
+    {
+    	ManagerImportWrapper mi = new ManagerImportWrapper();
+    	mi.setImports(mis);
+    	return mi;
+    }
     public void init(String docbaseType,String docbase,String configfile,boolean isfile)
     {
     	 try {
     		 if(this.applicationContext.isfile())
     		 {
 	    		 List<ManagerImport> mis = AssembleUtil.getManagerImports(docbaseType, docbase, configfile);
+	    		 ManagerImportWrapper mi = sortManagerImports(mis);
+	    		 mis = mi.getImports();
 	    		 for(int i = 0; i < mis.size(); i ++)
 	    		 {
-	    			 load(mis.get(i), null);
+	    			 load(mis.get(i), mi.getParent());
 	    		 }
     		 }
     		 else
@@ -215,7 +223,7 @@ public class ServiceProviderManager {
          }
 
          catch (Exception e) {
-             e.printStackTrace();
+            
              log.error("Load [" + defaultConfigFile + "]失败", e);
          }
     }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -18,8 +19,10 @@ public class PropertiesContainer {
     	if(configPropertiesFiles == null)
     	{
     		configPropertiesFiles = new ArrayList<String>();
-    		allProperties = new Properties();
+    		
     	}
+    	if(allProperties  == null)
+    		allProperties = new Properties();
     	this.configPropertiesFiles.add(configPropertiesFile);
     	evalfile(configPropertiesFile);
     	
@@ -52,7 +55,20 @@ public class PropertiesContainer {
 				}
     	}
     }
-    public String getProperty(String property)
+    
+    public void mergeParentConfigProperties(PropertiesContainer parent)
+    {
+    	if(parent == this)
+    		return;
+    	if(allProperties  == null)
+    		allProperties = new Properties();
+    	allProperties.putAll(parent.getAllProperties());
+    }
+    private Map<? extends Object, ? extends Object> getAllProperties() {
+		// TODO Auto-generated method stub
+		return this.allProperties;
+	}
+	public String getProperty(String property)
     {
     	if(allProperties == null)
     		return null;

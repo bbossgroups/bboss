@@ -415,7 +415,10 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 	}
 	
 	
-	
+	protected ServiceProviderManager _getServiceProviderManager()
+	{
+		return new WebServiceManagerProvider(this); 
+	}	
 	
 	
 	

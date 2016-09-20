@@ -21,6 +21,7 @@ import java.util.Map;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.LinkConfigFile;
 import org.frameworkset.spi.assemble.Pro;
+import org.frameworkset.spi.assemble.PropertiesContainer;
 import org.frameworkset.spi.assemble.ProviderParser;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 import org.xml.sax.Attributes;
@@ -76,6 +77,11 @@ public class SOAProviderParser extends ProviderParser
     protected Pro _buildPro()
     {
     	return new SOAPro(applicationContext);
+    }
+    
+    protected void mergeParentConfigProperties()
+    {
+    	 
     }
     
     protected void setFAttr(Pro property,Attributes attributes)

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<properties>
+	 <config file="org/frameworkset/spi/variable/ioc-var.properties"/>
+	<managerimport file="org/frameworkset/spi/variable/ioc-var.xml" />
+
+	
+	
+
+</properties>

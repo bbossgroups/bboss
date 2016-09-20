@@ -196,6 +196,11 @@ public class LinkConfigFile {
 	public void setConfigPropertiesFile(PropertiesContainer configPropertiesFile) {
 		this.configPropertiesFile = configPropertiesFile;
 	}
+	
+	public boolean hasConfigProperties()
+	{
+		return configPropertiesFile != null && configPropertiesFile.size() > 0;
+	}
 
 	 
 	
