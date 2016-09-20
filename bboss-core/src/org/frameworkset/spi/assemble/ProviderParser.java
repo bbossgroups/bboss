@@ -93,7 +93,7 @@ public class ProviderParser extends DefaultHandler
         return properties;
     }
 
-    LinkConfigFile linkfile;
+    protected LinkConfigFile linkfile;
 
     private String file;
 
@@ -1150,7 +1150,7 @@ public class ProviderParser extends DefaultHandler
         		configPropertiesFile = new PropertiesContainer();
         	String file = attributes.getValue("file");
         	if(file != null)
-        		this.configPropertiesFile.addConfigPropertiesFile(file);
+        		this.configPropertiesFile.addConfigPropertiesFile(file,this.linkfile);
         }
         else
         {

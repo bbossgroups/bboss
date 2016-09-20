@@ -14,7 +14,7 @@ public class PropertiesContainer {
     protected List<String> configPropertiesFiles;
     protected Properties allProperties ;
     private static Logger log = Logger.getLogger(PropertiesContainer.class);
-    public void addConfigPropertiesFile(String configPropertiesFile)
+    public void addConfigPropertiesFile(String configPropertiesFile,LinkConfigFile linkfile)
     {
     	if(configPropertiesFiles == null)
     	{
@@ -25,7 +25,13 @@ public class PropertiesContainer {
     		allProperties = new Properties();
     	this.configPropertiesFiles.add(configPropertiesFile);
     	evalfile(configPropertiesFile);
+    	if(linkfile != null)
+    		loopback(linkfile);
     	
+    }
+    private void loopback(LinkConfigFile linkfile)
+    {
+    	linkfile.loopback(this);
     }
     private void evalfile(String configPropertiesFile)
     {

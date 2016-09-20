@@ -68,7 +68,7 @@ public class LinkConfigFile {
 	/**
 	 * 导入配置文件configFile的配置文件配置信息
 	 */
-	private LinkConfigFile parent;
+	protected LinkConfigFile parent;
 	
 	/**
 	 * 配置文件对应的所有管理服务
@@ -200,6 +200,17 @@ public class LinkConfigFile {
 	public boolean hasConfigProperties()
 	{
 		return configPropertiesFile != null && configPropertiesFile.size() > 0;
+	}
+
+	public void loopback(PropertiesContainer propertiesContainer) {
+		if(this.parent != null)
+		{
+			parent._loopback(propertiesContainer,this);
+		}
+	}
+	
+	public void _loopback(PropertiesContainer propertiesContainer,LinkConfigFile son) {
+		
 	}
 
 	 
