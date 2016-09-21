@@ -1,5 +1,7 @@
 package org.frameworkset.spi.assemble;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -41,11 +43,21 @@ public class PropertiesContainer {
     	try
     	{
     		
-	    	ClassPathResource  resource = new ClassPathResource(configPropertiesFile);
-	    	input = resource.getInputStream();
+    		if(!configPropertiesFile.startsWith("file:"))
+    		{
+		    	ClassPathResource  resource = new ClassPathResource(configPropertiesFile);
+		    	input = resource.getInputStream();
+		    	log.debug("load config Properties File :"+resource.getFile().getAbsolutePath());
+    		}
+    		else
+    		{
+    			String _configPropertiesFile = configPropertiesFile.substring("file:".length());
+    			input = new FileInputStream(new File(_configPropertiesFile));
+    			log.debug("load config Properties File :"+_configPropertiesFile);
+    		}
 	    	properties.load(input);
 	    	allProperties.putAll(properties);
-	    	log.debug("load config Properties File :"+resource.getFile().getAbsolutePath());
+	    
     	}
     	catch(Exception e)
     	{
@@ -86,6 +98,12 @@ public class PropertiesContainer {
     	if(allProperties == null)
     		return 0;
     	return allProperties.size();
+    }
+    
+    public static void main(String[] args)
+    {
+    	String _configPropertiesFile = "file:/opt/local/xxx.propertis".substring("file:".length());
+    	System.out.println(_configPropertiesFile);
     }
 
 }
