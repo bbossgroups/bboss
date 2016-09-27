@@ -2049,15 +2049,12 @@ public class ValueObjectUtil {
 	}
 	public static Object convertObjToDateWithDateformat(Object obj,Class toType,SimpleDateFormat dateformat)
 	{
-		if(dateformat == null)
-			dateformat = ValueObjectUtil.getDefaultDateFormat();
+		
 		/**
 		 * 字符串向java.util.Date和java.sql.Date 类型转换
 		 */
 		if (toType == java.util.Date.class) {
-			// if(obj instanceof java.sql.Date
-			// || obj instanceof java.sql.Time
-			// || obj instanceof java.sql.Timestamp)
+			
 			if (java.util.Date.class.isAssignableFrom(obj.getClass()))
 				return obj;
 			if(obj.getClass() == long.class || obj.getClass() == Long.class)
@@ -2065,26 +2062,56 @@ public class ValueObjectUtil {
 				return new java.util.Date((Long)obj);
 			}
 			String data_str = obj.toString();
-			try {
-				
-				if(!"".equals(data_str))					
-					return dateformat.parse(data_str);
+			 
+			 
+			
+			if(!"".equals(data_str))	
+			{
+				if(dateformat == null)
+				{
+					try
+					{
+						 
+						long dl = Long.parseLong(data_str);
+						return new java.util.Date(dl);
+					}
+					catch (Exception e1)
+					{
+						try
+						{
+							dateformat = ValueObjectUtil.getDefaultDateFormat();
+							return new java.util.Date(dateformat.parse(data_str).getTime());
+						} catch (ParseException e) {
+							
+							throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+	
+						}
+					}
+				}
 				else
-					return null;
-			} catch (ParseException e) {
-				try
 				{
-					long dl = Long.parseLong(data_str);
-					return new java.util.Date(dl);
+					try
+					{						
+						return new java.util.Date(dateformat.parse(data_str).getTime());
+					} catch (ParseException e) {
+						try
+						{
+							 
+							long dl = Long.parseLong(data_str);
+							return new java.util.Date(dl);
+						}
+						catch (Exception e1)
+						{
+							throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+							
+						}
+						
+					}
 				}
-				catch (Exception e1)
-				{
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-				}
-				throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
-//				log.error(e.getMessage(),e);
 			}
+				
+			else
+				return null;
 //			return new java.util.Date(data_str);
 		}
 
@@ -2104,19 +2131,45 @@ public class ValueObjectUtil {
 				
 				if(!"".equals(data_str))	
 				{
-					try
-					{
-						long dl = Long.parseLong(data_str);
-						return new java.sql.Date(dl);
-					}
-					catch (Exception e1)
+					if(dateformat == null)
 					{
 						try
 						{
+							 
+							long dl = Long.parseLong(data_str);
+							return new java.sql.Date(dl);
+						}
+						catch (Exception e1)
+						{
+							try
+							{
+								dateformat = ValueObjectUtil.getDefaultDateFormat();
+								return new java.sql.Date(dateformat.parse(data_str).getTime());
+							} catch (ParseException e) {
+								
+								throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+		
+							}
+						}
+					}
+					else
+					{
+						try
+						{						
 							return new java.sql.Date(dateformat.parse(data_str).getTime());
 						} catch (ParseException e) {
+							try
+							{
+								 
+								long dl = Long.parseLong(data_str);
+								return new java.sql.Date(dl);
+							}
+							catch (Exception e1)
+							{
+								throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+								
+							}
 							
-							log.error(e.getMessage(),e);
 						}
 					}
 				}
@@ -2124,10 +2177,10 @@ public class ValueObjectUtil {
 				else
 					return null;
 			
-			java.sql.Date date = java.sql.Date.valueOf(data_str);// (new
+			 
 			// java.util.Date(obj.toString()).getTime());
 
-			return date;
+			 
 		}
 		
 		if (toType == java.sql.Timestamp.class) {
@@ -2144,26 +2197,54 @@ public class ValueObjectUtil {
 			String data_str = obj.toString();
 			if(!"".equals(data_str))	
 			{
-				try
-				{
-					long dl = Long.parseLong(data_str);
-					return new java.sql.Timestamp(dl);
-				}
-				catch (Exception e1)
+				if(dateformat == null)
 				{
 					try
 					{
+						 
+						long dl = Long.parseLong(data_str);
+						return new java.sql.Timestamp(dl);
+					}
+					catch (Exception e1)
+					{
+						try
+						{
+							dateformat = ValueObjectUtil.getDefaultDateFormat();
+							return new java.sql.Timestamp(dateformat.parse(data_str).getTime());
+						} catch (ParseException e) {
+							
+							throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+	
+						}
+					}
+				}
+				else
+				{
+					try
+					{						
 						return new java.sql.Timestamp(dateformat.parse(data_str).getTime());
 					} catch (ParseException e) {
+						try
+						{
+							 
+							long dl = Long.parseLong(data_str);
+							return new java.sql.Timestamp(dl);
+						}
+						catch (Exception e1)
+						{
+							throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+							
+						}
 						
-						log.error(e.getMessage(),e);
 					}
 				}
 			}
-			java.sql.Timestamp date = new Timestamp(java.sql.Date.valueOf(data_str).getTime());// (new
+			else
+				return null;
+			//java.sql.Timestamp date = new Timestamp(java.sql.Date.valueOf(data_str).getTime());// (new
 			// java.util.Date(obj.toString()).getTime());
 
-			return date;
+			//return date;
 		}
 		
 		return null;

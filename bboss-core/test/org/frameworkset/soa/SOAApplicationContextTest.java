@@ -288,5 +288,15 @@ public class SOAApplicationContextTest {
 		}		
 	}
 	
+	@Test
+	public void date() throws Exception
+	{
+		DateBean d = new DateBean();
+		d.setDate(new java.sql.Date(System.currentTimeMillis()));
+		String xml = ObjectSerializable.toXML(d);
+		d = ObjectSerializable.toBean(xml, DateBean.class);
+		System.out.println(d);
+	}
+	
 
 }
