@@ -2100,26 +2100,30 @@ public class ValueObjectUtil {
 				return new java.sql.Date((Long)obj);
 			}
 			String data_str = obj.toString();
-			try {
+			 
 				
-				
-				if(!"".equals(data_str))					
-					return new java.sql.Date(dateformat.parse(data_str).getTime());
+				if(!"".equals(data_str))	
+				{
+					try
+					{
+						long dl = Long.parseLong(data_str);
+						return new java.sql.Date(dl);
+					}
+					catch (Exception e1)
+					{
+						try
+						{
+							return new java.sql.Date(dateformat.parse(data_str).getTime());
+						} catch (ParseException e) {
+							
+							log.error(e.getMessage(),e);
+						}
+					}
+				}
+					
 				else
 					return null;
-			} catch (ParseException e) {
-				try
-				{
-					long dl = Long.parseLong(data_str);
-					return new java.util.Date(dl);
-				}
-				catch (Exception e1)
-				{
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-				}
-				log.error(e.getMessage(),e);
-			}
+			
 			java.sql.Date date = java.sql.Date.valueOf(data_str);// (new
 			// java.util.Date(obj.toString()).getTime());
 
@@ -2138,24 +2142,23 @@ public class ValueObjectUtil {
 				return new java.sql.Timestamp((Long)obj);
 			}
 			String data_str = obj.toString();
-			try {
-				
-				if(!"".equals(data_str))					
-					return new java.sql.Timestamp((dateformat).parse(data_str).getTime());
-				else
-					return null;
-			} catch (ParseException e) {
+			if(!"".equals(data_str))	
+			{
 				try
 				{
 					long dl = Long.parseLong(data_str);
-					return new java.util.Date(dl);
+					return new java.sql.Timestamp(dl);
 				}
 				catch (Exception e1)
 				{
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
+					try
+					{
+						return new java.sql.Timestamp(dateformat.parse(data_str).getTime());
+					} catch (ParseException e) {
+						
+						log.error(e.getMessage(),e);
+					}
 				}
-				log.error(e.getMessage(),e);
 			}
 			java.sql.Timestamp date = new Timestamp(java.sql.Date.valueOf(data_str).getTime());// (new
 			// java.util.Date(obj.toString()).getTime());

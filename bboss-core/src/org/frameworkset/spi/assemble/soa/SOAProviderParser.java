@@ -152,7 +152,10 @@ public class SOAProviderParser extends ProviderParser
     		}
     		    
     	}
-    	
+    	if(SOAAttributes.size() > 0)
+    	{
+    		property.setSOAAttributes(SOAAttributes);
+    	}
     	property.setExtendsAttributes(extendsAttributes);
 //    	return null;
     }

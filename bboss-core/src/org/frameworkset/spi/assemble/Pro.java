@@ -695,7 +695,12 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 			this.value = value;
 		}
 	}
-	
+	public void setValue(String value) {
+		modify();
+		 
+		this.value = value;
+		 
+	}
 	public void setCollectionValue(Object value) {
 		modify();
 		this.value = value;
