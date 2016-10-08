@@ -40,10 +40,13 @@ public class WebServiceManagerProvider extends ServiceProviderManager{
 				 break;
 			 }
 		 }
-		 if(position > 0)
+		 if(position >= 0)
 		 {
-			 mis.remove(position);
-			 mis.add(0, imp);
+			 if(position > 0)
+			 {
+				 mis.remove(position);
+				 mis.add(0, imp);
+			 }
 			 LinkConfigFile linkconfigFile = new WebLinkConfigFile(null, imp.getFile(), null);
 			 mi.setParent(linkconfigFile);
 		 }
