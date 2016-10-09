@@ -23,5 +23,19 @@ public class TestVariable {
 		System.out.println(variableBean.getExteral("string"));
 		System.out.println(variableBean.getVarValue());
 	}
+	
+	@Test
+	public void testZH()
+	{
+//		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("F:/迅雷下载/dbinit-system/schema/assemble.xml");
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("F:/workspace/bboss-cms/dbinit-system/schema/assemble.xml");
+		
+		//F:\workspace\bboss-cms
+//		VariableBean variableBean = context.getTBeanObject("test.beans", VariableBean.class);
+//		System.out.println(variableBean.getExteral("string"));
+//		System.out.println(variableBean.getVarValue());
+	}
+	
+	//F:\迅雷下载\dbinit-system/schema/assemble.xml
 
 }

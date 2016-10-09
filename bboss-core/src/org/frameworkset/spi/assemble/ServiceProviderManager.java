@@ -42,6 +42,8 @@ import org.frameworkset.spi.assemble.RefID.Index;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
 import org.xml.sax.InputSource;
 
+import com.frameworkset.util.SimpleStringUtil;
+
 /**
  * 
  * 
@@ -333,6 +335,7 @@ public class ServiceProviderManager {
         /* CHANGED TO USE JAXP */
 
         String url = configFile;
+        boolean isfile = false;
         try {
         	if(managerImport.isClasspathBase())
         	{
@@ -352,6 +355,15 @@ public class ServiceProviderManager {
 	            if (confURL == null) {
 	                url = System.getProperty("user.dir");
 	                url += "/" + configFile;
+	                File f = new File(url);
+	                if(!f.exists());
+	                {
+	                	url = configFile;
+	                	
+	                	
+	                }
+	                isfile = true;
+	                	
 	            } else {
 	                url = confURL.toString();
 	            }
@@ -368,7 +380,14 @@ public class ServiceProviderManager {
             factory.setValidating(false);
             SAXParser parser = factory.newSAXParser();
             if(managerImport.isClasspathBase())
-            	parser.parse(url, handler);
+            {
+            	if(!isfile)
+            		parser.parse(url, handler);
+            	else
+            	{
+            		parser.parse(new File(url), handler);
+            	}
+            }
             else
             	parser.parse(new File(url), handler);
 
