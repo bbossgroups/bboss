@@ -40,6 +40,7 @@ import java.util.Map;
  * @version 1.0
  */
 public class LinkConfigFile {
+	protected boolean multiRoot;
 	public LinkConfigFile(String fullPath,String configFile,LinkConfigFile parent)
 	{
 		this.configFile = configFile;
@@ -211,6 +212,14 @@ public class LinkConfigFile {
 	
 	public void _loopback(PropertiesContainer propertiesContainer,LinkConfigFile son) {
 		
+	}
+
+	public boolean isMultiRoot() {
+		return multiRoot;
+	}
+
+	public void setMultiRoot(boolean multiRoot) {
+		this.multiRoot = multiRoot;
 	}
 
 	 

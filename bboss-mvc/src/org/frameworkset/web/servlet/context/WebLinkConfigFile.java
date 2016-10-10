@@ -7,6 +7,7 @@ public class WebLinkConfigFile extends LinkConfigFile {
 
 	public WebLinkConfigFile(String fullPath, String configFile, LinkConfigFile parent) {
 		super(fullPath, configFile, parent);
+		multiRoot = true;
 		// TODO Auto-generated constructor stub
 	}
 

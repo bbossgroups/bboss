@@ -2505,6 +2505,15 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		// TODO Auto-generated method stub
 		return providerManager.getType(beanNameToCheck);
 	}
+	/**
+	 * 获取外部属性
+	 * @param property
+	 * @return
+	 */
+	public String getExternalProperty(String property)
+	{
+		return providerManager.getExternalProperty(property);
+	}
 	
 
 	

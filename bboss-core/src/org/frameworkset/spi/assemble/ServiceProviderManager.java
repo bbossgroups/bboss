@@ -104,7 +104,7 @@ public class ServiceProviderManager {
     /**
      * 管理服务配置文件跟踪器列表,顶级文件 List<LinkConfigFile>
      */
-    private List traceFiles;
+    private List<LinkConfigFile> traceFiles;
     
      
     /**
@@ -393,7 +393,7 @@ public class ServiceProviderManager {
 
             this.addMangers(handler.getManagers());
             this.addProperties(handler.getProperties());
-            if (parentFile == null)
+            if (parentFile == null || parentFile.isMultiRoot())
                 this.traceFiles.add(linkconfigFile);
             else
                 parentFile.addLinkConfigFile(linkconfigFile);
@@ -1041,7 +1041,18 @@ public class ServiceProviderManager {
 	       return value.getStringArray(defaultValues);
 	}
 	
-    
+	public String getExternalProperty(String property)
+	{
+		String value = null;
+		for(int i = 0;traceFiles != null &&  i < this.traceFiles.size();i ++)
+		{
+			LinkConfigFile f = traceFiles.get(i);
+			value = f.getConfigPropertiesFile() != null?f.getConfigPropertiesFile().getProperty(property):null;
+			if(value != null)
+				break;
+		}
+		return value;
+	}    
  
 
 }
