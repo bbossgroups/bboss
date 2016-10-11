@@ -19,10 +19,13 @@ public class WebLinkConfigFile extends LinkConfigFile {
 	public void _loopback(PropertiesContainer propertiesContainer,LinkConfigFile son) {
 		if( son.getConfigFile().equals(this.getConfigFile()))
 		{
-			if(configPropertiesFile == null)
-				configPropertiesFile = new PropertiesContainer();
-			configPropertiesFile.mergeParentConfigProperties(propertiesContainer);
+//			if(configPropertiesFile == null)
+//				configPropertiesFile = new PropertiesContainer();
+//			configPropertiesFile.mergeParentConfigProperties(propertiesContainer);
+			configPropertiesFile = propertiesContainer;
 		}
+		super._loopback(propertiesContainer, son);
+		
 	}
 
 }

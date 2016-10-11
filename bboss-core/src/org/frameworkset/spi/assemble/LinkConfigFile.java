@@ -211,7 +211,9 @@ public class LinkConfigFile {
 	}
 	
 	public void _loopback(PropertiesContainer propertiesContainer,LinkConfigFile son) {
-		
+		if(this.configPropertiesFile == null)
+			 this.configPropertiesFile = new PropertiesContainer();
+		configPropertiesFile.mergeSonConfigProperties(propertiesContainer);
 	}
 
 	public boolean isMultiRoot() {

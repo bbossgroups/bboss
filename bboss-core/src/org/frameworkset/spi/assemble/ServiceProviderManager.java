@@ -1047,7 +1047,7 @@ public class ServiceProviderManager {
 		for(int i = 0;traceFiles != null &&  i < this.traceFiles.size();i ++)
 		{
 			LinkConfigFile f = traceFiles.get(i);
-			value = f.getConfigPropertiesFile() != null?f.getConfigPropertiesFile().getProperty(property):null;
+			value = f.getConfigPropertiesFile() != null?f.getConfigPropertiesFile().getPropertyFromSelf2ndSons(property):null;
 			if(value != null)
 				break;
 		}

@@ -15,6 +15,7 @@ import org.frameworkset.util.io.ClassPathResource;
 public class PropertiesContainer {
     protected List<String> configPropertiesFiles;
     protected Properties allProperties ;
+    protected Properties sonAndParentProperties ;
     private static Logger log = Logger.getLogger(PropertiesContainer.class);
     public void addConfigPropertiesFile(String configPropertiesFile,LinkConfigFile linkfile)
     {
@@ -82,6 +83,16 @@ public class PropertiesContainer {
     		allProperties = new Properties();
     	allProperties.putAll(parent.getAllProperties());
     }
+    
+    public void mergeSonConfigProperties(PropertiesContainer son)
+    {
+//    	if(son == this)
+//    		return;
+    	if(sonAndParentProperties  == null)
+    		sonAndParentProperties = new Properties();
+    	if(son.getAllProperties() != null)
+    		sonAndParentProperties.putAll(son.getAllProperties());
+    }
     private Map<? extends Object, ? extends Object> getAllProperties() {
 		// TODO Auto-generated method stub
 		return this.allProperties;
@@ -91,6 +102,13 @@ public class PropertiesContainer {
     	if(allProperties == null)
     		return null;
     	return allProperties.getProperty(property);
+    }
+	
+	public String getPropertyFromSelf2ndSons(String property)
+    {
+    	if(sonAndParentProperties == null)
+    		return null;
+    	return sonAndParentProperties.getProperty(property);
     }
     
     public int size()
