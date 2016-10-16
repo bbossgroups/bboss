@@ -17,6 +17,7 @@ import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
+import redis.clients.jedis.Protocol;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
@@ -27,6 +28,10 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	private List<NodeInfo> nodes;
 	private int poolMaxTotal;
 	private long poolMaxWaitMillis;
+	private int maxIdle = -1;
+	private int timeout = Protocol.DEFAULT_TIMEOUT;
+	private int soTimeout =  Protocol.DEFAULT_TIMEOUT;
+	private int maxRedirections = 5;
 	private String auth;
 	public static final String mode_single = "single";
 	public static final String mode_cluster = "cluster";
@@ -67,8 +72,11 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		JedisPoolConfig config = new JedisPoolConfig();
 		config.setMaxTotal(poolMaxTotal);
 		config.setMaxWaitMillis(poolMaxWaitMillis);
+		if(maxIdle > 0)
+			config.setMaxIdle(maxIdle);
+		
 		NodeInfo node = nodes.get(0);
-		jedisPool = new JedisPool(config,node.getHost(), node.getPort(), (int)poolMaxWaitMillis*2,this.auth);
+		jedisPool = new JedisPool(config,node.getHost(), node.getPort(), timeout,this.auth);
 		 
 //		    Jedis jedis = pool.getResource();
 //		    jedis.auth(this.auth);
@@ -80,6 +88,10 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		    GenericObjectPoolConfig config = new GenericObjectPoolConfig();
 		    config.setMaxTotal(poolMaxTotal);
 			config.setMaxWaitMillis(poolMaxWaitMillis);
+			if(maxIdle > 0)
+				config.setMaxIdle(maxIdle);
+			
+			
 		    Set<HostAndPort> jedisClusterNode = new HashSet<HostAndPort>();
 		    for(int i = 0; i < nodes.size(); i ++)
 		    {
@@ -90,8 +102,9 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		    }
 		  
 		    
-		    jc = new JedisCluster(jedisClusterNode, config);
-		  
+//		    jc = new JedisCluster(jedisClusterNode,this.timeout,this.maxRedirections, config);
+		    jc = new JedisCluster(jedisClusterNode, timeout, soTimeout,
+		    		this.maxRedirections, auth,config);
 //		    jc.set("52", "poolTestValue2");
 //		    jc.set("53", "poolTestValue2");
 //		    System.out.println(jc.get("52")); 

@@ -29,7 +29,7 @@ dependencies {
             [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
             [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
             [group: 'org.apache.commons', name: 'commons-pool2', version: '2.4.2', transitive: false],
-            [group: 'redis.clients', name: 'jedis', version: '2.8.1', transitive: false],
+            [group: 'redis.clients', name: 'jedis', version: '2.9.0', transitive: false],
             [group: 'org.mongodb', name: 'mongo-java-driver', version: "${mongodbversion}", transitive: false],
                
     )
