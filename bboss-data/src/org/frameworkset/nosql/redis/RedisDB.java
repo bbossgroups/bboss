@@ -32,6 +32,9 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	private int timeout = Protocol.DEFAULT_TIMEOUT;
 	private int soTimeout =  Protocol.DEFAULT_TIMEOUT;
 	private int maxRedirections = 5;
+	private boolean testOnBorrow = false;
+	private boolean testOnReturn = false;
+	private boolean testWhileIdle = false;
 	private String auth;
 	public static final String mode_single = "single";
 	public static final String mode_cluster = "cluster";
@@ -74,7 +77,9 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		config.setMaxWaitMillis(poolMaxWaitMillis);
 		if(maxIdle > 0)
 			config.setMaxIdle(maxIdle);
-		
+		config.setTestOnBorrow(testOnBorrow);
+		config.setTestOnReturn(testOnReturn);
+		config.setTestWhileIdle(testWhileIdle);
 		NodeInfo node = nodes.get(0);
 		jedisPool = new JedisPool(config,node.getHost(), node.getPort(), timeout,this.auth);
 		 
@@ -91,7 +96,10 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 			if(maxIdle > 0)
 				config.setMaxIdle(maxIdle);
 			
-			
+			 
+			config.setTestOnBorrow(testOnBorrow);
+			config.setTestOnReturn(testOnReturn);
+			config.setTestWhileIdle(testWhileIdle);
 		    Set<HostAndPort> jedisClusterNode = new HashSet<HostAndPort>();
 		    for(int i = 0; i < nodes.size(); i ++)
 		    {
