@@ -61,6 +61,15 @@ public class SerialFactory {
 		"org.frameworkset.hibernate.serial.PersistentSortedMap",
 		"org.frameworkset.hibernate.serial.PersistentSortedSet",
 	};
+	/**
+	 * 在序列化对象的过程中默认忽略的异常清单，碰到异常就忽略并继续进行后续的序列化操作
+	 */
+	private   String defaultIgnoreExceptionNames[] = new String[]{
+			"org.hibernate.LazyInitializationException"			 
+		};
+	
+	private   String[] ignoreExceptionNames;
+	
 	private static SerialFactory serialFactory;
 	public static SerialFactory getSerialFactory()
 	{
@@ -78,6 +87,7 @@ public class SerialFactory {
 		}
 		return serialFactory;
 	}
+	
 	
 	public static class MagicClass
 	{
@@ -169,21 +179,42 @@ public class SerialFactory {
 	public void init()
 	{
 		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/soa/serialconf.xml");
-		Iterator it = context.getPropertyKeys().iterator();
+		Iterator<String> it = context.getPropertyKeys().iterator();
 		while(it.hasNext())
 		{
-			String magicClasss = (String)it.next();
-			Pro magic = context.getProBean(magicClasss);
-			String magicNumber = magic.getStringExtendAttribute("magic");
-			String serial = magic.getStringExtendAttribute("serial");
-			String preserial = magic.getStringExtendAttribute("preserial");
-			MagicClass MagicClass = new MagicClass();
-			MagicClass.setMagicclass(magicClasss);
-			MagicClass.setSerial(serial);
-			MagicClass.setMagicnumber(magicNumber);
-			MagicClass.setPreserial(preserial);
-			magicclassesByName.put(magicClasss, MagicClass);
-			this.magicclassesByMagicNumber.put(magicNumber, MagicClass);
+			
+			String magicClasss = it.next();
+			if(!magicClasss.equals("ignoreExceptions"))
+			{
+				Pro magic = context.getProBean(magicClasss);
+				String magicNumber = magic.getStringExtendAttribute("magic");
+				String serial = magic.getStringExtendAttribute("serial");
+				String preserial = magic.getStringExtendAttribute("preserial");
+				MagicClass MagicClass = new MagicClass();
+				MagicClass.setMagicclass(magicClasss);
+				MagicClass.setSerial(serial);
+				MagicClass.setMagicnumber(magicNumber);
+				MagicClass.setPreserial(preserial);
+				magicclassesByName.put(magicClasss, MagicClass);
+				this.magicclassesByMagicNumber.put(magicNumber, MagicClass);
+			}
+			else
+			{
+				Pro magic = context.getProBean(magicClasss);
+				String ignoreExceptions = (String)magic.getValue();
+				
+				if(ignoreExceptions != null && ignoreExceptions.trim().length() > 0)
+				{
+					ignoreExceptions= ignoreExceptions.trim();
+					this.ignoreExceptionNames = ignoreExceptions.split("\n");
+					for(int i =0 ; i < ignoreExceptionNames.length; i ++)
+					{
+						ignoreExceptionNames[i] = ignoreExceptionNames[i].trim();
+					}
+				}
+			}
+			
+			
 			
 		}
 	}
@@ -249,6 +280,28 @@ public class SerialFactory {
 	{
 		String magicclassName = magicclass.getName();
 		return getMagicClass( magicclassName);
+	}
+	
+	public boolean isIgnoreException(Throwable e)
+	{
+		String name = e.getClass().getName();
+		for(String iname : defaultIgnoreExceptionNames)
+		{
+			if(name.equals(iname))
+				return true;
+				
+		}
+		if(ignoreExceptionNames!= null )
+		{
+			for(String iname : ignoreExceptionNames)
+			{
+				if(name.equals(iname))
+					return true;
+					
+			}
+		}
+		return false;
+		
 	}
 
 }

@@ -38,8 +38,6 @@ import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 
-import com.frameworkset.spi.assemble.BeanInstanceException;
-import com.frameworkset.spi.assemble.CurrentlyInCreationException;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
@@ -1480,15 +1478,13 @@ public class ObjectSerializable {
 						dateformat, ret,stack,currentAddress + "{2}",false );
 			}
 
-		} catch (CurrentlyInCreationException e) {
+		} catch (SerialException e) {
 			throw e;
-		} catch (BeanInstanceException e) {
-			throw e;
-		}
+		} 
 
 		catch (Exception e) {
 			// e.printStackTrace();
-			throw new CurrentlyInCreationException("", e);
+			throw new SerialException("", e);
 		}
 
 		ret.append("</construction>");
@@ -1526,15 +1522,13 @@ public class ObjectSerializable {
 
 			convertBeanObjectToXML("lineNumber", value, int.class, true,dateformat,
 					ret,serialStack, currentAddress + "{3}",false);
-		} catch (CurrentlyInCreationException e) {
+		} catch (SerialException e) {
 			throw e;
-		} catch (BeanInstanceException e) {
-			throw e;
-		}
+		}  
 
 		catch (Exception e) {
 			// e.printStackTrace();
-			throw new CurrentlyInCreationException("", e);
+			throw new SerialException("", e);
 		}
 
 		ret.append("</construction>");
@@ -1600,20 +1594,22 @@ public class ObjectSerializable {
 				
 				convertBeanObjectToXML(attrName, value, ptype, pisbasetype,dateformat, ret,stack,currentAddress + "->" + attrName,true);
 			} catch (IllegalArgumentException e) {
-				throw new CurrentlyInCreationException("", e);
+				throw new SerialException("", e);
 			} catch (IllegalAccessException e) {
-				throw new CurrentlyInCreationException("", e);
+				throw new SerialException("", e);
 			} catch (InvocationTargetException e) {
-				throw new CurrentlyInCreationException("", e);
-			} catch (CurrentlyInCreationException e) {
+				Throwable target = e.getTargetException();
+				if(SerialFactory.getSerialFactory().isIgnoreException(target))
+					continue;
+				throw new SerialException("", target);
+			} catch (SerialException e) {
 				throw e;
-			} catch (BeanInstanceException e) {
-				throw e;
-			}
+			}  
 
 			catch (Exception e) {
-				// e.printStackTrace();
-				throw new CurrentlyInCreationException("", e);
+				if(SerialFactory.getSerialFactory().isIgnoreException(e))
+					continue;
+				throw new SerialException("", e);
 			}
 
 		}

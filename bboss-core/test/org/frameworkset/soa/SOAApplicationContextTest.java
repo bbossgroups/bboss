@@ -39,6 +39,19 @@ import com.frameworkset.util.ValueObjectUtil;
  * @version 1.0
  */
 public class SOAApplicationContextTest {
+	
+	@Test
+	public void testBeanWithException() throws Exception
+	{
+		BeanWithException b = new BeanWithException();
+		b.setV1("1");
+		b.setV2("2");
+		b.setV3("3");
+		String xml = ObjectSerializable.toXML(b);
+		b = ObjectSerializable.toBean(xml, BeanWithException.class);
+		System.out.print(b);
+		
+	}
 	@Test
 	public void testXMLToBean() throws Exception
 	{

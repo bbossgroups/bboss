@@ -15,7 +15,12 @@
 	<property name="org.frameworkset.soa.xblink.TestSerializable$SerialPO" magic="8"/> 
 	<property name="java.lang.StackTraceElement" magic="9"/>
 	<property name="java.lang.Exception" magic="10"/>
-	
+	<property name="ignoreExceptions">
+		<![CDATA[
+		org.frameworkset.soa.IgnoreException1
+		org.frameworkset.soa.IgnoreException2
+		]]>
+	</property>
 	
 	
  </properties>
