@@ -671,7 +671,14 @@ public class ClassUtil
 	    	int idx = name.indexOf("$$EnhancerByCGLIB$$") ;
 	    	if(idx < 0)
 	    	{
+	    		idx = name.indexOf("_$$_jvst") ;//fixed hibernate 4.8.0 lazy load bug
+	    		if(idx < 0)
 	    			this.clazz = clazz;
+	    		else
+	    		{
+	    			this.clazz = clazz.getSuperclass();
+		    		cglib = true;
+	    		}
 	    		
 	    	}
 	    	else
