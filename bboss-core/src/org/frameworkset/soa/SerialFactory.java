@@ -52,14 +52,14 @@ public class SerialFactory {
 		"org.frameworkset.soa.plugin.UnmodifiableMapPreSerial",
 		"org.frameworkset.soa.plugin.UnmodifiableSetPreSerial",
 		"org.frameworkset.soa.plugin.UnmodifiableSortedMapPreSerial",
-		"org.frameworkset.soa.plugin.UnmodifiableSortedSetPreSerial",
-		
+		"org.frameworkset.soa.plugin.UnmodifiableSortedSetPreSerial"
+		/**
 		"org.frameworkset.hibernate.serial.PersistentBagSerial",
 		"org.frameworkset.hibernate.serial.PersistentList",
 		"org.frameworkset.hibernate.serial.PersistentMap",
 		"org.frameworkset.hibernate.serial.PersistentSet",
 		"org.frameworkset.hibernate.serial.PersistentSortedMap",
-		"org.frameworkset.hibernate.serial.PersistentSortedSet",
+		"org.frameworkset.hibernate.serial.PersistentSortedSet",*/
 	};
 	/**
 	 * 在序列化对象的过程中默认忽略的异常清单，碰到异常就忽略并继续进行后续的序列化操作
