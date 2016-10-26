@@ -385,11 +385,25 @@ public class ServiceProviderManager {
             		parser.parse(url, handler);
             	else
             	{
-            		parser.parse(new File(url), handler);
+            		File f = new File(url);
+            		if(f.exists())
+            			parser.parse(new File(url), handler);
+            		else
+            		{
+            			 log.debug("从文件[" + url+ "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。");
+            		}
             	}
             }
             else
-            	parser.parse(new File(url), handler);
+            {
+            	File f = new File(url);
+        		if(f.exists())
+        			parser.parse(new File(url), handler);
+        		else
+        		{
+        			 log.debug("从文件[" + url+ "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。");
+        		}
+            }
 
             this.addMangers(handler.getManagers());
             this.addProperties(handler.getProperties());
@@ -410,11 +424,11 @@ public class ServiceProviderManager {
         		 log.debug("从文件[" + configFile+ "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。");
         	}
         	else if (parentFile == null) {
-                log.error("从文件[" + url + "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。",e);
+                throw new RuntimeException("从文件[" + url + "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。",e);
             } else {
-                log.error("从文件[" + parentFile + "@" + url + "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。",e);
+            	 throw new RuntimeException("从文件[" + parentFile + "@" + url + "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。",e);
             }
-            // e.printStackTrace();
+            
         }
 
     }
