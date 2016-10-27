@@ -390,7 +390,7 @@ public class ServiceProviderManager {
             			parser.parse(new File(url), handler);
             		else
             		{
-            			 log.debug("从文件[" + url+ "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。");
+            			 log.debug("IOC配置文件[" + url+ "]不存在，忽略加载");
             		}
             	}
             }
@@ -401,7 +401,7 @@ public class ServiceProviderManager {
         			parser.parse(new File(url), handler);
         		else
         		{
-        			 log.debug("从文件[" + url+ "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。");
+        			log.debug("IOC配置文件[" + url+ "]不存在，忽略加载");
         		}
             }
 
