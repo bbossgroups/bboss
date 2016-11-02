@@ -80,7 +80,7 @@ public abstract class BaseTag extends TagSupport implements TryCatchFinally
 	protected transient HttpServletResponse response = null;
 	protected boolean enablecontextmenu = false;
 	
-	public static boolean ENABLE_TAG_SECURITY = false;
+	public static boolean ENABLE_TAG_SECURITY = true;
 	
 	public boolean isEnablecontextmenu()
 	{

@@ -37,9 +37,16 @@ public class SecurityUtil {
 	{
 		try {
 			accessControlFactory = (AccessControlFactory) Class.forName("com.frameworkset.platform.security.PlatformAccessControlFactoryImpl").newInstance();
+			log.info("AccessControlFactory is com.frameworkset.platform.security.PlatformAccessControlFactoryImpl");
 		} catch (Exception e) {
-			log.warn("Use DefaultAccessControlFactoryImpl");
-			accessControlFactory = new DefaultAccessControlFactoryImpl();
+			try {
+				accessControlFactory = (AccessControlFactory) Class.forName("org.frameworkset.platform.security.PlatformAccessControlFactoryImpl").newInstance();
+				log.info("AccessControlFactory is org.frameworkset.platform.security.PlatformAccessControlFactoryImpl");
+			} catch (Exception e1) {
+				
+				log.info("AccessControlFactory is DefaultAccessControlFactoryImpl");
+				accessControlFactory = new DefaultAccessControlFactoryImpl();
+			}
 		}
 	}
 
