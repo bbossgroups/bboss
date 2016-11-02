@@ -45,7 +45,6 @@ import javax.servlet.jsp.tagext.TagSupport;
 import javax.servlet.jsp.tagext.TryCatchFinally;
 
 import org.apache.log4j.Logger;
-import org.frameworkset.spi.BaseSPIManager;
 
 import com.frameworkset.common.tag.contextmenu.ContextMenu;
 
@@ -81,7 +80,7 @@ public abstract class BaseTag extends TagSupport implements TryCatchFinally
 	protected transient HttpServletResponse response = null;
 	protected boolean enablecontextmenu = false;
 	
-	public static boolean ENABLE_TAG_SECURITY = BaseSPIManager.getBooleanProperty("ENABLE_TAG_SECURITY",false);
+	public static boolean ENABLE_TAG_SECURITY = false;
 	
 	public boolean isEnablecontextmenu()
 	{
@@ -190,11 +189,7 @@ public abstract class BaseTag extends TagSupport implements TryCatchFinally
 		   		 
     }
     
-    public static void main(String[] args)
-    {
-        boolean _ENABLE_TAG_SECURITY = BaseSPIManager.getBooleanProperty("ENABLE_TAG_SECURITY",false);
-        System.out.println(_ENABLE_TAG_SECURITY);
-    }
+   
     
     
     
