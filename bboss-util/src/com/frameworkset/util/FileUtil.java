@@ -40,6 +40,7 @@ package com.frameworkset.util;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -52,6 +53,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -1035,6 +1037,46 @@ public class FileUtil
         }
 
     }
+    
+    public static void writeFile(String fileName, String text,String encode) throws IOException
+    {
+    	writeFile(new File( fileName), text,encode);
+
+    }
+    
+    public static void writeFile(File file, String text,String encode) throws IOException
+    {
+        Writer fw = null;
+        java.io.OutputStream out = null;
+        try
+        {
+        	out = new FileOutputStream(file);
+        	fw = new BufferedWriter(new OutputStreamWriter(out,encode == null?"UTF-8":encode));
+        	
+            fw.write(text, 0, text.length());
+            fw.flush();
+        }
+        catch (IOException ioe)
+        {
+            throw new IOException("Write text to " + file.getPath() + " fail!");
+        }
+        finally
+        {
+        	try {
+				out.close();
+			} catch (Exception e) {
+				 
+			}
+        	try {
+				fw.close();
+			} catch (Exception e) {
+				 
+			}
+        }
+
+    }
+    
+    
 
     public static void writeFile(String fileName, String text, boolean isAppend) throws IOException
     {
