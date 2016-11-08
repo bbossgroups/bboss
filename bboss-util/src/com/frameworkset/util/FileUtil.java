@@ -639,7 +639,17 @@ public class FileUtil
      */
     public static void deleteFile(String path)
     {
-        File file = new File(path);
+    	deleteFile(new File(path));
+
+    }
+    
+    /**
+     * 删除文件目录下的所有子文件和子目录，操作一定要小心
+     * 
+     * @param publishTemppath
+     */
+    public static void deleteFile(File file)
+    {
         if (!file.exists() || file.isFile())
             return;
         if (file.isDirectory())
@@ -656,7 +666,18 @@ public class FileUtil
      */
     public static void removeFileOrDirectory(String path)
     {
-        File file = new File(path);
+    	removeFileOrDirectory(new File (path));
+
+    }
+    
+    /**
+     * 删除文件目录下的所有子文件和子目录，操作一定要小心
+     * 
+     * @param publishTemppath
+     */
+    public static void removeFileOrDirectory(File file)
+    {
+         
         if (!file.exists())
             return;
         if (file.isDirectory())
