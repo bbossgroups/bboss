@@ -42,8 +42,6 @@ import org.frameworkset.spi.assemble.RefID.Index;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
 import org.xml.sax.InputSource;
 
-import com.frameworkset.util.SimpleStringUtil;
-
 /**
  * 
  * 

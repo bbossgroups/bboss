@@ -74,6 +74,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.cache.FileContentCache;
+import org.frameworkset.util.io.ClassPathResource;
 
 public class FileUtil 
 {
@@ -597,6 +598,107 @@ public class FileUtil
                 {
                 }
         }
+    }
+    
+    /**
+     * 获取文件得内容
+     * 
+     * @param filePath
+     *            文件得物理路径
+     * @return
+     * @throws IOException
+     */
+    public static String getFileContent(InputStream reader,String charSet) throws IOException
+    {
+    	ByteArrayOutputStream swriter = null;
+        OutputStream temp = null;
+        
+        try
+        {
+        	swriter = new ByteArrayOutputStream();
+        	temp = new BufferedOutputStream(swriter);
+
+            int len = 0;
+            byte[] buffer = new byte[1024];
+            while ((len = reader.read(buffer)) > 0)
+            {
+            	temp.write(buffer, 0, len);
+            }
+            temp.flush();
+            if(charSet != null && !charSet.equals(""))
+            	return swriter.toString(charSet);
+            else
+            	return swriter.toString();
+        }
+        catch (FileNotFoundException e)
+        {
+           log.error("Get File Content Error:", e);
+            return "";
+        }
+        catch (IOException e)
+        {
+        	log.error("Get File Content Error:", e);
+            throw e;
+        }
+        finally
+        {
+            if (reader != null)
+                try
+                {
+                    reader.close();
+                }
+                catch (IOException e)
+                {
+                }
+            if (swriter != null)
+                try
+                {
+                    swriter.close();
+                }
+                catch (IOException e)
+                {
+                }
+            if (temp != null)
+                try
+                {
+                	temp.close();
+                }
+                catch (IOException e)
+                {
+                }
+        }
+    }
+    
+    
+    /**
+     * 获取文件得内容
+     * 对应得文件路径如果带file:则表示文件是物理路径，例如:file:/opt/aaa.txt
+     * 如果不带，则表示classpath类路径下的文件路径
+     * 
+     * @param file
+     *            文件得物理路径
+     * @return
+     * @throws IOException
+     */
+    public static String getContent(String file,String charSet) throws IOException
+    {
+    	InputStream input = null;
+    	String content = null;    	 
+		if(!file.startsWith("file:"))
+		{
+	    	ClassPathResource  resource = new ClassPathResource(file);
+	    	input = resource.getInputStream();
+	    	content = getFileContent(input,  charSet);
+	    	 
+		}
+		else
+		{			 
+			 content = getFileContent(file.substring(5), charSet);
+		}
+			
+    	 return content;
+    	 
+    	 
     }
     
     public static void main(String[] args)
