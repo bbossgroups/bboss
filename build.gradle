@@ -57,6 +57,7 @@ configure(allprojects) { project ->
 
 	repositories {
 		mavenLocal()		
+		
 		mavenCentral()
 		
 		
