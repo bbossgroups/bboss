@@ -294,7 +294,7 @@ public class SimpleStringUtil  {
 	}
 	public static String getUUID()
 	{
-		return java.util.UUID.randomUUID().toString();
+		return UUID.randomUUID().toString();
 	}
 	public static String getRealPath(String contextPath, String path,boolean usebase) {
 		
