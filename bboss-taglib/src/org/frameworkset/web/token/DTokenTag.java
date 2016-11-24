@@ -1,6 +1,10 @@
 package org.frameworkset.web.token;
 
+import java.lang.reflect.InvocationTargetException;
+
 import javax.servlet.jsp.JspException;
+
+import org.apache.log4j.Logger;
 
 import com.frameworkset.common.tag.BaseTag;
 /**
@@ -9,7 +13,7 @@ import com.frameworkset.common.tag.BaseTag;
  *
  */
 public class DTokenTag extends BaseTag {
-	 
+	 private static Logger log = Logger.getLogger(DTokenTag.class);
 	
 	/**
 	 * 参数有3个值（如果没有指定默认为input类型）：
@@ -65,25 +69,32 @@ public class DTokenTag extends BaseTag {
 				Boolean enableToken = (Boolean)TokenMethodHelper.isEnableToken.invoke(null);
 				if(!enableToken.booleanValue())
 					return ret;
+			}catch(InvocationTargetException e)
+			{
+				 log.info("build DTokenTag failed:"+e.getTargetException().getMessage());
 			} catch (RuntimeException e) {
-				throw new JspException(e);
+				log.info("build DTokenTag failed:"+e.getMessage());
 			} 
 			catch (Exception e) {
-				throw new JspException(e);
+				log.info("build DTokenTag failed:"+e.getMessage());
 			} catch (Throwable e) {
-				throw new JspException(e);
+				log.info("build DTokenTag failed:"+e.getMessage());
 			}
 			try {
 				out.print(TokenMethodHelper.buildDToken.invoke(null, element,this.jsonsplit,request,fid,this.cache));
 //				TokenMethodHelper.doDTokencheck.invoke(null,request, response);
 			}
+			catch(InvocationTargetException e)
+			{
+				 log.info("build DTokenTag failed:"+e.getTargetException().getMessage());
+			}
 			 catch (RuntimeException e) {
-					throw new JspException(e);
+				 log.info("build DTokenTag failed:"+e.getMessage());
 				} 
 			catch (Exception e) {
-				throw new JspException(e);
+				log.info("build DTokenTag failed:"+e.getMessage());
 			} catch (Throwable e) {
-				throw new JspException(e);
+				log.info("build DTokenTag failed:"+e.getMessage());
 			}
 		}
 		

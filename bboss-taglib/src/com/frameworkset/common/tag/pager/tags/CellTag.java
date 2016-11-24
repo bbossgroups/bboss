@@ -16,7 +16,6 @@
 package com.frameworkset.common.tag.pager.tags;
 import java.io.OutputStream;
 import java.net.URLDecoder;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
