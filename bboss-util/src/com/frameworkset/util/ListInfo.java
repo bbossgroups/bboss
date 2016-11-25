@@ -61,6 +61,7 @@ public class ListInfo implements Serializable{
    
     
     /**
+     * 检查是否是more分页
 	 * @return the more
 	 */
 	public boolean isMore() {
@@ -93,7 +94,8 @@ public class ListInfo implements Serializable{
 	   }
    }
    /**
-    * Access method for the datas property.
+    * 
+    * 获取当页记录列表
     *
     * @return   the current value of the datas property
     */
@@ -143,7 +145,10 @@ public class ListInfo implements Serializable{
         return showAll;
     }
 
-
+    /**
+     * 获取总记录数
+     * @return
+     */
     public long getTotalSize() {
         return totalSize;
     }
@@ -181,6 +186,7 @@ public class ListInfo implements Serializable{
     }
 
 	/**
+	 * 获取每页做多展示记录条数
 	 * @return the maxPageItems
 	 */
 	public int getMaxPageItems() {
@@ -229,5 +235,18 @@ public class ListInfo implements Serializable{
 			this.resultSize = listInfo.getResultSize();
 			this.datas = listInfo.getDatas();
 		}
+	}
+	/**
+	 * 获取查询结果总页数
+	 * @return
+	 */
+	public int getTotalPages()
+	{
+		if(getMaxPageItems() <= 0)
+			return 0;
+		int totopages = (int)(this.getTotalSize() / this.getMaxPageItems());
+		if(this.getTotalSize() % this.getMaxPageItems() > 0)
+			totopages = totopages + 1;
+		return totopages;
 	}
 }
