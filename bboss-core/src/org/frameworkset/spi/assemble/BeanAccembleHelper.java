@@ -1918,7 +1918,10 @@ public class BeanAccembleHelper {
 			}
 			catch(InvocationTargetException e)
 			{
-				throw new BeanInstanceException(e.getTargetException());
+				throw new BeanInstanceException("InitializingBean["
+						+ providerManagerInfo.getName()
+						+ "] afterPropertiesSet 失败,请检查配置文件是否配置正确["
+						+ providerManagerInfo.getConfigFile() + "]",e.getTargetException());
 			}
 			catch (BeanInstanceException e) {
 				throw e;

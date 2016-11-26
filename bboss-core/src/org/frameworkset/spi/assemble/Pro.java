@@ -182,9 +182,14 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 		return this.isfreeze;
 	}
 
+	
 	protected void modify() {
 		if (this.isFreeze())
-			throw new CannotModifyException();
+		{
+			StringBuilder error = new StringBuilder();
+			error.append("组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("已被冻结,不能修改!");
+			throw new CannotModifyException(error.toString());
+		}
 	}
 
 	public String toString() {
@@ -260,9 +265,13 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 		}
 
 		catch (ClassNotFoundException e) {
-			throw new BeanInstanceException(e);
-		} catch (Exception e) {
-			throw new BeanInstanceException(e);
+			StringBuilder error = new StringBuilder();
+			error.append("获取组件").append(this.getName()).append("@").append(this.configFile).append("类型失败：");
+			throw new BeanInstanceException(error.toString(),e);
+		} catch (Throwable e) {
+			StringBuilder error = new StringBuilder();
+			error.append("获取组件").append(this.getName()).append("@").append(this.configFile).append("类型失败：");
+			throw new BeanInstanceException(error.toString(),e);
 		}
 
 	}
@@ -377,7 +386,14 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 						retvalue = magicclass.getPreserialObject().posthandle(retvalue);
 					}
 				} catch (ClassNotFoundException e) {
-					throw new BeanInstanceException(e);
+					StringBuilder error = new StringBuilder();
+					error.append("初始化List组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+					throw new BeanInstanceException(error.toString(),e);
+				}
+				catch (Throwable e) {
+					StringBuilder error = new StringBuilder();
+					error.append("初始化List组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+					throw new BeanInstanceException(error.toString(),e);
 				}
 //				retvalue = ((ProList) value).getComponentList();
 			}
@@ -405,7 +421,14 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 						retvalue = magicclass.getPreserialObject().posthandle(retvalue);
 					}
 				} catch (ClassNotFoundException e) {
-					throw new BeanInstanceException(e);
+					StringBuilder error = new StringBuilder();
+					error.append("初始化Map组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+					throw new BeanInstanceException(error.toString(),e);
+				}
+				catch (Throwable e) {
+					StringBuilder error = new StringBuilder();
+					error.append("初始化Map组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+					throw new BeanInstanceException(error.toString(),e);
 				}
 			}
 			else
@@ -432,7 +455,14 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 						retvalue = magicclass.getPreserialObject().posthandle(retvalue);
 					}
 				} catch (ClassNotFoundException e) {
-					throw new BeanInstanceException(e);
+					StringBuilder error = new StringBuilder();
+					error.append("初始化Set组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+					throw new BeanInstanceException(error.toString(),e);
+				}
+				catch (Throwable e) {
+					StringBuilder error = new StringBuilder();
+					error.append("初始化Set组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+					throw new BeanInstanceException(error.toString(),e);
 				}
 //				retvalue = ((ProList) value).getComponentList();
 			}
@@ -1216,16 +1246,26 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 					{
 						try {
 							retvalue = ValueObjectUtil.byteArrayDecoder((String)value);
-						} catch (Exception e) {
-							throw new BeanInstanceException(e);
+						}catch (Throwable e) {
+							//InvocationTargetException e;
+							StringBuilder error = new StringBuilder();
+							error.append("获取组件值").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+							throw new BeanInstanceException(error.toString(),e);
+							 
 						}
 					}
 					else
 					{
 						try {
 							retvalue = ValueObjectUtil.typeCast(value, ValueObjectUtil.getClass(soatype));
-						} catch (Exception e) {
-							throw new BeanInstanceException(e);
+						}
+						
+						catch (Throwable e) {
+							 
+							StringBuilder error = new StringBuilder();
+							error.append("获取组件值").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+							throw new BeanInstanceException(error.toString(),e);
+							 
 						}
 					}
 				}
@@ -1246,8 +1286,13 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 				}
 			} catch (CurrentlyInCreationException e) {
 				throw e;
-			} catch (Exception e) {
-				throw new BeanInstanceException(e);
+			} 
+			catch (Throwable e) {
+				//InvocationTargetException e;
+				StringBuilder error = new StringBuilder();
+				error.append("获取组件值").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+				throw new BeanInstanceException(error.toString(),e);
+				 
 			}
 		}
 		return retvalue;
@@ -1643,9 +1688,13 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 			}
 
 			catch (ClassNotFoundException e) {
-				throw new BeanInstanceException(e);
+				StringBuilder error = new StringBuilder();
+				error.append("初始化工厂组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+				throw new BeanInstanceException(error.toString(),e);
 			} catch (Exception e) {
-				throw new BeanInstanceException(e);
+				StringBuilder error = new StringBuilder();
+				error.append("初始化工厂组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+				throw new BeanInstanceException(error.toString(),e);
 			}
 	 }
 
@@ -1842,8 +1891,14 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 			}
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			StringBuilder error = new StringBuilder();
+			error.append("初始化组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("事务配置失败：");
+			throw new BeanInstanceException(error.toString(),e);
+		}
+		catch (Throwable e) {
+			StringBuilder error = new StringBuilder();
+			error.append("初始化组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("事务配置失败：");
+			throw new BeanInstanceException(error.toString(),e);
 		}
 
 	}
@@ -1923,7 +1978,14 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 			}
 		} catch (ClassNotFoundException e) {
 			
-			e.printStackTrace();
+			StringBuilder error = new StringBuilder();
+			error.append("初始化组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("同步方法配置失败：");
+			throw new BeanInstanceException(error.toString(),e);
+		}
+		catch (Throwable e) {
+			StringBuilder error = new StringBuilder();
+			error.append("初始化组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("同步方法配置失败：");
+			throw new BeanInstanceException(error.toString(),e);
 		}
 
 	}
@@ -1936,7 +1998,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 		try {
 			return (String[])value;
 		} catch (Exception e) {
-			throw new AssembleException("属性[" + name + "]不是String[]型数据！value=" + value);
+			throw new AssembleException(new StringBuilder().append("属性[" ).append( name ).append("@").append(this.configFile).append("]不是String[]型数据！value=").append( value).toString());
 		}
 	}
 
@@ -1947,7 +2009,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 		try {
 			return (String[])value;
 		} catch (Exception e) {
-			throw new AssembleException("属性[" + name + "]不是String[]型数据！value=" + value);
+			throw new AssembleException(new StringBuilder().append("属性[" ).append( name ).append("@").append(this.configFile).append("]不是String[]型数据！value=").append( value).toString());
 		}
 	}
 
@@ -2185,9 +2247,13 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 			}
 
 			catch (ClassNotFoundException e) {
-				throw new BeanInstanceException(e);
-			} catch (Exception e) {
-				throw new BeanInstanceException(e);
+				StringBuilder error = new StringBuilder();
+				error.append("初始化iocpluginClass").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+				throw new BeanInstanceException(error.toString(),e);
+			} catch (Throwable e) {
+				StringBuilder error = new StringBuilder();
+				error.append("初始化iocpluginClass").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
+				throw new BeanInstanceException(error.toString(),e);
 			}
 	 } 
 	 
