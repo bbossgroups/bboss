@@ -40,7 +40,6 @@ import java.sql.Types;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
@@ -52,6 +51,7 @@ import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.transaction.JDBCTransaction;
 import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
+import com.frameworkset.util.UUID;
 
 /**
  * 封装表的主键信息 可能出现的问题： 1.如果通过其他的方式往数据库的相同表中插入数据，会造成主键冲突
