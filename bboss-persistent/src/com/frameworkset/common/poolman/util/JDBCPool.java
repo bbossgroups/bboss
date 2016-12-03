@@ -719,13 +719,13 @@ public class JDBCPool {
 			}
 			catch(Exception e)
 			{
-				log.info("初始化主键生成个器失败："+info.getIdGenerator()+",使用默认com.frameworkset.common.poolman.sql.StrongUuidGenerator.");
-				idGenerator = new com.frameworkset.common.poolman.sql.StrongUuidGenerator();
+				log.info("初始化主键生成个器失败："+info.getIdGenerator()+",使用默认com.frameworkset.common.poolman.sql.BBossUuidGenerator.");
+				idGenerator = new com.frameworkset.common.poolman.sql.BBossUuidGenerator();
 			}
 		}
 		else
 		{
-			idGenerator = new com.frameworkset.common.poolman.sql.StrongUuidGenerator();
+			idGenerator = new com.frameworkset.common.poolman.sql.BBossUuidGenerator();
 		}
 		if (null == info.getJNDIName() || info.getJNDIName().equals(""))
 			log
