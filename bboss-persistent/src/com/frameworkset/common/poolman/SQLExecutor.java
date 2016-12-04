@@ -592,6 +592,46 @@ public class SQLExecutor
 		
 	}
 	
+	
+	public static void updateByKeys(String sql, int... fields) throws SQLException {
+//		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
+		SQLInfoExecutor.updateByKeys(sqlinfo, fields);
+		
+	}
+	public static void updateByKeysWithDBName(String dbname,String sql, int... fields) throws SQLException {
+//		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
+		SQLInfoExecutor.updateByKeysWithDBName(dbname,sqlinfo, fields);
+		
+	}
+	
+	public static void updateByLongKeys(String sql, long... fields) throws SQLException {
+//		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
+		SQLInfoExecutor.updateByLongKeys(sqlinfo, fields);
+		
+	}
+	public static void updateByLongKeysWithDBName(String dbname,String sql, long... fields) throws SQLException {
+//		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
+		SQLInfoExecutor.updateByLongKeysWithDBName(dbname,sqlinfo, fields);
+		
+	}
+	
+	public static void updateByKeys(String sql, String... fields) throws SQLException {
+//		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
+		SQLInfoExecutor.updateByKeys(sqlinfo, fields);
+		
+	}
+	public static void updateByKeysWithDBName(String dbname,String sql, String... fields) throws SQLException {
+//		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
+		SQLInfoExecutor.updateByKeysWithDBName(dbname,sqlinfo, fields);
+		
+	}
+	
 	public static void deleteByKeys(String sql, String... fields) throws SQLException {
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
 		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
@@ -605,6 +645,7 @@ public class SQLExecutor
 		
 	}
 	
+	
 	public static void deleteByShortKeys(String sql, short... fields) throws SQLException {
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
 		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
@@ -615,6 +656,18 @@ public class SQLExecutor
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
 		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
 		SQLInfoExecutor.deleteByShortKeysWithDBName(dbname,sqlinfo, fields);
+	}
+	
+	public static void updateByShortKeys(String sql, short... fields) throws SQLException {
+//		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
+		SQLInfoExecutor.updateByShortKeys(sqlinfo, fields);
+		
+	}
+	public static void updateByShortKeysWithDBName(String dbname,String sql, short... fields) throws SQLException {
+//		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
+		SQLInfoExecutor.updateByShortKeysWithDBName(dbname,sqlinfo, fields);
 	}
 
 

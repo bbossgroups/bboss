@@ -120,6 +120,18 @@ public class ConfigSQLExecutor  {
 		
 	}
 	
+	public void updateByKeys(String sqlname, int... fields) throws SQLException {
+		SQLInfo sql = getSqlInfo(null,sqlname);
+		SQLInfoExecutor.updateByKeys(sql, fields);
+//		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
+		
+	}
+	public  void updateByKeysWithDBName(String dbname,String sqlname, int... fields) throws SQLException {
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
+		SQLInfoExecutor.updateByKeysWithDBName(dbname,sql, fields);
+		
+	}
+	
 	public void deleteByLongKeys(String sqlname, long... fields) throws SQLException {
 		SQLInfo sql = getSqlInfo(null,sqlname);
 		SQLInfoExecutor.deleteByLongKeys(sql, fields);
@@ -129,6 +141,19 @@ public class ConfigSQLExecutor  {
 	public void deleteByLongKeysWithDBName(String dbname,String sqlname, long... fields) throws SQLException {
 		SQLInfo sql = getSqlInfo(dbname,sqlname);
 		SQLInfoExecutor.deleteByLongKeysWithDBName(dbname,sql, fields);
+//		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
+		
+	}
+	
+	public void updateByLongKeys(String sqlname, long... fields) throws SQLException {
+		SQLInfo sql = getSqlInfo(null,sqlname);
+		SQLInfoExecutor.updateByLongKeys(sql, fields);
+//		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
+		
+	}
+	public void updateByLongKeysWithDBName(String dbname,String sqlname, long... fields) throws SQLException {
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
+		SQLInfoExecutor.updateByLongKeysWithDBName(dbname,sql, fields);
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
 		
 	}
@@ -146,6 +171,19 @@ public class ConfigSQLExecutor  {
 		
 	}
 	
+	public void updateByKeys(String sqlname, String... fields) throws SQLException {
+		SQLInfo sql = getSqlInfo(null,sqlname);
+		SQLInfoExecutor.updateByKeys(sql, fields);
+//		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
+		
+	}
+	public void updateByKeysWithDBName(String dbname,String sqlname, String... fields) throws SQLException {
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
+		SQLInfoExecutor.updateByKeysWithDBName(dbname,sql, fields);
+//		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
+		
+	}
+	
 	public void deleteByShortKeys(String sqlname, short... fields) throws SQLException {
 		SQLInfo sql = getSqlInfo(null,sqlname);
 		SQLInfoExecutor.deleteByShortKeys(sql, fields);
@@ -157,7 +195,17 @@ public class ConfigSQLExecutor  {
 		SQLInfoExecutor.deleteByShortKeysWithDBName(dbname,sql, fields);
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
 	}
-
+	public void updateByShortKeys(String sqlname, short... fields) throws SQLException {
+		SQLInfo sql = getSqlInfo(null,sqlname);
+		SQLInfoExecutor.updateByShortKeys(sql, fields);
+//		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
+		
+	}
+	public void updateByShortKeysWithDBName(String dbname,String sqlname, short... fields) throws SQLException {
+		SQLInfo sql = getSqlInfo(dbname,sqlname);
+		SQLInfoExecutor.updateByShortKeysWithDBName(dbname,sql, fields);
+//		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
+	}
 
 
 	public Object insert(String sqlname, Object... fields) throws SQLException {

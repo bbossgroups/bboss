@@ -365,12 +365,30 @@ public class SQLInfoExecutor {
 		
 	}
 	
+	public static void updateByKeys(SQLInfo sql, int... fields) throws SQLException {
+		executeBatch(null, sql,PreparedDBUtil.UPDATE, fields);
+		
+	}
+	public static void updateByKeysWithDBName(String dbname,SQLInfo sql, int... fields) throws SQLException {
+		executeBatch(dbname, sql,PreparedDBUtil.UPDATE, fields);
+		
+	}
+	
 	public static void deleteByLongKeys(SQLInfo sql, long... fields) throws SQLException {
 		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
 		
 	}
 	public static void deleteByLongKeysWithDBName(String dbname,SQLInfo sql, long... fields) throws SQLException {
 		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
+		
+	}
+	
+	public static void updateByLongKeys(SQLInfo sql, long... fields) throws SQLException {
+		executeBatch(null, sql,PreparedDBUtil.UPDATE, fields);
+		
+	}
+	public static void updateByLongKeysWithDBName(String dbname,SQLInfo sql, long... fields) throws SQLException {
+		executeBatch(dbname, sql,PreparedDBUtil.UPDATE, fields);
 		
 	}
 	
@@ -383,12 +401,30 @@ public class SQLInfoExecutor {
 		
 	}
 	
+	public static void updateByKeys(SQLInfo sql, String... fields) throws SQLException {
+		executeBatch(null, sql,PreparedDBUtil.UPDATE, fields);
+		
+	}
+	public static void updateByKeysWithDBName(String dbname,SQLInfo sql, String... fields) throws SQLException {
+		executeBatch(dbname, sql,PreparedDBUtil.UPDATE, fields);
+		
+	}
+	
 	public static void deleteByShortKeys(SQLInfo sql, short... fields) throws SQLException {
 		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
 		
 	}
 	public static void deleteByShortKeysWithDBName(String dbname,SQLInfo sql, short... fields) throws SQLException {
 		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
+	}
+	
+	
+	public static void updateByShortKeys(SQLInfo sql, short... fields) throws SQLException {
+		executeBatch(null, sql,PreparedDBUtil.UPDATE, fields);
+		
+	}
+	public static void updateByShortKeysWithDBName(String dbname,SQLInfo sql, short... fields) throws SQLException {
+		executeBatch(dbname, sql,PreparedDBUtil.UPDATE, fields);
 	}
 
 
