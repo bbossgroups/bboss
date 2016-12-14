@@ -1,4 +1,3 @@
-rootProject.name = 'bboss'
 include 'bboss-soa'
 include 'bboss-velocity'
 include 'bboss-util'
