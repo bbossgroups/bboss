@@ -2481,8 +2481,9 @@ public class PagerDataSet extends PagerTagSupport {
 		else
 		{
 			pagerContext.setUrl(url);
-			cookieid = this.pagerContext.getId() == null ?RequestContext.COOKIE_PREFIX + baseUri :RequestContext.COOKIE_PREFIX + baseUri + "|" +this.pagerContext.getId();
-		
+			//cookieid = this.pagerContext.getId() == null ?RequestContext.COOKIE_PREFIX + baseUri :RequestContext.COOKIE_PREFIX + baseUri + "|" +this.pagerContext.getId();
+			cookieid = StringUtil.builderPagingSizeCookieName(this.pagerContext.getId(),baseUri );
+			
 			int defaultSize = consumeCookie(cookieid,maxPageItems,request,pagerContext);
 			pagerContext.setMaxPageItems(defaultSize);
 			pagerContext.setCustomMaxPageItems(maxPageItems);

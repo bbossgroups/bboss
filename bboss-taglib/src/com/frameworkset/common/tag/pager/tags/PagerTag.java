@@ -50,6 +50,7 @@ import com.frameworkset.common.tag.pager.model.MetaDatas;
 import com.frameworkset.common.tag.pager.parser.PagerTagExport;
 import com.frameworkset.common.tag.pager.parser.ParseException;
 import com.frameworkset.common.tag.pager.parser.TagExportParser;
+import com.frameworkset.util.StringUtil;
 
 /**
  * @author biaoping.yin
@@ -423,8 +424,9 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		else
 		{
 			pagerContext.setUrl(url);
-			cookieid = this.pagerContext.getId() == null ?RequestContext.COOKIE_PREFIX + baseUri :RequestContext.COOKIE_PREFIX + baseUri + "|" +this.pagerContext.getId();
-		
+//			cookieid = this.pagerContext.getId() == null ?RequestContext.COOKIE_PREFIX + baseUri :RequestContext.COOKIE_PREFIX + baseUri + "|" +this.pagerContext.getId();
+			cookieid = StringUtil.builderPagingSizeCookieName(this.pagerContext.getId(),baseUri );
+			
 			int defaultSize = PagerDataSet.consumeCookie(cookieid,maxPageItems,request,pagerContext);
 			pagerContext.setCustomMaxPageItems(maxPageItems);
 			pagerContext.setMaxPageItems(defaultSize);

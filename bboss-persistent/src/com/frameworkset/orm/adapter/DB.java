@@ -39,6 +39,7 @@ import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -516,6 +517,16 @@ public abstract class DB implements  IDMethod,Platform
 			return dbInfoEncrypt.decryptDBUser(info.getUserName()).toUpperCase();
 		}
 	}
+	
+	 public String getDBCatalog(Connection con) throws SQLException{
+	    	
+			return null;
+		}
+	 
+	 public String _getDBCatalog(Connection con) throws SQLException{
+	    	
+			return con.getCatalog();
+		}
 	
 	public static DBInfoEncrypt getDBInfoEncrypt()
 	{

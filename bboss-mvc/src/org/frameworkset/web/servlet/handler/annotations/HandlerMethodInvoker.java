@@ -150,18 +150,19 @@ public class HandlerMethodInvoker {
 			if(handlerMethod.getMethodInfo().isPagerMethod())//
 			{
 				AbstractUrlHandlerMapping.exposeAttribute(HandlerMapping.PAGER_METHOD_FLAG_ATTRIBUTE, new Boolean(true), request);
+				if(!handlerMethod.getMethodInfo().isDefinePageSize())
+				{
+					String cookieid = RequestContext.getPagerSizeCookieID(request, null);
+					int defaultSize = RequestContext.getPagerSize(request,  HandlerMapping.DEFAULT_PAGE_SIZE,cookieid);
+					AbstractUrlHandlerMapping.exposeAttribute(HandlerMapping.PAGER_PAGESIZE_FLAG_ATTRIBUTE, new Integer(defaultSize), request);
+					AbstractUrlHandlerMapping.exposeAttribute(org.frameworkset.web.servlet.HandlerMapping.PAGER_COOKIEID_ATTRIBUTE, 
+							cookieid, request);
+					AbstractUrlHandlerMapping.exposeAttribute(org.frameworkset.web.servlet.HandlerMapping.PAGER_CUSTOM_PAGESIZE_ATTRIBUTE, 
+							HandlerMapping.DEFAULT_PAGE_SIZE, request);
+					
+				}
 			}
-			if(!handlerMethod.getMethodInfo().isDefinePageSize())
-			{
-				String cookieid = RequestContext.getPagerSizeCookieID(request, null);
-				int defaultSize = RequestContext.getPagerSize(request,  HandlerMapping.DEFAULT_PAGE_SIZE,cookieid);
-				AbstractUrlHandlerMapping.exposeAttribute(HandlerMapping.PAGER_PAGESIZE_FLAG_ATTRIBUTE, new Integer(defaultSize), request);
-				AbstractUrlHandlerMapping.exposeAttribute(org.frameworkset.web.servlet.HandlerMapping.PAGER_COOKIEID_ATTRIBUTE, 
-						cookieid, request);
-				AbstractUrlHandlerMapping.exposeAttribute(org.frameworkset.web.servlet.HandlerMapping.PAGER_CUSTOM_PAGESIZE_ATTRIBUTE, 
-						HandlerMapping.DEFAULT_PAGE_SIZE, request);
-				
-			}
+			
 			
 			Object[] args = HandlerUtils.buildMethodCallArgs(request, response,
 					pageContext, handlerMethod, implicitModel, null,messageConverters);

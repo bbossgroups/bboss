@@ -88,7 +88,13 @@ public class StringUtil extends SimpleStringUtil {
 			}
 		return temp_;
 	}
-	
+	public static final String COOKIE_PREFIX = "pager";
+	public static String builderPagingSizeCookieName(String pagerContextId,String baseUri){
+		baseUri = baseUri.replace('/', '_');
+		
+		String cookieid = pagerContextId == null ?COOKIE_PREFIX + baseUri :COOKIE_PREFIX + baseUri + "_" +pagerContextId;
+		return cookieid;
+	}
 	public static String getCookieValue(HttpServletRequest request,String name)
 	{
 		return getCookieValue(request,name,null);

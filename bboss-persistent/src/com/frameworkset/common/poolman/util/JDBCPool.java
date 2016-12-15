@@ -883,10 +883,11 @@ public class JDBCPool {
 //					schemaName = metaData.getUserName();
 				String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info));
 				TableMetaData tableMetaData = null;
+				String catalog = this.getDbAdapter().getDBCatalog(con);
 				// rs =
 				// metaData.getTables(null,"sysmanager".toUpperCase(),"td_sm_job".toUpperCase(),new
 				// String[] {"TABLE"});
-				rs = metaData.getTables(null, schemaName, tableName
+				rs = metaData.getTables(catalog, schemaName, tableName
 						.toUpperCase(), new String[] { "TABLE", "VIEW" });
 				while (rs.next()) {
 					tableName = rs.getString("TABLE_NAME");
@@ -910,7 +911,7 @@ public class JDBCPool {
 	
 					// columnrs =
 					// metaData.getColumns(null,"sysmanager".toUpperCase(),tableName,"%");
-					columnrs = metaData.getColumns(null, schemaName,
+					columnrs = metaData.getColumns(catalog, schemaName,
 							tableName, "%");
 					while (columnrs.next()) {
 						ColumnMetaData column = new ColumnMetaData(this.getDbAdapter());
@@ -982,7 +983,7 @@ public class JDBCPool {
 					/**
 					 * 构建主键信息
 					 */
-					primaryKeysrs = metaData.getPrimaryKeys(null, schemaName, tableName);
+					primaryKeysrs = metaData.getPrimaryKeys(catalog, schemaName, tableName);
 					while (primaryKeysrs.next()) {
 						PrimaryKeyMetaData primaryKeyMetaData = new PrimaryKeyMetaData(
 								this.getDbAdapter());
@@ -1022,7 +1023,7 @@ public class JDBCPool {
 					/**
 					 * 构建外键信息
 					 */
-					foreignrs = metaData.getImportedKeys(null, schemaName, tableName);
+					foreignrs = metaData.getImportedKeys(catalog, schemaName, tableName);
 					while (foreignrs.next()) {
 						ForeignKeyMetaData foreignKeyMetaData = new ForeignKeyMetaData(
 								this.getDbAdapter());
@@ -1568,6 +1569,8 @@ public class JDBCPool {
 
 		}
 		String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info));
+		
+		String catalog = this.getDbAdapter().getDBCatalog(con);
 //		String schemaName = this.getDbAdapter().getSchema(info);
 //		if(schemaName == null)
 //			schemaName = metaData.getUserName();
@@ -1576,7 +1579,7 @@ public class JDBCPool {
 			
 			try {
 				
-				columnrs = metaData.getColumns(null, schemaName, tableName, "%");
+				columnrs = metaData.getColumns(catalog, schemaName, tableName, "%");
 	
 				while (columnrs.next()) {
 					ColumnMetaData column = new ColumnMetaData(
@@ -1662,7 +1665,7 @@ public class JDBCPool {
 			 * 构建主键信息
 			 */
 			try {
-				primaryKeysrs = metaData.getPrimaryKeys(null, schemaName, tableName);
+				primaryKeysrs = metaData.getPrimaryKeys(catalog, schemaName, tableName);
 	
 				while (primaryKeysrs.next()) {
 					PrimaryKeyMetaData primaryKeyMetaData = new PrimaryKeyMetaData(
@@ -1711,7 +1714,7 @@ public class JDBCPool {
 				/**
 				 * 构建外键信息
 				 */
-				foreignrs = metaData.getImportedKeys(null, schemaName, tableName);
+				foreignrs = metaData.getImportedKeys(catalog, schemaName, tableName);
 				while (foreignrs.next()) {
 					ForeignKeyMetaData foreignKeyMetaData = new ForeignKeyMetaData(
 							this.getDbAdapter());

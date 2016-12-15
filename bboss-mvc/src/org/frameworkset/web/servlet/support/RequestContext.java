@@ -48,6 +48,7 @@ import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
 
 import com.frameworkset.util.HtmlUtils;
+import com.frameworkset.util.StringUtil;
 
 
 /**
@@ -834,13 +835,14 @@ public class RequestContext {
 //		return (String) request
 //		.getAttribute(org.frameworkset.web.servlet.HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
 	}
-	public static final String COOKIE_PREFIX = "pager.";
+	public static final String COOKIE_PREFIX = StringUtil.COOKIE_PREFIX;
 	public static String getPagerSizeCookieID(HttpServletRequest request,String paramNamePrefix)
 	{
 		String baseUri = RequestContext.getHandlerMappingPath(request);
-		String cookieid = paramNamePrefix == null ?
-				COOKIE_PREFIX + baseUri :
-					COOKIE_PREFIX + baseUri + "|" +paramNamePrefix;
+//		String cookieid = paramNamePrefix == null ?
+//				COOKIE_PREFIX + baseUri :
+//					COOKIE_PREFIX + baseUri + "|" +paramNamePrefix;
+		String cookieid = StringUtil.builderPagingSizeCookieName(paramNamePrefix ,baseUri );
 		return cookieid;
 	}
 	
@@ -875,7 +877,7 @@ public class RequestContext {
 			return cookies;
 		}
 	 public static  boolean isPagerCookie(final Cookie cookie) {
-			return 0 == cookie.getName().indexOf(COOKIE_PREFIX)	;
+			return 0 == cookie.getName().indexOf(StringUtil.COOKIE_PREFIX)	;
 		}
 	 
 	 public static  boolean isCookieForThisPagerTag(final Cookie cookie,String cookieid,String pageId) {

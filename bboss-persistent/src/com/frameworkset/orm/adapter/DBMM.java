@@ -33,6 +33,7 @@ package com.frameworkset.orm.adapter;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,6 +44,7 @@ import java.util.Date;
 import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
+import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.orm.platform.PlatformMysqlImpl;
 import com.frameworkset.util.SimpleStringUtil;
 
@@ -87,6 +89,11 @@ public class DBMM extends DB
     	FORMART_YEAR_MM_DD = "%Y-%c-%d";
     	FORMART_HH_MM_SS = "%h:%i:%s";
     }
+    
+    public String getDBCatalog(Connection con) throws SQLException{
+    	
+		return _getDBCatalog(  con);
+	}
 
     /**
      * This method is used to ignore case.
