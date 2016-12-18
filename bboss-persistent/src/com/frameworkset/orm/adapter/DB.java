@@ -520,7 +520,7 @@ public abstract class DB implements  IDMethod,Platform
 	
 	 public String getDBCatalog(Connection con) throws SQLException{
 	    	
-			return null;
+			return _getDBCatalog( con);
 		}
 	 
 	 public String _getDBCatalog(Connection con) throws SQLException{

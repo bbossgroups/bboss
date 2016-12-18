@@ -1193,7 +1193,7 @@ public class JDBCPool {
 			// rs =
 			// metaData.getTables(null,"sysmanager".toUpperCase(),"td_sm_job".toUpperCase(),new
 			// String[] {"TABLE"});
-			rs = metaData.getTables(null, schemaName, "%",
+			rs = metaData.getTables(this.getDbAdapter().getDBCatalog(con), schemaName, "%",
 					new String[] { "TABLE", "VIEW" });
 			while (rs.next()) {
 				String tableName = rs.getString("TABLE_NAME");
@@ -1272,7 +1272,7 @@ public class JDBCPool {
 			// rs =
 			// metaData.getTables(null,"sysmanager".toUpperCase(),"td_sm_job".toUpperCase(),new
 			// String[] {"TABLE"});
-			rs = metaData.getTables(null, schemaName, "%",
+			rs = metaData.getTables(this.getDbAdapter().getDBCatalog(con), schemaName, "%",
 					new String[] { "TABLE", "VIEW" });
 			while (rs.next()) {
 				String tableName = rs.getString("TABLE_NAME");
@@ -1476,7 +1476,7 @@ public class JDBCPool {
 			// String[] {"TABLE"});
 			String temp = this.getDbAdapter()
 			.getSchemaTableTableName(info, tableNamePattern);
-			rs = metaData.getTables(null, schemaName, temp == null?"%":temp,
+			rs = metaData.getTables(this.getDbAdapter().getDBCatalog(con), schemaName, temp == null?"%":temp,
 					this.convertTableTypes(tableTypes)
 					);
 			while (rs.next()) {
@@ -1847,7 +1847,7 @@ public class JDBCPool {
 				// rs =
 				// metaData.getTables(null,"sysmanager".toUpperCase(),"td_sm_job".toUpperCase(),new
 				// String[] {"TABLE"});
-				rs = metaData.getTables(null, schemaName, this.getDbAdapter()
+				rs = metaData.getTables(this.getDbAdapter().getDBCatalog(con), schemaName, this.getDbAdapter()
 						.getSchemaTableTableName(info, tableName), new String[] {
 						"TABLE", "VIEW" });
 				while (rs.next()) {
