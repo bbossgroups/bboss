@@ -1,0 +1,25 @@
+<properties>
+	<property name="default" 
+			f:timeoutConnection = "20000"
+			f:timeoutSocket = "20000"
+			f:retryTime = "3"
+			f:maxLineLength = "2000"
+			f:maxHeaderCount = "200"
+			f:maxTotal = "200" 
+			f:defaultMaxPerRoute = "10"
+		class="org.frameworkset.spi.remote.http.ClientConfiguration">		      
+	</property>
+	
+	<property name="sms" 
+			f:timeoutConnection = "20000"
+			f:timeoutSocket = "20000"
+			f:retryTime = "3"
+			f:maxLineLength = "2000"
+			f:maxHeaderCount = "200"
+			f:maxTotal = "200" 
+			f:defaultMaxPerRoute = "10"
+		class="org.frameworkset.spi.remote.http.ClientConfiguration">		      
+	</property>
+	
+		
+</properties>

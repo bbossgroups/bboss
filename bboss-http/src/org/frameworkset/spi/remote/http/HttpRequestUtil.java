@@ -39,12 +39,15 @@ public class HttpRequestUtil {
 	// public static final String DESC = "descend";
 	// public static final String ASC = "ascend";
 
-	private final static int TIMEOUT_CONNECTION = 20000;
-	private final static int TIMEOUT_SOCKET = 20000;
-	private final static int RETRY_TIME = 3;
+//	private final static int TIMEOUT_CONNECTION = 20000;
+//	private final static int TIMEOUT_SOCKET = 20000;
+//	private final static int RETRY_TIME = 3;
 
 	private static HttpClient getHttpClient() throws Exception {
-		return ClientConfiguration.getHttpClient();
+		return ClientConfiguration.getDefaultHttpclient();
+	}
+	private static HttpClient getHttpClient(String poolname) throws Exception {
+		return ClientConfiguration.getClientConfiguration(poolname).getHttpClient();
 	}
 
 	private static String getCookie() {
@@ -68,17 +71,17 @@ public class HttpRequestUtil {
 		// return appUserAgent;
 		return null;
 	}
-
-	private static HttpGet getHttpGet(String url, String cookie, String userAgent) {
+	private static HttpGet getHttpGet(String url, String cookie, String userAgent){
+		return  getHttpGet("default",  url,   cookie,   userAgent);
+	}
+	private static HttpGet getHttpGet(String httppoolname,String url, String cookie, String userAgent) {
 
 		HttpGet httpget = new HttpGet(url);
 		// Request configuration can be overridden at the request level.
 		// They will take precedence over the one set at the client level.
-		RequestConfig requestConfig = RequestConfig.copy(ClientConfiguration.getDefaultRequestConfig())
-				.setSocketTimeout(5000).setConnectTimeout(TIMEOUT_CONNECTION)
-				.setConnectionRequestTimeout(TIMEOUT_CONNECTION)
-				// .setProxy(new HttpHost("myotherproxy", 8080))
-				.build();
+		RequestConfig requestConfig = ClientConfiguration.getClientConfiguration(httppoolname).getRequestConfig();	
+				
+				 
 		httpget.setConfig(requestConfig);
 		httpget.addHeader("Host", "www.bbossgroups.com");
 		httpget.addHeader("Connection", "Keep-Alive");
@@ -88,14 +91,12 @@ public class HttpRequestUtil {
 			httpget.addHeader("User-Agent", userAgent);
 		return httpget;
 	}
-
-	private static HttpPost getHttpPost(String url, String cookie, String userAgent) {
+	private static HttpPost getHttpPost(String url, String cookie, String userAgent){
+		return getHttpPost("default",url, cookie, userAgent);
+	}
+	private static HttpPost getHttpPost(String httppoolname,String url, String cookie, String userAgent) {
 		HttpPost httpPost = new HttpPost(url);
-		RequestConfig requestConfig = RequestConfig.copy(ClientConfiguration.getDefaultRequestConfig())
-				.setSocketTimeout(5000).setConnectTimeout(TIMEOUT_CONNECTION)
-				.setConnectionRequestTimeout(TIMEOUT_CONNECTION)
-				// .setProxy(new HttpHost("myotherproxy", 8080))
-				.build();
+		RequestConfig requestConfig = ClientConfiguration.getClientConfiguration(httppoolname).getRequestConfig();
 		httpPost.setConfig(requestConfig);
 		httpPost.addHeader("Host", "www.bbossgroups.com");
 		httpPost.addHeader("Connection", "Keep-Alive");
@@ -110,6 +111,12 @@ public class HttpRequestUtil {
 	public static String httpGetforString(String url) throws Exception {
 		return httpGetforString(url, (String) null, (String) null);
 	}
+	public static String httpGetforString(String poolname,String url) throws Exception {
+		return httpGetforString(poolname,url, (String) null, (String) null);
+	}
+	public static String httpGetforString(String url, String cookie, String userAgent) throws Exception {
+		return httpGetforString("default",url, cookie, userAgent);
+	}
 
 	/**
 	 * get请求URL
@@ -117,7 +124,7 @@ public class HttpRequestUtil {
 	 * @param url
 	 * @throws AppException
 	 */
-	public static String httpGetforString(String url, String cookie, String userAgent) throws Exception {
+	public static String httpGetforString(String poolname,String url, String cookie, String userAgent) throws Exception {
 		// String cookie = getCookie();
 		// String userAgent = getUserAgent();
 
@@ -126,10 +133,11 @@ public class HttpRequestUtil {
 
 		String responseBody = "";
 		int time = 0;
+		int RETRY_TIME = ClientConfiguration.getClientConfiguration(poolname).getRetryTime();
 		do {
 			try {
-				httpClient = getHttpClient();
-				httpGet = getHttpGet(url, cookie, userAgent);
+				httpClient = getHttpClient(poolname);
+				httpGet = getHttpGet(poolname,url, cookie, userAgent);
 
 				// Create a custom response handler
 				ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
@@ -208,9 +216,14 @@ public class HttpRequestUtil {
 	 * @param files
 	 * @throws AppException
 	 */
-	public static String httpPostforString(String url, Map<String, Object> params, Map<String, File> files)
+	public static String httpPostFileforString(String url, Map<String, Object> params, Map<String, File> files)
 			throws Exception {
-		return httpPostforString(url, (String) null, (String) null, params, files);
+		return httpPostFileforString("default",url, (String) null, (String) null, params, files);
+	}
+	
+	public static String httpPostFileforString(String poolname,String url, Map<String, Object> params, Map<String, File> files)
+			throws Exception {
+		return httpPostFileforString(poolname,url, (String) null, (String) null, params, files);
 	}
 
 	/**
@@ -222,9 +235,16 @@ public class HttpRequestUtil {
 	 * @throws AppException
 	 */
 	public static String httpPostforString(String url, Map<String, Object> params) throws Exception {
-		return httpPostforString(url, (String) null, (String) null, params, (Map<String, File>) null);
+		return httpPostFileforString("default",url, (String) null, (String) null, params, (Map<String, File>) null);
+	}
+	
+	public static String httpPostforString(String poolname,String url, Map<String, Object> params) throws Exception {
+		return httpPostFileforString(poolname,url, (String) null, (String) null, params, (Map<String, File>) null);
 	}
 
+	public static String httpPostforString(String url) throws Exception {
+		return httpPostforString("default",url);
+	}
 	/**
 	 * 公用post方法
 	 * 
@@ -233,14 +253,24 @@ public class HttpRequestUtil {
 	 * @param files
 	 * @throws AppException
 	 */
-	public static String httpPostforString(String url) throws Exception {
-		return httpPostforString(url, (String) null, (String) null, (Map<String, Object>) null,
+	public static String httpPostforString(String poolname,String url) throws Exception {
+		return httpPostFileforString(poolname,url, (String) null, (String) null, (Map<String, Object>) null,
 				(Map<String, File>) null);
 	}
-	public static String httpPostforString(String url, String cookie, String userAgent,
+	public static String httpPostforString( String url, String cookie, String userAgent,
+			Map<String, File> files) throws Exception{
+		return httpPostforString("default",  url,   cookie,   userAgent,
+				 files) ;
+	}
+	public static String httpPostforString(String poolname,String url, String cookie, String userAgent,
 			Map<String, File> files) throws Exception {
-		return httpPostforString(url, cookie, userAgent, null,
+		return httpPostFileforString(poolname,url, cookie, userAgent, null,
 				files);
+	}
+	public static String httpPostforString(String url, String cookie, String userAgent, Map<String, Object> params,
+			Map<String, File> files) throws Exception {
+		return httpPostFileforString("default",url,   cookie,   userAgent,   params,
+				 files) ;
 	}
 	/**
 	 * 公用post方法
@@ -250,7 +280,7 @@ public class HttpRequestUtil {
 	 * @param files
 	 * @throws AppException
 	 */
-	public static String httpPostforString(String url, String cookie, String userAgent, Map<String, Object> params,
+	public static String httpPostFileforString(String poolname,String url, String cookie, String userAgent, Map<String, Object> params,
 			Map<String, File> files) throws Exception {
 		// System.out.println("post_url==> "+url);
 		// String cookie = getCookie(appContext);
@@ -318,10 +348,11 @@ public class HttpRequestUtil {
 
 		String responseBody = "";
 		int time = 0;
+		int RETRY_TIME = ClientConfiguration.getClientConfiguration(poolname).getRetryTime();
 		do {
 			try {
-				httpClient = getHttpClient();
-				httpPost = getHttpPost(url, cookie, userAgent);
+				httpClient = getHttpClient(poolname);
+				httpPost = getHttpPost(poolname,url, cookie, userAgent);
 			
 
 
