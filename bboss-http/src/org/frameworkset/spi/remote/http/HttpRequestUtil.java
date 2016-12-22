@@ -272,6 +272,12 @@ public class HttpRequestUtil {
 		return httpPostFileforString("default",url,   cookie,   userAgent,   params,
 				 files) ;
 	}
+	
+	public static String httpPostFileforString(String poolname,String url, String cookie, String userAgent, Map<String, Object> params,
+			Map<String, File> files) throws Exception {
+		return httpPostFileforString(poolname,url,   cookie,   userAgent,   params,
+				  files,null,null);
+	}
 	/**
 	 * 公用post方法
 	 * 
@@ -281,7 +287,7 @@ public class HttpRequestUtil {
 	 * @throws AppException
 	 */
 	public static String httpPostFileforString(String poolname,String url, String cookie, String userAgent, Map<String, Object> params,
-			Map<String, File> files) throws Exception {
+			Map<String, File> files,Map<String,String> headers,Map<String,String> cookies) throws Exception {
 		// System.out.println("post_url==> "+url);
 		// String cookie = getCookie(appContext);
 		// String userAgent = getUserAgent(appContext);
