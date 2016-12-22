@@ -89,9 +89,18 @@ public class DESCipher {
      * @throws Exception
      */
     public DESCipher() throws Exception {
-        this(DEFAULTKEY);
+        this(DEFAULTKEY,type_all);
     }
-
+    public DESCipher( int type) throws Exception {
+        this(DEFAULTKEY,type);
+    }
+    public static int type_decode = 0;
+    public static int type_encode = 1;
+    public static int type_all = 2;
+    public DESCipher(String strKey) throws Exception{
+    	 this(strKey,type_all);
+    }
+    
     /**
      * 指定密钥构造方法
      * 
@@ -100,13 +109,17 @@ public class DESCipher {
      * @throws Exception
      *             JAVA异常
      */
-    public DESCipher(String strKey) throws Exception {
+    public DESCipher(String strKey,int type) throws Exception {
         Security.addProvider(new com.sun.crypto.provider.SunJCE());
         Key key = getKey(strKey.getBytes());
-        encryptCipher = Cipher.getInstance("DES");
-        encryptCipher.init(Cipher.ENCRYPT_MODE, key);
-        decryptCipher = Cipher.getInstance("DES");
-        decryptCipher.init(Cipher.DECRYPT_MODE, key);
+        if(type == type_encode|| type == type_all){
+	        encryptCipher = Cipher.getInstance("DES");
+	        encryptCipher.init(Cipher.ENCRYPT_MODE, key);
+        }
+        if(type == type_decode|| type == type_all){
+	        decryptCipher = Cipher.getInstance("DES");
+	        decryptCipher.init(Cipher.DECRYPT_MODE, key);
+        }
     }
 
     /**
