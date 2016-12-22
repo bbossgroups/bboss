@@ -39,49 +39,7 @@ public class DESCipher {
 
     private Cipher decryptCipher = null;
 
-    /**
-     * 将参数字节数组转换为16进制值表示组合而成的字符串。
-     * 
-     * @param byte[] 需要转换的byte数组
-     * @return String 转换后的字符串
-     * @throws Exception
-     *             JAVA异常
-     */
-    public static String byteGrpToHexStr(byte[] arrB) throws Exception {
-        int iLen = arrB.length;
-        StringBuffer tempSB = new StringBuffer(iLen * 2);
-        for (int i = 0; i < iLen; i++) {
-            int intTmp = arrB[i];
-            while (intTmp < 0) {
-                intTmp = intTmp + 256;
-            }
-            if (intTmp < 16) {
-                tempSB.append("0");
-            }
-            tempSB.append(Integer.toString(intTmp, 16));
-        }
-        return tempSB.toString();
-    }
-
-    /**
-     * 将参数16进制值表示组合而成的字符串转换为字节数组。
-     * 
-     * @param String
-     *            需要转换的字符串
-     * @return byte[] 转换后的byte数组
-     * @throws Exception
-     *             JAVA异常
-     */
-    public static byte[] hexStrToByteGrp(String strIn) throws Exception {
-        byte[] arrB = strIn.getBytes();
-        int iLen = arrB.length;
-        byte[] arrOut = new byte[iLen / 2];
-        for (int i = 0; i < iLen; i = i + 2) {
-            String strTmp = new String(arrB, i, 2);
-            arrOut[i / 2] = (byte) Integer.parseInt(strTmp, 16);
-        }
-        return arrOut;
-    }
+    
 
     /**
      * 默认构造方法，使用默认密钥
@@ -145,7 +103,7 @@ public class DESCipher {
      *             JAVA异常
      */
     public String encrypt(String strIn) throws Exception {
-        return byteGrpToHexStr(encrypt(strIn.getBytes()));
+        return CoderUtil.byteGrpToHexStr(encrypt(strIn.getBytes()));
     }
 
     /**
@@ -171,8 +129,9 @@ public class DESCipher {
      *             JAVA异常
      */
     public String decrypt(String strIn) throws Exception {
-        return new String(decrypt(hexStrToByteGrp(strIn)));
+        return new String(decrypt(CoderUtil.hexStrToByteGrp(strIn)));
     }
+
 
     /**
      * 从指定字符串生成密钥，密钥所需的字节数组长度为8位 不足8位时后面补0，超出8位只取前8位
@@ -189,6 +148,12 @@ public class DESCipher {
         }
         Key key = new javax.crypto.spec.SecretKeySpec(arrB, "DES");
         return key;
+    }
+    public static void main(String[] args) throws Exception{
+    	DESCipher dd = new DESCipher("123456789",2);
+    	String r = dd.encrypt("bb");
+    	System.out.println(r);
+    	System.out.println(dd.decrypt(r));
     }
     
     

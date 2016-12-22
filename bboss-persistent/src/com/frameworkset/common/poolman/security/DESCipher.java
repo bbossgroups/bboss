@@ -33,7 +33,7 @@ import javax.crypto.Cipher;
  */
 public class DESCipher {
 
-    private static final String DEFAULTKEY = "BBOSSGROUPS";
+    private static final String DEFAULTKEY = "BBOSSGRP";
 
     private Cipher encryptCipher = null;
 
@@ -176,6 +176,10 @@ public class DESCipher {
         }
         Key key = new javax.crypto.spec.SecretKeySpec(arrB, "DES");
         return key;
+    }
+    
+    public static void main(String[] args){
+    	System.out.println(DEFAULTKEY.getBytes().length);
     }
     
     
