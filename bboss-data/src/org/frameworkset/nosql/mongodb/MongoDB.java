@@ -260,6 +260,16 @@ public class MongoDB {
 				} else if (clientMongoCredential.getMechanism().equals(MongoCredential.GSSAPI_MECHANISM)) {
 					mongoCredentials.add(MongoCredential.createGSSAPICredential(clientMongoCredential.getUserName()));
 				}
+				else if (clientMongoCredential.getMechanism().equals(MongoCredential.SCRAM_SHA_1_MECHANISM)) {
+					mongoCredentials.add(MongoCredential.createScramSha1Credential(clientMongoCredential.getUserName(),
+							clientMongoCredential.getDatabase(),
+							clientMongoCredential.getPassword().toCharArray()));
+				}
+				else if (clientMongoCredential.getMechanism().equals(MongoCredential.MONGODB_CR_MECHANISM)) {
+					mongoCredentials.add(MongoCredential.createMongoCRCredential(clientMongoCredential.getUserName(),
+							clientMongoCredential.getDatabase(),
+							clientMongoCredential.getPassword().toCharArray()));
+				}
 			}
 		}
 	}
