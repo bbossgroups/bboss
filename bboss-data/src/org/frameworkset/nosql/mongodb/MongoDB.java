@@ -265,11 +265,7 @@ public class MongoDB {
 							clientMongoCredential.getDatabase(),
 							clientMongoCredential.getPassword().toCharArray()));
 				}
-				else if (clientMongoCredential.getMechanism().equals(MongoCredential.MONGODB_CR_MECHANISM)) {
-					mongoCredentials.add(MongoCredential.createMongoCRCredential(clientMongoCredential.getUserName(),
-							clientMongoCredential.getDatabase(),
-							clientMongoCredential.getPassword().toCharArray()));
-				}
+				
 			}
 		}
 	}
