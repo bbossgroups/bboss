@@ -247,8 +247,17 @@ public class MongoDB {
 		if (this.credentials != null && this.credentials.size() > 0) {
 			this.mongoCredentials = new ArrayList<MongoCredential>();
 			for (ClientMongoCredential clientMongoCredential : this.credentials) {
-				if (StringUtil.isEmpty(clientMongoCredential.getMechanism())
-						|| clientMongoCredential.getMechanism().equals(MongoCredential.MONGODB_CR_MECHANISM)) {
+				if (StringUtil.isEmpty(clientMongoCredential.getMechanism())) {
+					mongoCredentials.add(MongoCredential.createCredential(clientMongoCredential.getUserName(),
+							clientMongoCredential.getDatabase(),
+							clientMongoCredential.getPassword().toCharArray()));
+				}
+				else  if (clientMongoCredential.getMechanism().equals(MongoCredential.SCRAM_SHA_1_MECHANISM)) {
+					mongoCredentials.add(MongoCredential.createScramSha1Credential(clientMongoCredential.getUserName(),
+							clientMongoCredential.getDatabase(),
+							clientMongoCredential.getPassword().toCharArray()));
+				}
+				else if (clientMongoCredential.getMechanism().equals(MongoCredential.MONGODB_CR_MECHANISM)) {
 					mongoCredentials.add(MongoCredential.createMongoCRCredential(clientMongoCredential.getUserName(),
 							clientMongoCredential.getDatabase(), clientMongoCredential.getPassword().toCharArray()));
 				} else if (clientMongoCredential.getMechanism().equals(MongoCredential.PLAIN_MECHANISM)) {
@@ -260,11 +269,7 @@ public class MongoDB {
 				} else if (clientMongoCredential.getMechanism().equals(MongoCredential.GSSAPI_MECHANISM)) {
 					mongoCredentials.add(MongoCredential.createGSSAPICredential(clientMongoCredential.getUserName()));
 				}
-				else if (clientMongoCredential.getMechanism().equals(MongoCredential.SCRAM_SHA_1_MECHANISM)) {
-					mongoCredentials.add(MongoCredential.createScramSha1Credential(clientMongoCredential.getUserName(),
-							clientMongoCredential.getDatabase(),
-							clientMongoCredential.getPassword().toCharArray()));
-				}
+				
 				
 			}
 		}
