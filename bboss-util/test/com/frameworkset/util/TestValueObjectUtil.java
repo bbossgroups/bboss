@@ -248,6 +248,12 @@ public class TestValueObjectUtil extends TestCase
 		Object value = ValueObjectUtil.typeCast(new Boolean(true), Boolean.class, boolean.class);
 		System.out.println(value);
 	}
+	@org.junit.Test
+	public void testValueGet()
+	{
+		Date date = new Date();
+		ValueObjectUtil.getValue(date,"ddd");
+	}
 	
 
 	@org.junit.Test

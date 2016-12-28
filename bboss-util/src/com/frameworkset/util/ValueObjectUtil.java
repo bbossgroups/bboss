@@ -181,12 +181,18 @@ public class ValueObjectUtil {
 		try {
 
 			PropertieDescription pd = ClassUtil.getPropertyDescriptor(clazz, property);
-			return pd.getValue(obj);
+			if(pd != null)
+				return pd.getValue(obj);
+			else
+			{
+				if(log.isDebugEnabled())
+					log.debug(new StringBuilder().append("类").append(clazz.getCanonicalName()).append("没有为属性[").append( property ).append( "]定义get或者返回布尔值的is方法.").toString());
+			}
 				
 			
 		} catch (Exception e) {
 			if(log.isDebugEnabled())
-				log.debug(new StringBuilder().append("没有为属性[").append(clazz.getCanonicalName()).append(".") .append( property ).append( "]定义get或者返回布尔值的is方法.").toString());
+				log.debug(new StringBuilder().append("获取类").append(clazz.getCanonicalName()).append("属性[") .append( property ).append( "]值异常：").toString(),e);
 		}
 		
 		return null;
@@ -263,7 +269,13 @@ public class ValueObjectUtil {
 			if(params == null || params.length == 0)
 			{
 				PropertieDescription pd = ClassUtil.getPropertyDescriptor(clazz, property);
-				return pd.getValue(obj);
+				if(pd != null)
+					return pd.getValue(obj);
+				else
+				{
+					if(log.isDebugEnabled())
+						log.debug(new StringBuilder().append("类").append(clazz.getCanonicalName()).append("没有为属性[").append( property ).append( "]定义get或者返回布尔值的is方法.").toString());
+				}
 				
 			}
 //			else
@@ -273,7 +285,7 @@ public class ValueObjectUtil {
 //			}
 		} catch (Exception e) {
 			if(log.isDebugEnabled())
-				log.debug(new StringBuilder().append("没有为属性[").append(clazz.getCanonicalName()).append(".") .append( property ).append( "]定义get或者返回布尔值的is方法.").toString());
+				log.debug(new StringBuilder().append("获取类").append(clazz.getCanonicalName()).append("属性[") .append( property ).append( "]值异常：").toString(),e);
 		}
 		// Object ret = getValueByMethodName(obj, getMethodName(property),
 		// params);
