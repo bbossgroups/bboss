@@ -177,15 +177,16 @@ public class ValueObjectUtil {
 	public static Object getValue(Object obj, String property) {
 		if (obj == null || property == null || property.trim().length() == 0)
 			return null;
-
+		Class clazz = obj.getClass();
 		try {
 
-			PropertieDescription pd = ClassUtil.getPropertyDescriptor(obj.getClass(), property);
+			PropertieDescription pd = ClassUtil.getPropertyDescriptor(clazz, property);
 			return pd.getValue(obj);
 				
 			
 		} catch (Exception e) {
-			log.debug("没有为属性[" + property + "]定义get或者返回布尔值的is方法.");
+			if(log.isDebugEnabled())
+				log.debug(new StringBuilder().append("没有为属性[").append(clazz.getCanonicalName()).append(".") .append( property ).append( "]定义get或者返回布尔值的is方法.").toString());
 		}
 		
 		return null;
@@ -257,11 +258,11 @@ public class ValueObjectUtil {
 	public static Object getValue(Object obj, String property,Object[] params) {
 		if (obj == null || property == null || property.trim().length() == 0)
 			return null;
-
+		Class clazz = obj.getClass();
 		try {
 			if(params == null || params.length == 0)
 			{
-				PropertieDescription pd = ClassUtil.getPropertyDescriptor(obj.getClass(), property);
+				PropertieDescription pd = ClassUtil.getPropertyDescriptor(clazz, property);
 				return pd.getValue(obj);
 				
 			}
@@ -271,7 +272,8 @@ public class ValueObjectUtil {
 //				return getValueByMethod(obj, method, params);
 //			}
 		} catch (Exception e) {
-			log.debug("没有为属性[" + property + "]定义get或者返回布尔值的is方法.");
+			if(log.isDebugEnabled())
+				log.debug(new StringBuilder().append("没有为属性[").append(clazz.getCanonicalName()).append(".") .append( property ).append( "]定义get或者返回布尔值的is方法.").toString());
 		}
 		// Object ret = getValueByMethodName(obj, getMethodName(property),
 		// params);
