@@ -57,7 +57,6 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -186,7 +185,7 @@ public class ValueObjectUtil {
 			else
 			{
 				if(log.isDebugEnabled())
-					log.debug(new StringBuilder().append("类").append(clazz.getCanonicalName()).append("没有为属性[").append( property ).append( "]定义get或者返回布尔值的is方法.").toString());
+					log.debug(new StringBuilder().append("类").append(clazz.getCanonicalName()).append("没有定义属性").append( property ).toString());
 			}
 				
 			
@@ -274,7 +273,7 @@ public class ValueObjectUtil {
 				else
 				{
 					if(log.isDebugEnabled())
-						log.debug(new StringBuilder().append("类").append(clazz.getCanonicalName()).append("没有为属性[").append( property ).append( "]定义get或者返回布尔值的is方法.").toString());
+						log.debug(new StringBuilder().append("类").append(clazz.getCanonicalName()).append("没有定义属性").append( property ).toString());
 				}
 				
 			}
