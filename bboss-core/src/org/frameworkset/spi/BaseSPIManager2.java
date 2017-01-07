@@ -1,17 +1,5 @@
-/*
- *  Copyright 2008 biaoping.yin
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.  
+/**
+ * 
  */
 package org.frameworkset.spi;
 
@@ -21,31 +9,14 @@ import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.assemble.ProSet;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 
-
 /**
- * <p>
- * Title:
- * </p>
- * 
- * <p>
- * Description: 服务管理类，提供aop的最底层的包装，实现简单aop拦截功能，提供日志的管理，事务的管理功能
- * </p>
- * 
- * <p>
- * Copyright: Copyright (c) 2006
- * </p>
- * 
- * <p>
- * Company:
- * </p>
- * @deprecated use BaseSPIManager2
- * @author biaoping.yin
- * @version 1.0
+ * @author yinbp
+ *
+ * @Date:2017-01-07 19:29:58
  */
-public abstract class BaseSPIManager
-{
+public abstract class BaseSPIManager2 {
 
-    public static ApplicationContext defaultContext; 
+	public static BaseApplicationContext defaultContext; 
     static
     {
         // try {
@@ -62,7 +33,7 @@ public abstract class BaseSPIManager
 //        addShutdownHook(new BeanDestroyHook());
         try
         {
-            defaultContext = ApplicationContext.getApplicationContext(ServiceProviderManager.defaultConfigFile);
+            defaultContext = DefaultApplicationContext.getApplicationContext(ServiceProviderManager.defaultConfigFile);
         }
         catch(Exception e)
         {
@@ -76,7 +47,7 @@ public abstract class BaseSPIManager
 
     }
     
-    public static ApplicationContext getDefaultApplicationContext()
+    public static BaseApplicationContext getDefaultApplicationContext()
     {
         return defaultContext;
     }
@@ -1151,7 +1122,7 @@ public abstract class BaseSPIManager
 
     }
 
-    public BaseSPIManager()
+    public BaseSPIManager2()
     {
     }
 
