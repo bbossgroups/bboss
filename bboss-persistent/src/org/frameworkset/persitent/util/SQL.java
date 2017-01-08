@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.frameworkset.spi.BaseSPIManager;
+import org.frameworkset.spi.BaseSPIManager2;
 
 import com.frameworkset.common.poolman.util.SQLManager;
 
@@ -36,11 +36,11 @@ import com.frameworkset.common.poolman.util.SQLManager;
 public class SQL {
 	public static String getSQL(String dbname,String sqlname)
 	{
-		String sql = BaseSPIManager.getProperty(sqlname);
+		String sql = BaseSPIManager2.getProperty(sqlname);
 		if(sql == null)
 		{
 			String dbtype = SQLManager.getInstance().getDBAdapter(dbname).getDBTYPE();
-			sql = BaseSPIManager.getProperty(sqlname + "-" + dbtype.toLowerCase());
+			sql = BaseSPIManager2.getProperty(sqlname + "-" + dbtype.toLowerCase());
 		}
 		return sql;
 		
@@ -59,11 +59,11 @@ public class SQL {
         }
 	public static Map getMapSQLs(String dbname,String sqlname)
         {
-                Map sqls = BaseSPIManager.getMapProperty(sqlname);
+                Map sqls = BaseSPIManager2.getMapProperty(sqlname);
                 if(sqls == null)
                 {
                         String dbtype = SQLManager.getInstance().getDBAdapter(dbname).getDBTYPE();
-                        sqls = BaseSPIManager.getMapProperty(sqlname + "-" + dbtype.toLowerCase());
+                        sqls = BaseSPIManager2.getMapProperty(sqlname + "-" + dbtype.toLowerCase());
                 }
                 return sqls;
                 
@@ -76,11 +76,11 @@ public class SQL {
         }
         public static List getListSQLs(String dbname,String sqlname)
         {
-            List sqls = BaseSPIManager.getListProperty(sqlname);
+            List sqls = BaseSPIManager2.getListProperty(sqlname);
                 if(sqls == null)
                 {
                         String dbtype = SQLManager.getInstance().getDBAdapter(dbname).getDBTYPE();
-                        sqls = BaseSPIManager.getListProperty(sqlname + "-" + dbtype.toLowerCase());
+                        sqls = BaseSPIManager2.getListProperty(sqlname + "-" + dbtype.toLowerCase());
                 }
                 return sqls;
                 
@@ -93,11 +93,11 @@ public class SQL {
         }
         public static Set getSetSQLs(String dbname,String sqlname)
         {
-            Set sqls = BaseSPIManager.getSetProperty(sqlname);
+            Set sqls = BaseSPIManager2.getSetProperty(sqlname);
                 if(sqls == null)
                 {
                         String dbtype = SQLManager.getInstance().getDBAdapter(dbname).getDBTYPE();
-                        sqls = BaseSPIManager.getSetProperty(sqlname + "-" + dbtype.toLowerCase());
+                        sqls = BaseSPIManager2.getSetProperty(sqlname + "-" + dbtype.toLowerCase());
                 }
                 return sqls;
                 
