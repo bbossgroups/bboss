@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 import org.frameworkset.spi.ApplicationContext;
+import org.frameworkset.spi.BaseSPIManager2;
 import org.frameworkset.util.I18NUtil;
 
 import com.frameworkset.common.ecs.A;
@@ -71,8 +72,8 @@ public final class IndexTag extends PagerTagSupport {
     public static final String[] _sizescope = new String[] {"5","10","20","30","40","50","60","70","80","90","100"};
     private String sizescope = null;
     
-    private static boolean enable_page_size_set = ApplicationContext.getApplicationContext().getBooleanProperty("enable_page_size_set",true);
-    private static boolean enable_page_total_size = ApplicationContext.getApplicationContext().getBooleanProperty("enable_page_total_size",true);
+    private static boolean enable_page_size_set = BaseSPIManager2.getBooleanProperty("enable_page_size_set",true);
+    private static boolean enable_page_total_size = BaseSPIManager2.getBooleanProperty("enable_page_total_size",true);
     /**
      * 上下翻页如果没有连接时，是否添加a标记
      * true（默认值） 添加，false不添加

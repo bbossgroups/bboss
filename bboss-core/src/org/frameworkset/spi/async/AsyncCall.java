@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.ApplicationContext;
+import org.frameworkset.spi.BaseSPIManager2;
 import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.async.annotation.Result;
 import org.frameworkset.util.TimeUtil;
@@ -59,13 +60,13 @@ public class AsyncCall {
 	 * 请求调用堆栈
 	 */
 	private LinkedBlockingQueue<CallService> callblockqueue = new java.util.concurrent.LinkedBlockingQueue<CallService>(
-			ApplicationContext.getApplicationContext().getIntProperty(
+			BaseSPIManager2.getIntProperty(
 					"component.asynccall.block.size", 200));
 	/**
 	 * 请求响应回调处理堆栈
 	 */
 	private LinkedBlockingQueue<CallService> callbackblockqueue = new java.util.concurrent.LinkedBlockingQueue<CallService>(
-			ApplicationContext.getApplicationContext().getIntProperty(
+			BaseSPIManager2.getIntProperty(
 					"component.asynccallback.block.size", 200));
 
 	public void start() {
@@ -106,7 +107,7 @@ public class AsyncCall {
 	}
 
 	private void initCallExecutor() {
-		ProMap proMap = ApplicationContext.getApplicationContext()
+		ProMap proMap = BaseSPIManager2
 				.getMapProperty("component.asynccall.threadpool");
 		if (proMap == null || proMap.size() == 0) {
 			/**
@@ -117,7 +118,7 @@ public class AsyncCall {
 			callexecutor = new java.util.concurrent.ThreadPoolExecutor(5, 20,
 					40, TimeUnit.SECONDS,
 					new java.util.concurrent.LinkedBlockingQueue<Runnable>(
-							ApplicationContext.getApplicationContext()
+							BaseSPIManager2
 									.getIntProperty(
 											"component.asynccall.block.size",
 											200) / 2), new CallerRunsPolicy());
@@ -130,7 +131,7 @@ public class AsyncCall {
 					"maximumPoolSize", 20), proMap.getInt("keepAliveTime", 40),
 					timeUnit_,
 					new java.util.concurrent.LinkedBlockingQueue<Runnable>(
-							ApplicationContext.getApplicationContext()
+							BaseSPIManager2
 									.getIntProperty(
 											"component.asynccall.block.size",
 											200) / 2), new CallerRunsPolicy());
@@ -138,7 +139,7 @@ public class AsyncCall {
 	}
 
 	private void initCallBackExecutor() {
-		ProMap proMap = ApplicationContext.getApplicationContext()
+		ProMap proMap = BaseSPIManager2
 				.getMapProperty("component.asynccallback.threadpool");
 		if (proMap == null || proMap.size() == 0) {
 			/**
