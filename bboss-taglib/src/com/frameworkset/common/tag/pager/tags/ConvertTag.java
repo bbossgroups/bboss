@@ -36,7 +36,7 @@ public class ConvertTag extends BaseValueTag{
 	/**
 	 * 存储转换数据的key，数据存放的容器可能是Map
 	 */
-	private String convertData;
+	private Object convertData;
 	private String scope = scope_request;
 	public int doStartTag() throws JspException {
 	    init();
@@ -58,30 +58,40 @@ public class ConvertTag extends BaseValueTag{
 			return actualValue;
 //		String key = actualValue.toString();
 //		Object key = actualValue;
-		if(scope.equals(scope_request))
-		{
-			Map datas = (Map)request.getAttribute(this.convertData);
-			if(datas == null) return null;
-			return datas.get(actualValue);
-		}
-		else if(scope.equals(scope_session))
-		{
-			Map datas = (Map)session.getAttribute(this.convertData);
-			if(datas == null) return null;
-			return datas.get(actualValue);
-		}
-		else if(scope.equals(scope_pageContext))
-		{
-			Map datas = (Map)pageContext.getAttribute(this.convertData);
+		if(convertData instanceof Map){
+			Map datas = (Map)convertData;
 			if(datas == null) return null;
 			return datas.get(actualValue);
 		}
 		else
 		{
-			Map datas = (Map)request.getAttribute(this.convertData);
-			if(datas == null) return null;
-			return datas.get(actualValue);
+			String key = String.valueOf(this.convertData);
+			if(scope.equals(scope_request))
+			{
+				Map datas = (Map)request.getAttribute(key);
+				if(datas == null) return null;
+				return datas.get(actualValue);
+			}
+			else if(scope.equals(scope_session))
+			{
+				Map datas = (Map)session.getAttribute(key);
+				if(datas == null) return null;
+				return datas.get(actualValue);
+			}
+			else if(scope.equals(scope_pageContext))
+			{
+				Map datas = (Map)pageContext.getAttribute(key);
+				if(datas == null) return null;
+				return datas.get(actualValue);
+			}
+			else
+			{
+				Map datas = (Map)request.getAttribute(key);
+				if(datas == null) return null;
+				return datas.get(actualValue);
+			}
 		}
+		
 		
 			
 		
@@ -89,13 +99,13 @@ public class ConvertTag extends BaseValueTag{
 	/**
 	 * @return the converData
 	 */
-	public String getConvertData() {
+	public Object getConvertData() {
 		return convertData;
 	}
 	/**
 	 * @param converData the converData to set
 	 */
-	public void setConvertData(String converData) {
+	public void setConvertData(Object converData) {
 		this.convertData = converData;
 	}
 	/**
