@@ -77,10 +77,10 @@ public class PagerDataSetExtraInfo extends TagExtraInfo {
         		rowidName = "rowid";
 
             VariableInfo[] vinfo = new VariableInfo[] {new VariableInfo(dataSetName,
-	                PagerDataSet.class.getName(),
+	                PagerDataSet.class.getName()+" ",
 	                declare, VariableInfo.NESTED),
 					new VariableInfo(rowidName,
-			                String.class.getName(),
+			                String.class.getName()+" ",
 			                declare, VariableInfo.NESTED)};
 	        return vinfo;
         }
