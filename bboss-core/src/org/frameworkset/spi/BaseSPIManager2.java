@@ -3,6 +3,8 @@
  */
 package org.frameworkset.spi;
 
+import java.util.Properties;
+
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.assemble.ProMap;
@@ -33,7 +35,14 @@ public abstract class BaseSPIManager2 {
 //        addShutdownHook(new BeanDestroyHook());
         try
         {
-            defaultContext = DefaultApplicationContext.getApplicationContext(ServiceProviderManager.defaultConfigFile);
+        	Properties properties = BaseApplicationContext.fillProperties();
+        	String defaultApplicationContext = (String)properties.get("defaultApplicationContext");
+        	if(defaultApplicationContext == null || defaultApplicationContext.equals("") || defaultApplicationContext.equals("BaseSPIManager2"))
+        		defaultContext = DefaultApplicationContext.getApplicationContext(ServiceProviderManager.defaultConfigFile);
+        	else
+        	{
+        		defaultContext = ApplicationContext.getApplicationContext(ServiceProviderManager.defaultConfigFile);
+        	}
         }
         catch(Exception e)
         {
@@ -73,7 +82,7 @@ public abstract class BaseSPIManager2 {
 //        {
 //            e.printStackTrace();
 //        }
-        ApplicationContext.addShutdownHook(destroyVMHook);
+        BaseApplicationContext.addShutdownHook(destroyVMHook);
     }
 
 //    public static void destroySingleBeans()
