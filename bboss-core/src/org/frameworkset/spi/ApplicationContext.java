@@ -87,24 +87,37 @@ public class ApplicationContext extends BaseApplicationContext {
 					+ "] will be used. ");
 			configfile = ServiceProviderManager.defaultConfigFile;
 		}
-		ApplicationContext instance = (ApplicationContext)applicationContexts.get(configfile);
-		if (instance != null)
-		{
+		try {
+			ApplicationContext instance = (ApplicationContext)applicationContexts.get(configfile);
+			if (instance != null)
+			{
+				instance.initApplicationContext();
+				return instance;
+			}
+			synchronized (lock) {
+				instance = (ApplicationContext)applicationContexts.get(configfile);
+				if (instance != null)
+					return instance;
+				instance = new ApplicationContext(configfile);
+				BaseApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
+				applicationContexts.put(configfile, instance);
+				
+
+			}
 			instance.initApplicationContext();
 			return instance;
-		}
-		synchronized (lock) {
-			instance = (ApplicationContext)applicationContexts.get(configfile);
-			if (instance != null)
-				return instance;
-			instance = new ApplicationContext(configfile);
-			BaseApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
-			applicationContexts.put(configfile, instance);
+		} 
+		catch(java.lang.ClassCastException e){
 			
-
+			throw new RuntimeException("版本冲突，5.0.2.3以后的版本不建议使用ApplicationContext.getApplicationContext(),但是仍然需要使用旧版默认容器对象，则必须修改jar包bboss-core-xxx.jar/aop.properites文件中的defaultApplicationContext属性值设置为BaseSPIManager1，"
+					+ "\r\n如果需要使用新的版本，升级策略：\r\n请将defaultApplicationContext属性值设置为=BaseSPIManager2并且将代码中所有调用ApplicationContext.getApplicationContext()方法的地方调整为BaseSPIManager2.getDefaultApplicationContext()\r\n"
+					+ "所有使用用BaseSPIManager类的地方改为BaseSPIManager2类.",e);
 		}
-		instance.initApplicationContext();
-		return instance;
+		catch(java.lang.RuntimeException e){
+			throw e;
+		}
+		
+		
 	}
 	
 
