@@ -51,7 +51,7 @@ public class HttpReqeust {
 	 */
 	public static String httpGetforString(String url, String cookie,
 			String userAgent) throws Exception {
-		return HttpRequestUtil.httpGetforString(url, cookie, userAgent);
+		return HttpRequestUtil.httpGetforString(url, cookie, userAgent,null);
 		// //responseBody = responseBody.replaceAll("\\p{Cntrl}", "\r\n");
 		// if(responseBody.contains("result") &&
 		// responseBody.contains("errorCode") &&

@@ -71,10 +71,10 @@ public class HttpRequestUtil {
 		// return appUserAgent;
 		return null;
 	}
-	private static HttpGet getHttpGet(String url, String cookie, String userAgent){
-		return  getHttpGet("default",  url,   cookie,   userAgent);
+	private static HttpGet getHttpGet(String url, String cookie, String userAgent,Map<String,String> headers){
+		return  getHttpGet("default",  url,   cookie,   userAgent, headers);
 	}
-	private static HttpGet getHttpGet(String httppoolname,String url, String cookie, String userAgent) {
+	private static HttpGet getHttpGet(String httppoolname,String url, String cookie, String userAgent,Map<String,String> headers) {
 
 		HttpGet httpget = new HttpGet(url);
 		// Request configuration can be overridden at the request level.
@@ -89,12 +89,19 @@ public class HttpRequestUtil {
 			httpget.addHeader("Cookie", cookie);
 		if (userAgent != null)
 			httpget.addHeader("User-Agent", userAgent);
+		if(headers != null && headers.size() > 0){
+			Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
+			while(entries.hasNext()){
+				Entry<String, String> entry = entries.next();
+				httpget.addHeader(entry.getKey(),entry.getValue());
+			}
+		}
 		return httpget;
 	}
 	private static HttpPost getHttpPost(String url, String cookie, String userAgent){
-		return getHttpPost("default",url, cookie, userAgent);
+		return getHttpPost("default",url, cookie, userAgent,null);
 	}
-	private static HttpPost getHttpPost(String httppoolname,String url, String cookie, String userAgent) {
+	private static HttpPost getHttpPost(String httppoolname,String url, String cookie, String userAgent,Map<String,String> headers) {
 		HttpPost httpPost = new HttpPost(url);
 		RequestConfig requestConfig = ClientConfiguration.getClientConfiguration(httppoolname).getRequestConfig();
 		httpPost.setConfig(requestConfig);
@@ -104,18 +111,26 @@ public class HttpRequestUtil {
 			httpPost.addHeader("Cookie", cookie);
 		if (userAgent != null)
 			httpPost.addHeader("User-Agent", userAgent);
-
+		if(headers != null && headers.size() > 0){
+			Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
+			while(entries.hasNext()){
+				Entry<String, String> entry = entries.next();
+				httpPost.addHeader(entry.getKey(),entry.getValue());
+			}
+		}
+		
+		
 		return httpPost;
 	}
 
-	public static String httpGetforString(String url) throws Exception {
-		return httpGetforString(url, (String) null, (String) null);
+	public static String httpGetforString(String url,Map<String,String> headers) throws Exception {
+		return httpGetforString(url, (String) null, (String) null,  headers);
 	}
-	public static String httpGetforString(String poolname,String url) throws Exception {
-		return httpGetforString(poolname,url, (String) null, (String) null);
+	public static String httpGetforString(String poolname,String url,Map<String,String> headers) throws Exception {
+		return httpGetforString(poolname,url, (String) null, (String) null, headers);
 	}
-	public static String httpGetforString(String url, String cookie, String userAgent) throws Exception {
-		return httpGetforString("default",url, cookie, userAgent);
+	public static String httpGetforString(String url, String cookie, String userAgent,Map<String,String> headers) throws Exception {
+		return httpGetforString("default",url, cookie, userAgent,  headers);
 	}
 
 	/**
@@ -124,7 +139,7 @@ public class HttpRequestUtil {
 	 * @param url
 	 * @throws AppException
 	 */
-	public static String httpGetforString(String poolname,String url, String cookie, String userAgent) throws Exception {
+	public static String httpGetforString(String poolname,String url, String cookie, String userAgent,Map<String,String> headers) throws Exception {
 		// String cookie = getCookie();
 		// String userAgent = getUserAgent();
 
@@ -137,7 +152,7 @@ public class HttpRequestUtil {
 		do {
 			try {
 				httpClient = getHttpClient(poolname);
-				httpGet = getHttpGet(poolname,url, cookie, userAgent);
+				httpGet = getHttpGet(poolname,url, cookie, userAgent,  headers);
 
 				// Create a custom response handler
 				ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
@@ -225,6 +240,9 @@ public class HttpRequestUtil {
 			throws Exception {
 		return httpPostFileforString(poolname,url, (String) null, (String) null, params, files);
 	}
+	public static String httpPostforString(String url, Map<String, Object> params) throws Exception {
+		return httpPostforString(  url,  params,  (Map<String,String>)null) ;
+	}
 
 	/**
 	 * 公用post方法
@@ -234,8 +252,8 @@ public class HttpRequestUtil {
 	 * @param files
 	 * @throws AppException
 	 */
-	public static String httpPostforString(String url, Map<String, Object> params) throws Exception {
-		return httpPostFileforString("default",url, (String) null, (String) null, params, (Map<String, File>) null);
+	public static String httpPostforString(String url, Map<String, Object> params,Map<String,String> headers) throws Exception {
+		return httpPostFileforString("default",url, (String) null, (String) null, params, (Map<String, File>) null,  headers);
 	}
 	
 	public static String httpPostforString(String poolname,String url, Map<String, Object> params) throws Exception {
@@ -276,7 +294,7 @@ public class HttpRequestUtil {
 	public static String httpPostFileforString(String poolname,String url, String cookie, String userAgent, Map<String, Object> params,
 			Map<String, File> files) throws Exception {
 		return httpPostFileforString(poolname,url,   cookie,   userAgent,   params,
-				  files,null,null);
+				  files,null);
 	}
 	/**
 	 * 公用post方法
@@ -287,7 +305,7 @@ public class HttpRequestUtil {
 	 * @throws AppException
 	 */
 	public static String httpPostFileforString(String poolname,String url, String cookie, String userAgent, Map<String, Object> params,
-			Map<String, File> files,Map<String,String> headers,Map<String,String> cookies) throws Exception {
+			Map<String, File> files,Map<String,String> headers) throws Exception {
 		// System.out.println("post_url==> "+url);
 		// String cookie = getCookie(appContext);
 		// String userAgent = getUserAgent(appContext);
@@ -358,7 +376,7 @@ public class HttpRequestUtil {
 		do {
 			try {
 				httpClient = getHttpClient(poolname);
-				httpPost = getHttpPost(poolname,url, cookie, userAgent);
+				httpPost = getHttpPost(poolname,url, cookie, userAgent,headers);
 			
 
 
