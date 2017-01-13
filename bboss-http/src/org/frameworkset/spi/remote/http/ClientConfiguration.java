@@ -100,6 +100,34 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	public  static RequestConfig getDefaultRequestConfig() {
+		return defaultRequestConfig;
+	}
+
+	public int getTimeoutConnection() {
+		return timeoutConnection;
+	}
+
+	public void setTimeoutConnection(int timeoutConnection) {
+		this.timeoutConnection = timeoutConnection;
+	}
+
+	public int getTimeoutSocket() {
+		return timeoutSocket;
+	}
+
+	public void setTimeoutSocket(int timeoutSocket) {
+		this.timeoutSocket = timeoutSocket;
+	}
+
+	public int getRetryTime() {
+		return retryTime;
+	}
+
+	public void setRetryTime(int retryTime) {
+		this.retryTime = retryTime;
+	}
 	public final  HttpClient getHttpClient()  throws Exception {
 		if(httpclient != null)
 			return httpclient;
@@ -301,34 +329,6 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 //            httpclient.close();
 //        }
     }
-
-	public  static RequestConfig getDefaultRequestConfig() {
-		return defaultRequestConfig;
-	}
-
-	public int getTimeoutConnection() {
-		return timeoutConnection;
-	}
-
-	public void setTimeoutConnection(int timeoutConnection) {
-		this.timeoutConnection = timeoutConnection;
-	}
-
-	public int getTimeoutSocket() {
-		return timeoutSocket;
-	}
-
-	public void setTimeoutSocket(int timeoutSocket) {
-		this.timeoutSocket = timeoutSocket;
-	}
-
-	public int getRetryTime() {
-		return retryTime;
-	}
-
-	public void setRetryTime(int retryTime) {
-		this.retryTime = retryTime;
-	}
 
 	public HttpClient getHttpclient() {
 		return httpclient;
