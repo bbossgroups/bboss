@@ -4861,10 +4861,12 @@ public class PreparedDBUtil extends DBUtil {
 			}
 			NewSQLInfo old_sql = null;
 			boolean showsql = showsql(stmtInfo.getDbname());
-			
-			while(batchparams.size() > 0)
+			int i = 0;
+			while(i < batchparams.size() )
 			{
-				Params Params = (Params)batchparams.remove(0);
+//				Params Params = (Params)batchparams.remove(0);
+				Params Params = (Params)batchparams.get(i);
+				i ++;
 				if (Params.action == SELECT) {
 					throw new SQLException("Batch prepared Operation do not support pagine query opations.");
 				} else if (Params.action == SELECT_COMMON) {
@@ -4943,7 +4945,7 @@ public class PreparedDBUtil extends DBUtil {
 					statement.addBatch();
 				}
 				
-				if(batchparams.size() == 0)
+				if(i == batchparams.size())
 				{
 					try
 					{
@@ -5036,7 +5038,9 @@ public class PreparedDBUtil extends DBUtil {
 			{
 				this.releaseResources(resources);
 			}
-				
+			if(batchparams	!= null){
+				batchparams.clear();
+			}
 			this.resetFromSetMethod(null);
 		}
 //		return CUDResult;
