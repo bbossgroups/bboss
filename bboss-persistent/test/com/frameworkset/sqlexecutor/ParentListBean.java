@@ -20,7 +20,7 @@ import com.frameworkset.orm.annotation.PrimaryKey;
 
 public class ParentListBean
 {
-	@PrimaryKey(pkname="ListBean",auto=true)
+//	@PrimaryKey(pkname="ListBean",auto=true)
 	private int id ;
 	private String fieldName;
 //	@Column(name="fileNamezzz",dataformat="格式转换" ,type="clob")

@@ -28,6 +28,7 @@ import com.frameworkset.util.ListInfo;
 import com.frameworkset.util.ValueObjectUtil;
 
 public class SQLInfoExecutor {
+	public static int DEFAULT_BATCHSIZE = 5000;
     /**
      * 添加sql参数，由DefaultDataInfoImpl进行处理
      * @param name
@@ -92,27 +93,60 @@ public class SQLInfoExecutor {
 	public static void execute(String dbname, SQLInfo sql, List beans,boolean isBatchOptimize,int action,GetCUDResult getCUDResult) throws SQLException
 	{
 		Connection con = null;
-		try
-		{
-			con = DBUtil.getConection(dbname);
-			List<SQLParams> batchsqlparams = SQLParams.convertBeansToSqlParams(beans,sql,dbname,action,con);
-			if(batchsqlparams == null)
-				return ;
-			PreparedDBUtil dbutil = new PreparedDBUtil();
-			dbutil.setBatchOptimize(isBatchOptimize);
-			dbutil.setPrepareDBName(dbname);
-			dbutil.addPreparedBatch(new ListSQLParams(batchsqlparams,sql));
-			dbutil.executePreparedBatch(con,getCUDResult);
-		}
-		finally
-		{
-			try {
-				if (con != null)
-					con.close();
-			} catch (Exception e) {
-				// TODO: handle exception
+		if(beans == null || beans.size() == 0)
+			return;
+		
+			try
+			{
+				con = DBUtil.getConection(dbname);
+				if(beans.size() < DEFAULT_BATCHSIZE){
+					
+					List<SQLParams> batchsqlparams = SQLParams.convertBeansToSqlParams(beans,sql,dbname,action,con);
+					if(batchsqlparams == null)
+						return ;
+					PreparedDBUtil dbutil = new PreparedDBUtil();
+					dbutil.setBatchOptimize(isBatchOptimize);
+					dbutil.setPrepareDBName(dbname);
+					dbutil.addPreparedBatch(new ListSQLParams(batchsqlparams,sql));
+					dbutil.executePreparedBatch(con,getCUDResult);
+				}
+				else//如果大于批处理size,则按批次进行批处理操作
+				{
+					
+					int start = 0;
+					int totalsize = beans.size();
+					int left  = totalsize - start;
+					int end = 0;
+					int step = 0;
+					do{
+						
+						 end = left >= DEFAULT_BATCHSIZE?start + DEFAULT_BATCHSIZE:totalsize;
+						 step = left >= DEFAULT_BATCHSIZE?DEFAULT_BATCHSIZE:left;
+						List<SQLParams> batchsqlparams = SQLParams.convertBeansToSqlParams(beans,sql,dbname,action,con,start,end,step);
+						if(batchsqlparams == null)
+							break ;
+						PreparedDBUtil dbutil = new PreparedDBUtil();
+						dbutil.setBatchOptimize(isBatchOptimize);
+						dbutil.setPrepareDBName(dbname);
+						dbutil.addPreparedBatch(new ListSQLParams(batchsqlparams,sql));
+						dbutil.executePreparedBatch(con,getCUDResult);
+						start = start + DEFAULT_BATCHSIZE;
+						left  = totalsize - start;
+					}while(left > 0);
+					
+				}
 			}
-		}
+			finally
+			{
+				try {
+					if (con != null)
+						con.close();
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		
+		
 	}
 	private static Object CUDexecute(String dbname, SQLInfo sql, Object bean,int action) throws SQLException
 	{

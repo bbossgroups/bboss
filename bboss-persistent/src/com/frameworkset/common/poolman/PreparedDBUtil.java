@@ -1303,7 +1303,8 @@ public class PreparedDBUtil extends DBUtil {
 					temp = StatementParser.refactorInsertStatement(stmtInfo);
 					if(showsql(stmtInfo.getDbname()))
 					{
-						log.debug("Execute JDBC prepared statement:"+temp[0]);
+						if(log.isDebugEnabled())
+		        			log.debug("Execute JDBC prepared statement:"+temp[0]);
 					}
 					statement = stmtInfo.prepareStatement(temp[0].toString());
 	
@@ -1346,7 +1347,8 @@ public class PreparedDBUtil extends DBUtil {
 					stmtInfo.setRETURN_GENERATED_KEYS(pool.getRETURN_GENERATED_KEYS());
 					if(showsql(stmtInfo.getDbname()))
 					{
-						log.debug("Execute JDBC prepared statement:"+stmtInfo.getSql());
+						if(log.isDebugEnabled())
+		        			log.debug("Execute JDBC prepared statement:"+stmtInfo.getSql());
 					}
 					statement = stmtInfo.prepareStatement(stmtInfo.getSql(),getCUDResult);
 				}
@@ -1361,7 +1363,8 @@ public class PreparedDBUtil extends DBUtil {
 			} else if (Params.action == UPDATE) {
 				if(showsql(stmtInfo.getDbname()))
 				{
-					log.debug("Execute JDBC prepared update statement:"+stmtInfo.getSql());
+					if(log.isDebugEnabled())
+	        			log.debug("Execute JDBC prepared update statement:"+stmtInfo.getSql());
 				}
 				statement = stmtInfo.prepareStatement();
 				//oracle大字段处理分析程序段，系统于2008.11.5日对大字段的处理进行了优化后无需再进行单独的大字段处理了
@@ -1416,7 +1419,8 @@ public class PreparedDBUtil extends DBUtil {
 				boolean showsql = showsql(stmtInfo.getDbname()); 
 				if(showsql)
 				{
-					log.debug("Execute JDBC prepared query statement:"+stmtInfo.getSql());
+					if(log.isDebugEnabled())
+	        			log.debug("Execute JDBC prepared query statement:"+stmtInfo.getSql());
 				}
 				 stmtInfo.setPagineOrderBy(Params.getPagineOrderby());
 				statement = stmtInfo.preparePagineStatement(showsql);
@@ -1440,7 +1444,8 @@ public class PreparedDBUtil extends DBUtil {
 			{
 				if(showsql(stmtInfo.getDbname()))
 				{
-					log.debug("Execute JDBC prepared query statement:"+stmtInfo.getSql());
+					if(log.isDebugEnabled())
+	        			log.debug("Execute JDBC prepared query statement:"+stmtInfo.getSql());
 				}
 				statement = stmtInfo.prepareQueryStatement();
 			}
@@ -4861,10 +4866,12 @@ public class PreparedDBUtil extends DBUtil {
 			}
 			NewSQLInfo old_sql = null;
 			boolean showsql = showsql(stmtInfo.getDbname());
-			
-			while(batchparams.size() > 0)
+			int i = 0;
+			while(i < batchparams.size() )
 			{
-				Params Params = (Params)batchparams.remove(0);
+//				Params Params = (Params)batchparams.remove(0);
+				Params Params = (Params)batchparams.get(i);
+				i ++;
 				if (Params.action == SELECT) {
 					throw new SQLException("Batch prepared Operation do not support pagine query opations.");
 				} else if (Params.action == SELECT_COMMON) {
@@ -4877,7 +4884,8 @@ public class PreparedDBUtil extends DBUtil {
 					old_sql = Params.prepareSqlifo;
 					if(showsql)
 					{
-						log.debug("Execute JDBC prepared batch statement:"+Params.prepareSqlifo.getNewsql());
+						if(log.isDebugEnabled())
+		        			log.debug("Execute JDBC prepared batch statement:"+Params.prepareSqlifo.getNewsql());
 					}
 					statement = stmtInfo
 							.prepareStatement(Params.prepareSqlifo.getNewsql(),getCUDResult);
@@ -4899,7 +4907,8 @@ public class PreparedDBUtil extends DBUtil {
 						int[] ret = statement.executeBatch();	
 						if(showsql)
 						{
-							log.debug(new StringBuffer("Execute prepared Batch sql[")
+							if(log.isDebugEnabled())
+			        			log.debug(new StringBuffer("Execute prepared Batch sql[")
 							.append(old_sql.getNewsql())
 							.append("] success")
 							.toString());
@@ -4926,7 +4935,8 @@ public class PreparedDBUtil extends DBUtil {
 					old_sql = Params.prepareSqlifo;
 					if(showsql)
 					{
-						log.debug("Execute JDBC prepared batch statement:"+Params.prepareSqlifo.getNewsql());
+						if(log.isDebugEnabled())
+		        			log.debug("Execute JDBC prepared batch statement:"+Params.prepareSqlifo.getNewsql());
 					}
 					statement = stmtInfo
 							.prepareStatement(Params.prepareSqlifo.getNewsql(),getCUDResult);
@@ -4943,14 +4953,15 @@ public class PreparedDBUtil extends DBUtil {
 					statement.addBatch();
 				}
 				
-				if(batchparams.size() == 0)
+				if(i == batchparams.size())
 				{
 					try
 					{
 						int[] ret = statement.executeBatch();	
 						if(showsql)
 						{
-							log.debug(new StringBuffer("Execute prepared Batch sql[")
+							if(log.isDebugEnabled())
+			        			log.debug(new StringBuffer("Execute prepared Batch sql[")
 							.append(old_sql.getNewsql())
 							.append("] success")
 							.toString());
@@ -5036,7 +5047,9 @@ public class PreparedDBUtil extends DBUtil {
 			{
 				this.releaseResources(resources);
 			}
-				
+			if(batchparams	!= null){
+				batchparams.clear();
+			}
 			this.resetFromSetMethod(null);
 		}
 //		return CUDResult;

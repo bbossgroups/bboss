@@ -640,7 +640,8 @@ public class SQLParams
         	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
         	if(pool != null && pool.showsql())
         	{
-        		log.debug("SQL INFO:" + this.toString() );
+        		if(log.isDebugEnabled())
+        			log.debug("SQL INFO:" + this.toString() );
         	}
         }
         
@@ -862,6 +863,22 @@ public class SQLParams
 		List<SQLParams> batchparams = new ArrayList<SQLParams>(beans.size());
 		for(Object bean:beans)
 		{
+			SQLParams params = convertBeanToSqlParams(bean,sql,dbname,action,con);
+			batchparams.add(params);
+			
+		}
+		return batchparams;
+	}
+    public static List<SQLParams> convertBeansToSqlParams(List beans,SQLInfo sql,String dbname,int action
+    		,Connection con,int start,int end,int step) throws SQLException
+	{
+		if(beans == null)
+			return null;
+		
+		List<SQLParams> batchparams = new ArrayList<SQLParams>(step);
+		for(int i = start; i < end; i++)
+		{
+			Object bean = beans.get(i);
 			SQLParams params = convertBeanToSqlParams(bean,sql,dbname,action,con);
 			batchparams.add(params);
 			

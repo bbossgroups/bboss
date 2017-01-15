@@ -28,6 +28,7 @@ import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.GetCUDResult;
 import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.SQLExecutor;
+import com.frameworkset.common.poolman.SQLInfoExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.sqlexecutor.BeanVariable.Bean;
@@ -113,6 +114,116 @@ public class SimpleApiTest {
 		
 		
 		
+	}
+	
+	@Test
+	public void testBatchInsert() throws Exception{
+		List<ListBean> beans = new ArrayList<ListBean>();
+		ListBean lb = null;
+//		SQLInfoExecutor.DEFAULT_BATCHSIZE = 5;
+		SQLExecutor.delete("delete from LISTBEAN");
+		for(int i = 0; i < 3000; i ++){
+			lb = new ListBean();
+			lb.setId(i);
+//			lb.setId(""+i);
+			lb.setFieldLable("sss");
+			lb.setFieldName("ss");
+			lb.setFieldType("int");
+			lb.setIsprimaryKey(false);
+			lb.setRequired(true);
+			lb.setSortorder("ppp"+i);
+			lb.setFieldLength(20);
+			lb.setIsvalidated(6);
+			beans.add(lb);
+		}
+		String sql = "insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE,SORTORDER,ISPRIMARYKEY,REQUIRED,FIELDLENGTH,ISVALIDATED) " +
+				"values(#[id],#[fieldName],#[fieldLable],#[fieldType],#[sortorder]," +
+				"#[isprimaryKey],#[required],#[fieldLength],#[isvalidated])";
+		long start = System.currentTimeMillis();
+		SQLExecutor.insertBeans(sql,beans);
+		long end = System.currentTimeMillis();
+		int nums = SQLExecutor.queryObject(int.class, "select count(id) from LISTBEAN");
+		System.out.println("耗时："+(end-start)/1000+"秒");
+		System.out.println(nums);
+//		List<Integer> ids = SQLExecutor.queryList(int.class, "select id from LISTBEAN");
+//		for(int id:ids){
+//			System.out.println(id);
+//		}
+//		
+//		List<String> sorts = SQLExecutor.queryList(String.class, "select sortorder from LISTBEAN");
+//		for(String id:sorts){
+//			System.out.println(id);
+//		}
+	}
+	
+	@Test
+	public void testBatchSimpleInsert() throws Exception{
+		List<Map> beans = new ArrayList<Map>();
+		Map lb = null;
+		SQLInfoExecutor.DEFAULT_BATCHSIZE = 100000;
+		try {
+			SQLExecutor.delete("drop table simple");
+		} catch (Exception e) {
+			 
+		}
+		SQLExecutor.update("CREATE  TABLE simple(ID INTEGER NOT NULL)");
+		
+		for(int i = 0; i < 3000; i ++){
+			lb = new HashMap();
+			lb.put("id",i);
+//			
+			beans.add(lb);
+		}
+		String sql = "insert into simple(ID) " +
+				"values(#[id])";
+		long start = System.currentTimeMillis();
+		SQLExecutor.insertBeans(sql,beans);
+		long end = System.currentTimeMillis();
+		int nums = SQLExecutor.queryObject(int.class, "select count(id) from simple");
+		System.out.println("耗时："+(end-start)/1000+"秒");
+		System.out.println(nums);
+//		List<Integer> ids = SQLExecutor.queryList(int.class, "select id from LISTBEAN");
+//		for(int id:ids){
+//			System.out.println(id);
+//		}
+//		
+//		List<String> sorts = SQLExecutor.queryList(String.class, "select sortorder from LISTBEAN");
+//		for(String id:sorts){
+//			System.out.println(id);
+//		}
+	}
+	
+	@Test
+	public void testSimpleInsert() throws Exception{
+		List<Map> beans = new ArrayList<Map>();
+		Map lb = null;
+		 
+		try {
+			SQLExecutor.delete("drop table simple");
+		} catch (Exception e) {
+			 
+		}
+		SQLExecutor.update("CREATE  TABLE simple(ID INTEGER NOT NULL)");
+		long start = System.currentTimeMillis();
+		for(int i = 0; i < 100000; i ++){
+			SQLExecutor.insert("insert into simple(ID) values(?)",i);
+		}
+		long end = System.currentTimeMillis();
+		
+		 
+		
+		int nums = SQLExecutor.queryObject(int.class, "select count(id) from simple");
+		System.out.println("耗时："+(end-start)/1000+"秒");
+		System.out.println(nums);
+//		List<Integer> ids = SQLExecutor.queryList(int.class, "select id from LISTBEAN");
+//		for(int id:ids){
+//			System.out.println(id);
+//		}
+//		
+//		List<String> sorts = SQLExecutor.queryList(String.class, "select sortorder from LISTBEAN");
+//		for(String id:sorts){
+//			System.out.println(id);
+//		}
 	}
 	@Test
 	public void arrayVariableTest() throws SQLException
