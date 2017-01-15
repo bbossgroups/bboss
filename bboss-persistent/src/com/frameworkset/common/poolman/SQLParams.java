@@ -640,7 +640,8 @@ public class SQLParams
         	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
         	if(pool != null && pool.showsql())
         	{
-        		log.debug("SQL INFO:" + this.toString() );
+        		if(log.isDebugEnabled())
+        			log.debug("SQL INFO:" + this.toString() );
         	}
         }
         

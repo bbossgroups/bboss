@@ -122,7 +122,7 @@ public class SimpleApiTest {
 		ListBean lb = null;
 //		SQLInfoExecutor.DEFAULT_BATCHSIZE = 5;
 		SQLExecutor.delete("delete from LISTBEAN");
-		for(int i = 0; i < 100000; i ++){
+		for(int i = 0; i < 3000; i ++){
 			lb = new ListBean();
 			lb.setId(i);
 //			lb.setId(""+i);
@@ -168,7 +168,7 @@ public class SimpleApiTest {
 		}
 		SQLExecutor.update("CREATE  TABLE simple(ID INTEGER NOT NULL)");
 		
-		for(int i = 0; i < 100000; i ++){
+		for(int i = 0; i < 3000; i ++){
 			lb = new HashMap();
 			lb.put("id",i);
 //			
