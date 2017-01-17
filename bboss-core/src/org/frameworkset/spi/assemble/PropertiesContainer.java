@@ -11,6 +11,10 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.util.io.ClassPathResource;
+import org.frameworkset.util.tokenizer.TextGrammarParser;
+import org.frameworkset.util.tokenizer.TextGrammarParser.GrammarToken;
+
+import com.frameworkset.util.SimpleStringUtil;
 
 public class PropertiesContainer {
     protected List<String> configPropertiesFiles;
@@ -30,6 +34,38 @@ public class PropertiesContainer {
     	evalfile(configPropertiesFile);
     	if(linkfile != null)
     		loopback(linkfile);
+    	
+    }
+    
+    public String evalValue(String value)
+	{
+		
+		if(SimpleStringUtil.isEmpty(value))
+			return value;
+		List<GrammarToken> tokens = TextGrammarParser.parser(value, "${", '}');
+		StringBuilder re = new StringBuilder();
+		for(int i = 0; tokens != null && i < tokens.size(); i ++)
+		{
+			GrammarToken token = tokens.get(i);
+			if(token.texttoken())
+				re.append(token.getText());
+			else
+			{
+				String varvalue = this.getProperty(token.getText());
+				if(varvalue != null)
+					re.append(varvalue);
+				else
+				{
+					re.append("${").append(token.getText()).append("}");
+				}
+			}
+		}
+		return re.toString();
+		
+	}
+    public void addConfigPropertiesFile(String configPropertiesFile)
+    {
+    	addConfigPropertiesFile(  configPropertiesFile,null);
     	
     }
     private void loopback(LinkConfigFile linkfile)

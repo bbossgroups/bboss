@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.spi.assemble.PropertiesContainer;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -42,13 +43,14 @@ public class ConfigParser extends DefaultHandler{
     private boolean jmxManagement = PoolManConstants.DEFAULT_USE_JMX;
     private String currentSet;
     private String currentName;
-    private StringBuffer currentValue = new StringBuffer();
+    private StringBuilder currentValue = new StringBuilder();
     private String file;
     private String[] filterdbname = null;
     private String interceptor = "com.frameworkset.common.poolman.interceptor.DummyInterceptor";
     private String currentdbtype ;
     private String dbnamespace;
-    
+
+    protected PropertiesContainer configPropertiesFile;
     /**
      * 用户自定义的适配器
      */
@@ -96,6 +98,14 @@ public class ConfigParser extends DefaultHandler{
             String external = SimpleStringUtil.replaceNull(attributes.getValue("external"),"false");
             properties.put("external",external);
             dbProps.add(properties);
+        }
+        else if(name.equals("config"))
+        {
+        	if(this.configPropertiesFile == null)
+        		configPropertiesFile = new PropertiesContainer();
+        	String file = attributes.getValue("file");
+        	if(file != null)
+        		this.configPropertiesFile.addConfigPropertiesFile(file);
         }
         else if (name.toLowerCase().equals("objectpool")) {
             this.currentSet = "generic";
@@ -153,10 +163,11 @@ public class ConfigParser extends DefaultHandler{
         		!name.equals("enablejta") &&
         		!name.equals("usepool") &&
         		!name.equals("encryptdbinfo") &&
-        		!name.equals("datasourceFile") && !name.equals("queryfetchsize"))
+        		!name.equals("datasourceFile") && !name.equals("queryfetchsize")&&!name.equals("config"))
             
         {
-        	log.debug("解析文件时[" + this.file + "]遇到元素[" + name + "]，忽略处理。");
+        	if(log.isDebugEnabled())
+        		log.debug("解析文件时[" + this.file + "]遇到元素[" + name + "]，忽略处理。");
         }
 
     }
@@ -209,7 +220,17 @@ public class ConfigParser extends DefaultHandler{
             }
             else
             {
-            	p.put(name.toLowerCase(), currentValue.toString().trim());
+            	String value = null;
+            	if(configPropertiesFile != null)
+            		value = this.configPropertiesFile.evalValue(currentValue.toString().trim());
+            	else
+            	{
+            		value = currentValue.toString().trim();
+            	}
+            	if(!name.equals("password"))
+            		p.put(name.toLowerCase(), value.trim());
+            	else
+            		p.put(name.toLowerCase(), value);
             }
         }
         else if (this.currentSet.equals("generic")) {
@@ -254,50 +275,7 @@ public class ConfigParser extends DefaultHandler{
         this.currentValue.delete(0, this.currentValue.length());
     }
 
-    class ConfigElement {
-
-        String name;
-        String value;
-        String datatype;
-        ConfigElement parent;
-        ArrayList children;
-
-
-        ConfigElement(String name, String value, String datatype) {
-            this.name = name;
-            this.value = value;
-            this.datatype = datatype;
-            this.parent = null;
-            this.children = new ArrayList();
-        }
-
-        String getValue() {
-            return this.value;
-        }
-
-        void setValue(String value) {
-            this.value = value;
-        }
-
-        boolean hasChildren() {
-            if (this.children.size() > 0)
-                return true;
-            return false;
-        }
-
-        ConfigElement getParent() {
-            return this.parent;
-        }
-
-        ArrayList getChildren() {
-            return this.children;
-        }
-
-        void addChild(ConfigElement child) {
-            this.children.add(child);
-        }
-
-    }
+   
 
 	/**
 	 * @return the adaptors
