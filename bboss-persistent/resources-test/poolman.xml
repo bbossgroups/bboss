@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <poolman>
-
+	<config file="db.properties"/>
 <!--  	<datasource> -->
 
 <!-- 		<dbname>bspf</dbname> -->
@@ -19,7 +19,7 @@
 		<dbname>mssql</dbname>
 		<loadmetadata>false</loadmetadata>
 		<enablejta>true</enablejta>
-		<jndiName>mssql_datasource_jndiname</jndiName>
+		<jndiName>${jndiName}</jndiName>
 		<datasourceFile>dbcp-derby.xml</datasourceFile>
 		<autoprimarykey>false</autoprimarykey>
 		<showsql>true</showsql>
