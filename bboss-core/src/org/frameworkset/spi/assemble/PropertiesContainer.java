@@ -84,13 +84,20 @@ public class PropertiesContainer {
     		{
 		    	ClassPathResource  resource = new ClassPathResource(configPropertiesFile);
 		    	input = resource.getInputStream();
-		    	log.debug("load config Properties File :"+resource.getFile().getAbsolutePath());
+		    	try{
+		    		if(log.isDebugEnabled())
+		    			log.debug("load config Properties File :"+resource.getURL());
+		    	}
+		    	catch(Exception e){
+		    		
+		    	}
     		}
     		else
     		{
     			String _configPropertiesFile = configPropertiesFile.substring("file:".length());
     			input = new FileInputStream(new File(_configPropertiesFile));
-    			log.debug("load config Properties File :"+_configPropertiesFile);
+    			if(log.isDebugEnabled())
+	    			log.debug("load config Properties File :"+_configPropertiesFile);
     		}
 	    	properties.load(input);
 	    	allProperties.putAll(properties);
