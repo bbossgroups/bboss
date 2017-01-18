@@ -34,7 +34,15 @@ public class TestVariable {
 		System.out.println(context.getExternalProperty("varValue2"));
 		 
 	}
-	
+	@Test
+	public void testVariableDefualtValue()
+	{
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/variable/ioc-var.xml");
+		VariableBean variableBean = context.getTBeanObject("test.beans", VariableBean.class);
+		System.out.println(variableBean.getVarValue3());
+		System.out.println(variableBean.getIntValue2());
+		 
+	}
 	@Test
 	public void testZH()
 	{

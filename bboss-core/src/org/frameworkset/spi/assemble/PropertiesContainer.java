@@ -51,12 +51,16 @@ public class PropertiesContainer {
 				re.append(token.getText());
 			else
 			{
+				
 				String varvalue = this.getProperty(token.getText());
 				if(varvalue != null)
 					re.append(varvalue);
 				else
 				{
-					re.append("${").append(token.getText()).append("}");
+					if(token.getDefaultValue() != null)
+						re.append(token.getDefaultValue());
+					else
+						re.append("${").append(token.getText()).append("}");
 				}
 			}
 		}
@@ -84,13 +88,20 @@ public class PropertiesContainer {
     		{
 		    	ClassPathResource  resource = new ClassPathResource(configPropertiesFile);
 		    	input = resource.getInputStream();
-		    	log.debug("load config Properties File :"+resource.getFile().getAbsolutePath());
+		    	try{
+		    		if(log.isDebugEnabled())
+		    			log.debug("load config Properties File :"+resource.getURL());
+		    	}
+		    	catch(Exception e){
+		    		
+		    	}
     		}
     		else
     		{
     			String _configPropertiesFile = configPropertiesFile.substring("file:".length());
     			input = new FileInputStream(new File(_configPropertiesFile));
-    			log.debug("load config Properties File :"+_configPropertiesFile);
+    			if(log.isDebugEnabled())
+	    			log.debug("load config Properties File :"+_configPropertiesFile);
     		}
 	    	properties.load(input);
 	    	allProperties.putAll(properties);
@@ -129,7 +140,7 @@ public class PropertiesContainer {
     	if(son.getAllProperties() != null)
     		sonAndParentProperties.putAll(son.getAllProperties());
     }
-    private Map<? extends Object, ? extends Object> getAllProperties() {
+    public Map<? extends Object, ? extends Object> getAllProperties() {
 		// TODO Auto-generated method stub
 		return this.allProperties;
 	}

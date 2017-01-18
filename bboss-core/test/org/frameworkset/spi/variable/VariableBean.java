@@ -6,7 +6,9 @@ public class VariableBean extends BeanInfoAware{
 	private String varValue;
 	private String varValue1;
 	private String varValue2;
+	private String varValue3;
 	private int intValue;
+	private int intValue2;
 	public VariableBean(String varValue1,String varValue2)
 	{
 		System.out.println("varValue1:"+varValue1);
@@ -48,6 +50,22 @@ public class VariableBean extends BeanInfoAware{
 
 	public void setIntValue(int intValue) {
 		this.intValue = intValue;
+	}
+
+	public String getVarValue3() {
+		return varValue3;
+	}
+
+	public void setVarValue3(String varValue3) {
+		this.varValue3 = varValue3;
+	}
+
+	public int getIntValue2() {
+		return intValue2;
+	}
+
+	public void setIntValue2(int intValue2) {
+		this.intValue2 = intValue2;
 	}
 
 }
