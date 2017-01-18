@@ -30,6 +30,7 @@ public class TextGrammarParser {
 		public static final int VARIABLE = 1;
 		private int position;
 		private String text;
+		private String defaultValue;
 		/**
 		 * 0 普通text
 		 * 1 变量
@@ -73,6 +74,12 @@ public class TextGrammarParser {
 		public boolean varibletoken()
 		{
 			return this.type == VARIABLE;
+		}
+		public String getDefaultValue() {
+			return defaultValue;
+		}
+		public void setDefaultValue(String defaultValue) {
+			this.defaultValue = defaultValue;
 		}
 		
 		
@@ -171,7 +178,15 @@ public class TextGrammarParser {
 						}
 						GrammarToken stringtoken = new GrammarToken();
 						stringtoken.position = tokens.size() ;
-						stringtoken.text = tplbuilder.toString();
+						String txt = tplbuilder.toString();
+						int pos = txt.indexOf(":");
+						String defaultValue = null;
+						if(pos > 0 ){
+							defaultValue = txt.substring(pos+1);
+							txt = txt.substring(0, pos);
+							stringtoken.setDefaultValue(defaultValue);
+						}						
+						stringtoken.text = txt;
 						stringtoken.type = GrammarToken.VARIABLE;//宏文件路径
 						tplbuilder.setLength(0);
 						tokens.add(stringtoken);
@@ -215,7 +230,7 @@ public class TextGrammarParser {
 			GrammarToken stringtoken = new GrammarToken();
 			stringtoken.position = tokens.size() ;
 			stringtoken.text = builder.toString();
-			stringtoken.type = 0;//宏文件路径
+			stringtoken.type = GrammarToken.TextPlain;//宏文件路径
 			builder.setLength(0);
 			tokens.add(stringtoken);
 		}

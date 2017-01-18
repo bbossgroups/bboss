@@ -51,12 +51,16 @@ public class PropertiesContainer {
 				re.append(token.getText());
 			else
 			{
+				
 				String varvalue = this.getProperty(token.getText());
 				if(varvalue != null)
 					re.append(varvalue);
 				else
 				{
-					re.append("${").append(token.getText()).append("}");
+					if(token.getDefaultValue() != null)
+						re.append(token.getDefaultValue());
+					else
+						re.append("${").append(token.getText()).append("}");
 				}
 			}
 		}
@@ -136,7 +140,7 @@ public class PropertiesContainer {
     	if(son.getAllProperties() != null)
     		sonAndParentProperties.putAll(son.getAllProperties());
     }
-    private Map<? extends Object, ? extends Object> getAllProperties() {
+    public Map<? extends Object, ? extends Object> getAllProperties() {
 		// TODO Auto-generated method stub
 		return this.allProperties;
 	}
