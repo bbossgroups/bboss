@@ -122,7 +122,9 @@ public class HttpRequestUtil {
 		
 		return httpPost;
 	}
-
+	public static String httpGetforString(String url) throws Exception {
+		return httpGetforString(url, (String) null, (String) null,  (Map<String,String>)null);
+	}
 	public static String httpGetforString(String url,Map<String,String> headers) throws Exception {
 		return httpGetforString(url, (String) null, (String) null,  headers);
 	}
