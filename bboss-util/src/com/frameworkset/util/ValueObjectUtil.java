@@ -1138,9 +1138,9 @@ public class ValueObjectUtil {
 			}
 			catch (Exception e)
 			{
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向[")
-				.append(toType.getName()).append("]转换").append(",value is ").append(obj).toString());
+				.append(toType.getName()).append("]转换").append(",value is  ").append(obj).toString());
 			}
 			
 			
@@ -1164,9 +1164,9 @@ public class ValueObjectUtil {
 			}
 			catch (Exception e)
 			{
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向[")
-				.append(toType.getName()).append("]转换").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换").append(",value is ").append(obj).toString());
 			}
 			
 			
@@ -1320,14 +1320,14 @@ public class ValueObjectUtil {
 			// && !toType.getName().startsWith("[")
 			// || !type.getName().startsWith("[")
 			// && toType.getName().startsWith("["))
-			throw new IllegalArgumentException(new StringBuffer("类型无法转换,不支持[")
+			throw new IllegalArgumentException(new StringBuilder().append("类型无法转换,不支持[")
 					.append(type.getName()).append("]向[").append(
 							toType.getName()).append("]转换").append(",value is ").append(obj).toString());
 		} else if (type == String.class && toType == Class.class) {
 			try {
 				return getClass((String) obj);
 			} catch (ClassNotFoundException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 						"类型无法转换,不支持[").append(type.getName()).append("]向[")
 						.append(toType.getName()).append("]转换").toString(),e);
 			}
@@ -1393,7 +1393,7 @@ public class ValueObjectUtil {
 			}
 			catch (Exception e)
 			{
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向[")
 				.append(toType.getName()).append("]转换").append(",value is ").append(obj).toString());
 			}
@@ -1419,9 +1419,9 @@ public class ValueObjectUtil {
 			}
 			catch (Exception e)
 			{
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向[")
-				.append(toType.getName()).append("]转换").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换").append(",value is ").append(obj).toString());
 			}
 			
 			
@@ -1575,14 +1575,14 @@ public class ValueObjectUtil {
 			// && !toType.getName().startsWith("[")
 			// || !type.getName().startsWith("[")
 			// && toType.getName().startsWith("["))
-			throw new IllegalArgumentException(new StringBuffer("类型无法转换,不支持[")
+			throw new IllegalArgumentException(new StringBuilder().append("类型无法转换,不支持[")
 					.append(type.getName()).append("]向[").append(
 							toType.getName()).append("]转换").append(",value is ").append(obj).toString());
 		} else if (type == String.class && toType == Class.class) {
 			try {
 				return getClass((String) obj);
 			} catch (ClassNotFoundException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 						"类型无法转换,不支持[").append(type.getName()).append("]向[")
 						.append(toType.getName()).append("]转换").toString(),e);
 			}
@@ -1755,7 +1755,7 @@ public class ValueObjectUtil {
 		 */
 		// if (type != String.class)
 		// throw new NoSupportTypeCastException(
-		// new StringBuffer("不支持[")
+		// new StringBuilder().append("不支持[")
 		// .append(type)
 		// .append("]向[")
 		// .append(toType)
@@ -1840,7 +1840,7 @@ public class ValueObjectUtil {
 			try {
 				return getClass((String) obj);
 			} catch (ClassNotFoundException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 						"类型无法转换,不支持[").append(type.getName()).append("]向[")
 						.append(toType.getName()).append("]转换").toString(),e);
 			}
@@ -1852,30 +1852,30 @@ public class ValueObjectUtil {
 			try {
 				return convertStringToEnum((String )obj,toType);
 			} catch (SecurityException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 			} catch (IllegalArgumentException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 			} catch (NoSuchMethodException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 			} catch (IllegalAccessException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 			} catch (InvocationTargetException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 			}
 		}
 
-		throw new NoSupportTypeCastException(new StringBuffer("不支持[").append(
-				type).append("]向[").append(toType).append("]的转换").append(",value is").append(obj).toString());
+		throw new NoSupportTypeCastException(new StringBuilder().append("不支持[").append(
+				type).append("]向[").append(toType).append("]的转换").append(",value is ").append(obj).toString());
 
 	}
 	
@@ -1897,7 +1897,7 @@ public class ValueObjectUtil {
 		 */
 		// if (type != String.class)
 		// throw new NoSupportTypeCastException(
-		// new StringBuffer("不支持[")
+		// new StringBuilder("不支持[")
 		// .append(type)
 		// .append("]向[")
 		// .append(toType)
@@ -1981,7 +1981,7 @@ public class ValueObjectUtil {
 			try {
 				return getClass((String) obj);
 			} catch (ClassNotFoundException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 						"类型无法转换,不支持[").append(type.getName()).append("]向[")
 						.append(toType.getName()).append("]转换").toString(),e);
 			}
@@ -1993,30 +1993,30 @@ public class ValueObjectUtil {
 			try {
 				return convertStringToEnum((String )obj,toType);
 			} catch (SecurityException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 			} catch (IllegalArgumentException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 			} catch (NoSuchMethodException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 			} catch (IllegalAccessException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 			} catch (InvocationTargetException e) {
-				throw new IllegalArgumentException(new StringBuffer(
+				throw new IllegalArgumentException(new StringBuilder().append(
 				"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+				.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 			}
 		}
 
-		throw new NoSupportTypeCastException(new StringBuffer("不支持[").append(
-				type).append("]向[").append(toType).append("]的转换").append(",value is").append(obj).toString());
+		throw new NoSupportTypeCastException(new StringBuilder().append("不支持[").append(
+				type).append("]向[").append(toType).append("]的转换").append(",value is ").append(obj).toString());
 
 	}
 	
@@ -2383,7 +2383,7 @@ public class ValueObjectUtil {
 			return obj;
 		// if (type != String[].class)
 		// throw new NoSupportTypeCastException(
-		// new StringBuffer("不支持[")
+		// new StringBuilder("不支持[")
 		// .append(type)
 		// .append("]向[")
 		// .append(toType)
@@ -2677,25 +2677,25 @@ public class ValueObjectUtil {
 					
 					return value;
 				} catch (SecurityException e) {
-					throw new IllegalArgumentException(new StringBuffer(
+					throw new IllegalArgumentException(new StringBuilder().append(
 					"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 				} catch (IllegalArgumentException e) {
-					throw new IllegalArgumentException(new StringBuffer(
+					throw new IllegalArgumentException(new StringBuilder().append(
 					"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 				} catch (NoSuchMethodException e) {
-					throw new IllegalArgumentException(new StringBuffer(
+					throw new IllegalArgumentException(new StringBuilder().append(
 					"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 				} catch (IllegalAccessException e) {
-					throw new IllegalArgumentException(new StringBuffer(
+					throw new IllegalArgumentException(new StringBuilder().append(
 					"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 				} catch (InvocationTargetException e) {
-					throw new IllegalArgumentException(new StringBuffer(
+					throw new IllegalArgumentException(new StringBuilder().append(
 					"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 				}
 			}
 			else if(type == String[].class )
@@ -2705,32 +2705,32 @@ public class ValueObjectUtil {
 					
 					return value;
 				} catch (SecurityException e) {
-					throw new IllegalArgumentException(new StringBuffer(
+					throw new IllegalArgumentException(new StringBuilder().append(
 					"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 				} catch (IllegalArgumentException e) {
-					throw new IllegalArgumentException(new StringBuffer(
+					throw new IllegalArgumentException(new StringBuilder().append(
 					"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 				} catch (NoSuchMethodException e) {
-					throw new IllegalArgumentException(new StringBuffer(
+					throw new IllegalArgumentException(new StringBuilder().append(
 					"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 				} catch (IllegalAccessException e) {
-					throw new IllegalArgumentException(new StringBuffer(
+					throw new IllegalArgumentException(new StringBuilder().append(
 					"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 				} catch (InvocationTargetException e) {
-					throw new IllegalArgumentException(new StringBuffer(
+					throw new IllegalArgumentException(new StringBuilder().append(
 					"类型无法转换,不支持[").append(type.getName()).append("]向枚举类型[")
-					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is").append(obj).toString());
+					.append(toType.getName()).append("]转换，超出枚举值范围").append(",value is ").append(obj).toString());
 				}
 			}
 				
 		}
 
-		throw new NoSupportTypeCastException(new StringBuffer("不支持[").append(
-				type).append("]向[").append(toType).append("]的转换").append(",value is").append(obj).toString());
+		throw new NoSupportTypeCastException(new StringBuilder().append("不支持[").append(
+				type).append("]向[").append(toType).append("]的转换").append(",value is ").append(obj).toString());
 
 	}
 	public static Object convertObjectToDateArray(Object obj,Class type,Class toType,String dateformat){
