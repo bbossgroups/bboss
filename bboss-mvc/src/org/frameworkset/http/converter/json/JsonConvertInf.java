@@ -10,4 +10,8 @@ public interface JsonConvertInf {
 	 * @see #setJsonPrefix
 	 */
 	public void setPrefixJson(boolean prefixJson) ;
+	/**
+	 * @param objectMapper
+	 */
+	public void setObjectMapper(Object objectMapper);
 }

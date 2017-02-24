@@ -3,7 +3,6 @@ package org.frameworkset.http.converter.json;
 import java.io.IOException;
 
 import org.frameworkset.http.MediaType;
-import org.frameworkset.http.ServerHttpRequest;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -34,8 +34,5 @@ dependencies {
                
     )
     
-     testCompile (            
-            
-            //fileTree(dir: 'lib-compile', include: '**/*.jar')
-    )
+     
 }

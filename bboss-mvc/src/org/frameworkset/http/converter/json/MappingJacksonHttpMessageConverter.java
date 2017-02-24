@@ -178,5 +178,8 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 		
 		((JsonConvertInf)convert).setPrefixJson(prefixJson);
 	}
+	public void setObjectMapper(Object objectMapper) {
+		((JsonConvertInf)convert).setObjectMapper( objectMapper);
+	}
 
 }
