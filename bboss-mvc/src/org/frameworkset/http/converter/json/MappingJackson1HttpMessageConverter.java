@@ -56,7 +56,7 @@ public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConv
 
 
 	private String jsonpCallback = ServerHttpRequest.JSONPCALLBACK_PARAM_NAME;
-	private ObjectMapper objectMapper = new ObjectMapper();
+	private ObjectMapper objectMapper = null;
 
 	private boolean prefixJson = false;
 
@@ -67,6 +67,7 @@ public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConv
 	 */
 	public MappingJackson1HttpMessageConverter() {
 		super(jsonmediatypes);
+		objectMapper = new ObjectMapper();
 	}
 
 	/**
@@ -77,9 +78,9 @@ public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConv
 	 * custom serializers for specific types. The other option for refining the serialization process is to use Jackson's
 	 * provided annotations on the types to be serialized, in which case a custom-configured ObjectMapper is unnecessary.
 	 */
-	public void setObjectMapper(ObjectMapper objectMapper) {
+	public void setObjectMapper(Object objectMapper) {
 		Assert.notNull(objectMapper, "'objectMapper' must not be null");
-		this.objectMapper = objectMapper;
+		this.objectMapper = (ObjectMapper)objectMapper;
 	}
 	
 	public boolean canWrite(MediaType mediaType) {

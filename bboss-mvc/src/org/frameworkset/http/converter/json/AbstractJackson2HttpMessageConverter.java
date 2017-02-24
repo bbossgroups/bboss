@@ -78,9 +78,9 @@ public abstract class AbstractJackson2HttpMessageConverter extends AbstractGener
 	 * provided annotations on the types to be serialized, in which case a
 	 * custom-configured ObjectMapper is unnecessary.
 	 */
-	public void setObjectMapper(ObjectMapper objectMapper) {
+	public void setObjectMapper(Object objectMapper) {
 		Assert.notNull(objectMapper, "ObjectMapper must not be null");
-		this.objectMapper = objectMapper;
+		this.objectMapper = (ObjectMapper)objectMapper;
 		configurePrettyPrint();
 	}
 
