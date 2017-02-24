@@ -3866,6 +3866,11 @@ public abstract class HandlerUtils {
 						
 					}
 				}
+				else
+				{
+					if(responseMediaType.isJsonp())
+						responseMediaType = HttpMessageConverter.jsonmediatypes[0];
+				}
 				
 				Class<?> returnValueType = returnValue.getClass();
 				allSupportedMediaTypes = new ArrayList<MediaType>();

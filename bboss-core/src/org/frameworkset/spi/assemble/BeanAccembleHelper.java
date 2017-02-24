@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.ApplicationContextAware;
 import org.frameworkset.spi.BaseApplicationContext;
@@ -648,8 +649,10 @@ public class BeanAccembleHelper {
 							}
 							else
 							{
-								log.warn("设置组件["+bean.getClass()+"]属性失败：Does not exist a writer method for field ["
+								if(log.isEnabledFor(Level.WARN)){
+									log.warn("设置组件["+bean.getClass()+"]属性失败：Does not exist a writer method for field ["
 										+ propertyDescriptor.getName() +"] ,请检查类定义文件是否正确设置了该字段的set方法，或者字段名称是否指定正确。");
+								}
 								flag = false;
 								break;
 							}
@@ -696,9 +699,12 @@ public class BeanAccembleHelper {
 					// bean.getClass() + "]中没有定义");
 //					log.warn("引用字段[" + filedName + "]在组件["
 //							+ bean.getClass() + "]中没有定义");
-					Exception e = new Exception("引用字段[" + filedName + "]在组件["
-							+ bean.getClass() + "]中没有定义");
-					log.warn("", e);
+					if(log.isEnabledFor(Level.WARN)){
+						
+						Exception e = new Exception("引用字段[" + filedName + "]在组件["
+								+ bean.getClass() + "]中没有定义");
+						log.warn("", e);
+					}
 				}
 			} 
 			catch(CurrentlyInCreationException e)
@@ -814,8 +820,10 @@ public class BeanAccembleHelper {
 							}
 							else
 							{
-								log.warn("初始化组件["+bean.getClass()+"]失败：Does not exist a writer method for field ["
+								if(log.isEnabledFor(Level.WARN)){
+									log.warn("初始化组件["+bean.getClass()+"]失败：Does not exist a writer method for field ["
 										+ propertyDescriptor.getName() +"] ,请检查类定义文件是否正确设置了该字段的set方法，或者字段名称是否指定正确。");
+								}
 								flag = false;
 								break;
 							}
@@ -855,11 +863,14 @@ public class BeanAccembleHelper {
 					// bean.getClass() + "]中没有定义");
 //					log.warn("引用字段[" + filedName + "]在provider["
 //							+ bean.getClass() + "]中没有定义");
-					Exception e = new Exception("引用字段[" + filedName + "]在组件["
-							+ bean.getClass() + "]中没有定义,请检查配置文件是否配置正确["
-											+ pro
-													.getConfigFile() + "]");
-					log.warn("", e);
+					if(log.isEnabledFor(Level.WARN)){
+						
+						Exception e = new Exception("引用字段[" + filedName + "]在组件["
+								+ bean.getClass() + "]中没有定义,请检查配置文件是否配置正确["
+												+ pro
+														.getConfigFile() + "]");
+						log.warn("", e);
+					}
 				}
 			}
 			catch(CurrentlyInCreationException e)
@@ -1657,9 +1668,10 @@ public class BeanAccembleHelper {
 							}
 							else
 							{
-								log.warn("设置组件["+providerManagerInfo.getName()+"]属性失败：Does not exist a writer method for field ["
+								if(log.isEnabledFor(Level.WARN)){
+									log.warn("设置组件["+providerManagerInfo.getName()+"]属性失败：Does not exist a writer method for field ["
 										+ propertyDescriptor.getName() +"] in class ["+instance.getClass().getCanonicalName()+"],请检查类定义文件是否正确设置了该字段的set方法，或者字段名称是否指定正确。");
-								
+								}
 								continue;
 							}
 //							if(wm == null)
@@ -1723,11 +1735,14 @@ public class BeanAccembleHelper {
 						
 //						log.warn("引用字段[" + filedName + "]在provider["
 //								+ instance.getClass() + "]中没有定义");
-						Exception e = new Exception("引用字段[" + filedName + "]在组件["
-								+ instance.getClass() + "]中没有定义,请检查配置文件是否配置正确["
-											+ providerManagerInfo
-													.getConfigFile() + "]");
-						log.warn("", e);
+						if(log.isEnabledFor(Level.WARN)){
+							
+							Exception e = new Exception("引用字段[" + filedName + "]在组件["
+									+ instance.getClass() + "]中没有定义,请检查配置文件是否配置正确["
+												+ providerManagerInfo
+														.getConfigFile() + "]");
+							log.warn("", e);
+						}
 					}
 				}
 			}
