@@ -64,7 +64,7 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	@Override
 	public boolean canWrite(String dataype) {
 		// TODO Auto-generated method stub
-		return convert.canRead(dataype);
+		return convert.canWrite(dataype);
 	}
 
 	@Override

@@ -1217,6 +1217,10 @@ public class ClassUtil
 	    
 	    private PropertieDescription buildPropertieDescription(Field[] declaredFields,List<Field> copeFields,PropertyDescriptor attr )
 	    {
+	    	if(attr.getPropertyType() == null)
+	    	{
+	    		return null;
+	    	}
 	    	Method wm = attr.getWriteMethod();
 	    	Method rm = attr.getReadMethod();
 	    	if(rm != null && (rm.getParameterTypes() != null && rm.getParameterTypes().length > 0))
@@ -1224,15 +1228,37 @@ public class ClassUtil
 	    		rm = null;
 	    	}
 	    	
-	    	if(wm != null && (wm.getParameterTypes() != null && wm.getParameterTypes().length > 1))
+	    	if(wm != null )
 	    	{
-	    		wm = null;
+	    		if(wm.getParameterTypes() == null || wm.getParameterTypes().length != 1)
+	    			wm = null;
+	    		
 	    	}
+	    	else //增强处理，如果set方法有返回值，jdk会认为set方法不是属性方法,begin
+	    	{
+	    		String name = attr.getName();
+	    		String uName = name.length() == 1 ? name.substring(0,1).toUpperCase():name.substring(0,1).toUpperCase()+name.substring(1);
+	    		String wmName = "set"+uName;
+	    		wm = this.getDeclaredMethod(wmName);	    		
+	    		if(wm != null)
+		    	{
+	    			if(wm.getParameterTypes() == null || wm.getParameterTypes().length != 1)
+		    			wm = null;
+	    			
+	    			if(wm != null){
+	    				Class<?> ptype = wm.getParameterTypes()[0];
+	    				boolean iswm = attr.getPropertyType().isAssignableFrom(ptype) || ptype.isAssignableFrom(attr.getPropertyType());
+	    				if(!iswm)
+	    					wm = null;
+	    			}
+	    			
+		    	}
+	    		
+	    		
+	    		
+	    	}//增强处理，如果set方法有返回值，jdk会认为set方法不是属性方法,end
 	    	
-	    	if(attr.getPropertyType() == null)
-	    	{
-	    		return null;
-	    	}
+	    	
 	    	
 	    	
 	    	Field field = this.getDeclaredField(declaredFields,attr.getName(),attr.getPropertyType());
