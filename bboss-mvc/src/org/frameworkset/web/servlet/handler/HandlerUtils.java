@@ -3868,7 +3868,7 @@ public abstract class HandlerUtils {
 				}
 				else
 				{
-					if(responseMediaType.isJsonp())
+					if(responseMediaType != null && responseMediaType.isJsonp())
 						responseMediaType = HttpMessageConverter.jsonmediatypes[0];
 				}
 				
