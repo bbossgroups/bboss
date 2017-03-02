@@ -88,10 +88,24 @@ public class ProviderParser extends DefaultHandler
     
     
 
-    public Map getProperties()
+    public BaseApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
+
+	public Map<String,Pro> getProperties()
     {
         return properties;
     }
+	
+	public Pro _getProperty(String name){
+		if(properties == null || properties.size() == 0){
+			return null;
+		}
+		else
+		{
+			return this.properties.get(name);
+		}
+	}
 
     protected LinkConfigFile linkfile;
 
@@ -136,6 +150,8 @@ public class ProviderParser extends DefaultHandler
         }
         currentValue = new StringBuilder();
         this.applicationContext = applicationContext;
+        if(applicationContext.getServiceProviderManager().findVariableFromSelf())
+        	configPropertiesFile = new PropertiesContainer();
 //        isSOAApplicationContext = applicationContext instanceof SOAApplicationContext;
         traceStack = new Stack();
     }
@@ -199,7 +215,7 @@ public class ProviderParser extends DefaultHandler
 	        			_value = this.currentValue.toString();
 	        			
 	    	            
-	    	        		p.setValue(_value,configPropertiesFile);
+	    	        		p.setValue(_value,configPropertiesFile,this);
 	    	        		 currentValue.delete(0, currentValue.length());
 //	    	            	currentValue.delete(0, currentValue.length());
 //	    	        		this.currentValue = null;
@@ -210,7 +226,7 @@ public class ProviderParser extends DefaultHandler
 	        			_value = this.currentValue.toString().trim();
 	        			if(_value.length() > 0)
 	    	            {
-	    	        		p.setValue(_value,configPropertiesFile);
+	    	        		p.setValue(_value,configPropertiesFile,this);
 //	    	            	currentValue.delete(0, currentValue.length());
 //	    	        		this.currentValue = null;
 	    	        		 currentValue.delete(0, currentValue.length());
@@ -543,7 +559,7 @@ public class ProviderParser extends DefaultHandler
     			}
     			else
     			{
-    				f.setValue(value,configPropertiesFile);
+    				f.setValue(value,configPropertiesFile,this);
     			}
     			//增加xpath信息
     			f.setXpath(property.getXpath() + Pro.REF_TOKEN + f.getName());
@@ -570,7 +586,7 @@ public class ProviderParser extends DefaultHandler
     			if(configPropertiesFile != null && configPropertiesFile.size() > 0)
     			{
     				
-    				 value = Pro.evalValue(  value,  configPropertiesFile);
+    				 value = Pro.evalValue(  value,  configPropertiesFile,this);
     			}
     			
     		    extendsAttributes.put(name, value);
@@ -760,7 +776,7 @@ public class ProviderParser extends DefaultHandler
 
         if (value != null)
         {
-            p.setValue(value,configPropertiesFile);
+            p.setValue(value,configPropertiesFile,this);
         }
         if (clazz != null && !clazz.equals(""))
         {
@@ -1050,7 +1066,7 @@ public class ProviderParser extends DefaultHandler
             ref.setName(fieldname);
             ref.setRefid(refid);
             ref.setReftype(reftype);
-            ref.setValue(value,configPropertiesFile);
+            ref.setValue(value,configPropertiesFile,this);
             ref.setClazz(clazz);
             providerManagerInfo.addReference(ref);
 
@@ -1107,7 +1123,7 @@ public class ProviderParser extends DefaultHandler
             Param param = new Param(applicationContext);
             param.setClazz(paramType);
             param.setRefid(refid);
-            param.setValue(value,configPropertiesFile);
+            param.setValue(value,configPropertiesFile,this);
             Object o = traceStack.peek();
             if (o instanceof SynchronizedMethod)
             {

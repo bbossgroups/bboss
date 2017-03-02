@@ -35,6 +35,10 @@
 
 	<property name="queryFieldWithSQLParams"><![CDATA[select count(1)  from LISTBEAN ]]>
 	</property>
+	
+	<property name="sonsql"><![CDATA['s','c','d']]></property>
+	<property name="mainsql"><![CDATA[select count(1)  from LISTBEAN where id in (@{sonsql})]]>
+	</property>
 	<!--
 		属性说明：istpl="true" multiparser="false"
 		istpl 标识sql语句中是否有velocity模板引擎语法，如果有则必须设置为true，默认为true

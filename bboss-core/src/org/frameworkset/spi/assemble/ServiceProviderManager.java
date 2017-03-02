@@ -1066,5 +1066,16 @@ public class ServiceProviderManager {
 		return value;
 	}    
  
+	public String getVarpre(){
+		return "${";
+	}
+	
+	public String getVarend(){
+		return "}";
+	}
+	
+	public boolean findVariableFromSelf(){
+		return false;
+	}
 
 }

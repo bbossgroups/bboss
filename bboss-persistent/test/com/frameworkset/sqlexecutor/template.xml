@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<properties>
+	<description>
+<![CDATA[
+	sql配置文件
+	可以通过名称属性name配置默认sql，特定数据库的sql通过在
+	名称后面加数据库类型后缀来区分，例如：
+	sqltest
+	sqltest-oracle
+	sqltest-derby
+	sqltest-mysql
+	等等，本配置实例就演示了具体配置方法
+ ]]>
+	</description>
+	
+	<property name="sonsql"><![CDATA['s','c','d']]></property>
+	<property name="mainsql"><![CDATA[select count(1)  from LISTBEAN where id in (@{sonsql})]]>
+	</property>
+	 
+	
+</properties>

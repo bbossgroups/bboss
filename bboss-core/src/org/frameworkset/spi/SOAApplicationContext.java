@@ -247,6 +247,12 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 		return new SOAServiceProviderManager(this);
 	}
 	
+	protected ServiceProviderManager _getServiceProviderManagerWithCharset(String charset)
+	{
+		return new SOAServiceProviderManager(this,charset); 
+	}
+	
+	
 	
 
 

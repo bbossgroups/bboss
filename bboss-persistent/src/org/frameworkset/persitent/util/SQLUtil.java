@@ -28,7 +28,6 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
-import org.frameworkset.spi.SOAFileApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 
 import bboss.org.apache.velocity.VelocityContext;
@@ -246,7 +245,7 @@ public class SQLUtil {
 		this.cache.clear();
 		String file = sqlcontext.getConfigfile();
 		sqlcontext.destroy(true);
-		sqlcontext = new SOAFileApplicationContext(file);		
+		sqlcontext = new SQLSOAFileApplicationContext(file);		
 		defaultDBName = sqlcontext.getProperty("default.dbname");
 		trimValues();
 //		if(refresh_interval > 0 )
@@ -354,7 +353,7 @@ public class SQLUtil {
 		
 	}
 	private SQLUtil(String sqlfile) {
-		sqlcontext = new SOAFileApplicationContext(sqlfile);		
+		sqlcontext = new SQLSOAFileApplicationContext(sqlfile);		
 		this.trimValues();
 		defaultDBName = sqlcontext.getProperty("default.dbname");
 //		refresh_interval = ApplicationContext.getApplicationContext().getLongProperty("sqlfile.refresh_interval", -1);
@@ -373,7 +372,7 @@ public class SQLUtil {
 		// TODO Auto-generated constructor stub
 	}
 
-
+	
 
 	public static SQLUtil getInstance(String sqlfile) {
 		
