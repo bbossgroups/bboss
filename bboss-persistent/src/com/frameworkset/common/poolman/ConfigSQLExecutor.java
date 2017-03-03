@@ -40,6 +40,7 @@ import com.frameworkset.util.ListInfo;
 public class ConfigSQLExecutor  {
 	
 	private SQLUtil context ;
+	
 	public ConfigSQLExecutor(String sqlfile)
 	{
 		context = SQLUtil.getInstance(sqlfile);

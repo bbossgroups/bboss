@@ -37,11 +37,15 @@ public class ConfigSQLExecutorTest {
 		executor = new ConfigSQLExecutor("com/frameworkset/sqlexecutor/sqlfile.xml");
 		try {
 			SQLInfo sql = executor.getSqlInfo("sqltemplate");
-			sql = executor.getSqlInfo("bspf","sqltemplate");
+			sql = executor.getSqlInfo("mssql","sqltemplate");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	@Test
+	public void queryData() throws SQLException{
+		int dd = executor.queryObject(int.class, "mainsql");
 	}
 	@Test
 	public void queryMap() throws SQLException

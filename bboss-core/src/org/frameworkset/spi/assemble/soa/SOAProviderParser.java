@@ -125,7 +125,7 @@ public class SOAProviderParser extends ProviderParser
     			}
     			else
     			{
-    				f.setValue(value,configPropertiesFile);
+    				f.setValue(value,configPropertiesFile,this);
     			}
     			//增加xpath信息
     			f.setXpath(property.getXpath() + Pro.REF_TOKEN + f.getName());

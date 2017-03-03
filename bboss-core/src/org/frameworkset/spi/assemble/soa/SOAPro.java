@@ -6,6 +6,7 @@ import org.frameworkset.spi.assemble.BeanAccembleHelper;
 import org.frameworkset.spi.assemble.CannotModifyException;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.PropertiesContainer;
+import org.frameworkset.spi.assemble.ProviderParser;
 
 public class SOAPro extends Pro {
 
@@ -60,7 +61,7 @@ public class SOAPro extends Pro {
 	}
 
 	@Override
-	public void setValue(String value, PropertiesContainer configPropertiesFile) {
+	public void setValue(String value, PropertiesContainer configPropertiesFile,ProviderParser providerParser) {
 		modify();
 		this.value = value;
 	}

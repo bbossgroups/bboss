@@ -687,9 +687,9 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	public Object getValue() {
 		return value;
 	}
-	public static String evalValue(String value,PropertiesContainer configPropertiesFile)
+	public static String evalValue(String value,PropertiesContainer configPropertiesFile,ProviderParser providerParser)
 	{
-		return configPropertiesFile.evalValue(value);
+		return configPropertiesFile.evalValue(value, providerParser);
 //		if(SimpleStringUtil.isEmpty(value))
 //			return value;
 //		List<GrammarToken> tokens = TextGrammarParser.parser(value, "${", '}');
@@ -713,12 +713,21 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 //		return re.toString();
 		
 	}
-	public void setValue(String value,PropertiesContainer configPropertiesFile) {
+	public void setValue(String value,PropertiesContainer configPropertiesFile,ProviderParser providerParser) {
 		modify();
-		if(configPropertiesFile != null && configPropertiesFile.size() > 0)
+		if(configPropertiesFile != null )
 		{
-			
-			this.value = evalValue(  value,  configPropertiesFile);
+			if( configPropertiesFile.size() > 0 ){
+				this.value = evalValue(  value,  configPropertiesFile,providerParser);
+			}
+			else if(providerParser != null && 
+					providerParser.getApplicationContext().getServiceProviderManager().findVariableFromSelf())
+			{
+				this.value = evalValue(  value,  configPropertiesFile,providerParser);				
+			}
+			else {
+				this.value = value;
+			}
 		}
 		else
 		{

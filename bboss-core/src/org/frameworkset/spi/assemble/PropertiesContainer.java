@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.util.io.ClassPathResource;
 import org.frameworkset.util.tokenizer.TextGrammarParser;
 import org.frameworkset.util.tokenizer.TextGrammarParser.GrammarToken;
@@ -37,12 +38,28 @@ public class PropertiesContainer {
     	
     }
     
-    public String evalValue(String value)
+    public String evalValue(String value,ProviderParser providerParser)
 	{
 		
 		if(SimpleStringUtil.isEmpty(value))
 			return value;
-		List<GrammarToken> tokens = TextGrammarParser.parser(value, "${", '}');
+		String varpre = null;
+		String varend = null;
+		boolean findVariableFromSelf = false;//持久层sql配置会设置为true
+		if(providerParser != null){
+			BaseApplicationContext context = providerParser.getApplicationContext();	
+			if(context != null){
+				varpre = context.getServiceProviderManager().getVarpre();
+				varend = context.getServiceProviderManager().getVarend();
+				findVariableFromSelf = context.getServiceProviderManager().findVariableFromSelf();
+			}
+		}
+		if(varpre == null)
+			varpre = "${";
+		if(varend == null)
+			varend = "}";
+			
+		List<GrammarToken> tokens = TextGrammarParser.parser(value, varpre, varend.charAt(0));
 		StringBuilder re = new StringBuilder();
 		for(int i = 0; tokens != null && i < tokens.size(); i ++)
 		{
@@ -53,14 +70,22 @@ public class PropertiesContainer {
 			{
 				
 				String varvalue = this.getProperty(token.getText());
-				if(varvalue != null)
+				if(varvalue == null){
+					Pro p = providerParser._getProperty(token.getText());
+					if(p != null){
+						varvalue = (String)p.getValue();
+					}
+				}
+				if(varvalue != null){
 					re.append(varvalue);
+				}
 				else
 				{
+					
 					if(token.getDefaultValue() != null)
 						re.append(token.getDefaultValue());
 					else
-						re.append("${").append(token.getText()).append("}");
+						re.append(varpre).append(token.getText()).append(varend);
 				}
 			}
 		}

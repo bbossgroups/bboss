@@ -222,7 +222,7 @@ public class ConfigParser extends DefaultHandler{
             {
             	String value = null;
             	if(configPropertiesFile != null)
-            		value = this.configPropertiesFile.evalValue(currentValue.toString().trim());
+            		value = this.configPropertiesFile.evalValue(currentValue.toString().trim(),null);
             	else
             	{
             		value = currentValue.toString().trim();
