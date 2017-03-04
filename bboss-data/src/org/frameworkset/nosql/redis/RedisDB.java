@@ -26,6 +26,15 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	private JedisPool jedisPool;
 	private Map<String,String> properties;
 	private List<NodeInfo> nodes;
+	private String servers;
+	public String getServers() {
+		return servers;
+	}
+
+	public void setServers(String servers) {
+		this.servers = servers;
+	}
+
 	private int poolMaxTotal;
 	private long poolMaxWaitMillis;
 	private int maxIdle = -1;
@@ -164,9 +173,43 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		if(jedisPool != null)
 			jedisPool.destroy();
 	}
-
+	private void buildNodes(){
+		List<NodeInfo> temp = new ArrayList<NodeInfo>();
+		if(this.servers != null ){
+			this.servers = servers.trim();
+			if(!this.servers.equals("")){
+				String _servers[] = servers.split("\n");
+				for(int i = 0; i < _servers.length; i ++){
+					String server = _servers[i].trim();
+					if(server.equals("")){
+						continue;
+					}
+					String node[] = server.split(":");
+					NodeInfo n = new NodeInfo();
+					n.setHost(node[0].trim());
+					if(node.length == 1){
+						
+						
+						n.setPort(6379);
+					}
+					else
+					{
+						n.setPort(Integer.parseInt(node[1].trim()));
+					}
+					temp.add(n);
+				}
+			}
+		}
+		this.nodes = temp;
+	}
+	public static void main(String[] args){
+		System.out.println("a\ra");
+	}
 	@Override
 	public void afterPropertiesSet() throws Exception {
+		if(this.nodes == null){
+			buildNodes();
+		}
 		if(getMode().equals(mode_shared))
 		{
 			this.startSharedPool();
