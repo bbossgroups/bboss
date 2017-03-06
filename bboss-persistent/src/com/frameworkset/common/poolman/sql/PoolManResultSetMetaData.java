@@ -292,7 +292,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
             if (_schemaName[c] == null)
                 _schemaName[c] = "";
 
-            _caseSensitive[c] = other.isCaseSensitive(rc);
+            _caseSensitive[c] = false;//other.isCaseSensitive(rc);,fixed mysql 每次都会向mysql后台发送SHOW FULL COLUMNS FROM 指令
         }
         
         for (int c = 0; c < _columnCount; c++) {
