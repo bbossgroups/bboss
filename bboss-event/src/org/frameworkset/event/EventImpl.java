@@ -122,7 +122,7 @@ public final class EventImpl<T> implements Event<T> {
 	/**
 	 *  Description:
 	 * @return
-	 * @see com.chinacreator.security.authorization.ACLEvent#getSource()
+	 * 
 	 */
 	public T getSource() {
 
@@ -132,7 +132,7 @@ public final class EventImpl<T> implements Event<T> {
 	/**
 	 *  Description:
 	 * @return
-	 * @see com.chinacreator.security.authorization.ACLEvent#getType()
+	 * 
 	 */
 	public EventType getType() {
 
