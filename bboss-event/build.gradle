@@ -25,6 +25,6 @@ dependencies {
 		[group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
 		[group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
 		[group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],
-		[group: 'org.jgroups', name: 'jgroups', version: '3.6.1.Final', transitive: false]
+		[group: 'org.jgroups', name: 'jgroups', version: '4.0.1.Final', transitive: false]
 	)
 }

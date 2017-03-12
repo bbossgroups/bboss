@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.frameworkset.event.Event;
-import org.frameworkset.spi.BaseApplicationContext;
 import org.jgroups.Address;
-import org.jgroups.Channel;
 import org.jgroups.JChannel;
 import org.jgroups.ReceiverAdapter;
 import org.jgroups.blocks.RequestOptions;
@@ -18,7 +16,7 @@ public class EventRPCDispatcher extends ReceiverAdapter implements
 		org.frameworkset.spi.InitializingBean,
 		org.frameworkset.spi.DisposableBean {
 	private static Logger log = Logger.getLogger(EventRPCDispatcher.class);
-	private Channel channel;
+	private JChannel channel;
 	private RpcDispatcher rpcDispatcher;
 	RpcDispatcherAnycastServerObject target;
 	EventRemoteService eventService;
@@ -115,17 +113,18 @@ public class EventRPCDispatcher extends ReceiverAdapter implements
 	public void init() throws Exception {
 		log.debug("Event RpcDispatcher Service starting.");
 		channel = createChannel();
-		rpcDispatcher = new RpcDispatcher(channel, this, this, eventService);
-		
+		rpcDispatcher = new RpcDispatcher(channel, eventService);
+		rpcDispatcher.setMembershipListener(this);
+		rpcDispatcher.setStateListener(this);
 		channel.connect(GROUP);
 		log.debug("Event RpcDispatcher Service started.");
-		BaseApplicationContext.addShutdownHook(new Runnable() {
-
-			public void run() {
-				shutdown();
-			}
-
-		});
+//		BaseApplicationContext.addShutdownHook(new Runnable() {
+//
+//			public void run() {
+//				shutdown();
+//			}
+//
+//		});
 
 	}
 
@@ -140,10 +139,11 @@ public class EventRPCDispatcher extends ReceiverAdapter implements
 
 	public void afterPropertiesSet() throws Exception {
 
-		channel = createChannel();
-		rpcDispatcher = new RpcDispatcher(channel, this, this, eventService);
-
-		channel.connect(GROUP);
+//		channel = createChannel();
+//		rpcDispatcher = new RpcDispatcher(channel, this, this, eventService);
+//
+//		channel.connect(GROUP);
+		init() ;
 
 	}
 

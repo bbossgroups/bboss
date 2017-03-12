@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.frameworkset.event.Event;
 import org.jgroups.Address;
-import org.jgroups.Channel;
+import org.jgroups.JChannel;
 import org.jgroups.ReceiverAdapter;
 import org.jgroups.blocks.RequestOptions;
 import org.jgroups.blocks.ResponseMode;
@@ -13,12 +13,14 @@ import org.jgroups.blocks.RpcDispatcher;
 
 public class RpcDispatcherAnycastServerObject extends ReceiverAdapter {
    
-    private final Channel c;
+    private final JChannel c;
     private final RpcDispatcher d;
 
-    public RpcDispatcherAnycastServerObject(Channel channel,EventRemoteService eventService) throws Exception {
+    public RpcDispatcherAnycastServerObject(JChannel channel,EventRemoteService eventService) throws Exception {
         c=channel;
-        d=new RpcDispatcher(c, this, this, eventService);
+        d=new RpcDispatcher(c, eventService);
+        d.setMembershipListener(this);
+        d.setStateListener(this);
     }
 
    
