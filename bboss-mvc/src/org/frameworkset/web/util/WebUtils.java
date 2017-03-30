@@ -36,10 +36,12 @@ import javax.servlet.http.HttpSession;
 import org.frameworkset.http.HttpRequest;
 import org.frameworkset.spi.ApplicationContextAware;
 import org.frameworkset.spi.BeanClassLoaderAware;
+import org.frameworkset.spi.BeanInfoAware;
 import org.frameworkset.spi.BeanNameAware;
 import org.frameworkset.spi.ResourceLoaderAware;
 import org.frameworkset.spi.assemble.BeanAccembleHelper;
 import org.frameworkset.spi.assemble.BeanInf;
+import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.support.ApplicationObjectSupport;
 import org.frameworkset.spi.support.MessageSourceAware;
 import org.frameworkset.util.Assert;
@@ -832,19 +834,17 @@ public abstract class WebUtils {
 			if(providerManagerInfo != null)
 				((BeanNameAware) bean).setBeanName(providerManagerInfo.getName());
 		}
+		if(bean instanceof BeanInfoAware)
+		{
+			if(providerManagerInfo != null && providerManagerInfo instanceof Pro)
+				((BeanInfoAware) bean).setBeaninfo((Pro)providerManagerInfo);
+		}
 		if (bean instanceof MessageSourceAware) {
 			((MessageSourceAware) bean).setMessageSource(context);
 		}
 		if (bean instanceof ResourceLoaderAware) {
 			((ResourceLoaderAware) bean).setResourceLoader(context);
 		}
-		
-		
-		
-		
-		
-		
-		
 		BeanAccembleHelper.afterPropertiesSet(bean,  providerManagerInfo,context);
 		BeanAccembleHelper.registDestroy(bean,  providerManagerInfo,context) ;
 		return bean;
