@@ -136,12 +136,12 @@ public class TestLob {
         FILEID VARCHAR(100),
         FILENAME VARCHAR(100),
         FILESIZE BIGINT,
-        FILECONTENT CLOB(2147483647)
+        FILECONTENT CLOB
     )
 	 */
 	public @Test void uploadClobFile() throws Exception
 	{
-		File file = new File("D:\\bbossgroups-3.5.1\\bboss-taglib\\readme.txt");
+		File file = new File("D:\\1");
 		
 		String sql = "";
 		try {
