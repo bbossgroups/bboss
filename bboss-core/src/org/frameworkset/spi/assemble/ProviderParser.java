@@ -170,14 +170,14 @@ public class ProviderParser extends DefaultHandler
     private boolean isbean(Pro p)
     {
 
-		boolean isbean = p.getValue() == null && p.getClazz() != null && !p.getClazz().equals("") && (p.getRefid() == null || p.getRefid().equals("")) ;
+		boolean isbean = p.isBean() || p.getValue() == null && p.getClazz() != null && !p.getClazz().equals("") && (p.getRefid() == null || p.getRefid().equals("")) ;
     	if(isbean)
     		return true;
     	if(p.getMagicclass() != null)
     		return true;
     	if(p.getValue() != null)
     	{
-    		isbean = p.getValue() instanceof ProList || p.getValue() instanceof ProMap || p.getValue() instanceof ProSet || p.getValue() instanceof ProArray; 
+    		isbean = p.getValue() instanceof ProList || p.getValue() instanceof ProMap || p.getValue() instanceof ProSet || p.getValue() instanceof ProArray  || p.getValue() instanceof ProProperties; 
     	}
     	if(isbean)
     		return true;
@@ -276,6 +276,13 @@ public class ProviderParser extends DefaultHandler
 //                list.add(p.getValue());
                 list.add(p);
             }
+            else if (value instanceof ProProperties)
+            {
+            	ProProperties<String,Pro> map = (ProProperties<String,Pro>)value;
+//                map.put(p.getName(), p.value);
+                map.put(p.getName(), p);
+                
+            }
             else if (value instanceof Map)
             {
             	ProMap<String,Pro> map = (ProMap<String,Pro>)value;
@@ -340,6 +347,7 @@ public class ProviderParser extends DefaultHandler
     @SuppressWarnings("unchecked")
 	public void endElement(String s1, String s2, String name)
     {
+    	
     	if (name.equals("p") || name.equals("property"))
         {
     		Pro p = (Pro) traceStack.pop();
@@ -368,6 +376,16 @@ public class ProviderParser extends DefaultHandler
              pro.setMap(true);
 
          }
+    	 else if ( name.equals("propes")) {
+    		
+    		 ProProperties map = (ProProperties)this.traceStack.pop();
+             Pro pro = (Pro) this.traceStack.peek();
+//             Map t = java.util.Collections.unmodifiableMap(map);
+             map.freeze();
+             pro.setCollectionValue(map);
+             pro.setIsProperties(true);
+    		 
+    	 }
     	 else if (name.equals("construction"))
          {
              Construction construction = (Construction) this.traceStack.pop();
@@ -856,8 +874,14 @@ public class ProviderParser extends DefaultHandler
     	if(currentValue.length() > 0)
     		currentValue.delete(0, currentValue.length());
 //    	currentValue = null;
-    	 
-        if (name.equals("p") || name.equals("property"))
+    	 if ( name.equals("propes")) {
+    		 
+			 ProProperties properties = new ProProperties();
+			 this.traceStack.push(properties);
+    		  
+    		 
+    	 }
+    	 else if (name.equals("p") || name.equals("property"))
         {    
 
         	Pro p = this._buildPro();// new Pro(applicationContext);

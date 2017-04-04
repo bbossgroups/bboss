@@ -482,17 +482,15 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 				retvalue = magicclass.getPreserialObject().posthandle(retvalue);
 			}
 		} 
-		else {
-//			if (this.clazz != null) {
-//				retvalue = accember.getBean(this, context);
-//				if(magicclass != null && magicclass.getPreserialObject() != null)
-//				{
-//					retvalue = magicclass.getPreserialObject().posthandle(retvalue);
-//				}
-//			} else 
+		else if (value instanceof ProProperties) {
+			retvalue = ((ProProperties) value).getProperties(context);
+			if(magicclass != null && magicclass.getPreserialObject() != null)
 			{
-				retvalue = value;
+				retvalue = magicclass.getPreserialObject().posthandle(retvalue);
 			}
+		} 
+		else {
+			retvalue = value;			
 		}
 		
 		return retvalue;
@@ -746,6 +744,8 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	}
 
 	private boolean isMap = false;
+	
+	private boolean isProperties = false;
 
 	private boolean isArray = false;
 
@@ -757,6 +757,13 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	public void setMap(boolean isMap) {
 
 		this.isMap = isMap;
+	}
+	public void setIsProperties(boolean isProperties){
+		this.isProperties = isProperties;
+	}
+	
+	public boolean isProperties(){
+		return isProperties;
 	}
 
 	public boolean isList() {
@@ -926,6 +933,19 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 		} catch (Exception e) {
 			log.warn("",e);
 			return defaultValue;
+		}
+	}
+	
+	public ProProperties getProProperties() {
+		Object ret = getTrueValueWithoutEditor(null, null, false);
+		if (ret == null)
+			return null;
+
+		try {
+			return (ProProperties) ret;
+		} catch (Exception e) {
+			log.warn("",e);
+			return null;
 		}
 	}
 

@@ -720,6 +720,18 @@ public class ServiceProviderManager {
         
     }
     
+    public ProProperties getProProperties(String name) {
+        Pro value = this.properties.get(name);
+        if (value == null) {
+            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            return null;
+        }
+       return value.getProProperties();        
+//        if(value == null)
+//            throw new AssembleException("配置文件没有指定属性[" + name + "]！");
+        
+    }
+    
     public ProMap getMapProperty(String name,ProMap defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
