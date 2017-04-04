@@ -29,6 +29,7 @@ import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
 
@@ -577,6 +578,63 @@ public class ObjectSerializable {
 			}
 		}
 	}
+	
+	private static void propertiestoxml(Writer ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress,ClassInfo classInfo) throws Exception
+	{
+		if (obj == null) {
+			if (name == null)
+				ret.append("<p s:nvl=\"true\" s:t=\"").append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+						"\"/>");
+			else
+				ret.append("<p n=\"").append(name).append(
+						"\" s:nvl=\"true\" s:t=\"").append(
+						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+						"\"/>");
+
+		}
+		else 
+		{
+			obj = serialContainerObject( ret,
+					 obj,
+					 name,
+					 vtype,
+					 classInfo,false) ;
+			if(obj != null)
+			{
+				Properties datas = (Properties) obj;
+	
+	//			if (name == null)
+	//				ret.append("<p s:t=\"").append(
+	//						ValueObjectUtil.getSimpleTypeName(vtype)).append(
+	//						"\">");
+	//			else
+	//			{
+	//				ret.append("<p n=\"").append(name).append("\" s:t=\"")
+	//						.append(ValueObjectUtil.getSimpleTypeName(vtype))
+	//						.append("\">");
+	////				currentAddress = currentAddress + "->" + name;
+	//			}
+				ret.append("<propes>");
+				Object value = null;
+				Iterator itr = datas.entrySet().iterator();
+				while (itr.hasNext())
+	
+				{
+					Map.Entry entry = (Map.Entry) itr.next();
+					value = entry.getValue();
+					if (value == null)
+						convertBeanObjectToXML(String.valueOf(entry.getKey()),
+								value, (Class)null,false, dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]",false);
+					else
+						convertBeanObjectToXML(String.valueOf(entry.getKey()),
+								value, value.getClass(), ValueObjectUtil.isBasePrimaryType(value.getClass()),dateformat, ret,serialStack,currentAddress + "[" + entry.getKey() + "]",false);
+				}
+				ret.append("</propes>");
+				ret.append("</p>");
+			}
+		}
+	}
 	private static void settoxml(Writer ret,Object obj,String dateformat,String name,Class vtype,SerialStack serialStack,String currentAddress,ClassInfo classInfo) throws Exception
 	{
 		if (obj == null) {
@@ -1094,7 +1152,14 @@ public class ObjectSerializable {
 			settoxml( ret, obj, dateformat, name, vtype, serialStack, currentAddress,classinfo);
 			
 
-		} else if (vtype != null && Map.class.isAssignableFrom(vtype)) {
+		} 
+		
+		else if (vtype != null && Properties.class.isAssignableFrom(vtype)) {
+			propertiestoxml( ret, obj, dateformat, name, vtype, serialStack, currentAddress,classinfo);
+			
+
+		} 
+		else if (vtype != null && Map.class.isAssignableFrom(vtype)) {
 			maptoxml( ret, obj, dateformat, name, vtype, serialStack, currentAddress,classinfo);
 			
 

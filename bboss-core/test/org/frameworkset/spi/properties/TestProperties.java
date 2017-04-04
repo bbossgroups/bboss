@@ -1,12 +1,16 @@
 package org.frameworkset.spi.properties;
 
 import java.util.Map;
+import java.util.Properties;
 
-import org.frameworkset.spi.ApplicationContext;
+import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.assemble.ProMap;
+import org.frameworkset.spi.assemble.ProProperties;
 import org.frameworkset.spi.assemble.ProSet;
+import org.junit.Test;
+
 
 /**
  * 
@@ -20,9 +24,11 @@ import org.frameworkset.spi.assemble.ProSet;
  */
 
 public class TestProperties {
-	private static ApplicationContext context = ApplicationContext.getApplicationContext("org/frameworkset/spi/properties/properties.xml");  
-    public static void testProperties()
+	
+    @Test
+	public void testProperties()
     {
+    	 DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/properties.xml");  
         Object class_ =  context.getObjectProperty("cluster_enable");
         boolean cluster_enable = context.getBooleanProperty("cluster_enable");
         System.out.println("cluster_enable:"+cluster_enable);
@@ -47,17 +53,28 @@ public class TestProperties {
         
     }
     
-    public static void testMapProperties()
+    @Test public void testMapProperties()
     {
+    	 DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/properties.xml");  
         ProMap map = context.getMapProperty("connection.params");
+        System.out.println(map);
+    }
+    
+    @Test public  void testProProperties()
+    {
+    	 DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/properties.xml");  
+    	ProProperties map = context.getProProperties("connection.propes");
+    	  java.util.Properties propes = context.getTBeanObject("connection.propes", Properties.class);
+          System.out.println(propes);
         System.out.println(map);
     }
     
     /**
      * 获取扩展属性
      */
-    public static void testExtendsProperties()
+    @Test public  void testExtendsProperties()
     {
+    	 DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/properties.xml");  
     	 boolean cluster_enable = context.getBooleanProperty("cluster_enable");
     	 boolean testattrboolean = context.getBooleanExtendAttribute("cluster_enable", "testattrboolean");
     	 String testattrstring = context.getStringExtendAttribute("cluster_enable", "testattrstring");
@@ -67,8 +84,9 @@ public class TestProperties {
     
     
     
-    public static void testWithValueGetMapProperties()
+    @Test public  void testWithValueGetMapProperties()
     {
+    	 DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/properties.xml");  
         ProMap map = context.getMapProperty("connection.params");
         Pro pro = context.getProBean("connection.params");
         Map attrs = pro.getExtendsAttributes();
@@ -103,76 +121,88 @@ public class TestProperties {
         
     }
     
-    public static void testListProperties()
+    @Test public  void testListProperties()
     {
+    	 DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/properties.xml");  
         ProList list = context.getListProperty("aaa.connection.list.params");
         System.out.println(list);
     }
     
-    public static void testFreeze()
+    @Test public  void testFreeze()
     {
+    	 DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/properties.xml");  
         ProList list = context.getListProperty("aaa.connection.list.params");
         
         list.add(new Pro());
     }
     
-    public static void testSetProperties()
+    @Test public  void testSetProperties()
     {
+    	 DefaultApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/properties/properties.xml");  
         ProSet set = context.getSetProperty("aaa.connection.set.params");
         System.out.println(set);
     }
     
-    public static void main(String[] args)
+   public static void main(String[] args)
     {
-        try
-        {
-            testProperties();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        try
-        {
-            testMapProperties();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        try
-        {
-            testListProperties();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        try
-        {
-            testSetProperties();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        
-        try
-        {
-            testWithValueGetMapProperties();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        try
-        {
-            testFreeze();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+//        try
+//        {
+//            testProperties();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        try
+//        {
+//            testMapProperties();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        try
+//        {
+//            testListProperties();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        try
+//        {
+//            testSetProperties();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        
+//        try
+//        {
+//            testWithValueGetMapProperties();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        try
+//        {
+//            testFreeze();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        
+//        try
+//        {
+//        	testProProperties();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
         
     }
 }

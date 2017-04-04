@@ -41,6 +41,7 @@ import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProArray;
 import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.assemble.ProMap;
+import org.frameworkset.spi.assemble.ProProperties;
 import org.frameworkset.spi.assemble.ProSet;
 import org.frameworkset.spi.assemble.ProviderManagerInfo;
 import org.frameworkset.spi.assemble.RefID;
@@ -1466,7 +1467,14 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		// throw new AssembleException("配置文件没有指定属性[" + name + "]！");
 
 	}
+	
+	public ProProperties getProProperties(String name) {
+		return this.providerManager.getProProperties(name);
+		// if(value == null)
+		// throw new AssembleException("配置文件没有指定属性[" + name + "]！");
 
+	}
+	
 	public ProMap getMapProperty(String name, ProMap defaultValue) {
 		return this.providerManager.getMapProperty(name, defaultValue);
 

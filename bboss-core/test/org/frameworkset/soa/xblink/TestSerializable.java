@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -69,6 +70,10 @@ public class TestSerializable
 			SerialPO po = new SerialPO();
 			po.setJob("架构工程师");
 			po.setName("多多");
+			Properties propes = new Properties();
+			propes.put("sss", "ssdfv");
+			propes.put("sssdd", "ssdfv");
+			po.setPropes(propes);
 			CGLibProxy proxy = new CGLibProxy(po);
 			SerialPO po1 = CGLibUtil.getBeanInstance(po.getClass(), po
 					.getClass(), proxy);
@@ -78,11 +83,13 @@ public class TestSerializable
 			po = ObjectSerializable.toBean(xml, SerialPO.class);
 			System.out.println("name:"+po.getName());
 			System.out.println("job:"+po.getJob());
+			System.out.println("properties:"+po.getPropes());
 		}
 		
 		public static class SerialPO
 		{
 			private String name;
+			private Properties propes;
 			private String job;
 			public String getName() {
 				return name;
@@ -95,6 +102,12 @@ public class TestSerializable
 			}
 			public void setJob(String job) {
 				this.job = job;
+			}
+			public Properties getPropes() {
+				return propes;
+			}
+			public void setPropes(Properties propes) {
+				this.propes = propes;
 			}
 		}
 	 @Test
