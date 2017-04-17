@@ -660,6 +660,25 @@ public class MethodParameter {
 	public void setRequestBody(RequestBodyWraper requestBody) {
 		this.requestBody = requestBody;
 	}
+	private boolean innerRequestBody(){
+		if(this.multiAnnotationParams == null || this.multiAnnotationParams.size() == 0){
+			return false;
+		}
+		for(MethodParameter p:multiAnnotationParams){
+			if(p.getRequestBody() != null)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
+	 * 判断参数是否带requestbody注解
+	 * @return
+	 */
+	public boolean requestbody() {
+		return isrequestbody || innerRequestBody();
+	}
 
 
 }

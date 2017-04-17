@@ -2,31 +2,14 @@
  * 
  */
 package org.frameworkset.spi.remote.http;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.nio.charset.CodingErrorAction;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.net.ssl.SSLContext;
-
-import org.apache.http.Consts;
-import org.apache.http.Header;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
+import org.apache.http.*;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.AuthSchemes;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.config.ConnectionConfig;
-import org.apache.http.config.MessageConstraints;
-import org.apache.http.config.Registry;
-import org.apache.http.config.RegistryBuilder;
-import org.apache.http.config.SocketConfig;
+import org.apache.http.config.*;
 import org.apache.http.conn.DnsResolver;
 import org.apache.http.conn.HttpConnectionFactory;
 import org.apache.http.conn.ManagedHttpClientConnection;
@@ -38,12 +21,9 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.impl.DefaultHttpResponseFactory;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.DefaultHttpResponseParser;
-import org.apache.http.impl.conn.DefaultHttpResponseParserFactory;
-import org.apache.http.impl.conn.ManagedHttpClientConnectionFactory;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.impl.conn.SystemDefaultDnsResolver;
+import org.apache.http.impl.conn.*;
 import org.apache.http.impl.io.DefaultHttpRequestWriterFactory;
 import org.apache.http.io.HttpMessageParser;
 import org.apache.http.io.HttpMessageParserFactory;
@@ -59,6 +39,14 @@ import org.frameworkset.spi.BeanNameAware;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.InitializingBean;
 
+import javax.net.ssl.SSLContext;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.charset.CodingErrorAction;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * This example demonstrates how to customize and configure the most common aspects
  * of HTTP request execution and connection management.
@@ -72,7 +60,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	private final static int TIMEOUT_CONNECTION = 20000;
 	private final static int TIMEOUT_SOCKET = 20000;
 	private final static int RETRY_TIME = 3;
-	private  HttpClient httpclient;
+	private  CloseableHttpClient httpclient;
 	private static RequestConfig defaultRequestConfig ;
 	private RequestConfig requestConfig;
 	private  static HttpClient defaultHttpclient;
@@ -128,7 +116,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	public void setRetryTime(int retryTime) {
 		this.retryTime = retryTime;
 	}
-	public final  HttpClient getHttpClient()  throws Exception {
+	public final CloseableHttpClient getHttpClient()  throws Exception {
 		if(httpclient != null)
 			return httpclient;
 //		synchronized(ClientConfiguration.class)
@@ -387,7 +375,6 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 			return config;
 		config = context.getTBeanObject(poolname, ClientConfiguration.class);
 		return config;
-		
 	}
 
 	public RequestConfig getRequestConfig() {
