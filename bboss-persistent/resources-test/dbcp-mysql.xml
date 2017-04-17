@@ -2,7 +2,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <!-- <property name="url" value="jdbc:mysql://localhost:3306/bboss?useCursorFetch=true&serverTimezone=UTC"/>-->
         <!-- <![CDATA[jdbc:mysql://localhost:3306/bboss?useUnicode=true&characterEncoding=utf-8&useSSL=false&nullCatalogMeansCurrent=false]]></property>  -->
-        <property name="url"><![CDATA[jdbc:mysql://localhost:3306/bboss?serverTimezone=UTC]]></property> 
+        <property name="url"><![CDATA[jdbc:mysql://localhost:3306/bboss?useUnicode=true&characterEncoding=utf-8]]></property> 
         
         <property name="username" value="root"/>
         <property name="password" value="123456"/>

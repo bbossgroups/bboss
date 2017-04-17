@@ -1016,7 +1016,7 @@ public abstract class HandlerUtils {
 			} else if (ModelMap.class.isAssignableFrom(type)) {
 				paramValue = model;
 				// userEditor = false;
-			} else if (Map.class.isAssignableFrom(type)) {
+			} else if (Map.class.isAssignableFrom(type) && (methodParameter != null && !methodParameter.requestbody())) {
 				MapKey mapKey = methodParameter.getMapKey();
 				if (methodParameter == null || mapKey == null) {
 					paramValue = buildParameterMaps(request);
