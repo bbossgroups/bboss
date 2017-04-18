@@ -416,10 +416,9 @@ public class HttpRequestUtil {
                         int status = response.getStatusLine().getStatusCode();
                         HttpEntity entity = response.getEntity();
                         if (status >= 200 && status < 300) {
-
                             return entity != null ? EntityUtils.toString(entity) : null;
                         } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status+"\r\n"+EntityUtils.toString(entity));
+                            throw new ClientProtocolException("Unexpected response status: " + status);
                         }
                     }
 
@@ -527,7 +526,7 @@ public class HttpRequestUtil {
 
                             return entity != null ? EntityUtils.toString(entity) : null;
                         } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status +"\r\n"+entity != null ? EntityUtils.toString(entity) : "");
+                            throw new ClientProtocolException("Unexpected response status: " + status);
                         }
                     }
 
