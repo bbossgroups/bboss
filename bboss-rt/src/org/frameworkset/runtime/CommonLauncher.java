@@ -258,33 +258,38 @@ public class CommonLauncher
 
     private static void loadSubdirJars(File file, List<URL> alljars) throws MalformedURLException
     {
-        
-        File[] jarfiles = file.listFiles(new FileFilter()
+        if(file.isFile()){
+        	 alljars.add(file.toURI().toURL());
+        }
+        else
         {
-            public boolean accept(File pathname)
-            {
-                if (pathname.isFile())
-                {
-                    String name = pathname.getName();
-                    return name.endsWith(".jar") || name.endsWith(".zip") || name.endsWith(".dll") || name.endsWith(".lib") || name.endsWith(".sigar_shellrc") || name.endsWith(".sl") || name.endsWith(".so") || name.endsWith(".dylib");
-                }
-                else return true;
-            }
-        });
-        
-        if(jarfiles == null || jarfiles.length == 0)
-            return;
-        for (File jarfile : jarfiles)
-        {
-            
-            if (jarfile.isFile())
-            {
-                alljars.add(jarfile.toURI().toURL());
-            }
-            else
-            {
-                loadSubdirJars(jarfile, alljars);
-            }
+	        File[] jarfiles = file.listFiles(new FileFilter()
+	        {
+	            public boolean accept(File pathname)
+	            {
+	                if (pathname.isFile())
+	                {
+	                    String name = pathname.getName();
+	                    return name.endsWith(".jar") || name.endsWith(".zip") || name.endsWith(".dll") || name.endsWith(".lib") || name.endsWith(".sigar_shellrc") || name.endsWith(".sl") || name.endsWith(".so") || name.endsWith(".dylib");
+	                }
+	                else return true;
+	            }
+	        });
+	        
+	        if(jarfiles == null || jarfiles.length == 0)
+	            return;
+	        for (File jarfile : jarfiles)
+	        {
+	            
+	            if (jarfile.isFile())
+	            {
+	                alljars.add(jarfile.toURI().toURL());
+	            }
+	            else
+	            {
+	                loadSubdirJars(jarfile, alljars);
+	            }
+	        }
         }
     }
 
