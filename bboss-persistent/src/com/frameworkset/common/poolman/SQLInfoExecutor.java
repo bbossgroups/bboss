@@ -15,20 +15,25 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
-
-import org.frameworkset.persitent.util.SQLInfo;
-
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
+import com.frameworkset.common.poolman.util.JDBCPool;
+import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.util.ListInfo;
 import com.frameworkset.util.ValueObjectUtil;
+import org.apache.log4j.Logger;
+import org.frameworkset.persitent.util.SQLInfo;
+
+import java.sql.BatchUpdateException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
 
 public class SQLInfoExecutor {
-	public static int DEFAULT_BATCHSIZE = 5000;
+	private static Logger log = Logger.getLogger(SQLInfoExecutor.class);
+	public static int DEFAULT_BATCHSIZE = -1;
     /**
      * 添加sql参数，由DefaultDataInfoImpl进行处理
      * @param name
@@ -99,7 +104,7 @@ public class SQLInfoExecutor {
 			try
 			{
 				con = DBUtil.getConection(dbname);
-				if(beans.size() < DEFAULT_BATCHSIZE){
+				if(beans.size() < DEFAULT_BATCHSIZE || DEFAULT_BATCHSIZE == -1){
 					
 					List<SQLParams> batchsqlparams = SQLParams.convertBeansToSqlParams(beans,sql,dbname,action,con);
 					if(batchsqlparams == null)
@@ -157,7 +162,7 @@ public class SQLInfoExecutor {
 	 * @param dbname
 	 * @param sql
 	 * @param bean
-	 * @param isBatchOptimize
+	 * @param getCUDResult
 	 * @param action
 	 * @return
 	 * @throws SQLException
@@ -233,8 +238,110 @@ public class SQLInfoExecutor {
 		}
 	}
 	
-	
-	
+	/**
+	 * 
+	 * @param dbname
+	 * @param sql
+	 * @param datas
+	 * @param batchsize
+	 * @param batchHandler
+	 * @throws SQLException
+	 */
+	public static <T> void executeBatch(String dbname,SQLInfo sql,List<T> datas,int batchsize, BatchHandler<T> batchHandler) throws SQLException{
+		if(datas == null || datas.size() == 0){
+			return;
+		}
+		StatementInfo stmtInfo = null;		
+		PreparedStatement statement = null;
+		List resources = null;
+		Connection con_ = null;
+//		GetCUDResult CUDResult = null;
+		try
+		{	
+			con_ = DBUtil.getConection(dbname);
+			stmtInfo = new StatementInfo(dbname,
+					null,
+					false,
+					 con_,
+					 false);
+			stmtInfo.init();
+			 
+			JDBCPool pool = SQLManager.getInstance().getPool(dbname);
+			boolean showsql = pool.getJDBCPoolMetadata().isShowsql();
+			if(showsql)
+			{
+				if(log.isDebugEnabled())
+        			log.debug("Execute JDBC prepared batch statement:"+sql.getSql());
+			}
+
+			statement = stmtInfo
+					.prepareStatement(sql.getSql());
+			if(batchsize <= 1 ){//如果batchsize被设置为0或者1直接一次性批处理所有记录
+				for(int i = 0;i < datas.size(); i ++ )
+				{
+					T param = datas.get(i);
+					batchHandler.handler(statement, param, i);
+					statement.addBatch();					
+					
+				}
+				statement.executeBatch();
+			}
+			else
+			{
+				int point = batchsize - 1;
+				int count = 0;
+				for(int i = 0 ;i < datas.size(); i ++ )
+				{
+					T param = datas.get(i);
+					batchHandler.handler(statement, param, i);
+					statement.addBatch();						
+					if((count > 0 && count % point == 0 ) ){
+						statement.executeBatch();
+						statement.clearBatch();
+						count = 0;
+						continue;
+					}
+					count ++;
+												
+				}
+				if(count > 0)
+					statement.executeBatch();
+			}
+				
+		}
+		catch(BatchUpdateException error)
+		{
+
+			
+			if(stmtInfo != null)
+				stmtInfo.errorHandle(error);		
+			
+			throw error;
+		}
+	    catch (Exception e) {
+//	    	try{
+//				
+//	    		log.error("Execuete batch prepared Error:" + e.getMessage(), e);
+//			}
+//			catch(Exception ei)
+//			{
+//				
+//			}
+			
+	    	
+			if(stmtInfo != null)
+				stmtInfo.errorHandle(e);
+			if(e instanceof SQLException)
+				throw (SQLException)e;
+			else
+				throw new NestedSQLException(e.getMessage(),e);
+		} finally {
+			if(stmtInfo != null)
+				stmtInfo.dofinally();
+			stmtInfo = null;
+			
+		}
+	}
 	
 	
 
@@ -1535,15 +1642,15 @@ public class SQLInfoExecutor {
 	 * @param <T>
 	 * @param beanType
 	 * @param sql
-	 * @param bean
+	 * @param fields
 	 * @return
 	 * @throws SQLException
 	 */
 	
 	
-	public static <T> T queryTField( Class<T> type,SQLInfo sql, Object... fields) throws SQLException
+	public static <T> T queryTField( Class<T> beanType,SQLInfo sql, Object... fields) throws SQLException
 	{
-		return queryTFieldWithDBName(null, type,sql, fields);
+		return queryTFieldWithDBName(null, beanType,sql, fields);
 	}
 	public static <T> T queryTFieldBean( Class<T> type,SQLInfo sql, Object bean) throws SQLException
 	{
@@ -1716,7 +1823,6 @@ public class SQLInfoExecutor {
 	 * @param sql
 	 * @param offset
 	 * @param pagesize
-	 * @param totalsize
 	 * @param bean
 	 * @return
 	 * @throws SQLException
@@ -1869,7 +1975,6 @@ public class SQLInfoExecutor {
 	 * @param sql
 	 * @param offset
 	 * @param pagesize
-	 * @param totalsize
 	 * @param bean
 	 * @return
 	 * @throws SQLException

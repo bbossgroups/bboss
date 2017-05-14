@@ -41,7 +41,6 @@ dependencies {
     )
     compile(
     		fileTree(dir: 'lib', include: '**/*.jar'),
-             
             
              
               [group: 'javax.transaction', name: 'jta', version: '1.1', transitive: false],
