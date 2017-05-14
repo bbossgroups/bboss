@@ -16,17 +16,16 @@
 
 package com.frameworkset.common.poolman;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.frameworkset.persitent.util.SQLInfo;
-import org.frameworkset.persitent.util.SQLUtil;
-
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.util.ListInfo;
+import org.frameworkset.persitent.util.SQLInfo;
+import org.frameworkset.persitent.util.SQLUtil;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>Title: SQLExecutor.java</p> 
@@ -590,6 +589,15 @@ public class SQLExecutor
 		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
 		SQLInfoExecutor.deleteByLongKeysWithDBName(dbname,sqlinfo, fields);
 		
+	}
+	
+	public static <T> void executeBatch(String sql,List<T> datas,int batchsize, BatchHandler<T> batchHandler) throws SQLException{
+		executeBatch(null,sql,datas,batchsize, batchHandler);
+	}
+	
+	public static <T> void executeBatch(String dbname,String sql,List<T> datas,int batchsize, BatchHandler<T> batchHandler) throws SQLException{
+		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
+		SQLInfoExecutor.executeBatch(  dbname,  sqlinfo,datas,batchsize,batchHandler) ;
 	}
 	
 	
@@ -1557,9 +1565,9 @@ public class SQLExecutor
 	/**
 	 * 
 	 * @param <T>
-	 * @param beanType
+	 * @param type
 	 * @param sql
-	 * @param bean
+	 * @param fields
 	 * @return
 	 * @throws SQLException
 	 */
@@ -1937,7 +1945,7 @@ public class SQLExecutor
 	 * @param rowhandler
 	 * @param beanType
 	 * @param dbname
-	 * @param sqlname
+	 * @param sql
 	 * @param offset
 	 * @param pagesize
 	 * @param fields
@@ -1957,7 +1965,7 @@ public class SQLExecutor
 	 * 
 	 * @param rowhandler
 	 * @param dbname
-	 * @param sqlname
+	 * @param sql
 	 * @param offset
 	 * @param pagesize
 	 * @param fields
@@ -1977,7 +1985,7 @@ public class SQLExecutor
 	 * 
 	 * @param beanType
 	 * @param dbname
-	 * @param sqlname
+	 * @param sql
 	 * @param offset
 	 * @param pagesize
 	 * @param fields
@@ -2018,9 +2026,9 @@ public class SQLExecutor
 	 * @return
 	 * @throws SQLException
 	 */
-	public static ListInfo moreListInfoByNullRowHandler(NullRowHandler rowhandler, String sqlname, long offset,int pagesize,Object... fields) throws SQLException
+	public static ListInfo moreListInfoByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,Object... fields) throws SQLException
 	{
-		return moreListInfoWithDBNameByNullRowHandler( rowhandler, null,sqlname, offset,pagesize,fields);		 
+		return moreListInfoWithDBNameByNullRowHandler( rowhandler, null,sql, offset,pagesize,fields);
 	}
 	
 		/**
@@ -2028,7 +2036,7 @@ public class SQLExecutor
 	 * @param rowhandler
 	 * @param beanType
 	 * @param dbname
-	 * @param sqlname
+	 * @param sql
 	 * @param offset
 	 * @param pagesize
 	 * @param bean
@@ -2039,7 +2047,7 @@ public class SQLExecutor
 	{
 		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
 //		return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sqlinfo, offset,pagesize,bean);
-//		SQLInfo sql = getSqlInfo(dbname, sqlname);
+//		SQLInfo sql = getSqlInfo(dbname, sql);
 		return SQLInfoExecutor.moreListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sqlinfo, offset,pagesize,bean);  
 	}
 	
@@ -2047,10 +2055,10 @@ public class SQLExecutor
 	 * 
 	 * @param rowhandler
 	 * @param dbname
-	 * @param sqlname
+
 	 * @param offset
 	 * @param pagesize
-	 * @param totalsize
+
 	 * @param bean
 	 * @return
 	 * @throws SQLException
@@ -2059,7 +2067,7 @@ public class SQLExecutor
 	{
 		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
 //		return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, dbname,  sqlinfo,  offset, pagesize, bean);	 
-//		SQLInfo sql = getSqlInfo(dbname, sqlname);
+//		SQLInfo sql = getSqlInfo(dbname, sql);
 		return SQLInfoExecutor.moreListInfoBeanWithDBNameByNullRowHandler(  rowhandler, dbname, sqlinfo, offset,pagesize,bean);  	 
 	}
 	
@@ -2067,7 +2075,7 @@ public class SQLExecutor
 	 * 
 	 * @param beanType
 	 * @param dbname
-	 * @param sqlname
+	 * @param sql
 	 * @param offset
 	 * @param pagesize
 	 * @param bean
@@ -2078,7 +2086,7 @@ public class SQLExecutor
 	{
 		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
 //		return SQLInfoExecutor.queryListInfoBeanWithDBName( beanType, dbname,  sqlinfo,  offset, pagesize,  bean);
-//		SQLInfo sql = getSqlInfo(dbname, sqlname);
+//		SQLInfo sql = getSqlInfo(dbname, sql);
 		return SQLInfoExecutor.moreListInfoBeanWithDBName(  beanType, dbname,  sqlinfo,  offset, pagesize, bean); 
 	}
 	
@@ -2094,7 +2102,7 @@ public class SQLExecutor
 			
 			SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
 //			return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, dbname,  sqlinfo,  offset, pagesize, totalsize, bean);
-//			SQLInfo sql = getSqlInfo(null, sqlname);
+//			SQLInfo sql = getSqlInfo(null, sql);
 			return SQLInfoExecutor.moreListInfoBeanWithDBNameByNullRowHandler(  rowhandler, (String)null, sqlinfo, offset,pagesize,bean);  	
 	}
 	
@@ -2102,7 +2110,7 @@ public class SQLExecutor
 	{
 			SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
 //			return SQLInfoExecutor.queryListInfoBeanWithDBName( beanType, dbname,  sqlinfo,  offset, pagesize, totalsize, bean);
-//			SQLInfo sql = getSqlInfo(null, sqlname);
+//			SQLInfo sql = getSqlInfo(null, sql);
 			return SQLInfoExecutor.moreListInfoBeanWithDBName(  beanType, (String)null,  sqlinfo,  offset, pagesize, bean); 
 	}
 	
@@ -2116,9 +2124,9 @@ public class SQLExecutor
 	 * @return
 	 * @throws SQLException
 	 */
-	public static ListInfo moreListInfo(Class<?> beanType, String sqlname, long offset,int pagesize,Object... fields) throws SQLException
+	public static ListInfo moreListInfo(Class<?> beanType, String sql, long offset,int pagesize,Object... fields) throws SQLException
 	{
-		return moreListInfoWithDBName(beanType, null,sqlname, offset,pagesize,fields);		 
+		return moreListInfoWithDBName(beanType, null,sql, offset,pagesize,fields);
 	}
 	
 	

@@ -132,6 +132,42 @@ public class StatementInfo {
 //			this.dbname = SQLManager.getInstance().getDefaultDBName();
 		this.needTransaction = needTransaction;
 	}
+	
+	public static List<Object> getGeneratedKeys(PreparedStatement statement) throws Exception
+	{
+		ResultSet keys = null;
+		
+		Object key = null;
+		try
+		{
+			keys = statement.getGeneratedKeys();			
+			List<Object> morekeys = null;
+			 while (keys.next()) {
+				 if(morekeys == null)
+					 morekeys = new ArrayList<Object>();
+				 
+				 
+				 key = keys.getObject(1);
+				 morekeys.add(key);
+			 
+            }
+			 return morekeys;
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+		finally
+		{
+			if(keys != null)
+				try {
+					keys.close();
+				} catch (Exception e) {
+					
+				}
+		}
+		
+	}
 
 	/**
 	 * protected Hashtable[] doJDBC(String dbname_, String sql_, // Connection

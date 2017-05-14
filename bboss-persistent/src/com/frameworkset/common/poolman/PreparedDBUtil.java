@@ -1466,7 +1466,7 @@ public class PreparedDBUtil extends DBUtil {
 					List<Object> morekeys = null;
 					if(Params.action == INSERT)
 					{
-						morekeys = getGeneratedKeys(statement);
+						morekeys = StatementInfo.getGeneratedKeys(statement);
 					}				
 					
 					if(morekeys != null && morekeys.size() == 1)
@@ -1598,41 +1598,7 @@ public class PreparedDBUtil extends DBUtil {
 		}
 	}
 	
-	protected List<Object> getGeneratedKeys(PreparedStatement statement) throws Exception
-	{
-		ResultSet keys = null;
-		
-		Object key = null;
-		try
-		{
-			keys = statement.getGeneratedKeys();			
-			List<Object> morekeys = null;
-			 while (keys.next()) {
-				 if(morekeys == null)
-					 morekeys = new ArrayList<Object>();
-				 
-				 
-				 key = keys.getObject(1);
-				 morekeys.add(key);
-			 
-            }
-			 return morekeys;
-		}
-		catch(Exception e)
-		{
-			throw e;
-		}
-		finally
-		{
-			if(keys != null)
-				try {
-					keys.close();
-				} catch (Exception e) {
-					
-				}
-		}
-		
-	}
+	
 	
 	/**
 	 * 
@@ -4971,7 +4937,7 @@ public class PreparedDBUtil extends DBUtil {
 						
 						if(CUDResult != null)
 						{		
-							List<Object> morekeys = getGeneratedKeys(statement);
+							List<Object> morekeys = StatementInfo.getGeneratedKeys(statement);
 //							CUDResult = new GetCUDResult(ret,ret,morekeys);
 							CUDResult.setKeys(morekeys);
 							CUDResult.setResult(ret);

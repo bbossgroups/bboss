@@ -15,16 +15,15 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import org.frameworkset.persitent.util.SQLInfo;
-import org.frameworkset.persitent.util.SQLUtil;
-
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.util.ListInfo;
+import org.frameworkset.persitent.util.SQLInfo;
+import org.frameworkset.persitent.util.SQLUtil;
+
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * 
@@ -271,6 +270,15 @@ public class ConfigSQLExecutor  {
 //		execute( dbname,  sql,  beans,PreparedDBUtil.DELETE);
 		
 	}
+	
+	public <T> void executeBatch(String sqlname,List<T> datas,int batchsize, BatchHandler<T> batchHandler) throws SQLException{
+		executeBatch(null,sqlname, datas, batchsize, batchHandler);
+	}
+	
+	public <T> void executeBatch(String dbname,String sqlname,List<T> datas,int batchsize, BatchHandler<T> batchHandler) throws SQLException{
+		SQLInfo sqlinfo = getSqlInfo(dbname,sqlname);
+		SQLInfoExecutor.executeBatch(  dbname,  sqlinfo,datas, batchsize,batchHandler) ;
+	}
 
 
 	public void insertBean(String dbname, String sqlname, Object bean) throws SQLException {
@@ -432,7 +440,7 @@ public class ConfigSQLExecutor  {
 	/**
 	 * 
 	 * @param beanType
-	 * @param sql
+	 * @param sqlname
 	 * @param offset
 	 * @param pagesize
 	 * @param fields
@@ -516,7 +524,7 @@ public class ConfigSQLExecutor  {
 	 * 
 	 * @param rowhandler
 	 * @param beanType
-	 * @param sql
+	 * @param sqlname
 	 * @param offset
 	 * @param pagesize
 	 * @param fields
@@ -602,7 +610,7 @@ public class ConfigSQLExecutor  {
 	/**
 	 * 
 	 * @param rowhandler
-	 * @param sql
+	 * @param sqlname
 	 * @param offset
 	 * @param pagesize
 	 * @param fields
@@ -686,7 +694,7 @@ public class ConfigSQLExecutor  {
 	/**
 	 * 
 	 * @param beanType
-	 * @param sql
+	 * @param sqlname
 	 * @param offset
 	 * @param pagesize
 	 * @param totalsize
@@ -737,16 +745,16 @@ public class ConfigSQLExecutor  {
 	 * 
 	 * @param <T>
 	 * @param beanType
-	 * @param sql
-	 * @param bean
+	 * @param sqlname
+	 * @param fields
 	 * @return
 	 * @throws SQLException
 	 */
 	
 	
-	public <T> T queryTField( Class<T> type,String sql, Object... fields) throws SQLException
+	public <T> T queryTField( Class<T> beanType,String sqlname, Object... fields) throws SQLException
 	{
-		return queryTFieldWithDBName(null, type,sql, fields);
+		return queryTFieldWithDBName(null, beanType,sqlname, fields);
 	}
 	public  <T> T queryTFieldBean( Class<T> type,String sqlname, Object bean) throws SQLException
 	{
@@ -773,16 +781,16 @@ public class ConfigSQLExecutor  {
 	 * 
 	 * @param <T>
 	 * @param beanType
-	 * @param sql
-	 * @param bean
+	 * @param sqlname
+	 * @param fields
 	 * @return
 	 * @throws SQLException
 	 */
 	
 	
-	public <T> T queryTField( Class<T> type,FieldRowHandler<T> fieldRowHandler,String sqlname, Object... fields) throws SQLException
+	public <T> T queryTField( Class<T> beanType,FieldRowHandler<T> fieldRowHandler,String sqlname, Object... fields) throws SQLException
 	{
-		return queryTFieldWithDBName(null, type,fieldRowHandler,sqlname, fields);
+		return queryTFieldWithDBName(null, beanType,fieldRowHandler,sqlname, fields);
 	}
 	public  <T> T queryTFieldBean( Class<T> type,FieldRowHandler<T> fieldRowHandler,String sqlname, Object bean) throws SQLException
 	{
@@ -808,7 +816,7 @@ public class ConfigSQLExecutor  {
 	 * 
 	 * @param <T>
 	 * @param beanType
-	 * @param sql
+	 * @param sqlname
 	 * @param bean
 	 * @return
 	 * @throws SQLException
@@ -890,10 +898,10 @@ public class ConfigSQLExecutor  {
 	 * 
 	 * @param rowhandler
 	 * @param beanType
-	 * @param sql
+	 * @param sqlname
 	 * @param offset
 	 * @param pagesize
-	 * @param totalsize
+	 * @param totalsizesqlname
 	 * @param bean
 	 * @return
 	 * @throws SQLException
@@ -980,7 +988,7 @@ public class ConfigSQLExecutor  {
 	 * @param sqlname
 	 * @param offset
 	 * @param pagesize
-	 * @param totalsize
+
 	 * @param bean
 	 * @return
 	 * @throws SQLException
@@ -994,7 +1002,7 @@ public class ConfigSQLExecutor  {
 	/**
 	 * 
 	 * @param rowhandler
-	 * @param sql
+	 * @param sqlname
 	 * @param offset
 	 * @param pagesize
 	 * @param totalsize
@@ -1087,7 +1095,7 @@ public class ConfigSQLExecutor  {
 	 * 
 	 * @param rowhandler
 	 * @param beanType
-	 * @param sql
+	 * @param sqlname
 	 * @param offset
 	 * @param pagesize
 	 * @param fields
@@ -1102,7 +1110,7 @@ public class ConfigSQLExecutor  {
 		/**
 	 * 
 	 * @param rowhandler
-	 * @param sql
+	 * @param sqlname
 	 * @param offset
 	 * @param pagesize
 	 * @param fields
@@ -1140,7 +1148,7 @@ public class ConfigSQLExecutor  {
 	 * @param sqlname
 	 * @param offset
 	 * @param pagesize
-	 * @param totalsize
+
 	 * @param bean
 	 * @return
 	 * @throws SQLException
@@ -1191,7 +1199,7 @@ public class ConfigSQLExecutor  {
 		/**
 	 * 
 	 * @param beanType
-	 * @param sql
+	 * @param sqlname
 	 * @param offset
 	 * @param pagesize
 	 * @param fields
