@@ -29,11 +29,11 @@ public class BatchTest {
             datas.add(data);
         }
         SQLExecutor.delete("delete from batchtest");
-        SQLExecutor.executeBatch("insert into batchtest (name) values(?)", datas, new BatchHandler<Map<String,String>>() {
+        SQLExecutor.executeBatch("insert into batchtest (name) values(?)", datas, 10,new BatchHandler<Map<String,String>>() {
             @Override
             public void handler(PreparedStatement stmt, Map<String,String> record, int i) throws SQLException {
                 stmt.setString(1,record.get("name"));
             }
-        },0);
+        });
     }
 }
