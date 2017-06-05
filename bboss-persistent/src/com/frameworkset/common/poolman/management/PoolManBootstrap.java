@@ -142,7 +142,8 @@ public class PoolManBootstrap implements java.io.Serializable{
         {
             try
             {
-                ((BaseTableManager)deployer).initTableInfo(values.get("dbname"));
+            	if(config.isNeedtableinfo())
+            		((BaseTableManager)deployer).initTableInfo(values.get("dbname"));
             }
             catch(Exception e)
             {
@@ -193,7 +194,8 @@ public class PoolManBootstrap implements java.io.Serializable{
         {
             try
             {
-                ((BaseTableManager)deployer).initTableInfo();
+            	if(config.isNeedtableinfo())
+            		((BaseTableManager)deployer).initTableInfo();
             }
             catch(Exception e)
             {
@@ -255,7 +257,8 @@ public class PoolManBootstrap implements java.io.Serializable{
         {
             try
             {
-                ((BaseTableManager)deployer).initTableInfo();
+            	if(config.isNeedtableinfo())
+            		((BaseTableManager)deployer).initTableInfo();
             }
             catch(Exception e)
             {
@@ -303,7 +306,8 @@ public class PoolManBootstrap implements java.io.Serializable{
         {
             try
             {
-                ((BaseTableManager)deployer).initTableInfo(dbname);
+            	if(config.isNeedtableinfo())
+            		((BaseTableManager)deployer).initTableInfo(dbname);
             }
             catch(Exception e)
             {

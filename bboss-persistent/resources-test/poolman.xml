@@ -2,30 +2,30 @@
 
 <poolman>
 	<config file="db.properties"/>
-<!--  	<datasource> -->
+  	<datasource>
 
-<!-- 		<dbname>bspf</dbname> -->
-<!-- 		<loadmetadata>false</loadmetadata> -->
-<!-- 		<enablejta>true</enablejta> -->
-<!-- 		<jndiName>dbcp_datasource_jndiname</jndiName> -->
-<!-- 		<datasourceFile>dbcp.xml</datasourceFile> -->
-<!-- 		<autoprimarykey>false</autoprimarykey> -->
-<!-- 		<showsql>false</showsql> -->
-<!-- 		<keygenerate>composite</keygenerate> -->
+ 		<dbname>bspf</dbname>
+ 		<loadmetadata>false</loadmetadata>
+ 		<enablejta>true</enablejta>
+ 		<jndiName>dbcp_datasource_jndiname</jndiName>
+ 		<datasourceFile>dbcp-mysql.xml</datasourceFile>
+ 		<autoprimarykey>false</autoprimarykey>
+ 		<showsql>false</showsql>
+ 		<keygenerate>composite</keygenerate>
 
-<!-- 	</datasource> -->
-  <datasource>
+ 	</datasource>
+ <!-- <datasource>
 
 		<dbname>mssql</dbname>
 		<loadmetadata>false</loadmetadata>
 		<enablejta>true</enablejta>
 		<jndiName>${jndiName}</jndiName>
-		<datasourceFile>dbcp-derby.xml</datasourceFile>
+		<datasourceFile>dbcp-mysql.xml</datasourceFile>
 		<autoprimarykey>false</autoprimarykey>
 		<showsql>true</showsql>
 		<keygenerate>composite</keygenerate>
 
-	</datasource>
+	</datasource>-->
   
   
 </poolman>

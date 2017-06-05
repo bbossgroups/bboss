@@ -62,6 +62,7 @@ public class PoolManConfiguration implements Serializable {
 	private ArrayList genericObjects;
 
 	private boolean useJMX = PoolManConstants.DEFAULT_USE_JMX;
+	public static boolean needtableinfo = false;
 	public static String jndi_principal = null;
 	public static String jndi_credentials = null;
 	private String[] filterdbname = null;
@@ -397,6 +398,14 @@ public class PoolManConfiguration implements Serializable {
 	 */
 	public void setAdaptors(Map<String, String> adaptors) {
 		this.adaptors = adaptors;
+	}
+
+	public boolean isNeedtableinfo() {
+		return needtableinfo;
+	}
+
+	public void setNeedtableinfo(boolean needtableinfo) {
+		this.needtableinfo = needtableinfo;
 	}
 
 }
