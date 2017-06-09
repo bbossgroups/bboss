@@ -28,6 +28,7 @@ import org.frameworkset.web.servlet.context.RequestAttributes;
 import org.frameworkset.web.servlet.context.RequestContextHolder;
 import org.frameworkset.web.servlet.context.ServletRequestAttributes;
 import org.frameworkset.web.servlet.mvc.NativeWebRequest;
+import org.frameworkset.web.util.UrlPathHelper;
 
 import com.frameworkset.util.StringUtil;
 
@@ -38,6 +39,7 @@ public abstract class BaseServlet extends HttpServlet{
 
 	/** Logger available to subclasses */
 	protected static final Logger logger = Logger.getLogger(BaseServlet.class);
+	protected UrlPathHelper urlPathHelper = new UrlPathHelper();
 	
 	/** Should we dispatch an HTTP TRACE request to {@link #doService}? */
 	private boolean dispatchTraceRequest = false;

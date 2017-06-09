@@ -92,6 +92,7 @@ public class ConfigParser extends DefaultHandler{
         currentValue.delete(0, currentValue.length());
         this.currentName = name;
         
+    		
         if (name.toLowerCase().equals("datasource")) {
             this.currentSet = "datasource";
             Properties properties = new Properties();
@@ -163,7 +164,7 @@ public class ConfigParser extends DefaultHandler{
         		!name.equals("enablejta") &&
         		!name.equals("usepool") &&
         		!name.equals("encryptdbinfo") &&
-        		!name.equals("datasourceFile") && !name.equals("queryfetchsize")&&!name.equals("config"))
+        		!name.equals("datasourceFile") && !name.equals("queryfetchsize")&&!name.equals("config") && !name.equals("needtableinfo"))
             
         {
         	if(log.isDebugEnabled())
@@ -270,7 +271,9 @@ public class ConfigParser extends DefaultHandler{
         		
         	}
         }
-        
+        else if(name.equals("needtableinfo")){
+        	PoolManConfiguration.needtableinfo = currentValue.toString().trim().equals("true");
+        }
         
         this.currentValue.delete(0, this.currentValue.length());
     }
