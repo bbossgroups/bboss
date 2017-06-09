@@ -12,8 +12,8 @@ import com.frameworkset.util.StringUtil;
 public class UrlPathHelper
 {
 
-  /** @deprecated */
-  public static final String INCLUDE_URI_REQUEST_ATTRIBUTE = "javax.servlet.include.request_uri";
+   
+  public static final String INCLUDE_URI_REQUEST_ATTRIBUTE = "bboss.servlet.include.request_uri";
 
   /** @deprecated */
   public static final String INCLUDE_CONTEXT_PATH_REQUEST_ATTRIBUTE = "javax.servlet.include.context_path";
@@ -24,7 +24,7 @@ public class UrlPathHelper
 
   private boolean alwaysUseFullPath = true;
 
-  private boolean urlDecode = true;
+  private boolean urlDecode = false;
 
   private String defaultEncoding = "ISO-8859-1";
 
@@ -124,14 +124,16 @@ public class UrlPathHelper
 
   public String getRequestUri(HttpServletRequest request)
   {
-//    String uri = (String)request.getAttribute("javax.servlet.include.request_uri");
-//    if (uri == null) {
-//      uri = request.getRequestURI();
-//    }
+    String uri = (String)request.getAttribute(INCLUDE_URI_REQUEST_ATTRIBUTE);
+    if (uri != null) {
+      return uri;
+    }
 //    
 //    String path = request.getServletPath();
 //    return decodeAndCleanUriString(request, uri);
-	  return request.getRequestURI();
+	  uri = request.getRequestURI();
+	  uri = decodeAndCleanUriString(  request,   uri);
+	  return uri;
   }
 
   public String getContextPath(HttpServletRequest request)
@@ -171,7 +173,12 @@ public class UrlPathHelper
 //      uri = request.getRequestURI();
 //    }    
 //    return decodeAndCleanUriString(request, uri);
-  	String uri = request.getRequestURI();
+	  String uri = (String)request.getAttribute(INCLUDE_URI_REQUEST_ATTRIBUTE);
+	    if (uri != null) {
+	      return uri;
+	    }
+  	uri = request.getRequestURI();
+    uri = decodeAndCleanUriString(  request,   uri);
     return uri;
   }
 

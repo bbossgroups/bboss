@@ -77,7 +77,6 @@ import org.frameworkset.web.servlet.view.UrlBasedViewResolver;
 import org.frameworkset.web.servlet.view.View;
 import org.frameworkset.web.servlet.view.ViewResolver;
 import org.frameworkset.web.ui.ThemeSource;
-import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
 
 import com.frameworkset.spi.assemble.BeanInstanceException;
@@ -100,6 +99,7 @@ public class DispatchServlet extends BaseServlet {
 	private String iocLifeCycleEventListeners;
 	private String iocLifeCycleEventListenerParams;
 	private List<IocLifeCycleEventListener> iocLifeCycleEventListenerList ;
+	
 	
 	public static Properties getDefaultStrategies()
 	{
@@ -335,7 +335,7 @@ public class DispatchServlet extends BaseServlet {
 	 */
 	protected long getLastModified(HttpServletRequest request) {
 		if (logger.isDebugEnabled()) {
-			String requestUri = new UrlPathHelper().getRequestUri(request);
+			String requestUri = urlPathHelper.getRequestUri(request);
 			logger.debug("DispatcherServlet with name '" + getServletName() +
 					"' determining Last-Modified value for [" + requestUri + "]");
 		}
@@ -358,7 +358,7 @@ public class DispatchServlet extends BaseServlet {
 			HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
 			long lastModified = ha.getLastModified(request, mappedHandler.getHandler());
 			if (logger.isInfoEnabled()) {
-				String requestUri = new UrlPathHelper().getRequestUri(request);
+				String requestUri = urlPathHelper.getRequestUri(request);
 				logger.debug("Last-Modified value for [" + requestUri + "] is: " + lastModified);
 			}
 			return lastModified;
@@ -493,7 +493,7 @@ public class DispatchServlet extends BaseServlet {
 	protected void noHandlerFound(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //		if (pageNotFoundLogger.isWarnEnabled()) 
 		{
-			String requestUri = new UrlPathHelper().getRequestUri(request);
+			String requestUri = urlPathHelper.getRequestUri(request);
 			pageNotFoundLogger.warn("No mapping found for HTTP request with URI [" +
 					requestUri + "] in DispatcherServlet with name '" + getServletName() + "'");
 		}
