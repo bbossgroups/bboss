@@ -1,21 +1,9 @@
 package org.frameworkset.runtime;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.net.URLDecoder;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -104,40 +92,53 @@ public class CommonLauncher
     private static void loadConfig(File appDir) throws IOException
     {
     	System.out.println("appDir:"+appDir);
-    	 File propertiesFile = new File(appDir, propertfile);
-         InputStream in = new FileInputStream(propertiesFile);
-        properts = new Properties(); 
-        properts.load(in);
-        mainclass = properts.getProperty("mainclass");
-        String extlib = properts.getProperty("extlibs") ;
-        if(extlib != null)
-        {
-        	extlibs = extlib.split(";");
-        	for(int i = 0;  i < extlibs.length; i++)
-        	{
-        		extlibs[i] = extlibs[i].trim();
-        	}
-        }
-        String extresources_ = properts.getProperty("extresources") ;
-        if(extresources_ != null)
-        {
-        	extresources = extresources_.split(";");
-        	for(int i = 0;  i < extresources.length; i++)
-        	{
-        		extresources[i] = extresources[i].trim();
-        	}
-        }
-        
-        if(mainclass == null || mainclass.trim().length() == 0)
-        {
-        	throw new java.lang.IllegalArgumentException("配置文件config.properties 中没有正确设置mainclass属性.");
-        }
-        else
-        {
-        	mainclass = mainclass.trim();
-        	System.out.println("use mainclass:"+mainclass);
-        }
-    }
+		InputStream in = null;
+		Reader read = null;
+		try {
+			File propertiesFile = new File(appDir, propertfile);
+			in = new FileInputStream(propertiesFile);
+			read = new InputStreamReader(in, "UTF-8");
+			properts = new Properties();
+			properts.load(read);
+			mainclass = properts.getProperty("mainclass");
+			String extlib = properts.getProperty("extlibs");
+			if (extlib != null) {
+				extlibs = extlib.split(";");
+				for (int i = 0; i < extlibs.length; i++) {
+					extlibs[i] = extlibs[i].trim();
+				}
+			}
+			String extresources_ = properts.getProperty("extresources");
+			if (extresources_ != null) {
+				extresources = extresources_.split(";");
+				for (int i = 0; i < extresources.length; i++) {
+					extresources[i] = extresources[i].trim();
+				}
+			}
+
+			if (mainclass == null || mainclass.trim().length() == 0) {
+				throw new java.lang.IllegalArgumentException("配置文件config.properties 中没有正确设置mainclass属性.");
+			} else {
+				mainclass = mainclass.trim();
+				System.out.println("use mainclass:" + mainclass);
+			}
+		}
+		finally {
+			if(in != null)
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			if(read != null)
+				try {
+					read.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+		}
+	}
     public static void run(String[] args) throws SecurityException, IllegalArgumentException,
             ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException
     {
@@ -193,19 +194,22 @@ public class CommonLauncher
         method.invoke(null, new Object[] {args});
     }
 
-    /**
-     * 
-     * 
-     * @param deploydir
-     * @throws MalformedURLException
-     * @throws ClassNotFoundException
-     * @throws NoSuchMethodException
-     * @throws SecurityException
-     * @throws InvocationTargetException
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException
-     * @throws InstantiationException 
-     */
+	/**
+	 *
+	 * @param lib
+	 * @param resourcesFile
+	 * @param classesFile
+	 * @param webclassesFile
+	 * @param weblibFile
+	 * @throws MalformedURLException
+	 * @throws ClassNotFoundException
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 * @throws InstantiationException
+	 */
     public static void loadPlugins(File lib,File resourcesFile,File classesFile ,
     
     File webclassesFile ,
@@ -623,7 +627,7 @@ public class CommonLauncher
 	/**
 	 * Left trim: remove spaces to the left of a String.
 	 * 
-	 * @param str
+	 * @param source
 	 *            The String to left trim
 	 * @return The left trimmed String
 	 */
@@ -640,7 +644,7 @@ public class CommonLauncher
 	/**
 	 * Right trim: remove spaces to the right of a string
 	 * 
-	 * @param str
+	 * @param source
 	 *            The string to right trim
 	 * @return The trimmed string.
 	 */
