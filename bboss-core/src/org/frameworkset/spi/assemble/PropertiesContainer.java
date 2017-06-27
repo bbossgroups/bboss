@@ -1,21 +1,17 @@
 package org.frameworkset.spi.assemble;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
+import com.frameworkset.util.SimpleStringUtil;
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.util.io.ClassPathResource;
 import org.frameworkset.util.tokenizer.TextGrammarParser;
 import org.frameworkset.util.tokenizer.TextGrammarParser.GrammarToken;
 
-import com.frameworkset.util.SimpleStringUtil;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 public class PropertiesContainer {
     protected List<String> configPropertiesFiles;
@@ -106,6 +102,7 @@ public class PropertiesContainer {
     	Properties properties = new java.util.Properties();
     	
     	InputStream input = null;
+		Reader read = null;
     	try
     	{
     		
@@ -128,7 +125,10 @@ public class PropertiesContainer {
     			if(log.isDebugEnabled())
 	    			log.debug("load config Properties File :"+_configPropertiesFile);
     		}
-	    	properties.load(input);
+    		if(input != null) {
+				read = new InputStreamReader(input, "UTF-8");
+				properties.load(read);
+			}
 	    	allProperties.putAll(properties);
 	    
     	}
@@ -143,6 +143,12 @@ public class PropertiesContainer {
 					input.close();
 				} catch (IOException e) {
 					 
+				}
+			if(read != null)
+				try {
+					read.close();
+				} catch (IOException e) {
+
 				}
     	}
     }
