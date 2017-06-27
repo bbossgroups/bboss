@@ -15,13 +15,13 @@
  */
 package org.frameworkset.remote;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.jgroups.Address;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -65,7 +65,7 @@ public class EventUtils {
 					eventRPCDispatcher =eventcontext.getTBeanObject("eventRPCDispatcher", EventRPCDispatcher.class);
 				
 			} catch (Throwable e) {
-				log.error("init event RPC Dispatcher failed:", e);
+				log.debug("Init event RPC Dispatcher failed:event config file eventconf.xml may not exist or check jgroups protocol config corrected.", e);
 			}
 			inited = true;
 		}

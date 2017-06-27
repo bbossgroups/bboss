@@ -1,14 +1,5 @@
 package org.frameworkset.task;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
@@ -16,15 +7,12 @@ import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.assemble.ProMap;
 import org.quartz.Calendar;
-import org.quartz.JobDetail;
-import org.quartz.JobListener;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.SchedulerFactory;
-import org.quartz.SchedulerListener;
-import org.quartz.TriggerListener;
+import org.quartz.*;
 import org.quartz.impl.SchedulerRepository;
 import org.quartz.impl.StdSchedulerFactory;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * 
@@ -234,7 +222,10 @@ public class TaskService implements Service {
 			return;
 		taskContext = DefaultApplicationContext.getApplicationContext(taskconfig);
 		Pro taskconfig = taskContext.getProBean("taskconfig");
-		
+		if (taskconfig == null ) {
+			log.debug("Schedule task config file"+(taskconfig == null?ScheduleRepository.taskconfig:taskconfig)+" not exist,ignore start Schedule Tasks.");
+			return;
+		}
 		if (!taskconfig.getBooleanExtendAttribute("enable")) {
 			log.debug("Scheduler not enable.");
 			return;
@@ -459,14 +450,13 @@ public class TaskService implements Service {
 	
 	/**
 	 * Create the Scheduler instance for the given factory and scheduler name.
-	 * Called by {@link #afterPropertiesSet}.
+	 * Called by {@link }.
 	 * <p>The default implementation invokes SchedulerFactory's <code>getScheduler</code>
 	 * method. Can be overridden for custom Scheduler creation.
 	 * @param schedulerFactory the factory to create the Scheduler with
 	 * @param schedulerName the name of the scheduler to create
 	 * @return the Scheduler instance
 	 * @throws SchedulerException if thrown by Quartz methods
-	 * @see #afterPropertiesSet
 	 * @see org.quartz.SchedulerFactory#getScheduler
 	 */
 	protected Scheduler createScheduler(SchedulerFactory schedulerFactory, String schedulerName)
