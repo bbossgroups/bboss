@@ -144,6 +144,7 @@ public class CommonLauncher
     {
     	CommonLauncher.args = args;
         URL location = (CommonLauncher.class).getProtectionDomain().getCodeSource().getLocation();
+		System.out.println("os info:"+getOS());
         appDir = computeApplicationDir(location, new File("."));
        
         File lib = new File(appDir, publiclibdir);
@@ -323,6 +324,7 @@ public class CommonLauncher
 
     private static File computeApplicationDir(URL location, File defaultDir)
     {
+
         if (location == null)
         {
             System.out.println("Warning: Cannot locate the program directory. Assuming default.");
@@ -354,7 +356,8 @@ public class CommonLauncher
             try
             {
                 File path = null;//new File(URLDecoder.decode(location.toExternalForm().substring(6), "UTF-8")).getParentFile();
-                if(!CommonLauncher.isLinux() && !CommonLauncher.isOSX())
+//                if(!CommonLauncher.isLinux() && !CommonLauncher.isOSX())
+				if(isWindows())
                 {
                 	path = new File(URLDecoder.decode(location.toExternalForm().substring(6), "UTF-8")).getParentFile();
                 }
@@ -386,7 +389,8 @@ public class CommonLauncher
 	 * @return The name of the OS
 	 */
 	public static final String getOS() {
-		return System.getProperty("os.name");
+		String osname = System.getProperty("os.name");
+		return osname;
 	}
 
 	/**
