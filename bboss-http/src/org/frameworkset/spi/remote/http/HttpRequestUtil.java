@@ -87,7 +87,7 @@ public class HttpRequestUtil {
 
 
         httpget.setConfig(requestConfig);
-        httpget.addHeader("Host", "www.bbossgroups.com");
+//        httpget.addHeader("Host", "www.bbossgroups.com");
         httpget.addHeader("Connection", "Keep-Alive");
         if (cookie != null)
             httpget.addHeader("Cookie", cookie);
@@ -111,7 +111,7 @@ public class HttpRequestUtil {
         HttpPost httpPost = new HttpPost(url);
         RequestConfig requestConfig = ClientConfiguration.getClientConfiguration(httppoolname).getRequestConfig();
         httpPost.setConfig(requestConfig);
-        httpPost.addHeader("Host", "www.bbossgroups.com");
+//        httpPost.addHeader("Host", "www.bbossgroups.com");
         httpPost.addHeader("Connection", "Keep-Alive");
         if (cookie != null)
             httpPost.addHeader("Cookie", cookie);
@@ -133,7 +133,7 @@ public class HttpRequestUtil {
         HttpDelete httpDelete = new HttpDelete(url);
         RequestConfig requestConfig = ClientConfiguration.getClientConfiguration(httppoolname).getRequestConfig();
         httpDelete.setConfig(requestConfig);
-        httpDelete.addHeader("Host", "www.bbossgroups.com");
+//        httpDelete.addHeader("Host", "www.bbossgroups.com");
         httpDelete.addHeader("Connection", "Keep-Alive");
         if (cookie != null)
             httpDelete.addHeader("Cookie", cookie);
