@@ -263,11 +263,13 @@ public class TaskService implements Service {
 			if(schedulerlistener != null && schedulerlistener.size() >0)
 			{
 				Iterator iterator = schedulerlistener.iterator();
+				ListenerManager listenerManager = scheduler.getListenerManager();
 				while(iterator.hasNext())
 				{
 					Pro pro = (Pro)iterator.next();
 					try {
-						scheduler.addSchedulerListener((SchedulerListener)pro.getObject());
+						listenerManager.addSchedulerListener((SchedulerListener)pro.getObject());
+//						scheduler.addSchedulerListener((SchedulerListener)pro.getObject());
 					} catch (Exception e) {
 						log.error("加载SchedulerListener失败!",e);
 					}
@@ -279,11 +281,13 @@ public class TaskService implements Service {
 			if(globaljoblistener != null && globaljoblistener.size() >0)
 			{
 				Iterator iterator = globaljoblistener.iterator();
+				ListenerManager listenerManager = scheduler.getListenerManager();
 				while(iterator.hasNext())
 				{
 					Pro pro = (Pro)iterator.next();
 					try {
-						scheduler.addGlobalJobListener((JobListener)pro.getObject());
+						listenerManager.addJobListener((JobListener)pro.getObject());
+//						scheduler.addGlobalJobListener((JobListener)pro.getObject());
 					} catch (Exception e) {
 						log.error("加载GlobalJobListener失败!",e);
 					}
@@ -295,11 +299,13 @@ public class TaskService implements Service {
 			if(joblistener != null && joblistener.size() >0)
 			{
 				Iterator iterator = joblistener.iterator();
+				ListenerManager listenerManager = scheduler.getListenerManager();
 				while(iterator.hasNext())
 				{
 					Pro pro = (Pro)iterator.next();
 					try {
-						scheduler.addJobListener((JobListener)pro.getObject());
+						listenerManager.addJobListener((JobListener)pro.getObject());
+//						scheduler.addJobListener((JobListener)pro.getObject());
 					} catch (Exception e) {
 						log.error("加载JobListener失败!",e);
 					}
@@ -310,11 +316,13 @@ public class TaskService implements Service {
 			if(globaltriggerlistener != null && globaltriggerlistener.size() >0)
 			{
 				Iterator iterator = globaltriggerlistener.iterator();
+				ListenerManager listenerManager = scheduler.getListenerManager();
 				while(iterator.hasNext())
 				{
 					Pro pro = (Pro)iterator.next();
 					try {
-						scheduler.addGlobalTriggerListener((TriggerListener)pro.getObject());
+						listenerManager.addTriggerListener((TriggerListener)pro.getObject());
+//						scheduler.addGlobalTriggerListener((TriggerListener)pro.getObject());
 					} catch (Exception e) {
 						log.error("加载GlobalTriggerListener失败!",e);
 					}
@@ -324,11 +332,13 @@ public class TaskService implements Service {
 			if(triggerlistener != null && triggerlistener.size() >0)
 			{
 				Iterator iterator = triggerlistener.iterator();
+				ListenerManager listenerManager = scheduler.getListenerManager();
 				while(iterator.hasNext())
 				{
 					Pro pro = (Pro)iterator.next();
 					try {
-						scheduler.addTriggerListener((TriggerListener)pro.getObject());
+						listenerManager.addTriggerListener((TriggerListener)pro.getObject());
+//						scheduler.addTriggerListener((TriggerListener)pro.getObject());
 					} catch (Exception e) {
 						log.error("加载TriggerListener失败!",e);
 					}
@@ -642,7 +652,7 @@ public class TaskService implements Service {
 		}
 	}
 	
-	public String[] getJobGroupNames(){
+	public List<String> getJobGroupNames(){
 	    try
         {
             return scheduler.getJobGroupNames();
@@ -656,16 +666,17 @@ public class TaskService implements Service {
 	}
 	
 	public String[] getJobNames(String jgroupId){
-	    try
-        {
-            return scheduler.getJobNames(jgroupId);
-        }
-        catch (SchedulerException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        }
+//	    try
+//        {
+//            return scheduler.getJobNames(jgroupId);
+//        }
+//        catch (SchedulerException e)
+//        {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//            return null;
+//        }
+		return null;
 	}
 	
 	public List getCurrentlyExecutingJobs(){
@@ -698,7 +709,7 @@ public class TaskService implements Service {
 				.get(groupid);
 		if (scheduleServiceInfo != null && scheduleServiceInfo.isUsed()) {
 			try {
-				scheduler.resumeJob(name, groupid);
+				scheduler.resumeJob(new JobKey(name, groupid));
 			} catch (SchedulerException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -742,7 +753,7 @@ public class TaskService implements Service {
 		if (scheduleServiceInfo != null && scheduleServiceInfo.isUsed()) {
 			try {
 				// scheduler.unscheduleJob(jobname, groupid);
-				scheduler.deleteJob(jobname, groupid);
+				scheduler.deleteJob(new JobKey(jobname, groupid));
 //				schedulerServiceIndex.remove(groupid);
 			} catch (SchedulerException ex) {
 				ex.printStackTrace();
@@ -767,7 +778,7 @@ public class TaskService implements Service {
 				.get(groupid);
 		if (scheduleServiceInfo != null && scheduleServiceInfo.isUsed()) {
 			try {
-				scheduler.pauseJob(jobname, groupid);
+				scheduler.pauseJob(new JobKey(jobname, groupid));
 			} catch (SchedulerException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -791,7 +802,7 @@ public class TaskService implements Service {
 				.get(triggerGroup);
 		if (scheduleServiceInfo != null && scheduleServiceInfo.isUsed()) {
 			try {
-				scheduler.unscheduleJob(triggerName, triggerGroup);
+				scheduler.unscheduleJob(new TriggerKey(triggerName, triggerGroup));
 			} catch (SchedulerException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -833,7 +844,7 @@ public class TaskService implements Service {
 				.get(groupName);
 		if (scheduleServiceInfo != null && scheduleServiceInfo.isUsed()) {
 			try {
-				scheduler.triggerJob(jobName, groupName);
+				scheduler.triggerJob(new JobKey(jobName, groupName));
 			} catch (SchedulerException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -883,8 +894,9 @@ public class TaskService implements Service {
 				.get(groupName);
 		if (scheduleServiceInfo != null && scheduleServiceInfo.isUsed()) {
 			try {
+				JobKey jobKey = new JobKey(jobName, groupName);
 				JobDetail jobdetail = scheduler
-						.getJobDetail(jobName, groupName);
+						.getJobDetail(jobKey);
 				Map parameters_ = (Map) jobdetail.getJobDataMap().get(
 						"parameters");
 				Set entrySet = parameters.entrySet();
@@ -894,7 +906,7 @@ public class TaskService implements Service {
 					parameters_.put(entry.getKey(), entry.getValue());
 
 				}
-				scheduler.triggerJob(jobName, groupName, jobdetail
+				scheduler.triggerJob(jobKey, jobdetail
 						.getJobDataMap());
 
 			} catch (SchedulerException e) {

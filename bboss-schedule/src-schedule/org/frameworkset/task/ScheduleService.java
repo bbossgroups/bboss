@@ -1,27 +1,26 @@
 package org.frameworkset.task;
 
+import com.frameworkset.util.StringUtil;
+import com.frameworkset.util.ValueObjectUtil;
+import org.frameworkset.spi.assemble.BeanAccembleHelper;
+import org.frameworkset.spi.assemble.MethodInvoker;
+import org.quartz.*;
+import org.quartz.DateBuilder.IntervalUnit;
+import org.quartz.impl.triggers.AbstractTrigger;
+import org.quartz.impl.triggers.CalendarIntervalTriggerImpl;
+import org.quartz.impl.triggers.SimpleTriggerImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import org.apache.log4j.Logger;
-import org.frameworkset.spi.assemble.BeanAccembleHelper;
-import org.frameworkset.spi.assemble.MethodInvoker;
-import org.quartz.CronTrigger;
-import org.quartz.DateIntervalTrigger;
-import org.quartz.DateIntervalTrigger.IntervalUnit;
-import org.quartz.JobDataMap;
-import org.quartz.JobDetail;
-import org.quartz.NthIncludedDayTrigger;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.SimpleTrigger;
-import org.quartz.Trigger;
-
-import com.frameworkset.util.StringUtil;
-import com.frameworkset.util.ValueObjectUtil;
+import static org.quartz.JobKey.jobKey;
+import static org.quartz.TriggerBuilder.newTrigger;
+import static org.quartz.impl.matchers.KeyMatcher.keyEquals;
 
 /**
  * 
@@ -34,7 +33,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * @version 1.0
  */
 public abstract class ScheduleService implements Serializable{	
-	private static Logger log = Logger.getLogger(ScheduleService.class);
+	private static Logger log = LoggerFactory.getLogger(ScheduleService.class);
 	protected ScheduleServiceInfo scheduleServiceInfo;
 	protected TaskService taskservice;
 	
@@ -66,47 +65,127 @@ public abstract class ScheduleService implements Serializable{
 		}
 		
 	}
-	protected void installMethodInvokerJob(Scheduler scheduler,SchedulejobInfo jobInfo) throws Exception
+	protected void installExecuteJob(Scheduler scheduler,SchedulejobInfo jobInfo) throws Exception
 	{
-		log.info("启动作业组["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]中的方法作业["+jobInfo.getId()+"]开始。");
-		JobDetail jobDetail = new JobDetail(jobInfo.getId(),
-                //Scheduler.DEFAULT_GROUP,
-				scheduleServiceInfo.getId(),
-				MethodInvokerJob.class);
+		log.info("启动作业组["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]中的作业["+jobInfo.getId()+"]开始。");
+//		JobDetail jobDetail = new JobDetail(jobInfo.getId(),
+//				//Scheduler.DEFAULT_GROUP,
+//				scheduleServiceInfo.getId(),
+//				ExecuteJOB.class);
+		JobDetail jobDetail = null;
+		JobBuilder jobBuilder = JobBuilder.newJob();
+		jobBuilder.withIdentity(jobInfo.getId(),
+				//Scheduler.DEFAULT_GROUP,
+				scheduleServiceInfo.getId()).ofType(ExecuteJOB.class);
 		String joblistenername = jobInfo.getJobPro().getStringExtendAttribute("joblistenername");
 		if(!StringUtil.isEmpty(joblistenername) )
 		{
 			String[] joblistenernames = joblistenername.split("\\,");
+			ListenerManager listenerManager = scheduler.getListenerManager();
 			for(int i = 0; i < joblistenernames.length; i ++)
 			{
-				jobDetail.addJobListener(joblistenernames[i]);
+				JobListener l = (JobListener)Class.forName(joblistenernames[i].trim()).newInstance();
+
+				listenerManager.addJobListener(l,keyEquals(jobKey(jobInfo.getId(),scheduleServiceInfo.getId())));
+//				jobDetail.addJobListener(joblistenernames[i]);
 			}
-			
+//			for(int i = 0; i < joblistenernames.length; i ++)
+//			{
+//				jobDetail.addJobListener(joblistenernames[i]);
+//			}
+
 		}
 		JobDataMap map = new JobDataMap();
-		
-		map.put("JobMethod",buildJobMethod(jobInfo));
-//		map.put("parameters",jobInfo.getParameters());
-		jobDetail.setJobDataMap(map);
-		
-		jobDetail.setRequestsRecovery(jobInfo.isShouldRecover());
-		String volatility = jobInfo.getJobPro().getStringExtendAttribute("volatility");
-		if(!StringUtil.isEmpty(volatility))
-		{
-			jobDetail.setVolatility(Boolean.parseBoolean(volatility));
-		}
+		Execute instance = (Execute)Class.forName(jobInfo.getClazz() ).newInstance();
+		map.put("action",instance);
+		map.put("parameters",jobInfo.getParameters());
+		jobBuilder.setJobData(map);
+//		jobDetail.setJobDataMap(map);
+		jobBuilder.requestRecovery(jobInfo.isShouldRecover());
+//		jobDetail.setRequestsRecovery(jobInfo.isShouldRecover());
+		//jobDetail.se
+
+
+//		String volatility = jobInfo.getJobPro().getStringExtendAttribute("volatility");
+//		if(!StringUtil.isEmpty(volatility))
+//		{
+//			jobDetail.setVolatility(Boolean.parseBoolean(volatility));
+//		}
 		String description = jobInfo.getJobPro().getStringExtendAttribute("description");
 		if(!StringUtil.isEmpty(description))
 		{
-			jobDetail.setDescription(description);
+//			jobDetail.setDescription(description);
+			jobBuilder.withDescription(description);
+		}
+
+		String durability = jobInfo.getJobPro().getStringExtendAttribute("durability");
+		if(!StringUtil.isEmpty(description))
+		{
+//			jobDetail.setDurability(Boolean.parseBoolean(durability));
+			jobBuilder.storeDurably(Boolean.parseBoolean(durability));
+		}
+
+
+		Trigger trigger = this.buildTrigger(scheduler,jobInfo);
+		jobDetail = jobBuilder.build();
+		scheduler.scheduleJob(jobDetail,trigger);
+		log.info("启动作业组["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]中的作业["+jobInfo.getId()+"]完毕。");
+	}
+
+	protected void installMethodInvokerJob(Scheduler scheduler,SchedulejobInfo jobInfo) throws Exception
+	{
+		log.info("启动作业组["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]中的方法作业["+jobInfo.getId()+"]开始。");
+//		JobDetail jobDetail = new JobDetail(jobInfo.getId(),
+//                //Scheduler.DEFAULT_GROUP,
+//				scheduleServiceInfo.getId(),
+//				MethodInvokerJob.class);
+		JobDetail jobDetail = null;
+		JobBuilder jobBuilder = JobBuilder.newJob();
+		jobBuilder.withIdentity(jobInfo.getId(),
+				//Scheduler.DEFAULT_GROUP,
+				scheduleServiceInfo.getId()).ofType(MethodInvokerJob.class);
+
+
+
+		JobDataMap map = new JobDataMap();
+		
+		map.put("JobMethod",buildJobMethod(jobInfo));
+		jobBuilder.setJobData(map);
+		jobBuilder.requestRecovery(jobInfo.isShouldRecover());
+		String volatility = jobInfo.getJobPro().getStringExtendAttribute("volatility");
+//		if(!StringUtil.isEmpty(volatility))
+//		{
+//			jobDetail.setVolatility(Boolean.parseBoolean(volatility));
+//		}
+		String description = jobInfo.getJobPro().getStringExtendAttribute("description");
+		if(!StringUtil.isEmpty(description))
+		{
+//			jobDetail.setDescription(description);
+			jobBuilder.withDescription(description);
 		}
 		String durability = jobInfo.getJobPro().getStringExtendAttribute("durability");
 		if(!StringUtil.isEmpty(description))
 		{
-			jobDetail.setDurability(Boolean.parseBoolean(durability));
+			jobBuilder.storeDurably(Boolean.parseBoolean(durability));
+//			jobDetail.setDurability(Boolean.parseBoolean(durability));
 		}
-		
-		Trigger trigger = this.buildTrigger(jobInfo);
+		jobDetail = jobBuilder.build();
+		Trigger trigger = this.buildTrigger(scheduler,jobInfo);
+		String joblistenername = jobInfo.getJobPro().getStringExtendAttribute("joblistenername");
+		if(!StringUtil.isEmpty(joblistenername) )
+		{
+			String[] joblistenernames = joblistenername.split("\\,");
+			ListenerManager listenerManager = scheduler.getListenerManager();
+			for(int i = 0; i < joblistenernames.length; i ++)
+			{
+				JobListener l = (JobListener)Class.forName(joblistenernames[i].trim()).newInstance();
+
+				listenerManager.addJobListener(l,keyEquals(jobKey(jobInfo.getId(),scheduleServiceInfo.getId())));
+//				jobDetail.addJobListener(joblistenernames[i]);
+			}
+
+		}
+
 		scheduler.scheduleJob(jobDetail,trigger);
 		log.info("启动作业组["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]中的方法作业["+jobInfo.getId()+"]完毕。");
 	}
@@ -119,20 +198,38 @@ public abstract class ScheduleService implements Serializable{
 		else
 			return temp;
 	}
-	protected Trigger buildTrigger(SchedulejobInfo jobInfo) throws Exception  
+	protected Trigger buildTrigger(Scheduler scheduler,SchedulejobInfo jobInfo) throws Exception
 	{
 		String triggertype = jobInfo.getJobPro().getStringExtendAttribute("trigger", "cron");
-		Trigger rtrigger = null; 
+		Trigger rtrigger = null;
+		String calendar = jobInfo.getJobPro().getStringExtendAttribute("calendar");
+
+
 		if(triggertype.equals("cron"))
 		{
-			CronTrigger trigger = new CronTrigger(jobInfo.getId(), scheduleServiceInfo.getId());
-			
-			trigger.setCronExpression(jobInfo.getCronb_time());
+
+//			CronTrigger trigger = new CronTrigger(jobInfo.getId(), scheduleServiceInfo.getId());
+			CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(jobInfo.getCronb_time());
 			String timeZone = jobInfo.getJobPro().getStringExtendAttribute("timeZone");
-			
+
 			if(!StringUtil.isEmpty(timeZone) )
 			{
-				trigger.setTimeZone(TimeZone.getTimeZone(timeZone));
+				cronScheduleBuilder.inTimeZone(TimeZone.getTimeZone(timeZone));
+			}
+			Trigger trigger = null;
+			if(!StringUtil.isEmpty(calendar))
+			{
+				trigger = newTrigger()
+						.withIdentity(jobInfo.getId(), scheduleServiceInfo.getId())
+						.withSchedule(cronScheduleBuilder).modifiedByCalendar(calendar)
+						.build();
+			}
+			else
+			{
+				trigger = newTrigger()
+						.withIdentity(jobInfo.getId(), scheduleServiceInfo.getId())
+						.withSchedule(cronScheduleBuilder)
+						.build();
 			}
 			rtrigger = trigger; 
 		}
@@ -168,10 +265,16 @@ public abstract class ScheduleService implements Serializable{
 			{
 	        	repeatInterval = Long.parseLong(s_repeatInterval);
 			}
-	        
-			SimpleTrigger simpletrigger = new SimpleTrigger(jobInfo.getId(), scheduleServiceInfo.getId(),  startTime,
-		             endTime,  repeatCount,  repeatInterval);
+			SimpleTriggerImpl simpletrigger = new SimpleTriggerImpl(jobInfo.getId(), scheduleServiceInfo.getId());
+			simpletrigger.setStartTime(startTime);
+			simpletrigger.setEndTime(endTime);
+			simpletrigger.setRepeatCount(repeatCount);
+			simpletrigger.setRepeatInterval(repeatInterval);
+			if(!StringUtil.isEmpty(calendar))
+				simpletrigger.setCalendarName(calendar);
 
+//			SimpleTrigger simpletrigger = new SimpleTrigger(jobInfo.getId(), scheduleServiceInfo.getId(),  startTime,
+//		             endTime,  repeatCount,  repeatInterval);
 			rtrigger = simpletrigger;
 		}
 		else if(triggertype.equals("DateInterval"))
@@ -200,6 +303,8 @@ public abstract class ScheduleService implements Serializable{
 			{
 	        	intervalUnit = getIntervalUnit(s_intervalUnit);
 			}
+			else
+				intervalUnit = IntervalUnit.SECOND;
 	        
 			String s_repeatInterval = jobInfo.getJobPro().getStringExtendAttribute("repeatInterval");
 	        int repeatInterval = 0;
@@ -207,9 +312,11 @@ public abstract class ScheduleService implements Serializable{
 			{
 	        	repeatInterval = Integer.parseInt(s_repeatInterval);
 			}
-			DateIntervalTrigger dateIntervalTrigger = new DateIntervalTrigger(jobInfo.getId(), scheduleServiceInfo.getId(), startTime,
+//			CalendarIntervalScheduleBuilder.calendarIntervalSchedule().withInterval(repeatInterval,intervalUnit);
+			CalendarIntervalTriggerImpl dateIntervalTrigger = new CalendarIntervalTriggerImpl(jobInfo.getId(), scheduleServiceInfo.getId(), startTime,
 		            endTime,  intervalUnit,   repeatInterval);
-
+			if(!StringUtil.isEmpty(calendar))
+				dateIntervalTrigger.setCalendarName(calendar);
 			rtrigger = dateIntervalTrigger;
 		}
 		else if(triggertype.equals("NthIncludedDay"))
@@ -265,7 +372,8 @@ public abstract class ScheduleService implements Serializable{
 			{
 				NthIncludedDayTrigger.setTimeZone(TimeZone.getTimeZone(timeZone));
 			}
-			
+			if(!StringUtil.isEmpty(calendar))
+				NthIncludedDayTrigger.setCalendarName(calendar);
 			rtrigger = NthIncludedDayTrigger;
 //			setNextFireCutoffInterval(int)
 		}
@@ -277,6 +385,8 @@ public abstract class ScheduleService implements Serializable{
 			{
 				TriggerBuilder rtrigger_builder = jobInfo.getJobPro().getApplicationContext().getTBeanObject(triggerbuilder_bean,TriggerBuilder.class);
 				rtrigger = rtrigger_builder.builder(jobInfo);
+				if(!StringUtil.isEmpty(calendar) && rtrigger instanceof AbstractTrigger)
+					((AbstractTrigger)rtrigger).setCalendarName(calendar);
 			}
 			else if(!StringUtil.isEmpty(triggerbuilder_class))
 			{
@@ -294,68 +404,19 @@ public abstract class ScheduleService implements Serializable{
 		if(!StringUtil.isEmpty(triggerlistenername) )
 		{
 			String[] triggerlistenernames = triggerlistenername.split("\\,");
+			ListenerManager listenerManager = scheduler.getListenerManager();
 			for(int i = 0; i < triggerlistenernames.length; i ++)
 			{
-				rtrigger.addTriggerListener(triggerlistenernames[i]);
+				TriggerListener l = (TriggerListener)Class.forName(triggerlistenernames[i].trim()).newInstance();
+				listenerManager.addTriggerListener(l,keyEquals(TriggerKey.triggerKey(jobInfo.getId(),scheduleServiceInfo.getId())));
+//				rtrigger.addTriggerListener(triggerlistenernames[i]);
 			}
 			
 		}
-		String calendar = jobInfo.getJobPro().getStringExtendAttribute("calendar");
-		
-		if(!StringUtil.isEmpty(calendar))
-		{
-			rtrigger.setCalendarName(calendar);
-		}			
+
 		return rtrigger;
 	}
-	protected void installExecuteJob(Scheduler scheduler,SchedulejobInfo jobInfo) throws Exception
-	{
-		log.info("启动作业组["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]中的作业["+jobInfo.getId()+"]开始。");
-		JobDetail jobDetail = new JobDetail(jobInfo.getId(),
-                //Scheduler.DEFAULT_GROUP,
-				scheduleServiceInfo.getId(),
-                ExecuteJOB.class);
-		
-		String joblistenername = jobInfo.getJobPro().getStringExtendAttribute("joblistenername");
-		if(!StringUtil.isEmpty(joblistenername) )
-		{
-			String[] joblistenernames = joblistenername.split("\\,");
-			for(int i = 0; i < joblistenernames.length; i ++)
-			{
-				jobDetail.addJobListener(joblistenernames[i]);
-			}
-			
-		}
-		JobDataMap map = new JobDataMap();
-		Execute instance = (Execute)Class.forName(jobInfo.getClazz() ).newInstance();
-		map.put("action",instance);
-		map.put("parameters",jobInfo.getParameters());
-		jobDetail.setJobDataMap(map);
-		jobDetail.setRequestsRecovery(jobInfo.isShouldRecover());
-		//jobDetail.se
-		
-		
-		String volatility = jobInfo.getJobPro().getStringExtendAttribute("volatility");
-		if(!StringUtil.isEmpty(volatility))
-		{
-			jobDetail.setVolatility(Boolean.parseBoolean(volatility));
-		}
-		String description = jobInfo.getJobPro().getStringExtendAttribute("description");
-		if(!StringUtil.isEmpty(description))
-		{
-			jobDetail.setDescription(description);
-		}
-		String durability = jobInfo.getJobPro().getStringExtendAttribute("durability");
-		if(!StringUtil.isEmpty(description))
-		{
-			jobDetail.setDurability(Boolean.parseBoolean(durability));
-		}
-		
-		Trigger trigger = this.buildTrigger(jobInfo);
-		scheduler.scheduleJob(jobDetail,trigger);
-		log.info("启动作业组["+(jobInfo.getParent() !=null?jobInfo.getParent().getId():"")+"]中的作业["+jobInfo.getId()+"]完毕。");
-	}
-	
+
 	public void startupConfigedService(Scheduler scheduler)
 	{
 		List list  = this.scheduleServiceInfo.getJobs();
@@ -405,7 +466,7 @@ public abstract class ScheduleService implements Serializable{
 	public boolean isExist(Scheduler scheduler,String groupid,String jobid)
 	{
 		try {
-			Object obj = scheduler.getJobDetail(jobid,groupid);
+			Object obj = scheduler.getJobDetail(new JobKey(jobid,groupid));
 			if(obj != null)
 				return true;
 			else

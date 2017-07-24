@@ -32,16 +32,16 @@
  *****************************************************************************/
 package com.frameworkset.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
+import org.apache.log4j.Logger;
+import org.apache.oro.text.regex.*;
+import org.frameworkset.json.JacksonObjectMapperWrapper;
+import org.frameworkset.json.JsonTypeReference;
+import org.frameworkset.util.CollectionUtils;
+import org.frameworkset.util.DataFormatUtil;
+import org.frameworkset.util.ObjectUtils;
+import org.frameworkset.util.encoder.Charsets;
+
+import java.io.*;
 import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.URLDecoder;
@@ -49,40 +49,7 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.TimeZone;
-import java.util.TreeSet;
-
-import org.apache.log4j.Logger;
-import org.apache.oro.text.regex.MalformedPatternException;
-import org.apache.oro.text.regex.MatchResult;
-import org.apache.oro.text.regex.Pattern;
-import org.apache.oro.text.regex.PatternCompiler;
-import org.apache.oro.text.regex.PatternMatcher;
-import org.apache.oro.text.regex.PatternMatcherInput;
-import org.apache.oro.text.regex.Perl5Compiler;
-import org.apache.oro.text.regex.Perl5Matcher;
-import org.apache.oro.text.regex.StringSubstitution;
-import org.frameworkset.json.JacksonObjectMapperWrapper;
-import org.frameworkset.json.JsonTypeReference;
-import org.frameworkset.util.CollectionUtils;
-import org.frameworkset.util.DataFormatUtil;
-import org.frameworkset.util.ObjectUtils;
-import org.frameworkset.util.encoder.Charsets;
+import java.util.*;
 
 /**
  * To change for your class or interface DAO中VOObject String类型与PO数据类型转换工具类.
@@ -468,7 +435,6 @@ public class SimpleStringUtil  {
 	/**
 	 * 将字符串数组转换成日期数组
 	 * 
-	 * @param dates
 	 *            Date[] 字符串数组
 	 * @return String[] 日期数组
 	 */
@@ -508,7 +474,6 @@ public class SimpleStringUtil  {
 	/**
 	 * 将字符串数组转换成日期数组
 	 * 
-	 * @param dates
 	 *            Date[] 字符串数组
 	 * @return String[] 日期数组
 	 */
@@ -530,7 +495,6 @@ public class SimpleStringUtil  {
 	/**
 	 * 将字符串数组转换成日期数组
 	 * 
-	 * @param dates
 	 *            Date[] 字符串数组
 	 * @return String[] 日期数组
 	 */
@@ -574,7 +538,6 @@ public class SimpleStringUtil  {
 	/**
 	 * 将字符串数组转换成日期数组
 	 * 
-	 * @param dates
 	 *            Date[] 字符串数组
 	 * @return String[] 日期数组
 	 */
@@ -596,7 +559,6 @@ public class SimpleStringUtil  {
 	/**
 	 * 将字符串数组转换成日期数组
 	 * 
-	 * @param dates
 	 *            Date[] 字符串数组
 	 * @return String[] 日期数组
 	 */
@@ -639,7 +601,6 @@ public class SimpleStringUtil  {
 	/**
 	 * 将字符串数组转换成日期数组
 	 * 
-	 * @param dates
 	 *            Date[] 字符串数组
 	 * @return String[] 日期数组
 	 */
@@ -746,10 +707,12 @@ public class SimpleStringUtil  {
      * @since 2.0
      */
     public static final String EMPTY = "";
+
 	/**
-	 * @param val
-	 * @param string
-	 * @param string2
+	 *
+	 * @param str
+	 * @param searchChars
+	 * @param replaceChars
 	 * @return
 	 */
 	public static String replaceChars(String str, String searchChars, String replaceChars) {
@@ -951,7 +914,6 @@ public class SimpleStringUtil  {
 	 *            String
 	 * @param token
 	 *            String
-	 * @param CASE_INSENSITIVE
 	 *            boolean
 	 * @return String[]
 	 */
@@ -1169,7 +1131,6 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	 * 
 	 * @param s
 	 *            <code>String</code> to be translated.
-	 * @param enc
 	 *            The name of a supported <a
 	 *            href="../lang/package-summary.html#charenc">character encoding
 	 *            </a>.
@@ -2247,13 +2208,23 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	public static String exceptionToString(Throwable exception)
 	{
 		StringWriter out = new StringWriter();
-		exception.printStackTrace(new java.io.PrintWriter(out));
-		String errorMessage = out.toString();
+		try {
+			exception.printStackTrace(new java.io.PrintWriter(out));
+			String errorMessage = out.toString();
+			return errorMessage;
+		}
+		finally {
+			try {
+				out.close();
+			} catch (IOException e) {
+			}
+		}
+
 //		errorMessage = errorMessage.replaceAll("\\n",
 //				"\\\\n");
 //		errorMessage = errorMessage.replaceAll("\\r",
 //				"\\\\r");
-		return errorMessage;
+
 	}
 	
 //	/**
@@ -2307,7 +2278,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	 * 对value采用charset进行URLEncode编码，编码的次数根据encoudtimes指定
 	 * @param value
 	 * @param charset
-	 * @param encoudtimes
+	 * @param encodecount
 	 * @return
 	 */
 	public static String urlencode(String value,String charset,int encodecount)
@@ -2372,7 +2343,6 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
      * 
     
    
-     * @param locales
      * @return
      */
     public static Map<String,Locale> getAllLocales()
@@ -2947,7 +2917,6 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	     *             required by the Java platform specification.
 	     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
 	     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-	     * @see #getBytesUnchecked(String, String)
 	     */
 	    public static byte[] getBytesUsAscii(final String string) {
 	        return getBytes(string, Charsets.US_ASCII);
@@ -2965,7 +2934,6 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	     *             required by the Java platform specification.
 	     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
 	     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-	     * @see #getBytesUnchecked(String, String)
 	     */
 	    public static byte[] getBytesUtf16(final String string) {
 	        return getBytes(string, Charsets.UTF_16);
@@ -2983,7 +2951,6 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	     *             required by the Java platform specification.
 	     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
 	     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-	     * @see #getBytesUnchecked(String, String)
 	     */
 	    public static byte[] getBytesUtf16Be(final String string) {
 	        return getBytes(string, Charsets.UTF_16BE);
@@ -3001,7 +2968,6 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	     *             required by the Java platform specification.
 	     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
 	     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-	     * @see #getBytesUnchecked(String, String)
 	     */
 	    public static byte[] getBytesUtf16Le(final String string) {
 	        return getBytes(string, Charsets.UTF_16LE);
@@ -3019,7 +2985,6 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	     *             required by the Java platform specification.
 	     * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
 	     * @see <a href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
-	     * @see #getBytesUnchecked(String, String)
 	     */
 	    public static byte[] getBytesUtf8(final String string) {
 	        return getBytes(string, Charsets.UTF_8);

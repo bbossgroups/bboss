@@ -16,14 +16,13 @@
 
 package org.frameworkset.task;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.quartz.SimpleTrigger;
-import org.quartz.Trigger;
-
 import com.frameworkset.util.StringUtil;
 import com.frameworkset.util.ValueObjectUtil;
+import org.quartz.Trigger;
+import org.quartz.impl.triggers.SimpleTriggerImpl;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * <p>Title: TestTiggerBuilder.java</p> 
@@ -77,9 +76,14 @@ public class TestTiggerBuilder implements TriggerBuilder {
 		}
         else
         	repeatInterval = 2000;
-        
-		SimpleTrigger simpletrigger = new SimpleTrigger(jobInfo.getId(), jobInfo.getScheduleServiceInfo().getId(),  startTime,
-	             endTime,  repeatCount,  repeatInterval);
+
+		SimpleTriggerImpl simpletrigger = new SimpleTriggerImpl(jobInfo.getId(), jobInfo.getScheduleServiceInfo().getId());
+		simpletrigger.setStartTime(startTime);
+		simpletrigger.setEndTime(endTime);
+		simpletrigger.setRepeatCount(repeatCount);
+		simpletrigger.setRepeatInterval(repeatInterval);
+
+
 		return simpletrigger;
 	}
 
