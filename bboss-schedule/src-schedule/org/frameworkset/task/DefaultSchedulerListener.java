@@ -17,10 +17,7 @@
 package org.frameworkset.task;
 
 import org.apache.log4j.Logger;
-import org.quartz.JobDetail;
-import org.quartz.SchedulerException;
-import org.quartz.SchedulerListener;
-import org.quartz.Trigger;
+import org.quartz.*;
 
 
 /**
@@ -43,8 +40,8 @@ public class DefaultSchedulerListener implements SchedulerListener {
 
 	}
 
-	public void jobUnscheduled(String triggerName, String triggerGroup) {
-		log.info("job Unscheduled:triggerName="+triggerName + ",triggerGroup="+triggerGroup);
+	public void jobUnscheduled(TriggerKey triggerKey) {
+		log.info("job Unscheduled:triggerName="+triggerKey.getName() + ",triggerGroup="+triggerKey.getGroup());
 
 	}
 
@@ -53,33 +50,78 @@ public class DefaultSchedulerListener implements SchedulerListener {
 
 	}
 
-	public void triggersPaused(String triggerName, String triggerGroup) {
-		log.info("triggers Paused:triggerName="+triggerName + ",triggerGroup="+triggerGroup);
+	@Override
+	public void triggerPaused(TriggerKey triggerKey) {
+		log.info("trigger Paused"+triggerKey.getName() + ",triggerGroup="+triggerKey.getGroup());
+	}
+
+	@Override
+	public void triggersPaused(String triggerGroup) {
+		log.info("trigger Paused" + " triggerGroup="+triggerGroup);
+	}
+
+	@Override
+	public void triggerResumed(TriggerKey triggerKey) {
+		log.info("trigger Resumed"+triggerKey.getName() + ",triggerGroup="+triggerKey.getGroup());
+	}
+
+	@Override
+	public void triggersResumed(String triggerGroup) {
+		log.info("trigger Resumed" + " triggerGroup="+triggerGroup);
+	}
+
+	public void triggersPaused(TriggerKey triggerKey) {
+		log.info("triggers Paused:triggerName="+triggerKey.getName() + ",triggerGroup="+triggerKey.getGroup());
 
 	}
 
-	public void triggersResumed(String triggerName, String triggerGroup) {
-		log.info("triggers Resumed:triggerName="+triggerName + ",triggerGroup="+triggerGroup);
+	public void triggersResumed(TriggerKey triggerKey) {
+		log.info("triggers Resumed:triggerName="+triggerKey.getName() + ",triggerGroup="+triggerKey.getGroup());
 
 	}
-
+	@Override
 	public void jobAdded(JobDetail jobDetail) {
 		log.info("job Added:"+jobDetail.toString());
 
 	}
 
-	public void jobDeleted(String jobName, String groupName) {
-		log.info("job Deleted:jobName="+jobName + ",groupName="+groupName);
+	@Override
+	public void jobDeleted(JobKey jobKey) {
+		log.info("job Deleted:"+jobKey.toString());
+	}
+
+	@Override
+	public void jobPaused(JobKey jobKey) {
+		log.info("job Paused:"+jobKey.toString());
+	}
+
+	@Override
+	public void jobsPaused(String jobGroup) {
+		log.info("job Paused:"+jobGroup);
+	}
+
+	@Override
+	public void jobResumed(JobKey jobKey) {
+		log.info("job Resumed:"+jobKey.toString());
+	}
+
+	@Override
+	public void jobsResumed(String jobGroup) {
+		log.info("job Resumed:"+jobGroup);
+	}
+
+	public void jobDeleted(TriggerKey triggerKey) {
+		log.info("job Deleted:jobName="+triggerKey.getName() + ",triggerGroup="+triggerKey.getGroup());
 
 	}
 
-	public void jobsPaused(String jobName, String jobGroup) {
-		log.info("jobs Paused:jobName="+jobName + ",jobGroup="+jobGroup);
+	public void jobsPaused(TriggerKey triggerKey) {
+		log.info("jobs Paused:jobName="+triggerKey.getName() + ",triggerGroup="+triggerKey.getGroup());
 
 	}
 
-	public void jobsResumed(String jobName, String jobGroup) {
-		log.info("jobs Resumed:jobName="+jobName + ",jobGroup="+jobGroup);
+	public void jobsResumed(TriggerKey triggerKey) {
+		log.info("jobs Resumed:jobName="+triggerKey.getName() + ",triggerGroup="+triggerKey.getGroup());
 
 	}
 
@@ -98,6 +140,11 @@ public class DefaultSchedulerListener implements SchedulerListener {
 
 	}
 
+	@Override
+	public void schedulerStarting() {
+		log.info("scheduler  Starting .");
+	}
+
 	public void schedulerShutdown() {
 		log.info("scheduler Shutdown .");
 
@@ -106,6 +153,11 @@ public class DefaultSchedulerListener implements SchedulerListener {
 	public void schedulerShuttingdown() {
 		log.info("scheduler Shutdown.");
 
+	}
+
+	@Override
+	public void schedulingDataCleared() {
+		log.info("scheduler  Data Cleared .");
 	}
 
 }

@@ -16,9 +16,9 @@
 
 package org.frameworkset.task;
 
-import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: GlobalTriggerListener.java</p> 
@@ -30,7 +30,7 @@ import org.quartz.Trigger;
  * @version 1.0
  */
 public class GlobalTriggerListener extends BaseTriggerListener {
-	private static Logger log = Logger.getLogger(GlobalTriggerListener.class);
+	private static org.slf4j.Logger log = LoggerFactory.getLogger(DefaultTriggerListener.class);
 	
 	public GlobalTriggerListener() {
 		// TODO Auto-generated constructor stub
@@ -52,10 +52,13 @@ public class GlobalTriggerListener extends BaseTriggerListener {
 
 	}
 
-	public void triggerComplete(Trigger trigger, JobExecutionContext context,
-			int triggerInstructionCode) {
-		log.info("Default Global trigger Complete:耗时"+context.getJobRunTime()+" milliseconds,["+context.toString()+"],[triggerInstructionCode="+triggerInstructionCode+"]");
+	@Override
+	public void triggerComplete(Trigger trigger, JobExecutionContext context, Trigger.CompletedExecutionInstruction triggerInstructionCode) {
+		if(log.isInfoEnabled())
+			log.info("Default Global trigger Complete:耗时"+context.getJobRunTime()+" milliseconds,["+context.toString()+"],[triggerInstructionCode="+triggerInstructionCode+"]");
 
 	}
+
+
 
 }

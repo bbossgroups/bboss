@@ -16,9 +16,12 @@
 
 package org.frameworkset.task;
 
-import org.apache.log4j.Logger;
+
 import org.quartz.JobExecutionContext;
+import org.quartz.Scheduler;
 import org.quartz.Trigger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: DefaultTriggerListener.java</p> 
@@ -30,7 +33,7 @@ import org.quartz.Trigger;
  * @version 1.0
  */
 public class DefaultTriggerListener  extends BaseTriggerListener {
-	private static Logger log = Logger.getLogger(DefaultTriggerListener.class);
+	private static Logger log = LoggerFactory.getLogger(DefaultTriggerListener.class);
 	
 	public DefaultTriggerListener() {
 		// TODO Auto-generated constructor stub
@@ -38,7 +41,8 @@ public class DefaultTriggerListener  extends BaseTriggerListener {
 	
 
 	public void triggerFired(Trigger trigger, JobExecutionContext context) {
-		log.info("Default trigger Fired:["+context.toString()+"]");
+		if(log.isInfoEnabled())
+			log.info("Default trigger Fired:["+context.toString()+"]");
 
 	}
 
@@ -48,15 +52,55 @@ public class DefaultTriggerListener  extends BaseTriggerListener {
 	}
 
 	public void triggerMisfired(Trigger trigger) {
-		log.info("Default trigger Misfired:[" + trigger.toString()+"]");
+		if(log.isInfoEnabled())
+			log.info("Default trigger Misfired:[" + trigger.toString()+"]");
 
 	}
 
-	public void triggerComplete(Trigger trigger, JobExecutionContext context,
-			int triggerInstructionCode) {
-		log.info("Default trigger Complete:耗时"+context.getJobRunTime()+" milliseconds,["+context.toString()+"],[triggerInstructionCode="+triggerInstructionCode+"]");
+//	public void triggerComplete(Trigger trigger, JobExecutionContext context,
+//			int triggerInstructionCode) {
+//		if(log.isInfoEnabled())
+//			log.info("Default trigger Complete:耗时"+context.getJobRunTime()+" milliseconds,["+context.toString()+"],[triggerInstructionCode="+triggerInstructionCode+"]");
+//
+//	}
 
-	}
+
+
+
+	/*
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *
+     * Interface.
+     *
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     */
+
+
+
+
+
+    /**
+     * <p>
+     * Called by the <code>{@link Scheduler}</code> when a <code>{@link Trigger}</code>
+     * has fired, it's associated <code>{@link org.quartz.JobDetail}</code>
+     * has been executed, and it's <code>triggered(xx)</code> method has been
+     * called.
+     * </p>
+     *
+     * @param trigger
+     *          The <code>Trigger</code> that was fired.
+     * @param context
+     *          The <code>JobExecutionContext</code> that was passed to the
+     *          <code>Job</code>'s<code>execute(xx)</code> method.
+     * @param triggerInstructionCode
+     *          the result of the call on the <code>Trigger</code>'s<code>triggered(xx)</code>
+     *          method.
+     */
+   public void triggerComplete(Trigger trigger, JobExecutionContext context,
+            Trigger.CompletedExecutionInstruction triggerInstructionCode){
+	   if(log.isInfoEnabled())
+		   log.info("Default trigger Complete:耗时"+context.getJobRunTime()+" milliseconds,["+context.toString()+"],[triggerInstructionCode="+triggerInstructionCode+"]");
+   }
 
 	
 	
