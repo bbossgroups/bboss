@@ -9,6 +9,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
@@ -17,6 +18,8 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import java.io.File;
@@ -124,6 +127,28 @@ public class HttpRequestUtil {
 
 
         return httpPost;
+    }
+
+    private static HttpDelete getHttpDelete(String httppoolname, String url, String cookie, String userAgent, Map<String, String> headers) {
+        HttpDelete httpDelete = new HttpDelete(url);
+        RequestConfig requestConfig = ClientConfiguration.getClientConfiguration(httppoolname).getRequestConfig();
+        httpDelete.setConfig(requestConfig);
+        httpDelete.addHeader("Host", "www.bbossgroups.com");
+        httpDelete.addHeader("Connection", "Keep-Alive");
+        if (cookie != null)
+            httpDelete.addHeader("Cookie", cookie);
+        if (userAgent != null)
+            httpDelete.addHeader("User-Agent", userAgent);
+        if (headers != null && headers.size() > 0) {
+            Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
+            while (entries.hasNext()) {
+                Entry<String, String> entry = entries.next();
+                httpDelete.addHeader(entry.getKey(), entry.getValue());
+            }
+        }
+
+
+        return httpDelete;
     }
 
     public static String httpGetforString(String url) throws Exception {
@@ -452,6 +477,121 @@ public class HttpRequestUtil {
             } finally {
                 // 释放连接
                 httpPost.releaseConnection();
+                httpClient = null;
+            }
+        } while (time < RETRY_TIME);
+        return responseBody;
+
+    }
+    /**
+     * 公用delete方法
+     *
+     * @param poolname
+     * @param url
+
+     * @throws Exception
+     */
+    public static String httpDelete(String poolname, String url) throws Exception{
+       return httpDelete(  poolname,   url, (String) null, (String) null, (Map<String, Object>) null,
+               (Map<String, String>) null);
+
+    }
+
+    /**
+     * 公用delete方法
+     *
+     * @param url
+
+     * @throws Exception
+     */
+    public static String httpDelete( String url) throws Exception{
+        return httpDelete(  "default",   url, (String) null, (String) null, (Map<String, Object>) null,
+                (Map<String, String>) null);
+
+    }
+
+    /**
+     * 公用delete方法
+     *
+     * @param poolname
+     * @param url
+     * @param cookie
+     * @param userAgent
+     * @param params
+     * @param headers
+     * @throws Exception
+     */
+    public static String httpDelete(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
+                                                Map<String, String> headers) throws Exception {
+
+
+        HttpClient httpClient = null;
+        HttpDelete httpDelete = null;
+
+
+
+        String responseBody = "";
+        int time = 0;
+        int RETRY_TIME = ClientConfiguration.getClientConfiguration(poolname).getRetryTime();
+        do {
+            try {
+                httpClient = getHttpClient(poolname);
+                httpDelete = getHttpDelete(poolname, url, cookie, userAgent, headers);
+                if(params != null && params.size() > 0) {
+                    HttpParams httpParams = new BasicHttpParams();
+                    Iterator<Entry<String, Object>> it = params.entrySet().iterator();
+                    NameValuePair paramPair_ = null;
+                    for (int i = 0; it.hasNext(); i++) {
+                        Entry<String, Object> entry = it.next();
+                        httpParams.setParameter(entry.getKey(), entry.getValue());
+                    }
+                    httpDelete.setParams(httpParams);
+                }
+                // Create a custom response handler
+                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+
+                    @Override
+                    public String handleResponse(final HttpResponse response)
+                            throws ClientProtocolException, IOException {
+                        int status = response.getStatusLine().getStatusCode();
+                        HttpEntity entity = response.getEntity();
+                        if (status >= 200 && status < 300) {
+                            return entity != null ? EntityUtils.toString(entity) : null;
+                        } else {
+                            throw new ClientProtocolException("Unexpected response status: " + status);
+                        }
+                    }
+
+                };
+                responseBody = httpClient.execute(httpDelete, responseHandler);
+                break;
+            } catch (ClientProtocolException e) {
+                throw new HttpRuntimeException("请求异常：", e);
+            } catch (HttpException e) {
+                time++;
+                if (time < RETRY_TIME) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                    }
+                    continue;
+                }
+                // 发生致命的异常，可能是协议不对或者返回的内容有问题
+                throw new HttpRuntimeException("请求异常：", e);
+            } catch (IOException e) {
+                time++;
+                if (time < RETRY_TIME) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                    }
+                    continue;
+                }
+                // 发生网络异常
+                throw new HttpRuntimeException("请求异常：", e);
+            } finally {
+                // 释放连接
+                httpDelete.releaseConnection();
                 httpClient = null;
             }
         } while (time < RETRY_TIME);

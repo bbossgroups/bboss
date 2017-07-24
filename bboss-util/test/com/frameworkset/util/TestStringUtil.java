@@ -1,14 +1,8 @@
 package com.frameworkset.util;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.frameworkset.json.JsonTypeReference;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import java.util.*;
 
 public class TestStringUtil {
 	@org.junit.Test
