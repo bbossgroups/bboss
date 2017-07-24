@@ -23,7 +23,9 @@ dependencies {
 		[group: 'bsh', name: 'bsh', version: '2.0b1', transitive: false],
 		[group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: false],
 		[group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
-		[group: 'log4j', name: 'log4j', version: '1.2.16', transitive: false],
-		[group: 'org.quartz-scheduler', name: 'quartz', version: '1.8.6', transitive: false]
+		[group: 'log4j', name: 'log4j', version: '1.2.17', transitive: false],
+		[group: 'org.quartz-scheduler', name: 'quartz', version: '1.8.6', transitive: false],
+			[group: 'org.slf4j', name: 'slf4j-api', version: '1.7.2', transitive: false],
+			[group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.2', transitive: false],
 	)
 }
