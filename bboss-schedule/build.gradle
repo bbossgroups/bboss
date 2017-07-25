@@ -19,7 +19,7 @@ sourceSets {
 project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.install)
 dependencies {
 	compile (
-		[group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
+		[group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: true],
 		[group: 'bsh', name: 'bsh', version: '2.0b1', transitive: false],
 		[group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: false],
 		[group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],

@@ -199,11 +199,16 @@ public class HttpRequestUtil {
                     public String handleResponse(final HttpResponse response)
                             throws ClientProtocolException, IOException {
                         int status = response.getStatusLine().getStatusCode();
+
                         if (status >= 200 && status < 300) {
                             HttpEntity entity = response.getEntity();
                             return entity != null ? EntityUtils.toString(entity) : null;
                         } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
+                            HttpEntity entity = response.getEntity();
+                            if (entity != null )
+                                return EntityUtils.toString(entity);
+                            else
+                                throw new ClientProtocolException("Unexpected response status: " + status);
                         }
                     }
 
@@ -211,7 +216,7 @@ public class HttpRequestUtil {
                 responseBody = httpClient.execute(httpGet, responseHandler);
                 break;
             } catch (ClientProtocolException e) {
-                throw new HttpRuntimeException("请求异常：", e);
+                throw   e;
             } catch (IOException e) {
                 time++;
                 if (time < RETRY_TIME) {
@@ -222,7 +227,7 @@ public class HttpRequestUtil {
                     continue;
                 }
                 // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                throw new HttpRuntimeException("请求异常：", e);
+                throw   e;
             } catch (Exception e) {
                 time++;
                 if (time < RETRY_TIME) {
@@ -233,8 +238,7 @@ public class HttpRequestUtil {
                     continue;
                 }
                 // 发生网络异常
-                e.printStackTrace();
-                throw new HttpRuntimeException("请求异常：", e);
+                throw   e;
             } finally {
                 // 释放连接
                 httpGet.releaseConnection();
@@ -439,11 +443,17 @@ public class HttpRequestUtil {
                     public String handleResponse(final HttpResponse response)
                             throws ClientProtocolException, IOException {
                         int status = response.getStatusLine().getStatusCode();
-                        HttpEntity entity = response.getEntity();
+
                         if (status >= 200 && status < 300) {
+                            HttpEntity entity = response.getEntity();
+
                             return entity != null ? EntityUtils.toString(entity) : null;
                         } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
+                            HttpEntity entity = response.getEntity();
+                            if (entity != null )
+                                return EntityUtils.toString(entity);
+                            else
+                                throw new ClientProtocolException("Unexpected response status: " + status);
                         }
                     }
 
@@ -451,7 +461,7 @@ public class HttpRequestUtil {
                 responseBody = httpClient.execute(httpPost, responseHandler);
                 break;
             } catch (ClientProtocolException e) {
-                throw new HttpRuntimeException("请求异常：", e);
+                throw   e;
             } catch (HttpException e) {
                 time++;
                 if (time < RETRY_TIME) {
@@ -462,7 +472,7 @@ public class HttpRequestUtil {
                     continue;
                 }
                 // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                throw new HttpRuntimeException("请求异常：", e);
+                throw   e;
             } catch (IOException e) {
                 time++;
                 if (time < RETRY_TIME) {
@@ -473,7 +483,7 @@ public class HttpRequestUtil {
                     continue;
                 }
                 // 发生网络异常
-                throw new HttpRuntimeException("请求异常：", e);
+                throw   e;
             } finally {
                 // 释放连接
                 httpPost.releaseConnection();
@@ -507,6 +517,32 @@ public class HttpRequestUtil {
     public static String httpDelete( String url) throws Exception{
         return httpDelete(  "default",   url, (String) null, (String) null, (Map<String, Object>) null,
                 (Map<String, String>) null);
+
+    }
+
+    /**
+     * 公用delete方法
+     *
+     * @param url
+
+     * @throws Exception
+     */
+    public static String httpDelete( String url,Map<String, String> headers) throws Exception{
+        return httpDelete(  "default",   url, (String) null, (String) null, (Map<String, Object>) null,
+                headers);
+
+    }
+
+    /**
+     * 公用delete方法
+     *
+     * @param url
+
+     * @throws Exception
+     */
+    public static String httpDelete( String url,Map<String, Object> params,Map<String, String> headers) throws Exception{
+        return httpDelete(  "default",   url, (String) null, (String) null, params,
+                headers);
 
     }
 
@@ -554,11 +590,18 @@ public class HttpRequestUtil {
                     public String handleResponse(final HttpResponse response)
                             throws ClientProtocolException, IOException {
                         int status = response.getStatusLine().getStatusCode();
-                        HttpEntity entity = response.getEntity();
+
                         if (status >= 200 && status < 300) {
+                            HttpEntity entity = response.getEntity();
                             return entity != null ? EntityUtils.toString(entity) : null;
                         } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
+                            HttpEntity entity = response.getEntity();
+                            if (entity != null )
+                                return EntityUtils.toString(entity);
+                            else
+                                throw new ClientProtocolException("Unexpected response status: " + status);
+
+//                            throw new ClientProtocolException(msg);
                         }
                     }
 
@@ -566,7 +609,7 @@ public class HttpRequestUtil {
                 responseBody = httpClient.execute(httpDelete, responseHandler);
                 break;
             } catch (ClientProtocolException e) {
-                throw new HttpRuntimeException("请求异常：", e);
+                throw   e;
             } catch (HttpException e) {
                 time++;
                 if (time < RETRY_TIME) {
@@ -577,7 +620,7 @@ public class HttpRequestUtil {
                     continue;
                 }
                 // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                throw new HttpRuntimeException("请求异常：", e);
+                throw   e;
             } catch (IOException e) {
                 time++;
                 if (time < RETRY_TIME) {
@@ -588,7 +631,7 @@ public class HttpRequestUtil {
                     continue;
                 }
                 // 发生网络异常
-                throw new HttpRuntimeException("请求异常：", e);
+                throw   e;
             } finally {
                 // 释放连接
                 httpDelete.releaseConnection();
@@ -661,12 +704,16 @@ public class HttpRequestUtil {
                     public String handleResponse(final HttpResponse response)
                             throws ClientProtocolException, IOException {
                         int status = response.getStatusLine().getStatusCode();
-                        HttpEntity entity = response.getEntity();
-                        if (status >= 200 && status < 300) {
 
+                        if (status >= 200 && status < 300) {
+                            HttpEntity entity = response.getEntity();
                             return entity != null ? EntityUtils.toString(entity) : null;
                         } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
+                            HttpEntity entity = response.getEntity();
+                            if (entity != null )
+                                return EntityUtils.toString(entity);
+                            else
+                                throw new ClientProtocolException("Unexpected response status: " + status);
                         }
                     }
 
@@ -674,7 +721,7 @@ public class HttpRequestUtil {
                 responseBody = httpClient.execute(httpPost,responseHandler);
                 break;
             } catch (ClientProtocolException e) {
-                throw new HttpRuntimeException("请求异常：", e);
+                throw  e;
             } catch (HttpException e) {
                 time++;
                 if (time < RETRY_TIME) {
@@ -685,7 +732,7 @@ public class HttpRequestUtil {
                     continue;
                 }
                 // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                throw new HttpRuntimeException("请求异常：", e);
+                throw   e;
             } catch (IOException e) {
                 time++;
                 if (time < RETRY_TIME) {
@@ -696,7 +743,7 @@ public class HttpRequestUtil {
                     continue;
                 }
                 // 发生网络异常
-                throw new HttpRuntimeException("请求异常：", e);
+                throw   e;
             } finally {
                 // 释放连接
                 httpPost.releaseConnection();
