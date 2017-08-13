@@ -209,10 +209,11 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 //					return SKIP_BODY;
 				}
 				catch (Throwable e) {
-					if(e.getCause() == null)
-						log.debug(e.getMessage());
-					else
-						log.debug(e.getCause().getMessage());
+//					if(e.getCause() == null)
+//						log.debug(e.getMessage());
+//					else
+//						log.debug(e.getCause().getMessage());
+					log.debug(e.getMessage(),e);
 //					return SKIP_BODY;
 				}
 			}
