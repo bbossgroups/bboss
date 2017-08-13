@@ -40,7 +40,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.XMLMark;
@@ -63,7 +64,7 @@ public class CallableDBUtil extends PreparedDBUtil {
 	public static int CALL_PROCEDURE = 0;
 	public static int CALL_FUNCTION = 1;
 	
-	private static Logger log = Logger.getLogger(CallableDBUtil.class);
+	private static Logger log = LoggerFactory.getLogger(CallableDBUtil.class);
 	/**
 	 * 覆盖父类的参数构造方法
 	 */

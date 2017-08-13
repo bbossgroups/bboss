@@ -26,11 +26,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
-
-import bboss.org.apache.velocity.VelocityContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.SQLManager;
@@ -38,6 +37,8 @@ import com.frameworkset.util.DaemonThread;
 import com.frameworkset.util.ResourceInitial;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.velocity.BBossVelocityUtil;
+
+import bboss.org.apache.velocity.VelocityContext;
 
 /**
  * <p>
@@ -59,7 +60,7 @@ import com.frameworkset.velocity.BBossVelocityUtil;
  */
 public class SQLUtil {
 	protected BaseApplicationContext sqlcontext;
-	private static Logger log = Logger.getLogger(SQLUtil.class);
+	private static Logger log = LoggerFactory.getLogger(SQLUtil.class);
 	protected static Map<String,SQLUtil> sqlutils = new HashMap<String,SQLUtil>(); 
 	protected SQLCache cache = new SQLCache(); 
 	protected static long refresh_interval = 5000;

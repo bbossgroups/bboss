@@ -21,10 +21,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.CollectionUtils;
 import org.frameworkset.util.ObjectUtils;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: HandlerExecutionChain.java</p> 
@@ -37,7 +38,7 @@ import org.frameworkset.web.servlet.handler.HandlerMeta;
  */
 public class HandlerExecutionChain {
 	private final HandlerMeta handler;
-	private static Logger logger = Logger.getLogger(HandlerExecutionChain.class);
+	private static Logger logger = LoggerFactory.getLogger(HandlerExecutionChain.class);
 	private HandlerInterceptor[] interceptors;
 
 	private List<HandlerInterceptor> interceptorList;

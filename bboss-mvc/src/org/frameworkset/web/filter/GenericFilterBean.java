@@ -8,7 +8,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BeanNameAware;
 import org.frameworkset.spi.DisposableBean;
 import org.frameworkset.spi.InitializingBean;
@@ -16,6 +15,8 @@ import org.frameworkset.util.Assert;
 import org.frameworkset.util.beans.BeanWrapper;
 import org.frameworkset.util.beans.BeansException;
 import org.frameworkset.web.servlet.context.ServletContextAware;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple base implementation of {@link javax.servlet.Filter} which treats
@@ -48,7 +49,7 @@ public abstract class GenericFilterBean implements
 		Filter, BeanNameAware,  ServletContextAware, InitializingBean, DisposableBean {
 
 	/** Logger available to subclasses */
-	protected static final Logger logger = Logger.getLogger(GenericFilterBean.class);
+	protected static final Logger logger = LoggerFactory.getLogger(GenericFilterBean.class);
 
 
 	/**

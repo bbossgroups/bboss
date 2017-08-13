@@ -31,12 +31,13 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.AntPathMatcher;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.PathMatcher;
 import org.frameworkset.util.ReflectionUtils;
 import org.frameworkset.util.ResourceUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.SimpleStringUtil;
 
@@ -56,7 +57,7 @@ import com.frameworkset.util.SimpleStringUtil;
  */
 public class PathMatchingResourcePatternResolver implements ResourcePatternResolver {
 
-	private static final Logger logger = Logger.getLogger(PathMatchingResourcePatternResolver.class);
+	private static final Logger logger = LoggerFactory.getLogger(PathMatchingResourcePatternResolver.class);
 
 	private static Method equinoxResolveMethod;
 

@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.io.PropertiesLoaderUtils;
 import org.frameworkset.util.CollectionUtils;
@@ -32,7 +31,8 @@ import org.frameworkset.util.io.DefaultResourceLoader;
 import org.frameworkset.util.io.Resource;
 import org.frameworkset.util.io.ResourceEditor;
 import org.frameworkset.util.io.ResourceLoader;
-import org.frameworkset.web.servlet.view.ContentNegotiatingViewResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
@@ -76,7 +76,7 @@ import freemarker.template.TemplateException;
  */
 public class FreeMarkerConfigurationFactory {
 
-	protected final static Logger logger = Logger.getLogger(FreeMarkerConfigurationFactory.class);
+	protected final static Logger logger = LoggerFactory.getLogger(FreeMarkerConfigurationFactory.class);
 
 	private Resource configLocation;
 

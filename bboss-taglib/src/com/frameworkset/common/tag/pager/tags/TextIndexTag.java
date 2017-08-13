@@ -2,9 +2,11 @@ package com.frameworkset.common.tag.pager.tags;
 
 import javax.servlet.jsp.JspException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.frameworkset.common.tag.pager.TextListInfo;
 import com.frameworkset.util.StringUtil;
-import org.apache.log4j.Logger;
 
 /**
  * <p>Title: TextIndexTag</p>
@@ -25,7 +27,7 @@ import org.apache.log4j.Logger;
  * @version 1.0
  */
 public class TextIndexTag extends TextSupportTag {
-    private static Logger log = Logger.getLogger(TextIndexTag.class);
+    private static Logger log = LoggerFactory.getLogger(TextIndexTag.class);
     public int doEndTag() throws JspException
     {
         TextListInfo listInfo = pagerTag.getListInfo();
@@ -91,7 +93,7 @@ public class TextIndexTag extends TextSupportTag {
             }
             catch(Exception e)
             {
-                log.error(e);
+                log.error("",e);
             }
         }
         return super.doEndTag();

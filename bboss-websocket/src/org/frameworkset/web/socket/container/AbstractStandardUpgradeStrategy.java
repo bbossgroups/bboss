@@ -14,7 +14,6 @@ import javax.websocket.Extension;
 import javax.websocket.WebSocketContainer;
 import javax.websocket.server.ServerContainer;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.http.HttpHeaders;
 import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.ServerHttpResponse;
@@ -28,6 +27,8 @@ import org.frameworkset.web.socket.handler.HandshakeFailureException;
 import org.frameworkset.web.socket.handler.WebSocketToStandardExtensionAdapter;
 import org.frameworkset.web.socket.inf.WebSocketExtension;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * A base class for {@link RequestUpgradeStrategy} implementations that build
  * on the standard WebSocket API for Java (JSR-356).
@@ -37,7 +38,7 @@ import org.frameworkset.web.socket.inf.WebSocketHandler;
  */
 public abstract class AbstractStandardUpgradeStrategy  implements RequestUpgradeStrategy {
 
-	protected final static Logger logger = Logger.getLogger(AbstractStandardUpgradeStrategy.class);
+	protected final static Logger logger = LoggerFactory.getLogger(AbstractStandardUpgradeStrategy.class);
 
 	private volatile List<WebSocketExtension> extensions;
 

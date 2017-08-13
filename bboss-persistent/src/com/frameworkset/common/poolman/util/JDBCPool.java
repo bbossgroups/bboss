@@ -35,8 +35,9 @@ import javax.naming.NameNotFoundException;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.NestedSQLException;
@@ -66,7 +67,7 @@ import com.frameworkset.util.StringUtil;
  * PooledConnection implementation, PoolManConnection.
  */
 public class JDBCPool {
-	private static Logger log = Logger.getLogger(JDBCPool.class);
+	private static Logger log = LoggerFactory.getLogger(JDBCPool.class);
 	public static String TABLE_TYPE_VIEW = "VIEW";
 	public static String TABLE_TYPE_TABLE = "TABLE";
 	public static String TABLE_TYPE_ALL = "ALL";

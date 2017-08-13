@@ -1,18 +1,34 @@
 package org.frameworkset.task;
 
-import org.apache.log4j.Logger;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.assemble.ProMap;
 import org.quartz.Calendar;
-import org.quartz.*;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.JobListener;
+import org.quartz.ListenerManager;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SchedulerFactory;
+import org.quartz.SchedulerListener;
+import org.quartz.TriggerKey;
+import org.quartz.TriggerListener;
 import org.quartz.impl.SchedulerRepository;
 import org.quartz.impl.StdSchedulerFactory;
-
-import java.io.IOException;
-import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -25,7 +41,7 @@ import java.util.*;
  * @version 1.0
  */
 public class TaskService implements Service {
-	private static Logger log = Logger.getLogger(ScheduleService.class);
+	private static Logger log = LoggerFactory.getLogger(ScheduleService.class);
 
 	
 	private Scheduler scheduler = null;

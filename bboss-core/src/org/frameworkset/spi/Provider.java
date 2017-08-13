@@ -23,7 +23,7 @@ package org.frameworkset.spi;
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: 长沙科创计算机系统集成有限公司</p>
+ * <p>Company: bbossgroups</p>
  *
  * @author biaoping.yin
  * @version 1.0

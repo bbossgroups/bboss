@@ -10,7 +10,7 @@ import java.util.Observer;
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: chinacreator</p>
+ * <p>Company: bbossgroups</p>
  * @Date 2006-9-15
  * @author biaoping.yin
  * @version 1.0

@@ -37,7 +37,7 @@ import com.frameworkset.common.tag.tree.itf.ITreeNode;
  * @author biaoping.yin 
  * @date 2006-12-19 8:54:08
  * @version v1.0
- * @company chinacreator.com
+ * @company bbossgroups
  */
 public class TreeIteratorElement implements ITreeIteratorElement,java.io.Serializable {
 

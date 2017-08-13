@@ -19,9 +19,10 @@ package org.frameworkset.spi;
 import java.io.InputStream;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: DefaultApplicationContext.java</p> 
@@ -33,7 +34,7 @@ import org.frameworkset.spi.assemble.callback.AssembleCallback;
  * @version 1.0
  */
 public class DefaultApplicationContext extends BaseApplicationContext {
-	private static Logger log = Logger.getLogger(DefaultApplicationContext.class);
+	private static Logger log = LoggerFactory.getLogger(DefaultApplicationContext.class);
 	/**
 	 * 获取指定根配置文件上下文bean组件管理容器，配置文件从参数configfile对应配置文件开始
 	 * 不同的上下文件环境容器互相隔离，组件间不存在依赖关系，属性也不存在任何引用关系。

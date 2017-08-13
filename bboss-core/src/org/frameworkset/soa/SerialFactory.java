@@ -20,10 +20,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: SerialFactory.java</p> 
@@ -35,7 +36,7 @@ import org.frameworkset.spi.assemble.Pro;
  * @version 1.0
  */
 public class SerialFactory {
-	private static Logger log = Logger.getLogger(SerialFactory.class);
+	private static Logger log = LoggerFactory.getLogger(SerialFactory.class);
 	private Map<String,MagicClass> magicclassesByName = new HashMap<String,MagicClass>();
 	private Map<String,MagicClass> magicclassesByMagicNumber = new HashMap<String,MagicClass>();
 	/**

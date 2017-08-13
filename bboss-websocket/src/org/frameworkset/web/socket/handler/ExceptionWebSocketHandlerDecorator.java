@@ -1,15 +1,15 @@
 package org.frameworkset.web.socket.handler;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.web.socket.inf.CloseStatus;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.frameworkset.web.socket.inf.WebSocketMessage;
 import org.frameworkset.web.socket.inf.WebSocketSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ExceptionWebSocketHandlerDecorator extends WebSocketHandlerDecorator {
 
-	private final Log logger = LogFactory.getLog(ExceptionWebSocketHandlerDecorator.class);
+	private final Logger logger = LoggerFactory.getLogger(ExceptionWebSocketHandlerDecorator.class);
 
 
 	public ExceptionWebSocketHandlerDecorator(WebSocketHandler delegate) {
@@ -27,7 +27,7 @@ public class ExceptionWebSocketHandlerDecorator extends WebSocketHandlerDecorato
 		}
 	}
 
-	public static void tryCloseWithError(WebSocketSession session, Throwable exception, Log logger) {
+	public static void tryCloseWithError(WebSocketSession session, Throwable exception, Logger logger) {
 		logger.error("Closing due to exception for " + session, exception);
 		if (session.isOpen()) {
 			try {

@@ -27,8 +27,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.ResourceUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -45,7 +46,7 @@ import org.frameworkset.util.ResourceUtils;
  */
 public abstract class AbstractResource implements Resource {
 	protected volatile long savesize;
-	private static Logger log = Logger.getLogger(AbstractResource.class);
+	private static Logger log = LoggerFactory.getLogger(AbstractResource.class);
 	
 
 	/**

@@ -20,19 +20,18 @@ package bboss.org.apache.velocity.runtime.log;
  */
 
 import java.util.Date;
-import org.apache.log.format.PatternFormatter;
 
 /**
  *
  */
-public class VelocityFormatter extends PatternFormatter
+public class VelocityFormatter 
 {
     /**
      * @param format
      */
     public VelocityFormatter( String format )
     {
-	super( format );
+	
     }
 
     /**

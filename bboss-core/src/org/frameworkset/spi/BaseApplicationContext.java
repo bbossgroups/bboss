@@ -32,7 +32,6 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.assemble.BaseTXManager;
 import org.frameworkset.spi.assemble.BeanAccembleHelper;
 import org.frameworkset.spi.assemble.BeanInf;
@@ -64,6 +63,8 @@ import org.frameworkset.util.io.PathMatchingResourcePatternResolver;
 import org.frameworkset.util.io.Resource;
 import org.frameworkset.util.io.ResourceLoader;
 import org.frameworkset.util.io.ResourcePatternResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.proxy.InvocationHandler;
 import com.frameworkset.proxy.ProxyFactory;
@@ -874,7 +875,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				} catch (SecurityException e) {
 					log.error(e.getMessage(),e);
 				} catch (NoSuchMethodException e) {
-					log.error(e);
+					log.error("getDeclaredMethod",e);
 				} catch (Exception e) {
 					log.error(e.getMessage(),e);
 				}
@@ -918,7 +919,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		destroyServiceMethods.add(destoryMethod);
 	}
 
-	private static Logger log = Logger.getLogger(BaseApplicationContext.class);
+	private static Logger log = LoggerFactory.getLogger(BaseApplicationContext.class);
 
 	/**
 	 * 缺省接口key

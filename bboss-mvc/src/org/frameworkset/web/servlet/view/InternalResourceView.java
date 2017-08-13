@@ -26,10 +26,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.web.servlet.support.ContextExposingHttpServletRequest;
 import org.frameworkset.web.servlet.support.RequestMethodHttpServletRequest;
 import org.frameworkset.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.StringUtil;
 
@@ -43,7 +44,7 @@ import com.frameworkset.util.StringUtil;
  * @version 1.0
  */
 public class InternalResourceView  extends AbstractUrlBasedView {
-	private static Logger logger = Logger.getLogger(InternalResourceView.class);
+	private static Logger logger = LoggerFactory.getLogger(InternalResourceView.class);
 	private boolean alwaysInclude = false;
 
 	private Boolean exposeForwardAttributes;

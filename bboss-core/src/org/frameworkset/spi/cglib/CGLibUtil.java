@@ -19,13 +19,6 @@ package org.frameworkset.spi.cglib;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import net.sf.cglib.proxy.Callback;
-import net.sf.cglib.proxy.Enhancer;
-import net.sf.cglib.proxy.MethodInterceptor;
-import net.sf.cglib.proxy.MethodProxy;
-import net.sf.cglib.proxy.NoOp;
-
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.assemble.BaseTXManager;
 import org.frameworkset.spi.assemble.Pro;
@@ -39,8 +32,16 @@ import org.frameworkset.spi.async.CallBackService;
 import org.frameworkset.spi.async.CallBackServiceImpl;
 import org.frameworkset.spi.async.CallService;
 import org.frameworkset.spi.interceptor.AfterThrowable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.proxy.Interceptor;
+
+import net.sf.cglib.proxy.Callback;
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
+import net.sf.cglib.proxy.NoOp;
 
 /**
  * <p>Title: CGLibUtil.java</p> 
@@ -52,7 +53,7 @@ import com.frameworkset.proxy.Interceptor;
  * @version 1.0
  */
 public class CGLibUtil {
-	private static Logger log = Logger.getLogger(CGLibUtil.class);
+	private static Logger log = LoggerFactory.getLogger(CGLibUtil.class);
 	private static AsyncCall asyncCall;
 	private static Object lock = new Object();
 	

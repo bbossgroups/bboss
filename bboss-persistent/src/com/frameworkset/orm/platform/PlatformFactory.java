@@ -33,7 +33,8 @@ package com.frameworkset.orm.platform;
 
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Factory class responsible to create Platform objects that
@@ -46,7 +47,7 @@ import org.apache.log4j.Logger;
 public class PlatformFactory
 {
     private static HashMap platforms = new HashMap();
-    private static Logger log = Logger.getLogger(PlatformFactory.class);
+    private static Logger log = LoggerFactory.getLogger(PlatformFactory.class);
 
     /**
      * Returns the Platform for a platform name.

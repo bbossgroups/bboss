@@ -6,18 +6,18 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.http.HttpStatus;
 import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.ServerHttpResponse;
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.frameworkset.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class OriginHandshakeInterceptor  implements HandshakeInterceptor {
 
-	protected Log logger = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final Set<String> allowedOrigins = new LinkedHashSet<String>();
 

@@ -3,8 +3,9 @@ package org.frameworkset.web.request.async;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.web.servlet.mvc.NativeWebRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Assists with the invocation of {@link CallableProcessingInterceptor}'s.
@@ -15,7 +16,7 @@ import org.frameworkset.web.servlet.mvc.NativeWebRequest;
  */
 class CallableInterceptorChain {
 
-	protected static final Logger logger = Logger.getLogger(CallableInterceptorChain.class);
+	protected static final Logger logger = LoggerFactory.getLogger(CallableInterceptorChain.class);
 	private final List<CallableProcessingInterceptor> interceptors;
 
 	private int preProcessIndex = -1;

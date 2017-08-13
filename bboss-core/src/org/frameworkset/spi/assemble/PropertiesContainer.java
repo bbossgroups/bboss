@@ -1,23 +1,30 @@
 package org.frameworkset.spi.assemble;
 
-import com.frameworkset.util.SimpleStringUtil;
-import org.apache.log4j.Logger;
-import org.frameworkset.spi.BaseApplicationContext;
-import org.frameworkset.util.io.ClassPathResource;
-import org.frameworkset.util.tokenizer.TextGrammarParser;
-import org.frameworkset.util.tokenizer.TextGrammarParser.GrammarToken;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.util.io.ClassPathResource;
+import org.frameworkset.util.tokenizer.TextGrammarParser;
+import org.frameworkset.util.tokenizer.TextGrammarParser.GrammarToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.frameworkset.util.SimpleStringUtil;
+
 public class PropertiesContainer {
     protected List<String> configPropertiesFiles;
     protected Properties allProperties ;
     protected Properties sonAndParentProperties ;
-    private static Logger log = Logger.getLogger(PropertiesContainer.class);
+    private static Logger log = LoggerFactory.getLogger(PropertiesContainer.class);
     public void addConfigPropertiesFile(String configPropertiesFile,LinkConfigFile linkfile)
     {
     	if(configPropertiesFiles == null)

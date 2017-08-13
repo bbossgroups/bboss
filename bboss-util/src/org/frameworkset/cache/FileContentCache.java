@@ -5,7 +5,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.DaemonThread;
 import com.frameworkset.util.FileUtil;
@@ -36,7 +37,7 @@ public class FileContentCache
 			
 		}
 	}
-	private static Logger log = Logger.getLogger(FileContentCache.class);
+	private static Logger log = LoggerFactory.getLogger(FileContentCache.class);
 	private Map<String,String> democontentCache = new HashMap<String,String>();	
 	public static final int HTMLNoBREncode  = 0;
 	public static final int HTMLEncode  = 1;

@@ -17,9 +17,10 @@
 package org.frameworkset.spi.support;
 
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.ApplicationContextException;
 import org.frameworkset.spi.BaseApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.spi.assemble.BeanInstanceException;
 
@@ -38,7 +39,7 @@ import com.frameworkset.spi.assemble.BeanInstanceException;
  */
 public class ApplicationObjectSupport {
 	/** Logger that is available to subclasses */
-	protected static final Logger logger = Logger.getLogger(ApplicationObjectSupport.class);
+	protected static final Logger logger = LoggerFactory.getLogger(ApplicationObjectSupport.class);
 	
 	/** ApplicationContext this object runs in */
 	private BaseApplicationContext applicationContext;

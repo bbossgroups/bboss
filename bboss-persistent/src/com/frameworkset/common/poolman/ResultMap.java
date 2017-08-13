@@ -24,12 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.wraper.ColumnWraper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
 import com.frameworkset.common.poolman.handle.ResultSetNullRowHandler;
@@ -74,7 +75,7 @@ public class ResultMap {
 	public static int type_xml = 3;
 	public static int type_maparray = 4;
 	public static int type_null = 5;
-	private static Logger log = Logger.getLogger(ResultMap.class);
+	private static Logger log = LoggerFactory.getLogger(ResultMap.class);
 	private Object functionResult;
 
 	private Record origineprocresult;

@@ -21,8 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.UNmodify;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: </p>
@@ -33,13 +34,13 @@ import org.frameworkset.spi.UNmodify;
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: 长沙科创</p>
+ * <p>Company: bboss</p>
  *
  * @author biaoping.yin
  * @version 1.0
  */
 public class ProviderManagerInfo extends BaseTXManager implements UNmodify {
-    private static Logger log = Logger.getLogger(ProviderManagerInfo.class);
+    private static Logger log = LoggerFactory.getLogger(ProviderManagerInfo.class);
     private String id;
     private String jndiName;
     private ProviderInfoQueue providerQueue;

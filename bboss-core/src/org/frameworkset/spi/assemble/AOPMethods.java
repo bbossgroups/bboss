@@ -22,8 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.UNmodify;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: AOPMethods.java</p> 
@@ -36,7 +37,7 @@ import org.frameworkset.spi.UNmodify;
  */
 public class AOPMethods  implements java.io.Serializable,UNmodify
 {
-    private static Logger log = Logger.getLogger(Transactions.class);
+    private static Logger log = LoggerFactory.getLogger(Transactions.class);
 
     /**
      * 事务方法信息 List<SynchronizedMethod>

@@ -37,8 +37,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.I18NUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.tree.COMTree;
@@ -52,7 +53,7 @@ import com.frameworkset.common.tag.tree.TreeFactory;
  */
 
 public class TreeData extends BaseTag {
-	private final static Logger log = Logger.getLogger(TreeData.class);
+	private final static Logger log = LoggerFactory.getLogger(TreeData.class);
 	private boolean enablecontextmenu = false;
 	/**
 		 * 树根节点checkbox 的值

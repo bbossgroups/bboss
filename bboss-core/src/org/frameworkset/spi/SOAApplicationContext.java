@@ -18,10 +18,11 @@ package org.frameworkset.spi;
 import java.io.InputStream;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 import org.frameworkset.spi.assemble.soa.SOAServiceProviderManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: SOAApplicationContext.java</p> 
@@ -33,7 +34,7 @@ import org.frameworkset.spi.assemble.soa.SOAServiceProviderManager;
  * @version 1.0
  */
 public class SOAApplicationContext extends DefaultApplicationContext {
-	private static Logger log = Logger.getLogger(SOAApplicationContext.class);
+	private static Logger log = LoggerFactory.getLogger(SOAApplicationContext.class);
 	private String charset;
 	protected boolean serial; 
 	

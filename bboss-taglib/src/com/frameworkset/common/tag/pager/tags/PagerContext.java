@@ -14,10 +14,11 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.SQLParams;
@@ -51,7 +52,7 @@ import com.frameworkset.util.StringUtil;
  * </p>
  * 
  * <p>
- * Company: chinacreator
+ * Company: bbossgroups
  * </p>
  * 
  * @Date 2007-2-1 10:04:58
@@ -89,7 +90,7 @@ public class PagerContext
 	private Tag tag;
 	private SQLExecutor sqlExecutor;
 
-	private final static Logger log = Logger.getLogger(PagerContext.class);
+	private final static Logger log = LoggerFactory.getLogger(PagerContext.class);
 
 	private HttpServletRequest request;
 

@@ -17,8 +17,9 @@ package com.frameworkset.common.poolman;
 
 import java.sql.SQLException;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.persitent.util.SQLInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SQLInfoDBUtil extends PreparedDBUtil {
 	
@@ -26,7 +27,7 @@ public class SQLInfoDBUtil extends PreparedDBUtil {
 	
 
 
-	private static Logger log = Logger.getLogger(SQLInfoDBUtil.class);
+	private static Logger log = LoggerFactory.getLogger(SQLInfoDBUtil.class);
 	
 	
 	 /**

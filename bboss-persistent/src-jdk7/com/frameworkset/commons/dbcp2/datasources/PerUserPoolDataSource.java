@@ -29,9 +29,10 @@ import javax.naming.Reference;
 import javax.naming.StringRefAddr;
 import javax.sql.ConnectionPoolDataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.frameworkset.commons.dbcp2.SwallowedExceptionLogger;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import com.frameworkset.commons.pool2.ObjectPool;
 import com.frameworkset.commons.pool2.impl.GenericObjectPool;
 
@@ -61,8 +62,8 @@ public class PerUserPoolDataSource extends InstanceKeyDataSource {
 
     private static final long serialVersionUID = 7872747993848065028L;
 
-    private static final Log log =
-            LogFactory.getLog(PerUserPoolDataSource.class);
+    private static final Logger log =
+    		LoggerFactory.getLogger(PerUserPoolDataSource.class);
 
     // Per user pool properties
     private Map<String,Boolean> perUserBlockWhenExhausted = null;

@@ -7,8 +7,6 @@ import javax.websocket.Endpoint;
 import javax.websocket.EndpointConfig;
 import javax.websocket.MessageHandler;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.socket.handler.ExceptionWebSocketHandlerDecorator;
 import org.frameworkset.web.socket.inf.BinaryMessage;
@@ -16,10 +14,12 @@ import org.frameworkset.web.socket.inf.CloseStatus;
 import org.frameworkset.web.socket.inf.PongMessage;
 import org.frameworkset.web.socket.inf.TextMessage;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StandardWebSocketHandlerAdapter extends Endpoint {
 
-	private static final Log logger = LogFactory.getLog(StandardWebSocketHandlerAdapter.class);
+	private static final Logger logger = LoggerFactory.getLogger(StandardWebSocketHandlerAdapter.class);
 
 	private final WebSocketHandler handler;
 

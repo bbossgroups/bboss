@@ -38,7 +38,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author biaoping.yin
@@ -49,7 +50,7 @@ import org.apache.log4j.Logger;
 public class ListDataInfoFactory {
 	
 	
-	private static final Logger log = Logger.getLogger(ListDataInfoFactory.class);
+	private static final Logger log = LoggerFactory.getLogger(ListDataInfoFactory.class);
 	/**
 	 * Describe what the  constructor does
 	 * 

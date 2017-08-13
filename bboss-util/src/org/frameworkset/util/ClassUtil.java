@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.soa.annotation.ExcludeField;
 import org.frameworkset.util.annotations.Attribute;
 import org.frameworkset.util.annotations.CookieValue;
@@ -47,6 +46,8 @@ import org.frameworkset.util.annotations.wraper.PathVariableWraper;
 import org.frameworkset.util.annotations.wraper.RequestBodyWraper;
 import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
 import org.frameworkset.util.annotations.wraper.RequestParamWraper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.orm.annotation.IgnoreORMapping;
@@ -72,7 +73,7 @@ import com.frameworkset.util.ValueObjectUtil;
 public class ClassUtil
 {
 	
-	private static final Logger log = Logger.getLogger(ClassUtil.class);
+	private static final Logger log = LoggerFactory.getLogger(ClassUtil.class);
 	private static final ParameterNameDiscoverer parameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
 	public static void destroy()
 	{

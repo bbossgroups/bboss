@@ -16,8 +16,14 @@
 
 package org.frameworkset.task;
 
-import org.apache.log4j.Logger;
-import org.quartz.*;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.SchedulerException;
+import org.quartz.SchedulerListener;
+import org.quartz.Trigger;
+import org.quartz.TriggerKey;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -30,7 +36,7 @@ import org.quartz.*;
  * @version 1.0
  */
 public class DefaultSchedulerListener implements SchedulerListener {
-	private static Logger log = Logger.getLogger(DefaultSchedulerListener.class) ;
+	private static Logger log = LoggerFactory.getLogger(DefaultSchedulerListener.class) ;
 	public DefaultSchedulerListener() {
 		
 	}

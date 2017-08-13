@@ -46,7 +46,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.http.HttpEntity;
 import org.frameworkset.http.HttpHeaders;
 import org.frameworkset.http.HttpInputMessage;
@@ -110,6 +109,8 @@ import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.servlet.ModelAndView;
 import org.frameworkset.web.servlet.ModelMap;
+import org.frameworkset.web.servlet.handler.HandlerUtils.ServletHandlerMethodInvoker;
+import org.frameworkset.web.servlet.handler.HandlerUtils.ServletHandlerMethodResolver;
 import org.frameworkset.web.servlet.handler.annotations.ExcludeMethod;
 import org.frameworkset.web.servlet.handler.annotations.HandlerMethodInvoker;
 import org.frameworkset.web.servlet.handler.annotations.HandlerMethodResolver;
@@ -124,6 +125,8 @@ import org.frameworkset.web.servlet.view.UrlBasedViewResolver;
 import org.frameworkset.web.servlet.view.View;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.ArrayEditorInf;
 import com.frameworkset.util.BeanUtils;
@@ -150,7 +153,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * @version 1.0
  */
 public abstract class HandlerUtils {
-	protected static final Logger logger = Logger.getLogger(HandlerUtils.class);
+	protected static final Logger logger = LoggerFactory.getLogger(HandlerUtils.class);
 	/** Default command name used for binding command objects: "command" */
 	public static final String DEFAULT_COMMAND_NAME = "command";
 	public static final String USE_MVC_DENCODE_KEY = "org.frameworkset.web.servlet.handler.HandlerUtils.USE_MVC_DENCODE_KEY";
@@ -657,7 +660,7 @@ public abstract class HandlerUtils {
 								paramValue = URLDecoder.decode(paramValue_,
 										decodeCharset);
 							} catch (Exception e) {
-								logger.error(e);
+								logger.error("",e);
 								paramValue = paramValue_;
 							}
 						} else if (charset != null && convertcharset != null) {
@@ -666,7 +669,7 @@ public abstract class HandlerUtils {
 										paramValue_.getBytes(charset),
 										convertcharset);
 							} catch (Exception e) {
-								logger.error(e);
+								logger.error("",e);
 								paramValue = paramValue_;
 							}
 						} else {
@@ -2294,7 +2297,7 @@ public abstract class HandlerUtils {
 								value = URLDecoder
 										.decode(value_, decodeCharset);
 							} catch (Exception e) {
-								logger.error(e);
+								logger.error("",e);
 								value = value_;
 							}
 						} else if (charset != null && convertcharset != null) {
@@ -2302,7 +2305,7 @@ public abstract class HandlerUtils {
 								value = new String(value_.getBytes(charset),
 										convertcharset);
 							} catch (Exception e) {
-								logger.error(e);
+								logger.error("",e);
 								value = value_;
 							}
 						} else {
@@ -3391,7 +3394,7 @@ public abstract class HandlerUtils {
 	 * 
 	 * @see #PAGE_NOT_FOUND_LOG_CATEGORY
 	 */
-	protected final static Logger pageNotFoundLogger = Logger
+	protected final static Logger pageNotFoundLogger = LoggerFactory
 			.getLogger(PAGE_NOT_FOUND_LOG_CATEGORY);
 
 	// protected static final Log pageNotFoundLogger = LogFactory

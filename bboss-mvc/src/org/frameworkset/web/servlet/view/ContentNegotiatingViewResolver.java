@@ -33,7 +33,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.http.MediaType;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtils;
@@ -46,6 +45,8 @@ import org.frameworkset.web.servlet.context.ServletRequestAttributes;
 import org.frameworkset.web.servlet.support.WebApplicationObjectSupport;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.StringUtil;
 
@@ -98,7 +99,7 @@ import com.frameworkset.util.StringUtil;
  */
 public class ContentNegotiatingViewResolver extends WebApplicationObjectSupport implements ViewResolver {
 
-	private final static Logger logger = Logger.getLogger(ContentNegotiatingViewResolver.class);
+	private final static Logger logger = LoggerFactory.getLogger(ContentNegotiatingViewResolver.class);
 
 	private static final String ACCEPT_HEADER = "Accept";
 

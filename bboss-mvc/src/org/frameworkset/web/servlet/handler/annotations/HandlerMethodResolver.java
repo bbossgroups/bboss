@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.annotations.HandlerMapping;
 import org.frameworkset.util.annotations.MethodInfo;
@@ -36,6 +35,8 @@ import org.frameworkset.util.annotations.ModelAttribute;
 import org.frameworkset.util.annotations.SessionAttributes;
 import org.frameworkset.web.servlet.ModelAndView;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -53,7 +54,7 @@ public class HandlerMethodResolver {
 	private  Set<MethodInfo> handlerMethods = new LinkedHashSet<MethodInfo>();
 	/** Methods, keyed by exception class */
 	private  Map<Class, Method> exceptionHandlerMap = new HashMap<Class, Method>();
-	private final static Logger log = Logger.getLogger(HandlerMethodResolver.class);
+	private final static Logger log = LoggerFactory.getLogger(HandlerMethodResolver.class);
 
 	private final Set<Method> initBinderMethods = new LinkedHashSet<Method>();
 

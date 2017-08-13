@@ -15,11 +15,11 @@
  */
 package org.frameworkset.util.asm;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import bboss.org.objectweb.asm.ClassReader;
 import bboss.org.objectweb.asm.ClassWriter;
@@ -37,7 +37,7 @@ import bboss.org.objectweb.asm.ClassWriter;
  */
 public class AsmUtil {
 	private static final ASMClassLoader classLoader = new ASMClassLoader();
-	private static final Logger log = Logger.getLogger(AsmUtil.class);
+	private static final Logger log = LoggerFactory.getLogger(AsmUtil.class);
 	
 	public static final String bboss_field_getMethod_prex = "___bboss_pull";
 	public static final String bboss_field_setMethod_prex = "___bboss_put";

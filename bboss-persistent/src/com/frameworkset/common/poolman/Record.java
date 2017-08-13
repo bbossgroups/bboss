@@ -30,7 +30,8 @@ import java.sql.Types;
 import java.util.Calendar;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.handle.ValueExchange;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData.WrapInteger;
@@ -126,7 +127,7 @@ public class Record extends DBHashtable{
 //	private Map data = new HashMap();
 	
 	
-	private static Logger log = Logger.getLogger(Record.class);
+	private static Logger log = LoggerFactory.getLogger(Record.class);
 	
 	
 	

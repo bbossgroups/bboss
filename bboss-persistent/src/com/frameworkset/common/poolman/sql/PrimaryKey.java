@@ -41,7 +41,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.PreparedDBUtil;
@@ -61,7 +62,7 @@ import com.frameworkset.util.UUID;
  */
 public class PrimaryKey
 {
-	private static Logger log = Logger.getLogger(PrimaryKey.class);
+	private static Logger log = LoggerFactory.getLogger(PrimaryKey.class);
 
 	/** 多主键时主键及其当前值保存在本变量中 */
 	private Map primaryKeys;

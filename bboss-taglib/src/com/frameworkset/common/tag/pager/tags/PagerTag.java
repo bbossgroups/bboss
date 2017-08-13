@@ -40,8 +40,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 
-import org.apache.log4j.Logger;
-import org.frameworkset.web.servlet.support.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.tag.BaseTag;
@@ -57,7 +57,7 @@ import com.frameworkset.util.StringUtil;
  * @version 1.0 2005-2-3
  */
 public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
-	private final static Logger log = Logger.getLogger(PagerTag.class);
+	private final static Logger log = LoggerFactory.getLogger(PagerTag.class);
 	protected boolean moreQuery = false;
 //	protected String pretoken = "#\\[";
 //    protected String endtoken = "\\]";

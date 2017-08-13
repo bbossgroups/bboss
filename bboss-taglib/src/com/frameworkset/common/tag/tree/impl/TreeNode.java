@@ -48,7 +48,7 @@ import com.frameworkset.common.tag.tree.itf.ITreeNode;
  * @author biaoping.yin 
  * @date 2006-12-19 8:53:36
  * @version v1.0
- * @company chinacreator.com
+ * @company bbossgroups
  */
 public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 

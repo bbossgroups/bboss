@@ -18,18 +18,17 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadBase;
-
 import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-
-import org.apache.log4j.Logger;
 import org.frameworkset.util.io.Resource;
 import org.frameworkset.web.multipart.MaxUploadSizeExceededException;
 import org.frameworkset.web.multipart.MultipartException;
 import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.servlet.mvc.RequestMap;
 import org.frameworkset.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.StringUtil;
 
@@ -46,7 +45,7 @@ public abstract class CommonsFileUploadSupport {
 	public void setEncoding(String encoding) {
 		this.encoding = encoding;
 	}
-	protected final static Logger logger = Logger.getLogger(CommonsFileUploadSupport.class);
+	protected final static Logger logger = LoggerFactory.getLogger(CommonsFileUploadSupport.class);
 
 	private final DiskFileItemFactory fileItemFactory;
 

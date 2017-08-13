@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.core.Config;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.support.LocaleContext;
 import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.spi.support.MessageSourceResolvable;
@@ -46,6 +45,8 @@ import org.frameworkset.web.ui.context.ResourceBundleThemeSource;
 import org.frameworkset.web.ui.context.Theme;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.HtmlUtils;
 import com.frameworkset.util.StringUtil;
@@ -61,7 +62,7 @@ import com.frameworkset.util.StringUtil;
  * @version 1.0
  */
 public class RequestContext {
-	private static final Logger logger = Logger.getLogger(RequestContext.class);
+	private static final Logger logger = LoggerFactory.getLogger(RequestContext.class);
 	/**
 	 * Default theme name used if the RequestContext cannot find a ThemeResolver.
 	 * Only applies to non-DispatcherServlet requests.

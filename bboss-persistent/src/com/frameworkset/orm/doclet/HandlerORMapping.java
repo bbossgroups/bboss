@@ -20,7 +20,14 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.frameworkset.orm.ORMappingException;
+import com.frameworkset.orm.ORMappingManager;
+import com.frameworkset.orm.engine.model.Column;
+import com.frameworkset.orm.engine.model.Database;
+import com.frameworkset.orm.engine.model.Table;
 
 import xjavadoc.XClass;
 import xjavadoc.XDoc;
@@ -28,12 +35,6 @@ import xjavadoc.XField;
 import xjavadoc.XJavaDoc;
 import xjavadoc.XTag;
 import xjavadoc.filesystem.FileSourceSet;
-
-import com.frameworkset.orm.ORMappingException;
-import com.frameworkset.orm.ORMappingManager;
-import com.frameworkset.orm.engine.model.Column;
-import com.frameworkset.orm.engine.model.Database;
-import com.frameworkset.orm.engine.model.Table;
 
 /**
  * <p>Title: HandlerORMapping</p>
@@ -53,7 +54,7 @@ import com.frameworkset.orm.engine.model.Table;
  * @version 1.0
  */
 public class HandlerORMapping {
-    private static Logger log = Logger.getLogger(HandlerORMapping.class);
+    private static Logger log = LoggerFactory.getLogger(HandlerORMapping.class);
 
     private final XJavaDoc _xJavaDoc = new XJavaDoc();
     private File srcDir;

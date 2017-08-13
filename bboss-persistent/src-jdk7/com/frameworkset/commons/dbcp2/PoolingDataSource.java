@@ -21,12 +21,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.NoSuchElementException;
-import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.commons.pool2.ObjectPool;
 import com.frameworkset.commons.pool2.impl.GenericObjectPool;
@@ -46,7 +45,7 @@ import com.frameworkset.commons.pool2.impl.GenericObjectPool;
  */
 public class PoolingDataSource<C extends Connection> implements DataSource {
 
-    private static final Log log = LogFactory.getLog(PoolingDataSource.class);
+	private static final Logger log = LoggerFactory.getLogger(PoolingDataSource.class);
 
     /** Controls access to the underlying connection */
     private boolean accessToUnderlyingConnectionAllowed = false;
@@ -119,7 +118,7 @@ public class PoolingDataSource<C extends Connection> implements DataSource {
     /* JDBC_4_ANT_KEY_END */
 
     @Override
-    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+    public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
         throw new SQLFeatureNotSupportedException();
     }
 

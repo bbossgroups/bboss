@@ -1,5 +1,9 @@
 package bboss.org.apache.velocity.runtime.log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -19,8 +23,6 @@ package bboss.org.apache.velocity.runtime.log;
  * under the License.    
  */
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import bboss.org.apache.velocity.runtime.RuntimeServices;
 
@@ -58,44 +60,44 @@ public class JdkLogChute implements LogChute
         {
             name = DEFAULT_LOG_NAME;
         }
-        logger = Logger.getLogger(name);
+        logger = LoggerFactory.getLogger(name);
 
-        /* get and set specified level for this logger, */
-        String lvl = rs.getString(RUNTIME_LOG_JDK_LOGGER_LEVEL);
-        if (lvl != null)
-        {
-            Level level = Level.parse(lvl);
-            logger.setLevel(level);
-            log(LogChute.DEBUG_ID, "JdkLogChute will use logger '"
-                +name+'\''+" at level '"+level+'\'');
-        }
+//        /* get and set specified level for this logger, */
+//        String lvl = rs.getString(RUNTIME_LOG_JDK_LOGGER_LEVEL);
+//        if (lvl != null)
+//        {
+//            Level level = Level.parse(lvl);
+//            logger.setLevel(level);
+//            log(LogChute.DEBUG_ID, "JdkLogChute will use logger '"
+//                +name+'\''+" at level '"+level+'\'');
+//        }
 
     }
 
-    /**
-     * Returns the java.util.logging.Level that matches
-     * to the specified LogChute level.
-     * @param level
-     * @return The current log level of the JDK Logger.
-     */
-    protected Level getJdkLevel(int level)
-    {
-        switch (level)
-        {
-            case LogChute.WARN_ID:
-                return Level.WARNING;
-            case LogChute.INFO_ID:
-                return Level.INFO;
-            case LogChute.DEBUG_ID:
-                return Level.FINE;
-            case LogChute.TRACE_ID:
-                return Level.FINEST;
-            case LogChute.ERROR_ID:
-                return Level.SEVERE;
-            default:
-                return Level.FINER;
-        }
-    }
+//    /**
+//     * Returns the java.util.logging.Level that matches
+//     * to the specified LogChute level.
+//     * @param level
+//     * @return The current log level of the JDK Logger.
+//     */
+//    protected Level getJdkLevel(int level)
+//    {
+//        switch (level)
+//        {
+//            case LogChute.WARN_ID:
+//                return Level.WARNING;
+//            case LogChute.INFO_ID:
+//                return Level.INFO;
+//            case LogChute.DEBUG_ID:
+//                return Level.FINE;
+//            case LogChute.TRACE_ID:
+//                return Level.FINEST;
+//            case LogChute.ERROR_ID:
+//                return Level.SEVERE;
+//            default:
+//                return Level.FINER;
+//        }
+//    }
 
     /**
      * Logs messages
@@ -116,14 +118,68 @@ public class JdkLogChute implements LogChute
      */
     public void log(int level, String message, Throwable t)
     {
-        Level jdkLevel = getJdkLevel(level);
-        if (t == null)
+
+        switch (level)
         {
-            logger.log(jdkLevel, message);
-        }
-        else
-        {
-            logger.log(jdkLevel, message, t);
+            case LogChute.WARN_ID:
+            	 if (t == null)
+                 {
+                     logger.warn( message);
+                 }
+                 else
+                 {
+                     logger.warn( message, t);
+                 }
+                break;
+            case LogChute.INFO_ID:
+            	if (t == null)
+                {
+                    logger.info( message);
+                }
+                else
+                {
+                    logger.info( message, t);
+                }
+               break;
+            case LogChute.DEBUG_ID:
+            	if (t == null)
+                {
+                    logger.debug( message);
+                }
+                else
+                {
+                    logger.debug( message, t);
+                }
+               break;
+            case LogChute.TRACE_ID:
+            	if (t == null)
+                {
+                    logger.trace( message);
+                }
+                else
+                {
+                    logger.trace( message, t);
+                }
+               break;
+            case LogChute.ERROR_ID:
+            	if (t == null)
+                {
+                    logger.error( message);
+                }
+                else
+                {
+                    logger.error( message, t);
+                }
+               break;
+            default:
+            	if (t == null)
+                {
+                    logger.debug( message);
+                }
+                else
+                {
+                    logger.debug( message, t);
+                }
         }
     }
 
@@ -132,8 +188,21 @@ public class JdkLogChute implements LogChute
      */
     public boolean isLevelEnabled(int level)
     {
-        Level jdkLevel = getJdkLevel(level);
-        return logger.isLoggable(jdkLevel);
+    	switch (level)
+        {
+            case LogChute.WARN_ID:
+            	 return logger.isWarnEnabled();
+            case LogChute.INFO_ID:
+            	 return logger.isInfoEnabled();
+            case LogChute.DEBUG_ID:
+            	return logger.isDebugEnabled();
+            case LogChute.TRACE_ID:
+            	return logger.isTraceEnabled();
+            case LogChute.ERROR_ID:
+            	return logger.isErrorEnabled();
+            default:
+            	return logger.isDebugEnabled();
+        }
     }
 
 }

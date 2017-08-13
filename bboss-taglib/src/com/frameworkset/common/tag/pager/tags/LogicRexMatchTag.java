@@ -12,7 +12,7 @@ import com.frameworkset.util.RegexUtil;
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: 长沙科创计算机系统集成有限公司</p>
+ * <p>Company: bbossgroups</p>
  * @Date 2007-12-6 20:18:52
  * @author biaoping.yin
  * @version 1.0

@@ -33,7 +33,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.frameworkset.soa.ObjectSerializable;
 import org.frameworkset.soa.TransientFieldBean;
@@ -42,6 +41,8 @@ import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.cglib.CGLibProxy;
 import org.frameworkset.spi.cglib.CGLibUtil;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.caucho.hessian.io.HessianInput;
 import com.caucho.hessian.io.HessianOutput;
@@ -61,7 +62,7 @@ import com.thoughtworks.xstream.XStream;
  */
 public class TestSerializable
 {
-	private static Logger log = Logger.getLogger(TestSerializable.class);
+	private static Logger log = LoggerFactory.getLogger(TestSerializable.class);
 	 private static XStream xStream = new XStream();
 	 @Test
 		public void testCGlibSerial() throws Exception
@@ -79,11 +80,11 @@ public class TestSerializable
 					.getClass(), proxy);
 		
 			String xml = ObjectSerializable.toXML(po1);
-			System.out.println(xml);
+			log.debug(xml);
 			po = ObjectSerializable.toBean(xml, SerialPO.class);
-			System.out.println("name:"+po.getName());
-			System.out.println("job:"+po.getJob());
-			System.out.println("properties:"+po.getPropes());
+			log.debug("name:"+po.getName());
+			log.debug("job:"+po.getJob());
+			log.debug("properties:"+po.getPropes());
 		}
 		
 		public static class SerialPO

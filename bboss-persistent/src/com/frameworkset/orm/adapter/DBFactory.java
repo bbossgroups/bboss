@@ -21,7 +21,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class creates different {@link com.frameworkset.orm.adapter.DB}
@@ -37,7 +38,7 @@ import org.apache.log4j.Logger;
  */
 public class DBFactory 
 {
-	private static Logger log = Logger.getLogger(DBFactory.class);
+	private static Logger log = LoggerFactory.getLogger(DBFactory.class);
     /**
      * JDBC driver to Torque Adapter map.
      */

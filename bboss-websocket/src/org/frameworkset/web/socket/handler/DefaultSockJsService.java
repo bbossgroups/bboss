@@ -7,8 +7,6 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.schedule.TaskScheduler;
 import org.frameworkset.web.servlet.context.ServletContextAware;
 import org.frameworkset.web.socket.sockjs.TransportHandler;
@@ -20,6 +18,8 @@ import org.frameworkset.web.socket.sockjs.transport.TransportHandlingSockJsServi
 import org.frameworkset.web.socket.sockjs.transport.XhrPollingTransportHandler;
 import org.frameworkset.web.socket.sockjs.transport.XhrReceivingTransportHandler;
 import org.frameworkset.web.socket.sockjs.transport.XhrStreamingTransportHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultSockJsService  extends TransportHandlingSockJsService implements ServletContextAware {
 
@@ -72,7 +72,7 @@ public class DefaultSockJsService  extends TransportHandlingSockJsService implem
 			result.add(new WebSocketTransportHandler(new DefaultHandshakeHandler()));
 		}
 		catch (Exception ex) {
-			Log logger = LogFactory.getLog(DefaultSockJsService.class);
+			Logger logger = LoggerFactory.getLogger(DefaultSockJsService.class);
 			if (logger.isWarnEnabled()) {
 				logger.warn("Failed to create a default WebSocketTransportHandler", ex);
 			}

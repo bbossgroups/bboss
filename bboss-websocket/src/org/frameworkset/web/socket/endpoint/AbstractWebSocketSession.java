@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.socket.inf.BinaryMessage;
 import org.frameworkset.web.socket.inf.CloseStatus;
@@ -13,10 +11,12 @@ import org.frameworkset.web.socket.inf.PingMessage;
 import org.frameworkset.web.socket.inf.PongMessage;
 import org.frameworkset.web.socket.inf.TextMessage;
 import org.frameworkset.web.socket.inf.WebSocketMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractWebSocketSession <T> implements NativeWebSocketSession {
 
-	protected final Log logger = LogFactory.getLog(getClass());
+	protected final   Logger logger = LoggerFactory.getLogger(getClass());
 
 	private T nativeSession;
 

@@ -20,9 +20,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.io.Resource;
 import org.frameworkset.util.io.ResourceLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import freemarker.cache.TemplateLoader;
 
@@ -38,7 +39,7 @@ import freemarker.cache.TemplateLoader;
  */
 public class FreeMarkerTemplateLoader implements TemplateLoader {
 
-	protected final static Logger logger = Logger.getLogger(FreeMarkerTemplateLoader.class);
+	protected final static Logger logger = LoggerFactory.getLogger(FreeMarkerTemplateLoader.class);
 
 	private final ResourceLoader resourceLoader;
 

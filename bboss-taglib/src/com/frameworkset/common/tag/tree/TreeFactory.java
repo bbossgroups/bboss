@@ -42,7 +42,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.tag.tree.itf.ITree;
 
@@ -53,7 +54,7 @@ import com.frameworkset.common.tag.tree.itf.ITree;
  */
 public class TreeFactory implements Serializable
 {
-	private final static Logger log = Logger.getLogger(TreeFactory.class);
+	private final static Logger log = LoggerFactory.getLogger(TreeFactory.class);
 	private static HashMap map;
 	static
 	{

@@ -9,8 +9,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.http.HttpStatus;
 import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.ServerHttpResponse;
@@ -23,6 +21,8 @@ import org.frameworkset.web.socket.container.RequestUpgradeStrategy;
 import org.frameworkset.web.socket.inf.SubProtocolCapable;
 import org.frameworkset.web.socket.inf.WebSocketExtension;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.StringUtil;
 
@@ -53,7 +53,7 @@ public class AbstractHandshakeHandler  implements HandshakeHandler, Lifecycle {
 			"com.ibm.websphere.wsoc.WsWsocServerContainer", classLoader);
 
 
-	protected final Log logger = LogFactory.getLog(getClass());
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final RequestUpgradeStrategy requestUpgradeStrategy;
 

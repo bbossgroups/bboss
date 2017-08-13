@@ -21,11 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.async.annotation.Async;
 import org.frameworkset.spi.async.annotation.Constants;
 import org.frameworkset.spi.async.annotation.Result;
 //import org.frameworkset.spi.remote.RPCMethodCall;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.orm.annotation.TransactionType;
 import com.frameworkset.orm.transaction.TransactionException;
@@ -38,13 +39,13 @@ import com.frameworkset.util.RegexUtil;
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: 长沙科创计算机系统集成有限公司</p>
+ * <p>Company: bboss</p>
  *
  * @author biaoping.yin
  * @version 1.0
  */
 public class SynchronizedMethod implements java.io.Serializable {
-	private static Logger log = Logger.getLogger(SynchronizedMethod.class);
+	private static Logger log = LoggerFactory.getLogger(SynchronizedMethod.class);
 	
 	/**
 	 * 注解事务方法

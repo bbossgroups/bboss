@@ -1,5 +1,8 @@
 package bboss.org.apache.velocity.runtime.log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -19,10 +22,10 @@ package bboss.org.apache.velocity.runtime.log;
  * under the License.    
  */
 
-import org.apache.log4j.Category;
-import org.apache.log4j.Level;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.RollingFileAppender;
+//import org.apache.log4j.Category;
+//import org.apache.log4j.Level;
+//import org.apache.log4j.PatternLayout;
+//import org.apache.log4j.RollingFileAppender;
 import bboss.org.apache.velocity.runtime.RuntimeConstants;
 import bboss.org.apache.velocity.runtime.RuntimeServices;
 
@@ -43,10 +46,10 @@ import bboss.org.apache.velocity.runtime.RuntimeServices;
 public class SimpleLog4JLogSystem implements LogSystem
 {
     private RuntimeServices rsvc = null;
-    private RollingFileAppender appender = null;
+//    private RollingFileAppender appender = null;
 
     /** log4java logging interface */
-    protected Category logger = null;
+    protected Logger logger = null;
 
     /**
      *
@@ -67,11 +70,11 @@ public class SimpleLog4JLogSystem implements LogSystem
          *  the application to make us use an existing logger
          */
 
-        String categoryname =  (String) rsvc.getProperty("runtime.log.logsystem.log4j.category");
+        String categoryname =  "bboss.org.apache.velocity";
 
         if ( categoryname != null )
         {
-            logger = Category.getInstance( categoryname );
+            logger = LoggerFactory.getLogger(categoryname );
 
             logVelocityMessage( 0,
                                 "SimpleLog4JLogSystem using category '" + categoryname + "'");
@@ -112,23 +115,24 @@ public class SimpleLog4JLogSystem implements LogSystem
          *  do it by our classname to avoid conflicting with anything else
          *  that might be used...
          */
+    	logger = LoggerFactory.getLogger(this.getClass().getName());
 
-        logger = Category.getInstance(this.getClass().getName());
-        logger.setAdditivity(false);
-
-        /*
-         * Priority is set for DEBUG becouse this implementation checks
-         * log level.
-         */
-        logger.setLevel(Level.DEBUG);
-
-        appender = new RollingFileAppender( new PatternLayout( "%d - %m%n"), logfile, true);
-
-        appender.setMaxBackupIndex( 1 );
-
-        appender.setMaximumFileSize( 100000 );
-
-        logger.addAppender(appender);
+//        logger = Category.getInstance(this.getClass().getName());
+//        logger.setAdditivity(false);
+//
+//        /*
+//         * Priority is set for DEBUG becouse this implementation checks
+//         * log level.
+//         */
+//        logger.setLevel(Level.DEBUG);
+//
+//        appender = new RollingFileAppender( new PatternLayout( "%d - %m%n"), logfile, true);
+//
+//        appender.setMaxBackupIndex( 1 );
+//
+//        appender.setMaximumFileSize( 100000 );
+//
+//        logger.addAppender(appender);
     }
 
     /**
@@ -169,11 +173,11 @@ public class SimpleLog4JLogSystem implements LogSystem
     /** Close all destinations*/
     public void shutdown()
     {
-        if (appender != null)
-        {
-            logger.removeAppender(appender);
-            appender.close();
-            appender = null;
-        }
+//        if (appender != null)
+//        {
+//            logger.removeAppender(appender);
+//            appender.close();
+//            appender = null;
+//        }
     }
 }

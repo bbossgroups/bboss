@@ -15,7 +15,8 @@
  */
 package com.frameworkset.platform.cms.driver.htmlconverter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.platform.cms.driver.jsp.ContextInf;
 
@@ -31,7 +32,7 @@ import com.frameworkset.platform.cms.driver.jsp.ContextInf;
  */
 public class CmsLinkProcessorUtil {
 	private static CmsLinkProcessorFactory cmsLinkProcessorFactory;
-	private static Logger log = Logger.getLogger(CmsLinkProcessorUtil.class);
+	private static Logger log = LoggerFactory.getLogger(CmsLinkProcessorUtil.class);
 	static {
 		try {
 			cmsLinkProcessorFactory = (CmsLinkProcessorFactory) Class.forName("com.frameworkset.platform.cms.driver.htmlconverter.PlatformCmsLinkProcessorFactory").newInstance();

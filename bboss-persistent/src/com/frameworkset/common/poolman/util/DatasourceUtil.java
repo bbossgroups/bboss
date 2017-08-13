@@ -24,10 +24,11 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
 import com.frameworkset.common.poolman.sql.PoolManDataSource;
@@ -53,7 +54,7 @@ import com.frameworkset.orm.transaction.TXDataSource;
  */
 public class DatasourceUtil {
 	public static final String DATASOURCE_BEAN_NAME = "datasource";
-	private static Logger log = Logger.getLogger(DatasourceUtil.class);
+	private static Logger log = LoggerFactory.getLogger(DatasourceUtil.class);
 
 	public static DataSource getDataSource(String sourcefile) {
 		BaseApplicationContext context = DefaultApplicationContext

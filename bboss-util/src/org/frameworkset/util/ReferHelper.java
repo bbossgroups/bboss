@@ -5,14 +5,13 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-import org.frameworkset.util.AntPathMatcher;
-import org.frameworkset.util.PathMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.StringUtil;
 
 public class ReferHelper {
-	private static Logger logger = Logger.getLogger(ReferHelper.class);
+	private static Logger logger = LoggerFactory.getLogger(ReferHelper.class);
 	private String[] refererwallwhilelist;
 	private boolean refererDefender = false;
 	private PathMatcher pathMatcher;

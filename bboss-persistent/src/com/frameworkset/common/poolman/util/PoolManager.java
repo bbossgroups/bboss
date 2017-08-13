@@ -21,7 +21,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.sql.PrimaryKeyCacheManager;
@@ -32,7 +33,7 @@ import com.frameworkset.common.poolman.sql.PrimaryKeyCacheManager;
  * @see SQLManager
  */
 public class PoolManager  {
-	private static Logger log = Logger.getLogger(PoolManager.class);
+	private static Logger log = LoggerFactory.getLogger(PoolManager.class);
 
     protected HashMap pools;
     protected List<String> poolnames;

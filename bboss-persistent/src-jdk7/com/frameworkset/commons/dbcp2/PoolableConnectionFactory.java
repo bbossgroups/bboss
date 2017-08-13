@@ -25,15 +25,16 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.management.ObjectName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.frameworkset.commons.pool2.KeyedObjectPool;
 import com.frameworkset.commons.pool2.ObjectPool;
 import com.frameworkset.commons.pool2.PooledObject;
 import com.frameworkset.commons.pool2.PooledObjectFactory;
+import com.frameworkset.commons.pool2.impl.DefaultPooledObject;
 import com.frameworkset.commons.pool2.impl.GenericKeyedObjectPool;
 import com.frameworkset.commons.pool2.impl.GenericKeyedObjectPoolConfig;
-import com.frameworkset.commons.pool2.impl.DefaultPooledObject;
 
 /**
  * A {@link PooledObjectFactory} that creates
@@ -49,8 +50,8 @@ import com.frameworkset.commons.pool2.impl.DefaultPooledObject;
 public class PoolableConnectionFactory
         implements PooledObjectFactory<PoolableConnection> {
 
-    private static final Log log =
-            LogFactory.getLog(PoolableConnectionFactory.class);
+	private static final Logger log =
+    		LoggerFactory.getLogger(PoolableConnectionFactory.class);
 
     /**
      * Create a new {@code PoolableConnectionFactory}.

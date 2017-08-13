@@ -19,11 +19,12 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.servlet.mvc.MethodNameResolver;
 import org.frameworkset.web.servlet.mvc.NoSuchRequestHandlingMethodException;
 import org.frameworkset.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.StringUtil;
 
@@ -45,7 +46,7 @@ public class ParameterMethodNameResolver  implements MethodNameResolver {
 	public static final String DEFAULT_PARAM_NAME = "action";
 
 
-	protected final static Logger logger = Logger.getLogger(ParameterMethodNameResolver.class);
+	protected final static Logger logger = LoggerFactory.getLogger(ParameterMethodNameResolver.class);
 
 	private String paramName = DEFAULT_PARAM_NAME;
 

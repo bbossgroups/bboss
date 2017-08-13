@@ -17,11 +17,12 @@ package org.frameworkset.web.servlet.handler;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.DisposableBean;
 import org.frameworkset.spi.LifecycleProcessor;
 import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.HandlerMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: HandlerMappings.java</p> 
@@ -37,7 +38,7 @@ public class HandlerMappingsTable implements DisposableBean{
 	HandlerMapping handlerMapping;
 	
 	HandlerMapping websocketHandlerMapping;
-	private static Logger logger = Logger.getLogger(HandlerMappingsTable.class);
+	private static Logger logger = LoggerFactory.getLogger(HandlerMappingsTable.class);
 	private boolean scanAllMappings = true;
 
 	private LifecycleProcessor websocketLifecycleProcessor;

@@ -21,11 +21,12 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.ReflectionUtils;
 import org.frameworkset.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.StringUtil;
 
@@ -46,7 +47,7 @@ public class FacesRequestAttributes implements RequestAttributes {
 	/**
 	 * We'll create a lot of these objects, so we don't want a new logger every time.
 	 */
-	private static final Logger logger = Logger.getLogger(FacesRequestAttributes.class);
+	private static final Logger logger = LoggerFactory.getLogger(FacesRequestAttributes.class);
 	
 	private final FacesContext facesContext;
 

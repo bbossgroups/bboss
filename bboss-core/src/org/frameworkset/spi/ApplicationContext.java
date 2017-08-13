@@ -16,8 +16,9 @@
 
 package org.frameworkset.spi;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -40,7 +41,7 @@ import org.frameworkset.spi.assemble.ServiceProviderManager;
  */
 public class ApplicationContext extends BaseApplicationContext {
 
-	private static Logger log = Logger.getLogger(ApplicationContext.class);
+	private static Logger log = LoggerFactory.getLogger(ApplicationContext.class);
 
 	
 	protected ApplicationContext(String configfile)

@@ -3,8 +3,7 @@ package com.frameworkset.sqlexecutor;
 /**
  * <br>
  * 临控指令申请流程表 对应表 T_ZT_ZDRY_LKZLSQLC
- * 
- * @author: <a href="mailto:zhangye.lin@chinacreator.com">林彰叶</a>
+ 
  */
 public class TlkzlsqlcBean implements java.io.Serializable {
 	private String bksqlcbh;// bksqlcbh 临控指令流程编号 varchar2(27) true false true

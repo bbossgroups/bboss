@@ -45,7 +45,8 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -69,7 +70,7 @@ import com.frameworkset.orm.engine.model.Table;
 public class XmlToData extends DefaultHandler implements EntityResolver, Serializable 
 {
     /** Logging class from commons.logging */
-    private static Logger log = Logger.getLogger(XmlToData.class);
+    private static Logger log = LoggerFactory.getLogger(XmlToData.class);
     private Database database;
     private List data;
     private String dtdFileName;

@@ -16,7 +16,7 @@ import com.frameworkset.util.ListInfo;
  *
  * <p>Copyright (c) 2006.10 </p>
  *
- * <p>Company: chinacreator</p>
+ * <p>Company: bbossgroups</p>
  * @Date 2007-2-4 15:11:55
  * @author biaoping.yin
  * @version 1.0

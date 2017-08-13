@@ -13,7 +13,7 @@ import java.util.TreeSet;
  *
  * <p>Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: 长沙科创计算机系统集成有限公司</p>
+ * <p>Company: bbossgroups</p>
  * @Date 2006-9-15
  * @author biaoping.yin
  * @version 1.0

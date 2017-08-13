@@ -44,7 +44,8 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
 import javax.servlet.jsp.tagext.TryCatchFinally;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.tag.contextmenu.ContextMenu;
 
@@ -72,7 +73,7 @@ public abstract class BaseTag extends TagSupport implements TryCatchFinally
 		enablecontextmenu = false;
 	}
 
-	private final static Logger log = Logger.getLogger(BaseTag.class);
+	private final static Logger log = LoggerFactory.getLogger(BaseTag.class);
 	protected transient HttpServletRequest request = null;
 								//(HttpServletRequest) pageContext.getRequest();
 	protected transient JspWriter out =  null;//pageContext.getOut();

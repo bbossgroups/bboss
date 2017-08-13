@@ -25,10 +25,11 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.el.ELException;
 import javax.servlet.jsp.el.Expression;
 
-import org.apache.log4j.Logger;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: ExpressionEvaluationUtils.java</p> 
@@ -63,7 +64,7 @@ public abstract class ExpressionEvaluationUtils {
 	private static final String JAKARTA_JSTL_CLASS_NAME =
 			"org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager";
 
-	protected final static Logger logger = Logger.getLogger(ExpressionEvaluationUtils.class);
+	protected final static Logger logger = LoggerFactory.getLogger(ExpressionEvaluationUtils.class);
 //	private static final Log logger = LogFactory.getLog(ExpressionEvaluationUtils.class);
 
 	private static ExpressionEvaluationHelper helper;

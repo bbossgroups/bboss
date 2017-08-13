@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.util.AntPathMatcher;
 import org.frameworkset.util.Assert;
@@ -45,6 +44,8 @@ import org.frameworkset.web.servlet.support.session.DefaultSessionAttributeStore
 import org.frameworkset.web.servlet.support.session.SessionAttributeStore;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: AnnotationMethodHandlerAdapter.java</p> 
@@ -68,7 +69,7 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 	 * Additional logger to use when no mapped handler is found for a request.
 	 * @see #PAGE_NOT_FOUND_LOG_CATEGORY
 	 */
-	protected final static Logger pageNotFoundLogger = Logger.getLogger(PAGE_NOT_FOUND_LOG_CATEGORY);
+	protected final static Logger pageNotFoundLogger = LoggerFactory.getLogger(PAGE_NOT_FOUND_LOG_CATEGORY);
 //	protected static final Log pageNotFoundLogger = LogFactory.getLog(PAGE_NOT_FOUND_LOG_CATEGORY);
 
 	private UrlPathHelper urlPathHelper = new UrlPathHelper();

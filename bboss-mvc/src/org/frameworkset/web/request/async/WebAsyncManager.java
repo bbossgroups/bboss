@@ -9,13 +9,14 @@ import java.util.concurrent.RejectedExecutionException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.schedule.AsyncTaskExecutor;
 import org.frameworkset.schedule.SimpleAsyncTaskExecutor;
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.request.async.DeferredResult.DeferredResultHandler;
 import org.frameworkset.web.servlet.context.RequestAttributes;
 import org.frameworkset.web.util.UrlPathHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The central class for managing asynchronous request processing, mainly intended
@@ -42,7 +43,7 @@ public final class WebAsyncManager {
 
 	private static final Object RESULT_NONE = new Object();
 
-	private static final Logger logger = Logger.getLogger(WebAsyncManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(WebAsyncManager.class);
 
 	private static final UrlPathHelper urlPathHelper = new UrlPathHelper();
 

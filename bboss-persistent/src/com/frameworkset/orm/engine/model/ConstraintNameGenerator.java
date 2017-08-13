@@ -33,7 +33,8 @@ package com.frameworkset.orm.engine.model;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.orm.engine.EngineException;
 
@@ -48,7 +49,7 @@ import com.frameworkset.orm.engine.EngineException;
 public class ConstraintNameGenerator implements NameGenerator
 {
     /** Logging class from commons.logging */
-    private static Logger log = Logger.getLogger(ConstraintNameGenerator.class);
+    private static Logger log = LoggerFactory.getLogger(ConstraintNameGenerator.class);
 
     /**
      * First element of <code>inputs</code> should be of type {@link

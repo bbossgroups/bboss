@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.ServerHttpResponse;
 import org.frameworkset.http.ServletServerHttpRequest;
@@ -23,10 +21,12 @@ import org.frameworkset.util.Assert;
 import org.frameworkset.web.HttpRequestHandler;
 import org.frameworkset.web.servlet.context.ServletContextAware;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebSocketHttpRequestHandler  implements HttpRequestHandler, Lifecycle, ServletContextAware {
 
-	private final Log logger = LogFactory.getLog(WebSocketHttpRequestHandler.class);
+	private final Logger logger = LoggerFactory.getLogger(WebSocketHttpRequestHandler.class);
 
 	private final WebSocketHandler wsHandler;
 

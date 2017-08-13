@@ -15,9 +15,10 @@
  */
 package com.frameworkset.orm.ant;
 
-import org.apache.log4j.Logger;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.orm.ORMappingException;
 import com.frameworkset.orm.doclet.HandlerORMapping;
@@ -38,7 +39,7 @@ import com.frameworkset.orm.doclet.HandlerORMapping;
  * @version 1.0
  */
 public class ORMappingTask extends Task{
-    private static Logger log = Logger.getLogger(ORMappingTask.class);
+    private static Logger log = LoggerFactory.getLogger(ORMappingTask.class);
     /**
      * 源文件路径
      */

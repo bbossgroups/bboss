@@ -45,10 +45,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.persitent.util.SQLInfo;
 import org.frameworkset.persitent.util.SQLUtil;
 import org.frameworkset.util.BigFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
@@ -110,7 +111,7 @@ public class PreparedDBUtil extends DBUtil {
 	 */
 	protected boolean batchOptimize = false;
 
-	private static Logger log = Logger.getLogger(PreparedDBUtil.class);
+	private static Logger log = LoggerFactory.getLogger(PreparedDBUtil.class);
 
 
 

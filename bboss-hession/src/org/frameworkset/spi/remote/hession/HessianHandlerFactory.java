@@ -23,10 +23,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -40,7 +41,7 @@ import org.frameworkset.spi.DefaultApplicationContext;
  * @version 1.0
  */
 public class HessianHandlerFactory {
-	private static Logger log = Logger.getLogger(HessianHandlerFactory.class);
+	private static Logger log = LoggerFactory.getLogger(HessianHandlerFactory.class);
 	private Map<String,HessianHanderContainer> containers ;
 	private Method getWebApplicationContext;
 	public HessianHandlerFactory() {

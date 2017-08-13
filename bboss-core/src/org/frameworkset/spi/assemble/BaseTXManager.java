@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.ProviderInterceptor;
 import org.frameworkset.spi.UNmodify;
 import org.frameworkset.spi.interceptor.DummyInterceptorFacttory;
@@ -14,12 +13,14 @@ import org.frameworkset.spi.interceptor.DumyInterceptor;
 import org.frameworkset.spi.interceptor.InterceptorChain;
 import org.frameworkset.spi.interceptor.InterceptorFacttory;
 import org.frameworkset.spi.interceptor.InterceptorWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.proxy.Interceptor;
 
 public abstract class BaseTXManager implements java.io.Serializable,UNmodify
 {
-    private static Logger log = Logger.getLogger(ProviderManagerInfo.class);
+    private static Logger log = LoggerFactory.getLogger(ProviderManagerInfo.class);
     private static InterceptorFacttory interceptorFacttory;
     static
     {

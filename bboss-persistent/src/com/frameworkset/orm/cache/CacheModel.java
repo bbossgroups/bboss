@@ -25,13 +25,14 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
 public class CacheModel {
 	
-	private static final Logger log = Logger.getLogger(CacheModel.class);
+	private static final Logger log = LoggerFactory.getLogger(CacheModel.class);
 
 	  private static final int MAX_OBJECT_LOG_SIZE = 200;
 

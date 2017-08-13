@@ -52,21 +52,22 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.DataFormatUtil;
-
-import bsh.Interpreter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.util.SimpleStringUtil;
+
+import bsh.Interpreter;
 
 /**
  * @author biaoping.yin
  * 改类充分使用java.lang.reflection中提供的功能，提供以下工具：
  * 从对象中获取对应属性的值
  */
-public class ValueObjectUtil implements Serializable{
-	private static final Logger log = Logger.getLogger(ValueObjectUtil.class);
+public class ValueObjectUtil {
+	private static final Logger log = LoggerFactory.getLogger(ValueObjectUtil.class);
 //	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
 	
 

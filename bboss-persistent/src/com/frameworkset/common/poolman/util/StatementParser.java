@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import org.apache.log4j.Logger;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.MatchResult;
 import org.apache.oro.text.regex.Pattern;
@@ -30,9 +29,10 @@ import org.apache.oro.text.regex.PatternCompiler;
 import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.StatementInfo;
-import com.frameworkset.common.poolman.sql.ParserException;
 import com.frameworkset.common.poolman.sql.PrimaryKey;
 import com.frameworkset.common.poolman.sql.PrimaryKeyCacheManager;
 import com.frameworkset.common.poolman.sql.Sequence;
@@ -45,9 +45,9 @@ import com.frameworkset.util.SimpleStringUtil;
  * 
  * @author biaoping.yin created on 2005-3-31 version 1.0
  */
-public class StatementParser implements Serializable
+public class StatementParser 
 {
-	 private static Logger log = Logger.getLogger(StatementParser.class);
+	 private static Logger log = LoggerFactory.getLogger(StatementParser.class);
 
 	/**
 	 * insert正则表达式解析insert语句 如果insert语句与正则表达式匹配，本方法根据表达式对语句的分组

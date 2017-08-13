@@ -2,8 +2,9 @@ package org.frameworkset.schedule;
 
 import java.util.concurrent.Future;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.ReflectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -59,7 +60,7 @@ public  abstract class TaskUtils {
 	 */
 	private static class LoggingErrorHandler implements ErrorHandler {
 
-		private final Logger logger = Logger.getLogger(LoggingErrorHandler.class);
+		private final Logger logger = LoggerFactory.getLogger(LoggingErrorHandler.class);
 
 		@Override
 		public void handleError(Throwable t) {			

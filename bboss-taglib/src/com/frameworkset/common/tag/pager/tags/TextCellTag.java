@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.frameworkset.util.StringUtil;
 
 /**
@@ -20,13 +22,13 @@ import com.frameworkset.util.StringUtil;
  * @version 1.0
  */
 public class TextCellTag extends TextSupportTag {
-    private static Logger log = Logger.getLogger(TextCellTag.class);
+    private static Logger log = LoggerFactory.getLogger(TextCellTag.class);
     public int doEndTag() throws JspException
     {
         try {
             this.getJspWriter().print(StringUtil.toUTF(pagerTag.getListInfo().getCurValue()));
         } catch (IOException ex) {
-            log.error(ex);
+            log.error("",ex);
         }
         return super.doEndTag();
     }

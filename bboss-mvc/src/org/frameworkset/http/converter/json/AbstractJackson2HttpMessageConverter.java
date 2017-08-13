@@ -7,7 +7,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Level;
 import org.frameworkset.http.HttpInputMessage;
 import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.MediaType;
@@ -120,7 +119,7 @@ public abstract class AbstractJackson2HttpMessageConverter extends AbstractGener
 	@Override
 	public boolean canRead(Type type, Class<?> contextClass, MediaType mediaType) {
 		JavaType javaType = getJavaType(type, contextClass);
-		if (!jackson23Available || !logger.isEnabledFor(Level.WARN)) {
+		if (!jackson23Available || !logger.isWarnEnabled()) {
 			return (this.objectMapper.canDeserialize(javaType) && canRead(mediaType));
 		}
 		AtomicReference<Throwable> causeRef = new AtomicReference<Throwable>();
@@ -141,7 +140,7 @@ public abstract class AbstractJackson2HttpMessageConverter extends AbstractGener
 
 	@Override
 	public boolean canWrite(Class<?> clazz, MediaType mediaType) {
-		if (!jackson23Available || !logger.isEnabledFor(Level.WARN)) {
+		if (!jackson23Available || !logger.isWarnEnabled()) {
 			return (this.objectMapper.canSerialize(clazz) && canWrite(mediaType));
 		}
 		AtomicReference<Throwable> causeRef = new AtomicReference<Throwable>();
