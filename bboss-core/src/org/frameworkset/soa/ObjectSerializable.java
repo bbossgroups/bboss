@@ -1531,17 +1531,21 @@ public class ObjectSerializable {
 		try {
 
 			Object value = ValueObjectUtil.getValue(obj, "message");
-
+			StringBuilder temp = new StringBuilder();
+			temp.append(currentAddress).append("{0}");
 			convertBeanObjectToXML("message", value, String.class, true,dateformat,
-					ret,stack,currentAddress + "{0}"  ,false);
+					ret,stack,temp.toString()  ,false);
 			value = ValueObjectUtil.getValue(obj, "cause");
 			if (value != null) {
+				temp.setLength(0);
+				temp.append(currentAddress).append("{1}");
 				convertBeanObjectToXML("cause", value, value.getClass(),false,
-						dateformat, ret,stack,currentAddress + "{1}" ,false);
-			} else {
-				convertBeanObjectToXML("cause", value, Throwable.class,false,
-						dateformat, ret,stack,currentAddress + "{2}",false );
-			}
+						dateformat, ret,stack,temp.toString() ,false);
+			} 
+//			else {
+//				convertBeanObjectToXML("cause", value, Throwable.class,false,
+//						dateformat, ret,stack,currentAddress + "{2}",false );
+//			}
 
 		} catch (SerialException e) {
 			throw e;
@@ -1570,23 +1574,32 @@ public class ObjectSerializable {
 		ret.append("<construction>");
 
 		try {
-
+			StringBuilder temp = new StringBuilder();
+			String addr = null;
 			Object value = ValueObjectUtil.getValue(obj, "className");
-
+			temp.append(currentAddress).append( "{0}");
+			addr = temp.toString();
+			temp.setLength(0);
 			convertBeanObjectToXML("declaringClass", value, String.class,true,
-					dateformat, ret,serialStack, currentAddress + "{0}",false);
+					dateformat, ret,serialStack, addr,false);
 			value = ValueObjectUtil.getValue(obj, "methodName");
-
+			temp.append(currentAddress).append( "{1}");
+			addr = temp.toString();
+			temp.setLength(0);
 			convertBeanObjectToXML("methodName", value, String.class,true,
-					dateformat, ret,serialStack, currentAddress + "{1}",false);
+					dateformat, ret,serialStack, addr,false);
 			value = ValueObjectUtil.getValue(obj, "fileName");
-
+			temp.append(currentAddress).append( "{2}");
+			addr = temp.toString();
+			temp.setLength(0);
 			convertBeanObjectToXML("fileName", value, String.class, true,dateformat,
-					ret,serialStack, currentAddress + "{2}",false);
+					ret,serialStack, addr,false);
 			value = ValueObjectUtil.getValue(obj, "lineNumber");
-
+			temp.append(currentAddress).append( "{3}");
+			addr = temp.toString();
+			temp.setLength(0);
 			convertBeanObjectToXML("lineNumber", value, int.class, true,dateformat,
-					ret,serialStack, currentAddress + "{3}",false);
+					ret,serialStack, addr,false);
 		} catch (SerialException e) {
 			throw e;
 		}  
@@ -1627,6 +1640,8 @@ public class ObjectSerializable {
 //		BeanInfo beanInfo = Introspector.getBeanInfo(type);
 //		PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
 		List<PropertieDescription> attributes = beanInfo.getPropertyDescriptors();
+		StringBuilder temp = new StringBuilder();
+		String addr = null;
 		for (int n = 0; attributes != null && n < attributes.size(); n++) {
 
 			// get bean attribute name
@@ -1656,8 +1671,12 @@ public class ObjectSerializable {
 					pisbasetype = true;
 					ptype = value.getClass();
 				}
-				
-				convertBeanObjectToXML(attrName, value, ptype, pisbasetype,dateformat, ret,stack,currentAddress + "->" + attrName,true);
+				 
+				temp.append(currentAddress).append( "->" ).append(attrName);
+				addr = temp.toString();
+				temp.setLength(0);
+				convertBeanObjectToXML(attrName, value, ptype, pisbasetype,dateformat, ret,stack,addr,true);
+				 
 			} catch (IllegalArgumentException e) {
 				throw new SerialException("", e);
 			} catch (IllegalAccessException e) {
@@ -1684,11 +1703,15 @@ public class ObjectSerializable {
 	private static void convertParams(Writer ret, Object[] params,
 			Class[] paramTypes, String dateformat,SerialStack stack,String currentAddress)
 			throws Exception {
-		
+		StringBuilder temp = new StringBuilder();
+		String addr = null;
 		for (int i = 0; i < params.length; i++) {
-			 
+			temp.append(currentAddress).append( "[").append(i).append("]");
+			addr = temp.toString(); 
+			temp.setLength(0);
 			ObjectSerializable.convertBeanObjectToXML(null, params[i],
-					paramTypes[i], ValueObjectUtil.isBasePrimaryType(paramTypes[i]),dateformat, ret, stack,currentAddress + "[" + i+"]",false);
+					paramTypes[i], ValueObjectUtil.isBasePrimaryType(paramTypes[i]),dateformat, ret, stack,addr,false);
+			
 		}
 	}
 
