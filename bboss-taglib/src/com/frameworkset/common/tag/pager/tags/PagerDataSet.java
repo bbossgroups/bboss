@@ -55,9 +55,10 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.web.servlet.support.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.tag.exception.FormulaException;
@@ -176,7 +177,7 @@ public class PagerDataSet extends PagerTagSupport {
 
 	private int index = -1;
 
-	private static final Logger log = Logger.getLogger(PagerDataSet.class);
+	private static final Logger log = LoggerFactory.getLogger(PagerDataSet.class);
 	
 	/**
 	 * 外部定义的变量名称信息

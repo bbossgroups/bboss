@@ -3,7 +3,6 @@ package com.frameworkset.util;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
-import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -13,7 +12,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import bboss.org.apache.velocity.Template;
 import bboss.org.apache.velocity.VelocityContext;
@@ -33,13 +33,13 @@ import bboss.org.apache.velocity.runtime.resource.Resource;
  *
  * <p>Copyright: Copyright (c) 2005</p>
  *
- * <p>Company: chinacreator</p>
+ * <p>Company: bbossgroups</p>
  *
  * @author biaoping.yin
  * @version 1.0
  */
 public class VelocityUtil{
-	private static Logger log = Logger.getLogger(VelocityUtil.class);
+	private static Logger log = LoggerFactory.getLogger(VelocityUtil.class);
 	private static boolean inited = false;
 	private static boolean VERSION_OLD = true; 	
 	

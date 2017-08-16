@@ -15,6 +15,16 @@
  */
 package com.frameworkset.common.poolman;
 
+import java.sql.BatchUpdateException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
+
+import org.frameworkset.persitent.util.SQLInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
@@ -22,17 +32,9 @@ import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.util.ListInfo;
 import com.frameworkset.util.ValueObjectUtil;
-import org.apache.log4j.Logger;
-import org.frameworkset.persitent.util.SQLInfo;
-
-import java.sql.BatchUpdateException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.List;
 
 public class SQLInfoExecutor {
-	private static Logger log = Logger.getLogger(SQLInfoExecutor.class);
+	private static Logger log = LoggerFactory.getLogger(SQLInfoExecutor.class);
 	public static int DEFAULT_BATCHSIZE = -1;
     /**
      * 添加sql参数，由DefaultDataInfoImpl进行处理

@@ -6,7 +6,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class TokenMethodHelper {
 	public static Method isEnableToken;
@@ -14,7 +15,7 @@ public abstract class TokenMethodHelper {
 //	buildDToken(String elementType, String jsonsplit,
 //			HttpServletRequest request, String fid, boolean cache)
 	public static Method buildDToken;
-	private static final Logger logger = Logger.getLogger(TokenMethodHelper.class);
+	private static final Logger logger = LoggerFactory.getLogger(TokenMethodHelper.class);
 	static 
 	{
 		Class clazz = null;

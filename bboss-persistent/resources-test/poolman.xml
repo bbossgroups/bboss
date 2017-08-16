@@ -8,9 +8,9 @@
  		<loadmetadata>false</loadmetadata>
  		<enablejta>true</enablejta>
  		<jndiName>dbcp_datasource_jndiname</jndiName>
- 		<datasourceFile>dbcp-mysql.xml</datasourceFile>
+ 		<datasourceFile>dbcp-derby.xml</datasourceFile>
  		<autoprimarykey>false</autoprimarykey>
- 		<showsql>false</showsql>
+ 		<showsql>true</showsql>
  		<keygenerate>composite</keygenerate>
 
  	</datasource>

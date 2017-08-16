@@ -21,13 +21,14 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.util.JDBCPool;
 
 public class ContextUtil {
 	public static String INITIAL_CONTEXT_FACTORY = "INITIAL_CONTEXT_FACTORY".toLowerCase();
-	private static Logger log = Logger.getLogger(ContextUtil.class);
+	private static Logger log = LoggerFactory.getLogger(ContextUtil.class);
 	public static Context finaContext(Hashtable environment,ClassLoader loader)
 	{
 		Context ctx = null;

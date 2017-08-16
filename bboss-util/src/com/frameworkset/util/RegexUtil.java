@@ -3,7 +3,6 @@ package com.frameworkset.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.MatchResult;
 import org.apache.oro.text.regex.Pattern;
@@ -14,6 +13,8 @@ import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 import org.apache.oro.text.regex.Perl5Substitution;
 import org.apache.oro.text.regex.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * <p>Title: </p>
  *
@@ -27,7 +28,7 @@ import org.apache.oro.text.regex.Util;
  * @version 1.0
  */
 public class RegexUtil {
-    private static Logger log = Logger.getLogger(RegexUtil.class);
+    private static Logger log = LoggerFactory.getLogger(RegexUtil.class);
     
     public static final int default_mask = Perl5Compiler.SINGLELINE_MASK | Perl5Compiler.DEFAULT_MASK; 
     public static String[] parser(String src, String regex) {

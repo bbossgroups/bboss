@@ -35,7 +35,8 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.management.BaseTableManager;
 
@@ -45,7 +46,7 @@ import com.frameworkset.common.poolman.management.BaseTableManager;
  * @author biaoping.yin created on 2005-3-29 version 1.0
  */
 public class PrimaryKeyCache {
-	private static Logger log = Logger.getLogger(PrimaryKeyCache.class);
+	private static Logger log = LoggerFactory.getLogger(PrimaryKeyCache.class);
 
 	// 数据库链接池名称
 	private String dbname;

@@ -19,7 +19,6 @@ import java.net.MalformedURLException;
 
 import javax.servlet.ServletContext;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.BeanDestroyHook;
 import org.frameworkset.spi.DefaultApplicationContext;
@@ -39,6 +38,8 @@ import org.frameworkset.web.ui.ThemeSource;
 import org.frameworkset.web.ui.context.Theme;
 import org.frameworkset.web.ui.context.UiApplicationContextUtils;
 import org.frameworkset.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.spi.assemble.BeanInstanceException;
 
@@ -54,7 +55,7 @@ import com.frameworkset.spi.assemble.BeanInstanceException;
  * @version 1.0
  */
 public class WebApplicationContext extends DefaultApplicationContext implements ThemeSource {
-	private static final Logger logger = Logger.getLogger(WebApplicationContext.class);
+	private static final Logger logger = LoggerFactory.getLogger(WebApplicationContext.class);
 	/**
 	 * Context attribute to bind root WebApplicationContext to on successful startup.
 	 * <p>Note: If the startup of the root context fails, this attribute can contain

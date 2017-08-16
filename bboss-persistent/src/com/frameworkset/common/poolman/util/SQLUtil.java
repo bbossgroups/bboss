@@ -43,7 +43,8 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import javax.transaction.SystemException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.NestedSQLException;
@@ -84,7 +85,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
  * @version 1.0
  */
 public class SQLUtil{
-	private static final Logger log = Logger.getLogger(SQLUtil.class);
+	private static final Logger log = LoggerFactory.getLogger(SQLUtil.class);
 
 //	private static SQLUtil myself;
 	/** 每次查询数据库获取的实际记录条数 */

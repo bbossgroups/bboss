@@ -22,12 +22,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.BaseSPIManager2;
 import org.frameworkset.spi.assemble.ProMap;
 import org.frameworkset.spi.async.annotation.Result;
 import org.frameworkset.util.TimeUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -48,7 +49,7 @@ import org.frameworkset.util.TimeUtil;
  * @version 1.0
  */
 public class AsyncCall {
-	private static Logger log = Logger.getLogger(AsyncCall.class);
+	private static Logger log = LoggerFactory.getLogger(AsyncCall.class);
 	// static java.util.concurrent.ThreadPoolExecutor executor = null;
 	private java.util.concurrent.ThreadPoolExecutor callexecutor = null;
 	private java.util.concurrent.ThreadPoolExecutor callbackexecutor = null;

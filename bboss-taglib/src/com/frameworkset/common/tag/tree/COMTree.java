@@ -45,9 +45,10 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.security.AccessControlInf;
 import org.frameworkset.security.SecurityUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.tree.impl.Tree;
@@ -61,7 +62,7 @@ import com.frameworkset.common.tag.tree.itf.ITreeNode;
 
 
 public abstract class COMTree extends Tree {
-    private static final Logger log = Logger.getLogger(COMTree.class);
+    private static final Logger log = LoggerFactory.getLogger(COMTree.class);
     /**
      * 扩展条件，通过该条件来过滤树的节点,获取符合条件的节点
      */

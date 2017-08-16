@@ -21,7 +21,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -36,7 +35,8 @@ import java.util.Properties;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.util.ValueObjectUtil;
@@ -52,8 +52,8 @@ import com.frameworkset.velocity.BBossVelocityUtil;
  * deprecated pool.props file and treats it as if it were named 'poolman.props'.
  * If it cannot find any of these files, it throws an Exception.
  */
-public class PoolManConfiguration implements Serializable {
-	private static Logger log = Logger.getLogger(PoolManConfiguration.class);
+public class PoolManConfiguration   {
+	private static Logger log = LoggerFactory.getLogger(PoolManConfiguration.class);
 
 	private String configFile;
 	private ConfigParser handler;

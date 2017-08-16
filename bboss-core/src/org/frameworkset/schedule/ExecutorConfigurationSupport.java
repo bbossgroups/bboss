@@ -6,15 +6,16 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BeanNameAware;
 import org.frameworkset.spi.DisposableBean;
 import org.frameworkset.spi.InitializingBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class ExecutorConfigurationSupport extends CustomizableThreadFactory
 		implements BeanNameAware, InitializingBean, DisposableBean {
 
-	protected final Logger logger = Logger.getLogger(getClass());
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private ThreadFactory threadFactory = this;
 

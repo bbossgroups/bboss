@@ -36,7 +36,8 @@ import java.sql.Types;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // I don't know if the peer system deals
 // with the recommended mappings.
@@ -91,7 +92,7 @@ import org.apache.log4j.Logger;
 public class TypeMap implements Serializable
 {
     /** Logging class from commons.logging */
-    private static Logger log = Logger.getLogger(Column.class);
+    private static Logger log = LoggerFactory.getLogger(Column.class);
     
     private static final SchemaType[] TEXT_TYPES =
     {

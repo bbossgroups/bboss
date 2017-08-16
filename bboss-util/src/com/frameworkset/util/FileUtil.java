@@ -72,13 +72,14 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.cache.FileContentCache;
 import org.frameworkset.util.io.ClassPathResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FileUtil 
 {
-	private static Logger log = Logger.getLogger(FileContentCache.class);
+	private static Logger log = LoggerFactory.getLogger(FileContentCache.class);
 	private static final ListResourceBundle mimeTypes = new FileMIMETypes();
 	public static final String apppath;
 	static{

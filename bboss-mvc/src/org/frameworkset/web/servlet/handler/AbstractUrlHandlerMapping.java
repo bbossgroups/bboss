@@ -20,7 +20,6 @@ import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.AntPathMatcher;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.PathMatcher;
@@ -28,6 +27,8 @@ import org.frameworkset.util.beans.BeansException;
 import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.HandlerMapping;
 import org.frameworkset.web.util.UrlPathHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: AbstractUrlHandlerMapping.java</p> 
@@ -44,7 +45,7 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 	
 
 	protected PathMatcher pathMatcher = new AntPathMatcher();
-	protected static Logger logger = Logger.getLogger(AbstractUrlHandlerMapping.class);
+	protected static Logger logger = LoggerFactory.getLogger(AbstractUrlHandlerMapping.class);
 	public void destroy()
 	{
 		super.destroy();

@@ -55,7 +55,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -69,7 +70,7 @@ public class CommonRequest implements HttpServletRequest {
       
     }
 
-    private static Logger log = Logger.getLogger(CommonRequest.class);
+    private static Logger log = LoggerFactory.getLogger(CommonRequest.class);
 	protected HttpServletRequest request = null;
 	 
 	protected String encode = null;

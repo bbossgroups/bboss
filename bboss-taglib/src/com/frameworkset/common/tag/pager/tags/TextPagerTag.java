@@ -4,7 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.pager.TextListInfo;
@@ -31,7 +32,7 @@ import com.frameworkset.common.tag.pager.TextSpliting;
  * @version 1.0
  */
 public class TextPagerTag extends BaseTag {
-    private Logger log = Logger.getLogger(TextPagerTag.class);
+    private Logger log = LoggerFactory.getLogger(TextPagerTag.class);
     /**
      * 请求范围
      * request 缺省
@@ -97,8 +98,7 @@ public class TextPagerTag extends BaseTag {
             this.pageNumber = Integer.parseInt(request.getParameter(
                 "pageNumber").trim());
         } catch (Exception e) {
-            log.error(e);
-            e.printStackTrace();
+            log.error("",e);
             pageNumber = 1;
         }
 

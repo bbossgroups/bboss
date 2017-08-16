@@ -7,8 +7,8 @@ package org.frameworkset.log;
 
 public class DefaultLogger extends Logger
 {
-    org.apache.log4j.Logger log = null;
-    public DefaultLogger(org.apache.log4j.Logger log)
+	org.slf4j.Logger log = null;
+    public DefaultLogger(org.slf4j.Logger log)
     {
         this.log = log;
     }

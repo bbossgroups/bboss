@@ -4,15 +4,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.ServerHttpResponse;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HandshakeInterceptorChain {
 
-	private static final Log logger = LogFactory.getLog(HandshakeInterceptorChain.class);
+	private static final Logger logger = LoggerFactory.getLogger(HandshakeInterceptorChain.class);
 
 	private final List<HandshakeInterceptor> interceptors;
 

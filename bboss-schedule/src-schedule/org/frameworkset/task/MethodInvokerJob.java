@@ -19,12 +19,13 @@ package org.frameworkset.task;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.assemble.MethodInvoker;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.orm.transaction.TransactionManager;
 
@@ -39,7 +40,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
  * @version 1.0
  */
 public class MethodInvokerJob implements Job, Serializable{
-	private static final Logger log = Logger.getLogger(MethodInvokerJob.class);
+	private static final Logger log = LoggerFactory.getLogger(MethodInvokerJob.class);
 	public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 		 
 		 try {

@@ -20,7 +20,8 @@ import java.util.Map;
 
 import javax.management.MBeanServer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.util.SQLUtil;
@@ -37,8 +38,8 @@ import com.frameworkset.orm.adapter.DBFactory;
  */
 
 //public class PoolManBootstrap extends NotificationBroadcasterSupport implements PoolManBootstrapMBean,javax.management.MBeanRegistration{
-public class PoolManBootstrap implements java.io.Serializable{
-    private static Logger log = Logger.getLogger(PoolManBootstrap.class);
+public class PoolManBootstrap  {
+    private static Logger log = LoggerFactory.getLogger(PoolManBootstrap.class);
     private String configFile = PoolManConstants.XML_CONFIG_FILE;
     private static Map<String,Boolean> startedFile = new HashMap<String,Boolean>();
     public static void main(String[] args) throws Exception {

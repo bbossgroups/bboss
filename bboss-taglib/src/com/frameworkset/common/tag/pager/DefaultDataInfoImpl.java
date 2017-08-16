@@ -38,7 +38,8 @@ import java.util.Hashtable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.PreparedDBUtil;
@@ -65,7 +66,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	protected String dbName = null;
 	protected boolean listMode;
 	protected boolean first = true;
-	private static final Logger log = Logger.getLogger(DefaultDataInfoImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(DefaultDataInfoImpl.class);
 	/**
 	 * 标识查询是否是more查询
 	 */
@@ -264,7 +265,7 @@ public class DefaultDataInfoImpl implements DataInfo {
                 return listInfo;
 	        }
         } catch (SQLException e) {
-            log.error(e);
+            log.error("",e);
 	        return null;
         }
 
@@ -305,7 +306,7 @@ public class DefaultDataInfoImpl implements DataInfo {
                 return listInfo;
 	        }
         } catch (SQLException e) {
-            log.error(e);
+            log.error("",e);
 	        return null;
         }
 	}

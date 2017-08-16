@@ -23,9 +23,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.remote.EventUtils;
 import org.jgroups.Address;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 事件处理抽象类
@@ -34,7 +35,7 @@ import org.jgroups.Address;
  * @version 1.0
  */
 public class EventHandle  implements Notifiable {
-	private static final Logger log = Logger.getLogger(EventHandle.class);
+	private static final Logger log = LoggerFactory.getLogger(EventHandle.class);
 	
 	static ThreadPoolExecutor sendexecutor = new java.util.concurrent.ThreadPoolExecutor(50,Integer.MAX_VALUE, 0, NANOSECONDS,
             new java.util.concurrent.ArrayBlockingQueue<Runnable>(10)
@@ -343,7 +344,7 @@ public class EventHandle  implements Notifiable {
 			try {
 				listener.handle(event);
 			} catch (Exception e) {
-				log.error(event,e);
+				log.error("",e);
 			}
 		}
 
@@ -354,7 +355,7 @@ public class EventHandle  implements Notifiable {
 			try {
 				listener.handle(event);
 			} catch (Exception e) {
-				log.error(event,e);
+				log.error("",e);
 			}
 		}
 

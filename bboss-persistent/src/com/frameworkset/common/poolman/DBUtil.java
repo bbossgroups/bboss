@@ -36,9 +36,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-
-
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
@@ -75,7 +74,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	// */
 	// private static ThreadLocal threadLocal = new ThreadLocal();
 
-	private static Logger log = Logger.getLogger(DBUtil.class);
+	private static Logger log = LoggerFactory.getLogger(DBUtil.class);
 
 	protected String oraclerownum;
 
@@ -1340,7 +1339,8 @@ public class DBUtil extends SQLUtil implements Serializable {
 						// if(tx != null)
 						// tx.setRollbackOnly();
 						primaryKey.restoreKey(temp[1]);
-						log.error(temp[0], e);
+						
+						log.error(String.valueOf(temp[0] != null?temp[0]:""), e);
 						throw e;
 					}
 	

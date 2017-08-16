@@ -37,7 +37,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.tag.contextmenu.ContextMenu;
 import com.frameworkset.common.tag.contextmenu.ContextMenuTag;
@@ -54,7 +55,7 @@ import com.frameworkset.common.tag.tree.itf.ITreeNode;
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
- * <p>Company: chinacreator</p>
+ * <p>Company: bbossgroups</p>
  * @Date 2004-1-15
  * @author biaoping.yin
  * @version 1.0
@@ -64,7 +65,7 @@ public class TreeTag extends ContextMenuTag {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(TreeTag.class);
+	private static final Logger log = LoggerFactory.getLogger(TreeTag.class);
 	/**
 	 * 定义每棵树的名称，必须是英文，保持在系统中的唯一性
 	 */

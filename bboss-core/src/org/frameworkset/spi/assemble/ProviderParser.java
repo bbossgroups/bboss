@@ -22,11 +22,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.soa.SerialFactory;
 import org.frameworkset.soa.SerialFactory.MagicClass;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.SPIException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -111,7 +112,7 @@ public class ProviderParser extends DefaultHandler
 
     private String file;
 
-    private static Logger log = Logger.getLogger(ProviderParser.class);
+    private static Logger log = LoggerFactory.getLogger(ProviderParser.class);
 
     public ProviderParser(BaseApplicationContext applicationContext,String file, LinkConfigFile linkfile)
     {

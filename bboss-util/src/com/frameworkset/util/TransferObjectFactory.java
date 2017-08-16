@@ -31,9 +31,7 @@
  *****************************************************************************/
 
 package com.frameworkset.util;
-import java.beans.Introspector;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -45,11 +43,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.beans.PropertyAccessException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -59,7 +58,7 @@ import org.frameworkset.util.beans.PropertyAccessException;
  */
 public class TransferObjectFactory 
 {
-	private static final Logger log = Logger.getLogger(TransferObjectFactory.class);
+	private static final Logger log = LoggerFactory.getLogger(TransferObjectFactory.class);
 
 	/**
 	* Use a HashMap to cache class information for

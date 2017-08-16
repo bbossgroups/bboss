@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.util.ReflectionUtils;
 import org.frameworkset.util.annotations.MethodData;
@@ -34,6 +33,8 @@ import org.frameworkset.web.servlet.handler.AbstractUrlHandlerMapping;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
 import org.frameworkset.web.servlet.support.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.BeanUtils;
 
@@ -61,7 +62,7 @@ public class HandlerMethodInvoker {
 	 * We'll create a lot of these objects, so we don't want a new logger every
 	 * time.
 	 */
-	protected final static Logger logger = Logger.getLogger(HandlerMethodInvoker.class);
+	protected final static Logger logger = LoggerFactory.getLogger(HandlerMethodInvoker.class);
 
 	private final HandlerMethodResolver methodResolver;
 //

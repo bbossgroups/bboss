@@ -36,7 +36,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 
 import com.frameworkset.orm.engine.EngineException;
@@ -51,7 +52,7 @@ import com.frameworkset.orm.engine.EngineException;
 public class Index implements Serializable
 {
     /** Logging class from commons.logging */
-    private static Logger log = Logger.getLogger(Index.class);
+    private static Logger log = LoggerFactory.getLogger(Index.class);
     /** name of the index */
     private String indexName;
     /** table */

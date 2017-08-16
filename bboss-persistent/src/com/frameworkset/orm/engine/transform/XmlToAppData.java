@@ -42,7 +42,8 @@ import java.util.Vector;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -70,7 +71,7 @@ import com.frameworkset.orm.engine.model.Unique;
 public class XmlToAppData extends DefaultHandler  implements Serializable 
 {
     /** Logging class from commons.logging */
-    private static Logger log = Logger.getLogger(XmlToAppData.class);
+    private static Logger log = LoggerFactory.getLogger(XmlToAppData.class);
 
     private Database database;
     private Table currTable;

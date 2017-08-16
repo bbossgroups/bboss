@@ -46,8 +46,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.io.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * To change for your class or interface DAO中VOObject String类型与PO数据类型转换工具类.
@@ -57,7 +58,7 @@ import org.frameworkset.util.io.Resource;
  */
 
 public class StringUtil extends SimpleStringUtil {
-	private static Logger log = Logger.getLogger(StringUtil.class);
+	private static Logger log = LoggerFactory.getLogger(StringUtil.class);
 	private static Method httpOnlyMethod = null;
 	static
 	{

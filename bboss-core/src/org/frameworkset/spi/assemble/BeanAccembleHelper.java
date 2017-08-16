@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.ApplicationContextAware;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.BeanClassLoaderAware;
@@ -23,12 +21,15 @@ import org.frameworkset.spi.InitializingBean;
 import org.frameworkset.spi.LocalCallContextImpl;
 import org.frameworkset.spi.ResourceLoaderAware;
 import org.frameworkset.spi.SPIException;
+import org.frameworkset.spi.assemble.BeanAccembleHelper.LoopObject;
 import org.frameworkset.spi.assemble.plugin.IocPlugin;
 import org.frameworkset.spi.support.ApplicationObjectSupport;
 import org.frameworkset.spi.support.MessageSourceAware;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.spi.assemble.CurrentlyInCreationException;
@@ -57,7 +58,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * @version 1.0
  */
 public class BeanAccembleHelper {
-	private static Logger log = Logger.getLogger(BeanAccembleHelper.class);
+	private static Logger log = LoggerFactory.getLogger(BeanAccembleHelper.class);
 
 	private Class<?>[] constructParamTypes = null;
 
@@ -649,7 +650,7 @@ public class BeanAccembleHelper {
 							}
 							else
 							{
-								if(log.isEnabledFor(Level.WARN)){
+								if(log.isWarnEnabled()){
 									log.warn("设置组件["+bean.getClass()+"]属性失败：Does not exist a writer method for field ["
 										+ propertyDescriptor.getName() +"] ,请检查类定义文件是否正确设置了该字段的set方法，或者字段名称是否指定正确。");
 								}
@@ -699,7 +700,7 @@ public class BeanAccembleHelper {
 					// bean.getClass() + "]中没有定义");
 //					log.warn("引用字段[" + filedName + "]在组件["
 //							+ bean.getClass() + "]中没有定义");
-					if(log.isEnabledFor(Level.WARN)){
+					if(log.isWarnEnabled()){
 						
 						Exception e = new Exception("引用字段[" + filedName + "]在组件["
 								+ bean.getClass() + "]中没有定义");
@@ -820,7 +821,7 @@ public class BeanAccembleHelper {
 							}
 							else
 							{
-								if(log.isEnabledFor(Level.WARN)){
+								if(log.isWarnEnabled()){
 									log.warn("初始化组件["+bean.getClass()+"]失败：Does not exist a writer method for field ["
 										+ propertyDescriptor.getName() +"] ,请检查类定义文件是否正确设置了该字段的set方法，或者字段名称是否指定正确。");
 								}
@@ -863,7 +864,7 @@ public class BeanAccembleHelper {
 					// bean.getClass() + "]中没有定义");
 //					log.warn("引用字段[" + filedName + "]在provider["
 //							+ bean.getClass() + "]中没有定义");
-					if(log.isEnabledFor(Level.WARN)){
+					if(log.isWarnEnabled()){
 						
 						Exception e = new Exception("引用字段[" + filedName + "]在组件["
 								+ bean.getClass() + "]中没有定义,请检查配置文件是否配置正确["
@@ -1668,7 +1669,7 @@ public class BeanAccembleHelper {
 							}
 							else
 							{
-								if(log.isEnabledFor(Level.WARN)){
+								if(log.isWarnEnabled()){
 									log.warn("设置组件["+providerManagerInfo.getName()+"]属性失败：Does not exist a writer method for field ["
 										+ propertyDescriptor.getName() +"] in class ["+instance.getClass().getCanonicalName()+"],请检查类定义文件是否正确设置了该字段的set方法，或者字段名称是否指定正确。");
 								}
@@ -1735,7 +1736,7 @@ public class BeanAccembleHelper {
 						
 //						log.warn("引用字段[" + filedName + "]在provider["
 //								+ instance.getClass() + "]中没有定义");
-						if(log.isEnabledFor(Level.WARN)){
+						if(log.isWarnEnabled()){
 							
 							Exception e = new Exception("引用字段[" + filedName + "]在组件["
 									+ instance.getClass() + "]中没有定义,请检查配置文件是否配置正确["

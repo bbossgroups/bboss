@@ -36,9 +36,9 @@ import javax.naming.RefAddr;
 import javax.naming.Reference;
 import javax.naming.spi.ObjectFactory;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.util.StandardCharsets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.commons.pool2.impl.BaseObjectPoolConfig;
 import com.frameworkset.commons.pool2.impl.GenericObjectPoolConfig;
@@ -62,7 +62,8 @@ import com.frameworkset.commons.pool2.impl.GenericObjectPoolConfig;
  */
 public class BasicDataSourceFactory implements ObjectFactory {
 
-    private static final Log log = LogFactory.getLog(BasicDataSourceFactory.class);
+	private static final Logger log =
+    		LoggerFactory.getLogger(BasicDataSourceFactory.class);
 
     private static final String PROP_DEFAULTAUTOCOMMIT = "defaultAutoCommit";
     private static final String PROP_DEFAULTREADONLY = "defaultReadOnly";

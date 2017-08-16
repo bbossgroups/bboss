@@ -9,21 +9,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.soa.SerialFactory.MagicClass;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.Lifecycle;
 import org.frameworkset.spi.async.annotation.Async;
-import org.frameworkset.util.tokenizer.TextGrammarParser;
-import org.frameworkset.util.tokenizer.TextGrammarParser.GrammarToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.orm.annotation.RollbackExceptions;
 import com.frameworkset.orm.annotation.Transaction;
 import com.frameworkset.orm.annotation.TransactionType;
 import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.util.EditorInf;
-import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.ValueObjectUtil;
 
 /**
@@ -113,7 +111,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	// this.uuid = this.name;
 	//		
 	// }
-	protected static Logger log = Logger.getLogger(Pro.class);
+	protected static Logger log = LoggerFactory.getLogger(Pro.class);
 	private String name;
 	protected boolean bean = false;
 	private boolean singlable = true;

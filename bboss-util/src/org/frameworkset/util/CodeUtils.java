@@ -33,11 +33,12 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.tokenizer.StringTokenizer;
 import org.frameworkset.util.tokenizer.Token;
 import org.frameworkset.util.tokenizer.Tokenizer;
 import org.frameworkset.util.tokenizer.TokenizerSymbol;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.uwyn.jhighlight.renderer.Renderer;
 import com.uwyn.jhighlight.renderer.XhtmlRendererFactory;
@@ -62,7 +63,7 @@ public class CodeUtils {
 	 */
 	
 
-	    private static Logger logger = Logger.getLogger(CodeUtils.class);
+	    private static Logger logger = LoggerFactory.getLogger(CodeUtils.class);
 
 	 
 

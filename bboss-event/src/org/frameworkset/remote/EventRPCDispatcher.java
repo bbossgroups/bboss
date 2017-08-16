@@ -3,7 +3,6 @@ package org.frameworkset.remote;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.event.Event;
 import org.jgroups.Address;
 import org.jgroups.JChannel;
@@ -11,11 +10,13 @@ import org.jgroups.ReceiverAdapter;
 import org.jgroups.blocks.RequestOptions;
 import org.jgroups.blocks.ResponseMode;
 import org.jgroups.blocks.RpcDispatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EventRPCDispatcher extends ReceiverAdapter implements
 		org.frameworkset.spi.InitializingBean,
 		org.frameworkset.spi.DisposableBean {
-	private static Logger log = Logger.getLogger(EventRPCDispatcher.class);
+	private static Logger log = LoggerFactory.getLogger(EventRPCDispatcher.class);
 	private JChannel channel;
 	private RpcDispatcher rpcDispatcher;
 	RpcDispatcherAnycastServerObject target;

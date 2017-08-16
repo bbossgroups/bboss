@@ -37,7 +37,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 
 import com.frameworkset.orm.engine.EngineException;
@@ -59,7 +60,7 @@ public class Column implements Serializable
 {
     private static final SchemaType DEFAULT_TYPE = SchemaType.VARCHAR;
     /** Logging class from commons.logging */
-    private static Logger log = Logger.getLogger(Column.class);
+    private static Logger log = LoggerFactory.getLogger(Column.class);
     private String name;
     private String description;
     private Domain domain = new Domain();
@@ -272,7 +273,7 @@ public class Column implements Serializable
             }
             catch (EngineException e)
             {
-                log.error(e, e);
+                log.error("", e);
             }
         }
         return StringUtils.capitalize(javaName);

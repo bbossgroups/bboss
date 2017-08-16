@@ -46,7 +46,7 @@
 			         mina的手动启动方法为：
 			         org.frameworkset.spi.remote.mina.MinaRPCServer.getMinaRPCServer().start();
 			         jgroup的手动启动方法为：
-			         com.chinacreator.remote.JGroupHelper.getJGroupHelper().start();		
+			         com.frameworkset.remote.JGroupHelper.getJGroupHelper().start();		
 			         jms协议的手动启动方法：
 			         org.frameworkset.spi.remote.jms.JMSServer.getJMSServer().start();	
 		 -->

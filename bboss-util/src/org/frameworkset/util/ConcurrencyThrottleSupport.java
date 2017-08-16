@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Support class for throttling concurrent access to a specific resource.
@@ -42,7 +43,7 @@ public abstract class ConcurrencyThrottleSupport implements Serializable {
 
 
 	/** Transient to optimize serialization */
-	protected static transient Logger logger = Logger.getLogger(ConcurrencyThrottleSupport.class);
+	protected static transient Logger logger = LoggerFactory.getLogger(ConcurrencyThrottleSupport.class);
 
 	private transient Object monitor = new Object();
 

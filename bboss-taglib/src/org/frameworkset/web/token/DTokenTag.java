@@ -4,7 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.jsp.JspException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.tag.BaseTag;
 /**
@@ -13,7 +14,7 @@ import com.frameworkset.common.tag.BaseTag;
  *
  */
 public class DTokenTag extends BaseTag {
-	 private static Logger log = Logger.getLogger(DTokenTag.class);
+	 private static Logger log = LoggerFactory.getLogger(DTokenTag.class);
 	
 	/**
 	 * 参数有3个值（如果没有指定默认为input类型）：

@@ -3,11 +3,12 @@ package org.frameworkset.task;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.orm.transaction.TransactionManager;
 
@@ -23,7 +24,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
  */
 public class ExecuteJOB implements Job, Serializable{
 
-	private static final Logger log = Logger.getLogger(ExecuteJOB.class);
+	private static final Logger log = LoggerFactory.getLogger(ExecuteJOB.class);
     /**
      * execute
      *

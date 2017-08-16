@@ -28,7 +28,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.orm.engine.EngineException;
 import com.frameworkset.orm.engine.model.Column;
@@ -52,7 +53,7 @@ import com.frameworkset.orm.platform.PlatformConst;
  * @version 1.0
  */
 public class ORMappingManager implements java.io.Serializable{
-    private static Logger log = Logger.getLogger(ORMappingManager.class);
+    private static Logger log = LoggerFactory.getLogger(ORMappingManager.class);
     public static final String ANONYMITY_DATABASE_TYPE = PlatformConst.PLATFORM_DEFAULT;
     public static final String ANONYMITY_DATABASE_NAME = "anonymity_database";
     private static ORMappingManager instance = null;

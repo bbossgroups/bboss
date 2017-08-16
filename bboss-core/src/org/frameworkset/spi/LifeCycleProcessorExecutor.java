@@ -2,15 +2,16 @@ package org.frameworkset.spi;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.support.DefaultLifecycleProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LifeCycleProcessorExecutor {
 	
 	public LifeCycleProcessorExecutor() {
 		// TODO Auto-generated constructor stub
 	}
-	private static Logger log = Logger.getLogger(LifeCycleProcessorExecutor.class);
+	private static Logger log = LoggerFactory.getLogger(LifeCycleProcessorExecutor.class);
 	protected LifecycleProcessor lifecycleProcessor;
 	protected BaseApplicationContext context;
 	protected LifecycleProcessor initLifecycleProcessor() {

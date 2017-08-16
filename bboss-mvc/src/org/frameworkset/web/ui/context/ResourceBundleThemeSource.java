@@ -19,13 +19,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.support.HierarchicalMessageSource;
 import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.spi.support.ReloadableResourceBundleMessageSource;
 import org.frameworkset.spi.support.ResourceBundleMessageSource;
 import org.frameworkset.web.ui.HierarchicalThemeSource;
 import org.frameworkset.web.ui.ThemeSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: ResourceBundleThemeSource.java</p> 
@@ -38,7 +39,7 @@ import org.frameworkset.web.ui.ThemeSource;
  */
 public class ResourceBundleThemeSource implements HierarchicalThemeSource {
 
-	protected final Logger logger = Logger.getLogger(ResourceBundleThemeSource.class);
+	protected final Logger logger = LoggerFactory.getLogger(ResourceBundleThemeSource.class);
 
 	private ThemeSource parentThemeSource;
 

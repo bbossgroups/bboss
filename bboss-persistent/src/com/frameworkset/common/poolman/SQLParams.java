@@ -29,12 +29,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.persitent.util.SQLInfo;
 import org.frameworkset.persitent.util.SQLUtil;
 import org.frameworkset.util.BigFile;
@@ -43,6 +41,8 @@ import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.DateFormateMeta;
 import org.frameworkset.util.annotations.wraper.ColumnWraper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.sql.IdGenerator;
 import com.frameworkset.common.poolman.util.JDBCPool;
@@ -82,7 +82,7 @@ public class SQLParams
     private NewSQLInfo newsql = null;
 
 	private String dbname = null;
-    private static Logger log = Logger.getLogger(SQLParams.class);
+    private static Logger log = LoggerFactory.getLogger(SQLParams.class);
     /**
      * 用于预编译批处理操作
      */

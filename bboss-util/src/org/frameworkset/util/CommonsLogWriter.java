@@ -18,7 +18,7 @@ package org.frameworkset.util;
 
 import java.io.Writer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 
 

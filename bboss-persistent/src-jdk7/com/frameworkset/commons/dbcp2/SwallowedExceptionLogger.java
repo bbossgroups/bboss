@@ -16,7 +16,8 @@
  */
 package com.frameworkset.commons.dbcp2;
 
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
+
 import com.frameworkset.commons.pool2.SwallowedExceptionListener;
 
 /**
@@ -26,7 +27,7 @@ import com.frameworkset.commons.pool2.SwallowedExceptionListener;
  */
 public class SwallowedExceptionLogger implements SwallowedExceptionListener{
 
-    private final Log log;
+    private final Logger log;
     private final boolean logExpiredConnections;
 
     /**
@@ -35,7 +36,7 @@ public class SwallowedExceptionLogger implements SwallowedExceptionListener{
      *
      * @param log logger
      */
-    public SwallowedExceptionLogger(Log log) {
+    public SwallowedExceptionLogger(Logger log) {
         this(log, true);    
     }
     
@@ -46,7 +47,7 @@ public class SwallowedExceptionLogger implements SwallowedExceptionListener{
      * @param log logger
      * @param logExpiredConnections false suppresses logging of expired connection events
      */
-    public SwallowedExceptionLogger(Log log, boolean logExpiredConnections) {
+    public SwallowedExceptionLogger(Logger log, boolean logExpiredConnections) {
         this.log = log;
         this.logExpiredConnections = logExpiredConnections;
     }

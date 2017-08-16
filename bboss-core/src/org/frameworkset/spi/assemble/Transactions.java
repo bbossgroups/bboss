@@ -18,8 +18,9 @@ package org.frameworkset.spi.assemble;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.UNmodify;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -47,7 +48,7 @@ import org.frameworkset.spi.UNmodify;
  */
 public class Transactions implements java.io.Serializable,UNmodify
 {
-    private static Logger log = Logger.getLogger(Transactions.class);
+    private static Logger log = LoggerFactory.getLogger(Transactions.class);
 
     AOPMethods transationMethods;
 

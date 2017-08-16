@@ -42,19 +42,20 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
-
-import bboss.org.apache.velocity.Template;
-import bboss.org.apache.velocity.VelocityContext;
-import bboss.org.apache.velocity.exception.MethodInvocationException;
-import bboss.org.apache.velocity.exception.ParseErrorException;
-import bboss.org.apache.velocity.exception.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.tag.tree.itf.ITree;
 import com.frameworkset.common.tag.tree.itf.ITreeIteratorElement;
 import com.frameworkset.common.tag.tree.itf.ITreeNode;
 import com.frameworkset.util.StringUtil;
 import com.frameworkset.util.VelocityUtil;
+
+import bboss.org.apache.velocity.Template;
+import bboss.org.apache.velocity.VelocityContext;
+import bboss.org.apache.velocity.exception.MethodInvocationException;
+import bboss.org.apache.velocity.exception.ParseErrorException;
+import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 
 /**
  * 该类辅助TreeTag生成各种树的html代码， 可以通过ecs/velocity/StringBuilder几种方式来生成
@@ -66,7 +67,7 @@ import com.frameworkset.util.VelocityUtil;
 
 public class NodeHelper  implements Serializable
 {
-	private static final Logger log = Logger.getLogger(NodeHelper.class);
+	private static final Logger log = LoggerFactory.getLogger(NodeHelper.class);
  
 	/**
 	 * 包含显示的节点信息

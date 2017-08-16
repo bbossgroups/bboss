@@ -26,9 +26,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.XMLRowHandler;
@@ -45,7 +46,7 @@ import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
 
 public class StatementInfo {
-	private static final Logger log = Logger.getLogger(StatementInfo.class);
+	private static final Logger log = LoggerFactory.getLogger(StatementInfo.class);
 	private String dbname;
 	private String sql;
 	private NewSQLInfo newsqlinfo;

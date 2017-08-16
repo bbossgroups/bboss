@@ -6,7 +6,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.StringUtil;
 import com.mongodb.Bytes;
@@ -37,7 +38,7 @@ public class MongoDB {
 			// e.printStackTrace();
 		}
 	}
-	private static Logger log = Logger.getLogger(MongoDB.class);
+	private static Logger log = LoggerFactory.getLogger(MongoDB.class);
 	private String serverAddresses;
 	private String option;
 	private String writeConcern;

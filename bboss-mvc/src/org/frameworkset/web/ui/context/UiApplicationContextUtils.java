@@ -19,10 +19,11 @@ package org.frameworkset.web.ui.context;
 
 
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.web.ui.HierarchicalThemeSource;
 import org.frameworkset.web.ui.ThemeSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -44,7 +45,7 @@ public abstract class UiApplicationContextUtils {
 	public static final String THEME_SOURCE_BEAN_NAME = "themeSource";
 
 
-	private static final Logger logger = Logger.getLogger(UiApplicationContextUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(UiApplicationContextUtils.class);
 
 
 	/**

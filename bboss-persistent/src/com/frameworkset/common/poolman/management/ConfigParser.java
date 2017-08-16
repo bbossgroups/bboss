@@ -21,8 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.assemble.PropertiesContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -36,7 +37,7 @@ import com.frameworkset.util.SimpleStringUtil;
  * and admin-agent properties.
  */
 public class ConfigParser extends DefaultHandler{
-	private static Logger log = Logger.getLogger(ConfigParser.class) ;
+	private static Logger log = LoggerFactory.getLogger(ConfigParser.class) ;
     private ArrayList dbProps;
     private ArrayList genericProps;
     private Properties adminProps;

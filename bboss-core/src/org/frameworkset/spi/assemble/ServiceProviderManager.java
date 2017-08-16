@@ -34,12 +34,13 @@ import java.util.Set;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.Lifecycle;
 import org.frameworkset.spi.assemble.RefID.Index;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
 /**
@@ -66,7 +67,7 @@ import org.xml.sax.InputSource;
  * @version 1.0
  */
 public class ServiceProviderManager {
-    private static Logger log = Logger.getLogger(ServiceProviderManager.class);
+    private static Logger log = LoggerFactory.getLogger(ServiceProviderManager.class);
     /**
      * 属性引用的反向索引集合
      */

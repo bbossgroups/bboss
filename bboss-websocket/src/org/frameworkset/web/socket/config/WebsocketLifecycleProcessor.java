@@ -11,12 +11,13 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.ApplicationContextException;
 import org.frameworkset.spi.Lifecycle;
 import org.frameworkset.spi.LifecycleProcessor;
 import org.frameworkset.spi.Phased;
 import org.frameworkset.spi.SmartLifecycle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebsocketLifecycleProcessor implements LifecycleProcessor {
 	private WebSocketHandlerMapping webSocketHandlerMapping;
@@ -32,7 +33,7 @@ public class WebsocketLifecycleProcessor implements LifecycleProcessor {
 	
 	
 	
-	private final Logger logger = Logger.getLogger(getClass());
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private volatile long timeoutPerShutdownPhase = 30000;
 

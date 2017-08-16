@@ -21,10 +21,11 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TryCatchFinally;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.web.servlet.support.RequestContext;
 import org.frameworkset.web.servlet.support.RequestContextUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.tag.pager.tags.CellTag;
 
@@ -43,7 +44,7 @@ public abstract class RequestContextAwareTag extends CellTag implements TryCatch
 
 	
 	/** Logger available to subclasses */
-	protected final static Logger logger = Logger.getLogger(RequestContextAwareTag.class);
+	protected final static Logger logger = LoggerFactory.getLogger(RequestContextAwareTag.class);
 
 
 	private RequestContext requestContext;

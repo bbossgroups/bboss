@@ -43,7 +43,7 @@ import com.frameworkset.common.tag.tree.impl.TreeIterator;
  *
  * <p>Copyright: Copyright (c) 2007</p>
  *
- * <p>Company: chinacreator</p>
+ * <p>Company: bbossgroups</p>
  * @Date 2004-9-15
  * @author biaoping.yin
  * @version 1.0

@@ -15,15 +15,7 @@
  */
 package org.frameworkset.web.token;
 
-import java.lang.reflect.Method;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.jsp.JspException;
-
-import org.apache.log4j.Logger;
-import org.frameworkset.util.annotations.MethodData;
-import org.frameworkset.web.servlet.handler.HandlerUtils;
 
 import com.frameworkset.common.tag.BaseTag;
 

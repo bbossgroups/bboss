@@ -19,7 +19,6 @@ import java.io.File;
 
 import javax.servlet.ServletContext;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.support.ApplicationObjectSupport;
 import org.frameworkset.web.servlet.context.ServletContextAware;

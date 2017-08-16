@@ -39,7 +39,8 @@ import java.util.Map;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.tag.pager.DataInfo;
 import com.frameworkset.common.tag.pager.ObjectDataInfoImpl;
@@ -63,7 +64,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	private static final long serialVersionUID = 1L;
 
 
-	private static final Logger log = Logger.getLogger(DetailTag.class);
+	private static final Logger log = LoggerFactory.getLogger(DetailTag.class);
 
 
 	/**详细显示页的显示的字段信息,以逗号分隔*/
@@ -208,10 +209,11 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 //					return SKIP_BODY;
 				}
 				catch (Throwable e) {
-					if(e.getCause() == null)
-						log.debug(e.getMessage());
-					else
-						log.debug(e.getCause().getMessage());
+//					if(e.getCause() == null)
+//						log.debug(e.getMessage());
+//					else
+//						log.debug(e.getCause().getMessage());
+					log.debug(e.getMessage(),e);
 //					return SKIP_BODY;
 				}
 			}

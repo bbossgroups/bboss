@@ -15,13 +15,14 @@
  */
 package org.frameworkset.remote;
 
-import org.apache.log4j.Logger;
+import java.util.List;
+import java.util.Map;
+
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.jgroups.Address;
-
-import java.util.List;
-import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -38,7 +39,7 @@ import java.util.Map;
  */
 public class EventUtils {
 
-	private static final Logger log = Logger.getLogger(EventUtils.class);
+	private static final Logger log = LoggerFactory.getLogger(EventUtils.class);
 	
 	private static boolean remoteevent_enabled ; 
 	

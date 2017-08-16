@@ -17,7 +17,8 @@ package com.frameworkset.listener;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.orm.transaction.TransactionManager;
 
@@ -37,7 +38,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
  */
 public class BSServletRequestListener implements javax.servlet.ServletRequestListener
 {
-	private static final Logger log = Logger.getLogger(BSServletRequestListener.class);
+	private static final Logger log = LoggerFactory.getLogger(BSServletRequestListener.class);
 	
 //	private static String[] interceptorURIs ;
 //	private static final String[] defaultinterceptorURIs = new String[]{".jsp",".do",".page"};

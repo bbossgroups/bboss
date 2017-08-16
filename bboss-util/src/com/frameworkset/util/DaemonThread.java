@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.log4j.Logger;
-
-import com.frameworkset.util.DaemonThread.FileBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: </p>
@@ -171,7 +170,7 @@ public class DaemonThread extends java.lang.Thread
 		}
 		 
 	}
-    private static Logger log = Logger.getLogger(DaemonThread.class);
+    private static Logger log = LoggerFactory.getLogger(DaemonThread.class);
 
 //    private long lastModifiedTime;
 //    private long oldModifiedTime;

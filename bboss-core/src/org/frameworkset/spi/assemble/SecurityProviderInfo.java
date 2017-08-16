@@ -20,9 +20,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.util.NoSupportTypeCastException;
 import com.frameworkset.spi.assemble.CurrentlyInCreationException;
@@ -54,7 +55,7 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
 	 */
     private static final long serialVersionUID = 3932490475171037677L;
 
-    private static Logger log = Logger.getLogger(SecurityProviderInfo.class);
+    private static Logger log = LoggerFactory.getLogger(SecurityProviderInfo.class);
 
     private boolean isdefault = false;
 

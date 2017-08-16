@@ -23,8 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.Tag;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.DataFormatUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.tag.exception.FormulaException;
 import com.frameworkset.common.tag.pager.model.Field;
@@ -110,7 +111,7 @@ public class CellTag  extends PagerTagSupport {
 	
 		this.parameter = parameter;
 	}
-    private static Logger log = Logger.getLogger (CellTag.class);
+    private static Logger log = LoggerFactory.getLogger (CellTag.class);
     /**
      * 记录cell的元模型元素
      */

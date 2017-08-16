@@ -25,7 +25,8 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //import bboss.org.objectweb.asm.ClassAdapter;
 import bboss.org.objectweb.asm.ClassReader;
@@ -47,7 +48,7 @@ import bboss.org.objectweb.asm.Type;
  */
 public class LocalVariableTableParameterNameDiscoverer  implements ParameterNameDiscoverer {
 
-	private static Logger logger = Logger.getLogger(LocalVariableTableParameterNameDiscoverer.class);
+	private static Logger logger = LoggerFactory.getLogger(LocalVariableTableParameterNameDiscoverer.class);
 
 //	private final Map parameterNamesCache =new java.util.concurrent.ConcurrentHashMap(16);
 

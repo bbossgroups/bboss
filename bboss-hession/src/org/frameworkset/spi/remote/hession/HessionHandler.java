@@ -21,9 +21,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.CommonsLogWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.caucho.hessian.io.AbstractHessianInput;
 import com.caucho.hessian.io.AbstractHessianOutput;
@@ -51,7 +52,7 @@ public class HessionHandler extends AbstractHessionHandler{
 
 
 	private SerializerFactory serializerFactory = new SerializerFactory();
-	private static final Logger logger = Logger.getLogger(HessionHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(HessionHandler.class);
 	private Logger debugLogger;
 
 	private HessianSkeleton skeleton;

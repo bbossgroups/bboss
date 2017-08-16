@@ -36,7 +36,8 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -59,7 +60,7 @@ public class DTDResolver implements EntityResolver,Serializable
     private InputSource databaseDTD = null;
 
     /** Logging class from commons.logging */
-    private static Logger log = Logger.getLogger(DTDResolver.class);
+    private static Logger log = LoggerFactory.getLogger(DTDResolver.class);
 
     /**
      * constructor

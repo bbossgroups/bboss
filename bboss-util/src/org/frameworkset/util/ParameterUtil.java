@@ -5,9 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.ClassUtil.Var;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -20,7 +21,7 @@ import org.frameworkset.util.ClassUtil.Var;
  * @version 1.0
  */
 public class ParameterUtil {
-	private static Logger log = Logger.getLogger(ParameterUtil.class);
+	private static Logger log = LoggerFactory.getLogger(ParameterUtil.class);
 	public static String getParameterName(PropertieDescription property,String defaultName,HttpServletRequest request ,int curposition)
 	{
 		List<Var> vars = property.getRequestParamNameToken();

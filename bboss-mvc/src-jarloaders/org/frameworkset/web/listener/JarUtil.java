@@ -27,10 +27,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.web.servlet.PropertiesDummy;
 import org.frameworkset.web.servlet.launcher.CustomClassLoader;
 import org.frameworkset.web.servlet.launcher.CustomJarsLauncher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -305,7 +306,7 @@ public abstract class JarUtil {
 			CustomJarsLauncher launcher = new CustomJarsLauncher();
 			launcher.loadFromRepository(classLoader, docbase,
 					customJarsLocation);
-			Logger log = Logger.getLogger(JarUtil.class);
+			Logger log = LoggerFactory.getLogger(JarUtil.class);
 
 			return loaded;
 		} catch (Exception e) {

@@ -25,13 +25,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.http.HttpHeaders;
 import org.frameworkset.http.HttpInputMessage;
 import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.MediaType;
 import org.frameworkset.http.StreamingHttpOutputMessage;
 import org.frameworkset.util.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for most {@link HttpMessageConverter} implementations.
@@ -47,7 +48,7 @@ import org.frameworkset.util.Assert;
 public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConverter<T> {
 
 	/** Logger available to subclasses */
-	protected final static Logger logger = Logger.getLogger(AbstractHttpMessageConverter.class);
+	protected final static Logger logger = LoggerFactory.getLogger(AbstractHttpMessageConverter.class);
 	/**
 	 * 指定默认的输出字符编码
 	 */

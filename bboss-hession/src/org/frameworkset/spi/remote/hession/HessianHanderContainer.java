@@ -20,11 +20,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.ServletException;
-
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.caucho.hessian.io.SerializerFactory;
 import com.caucho.services.server.GenericService;
@@ -43,7 +42,7 @@ public class HessianHanderContainer {
 
 	private Map<String,AbstractHessionHandler> hessionHandlers;
 	private BaseApplicationContext context;
-	private static final Logger log = Logger.getLogger(HessianHanderContainer.class);
+	private static final Logger log = LoggerFactory.getLogger(HessianHanderContainer.class);
 	private Map<String,Pro> hessionPortServices = new HashMap<String,Pro>();
 	public HessianHanderContainer(BaseApplicationContext context) {
 		hessionHandlers = new HashMap<String,AbstractHessionHandler>();

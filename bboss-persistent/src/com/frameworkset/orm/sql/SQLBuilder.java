@@ -19,7 +19,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.orm.ORMappingException;
 import com.frameworkset.orm.ORMappingManager;
@@ -33,7 +34,7 @@ import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.ValueObjectUtil;
 
 public class SQLBuilder {
-	private static Logger log = Logger.getLogger(SQLBuilder.class);
+	private static Logger log = LoggerFactory.getLogger(SQLBuilder.class);
     public static final int SQLBUILD_TYPE_INSERT = 0;
     public static final int SQLBUILD_TYPE_DELETE = 1;
     public static final int SQLBUILD_TYPE_UPDATE = 2;

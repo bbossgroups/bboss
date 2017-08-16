@@ -14,7 +14,6 @@ import javax.servlet.jsp.JspFactory;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.http.CorsUtils;
 import org.frameworkset.spi.support.LocaleContext;
 import org.frameworkset.spi.support.LocaleContextHolder;
@@ -29,6 +28,8 @@ import org.frameworkset.web.servlet.context.RequestContextHolder;
 import org.frameworkset.web.servlet.context.ServletRequestAttributes;
 import org.frameworkset.web.servlet.mvc.NativeWebRequest;
 import org.frameworkset.web.util.UrlPathHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.StringUtil;
 
@@ -38,7 +39,7 @@ public abstract class BaseServlet extends HttpServlet{
 			ClassUtils.hasMethod(HttpServletResponse.class, "getStatus");
 
 	/** Logger available to subclasses */
-	protected static final Logger logger = Logger.getLogger(BaseServlet.class);
+	protected static final Logger logger = LoggerFactory.getLogger(BaseServlet.class);
 	protected UrlPathHelper urlPathHelper = new UrlPathHelper();
 	
 	/** Should we dispatch an HTTP TRACE request to {@link #doService}? */

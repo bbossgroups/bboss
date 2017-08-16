@@ -18,7 +18,8 @@ package org.frameworkset.security;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>SecurityUtil.java</p>
@@ -31,7 +32,7 @@ import org.apache.log4j.Logger;
  * @version 1.0
  */
 public class SecurityUtil {
-	private static Logger log = Logger.getLogger(SecurityUtil.class);
+	private static Logger log = LoggerFactory.getLogger(SecurityUtil.class);
 	private static AccessControlFactory accessControlFactory;
 	static
 	{

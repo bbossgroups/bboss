@@ -2,8 +2,9 @@ package org.frameworkset.task;
 
 import java.io.Serializable;
 
-import org.apache.log4j.Logger;
 import org.quartz.Scheduler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -18,7 +19,7 @@ import org.quartz.Scheduler;
  */
 
 public class DefaultScheduleService extends ScheduleService implements Serializable{
-	private static Logger log = Logger.getLogger(DefaultScheduleService.class);
+	private static Logger log = LoggerFactory.getLogger(DefaultScheduleService.class);
 	public void startService(Scheduler scheduler)
 			throws ScheduleServiceException {
 		

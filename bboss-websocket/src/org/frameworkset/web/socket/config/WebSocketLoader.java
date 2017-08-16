@@ -6,18 +6,19 @@ import java.util.Set;
 
 import javax.servlet.ServletConfig;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.schedule.ThreadPoolTaskScheduler;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
 import org.frameworkset.web.socket.handler.HandshakeInterceptor;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.StringUtil;
 
 public class WebSocketLoader {
-	private static Logger logger = Logger.getLogger(WebSocketLoader.class);
+	private static Logger logger = LoggerFactory.getLogger(WebSocketLoader.class);
 	private static String[] websocketattrs = new String[]{
 			"enablewebsocket","websocketUrl","sockJSUrl"
 	};

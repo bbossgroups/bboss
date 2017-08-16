@@ -21,8 +21,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.CallContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.ValueObjectUtil;
 
@@ -45,7 +46,7 @@ import com.frameworkset.util.ValueObjectUtil;
  * @version 1.0
  */
 public class ProArray implements Serializable{
-	private static final Logger log = Logger.getLogger(ProArray.class);
+	private static final Logger log = LoggerFactory.getLogger(ProArray.class);
 	private boolean isfreeze = false;
 	/**
 	 * 容器组件类型，有以下三种类型： bean:将可以直接将组装的bean数组 String：ProArray转换为String[]数组

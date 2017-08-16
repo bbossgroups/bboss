@@ -27,13 +27,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.MethodParameter;
 import org.frameworkset.util.ReflectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: BeanUtils.java</p> 
@@ -45,7 +46,7 @@ import org.frameworkset.util.ReflectionUtils;
  * @version 1.0
  */
 public abstract class BeanUtils {
-	private static final Logger logger = Logger.getLogger(BeanUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(BeanUtils.class);
 
 	private static final Map unknownEditorTypes = Collections.synchronizedMap(new WeakHashMap());
 

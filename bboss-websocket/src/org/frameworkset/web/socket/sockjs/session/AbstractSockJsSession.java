@@ -12,8 +12,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.spi.NestedCheckedException;
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.socket.inf.CloseStatus;
@@ -26,6 +24,8 @@ import org.frameworkset.web.socket.sockjs.SockJsServiceConfig;
 import org.frameworkset.web.socket.sockjs.SockJsSession;
 import org.frameworkset.web.socket.sockjs.SockJsTransportFailureException;
 import org.frameworkset.web.socket.sockjs.frame.SockJsFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractSockJsSession  implements SockJsSession {
 
@@ -50,7 +50,7 @@ public abstract class AbstractSockJsSession  implements SockJsSession {
 	 * Separate logger to use on network IO failure after a client has gone away.
 	 * @see #DISCONNECTED_CLIENT_LOG_CATEGORY
 	 */
-	protected static final Log disconnectedClientLogger = LogFactory.getLog(DISCONNECTED_CLIENT_LOG_CATEGORY);
+	protected static final Logger disconnectedClientLogger = LoggerFactory.getLogger(DISCONNECTED_CLIENT_LOG_CATEGORY);
 
 
 	private static final Set<String> disconnectedClientExceptions;
@@ -65,7 +65,7 @@ public abstract class AbstractSockJsSession  implements SockJsSession {
 	}
 
 
-	protected final Log logger = LogFactory.getLog(getClass());
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final String id;
 

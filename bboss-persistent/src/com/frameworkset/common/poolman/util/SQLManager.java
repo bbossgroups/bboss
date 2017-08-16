@@ -20,7 +20,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -28,7 +27,8 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.management.BaseTableManager;
@@ -39,7 +39,7 @@ import com.frameworkset.orm.transaction.TXDataSource;
 
 public class SQLManager extends PoolManager{
 
-	private static Logger log = Logger.getLogger(SQLManager.class);
+	private static Logger log = LoggerFactory.getLogger(SQLManager.class);
 
     /**
      * Singleton is instantiated here in order to bypass the

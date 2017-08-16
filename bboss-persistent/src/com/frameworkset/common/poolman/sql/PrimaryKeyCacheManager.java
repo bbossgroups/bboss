@@ -38,7 +38,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.util.SQLManager;
 
@@ -49,7 +50,7 @@ import com.frameworkset.common.poolman.util.SQLManager;
  * version 1.0
  */
 public class PrimaryKeyCacheManager {
-    private static Logger log = Logger.getLogger(PrimaryKeyCacheManager.class);
+    private static Logger log = LoggerFactory.getLogger(PrimaryKeyCacheManager.class);
     private Map<String,PrimaryKeyCache> primaryKeyCaches;
     public static void  destroy()
     {

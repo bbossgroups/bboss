@@ -22,7 +22,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.sql.ColumnMetaData;
@@ -42,7 +43,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
 public abstract class BaseTableManager {
 //	static PrimaryKeyCacheManager manager = PrimaryKeyCacheManager.getInstance();
 
-	private static Logger log = Logger.getLogger(BaseTableManager.class);
+	private static Logger log = LoggerFactory.getLogger(BaseTableManager.class);
 
 	// 查询表的信息sql
 	public static final String queryTableInfoSql = "select * from tableinfo";

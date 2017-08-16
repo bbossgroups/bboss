@@ -14,7 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.CompareUtil;
 
@@ -29,7 +30,7 @@ import com.frameworkset.util.CompareUtil;
  */
 public abstract class AbstractCompositeVO implements Serializable
 {
-	private static Logger log = Logger.getLogger(AbstractCompositeVO.class);
+	private static Logger log = LoggerFactory.getLogger(AbstractCompositeVO.class);
 	/**
 	 * binMap用来容纳一个HashMap对象序列，
 	 * 每个HashMap对象的key为hashmap中所容纳对象的class，

@@ -28,11 +28,12 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.spi.BeanNameAware;
 import org.frameworkset.util.CollectionUtils;
 import org.frameworkset.web.servlet.support.RequestContext;
 import org.frameworkset.web.servlet.support.WebApplicationObjectSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: AbstractView.java</p> 
@@ -45,7 +46,7 @@ import org.frameworkset.web.servlet.support.WebApplicationObjectSupport;
  */
 public abstract class AbstractView  extends WebApplicationObjectSupport implements View, BeanNameAware {
 	/** Logger that is available to subclasses */
-	protected static final Logger logger = Logger.getLogger(AbstractView.class);
+	protected static final Logger logger = LoggerFactory.getLogger(AbstractView.class);
 	/** Default content type. Overridable as bean property. */
 	public static final String DEFAULT_CONTENT_TYPE = "text/html;charset=ISO-8859-1";
 

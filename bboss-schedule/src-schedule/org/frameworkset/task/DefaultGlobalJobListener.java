@@ -16,9 +16,10 @@
 
 package org.frameworkset.task;
 
-import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.StringUtil;
 
@@ -32,7 +33,7 @@ import com.frameworkset.util.StringUtil;
  * @version 1.0
  */
 public class DefaultGlobalJobListener extends BaseJobListener {
-	private static Logger log = Logger.getLogger(DefaultJobListener.class);
+	private static Logger log = LoggerFactory.getLogger(DefaultJobListener.class);
 	
 	public DefaultGlobalJobListener() {
 		// TODO Auto-generated constructor stub

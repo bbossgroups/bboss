@@ -2,16 +2,17 @@ package org.frameworkset.web.servlet.mvc.mutiaction;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.servlet.handler.AbstractUrlHandlerMapping;
 import org.frameworkset.web.servlet.mvc.MethodNameResolver;
 import org.frameworkset.web.servlet.mvc.NoSuchRequestHandlingMethodException;
 import org.frameworkset.web.util.UrlPathHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractUrlMethodNameResolver  implements MethodNameResolver {
 
-	protected final static Logger logger = Logger.getLogger(AbstractUrlMethodNameResolver.class);
+	protected final static Logger logger = LoggerFactory.getLogger(AbstractUrlMethodNameResolver.class);
 
 	private UrlPathHelper urlPathHelper = new UrlPathHelper();
 

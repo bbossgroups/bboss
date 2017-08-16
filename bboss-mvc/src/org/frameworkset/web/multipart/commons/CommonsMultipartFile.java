@@ -9,12 +9,13 @@ import java.io.Serializable;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItem;
-import org.apache.log4j.Logger;
 import org.frameworkset.web.multipart.IgnoreFieldNameMultipartFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CommonsMultipartFile  implements IgnoreFieldNameMultipartFile, Serializable {
 
-	protected final static Logger logger = Logger.getLogger(CommonsMultipartFile.class);
+	protected final static Logger logger = LoggerFactory.getLogger(CommonsMultipartFile.class);
 
 	private final FileItem fileItem;
 

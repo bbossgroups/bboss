@@ -15,8 +15,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.http.CorsUtils;
 import org.frameworkset.http.HttpStatus;
 import org.frameworkset.http.InvalidMediaTypeException;
@@ -31,6 +29,8 @@ import org.frameworkset.util.ObjectUtils;
 import org.frameworkset.util.annotations.HttpMethod;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.frameworkset.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.StringUtil;
 
@@ -45,7 +45,7 @@ public abstract class AbstractSockJsService  implements SockJsService, CorsConfi
 	private static final String XFRAME_OPTIONS_HEADER = "X-Frame-Options";
 
 
-	protected final Log logger = LogFactory.getLog(getClass());
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final TaskScheduler taskScheduler;
 

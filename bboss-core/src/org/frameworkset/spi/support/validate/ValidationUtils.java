@@ -16,8 +16,9 @@
 package org.frameworkset.spi.support.validate;
 
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.SimpleStringUtil;
 
@@ -32,7 +33,7 @@ import com.frameworkset.util.SimpleStringUtil;
  */
 public abstract class ValidationUtils {
 	
-	private static Logger logger = Logger.getLogger(ValidationUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(ValidationUtils.class);
 
 
 	/**

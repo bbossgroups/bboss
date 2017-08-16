@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.LifeCycleProcessorExecutor;
@@ -78,6 +77,8 @@ import org.frameworkset.web.servlet.view.View;
 import org.frameworkset.web.servlet.view.ViewResolver;
 import org.frameworkset.web.ui.ThemeSource;
 import org.frameworkset.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.util.StringUtil;
@@ -123,7 +124,7 @@ public class DispatchServlet extends BaseServlet {
 	 * that defines DispatcherServlet's default strategy names.
 	 */
 	private static final String DEFAULT_STRATEGIES_PATH = "DispatcherServlet.properties";
-	private static Logger logger = Logger.getLogger(DispatchServlet.class);
+	private static Logger logger = LoggerFactory.getLogger(DispatchServlet.class);
 	static {
 		// Load default strategy implementations from properties file.
 		// This is currently strictly internal and not meant to be customized
@@ -245,7 +246,7 @@ public class DispatchServlet extends BaseServlet {
 	/**
 	 * Additional logger to use when no mapped handler is found for a request.
 	 */
-	protected static final Logger pageNotFoundLogger = Logger.getLogger(PAGE_NOT_FOUND_LOG_CATEGORY);
+	protected static final Logger pageNotFoundLogger = LoggerFactory.getLogger(PAGE_NOT_FOUND_LOG_CATEGORY);
 	
 	/** List of ViewResolvers used by this servlet */
 	private static List viewResolvers;

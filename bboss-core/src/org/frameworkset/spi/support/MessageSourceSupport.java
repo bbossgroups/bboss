@@ -21,7 +21,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -43,7 +44,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class MessageSourceSupport {
 	/** Logger available to subclasses */
-	protected static final Logger logger = Logger
+	protected static final Logger logger = LoggerFactory
 			.getLogger(MessageSourceSupport.class);
 
 	private boolean alwaysUseMessageFormat = false;

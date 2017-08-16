@@ -1,17 +1,10 @@
 package bboss.org.mozilla.intl.chardet;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-
+import com.frameworkset.util.FileUtil;
 import org.frameworkset.util.FileCopyUtils;
 
-import com.frameworkset.util.FileUtil;
+import java.io.*;
+import java.net.URL;
 
 public class UTF8Convertor {
 	private StringBuffer buffer = new StringBuffer();
@@ -472,7 +465,7 @@ public class UTF8Convertor {
 //		convertor.convertCharsetToUtf_8("D:\\workspace\\SanyPDP\\src-htmlparser",
 //				new String[]{".svn","classes",".settings","文档","dbinit-system","distrib","doc","lib","lib-client","lib-compile"},
 //				new String[]{".jsp",".java",".js",".css",".txt",".properties",".html",".htm",".tld",".vm",".xml"});
-		convertor.convertCharsetToUtf_8("F:\\workspace\\bestpractice\\bboss-clientproxy",
+		convertor.convertCharsetToUtf_8("E:\\workspace\\bbossgroups\\bboss-plugins\\bboss-plugin-activemq\\src\\main\\java",
 				new String[]{".svn"},
 				new String[]{".java",".xml"});
 		

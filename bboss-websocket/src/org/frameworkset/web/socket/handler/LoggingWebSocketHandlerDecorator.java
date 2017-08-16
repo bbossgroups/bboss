@@ -1,11 +1,11 @@
 package org.frameworkset.web.socket.handler;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.web.socket.inf.CloseStatus;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.frameworkset.web.socket.inf.WebSocketMessage;
 import org.frameworkset.web.socket.inf.WebSocketSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A {@link WebSocketHandlerDecorator} that adds logging to WebSocket lifecycle events.
@@ -15,7 +15,7 @@ import org.frameworkset.web.socket.inf.WebSocketSession;
  */
 public class LoggingWebSocketHandlerDecorator extends WebSocketHandlerDecorator {
 
-	private static final Log logger = LogFactory.getLog(LoggingWebSocketHandlerDecorator.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoggingWebSocketHandlerDecorator.class);
 
 
 	public LoggingWebSocketHandlerDecorator(WebSocketHandler delegate) {

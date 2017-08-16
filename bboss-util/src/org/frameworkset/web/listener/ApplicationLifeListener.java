@@ -22,8 +22,9 @@ import java.lang.reflect.Method;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.ClassUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: ApplicationLifeListener.java</p> 
@@ -42,7 +43,7 @@ public class ApplicationLifeListener implements ServletContextListener{
  * 
  * 	
  */
- private static Logger log = Logger.getLogger(ApplicationLifeListener.class); 
+ private static Logger log = LoggerFactory.getLogger(ApplicationLifeListener.class); 
  private static Method 	baseApplicationContextShutdown;
  private static Method 	dispatchServletDestory;
  static 

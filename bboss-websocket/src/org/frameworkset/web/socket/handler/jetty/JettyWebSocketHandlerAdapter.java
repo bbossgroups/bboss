@@ -3,8 +3,6 @@ package org.frameworkset.web.socket.handler.jetty;
 
 import java.nio.ByteBuffer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -21,6 +19,8 @@ import org.frameworkset.web.socket.inf.CloseStatus;
 import org.frameworkset.web.socket.inf.PongMessage;
 import org.frameworkset.web.socket.inf.TextMessage;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Adapts {@link WebSocketHandler} to the Jetty 9 WebSocket API.
@@ -33,7 +33,7 @@ public class JettyWebSocketHandlerAdapter {
 
 	private static final ByteBuffer EMPTY_PAYLOAD = ByteBuffer.wrap(new byte[0]);
 
-	private static final Log logger = LogFactory.getLog(JettyWebSocketHandlerAdapter.class);
+	private static final Logger logger = LoggerFactory.getLogger(JettyWebSocketHandlerAdapter.class);
 
 
 	private final WebSocketHandler webSocketHandler;

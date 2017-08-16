@@ -36,7 +36,7 @@
 	<property name="queryFieldWithSQLParams"><![CDATA[select count(1)  from LISTBEAN ]]>
 	</property>
 	
-	<property name="sonsql"><![CDATA['s','c','d']]></property>
+	<property name="sonsql"><![CDATA[0,2,1]]></property>
 	<property name="mainsql"><![CDATA[select count(1)  from LISTBEAN where id in (@{sonsql})]]>
 	</property>
 	<!--

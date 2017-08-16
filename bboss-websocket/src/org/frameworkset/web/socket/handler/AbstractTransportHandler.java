@@ -2,17 +2,17 @@ package org.frameworkset.web.socket.handler;
 
 import java.nio.charset.Charset;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.frameworkset.web.socket.sockjs.SockJsServiceConfig;
 import org.frameworkset.web.socket.sockjs.TransportHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractTransportHandler  implements TransportHandler {
 
 	protected static final Charset UTF8_CHARSET = Charset.forName("UTF-8");
 
 
-	protected final Log logger = LogFactory.getLog(this.getClass());
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private SockJsServiceConfig serviceConfig;
 

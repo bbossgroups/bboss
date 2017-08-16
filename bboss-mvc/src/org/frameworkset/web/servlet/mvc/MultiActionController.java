@@ -36,6 +36,8 @@ import org.frameworkset.web.servlet.handler.HandlerUtils;
 import org.frameworkset.web.servlet.handler.HandlerUtils.ServletHandlerMethodResolver;
 import org.frameworkset.web.servlet.mvc.mutiaction.AbstractUrlMethodNameResolver;
 import org.frameworkset.web.servlet.mvc.mutiaction.InternalPathMethodNameResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: MultiActionController.java</p> 
@@ -47,7 +49,7 @@ import org.frameworkset.web.servlet.mvc.mutiaction.InternalPathMethodNameResolve
  * @version 1.0
  */
 public class MultiActionController  extends AbstractController implements LastModified,BeanNameAware  {
-	
+	private static Logger logger = LoggerFactory.getLogger(MultiActionController.class);
 	private ServletHandlerMethodResolver handlerMethodResolver =
 		null;
 	

@@ -17,7 +17,8 @@ package com.frameworkset.platform.cms.driver.callback;
 
 import javax.servlet.jsp.tagext.Tag;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
 
@@ -33,7 +34,7 @@ import com.frameworkset.platform.cms.driver.jsp.CMSServletRequest;
  */
 public class CMSCallBackUtil {
 	static CMSCallBackFactory cmsCallBackFactory;
-	private static Logger log = Logger.getLogger(CMSCallBackUtil.class);
+	private static Logger log = LoggerFactory.getLogger(CMSCallBackUtil.class);
 	static {
 		try {
 			cmsCallBackFactory = (CMSCallBackFactory) Class.forName("com.frameworkset.platform.cms.driver.callback.PlatformCMSCallBackFactory").newInstance();

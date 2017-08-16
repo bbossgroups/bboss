@@ -68,12 +68,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.util.MethodParameter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.spi.assemble.BeanInstanceException;
@@ -144,7 +145,7 @@ public class ValueObjectUtil {
 		Class.class,
 		java.sql.Timestamp.class,java.sql.Date.class,java.util.Date.class,java.util.Locale.class
 		};
-	private static final Logger log = Logger.getLogger(ValueObjectUtil.class);
+	private static final Logger log = LoggerFactory.getLogger(ValueObjectUtil.class);
 
 //	private static final SimpleDateFormat format = new SimpleDateFormat(
 //			"yyyy-MM-dd HH:mm:ss");

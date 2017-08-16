@@ -3,9 +3,10 @@ package org.frameworkset.web.request.async;
 import java.util.PriorityQueue;
 import java.util.concurrent.Callable;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.Assert;
 import org.frameworkset.web.servlet.mvc.NativeWebRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * {@code DeferredResult} provides an alternative to using a {@link Callable} for
@@ -32,7 +33,7 @@ public class DeferredResult<T> {
 
 	private static final Object RESULT_NONE = new Object();
 
-	protected static final Logger logger = Logger.getLogger(DeferredResult.class);
+	protected static final Logger logger = LoggerFactory.getLogger(DeferredResult.class);
 
 
 	private final Long timeout;

@@ -16,7 +16,8 @@
 package com.frameworkset.common.tag.pager;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.poolman.util.SQLUtil.DBHashtable;
 import com.frameworkset.util.ValueObjectUtil;
@@ -31,7 +32,7 @@ import com.frameworkset.util.ValueObjectUtil;
 
 public class ClassData 
 {	
-	private static final Logger log = Logger.getLogger(ClassData.class);
+	private static final Logger log = LoggerFactory.getLogger(ClassData.class);
 	
 	/**
 	 * 值对象

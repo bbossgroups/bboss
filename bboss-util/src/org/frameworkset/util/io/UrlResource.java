@@ -24,9 +24,10 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
-import org.apache.log4j.Logger;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ResourceUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frameworkset.util.SimpleStringUtil;
 
@@ -42,7 +43,7 @@ import com.frameworkset.util.SimpleStringUtil;
  * @version 1.0
  */
 public class UrlResource extends AbstractResource {
-	private static Logger log = Logger.getLogger(UrlResource.class);
+	private static Logger log = LoggerFactory.getLogger(UrlResource.class);
 	
 	private URLConnection con; 
 	private long totalsize;

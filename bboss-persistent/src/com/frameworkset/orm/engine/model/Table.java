@@ -38,7 +38,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 
 import com.frameworkset.orm.engine.EngineException;
@@ -57,7 +58,7 @@ import com.frameworkset.orm.engine.EngineException;
 public class Table implements IDMethod,Comparable,Serializable
 {
     /** Logging class from commons.logging */
-    private static Logger log = Logger.getLogger(Table.class);
+    private static Logger log = LoggerFactory.getLogger(Table.class);
 
     //private AttributeListImpl attributes;
     private List columnList;
@@ -235,7 +236,7 @@ public class Table implements IDMethod,Comparable,Serializable
         }
         catch (EngineException e)
         {
-            log.error(e, e);
+            log.error("", e);
         }
     }
 
@@ -287,7 +288,7 @@ public class Table implements IDMethod,Comparable,Serializable
         }
         catch (EngineException nameAlreadyInUse)
         {
-            log.error(nameAlreadyInUse, nameAlreadyInUse);
+            log.error("", nameAlreadyInUse);
         }
     }
 
