@@ -58,6 +58,8 @@ import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.spi.support.MessageSourceResolvable;
 import org.frameworkset.spi.support.NoSuchMessageException;
 import org.frameworkset.util.Assert;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.io.DefaultResourceLoader;
 import org.frameworkset.util.io.PathMatchingResourcePatternResolver;
 import org.frameworkset.util.io.Resource;
@@ -870,12 +872,18 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				Object value = entry.getInstance();
 				String method = entry.getDestroyMethod();
 				try {
-					Method m = value.getClass().getDeclaredMethod(method);
-					m.invoke(value);
+					ClassInfo iclass = ClassUtil.getClassInfo(value.getClass());
+					Method m = iclass.getDeclaredMethod(method);
+					if(m != null)
+						m.invoke(value);
+					else
+					{
+						log.info("Destroy Bean failed:"
+									+value.getClass().getCanonicalName()+"."+method +" do not exist.");
+						
+					}
 				} catch (SecurityException e) {
 					log.error(e.getMessage(),e);
-				} catch (NoSuchMethodException e) {
-					log.error("getDeclaredMethod",e);
 				} catch (Exception e) {
 					log.error(e.getMessage(),e);
 				}
@@ -2523,9 +2531,6 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	{
 		return providerManager.getExternalProperty(property);
 	}
-	
-
-	
 
 }
 

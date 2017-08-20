@@ -1914,20 +1914,23 @@ public class BeanAccembleHelper {
 				&& providerManagerInfo.getInitMethod() != null
 				&& !providerManagerInfo.getInitMethod().equals("")) {
 			try {
-				Method m = instance.getClass().getDeclaredMethod(
-						providerManagerInfo.getInitMethod());
+				ClassInfo iclass = ClassUtil.getClassInfo(instance.getClass());
+				Method m = iclass.getDeclaredMethod(providerManagerInfo.getInitMethod());
+				if(m == null){
+					throw new BeanInstanceException("InitializingBean["
+							+ providerManagerInfo.getName()
+							+ "] afterPropertiesSet 失败:NoSuchMethodException["+providerManagerInfo.getInitMethod()+"]，请检查配置文件是否配置正确["
+							+ providerManagerInfo.getConfigFile() + "]");
+				}
+//				Method m = instance.getClass().getDeclaredMethod(
+//						providerManagerInfo.getInitMethod());
 				m.invoke(instance, new Object[0]);
 			} catch (SecurityException e) {
 				throw new BeanInstanceException("InitializingBean["
 						+ providerManagerInfo.getName()
 						+ "] afterPropertiesSet 失败,请检查配置文件是否配置正确["
 						+ providerManagerInfo.getConfigFile() + "]", e);
-			} catch (NoSuchMethodException e) {
-				throw new BeanInstanceException("InitializingBean["
-						+ providerManagerInfo.getName()
-						+ "] afterPropertiesSet 失败,请检查配置文件是否配置正确["
-						+ providerManagerInfo.getConfigFile() + "]", e);
-			}
+			} 
 			catch(CurrentlyInCreationException e)
 			{
 				throw e;
