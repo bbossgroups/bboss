@@ -245,7 +245,8 @@ public class HttpRequestUtil {
                 throw   e;
             } finally {
                 // 释放连接
-                httpGet.releaseConnection();
+            	if(httpGet!=null)
+            		httpGet.releaseConnection();
                 httpClient = null;
             }
         } while (time < RETRY_TIME);
@@ -490,7 +491,8 @@ public class HttpRequestUtil {
                 throw   e;
             } finally {
                 // 释放连接
-                httpPost.releaseConnection();
+            	if(httpPost != null)
+            		httpPost.releaseConnection();
                 httpClient = null;
             }
         } while (time < RETRY_TIME);
@@ -750,7 +752,8 @@ public class HttpRequestUtil {
                 throw   e;
             } finally {
                 // 释放连接
-                httpPost.releaseConnection();
+            	if(httpPost != null)
+            		httpPost.releaseConnection();
                 httpClient = null;
             }
 
