@@ -640,7 +640,8 @@ public class HttpRequestUtil {
                 throw   e;
             } finally {
                 // 释放连接
-                httpDelete.releaseConnection();
+                if(httpDelete != null)
+                	httpDelete.releaseConnection();
                 httpClient = null;
             }
         } while (time < RETRY_TIME);
