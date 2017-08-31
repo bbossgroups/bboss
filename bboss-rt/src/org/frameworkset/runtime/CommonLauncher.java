@@ -64,7 +64,8 @@ public class CommonLauncher {
 	private static String extlibs[];
 	private static String extresources[];
 	private static File appDir;
-
+	private static boolean shutdown = false;
+	private static boolean restart = false;
 	private static List<URL> alljars;
 
 	public static String getProperty(String pro) {
@@ -145,7 +146,7 @@ public class CommonLauncher {
 
 		}
 	}
-
+	
 	public static void run(String[] args)
 			throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchMethodException,
 			IllegalAccessException, InvocationTargetException, InstantiationException, IOException {
@@ -154,10 +155,14 @@ public class CommonLauncher {
 		System.out.println("os info:" + getOS());
 		appDir = computeApplicationDir(location, new File("."));
 		loadConfig(appDir);
-		if (!shutdown) {
+		if (!shutdown && !restart) {
 			startup();
-		} else {
+		} else if(shutdown){
 			shutdown();
+		}
+		else if(restart){
+			shutdown();
+			startup();
 		}
 
 	}
@@ -180,7 +185,9 @@ public class CommonLauncher {
 			try {
 				in = new BufferedReader(read);
 				while ((s = in.readLine()) != null) {
-					pids.add(s);
+					s = s.trim();
+					if(!s.equals("") && !s.equals("\n"))
+						pids.add(s);
 				}
 
 			} finally {
@@ -259,6 +266,7 @@ public class CommonLauncher {
 	private static void startup()
 			throws MalformedURLException, ClassNotFoundException, SecurityException, NoSuchMethodException,
 			IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException {
+		System.out.println("starting ....");
 		genPIDFile();
 		File lib = new File(appDir, publiclibdir);
 
@@ -298,7 +306,7 @@ public class CommonLauncher {
 		}
 		Method method = mainClass.getMethod("main", new Class[] { String[].class });
 		method.invoke(null, new Object[] { args });
-		
+		System.out.println("started success.");
 	}
 
 	private static void genPIDFile() {
@@ -417,7 +425,7 @@ public class CommonLauncher {
 		}
 	}
 
-	private static boolean shutdown = false;
+	
 
 	public static void main(String[] args)
 			throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchMethodException,
@@ -430,8 +438,11 @@ public class CommonLauncher {
 				propertfile = args[i].substring("--conf=".length());
 				if (!propertfile.startsWith("/"))
 					propertfile = "/" + propertfile;
-			} else if (args[i].equals("shutdown")) {
+			} else if (args[i].equals("stop")) {
 				shutdown = true;
+			}
+			else if (args[i].equals("restart")) {
+				restart = true;
 			}
 			buidler.append(args[i]).append(" ");
 		}
