@@ -1,1 +1,1 @@
-java -jar bboss-rt-${bboss_version}.jar  restart
+java ${vm} -jar ${project}-${bboss_version}.jar restart

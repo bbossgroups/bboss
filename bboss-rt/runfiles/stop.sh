@@ -1,2 +1,2 @@
 #!/bin/sh
-java -jar bboss-rt-${bboss_version}.jar stop
+java -jar ${project}-${bboss_version}.jar stop

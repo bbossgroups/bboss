@@ -1,2 +1,3 @@
 #!/bin/sh
-java -jar bboss-rt-${bboss_version}.jar restart
+nohup java ${vm} -jar ${project}-${bboss_version}.jar restart > ${project}.log &
+tail -f ${project}.log

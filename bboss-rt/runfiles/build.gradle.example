@@ -31,11 +31,11 @@ configurations {
 }
 dependencies {
 	compile project(':spark-service-util')
-     compile  (  
-     [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${bboss_version}", transitive: true],       
-     
+     compile  (
+     [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${bboss_version}", transitive: true],
+
           [group: 'org.apache.thrift', name: 'libthrift', version: "0.9.2", transitive: false],
-     
+
      [group: 'org.apache.hadoop', name: 'hadoop-annotations', version: "${hadoop_version}", transitive: true],
 	            [group: 'org.apache.hadoop', name: 'hadoop-auth', version: "${hadoop_version}", transitive: true],
 	            [group: 'org.apache.hadoop', name: 'hadoop-common', version: "${hadoop_version}", transitive: true],
@@ -47,51 +47,55 @@ dependencies {
 	            [group: 'com.bbossgroups.plugins', name: 'bboss-plugin-kafka', version: "5.0.3.6", transitive: true],
 	            [group: 'com.bbossgroups.plugins', name: 'bboss-plugin-elasticsearch', version: "5.0.3.6", transitive: true],
      )
-     
+
     runtime(
 		[group: 'com.bbossgroups', name: 'bboss-rt', version: "${bboss_version}", transitive: false],
     )
-    
+
     testCompile(
      [group: 'org.apache.hive', name: 'hive-jdbc', version: "2.1.1", transitive: true],
     )
-	   	  	  
-       
+
+
 }
 
 
 task copyJarFiles(type: Sync,dependsOn:'jar'){
-	
 
-	 
+
+
 	 from configurations.compile
-	 from jar.outputs	 
-	 exclude { details -> details.file.name.startsWith('bboss-rt')  }	  
+	 from jar.outputs
+	 exclude { details -> details.file.name.startsWith('bboss-rt')  }
 	 into 'build/dist/lib'
-	 
+
 }
 
-task copyRTJarFiles(type: Copy,dependsOn:'copyJarFiles'){ 	
+task copyRTJarFiles(type: Copy,dependsOn:'copyJarFiles'){
 	 from configurations.runtime - configurations.compile
-	 into 'build/dist'	 
+	 into 'build/dist'
+     rename ("bboss-rt-${bboss_version}.jar", "${project.name}-${bboss_version}.jar")
 }
 task copyToolFiles(type: Copy ,dependsOn:'copyRTJarFiles')  {
 			from ('runfiles')
-			{				
-				expand(						
-						bboss_version:"${bboss_version}",cmd:"trace"
+			{
+				expand(
+						bboss_version:"${bboss_version}",
+                        cmd:"${project.name}",
+                        project:"${project.name}",
+                        vm:"-Xms512m -Xmx512m -Xmn256m -XX:PermSize=128M -XX:MaxPermSize=256M"
 						)
-				
-			} 
-		  filteringCharset = 'UTF-8'     
+
+			}
+		  filteringCharset = 'UTF-8'
 			into 'build/dist/'
-		
-	 
-	 
+
+
+
 }
 task copyResourcesfiles(type: Sync )  {
 	from fileTree(dir: 'src/test/resources')
-	filteringCharset = 'UTF-8'    
+	filteringCharset = 'UTF-8'
 	into 'build/dist/resources'
 }
 
@@ -100,5 +104,5 @@ task releaseVersion(type: Zip,dependsOn:['copyToolFiles','copyResourcesfiles']) 
     //appendix = 'wrapper'
    classifier = 'released'
    from 'build/dist/'
-   
+
 }
