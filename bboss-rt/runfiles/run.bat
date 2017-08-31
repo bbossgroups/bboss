@@ -6,22 +6,22 @@ if ""%1""=="""" goto info
 :info
 
 echo Usage:
-echo   ${cmd} keyword
+echo   ${project} keyword
 echo   ----------------------------------------------------------------
-echo   start                            -- Start ${cmd}
-echo   stop                         -- stop ${cmd}
-echo   restart                          -- Restart ${cmd}
+echo   start                            -- Start ${project}
+echo   stop                             -- stop ${project}
+echo   restart                          -- Restart ${project}
 echo   ----------------------------------------------------------------
 
 goto end
 :start
-    java -Xms512m -Xmx512m -Xmn256m -XX:PermSize=128M -XX:MaxPermSize=256M -jar bboss-rt-${bboss_version}.jar
+    java ${vm} -jar ${project}-${bboss_version}.jar
 goto end
 :stop
-    java -jar bboss-rt-${bboss_version}.jar stop
+    java -jar ${project}-${bboss_version}.jar stop
 goto end
 :restart
-    java -Xms512m -Xmx512m -Xmn256m -XX:PermSize=128M -XX:MaxPermSize=256M -jar bboss-rt-${bboss_version}.jar restart
+    java ${vm} -jar ${project}-${bboss_version}.jar restart
 goto end
 :end
 echo end
