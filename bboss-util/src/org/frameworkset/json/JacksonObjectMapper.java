@@ -1,6 +1,7 @@
 package org.frameworkset.json;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
 
@@ -9,6 +10,8 @@ public interface JacksonObjectMapper {
 	<T> T json2Object(String jsonString, Class<T> toclass);
 
 	<T> T json2Object(String jsonString, Class<T> toclass, boolean ALLOW_SINGLE_QUOTES);
+	
+	<T> T json2Object(InputStream jsonString, Class<T> toclass, boolean ALLOW_SINGLE_QUOTES);
 	//	  public   <T> T json2Object(String jsonString,TypeReference<T> ref) {
 	//			return json2Object(jsonString,ref,true);
 	//			

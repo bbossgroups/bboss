@@ -2638,6 +2638,12 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		
 	
 	}
+    public static <T> T json2Object(InputStream jsonString,Class<T> toclass) {
+		// TODO Auto-generated method stub
+		return objectMapper.json2Object(jsonString,toclass,true);
+		
+	
+	}
     
     public static String object2json(Object object,boolean ALLOW_SINGLE_QUOTES) {
 //    	ObjectMapper mapper = new ObjectMapper();

@@ -303,7 +303,19 @@ public class HttpRequestUtil {
     public static String httpPostforString(String url, Map<String, Object> params, Map<String, String> headers) throws Exception {
         return httpPostFileforString("default", url, (String) null, (String) null, params, (Map<String, File>) null, headers);
     }
-
+    
+    /**
+     * 公用post方法
+     *
+     * @param url
+     * @param params
+     * @param headers
+     * @throws Exception
+     */
+    public static <T> T httpPostforString(String url, Map<String, Object> params, Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
+        return httpPostFileforString("default", url, (String) null, (String) null, params, (Map<String, File>) null, headers,responseHandler);
+    }
+    
     public static String httpPostforString(String poolname, String url, Map<String, Object> params) throws Exception {
         return httpPostFileforString(poolname, url, (String) null, (String) null, params, (Map<String, File>) null);
     }
@@ -347,6 +359,7 @@ public class HttpRequestUtil {
         return httpPostFileforString(poolname, url, cookie, userAgent, params,
                 files, null);
     }
+    
 
     /**
      * 公用post方法
@@ -360,8 +373,8 @@ public class HttpRequestUtil {
      * @param headers
      * @throws Exception
      */
-    public static String httpPostFileforString(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
-                                               Map<String, File> files, Map<String, String> headers) throws Exception {
+    public static <T> T httpPostFileforString(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
+                                               Map<String, File> files, Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
         // System.out.println("post_url==> "+url);
         // String cookie = getCookie(appContext);
         // String userAgent = getUserAgent(appContext);
@@ -424,7 +437,7 @@ public class HttpRequestUtil {
             }
         }
 
-        String responseBody = "";
+        T responseBody = null;
         int time = 0;
         int RETRY_TIME = ClientConfiguration.getClientConfiguration(poolname).getRetryTime();
         do {
@@ -441,28 +454,28 @@ public class HttpRequestUtil {
                     httpPost.setEntity(entity);
 
                 }
-                // Create a custom response handler
-                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-                    @Override
-                    public String handleResponse(final HttpResponse response)
-                            throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-
-                        if (status >= 200 && status < 300) {
-                            HttpEntity entity = response.getEntity();
-
-                            return entity != null ? EntityUtils.toString(entity) : null;
-                        } else {
-                            HttpEntity entity = response.getEntity();
-                            if (entity != null )
-                                return EntityUtils.toString(entity);
-                            else
-                                throw new ClientProtocolException("Unexpected response status: " + status);
-                        }
-                    }
-
-                };
+//                // Create a custom response handler
+//                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+//
+//                    @Override
+//                    public String handleResponse(final HttpResponse response)
+//                            throws ClientProtocolException, IOException {
+//                        int status = response.getStatusLine().getStatusCode();
+//
+//                        if (status >= 200 && status < 300) {
+//                            HttpEntity entity = response.getEntity();
+//
+//                            return entity != null ? EntityUtils.toString(entity) : null;
+//                        } else {
+//                            HttpEntity entity = response.getEntity();
+//                            if (entity != null )
+//                                return EntityUtils.toString(entity);
+//                            else
+//                                throw new ClientProtocolException("Unexpected response status: " + status);
+//                        }
+//                    }
+//
+//                };
                 responseBody = httpClient.execute(httpPost, responseHandler);
                 break;
             } catch (ClientProtocolException e) {
@@ -497,6 +510,47 @@ public class HttpRequestUtil {
             }
         } while (time < RETRY_TIME);
         return responseBody;
+
+    }
+    
+    /**
+     * 公用post方法
+     *
+     * @param poolname
+     * @param url
+     * @param cookie
+     * @param userAgent
+     * @param params
+     * @param files
+     * @param headers
+     * @throws Exception
+     */
+    public static String httpPostFileforString(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
+                                               Map<String, File> files, Map<String, String> headers) throws Exception {
+    	
+    	return httpPostFileforString(  poolname,   url,   cookie,   userAgent,   params,
+                  files,  headers,new ResponseHandler<String>() {
+
+                      @Override
+                      public String handleResponse(final HttpResponse response)
+                              throws ClientProtocolException, IOException {
+                          int status = response.getStatusLine().getStatusCode();
+
+                          if (status >= 200 && status < 300) {
+                              HttpEntity entity = response.getEntity();
+
+                              return entity != null ? EntityUtils.toString(entity) : null;
+                          } else {
+                              HttpEntity entity = response.getEntity();
+                              if (entity != null )
+                                  return EntityUtils.toString(entity);
+                              else
+                                  throw new ClientProtocolException("Unexpected response status: " + status);
+                          }
+                      }
+
+                  });
+       
 
     }
     /**
@@ -681,12 +735,16 @@ public class HttpRequestUtil {
         return  sendBody("default",  requestBody,   url,   null,ContentType.create(
                 "text/plain", Consts.UTF_8));
     }
-
-    public static String sendJsonBody(String requestBody, String url, Map<String, String> headers) throws Exception {
+   
+    public static String sendJsonBody(String requestBody, String url, Map<String, String> headers ) throws Exception {
 
         return  sendBody( "default", requestBody,   url,   headers,ContentType.APPLICATION_JSON);
     }
-    public static String sendBody(String poolname,String requestBody, String url, Map<String, String> headers,ContentType contentType) throws Exception {
+    public static <T> T sendJsonBody(String requestBody, String url, Map<String, String> headers  ,ResponseHandler<T> responseHandler) throws Exception {
+
+        return  sendBody( "default", requestBody,   url,   headers,ContentType.APPLICATION_JSON, responseHandler);
+    }
+    public static <T> T sendBody(String poolname,String requestBody, String url, Map<String, String> headers,ContentType contentType, ResponseHandler<T> responseHandler) throws Exception {
         CloseableHttpClient httpClient = null;
         HttpPost httpPost = null;
 
@@ -695,7 +753,7 @@ public class HttpRequestUtil {
                 requestBody,
                 contentType);
         int RETRY_TIME = ClientConfiguration.getClientConfiguration(poolname).getRetryTime();
-        String responseBody = null;
+        T responseBody = null;
         int time = 0;
         do {
             try {
@@ -704,27 +762,27 @@ public class HttpRequestUtil {
                 if (httpEntity != null) {
                     httpPost.setEntity(httpEntity);
                 }
-                // Create a custom response handler
-                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-                    @Override
-                    public String handleResponse(final HttpResponse response)
-                            throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-
-                        if (status >= 200 && status < 300) {
-                            HttpEntity entity = response.getEntity();
-                            return entity != null ? EntityUtils.toString(entity) : null;
-                        } else {
-                            HttpEntity entity = response.getEntity();
-                            if (entity != null )
-                                return EntityUtils.toString(entity);
-                            else
-                                throw new ClientProtocolException("Unexpected response status: " + status);
-                        }
-                    }
-
-                };
+//                // Create a custom response handler
+//                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+//
+//                    @Override
+//                    public String handleResponse(final HttpResponse response)
+//                            throws ClientProtocolException, IOException {
+//                        int status = response.getStatusLine().getStatusCode();
+//
+//                        if (status >= 200 && status < 300) {
+//                            HttpEntity entity = response.getEntity();
+//                            return entity != null ? EntityUtils.toString(entity) : null;
+//                        } else {
+//                            HttpEntity entity = response.getEntity();
+//                            if (entity != null )
+//                                return EntityUtils.toString(entity);
+//                            else
+//                                throw new ClientProtocolException("Unexpected response status: " + status);
+//                        }
+//                    }
+//
+//                };
                 responseBody = httpClient.execute(httpPost,responseHandler);
                 break;
             } catch (ClientProtocolException e) {
@@ -760,6 +818,30 @@ public class HttpRequestUtil {
 
         } while (time < RETRY_TIME);
         return responseBody;
+    }
+    
+    public static String sendBody(String poolname,String requestBody, String url, Map<String, String> headers,ContentType contentType) throws Exception {
+    	return sendBody(  poolname,  requestBody,   url, headers,  contentType, new ResponseHandler<String>() {
+
+            @Override
+            public String handleResponse(final HttpResponse response)
+                    throws ClientProtocolException, IOException {
+                int status = response.getStatusLine().getStatusCode();
+
+                if (status >= 200 && status < 300) {
+                    HttpEntity entity = response.getEntity();
+                    return entity != null ? EntityUtils.toString(entity) : null;
+                } else {
+                    HttpEntity entity = response.getEntity();
+                    if (entity != null )
+                        return EntityUtils.toString(entity);
+                    else
+                        throw new ClientProtocolException("Unexpected response status: " + status);
+                }
+            }
+
+        });
+        
     }
 
 }
