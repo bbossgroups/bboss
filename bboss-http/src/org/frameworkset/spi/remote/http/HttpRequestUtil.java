@@ -24,6 +24,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -153,6 +154,28 @@ public class HttpRequestUtil {
 
 
         return httpDelete;
+    }
+    
+    private static HttpPut getHttpPut(String httppoolname, String url, String cookie, String userAgent, Map<String, String> headers) {
+    	HttpPut httpPut = new HttpPut(url);
+        RequestConfig requestConfig = ClientConfiguration.getClientConfiguration(httppoolname).getRequestConfig();
+        httpPut.setConfig(requestConfig);
+//        httpDelete.addHeader("Host", "www.bbossgroups.com");
+        httpPut.addHeader("Connection", "Keep-Alive");
+        if (cookie != null)
+        	httpPut.addHeader("Cookie", cookie);
+        if (userAgent != null)
+        	httpPut.addHeader("User-Agent", userAgent);
+        if (headers != null && headers.size() > 0) {
+            Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
+            while (entries.hasNext()) {
+                Entry<String, String> entry = entries.next();
+                httpPut.addHeader(entry.getKey(), entry.getValue());
+            }
+        }
+
+
+        return httpPut;
     }
 
     public static String httpGetforString(String url) throws Exception {
@@ -291,6 +314,10 @@ public class HttpRequestUtil {
     public static String httpPostforString(String url, Map<String, Object> params) throws Exception {
         return httpPostforString(url, params, (Map<String, String>) null);
     }
+    
+    public static <T> T httpPost(String url, Map<String, Object> params,ResponseHandler<T> responseHandler) throws Exception {
+        return httpPostforString(url, params, (Map<String, String>) null, responseHandler);
+    }
 
     /**
      * 公用post方法
@@ -304,6 +331,20 @@ public class HttpRequestUtil {
         return httpPostFileforString("default", url, (String) null, (String) null, params, (Map<String, File>) null, headers);
     }
     
+   
+    
+    /**
+     * 公用post方法
+     *
+     * @param url
+     * @param params
+     * @param headers
+     * @throws Exception
+     */
+    public static  <T> T  httpPost(String url, Map<String, Object> params, Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
+        return httpPost("default", url, (String) null, (String) null, params, (Map<String, File>) null, headers, responseHandler);
+    }
+    
     /**
      * 公用post方法
      *
@@ -313,7 +354,7 @@ public class HttpRequestUtil {
      * @throws Exception
      */
     public static <T> T httpPostforString(String url, Map<String, Object> params, Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
-        return httpPostFileforString("default", url, (String) null, (String) null, params, (Map<String, File>) null, headers,responseHandler);
+        return httpPost("default", url, (String) null, (String) null, params, (Map<String, File>) null, headers,responseHandler);
     }
     
     public static String httpPostforString(String poolname, String url, Map<String, Object> params) throws Exception {
@@ -322,6 +363,10 @@ public class HttpRequestUtil {
 
     public static String httpPostforString(String url) throws Exception {
         return httpPostforString("default", url);
+    }
+    
+    public static <T> T  httpPost(String url,ResponseHandler<T> responseHandler) throws Exception {
+        return httpPost("default", url, responseHandler);
     }
 
     /**
@@ -334,6 +379,19 @@ public class HttpRequestUtil {
     public static String httpPostforString(String poolname, String url) throws Exception {
         return httpPostFileforString(poolname, url, (String) null, (String) null, (Map<String, Object>) null,
                 (Map<String, File>) null);
+    }
+    
+    /**
+     * 公用post方法
+     *
+     * @param poolname
+     * @param url
+     * @throws Exception
+     */
+    public static <T> T  httpPost(String poolname, String url,ResponseHandler<T> responseHandler) throws Exception {
+    	return httpPost(  poolname,   url, (String) null, (String) null, (Map<String, Object>) null,
+    			 (Map<String, File>) null, (Map<String, String>)null,responseHandler) ;
+        
     }
 
     public static String httpPostforString(String url, String cookie, String userAgent,
@@ -373,7 +431,7 @@ public class HttpRequestUtil {
      * @param headers
      * @throws Exception
      */
-    public static <T> T httpPostFileforString(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
+    public static <T> T httpPost(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
                                                Map<String, File> files, Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
         // System.out.println("post_url==> "+url);
         // String cookie = getCookie(appContext);
@@ -525,34 +583,185 @@ public class HttpRequestUtil {
      * @param headers
      * @throws Exception
      */
+    public static String httpPutforString(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
+                                               Map<String, File> files, Map<String, String> headers) throws Exception{
+    	return httpPut(  poolname,   url,   cookie,   userAgent,  params,
+                  files,   headers,new StringResponseHandler());
+    }
+    /**
+     * 公用post方法
+     *
+     * @param poolname
+     * @param url
+     * @param cookie
+     * @param userAgent
+     * @param params
+     * @param files
+     * @param headers
+     * @throws Exception
+     */
+    public static <T> T httpPut(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
+                                               Map<String, File> files, Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
+        // System.out.println("post_url==> "+url);
+        // String cookie = getCookie(appContext);
+        // String userAgent = getUserAgent(appContext);
+
+        HttpClient httpClient = null;
+        HttpPut httpPut = null;
+
+//				
+//                .addPart("bin", bin)
+//                .addPart("comment", comment)
+//                .build();
+//				 FileBody bin = new FileBody(new File(args[0]));
+//        StringBody comment = new StringBody("A binary file of some kind", ContentType.TEXT_PLAIN);
+        HttpEntity httpEntity = null;
+        List<NameValuePair> paramPair = null;
+        if (files != null) {
+            MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+            // post表单参数处理
+            int length = (params == null ? 0 : params.size()) + (files == null ? 0 : files.size());
+
+            int i = 0;
+            boolean hasdata = false;
+
+            if (params != null) {
+                Iterator<Entry<String, Object>> it = params.entrySet().iterator();
+                while (it.hasNext()) {
+                    Entry<String, Object> entry = it.next();
+                    multipartEntityBuilder.addTextBody(entry.getKey(), String.valueOf(entry.getValue()), ClientConfiguration.TEXT_PLAIN_UTF_8);
+                    hasdata = true;
+                }
+            }
+            if (files != null) {
+                Iterator<Entry<String, File>> it = files.entrySet().iterator();
+                while (it.hasNext()) {
+                    Entry<String, File> entry = it.next();
+
+//						parts[i++] = new FilePart(entry.getKey(), entry.getValue());
+                    File f = new File(String.valueOf(entry.getValue()));
+                    if (f.exists()) {
+                        FileBody file = new FileBody(f);
+                        multipartEntityBuilder.addPart(entry.getKey(), file);
+                        hasdata = true;
+                    } else {
+
+                    }
+
+                    // System.out.println("post_key_file==> "+file);
+                }
+            }
+            if (hasdata)
+                httpEntity = multipartEntityBuilder.build();
+        } else if (params != null && params.size() > 0) {
+            paramPair = new ArrayList<NameValuePair>();
+            Iterator<Entry<String, Object>> it = params.entrySet().iterator();
+            NameValuePair paramPair_ = null;
+            for (int i = 0; it.hasNext(); i++) {
+                Entry<String, Object> entry = it.next();
+                paramPair_ = new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue()));
+                paramPair.add(paramPair_);
+            }
+        }
+
+        T responseBody = null;
+        int time = 0;
+        int RETRY_TIME = ClientConfiguration.getClientConfiguration(poolname).getRetryTime();
+        do {
+            try {
+                httpClient = getHttpClient(poolname);
+                httpPut = getHttpPut(poolname, url, cookie, userAgent, headers);
+
+
+                if (httpEntity != null) {
+                	httpPut.setEntity(httpEntity);
+                } else if (paramPair != null && paramPair.size() > 0) {
+                    UrlEncodedFormEntity entity = new UrlEncodedFormEntity(paramPair, Consts.UTF_8);
+
+                    httpPut.setEntity(entity);
+
+                }
+//                // Create a custom response handler
+//                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+//
+//                    @Override
+//                    public String handleResponse(final HttpResponse response)
+//                            throws ClientProtocolException, IOException {
+//                        int status = response.getStatusLine().getStatusCode();
+//
+//                        if (status >= 200 && status < 300) {
+//                            HttpEntity entity = response.getEntity();
+//
+//                            return entity != null ? EntityUtils.toString(entity) : null;
+//                        } else {
+//                            HttpEntity entity = response.getEntity();
+//                            if (entity != null )
+//                                return EntityUtils.toString(entity);
+//                            else
+//                                throw new ClientProtocolException("Unexpected response status: " + status);
+//                        }
+//                    }
+//
+//                };
+                responseBody = httpClient.execute(httpPut, responseHandler);
+                break;
+            } catch (ClientProtocolException e) {
+                throw   e;
+            } catch (HttpException e) {
+                time++;
+                if (time < RETRY_TIME) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                    }
+                    continue;
+                }
+                // 发生致命的异常，可能是协议不对或者返回的内容有问题
+                throw   e;
+            } catch (IOException e) {
+                time++;
+                if (time < RETRY_TIME) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                    }
+                    continue;
+                }
+                // 发生网络异常
+                throw   e;
+            } finally {
+                // 释放连接
+            	if(httpPut != null)
+            		httpPut.releaseConnection();
+                httpClient = null;
+            }
+        } while (time < RETRY_TIME);
+        return responseBody;
+
+    }
+    
+    /**
+     * 公用post方法
+     *
+     * @param poolname
+     * @param url
+     * @param cookie
+     * @param userAgent
+     * @param params
+     * @param files
+     * @param headers
+     * @throws Exception
+     */
     public static String httpPostFileforString(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
                                                Map<String, File> files, Map<String, String> headers) throws Exception {
     	
-    	return httpPostFileforString(  poolname,   url,   cookie,   userAgent,   params,
-                  files,  headers,new ResponseHandler<String>() {
-
-                      @Override
-                      public String handleResponse(final HttpResponse response)
-                              throws ClientProtocolException, IOException {
-                          int status = response.getStatusLine().getStatusCode();
-
-                          if (status >= 200 && status < 300) {
-                              HttpEntity entity = response.getEntity();
-
-                              return entity != null ? EntityUtils.toString(entity) : null;
-                          } else {
-                              HttpEntity entity = response.getEntity();
-                              if (entity != null )
-                                  return EntityUtils.toString(entity);
-                              else
-                                  throw new ClientProtocolException("Unexpected response status: " + status);
-                          }
-                      }
-
-                  });
+    	return httpPost(  poolname,   url,   cookie,   userAgent,   params,
+                  files,  headers,new StringResponseHandler() );
        
 
     }
+    
+    
     /**
      * 公用delete方法
      *
@@ -605,7 +814,6 @@ public class HttpRequestUtil {
                 headers);
 
     }
-
     /**
      * 公用delete方法
      *
@@ -619,6 +827,22 @@ public class HttpRequestUtil {
      */
     public static String httpDelete(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
                                                 Map<String, String> headers) throws Exception {
+    	return httpDelete(  poolname,   url,   cookie,   userAgent,   params,
+                  headers,new StringResponseHandler());
+    }
+    /**
+     * 公用delete方法
+     *
+     * @param poolname
+     * @param url
+     * @param cookie
+     * @param userAgent
+     * @param params
+     * @param headers
+     * @throws Exception
+     */
+    public static <T> T httpDelete(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
+                                                Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
 
 
         HttpClient httpClient = null;
@@ -626,7 +850,7 @@ public class HttpRequestUtil {
 
 
 
-        String responseBody = "";
+        T responseBody = null;
         int time = 0;
         int RETRY_TIME = ClientConfiguration.getClientConfiguration(poolname).getRetryTime();
         do {
@@ -644,28 +868,7 @@ public class HttpRequestUtil {
                     httpDelete.setParams(httpParams);
                 }
                 // Create a custom response handler
-                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-                    @Override
-                    public String handleResponse(final HttpResponse response)
-                            throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-
-                        if (status >= 200 && status < 300) {
-                            HttpEntity entity = response.getEntity();
-                            return entity != null ? EntityUtils.toString(entity) : null;
-                        } else {
-                            HttpEntity entity = response.getEntity();
-                            if (entity != null )
-                                return EntityUtils.toString(entity);
-                            else
-                                throw new ClientProtocolException("Unexpected response status: " + status);
-
-//                            throw new ClientProtocolException(msg);
-                        }
-                    }
-
-                };
+                 
                 responseBody = httpClient.execute(httpDelete, responseHandler);
                 break;
             } catch (ClientProtocolException e) {
@@ -702,6 +905,8 @@ public class HttpRequestUtil {
         return responseBody;
 
     }
+    
+    
     public static String sendStringBody(String poolname,String requestBody, String url, Map<String, String> headers) throws Exception {
         return  sendBody(poolname,  requestBody,   url,   headers,ContentType.create(
                 "text/plain", Consts.UTF_8));
