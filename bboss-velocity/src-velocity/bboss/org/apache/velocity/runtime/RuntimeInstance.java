@@ -141,7 +141,10 @@ public class RuntimeInstance implements RuntimeConstants, RuntimeServices
      * The SQL Runtime parser pool
      */
     private  ParserPool parserSQLPool;
-
+    /**
+     * The Elastic Template Runtime parser pool
+     */
+    private  ParserPool parserElasticTemplatePool;
     /**
      * Indicate whether the Runtime is in the midst of initialization.
      */
@@ -1130,7 +1133,31 @@ public class RuntimeInstance implements RuntimeConstants, RuntimeServices
             parserSQLPool = (ParserPool) o;
 
             parserSQLPool.initialize(this);
+            
+            
+            
+            try {
+				o = ClassUtils.getNewInstance( pp );
+			}  
+            catch (ClassNotFoundException cnfe )
+            {
+                String err = "The specified class for ParserPool ("
+                    + pp
+                    + ") does not exist (or is not accessible to the current classloader.";
+                log.error(err);
+                throw new VelocityException(err, cnfe);
+            }
+            catch (InstantiationException ie)
+            {
+              throw new VelocityException("Could not instantiate class '" + pp + "'", ie);
+            }
+            catch (IllegalAccessException ae)
+            {
+              throw new VelocityException("Cannot access class '" + pp + "'", ae);
+            }
+            parserElasticTemplatePool = (ParserPool) o;
 
+            parserElasticTemplatePool.initialize(this);
         }
         else
         {
@@ -1290,6 +1317,42 @@ public class RuntimeInstance implements RuntimeConstants, RuntimeServices
 //            }
 //
 //        }
+    }
+    /**
+     *  Parse the input and return the root of the AST node structure.
+     *
+     * @param reader Reader retrieved by a resource loader
+     * @param templateName name of the template being parsed
+     * @param dumpNamespace flag to dump the Velocimacro namespace for this template
+     * @return A root node representing the template as an AST tree.
+     * @throws ParseException When the template could not be parsed.
+     */
+    public SimpleNode parseElasticTemplate(Reader reader, String elasticTemplate, boolean dumpNamespace)
+        throws ParseException{
+    	return  _parse( reader,  elasticTemplate,  dumpNamespace, parserElasticTemplatePool);
+    }
+    
+    
+    /**
+     * Parse the input SQL and return the root of
+     * AST node structure.
+     * <br><br>
+     *  In the event that it runs out of parsers in the
+     *  pool, it will create and let them be GC'd
+     *  dynamically, logging that it has to do that.  This
+     *  is considered an exceptional condition.  It is
+     *  expected that the user will set the
+     *  PARSER_POOL_SIZE property appropriately for their
+     *  application.  We will revisit this.
+     *
+     * @param reader inputstream retrieved by a resource loader
+     * @param templateName name of the template being parsed
+     * @return The AST representing the template.
+     * @throws ParseException
+     */
+    public  SimpleNode parseElasticTemplate( Reader reader, String elasticTemplate )
+        throws ParseException{
+    	return parseElasticTemplate(  reader,  elasticTemplate ,true);
     }
     
     /**

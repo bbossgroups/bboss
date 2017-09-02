@@ -1,6 +1,7 @@
 package org.frameworkset.json;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
 
@@ -59,6 +60,16 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 	 */
 	@Override
 	public  <T> T json2Object(String jsonString,Class<T> toclass,boolean ALLOW_SINGLE_QUOTES) {
+			return jacksonObjectMapper.json2Object(jsonString,toclass,ALLOW_SINGLE_QUOTES);
+			
+			
+		
+		}
+	/* (non-Javadoc)
+	 * @see org.frameworkset.json.JacksonObjectMapper#json2Object(java.lang.String, java.lang.Class, boolean)
+	 */
+	@Override
+	public  <T> T json2Object(InputStream jsonString,Class<T> toclass,boolean ALLOW_SINGLE_QUOTES) {
 			return jacksonObjectMapper.json2Object(jsonString,toclass,ALLOW_SINGLE_QUOTES);
 			
 			

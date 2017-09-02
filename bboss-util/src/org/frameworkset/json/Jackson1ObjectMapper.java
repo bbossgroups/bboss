@@ -1,6 +1,7 @@
 package org.frameworkset.json;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.lang.reflect.Type;
@@ -38,6 +39,29 @@ public class Jackson1ObjectMapper implements JacksonObjectMapper {
 					
 				} catch (Exception e) {
 					throw new IllegalArgumentException(jsonString,e);
+				}
+				
+				
+			
+			}
+		
+		/* (non-Javadoc)
+		 * @see org.frameworkset.json.JacksonObjectMapper#json2Object(java.lang.String, java.lang.Class, boolean)
+		 */
+		@Override
+		public  <T> T json2Object(InputStream jsonString,Class<T> toclass,boolean ALLOW_SINGLE_QUOTES) {
+				// TODO Auto-generated method stub
+
+//				String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'人寿保险','department':'xxx','position':'主管' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'人寿保险','department':'xxx','position':'主管' }]";
+//				ObjectMapper mapper = new ObjectMapper();
+//				mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+				try {
+					T value = mapper.readValue(jsonString, toclass);
+					return value;
+					
+					
+				} catch (Exception e) {
+					throw new IllegalArgumentException("",e);
 				}
 				
 				

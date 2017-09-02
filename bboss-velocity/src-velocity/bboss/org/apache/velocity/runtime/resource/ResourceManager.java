@@ -46,6 +46,7 @@ public interface ResourceManager
     public static final int RESOURCE_CONTENT = 2;
     
     public static final int RESOURCE_SQL = 3;
+    public static final int RESOURCE_ES = 4;
 
     /**
      * Initialize the ResourceManager.

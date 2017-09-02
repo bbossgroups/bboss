@@ -195,6 +195,7 @@ public interface RuntimeServices extends RuntimeLogger
     public  SimpleNode parseSQL( Reader reader, String SQL )
         throws ParseException;
     
+    
     /**
      *  Parse the input and return the root of the AST node structure.
      *
@@ -218,7 +219,39 @@ public interface RuntimeServices extends RuntimeLogger
      */
     public SimpleNode parse( Reader reader, String templateName, boolean dumpNamespace )
         throws ParseException;
-
+    /**
+     *  Parse the input and return the root of the AST node structure.
+     *
+     * @param reader Reader retrieved by a resource loader
+     * @param templateName name of the template being parsed
+     * @param dumpNamespace flag to dump the Velocimacro namespace for this template
+     * @return A root node representing the template as an AST tree.
+     * @throws ParseException When the template could not be parsed.
+     */
+    public SimpleNode parseElasticTemplate(Reader reader, String elasticTemplate, boolean dumpNamespace)
+        throws ParseException;
+    
+    
+    /**
+     * Parse the input SQL and return the root of
+     * AST node structure.
+     * <br><br>
+     *  In the event that it runs out of parsers in the
+     *  pool, it will create and let them be GC'd
+     *  dynamically, logging that it has to do that.  This
+     *  is considered an exceptional condition.  It is
+     *  expected that the user will set the
+     *  PARSER_POOL_SIZE property appropriately for their
+     *  application.  We will revisit this.
+     *
+     * @param reader inputstream retrieved by a resource loader
+     * @param templateName name of the template being parsed
+     * @return The AST representing the template.
+     * @throws ParseException
+     */
+    public  SimpleNode parseElasticTemplate( Reader reader, String elasticTemplate )
+        throws ParseException;
+    
     /**
      * Renders the input string using the context into the output writer.
      * To be used when a template is dynamically constructed, or want to use
