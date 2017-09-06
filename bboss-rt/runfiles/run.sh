@@ -6,10 +6,10 @@ case \$1 in
     tail -f ${project}.log
      ;;
    stop)
-    java -jar ${project}-${bboss_version}.jar  stop
+    java -jar ${project}-${bboss_version}.jar  stop --shutdownLevel=C
      ;;
    restart)
-    nohup java ${vm} -jar ${project}-${bboss_version}.jar restart > ${project}.log &
+    nohup java ${vm} -jar ${project}-${bboss_version}.jar restart --shutdownLevel=C > ${project}.log &
     tail -f ${project}.log
     ;;
    *)

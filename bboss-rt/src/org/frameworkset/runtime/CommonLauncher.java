@@ -65,6 +65,7 @@ public class CommonLauncher {
 	private static String extresources[];
 	private static File appDir;
 	private static boolean shutdown = false;
+	private static int shutdownLevel = 9;
 	private static boolean restart = false;
 	private static List<URL> alljars;
 
@@ -246,7 +247,10 @@ public class CommonLauncher {
 		{
 			 
 			StringBuilder builder = new StringBuilder();
-			builder.append("kill -9");
+			if(shutdownLevel == -1)
+				builder.append("kill ");
+			else 
+				builder.append("kill -").append(shutdownLevel);
 			for(int i = 0; i < pids.size(); i ++){
 				builder.append(" ").append(pids.get(i));
 			}
@@ -444,6 +448,19 @@ public class CommonLauncher {
 			else if (args[i].equals("restart")) {
 				restart = true;
 			}
+			else if (args[i].startsWith("--shutdownLevel=")) {
+				String level = args[1].substring("--shutdownLevel=".length());
+				try {
+					if(level.equals("C"))
+						shutdownLevel = -1;
+					else 
+						shutdownLevel = Integer.parseInt(level);
+				} catch (Exception e) {
+					System.err.println("shutdownLevel 必须制定定为2 9 或者C");
+				}
+				restart = true;
+			}
+			
 			buidler.append(args[i]).append(" ");
 		}
 		
