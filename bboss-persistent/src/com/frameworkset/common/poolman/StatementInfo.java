@@ -345,9 +345,9 @@ public class StatementInfo {
 		if (this.rownum == null) {
 			// if (this.isRobotQuery(prepareDBName))
 			paginesql = getDBPagineSql(true);
-			if(showsql && paginesql != null)
+			if(log.isInfoEnabled() && showsql && paginesql != null)
 			{
-				log.debug("Execute JDBC prepared pagine query statement:"+paginesql.getSql());
+				log.info("Execute JDBC prepared pagine query statement:{}",paginesql.getSql());
 			}
 		} else {
 			paginesql = getDBPagineSqlForOracle(true);
@@ -367,9 +367,9 @@ public class StatementInfo {
 		{
 			countsql = totalsizesql;
 		}
-		if(showsql)
+		if(log.isInfoEnabled() && showsql)
 		{
-			log.debug("Execute JDBC prepared pagine query count statement:"+countsql);
+			log.info("Execute JDBC prepared pagine query count statement:{}",countsql);
 		}
 		return prepareStatement(countsql);
 	}
@@ -391,8 +391,8 @@ public class StatementInfo {
 		// is not a select statement");
 		//
 		// String fromPart = sql.substring(tempSql.indexOf("from"));
-		String selectCount = "select count(1) from (" + sql
-				+ ") countsql_daul_forpagination";
+		String selectCount = new StringBuilder().append("select count(1) from (").append( sql
+				).append(") countsql_daul_forpagination").toString();
 
 		return selectCount;
 

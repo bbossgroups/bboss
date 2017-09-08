@@ -2224,9 +2224,9 @@ public class CallableDBUtil extends PreparedDBUtil {
 			resources = new ArrayList();
 			super.setUpParams(Params, cstmt,resources);
 			this.setUpCallableParams(_params, cstmt);
-			if(showsql(stmtInfo.getDbname()))
+			if(log.isInfoEnabled() && showsql(stmtInfo.getDbname()) )
 			{
-				log.debug("Execute JDBC callable statement:"+stmtInfo.getSql());
+				log.info("Execute JDBC callable statement:{}",stmtInfo.getSql());
 			}
 			boolean success = cstmt.execute();
 			

@@ -591,9 +591,9 @@ public class SQLUtil{
 
 			s = stmtInfo.createStatement();
 
-			if(showsql(stmtInfo.getDbname()))
+			if(log.isInfoEnabled() && showsql(stmtInfo.getDbname()))
 			{
-				log.debug("Execute JDBC statement:"+stmtInfo.getSql());
+				log.info("Execute JDBC statement:{}",stmtInfo.getSql());
 			}
 			boolean hasResult = s.execute(stmtInfo.getSql());
 //			results = new HashMaple[10];

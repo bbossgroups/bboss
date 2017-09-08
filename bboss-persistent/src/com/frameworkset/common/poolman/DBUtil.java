@@ -911,10 +911,10 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 
 				String paginesql = stmtInfo.paginesql(false).getSql();
-				if(showsql(stmtInfo.getDbname()))
+				if(log.isInfoEnabled() && showsql(stmtInfo.getDbname()))
 				{
-					log.debug("JDBC pageine origine statement:" + stmtInfo.getSql());
-					log.debug("JDBC pageine statement:" + paginesql);
+					log.info("JDBC pageine origine statement:{}", stmtInfo.getSql());
+					log.info("JDBC pageine statement:{}", paginesql);
 				}
 //				log.debug("paginesql:" + paginesql);
 				s.execute(paginesql);
@@ -1319,9 +1319,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 					try {
 						String changesqlString = (String) temp[0];
 						// String ret = s.executeUpdate(sql) + "";
-						if(showsql(dbname_))
+						if(log.isInfoEnabled() && showsql(dbname_))
 						{
-							log.debug("JDBC Insert statement:" + stmtInfo.getSql());
+							log.info("JDBC Insert statement:{}", stmtInfo.getSql());
 						}
 						s.executeUpdate(changesqlString);
 	
@@ -1352,9 +1352,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 			}
 			else
 			{
-				if(showsql(dbname_))
+				if(log.isInfoEnabled() && showsql(dbname_))
 				{
-					log.debug("JDBC Insert statement:" + stmtInfo.getSql());
+					log.info("JDBC Insert statement:{}", stmtInfo.getSql());
 				}
 				int i = s.executeUpdate(stmtInfo.getSql());
 				stmtInfo.commit();
@@ -2418,9 +2418,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 		
 					// 重新设置处理后的sql语句
 					sql = (String) objs[0];
-					if(showsql(stmtInfo.getDbname()))
+					if(log.isInfoEnabled() && showsql(stmtInfo.getDbname()))
 					{
-						log.debug("Execute JDBC batch statement:"+sql);
+						log.info("Execute JDBC batch statement:{}",sql);
 					}
 //					log.info("Add Batch Statement:" + sql);
 		
@@ -2439,9 +2439,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 				{
 //					sql = (String) objs[0];
 //					log.info("Add Batch Statement:" + sql);
-					if(showsql(stmtInfo.getDbname()))
+					if(log.isInfoEnabled() && showsql(stmtInfo.getDbname()))
 					{
-						log.debug("Execute JDBC batch statement:"+sql);
+						log.info("Execute JDBC batch statement:{}",sql);
 					}
 					// 执行statement的添加批处理命令		
 					batchStmt.addBatch(sql);
