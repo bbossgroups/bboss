@@ -588,6 +588,92 @@ public class HttpRequestUtil {
     	return httpPut(  poolname,   url,   cookie,   userAgent,  params,
                   files,   headers,new StringResponseHandler());
     }
+    
+    /**
+     * 公用post方法
+     *
+     * @param poolname
+     * @param url
+     * @param cookie
+     * @param userAgent
+     * @param params
+     * @param files
+     * @param headers
+     * @throws Exception
+     */
+    public static String httpPutforString(  String url,Map<String, Object> params, Map<String, String> headers ) throws Exception{
+    	return httpPut(  "default",   url,   (String)null,   (String)null,  params,
+    			( Map<String, File> )null,   headers,new StringResponseHandler());
+    }
+    
+    /**
+     * 公用post方法
+     *
+     * @param poolname
+     * @param url
+     * @param cookie
+     * @param userAgent
+     * @param params
+     * @param files
+     * @param headers
+     * @throws Exception
+     */
+    public static <T> T httpPut(String url, String cookie, String userAgent, Map<String, Object> params,
+                                               Map<String, File> files, Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
+    	return httpPut("default", url, cookie, userAgent, params,
+                                                    files, headers, responseHandler) ;
+    }
+    
+    /**
+     * 公用post方法
+     *
+     * @param poolname
+     * @param url
+     * @param cookie
+     * @param userAgent
+     * @param params
+     * @param files
+     * @param headers
+     * @throws Exception
+     */
+    public static <T> T httpPut(String url, Map<String, Object> params,  Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
+    	return httpPut( url, (String)null, (String)null, (Map<String, Object>)params,
+    							(Map<String, File>)null, headers, responseHandler) ;
+    }
+    
+    /**
+     * 公用post方法
+     *
+     * @param poolname
+     * @param url
+     * @param cookie
+     * @param userAgent
+     * @param params
+     * @param files
+     * @param headers
+     * @throws Exception
+     */
+    public static <T> T httpPut(String url, Map<String, Object> params,ResponseHandler<T> responseHandler) throws Exception {
+    	return httpPut( url, (String)null, (String)null, (Map<String, Object>)params,
+    							(Map<String, File>)null, (Map<String, String>)null, responseHandler) ;
+    }
+    
+    /**
+     * 公用post方法
+     *
+     * @param poolname
+     * @param url
+     * @param cookie
+     * @param userAgent
+     * @param params
+     * @param files
+     * @param headers
+     * @throws Exception
+     */
+    public static <T> T httpPut(String url,ResponseHandler<T> responseHandler) throws Exception {
+    	return httpPut( url, (String)null, (String)null, (Map<String, Object>)null,
+    							(Map<String, File>)null, (Map<String, String>)null, responseHandler) ;
+    }
     /**
      * 公用post方法
      *
@@ -1048,5 +1134,136 @@ public class HttpRequestUtil {
         });
         
     }
+    
+    public static <T> T putBody(String poolname,String requestBody, String url, Map<String, String> headers,ContentType contentType, ResponseHandler<T> responseHandler) throws Exception {
+        CloseableHttpClient httpClient = null;
+        HttpPut httpPost = null;
+
+
+        HttpEntity httpEntity = new StringEntity(
+                requestBody,
+                contentType);
+        int RETRY_TIME = ClientConfiguration.getClientConfiguration(poolname).getRetryTime();
+        T responseBody = null;
+        int time = 0;
+        do {
+            try {
+                httpClient = getHttpClient(poolname);
+                httpPost = getHttpPut(poolname, url, "", "", headers);
+                if (httpEntity != null) {
+                    httpPost.setEntity(httpEntity);
+                }
+//                // Create a custom response handler
+//                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+//
+//                    @Override
+//                    public String handleResponse(final HttpResponse response)
+//                            throws ClientProtocolException, IOException {
+//                        int status = response.getStatusLine().getStatusCode();
+//
+//                        if (status >= 200 && status < 300) {
+//                            HttpEntity entity = response.getEntity();
+//                            return entity != null ? EntityUtils.toString(entity) : null;
+//                        } else {
+//                            HttpEntity entity = response.getEntity();
+//                            if (entity != null )
+//                                return EntityUtils.toString(entity);
+//                            else
+//                                throw new ClientProtocolException("Unexpected response status: " + status);
+//                        }
+//                    }
+//
+//                };
+                responseBody = httpClient.execute(httpPost,responseHandler);
+                break;
+            } catch (ClientProtocolException e) {
+                throw  e;
+            } catch (HttpException e) {
+                time++;
+                if (time < RETRY_TIME) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                    }
+                    continue;
+                }
+                // 发生致命的异常，可能是协议不对或者返回的内容有问题
+                throw   e;
+            } catch (IOException e) {
+                time++;
+                if (time < RETRY_TIME) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                    }
+                    continue;
+                }
+                // 发生网络异常
+                throw   e;
+            } finally {
+                // 释放连接
+            	if(httpPost != null)
+            		httpPost.releaseConnection();
+                httpClient = null;
+            }
+
+        } while (time < RETRY_TIME);
+        return responseBody;
+    }
+    
+    public static String putBody(String poolname,String requestBody, String url, Map<String, String> headers,ContentType contentType) throws Exception {
+    	return putBody(  poolname,  requestBody,   url, headers,  contentType, new ResponseHandler<String>() {
+
+            @Override
+            public String handleResponse(final HttpResponse response)
+                    throws ClientProtocolException, IOException {
+                int status = response.getStatusLine().getStatusCode();
+
+                if (status >= 200 && status < 300) {
+                    HttpEntity entity = response.getEntity();
+                    return entity != null ? EntityUtils.toString(entity) : null;
+                } else {
+                    HttpEntity entity = response.getEntity();
+                    if (entity != null )
+                        return EntityUtils.toString(entity);
+                    else
+                        throw new ClientProtocolException("Unexpected response status: " + status);
+                }
+            }
+
+        });
+        
+    }
+    
+    public static <T> T putBody(String requestBody, String url, Map<String, String> headers,ContentType contentType, ResponseHandler<T> responseHandler) throws Exception {
+        return putBody( "default", requestBody,   url,  headers,  contentType,  responseHandler) ;
+    }
+    
+    public static String putBody(String requestBody, String url, Map<String, String> headers,ContentType contentType) throws Exception {
+    	return putBody( "default",requestBody,   url,   headers,  contentType) ;
+        
+    }
+    
+    
+
+    public static <T> T putJson(String poolname,String requestBody, String url, Map<String, String> headers,ContentType contentType, ResponseHandler<T> responseHandler) throws Exception {
+       return putJson(  poolname,  requestBody,   url,   headers,ContentType.APPLICATION_JSON,  responseHandler);
+    }
+    
+    public static String putJson(String poolname,String requestBody, String url, Map<String, String> headers,ContentType contentType) throws Exception {
+    	return putJson(  poolname,  requestBody,   url, headers, ContentType.APPLICATION_JSON);
+        
+    }
+    
+    public static <T> T putJson(String requestBody, String url, Map<String, String> headers, ResponseHandler<T> responseHandler) throws Exception {
+        return putBody( "default", requestBody,   url,  headers,   ContentType.APPLICATION_JSON,  responseHandler) ;
+    }
+    
+    public static String putJson(String requestBody, String url, Map<String, String> headers) throws Exception {
+    	return putBody( "default",requestBody,   url,   headers,  ContentType.APPLICATION_JSON) ;
+        
+    }
+    
+    
 
 }

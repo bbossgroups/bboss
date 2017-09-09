@@ -81,7 +81,6 @@ task copyToolFiles(type: Copy ,dependsOn:'copyRTJarFiles')  {
 			{
 				expand(
 						bboss_version:"${bboss_version}",
-                        cmd:"${project.name}",
                         project:"${project.name}",
                         vm:"-Xms512m -Xmx512m -Xmn256m -XX:PermSize=128M -XX:MaxPermSize=256M"
 						)
