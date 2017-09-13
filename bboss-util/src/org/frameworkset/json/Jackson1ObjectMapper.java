@@ -73,6 +73,31 @@ public class Jackson1ObjectMapper implements JacksonObjectMapper {
 //			
 //			}
 //		  
+		@Override
+		public <T> T json2ObjectWithType(InputStream jsonString, final JsonTypeReference<T> ref,
+				boolean ALLOW_SINGLE_QUOTES) {
+			ObjectMapper mapper = new ObjectMapper();
+			
+			
+			TypeReference<?> ref_ = new TypeReference<Object>(){
+				@Override
+				public Type getType() {
+					// TODO Auto-generated method stub
+					return ref.getType();
+				}
+				
+			};  
+					//(TypeReference)ref.getTypeReference();
+			mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+			try {
+				T value = mapper.readValue(jsonString, ref_);
+				return value;
+				
+				
+			} catch (Exception e) {
+				throw new IllegalArgumentException(e);
+			}
+		}
 		  public  <T> T json2ObjectWithType(String jsonString,final JsonTypeReference<T> ref,boolean ALLOW_SINGLE_QUOTES) {
 				// TODO Auto-generated method stub
 	
@@ -250,5 +275,7 @@ public class Jackson1ObjectMapper implements JacksonObjectMapper {
 				
 			
 			}
+
+		
 
 }

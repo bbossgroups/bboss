@@ -104,6 +104,9 @@ public class SimpleStringUtil  {
 	public static final String BLANK = "";
 	private static JacksonObjectMapperWrapper objectMapper = new JacksonObjectMapperWrapper();
 
+	public JacksonObjectMapperWrapper getJacksonObjectMapper(){
+		return objectMapper;
+	}
 	/**
 	 * A constant passed to the {@link #split split()}methods indicating that
 	 * all occurrences of a pattern should be used to split a string.
@@ -2613,6 +2616,12 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		
 	
 	}
+    
+    public static <T> T json2ObjectWithType(InputStream json,JsonTypeReference<T> ref) {
+		return json2ObjectWithType(json,ref,true);
+		
+	
+	}
     public static <T> T  json2ObjectWithType(String jsonString,JsonTypeReference<T> ref,boolean ALLOW_SINGLE_QUOTES) {
 		// TODO Auto-generated method stub
 
@@ -2628,6 +2637,25 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 //			throw new IllegalArgumentException(jsonString,e);
 //		}
     	return objectMapper.json2ObjectWithType(jsonString, ref, ALLOW_SINGLE_QUOTES);
+		
+	
+	}
+    
+    public static <T> T  json2ObjectWithType(InputStream json,JsonTypeReference<T> ref,boolean ALLOW_SINGLE_QUOTES) {
+		// TODO Auto-generated method stub
+
+//		String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'人寿保险','department':'xxx','position':'主管' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'人寿保险','department':'xxx','position':'主管' }]";
+//		ObjectMapper mapper = new ObjectMapper();
+//		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+//		try {
+//			T value = mapper.readValue(jsonString, ref);
+//			return value;
+//			
+//			
+//		} catch (Exception e) {
+//			throw new IllegalArgumentException(jsonString,e);
+//		}
+    	return objectMapper.json2ObjectWithType(json, ref, ALLOW_SINGLE_QUOTES);
 		
 	
 	}

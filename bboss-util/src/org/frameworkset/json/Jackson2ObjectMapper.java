@@ -7,6 +7,7 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	ObjectMapper mapper = new ObjectMapper();
@@ -22,6 +23,9 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			
 		
 		}
+	
+	
+ 
 	    
 	 /* (non-Javadoc)
 	 * @see org.frameworkset.json.JacksonObjectMapper#json2Object(java.lang.String, java.lang.Class, boolean)
@@ -91,7 +95,28 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 //			
 //		
 //		}
-	
+	@Override
+	public <T> T json2ObjectWithType(InputStream jsonString, final JsonTypeReference<T> ref, boolean ALLOW_SINGLE_QUOTES) {
+		// TODO Auto-generated method stub
+		ObjectMapper mapper = new ObjectMapper();
+		TypeReference<?> ref_ = new TypeReference<Object>(){
+			@Override
+			public Type getType() {
+				// TODO Auto-generated method stub
+				return ref.getType();
+			}
+
+			 
+		};  
+		try {
+			T value = mapper.readValue(jsonString, ref_);
+			return value;
+			
+			
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
 	public   <T> T json2ObjectWithType(String jsonString,final JsonTypeReference<T> ref,boolean ALLOW_SINGLE_QUOTES) {
 		// TODO Auto-generated method stub
 
@@ -268,5 +293,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			
 		
 		}
+
+
 
 }

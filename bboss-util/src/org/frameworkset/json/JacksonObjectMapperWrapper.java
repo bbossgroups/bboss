@@ -100,6 +100,32 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 		
 		}
 	  
+	  
+	  public    <T> T json2ObjectWithType(InputStream jsonString,final JsonTypeReference<T> ref) {
+			return json2ObjectWithType(jsonString,ref,true);
+			
+		
+		}
+	  
+	  public   <T> T json2ObjectWithType(InputStream jsonString,final JsonTypeReference<T> ref,boolean ALLOW_SINGLE_QUOTES) {
+			// TODO Auto-generated method stub
+
+//			String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'人寿保险','department':'xxx','position':'主管' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'人寿保险','department':'xxx','position':'主管' }]";
+//			ObjectMapper mapper = new ObjectMapper();
+//			mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+//			try {
+//				T value = mapper.readValue(jsonString, ref);
+//				return value;
+//				
+//				
+//			} catch (Exception e) {
+//				throw new IllegalArgumentException(jsonString,e);
+//			}
+		  return jacksonObjectMapper.json2ObjectWithType( jsonString,ref,ALLOW_SINGLE_QUOTES);
+			
+		
+		}
+	  
 	  /* (non-Javadoc)
 	 * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object)
 	 */
