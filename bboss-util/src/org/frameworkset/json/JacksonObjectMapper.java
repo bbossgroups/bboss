@@ -57,5 +57,7 @@ public interface JacksonObjectMapper {
 	byte[] object2jsonAsbyte(Object object, boolean ALLOW_SINGLE_QUOTES);
 
 	<T> T json2ObjectWithType(String jsonString, JsonTypeReference<T> ref, boolean aLLOW_SINGLE_QUOTES);
+	
+	<T> T json2ObjectWithType(InputStream jsonString, JsonTypeReference<T> ref, boolean aLLOW_SINGLE_QUOTES);
 
 }
