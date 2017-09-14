@@ -702,39 +702,42 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 //		return instance;
 //	}
 	private static List<WrapperRunnable> shutdownHooks = new ArrayList<WrapperRunnable>();
-	private static void addShutdownHook_(WrapperRunnable destroyVMHook)
+	private static synchronized void addShutdownHook_(WrapperRunnable destroyVMHook)
 	{
 		shutdownHooks.add(destroyVMHook);
+		Collections.sort(shutdownHooks, priorComparator);
 		
 	}
 	
 	static Object lockshutdown = new Object();
+	static PriorComparator priorComparator = new PriorComparator();
+	static class PriorComparator implements Comparator<WrapperRunnable>{
+		
+		public int compare(WrapperRunnable o1, WrapperRunnable o2) {
+			if(o1.getProir() > o2.getProir())
+				return 1;
+			else if(o1.getProir() == o2.getProir())
+			{
+				return 0;
+			}
+			else
+				return -1;
+				
+		}
+		
+	}
 	/**
 	 * invoke shutdown hooks by programs when application is undeployed.  
 	 */
 	public static  void shutdown()
 	{
-		synchronized(lockshutdown)
+//		synchronized(lockshutdown)
 		{
 			try
 			{
 				if(shutdownHooks != null)
 				{
-					Collections.sort(shutdownHooks, new Comparator<WrapperRunnable>(){
-		
-						public int compare(WrapperRunnable o1, WrapperRunnable o2) {
-							if(o1.getProir() > o2.getProir())
-								return 1;
-							else if(o1.getProir() == o2.getProir())
-							{
-								return 0;
-							}
-							else
-								return -1;
-								
-						}
-						
-					});
+					
 					for(int i = shutdownHooks.size()-1; i >= 0; i --)
 					{
 						try {
@@ -778,11 +781,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			}
 			catch(Exception e)
 			{
-				log.warn("",e);
+				e.printStackTrace();
+//				log.warn("",e);
 			}
 			catch(Throwable e)
 			{
-				log.warn("",e);
+//				log.warn("",e);
+				e.printStackTrace();
 			}
 			finally
 			{
