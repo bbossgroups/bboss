@@ -746,7 +746,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 							destroyVMHook.run();
 							Thread.sleep(1000);
 						} catch (Throwable e) {
-							log.warn("execute shutdown hook error:", e);
+							//log.warn("execute shutdown hook error:", e);
+							e.printStackTrace();
 						}
 					}
 					shutdownHooks.clear();
@@ -762,11 +763,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 							entry.getValue().destroy();
 						} catch(Exception e)
 						{
-							log.warn("execute shutdown hook error:", e);
+							e.printStackTrace();
+							//log.warn("execute shutdown hook error:", e);
 						}
 						catch(Throwable e)
 						{
-							log.warn("execute shutdown hook error:", e);
+//							log.warn("execute shutdown hook error:", e);
+							e.printStackTrace();
 						}
 					}
 					applicationContexts.clear();
