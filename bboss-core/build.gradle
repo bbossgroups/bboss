@@ -3,6 +3,7 @@ sourceSets {
         java {
             srcDir 'src'
             srcDir 'src-log'
+            srcDir 'src-spring'
           
         }
         resources {
