@@ -370,6 +370,8 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	}
 	public static ClientConfiguration getClientConfiguration(String poolname){
 		loadClientConfiguration();
+		if(poolname == null)
+			return getDefaultClientConfiguration();
 		ClientConfiguration config = clientConfigs.get(poolname);
 		if(config != null)
 			return config;
