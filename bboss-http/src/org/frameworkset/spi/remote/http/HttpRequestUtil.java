@@ -3,19 +3,7 @@
  */
 package org.frameworkset.spi.remote.http;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.apache.http.Consts;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpException;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
+import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -34,6 +22,14 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author yinbp
@@ -330,6 +326,18 @@ public class HttpRequestUtil {
     public static String httpPostforString(String url, Map<String, Object> params, Map<String, String> headers) throws Exception {
         return httpPostFileforString("default", url, (String) null, (String) null, params, (Map<String, File>) null, headers);
     }
+
+    /**
+     * 公用post方法
+     *
+     * @param url
+     * @param params
+     * @param headers
+     * @throws Exception
+     */
+    public static String httpPostforString(String poolName,String url, Map<String, Object> params, Map<String, String> headers) throws Exception {
+        return httpPostFileforString(poolName, url, (String) null, (String) null, params, (Map<String, File>) null, headers);
+    }
     
    
     
@@ -588,28 +596,30 @@ public class HttpRequestUtil {
     	return httpPut(  poolname,   url,   cookie,   userAgent,  params,
                   files,   headers,new StringResponseHandler());
     }
-    
+
     /**
-     * 公用post方法
      *
-     * @param poolname
      * @param url
-     * @param cookie
-     * @param userAgent
      * @param params
-     * @param files
      * @param headers
+     * @return
      * @throws Exception
      */
+
     public static String httpPutforString(  String url,Map<String, Object> params, Map<String, String> headers ) throws Exception{
     	return httpPut(  "default",   url,   (String)null,   (String)null,  params,
     			( Map<String, File> )null,   headers,new StringResponseHandler());
+    }
+
+    public static String httpPutforString(String poolname,  String url,Map<String, Object> params, Map<String, String> headers ) throws Exception{
+        return httpPut(  poolname,   url,   (String)null,   (String)null,  params,
+                ( Map<String, File> )null,   headers,new StringResponseHandler());
     }
     
     /**
      * 公用post方法
      *
-     * @param poolname
+
      * @param url
      * @param cookie
      * @param userAgent
@@ -623,51 +633,42 @@ public class HttpRequestUtil {
     	return httpPut("default", url, cookie, userAgent, params,
                                                     files, headers, responseHandler) ;
     }
-    
+
     /**
-     * 公用post方法
      *
-     * @param poolname
      * @param url
-     * @param cookie
-     * @param userAgent
      * @param params
-     * @param files
      * @param headers
+     * @param responseHandler
+     * @param <T>
+     * @return
      * @throws Exception
      */
     public static <T> T httpPut(String url, Map<String, Object> params,  Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
     	return httpPut( url, (String)null, (String)null, (Map<String, Object>)params,
     							(Map<String, File>)null, headers, responseHandler) ;
     }
-    
+
     /**
-     * 公用post方法
      *
-     * @param poolname
      * @param url
-     * @param cookie
-     * @param userAgent
      * @param params
-     * @param files
-     * @param headers
+     * @param responseHandler
+     * @param <T>
+     * @return
      * @throws Exception
      */
     public static <T> T httpPut(String url, Map<String, Object> params,ResponseHandler<T> responseHandler) throws Exception {
     	return httpPut( url, (String)null, (String)null, (Map<String, Object>)params,
     							(Map<String, File>)null, (Map<String, String>)null, responseHandler) ;
     }
-    
+
     /**
-     * 公用post方法
      *
-     * @param poolname
      * @param url
-     * @param cookie
-     * @param userAgent
-     * @param params
-     * @param files
-     * @param headers
+     * @param responseHandler
+     * @param <T>
+     * @return
      * @throws Exception
      */
     public static <T> T httpPut(String url,ResponseHandler<T> responseHandler) throws Exception {
@@ -897,6 +898,12 @@ public class HttpRequestUtil {
      */
     public static String httpDelete( String url,Map<String, Object> params,Map<String, String> headers) throws Exception{
         return httpDelete(  "default",   url, (String) null, (String) null, params,
+                headers);
+
+    }
+
+    public static String httpDelete( String poolname,String url,Map<String, Object> params,Map<String, String> headers) throws Exception{
+        return httpDelete(  poolname,   url, (String) null, (String) null, params,
                 headers);
 
     }
@@ -1262,6 +1269,11 @@ public class HttpRequestUtil {
     public static String putJson(String requestBody, String url, Map<String, String> headers) throws Exception {
     	return putBody( "default",requestBody,   url,   headers,  ContentType.APPLICATION_JSON) ;
         
+    }
+
+    public static String putJson(String poolName,String requestBody, String url, Map<String, String> headers) throws Exception {
+        return putBody(poolName,requestBody,   url,   headers,  ContentType.APPLICATION_JSON) ;
+
     }
     
     

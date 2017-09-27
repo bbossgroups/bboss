@@ -163,6 +163,14 @@ public class CommonLauncher {
 		}
 		else if(restart){
 			shutdown();
+			try {
+				//关闭服务后，停顿2秒
+				if(shutdownLevel != 9)
+					Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				return;
+			}
 			startup();
 		}
 
@@ -208,7 +216,7 @@ public class CommonLauncher {
 					e.printStackTrace();
 				}
 		}
-		pid.delete();
+
 		if(pids.size() > 0){
 			try {
 				killproc(pids);
@@ -224,6 +232,7 @@ public class CommonLauncher {
 		else{
 			System.out.println("没有需要关闭的进程信息.");
 		}
+		pid.delete();
 		
 		System.out.println("shutdown end.");
 
