@@ -11,6 +11,14 @@ public class BBossStringWriter  extends Writer {
      * Create a new string writer using the default initial string-buffer
      * size.
      */
+    public BBossStringWriter(StringBuilder buf) {
+        this.buf = buf;
+        lock = buf;
+    }
+    /**
+     * Create a new string writer using the default initial string-buffer
+     * size.
+     */
     public BBossStringWriter() {
         buf = new StringBuilder();
         lock = buf;

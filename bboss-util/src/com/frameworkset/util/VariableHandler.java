@@ -16,14 +16,14 @@
 
 package com.frameworkset.util;
 
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.PropertieDescription;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.frameworkset.util.ClassUtil;
-import org.frameworkset.util.ClassUtil.PropertieDescription;
 
 
 /**
@@ -102,7 +102,7 @@ public class VariableHandler
     }
     /**
      * 从串src中析取匹配regex模式的所有字符串，并且用substitution替换匹配上模式的子符串
-     * @param src
+     * @param inputString
      * @param regex
      * @param substitution
      * @return String[][]二维数组，第一维表示替换后的src，第二维表示匹配regex的所有的子串数组
@@ -114,8 +114,7 @@ public class VariableHandler
     
     /**
      * 从串src中析取匹配regex模式的所有字符串，并且用substitution替换匹配上模式的子符串
-     * @param src
-     * @param regex
+     * @param inputString
      * @param substitution
      * @return String[][]二维数组，第一维表示替换后的src，第二维表示匹配regex的所有的子串数组
      */
@@ -179,8 +178,28 @@ public class VariableHandler
     public static class URLStruction {
 		protected List<String> tokens;
 		protected List<Variable> variables;
-		
+		protected boolean hasVars;
+		public URLStruction(){
 
+		}
+		public URLStruction(String url){
+			this.url = url;
+		}
+		public String getUrl() {
+			return url;
+		}
+
+
+		protected String url;
+		public boolean hasVars()
+		{
+			return this.hasVars;
+		}
+		protected void after(){
+			if(variables != null && variables.size() == 0){
+				this.hasVars = true;
+			}
+		}
 		public List<String> getTokens() {
 			return tokens;
 		}
@@ -195,6 +214,7 @@ public class VariableHandler
 
 		public void setVariables(List<Variable> variables) {
 			this.variables = variables;
+
 		}
 		
 		
@@ -203,21 +223,22 @@ public class VariableHandler
     
     public static class SQLStruction extends URLStruction{
     	private String sql;
-    	private boolean hasVars = true;
+
     	public SQLStruction()
     	{
-    		
+    		super();
     	}
     	public SQLStruction(String sql)
     	{
-    		this.sql = sql;
-    		hasVars = false;
+    		super(sql);
     	}
+
+		protected void after(){
+			super.after();
+			buildSQL();
+		}
     	
-    	public boolean hasVars()
-    	{
-    		return this.hasVars;
-    	}
+
     	public String buildSQL()
     	{
     		if(sql == null)
@@ -468,17 +489,69 @@ public class VariableHandler
 		}
 
 	}
-    
-    
-    /**
+	static SQLStructionBuiler  sqlStructionBuiler = new SQLStructionBuiler ();
+	static URLStructionBuiler urlStructionBuiler = new URLStructionBuiler();
+	/**
+	 * 将包含变量的sql语句解析成常量字符串列表和变量名称两个列表
+	 * 变量的分界符为#[和],如果url中没有包含变量那么返回null值
+	 * 变量数组、list、map的元素取值采用[]结合数字下标和key名称
+	 * 变量引用采用->连接符
+	 * @param sql
+	 * @return
+	 */
+	public static URLStruction parserTempateStruction(String sql){
+		return VariableHandler._parserStruction(sql,urlStructionBuiler);
+	}
+	/**
+	 * 将包含变量的sql语句解析成常量字符串列表和变量名称两个列表
+	 * 变量的分界符为#[和],如果url中没有包含变量那么返回null值
+	 * 变量数组、list、map的元素取值采用[]结合数字下标和key名称
+	 * 变量引用采用->连接符
+	 * @param sql
+	 * @return
+	 */
+	public static SQLStruction parserSQLStruction(String sql) {
+		return (SQLStruction)VariableHandler._parserStruction(sql,sqlStructionBuiler);
+	}
+	static abstract interface StructionBuiler{
+		abstract URLStruction buildStruction();
+		abstract URLStruction buildStruction(String token);
+	}
+	static class SQLStructionBuiler implements StructionBuiler{
+
+		@Override
+		public URLStruction buildStruction() {
+			return new SQLStruction();
+		}
+
+		@Override
+		public URLStruction buildStruction(String token) {
+			return  new SQLStruction(token);
+		}
+
+	}
+
+	static class URLStructionBuiler implements StructionBuiler{
+
+		@Override
+		public URLStruction buildStruction() {
+			return new URLStruction();
+		}
+		@Override
+		public URLStruction buildStruction(String token) {
+			return  new URLStruction(token);
+		}
+	}
+
+	/**
      * 将包含变量的sql语句解析成常量字符串列表和变量名称两个列表
      * 变量的分界符为#[和],如果url中没有包含变量那么返回null值
      * 变量数组、list、map的元素取值采用[]结合数字下标和key名称
      * 变量引用采用->连接符
-     * @param url
+     * @param sql
      * @return
      */
-    public static SQLStruction parserSQLStruction(String sql) {
+    public static URLStruction _parserStruction(String sql,StructionBuiler structionBuiler) {
 		if(sql == null || sql.trim().length() == 0)
 			return null;
 		int len = sql.length();
@@ -801,13 +874,13 @@ public class VariableHandler
 
 		if (variables.size() == 0)
 		{
-			return new SQLStruction(sql);
+			return structionBuiler.buildStruction(sql);
 		}
 		else {
-			SQLStruction itemUrlStruction = new SQLStruction();
+			URLStruction itemUrlStruction = structionBuiler.buildStruction();
 			itemUrlStruction.setTokens(tokens);
 			itemUrlStruction.setVariables(variables);
-			itemUrlStruction.buildSQL();
+			itemUrlStruction.after();
 			return itemUrlStruction;
 		}
 
@@ -815,7 +888,8 @@ public class VariableHandler
     
     /**
      * 根据引用的维度获取其对应的Pro对象
-     * @param refid
+     * @param var
+	 * @param bean
      * @return
      */
     public static Object evaluateVariableValue(Variable var,Object bean)

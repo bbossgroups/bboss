@@ -15,26 +15,17 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
+import bboss.org.apache.velocity.VelocityContext;
+import com.frameworkset.common.poolman.sql.IdGenerator;
+import com.frameworkset.common.poolman.util.JDBCPool;
+import com.frameworkset.common.poolman.util.SQLManager;
+import com.frameworkset.orm.annotation.PrimaryKey;
+import com.frameworkset.util.*;
+import com.frameworkset.util.VariableHandler.SQLStruction;
+import com.frameworkset.util.VariableHandler.Variable;
 import org.frameworkset.persitent.util.SQLInfo;
 import org.frameworkset.persitent.util.SQLUtil;
+import org.frameworkset.soa.BBossStringWriter;
 import org.frameworkset.util.BigFile;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
@@ -44,19 +35,13 @@ import org.frameworkset.util.annotations.wraper.ColumnWraper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.common.poolman.sql.IdGenerator;
-import com.frameworkset.common.poolman.util.JDBCPool;
-import com.frameworkset.common.poolman.util.SQLManager;
-import com.frameworkset.orm.annotation.PrimaryKey;
-import com.frameworkset.util.ColumnEditorInf;
-import com.frameworkset.util.ColumnToFieldEditor;
-import com.frameworkset.util.ColumnType;
-import com.frameworkset.util.StringUtil;
-import com.frameworkset.util.VariableHandler;
-import com.frameworkset.util.VariableHandler.SQLStruction;
-import com.frameworkset.util.VariableHandler.Variable;
-
-import bboss.org.apache.velocity.VelocityContext;
+import java.io.File;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.*;
+import java.util.*;
+import java.util.Date;
+import java.util.Map.Entry;
 
 /**
  * <p>Title: SQLParams.java</p>
@@ -371,7 +356,7 @@ public class SQLParams
     		if(sqlinfo.istpl())
     		{
 	    		vcontext = buildVelocityContext();
-	    		StringWriter sw = new StringWriter();
+	    		BBossStringWriter sw = new BBossStringWriter();
 	    		sqlinfo.getSqltpl().merge(vcontext, sw);
 	    		sql = sw.toString();
     		}
@@ -410,7 +395,7 @@ public class SQLParams
         		{
 	        		if(vcontext == null)
 	        			vcontext = buildVelocityContext();
-	        		StringWriter sw = new StringWriter();
+	        		BBossStringWriter sw = new BBossStringWriter();
 	        		totalsizesqlinfo.getSqltpl().merge(vcontext, sw);
 	        		totalsizesql = sw.toString();
         		}
@@ -491,7 +476,7 @@ public class SQLParams
 	    		{
 	    			vcontext = buildVelocityContext();//一个context是否可以被同时用于多次运算呢？
 			    	
-			    	StringWriter sw = new StringWriter();
+	    			BBossStringWriter sw = new BBossStringWriter();
 			       sqlinfo.getSqltpl().merge(vcontext,sw);
 			       sql = sw.toString();
 	    		}
@@ -526,7 +511,7 @@ public class SQLParams
 	        		{
 		        		if(vcontext == null)
 		        			vcontext = buildVelocityContext();
-		        		StringWriter sw = new StringWriter();
+		        		BBossStringWriter sw = new BBossStringWriter();
 		        		totalsizesqlinfo.getSqltpl().merge(vcontext,sw);
 		        		totalsizesql = sw.toString();
 	        		}
@@ -610,8 +595,8 @@ public class SQLParams
 		    		{
 		    			if(vcontext == null)
 		        			vcontext = buildVelocityContext();
-				    	
-				    	StringWriter sw = new StringWriter();
+
+						BBossStringWriter sw = new BBossStringWriter();
 				    	conditionsqlinfo.getSqltpl().merge(vcontext,sw);
 				    	_pagineOrderby = sw.toString();
 		    		}
@@ -1433,8 +1418,9 @@ public class SQLParams
      * 添加sql参数，由DefaultDataInfoImpl进行处理
      * @param name
      * @param value
+	 * @param size
      * @param type
-     * @param charset 指定clob字段读取文件时的字符集utf-8，或者UTF-8
+     * @param dataformat 指定clob字段读取文件时的字符集utf-8，或者UTF-8
      * @throws SetSQLParamException 
      */
     public void addSQLParam(String name, Object value, long size,String type,String dataformat) throws SetSQLParamException
