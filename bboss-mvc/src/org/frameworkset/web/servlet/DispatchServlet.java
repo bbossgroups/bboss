@@ -1599,7 +1599,7 @@ public class DispatchServlet extends BaseServlet {
 					this.messageConverters[i] = (HttpMessageConverter) t
 							.getBean();
 				} catch (Exception e) {
-					System.out.println("load messageConvert failed:" + t.getClazz());
+					//System.out.println("load messageConvert failed:" + t.getClazz());
 					logger.error("load messageConvert failed:" + t.getClazz(), e);
 				}
 			}

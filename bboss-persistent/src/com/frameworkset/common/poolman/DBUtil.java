@@ -2376,7 +2376,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 								 Connection con_,
 								 boolean needtransaction_ ) throws SQLException {
 		if (batchSQLS == null || batchSQLS.size() == 0) {
-			System.out.println("没有要处理的批处理命令行！");
+			log.info("没有要处理的批处理命令行！");
 			return null;
 		}
 		StatementInfo stmtInfo = null;

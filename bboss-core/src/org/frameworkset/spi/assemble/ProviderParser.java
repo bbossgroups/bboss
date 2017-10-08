@@ -352,8 +352,8 @@ public class ProviderParser extends DefaultHandler
     	if (name.equals("p") || name.equals("property"))
         {
     		Pro p = (Pro) traceStack.pop();
-    		if(p.getIocplugin()!= null)
-    			System.out.println();
+//    		if(p.getIocplugin()!= null)
+//    			System.out.println();
     		endProperty(p, s1, s2, name);
 
         }
