@@ -19,11 +19,11 @@ package bboss.org.apache.velocity;
  * under the License.    
  */
 
-import java.util.HashMap;
-import java.util.Map;
-
 import bboss.org.apache.velocity.context.AbstractContext;
 import bboss.org.apache.velocity.context.Context;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  General purpose implemention of the application Context
@@ -183,5 +183,9 @@ public class VelocityContext extends AbstractContext implements Cloneable
         {
         }
         return clone;
-    }    
+    }
+
+    public Map getContext(){
+        return this.context;
+    }
 }

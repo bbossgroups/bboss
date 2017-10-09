@@ -15,46 +15,27 @@
  */
 package org.frameworkset.util;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.frameworkset.soa.annotation.ExcludeField;
-import org.frameworkset.util.annotations.Attribute;
-import org.frameworkset.util.annotations.CookieValue;
-import org.frameworkset.util.annotations.DataBind;
-import org.frameworkset.util.annotations.IgnoreBind;
-import org.frameworkset.util.annotations.MapKey;
-import org.frameworkset.util.annotations.PathVariable;
-import org.frameworkset.util.annotations.RequestBody;
-import org.frameworkset.util.annotations.RequestHeader;
-import org.frameworkset.util.annotations.RequestParam;
-import org.frameworkset.util.annotations.wraper.AttributeWraper;
-import org.frameworkset.util.annotations.wraper.ColumnWraper;
-import org.frameworkset.util.annotations.wraper.CookieValueWraper;
-import org.frameworkset.util.annotations.wraper.PathVariableWraper;
-import org.frameworkset.util.annotations.wraper.RequestBodyWraper;
-import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
-import org.frameworkset.util.annotations.wraper.RequestParamWraper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.frameworkset.orm.annotation.Column;
 import com.frameworkset.orm.annotation.IgnoreORMapping;
 import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.util.BeanUtils;
 import com.frameworkset.util.EditorInf;
 import com.frameworkset.util.ValueObjectUtil;
+import org.frameworkset.soa.annotation.ExcludeField;
+import org.frameworkset.util.annotations.*;
+import org.frameworkset.util.annotations.wraper.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -217,7 +198,7 @@ public class ClassUtil
 		}
 		private boolean oldAccessible = false;
 		private String uperName;
-		public PropertieDescription(Class propertyType,Field field, Method writeMethod,Method readMethod,
+		public PropertieDescription(ClassInfo classInfo,Class propertyType,Field field, Method writeMethod,Method readMethod,
 				String name)
 		{
 			super();
@@ -320,13 +301,13 @@ public class ClassUtil
 			if(this.field != null)
 			{
 				annotations = this.field.getAnnotations();
-				initParam(this.field.getAnnotations());
+				initParam(classInfo,this.field.getAnnotations());
 			}
 			
 				
 		}
 		
-		private void initParam(Annotation[] annotations)
+		private void initParam(ClassInfo classInfo,Annotation[] annotations)
 		{
 			if(annotations == null || annotations.length == 0)
 				return;
@@ -363,6 +344,7 @@ public class ClassUtil
 				else if(a instanceof PrimaryKey)
 				{
 					pk = (PrimaryKey)a;
+					classInfo.setPkProperty(this);
 				}
 				else if(a instanceof Column )
 				{
@@ -600,6 +582,10 @@ public class ClassUtil
 	}
 	public static class ClassInfo
 	{
+
+
+
+		private volatile transient  PropertieDescription pkProperty;
 		/**
 		 * declaredFields保存了类clazz以及父类中的所有属性字段定义，如果子类中和父类变量
 		 * 重名，则安顺包含在数组中，这种情况是不允许的必须过滤掉，也就是说子类中有了和父类中相同签名的方法，则自动过滤掉
@@ -660,6 +646,13 @@ public class ClassUtil
 			}
 	    	return null;
 	    }
+		public PropertieDescription getPkProperty() {
+			return pkProperty;
+		}
+
+		public void setPkProperty(PropertieDescription pkProperty) {
+			this.pkProperty = pkProperty;
+		}
 	    public String getName()
 	    {
 	    	return this.clazz.getName();
@@ -1267,7 +1260,7 @@ public class ClassUtil
 	    	this.containFieldAndRemove(attr.getName(), copeFields) ;
 	    	
 	    	
-	    	PropertieDescription pd = new PropertieDescription(attr.getPropertyType(),
+	    	PropertieDescription pd = new PropertieDescription(this,attr.getPropertyType(),
 	    			                    field,wm,
 	    								rm,attr.getName());
 //	    	if(field != null && (wm == null || rm == null))
@@ -1280,7 +1273,7 @@ public class ClassUtil
 	    {
 //	    	Method wm = null;
 //	    	Method rm = null;
-	    	PropertieDescription pd = new PropertieDescription(field.getType(),
+	    	PropertieDescription pd = new PropertieDescription(this,field.getType(),
 	    									field,null,
 	    									null,field.getName());
 //	    	asm.add(pd);
