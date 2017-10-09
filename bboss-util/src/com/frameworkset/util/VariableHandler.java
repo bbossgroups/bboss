@@ -196,7 +196,7 @@ public class VariableHandler
 			return this.hasVars;
 		}
 		protected void after(){
-			if(variables != null && variables.size() == 0){
+			if(variables != null && variables.size() >= 0){
 				this.hasVars = true;
 			}
 		}
