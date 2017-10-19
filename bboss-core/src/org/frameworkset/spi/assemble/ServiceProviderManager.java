@@ -15,25 +15,6 @@
  */
 package org.frameworkset.spi.assemble;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.Lifecycle;
@@ -42,6 +23,18 @@ import org.frameworkset.spi.assemble.callback.AssembleCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * 
@@ -629,6 +622,10 @@ public class ServiceProviderManager {
     {
     	return this.properties.keySet();
     }
+
+    public boolean isEmpty(){
+    	return this.properties == null || this.properties.size() == 0;
+	}
 
     public String getProperty(String name) {
         Pro pro = this.properties.get(name);
