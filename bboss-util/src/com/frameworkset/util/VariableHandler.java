@@ -230,7 +230,7 @@ public class VariableHandler
     	}
     	public SQLStruction(String sql)
     	{
-    		super(sql);
+    		this.sql = sql;
     	}
 
 		protected void after(){
