@@ -2,6 +2,7 @@
  * 
  */
 package org.frameworkset.spi.remote.http;
+
 import org.apache.http.*;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
@@ -34,10 +35,9 @@ import org.apache.http.message.BasicLineParser;
 import org.apache.http.message.LineParser;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.CharArrayBuffer;
-import org.frameworkset.spi.BaseApplicationContext;
-import org.frameworkset.spi.BeanNameAware;
-import org.frameworkset.spi.DefaultApplicationContext;
-import org.frameworkset.spi.InitializingBean;
+import org.frameworkset.spi.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
 import java.net.InetAddress;
@@ -57,6 +57,7 @@ import java.util.Map;
  * @Date:2016-11-20 11:50:36
  */
 public class ClientConfiguration implements InitializingBean,BeanNameAware{
+	private static Logger logger = LoggerFactory.getLogger(ClientConfiguration.class);
 	private final static int TIMEOUT_CONNECTION = 20000;
 	private final static int TIMEOUT_SOCKET = 20000;
 	private final static int RETRY_TIME = 3;
@@ -71,14 +72,30 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	private int maxHeaderCount = 200;
 	private int maxTotal = 200; 
 	private int defaultMaxPerRoute = 10;
+	private long retryInterval = -1;
+	public long getRetryInterval() {
+		return retryInterval;
+	}
+
+
+	public void setRetryInterval(long retryInterval) {
+		this.retryInterval = retryInterval;
+	}
+
+
 	private String beanName;
 	private static Map<String,ClientConfiguration> clientConfigs = new HashMap<String,ClientConfiguration>();
 	private static BaseApplicationContext context;
+	private static boolean emptyContext;
 	private static void loadClientConfiguration(){
-		if(context == null)
+		if(context == null) {
 			context = DefaultApplicationContext.getApplicationContext("conf/httpclient.xml");
+			emptyContext = context.isEmptyContext();
+		}
 		
 	}
+
+
 	public static final ContentType TEXT_PLAIN_UTF_8 = ContentType.create(
             "text/plain", Consts.UTF_8);
 	/**
@@ -264,58 +281,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		}
         return httpclient;
 
-//        try {
-//            HttpGet httpget = new HttpGet("http://www.baidu.com");
-//            // Request configuration can be overridden at the request level.
-//            // They will take precedence over the one set at the client level.
-//            RequestConfig requestConfig = RequestConfig.copy(defaultRequestConfig)
-//                .setSocketTimeout(5000)
-//                .setConnectTimeout(5000)
-//                .setConnectionRequestTimeout(5000)
-//               // .setProxy(new HttpHost("myotherproxy", 8080))
-//                .build();
-//            httpget.setConfig(requestConfig);
-//
-//            // Execution context can be customized locally.
-//            HttpClientContext context = HttpClientContext.create();
-//            // Contextual attributes set the local context level will take
-//            // precedence over those set at the client level.
-//            context.setCookieStore(cookieStore);
-//            context.setCredentialsProvider(credentialsProvider);
-//
-//            System.out.println("executing request " + httpget.getURI());
-//            CloseableHttpResponse response = httpclient.execute(httpget, context);
-//            try {
-//                System.out.println("----------------------------------------");
-//                System.out.println(response.getStatusLine());
-//                System.out.println(EntityUtils.toString(response.getEntity()));
-//                System.out.println("----------------------------------------");
-//
-//                // Once the request has been executed the local context can
-//                // be used to examine updated state and various objects affected
-//                // by the request execution.
-//
-//                // Last executed request
-//                context.getRequest();
-//                // Execution route
-//                context.getHttpRoute();
-//                // Target auth state
-//                context.getTargetAuthState();
-//                // Proxy auth state
-//                context.getTargetAuthState();
-//                // Cookie origin
-//                context.getCookieOrigin();
-//                // Cookie spec used
-//                context.getCookieSpec();
-//                // User security token
-//                context.getUserToken();
-//
-//            } finally {
-//                response.close();
-//            }
-//        } finally {
-//            httpclient.close();
-//        }
+
     }
 
 	public HttpClient getHttpclient() {
@@ -365,25 +331,97 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		loadClientConfiguration();
 		if(defaultClientConfiguration != null)
 			return defaultClientConfiguration;
-		defaultClientConfiguration = context.getTBeanObject("default", ClientConfiguration.class);
+
+		if(defaultClientConfiguration == null){
+
+			try {
+				defaultClientConfiguration = makeDefualtClientConfiguration("default");
+			} catch (Exception e) {
+				throw new HttpRuntimeException("Get DefaultClientConfiguration[default] failed:",e);
+			}
+		}
 		return defaultClientConfiguration;
+	}
+	private static ClientConfiguration makeDefualtClientConfiguration(String name) throws Exception {
+
+		ClientConfiguration clientConfiguration = clientConfigs.get(name);
+		if(clientConfiguration != null){
+			return clientConfiguration;
+		}
+		synchronized (ClientConfiguration.class){
+			clientConfiguration = clientConfigs.get(name);
+			if(clientConfiguration != null){
+				return clientConfiguration;
+			}
+			if(!emptyContext) {
+				try {
+					clientConfiguration = context.getTBeanObject(name, ClientConfiguration.class);
+				}
+				catch (SPIException e){
+					logger.warn(new StringBuilder().append("Make Defualt ClientConfiguration [").append(name).append("] failed,an internal http pool will been constructed:").append(e.getMessage()).toString());
+				}
+
+			}
+			if(clientConfiguration == null) {
+				clientConfiguration = new ClientConfiguration();
+				/**
+				 * f:timeoutConnection = "20000"
+				 f:timeoutSocket = "20000"
+				 f:retryTime = "1"
+				 f:maxLineLength = "2000"
+				 f:maxHeaderCount = "200"
+				 f:maxTotal = "200"
+				 f:defaultMaxPerRoute = "10"
+				 */
+				clientConfiguration.setTimeoutConnection(20000);
+				clientConfiguration.setTimeoutSocket(20000);
+				clientConfiguration.setRetryTime(-1);
+				clientConfiguration.setMaxLineLength(Integer.MAX_VALUE);
+				clientConfiguration.setMaxHeaderCount(Integer.MAX_VALUE);
+				clientConfiguration.setMaxTotal(1000);
+				clientConfiguration.setDefaultMaxPerRoute(200);
+				clientConfiguration.setBeanName(name);
+
+				clientConfiguration.afterPropertiesSet();
+				clientConfigs.put(name, clientConfiguration);
+			}
+		}
+		return clientConfiguration;
+
 	}
 	public static ClientConfiguration getClientConfiguration(String poolname){
 		loadClientConfiguration();
 		if(poolname == null)
 			return getDefaultClientConfiguration();
-		ClientConfiguration config = clientConfigs.get(poolname);
-		if(config != null)
-			return config;
-		config = context.getTBeanObject(poolname, ClientConfiguration.class);
-		return config;
+		try {
+			return makeDefualtClientConfiguration(poolname);
+		} catch (Exception e) {
+			throw new HttpRuntimeException("makeDefualtClientConfiguration ["+poolname+"] failed:",e);
+		}
+//		ClientConfiguration config = clientConfigs.get(poolname);
+//		if(config != null)
+//			return config;
+//		config = context.getTBeanObject(poolname, ClientConfiguration.class);
+//		return config;
 	}
 
 	public RequestConfig getRequestConfig() {
 		return requestConfig;
 	}
-	
-	
-	
 
+	public int getMaxLineLength() {
+		return maxLineLength;
+	}
+
+	public void setMaxLineLength(int maxLineLength) {
+		this.maxLineLength = maxLineLength;
+	}
+
+	public int getMaxHeaderCount() {
+		return maxHeaderCount;
+	}
+
+	public void setMaxHeaderCount(int maxHeaderCount) {
+		this.maxHeaderCount = maxHeaderCount;
+	}
 }

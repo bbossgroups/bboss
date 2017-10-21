@@ -2540,6 +2540,14 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		return providerManager.getExternalProperty(property);
 	}
 
+	/**
+	 * 判断IOC容器是否为空，如果容器配置文件不存在或者容器对象为空，返回true
+	 * @return
+	 */
+	public boolean isEmptyContext(){
+		return providerManager == null || this.providerManager.isEmpty();
+	}
+
 }
 
 
