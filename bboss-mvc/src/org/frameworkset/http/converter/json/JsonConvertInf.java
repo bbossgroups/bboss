@@ -7,7 +7,7 @@ public interface JsonConvertInf {
 	 * <p>Prefixing the JSON string in this manner is used to help prevent JSON Hijacking.
 	 * The prefix renders the string syntactically invalid as a script so that it cannot be hijacked.
 	 * This prefix should be stripped before parsing the string as JSON.
-	 * @see #setJsonPrefix
+	 * @see #setPrefixJson
 	 */
 	public void setPrefixJson(boolean prefixJson) ;
 	/**

@@ -1,22 +1,26 @@
 package org.frameworkset.http.converter.json;
 
-import java.io.IOException;
-
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.frameworkset.http.MediaType;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 
 public class MappingJackson2HttpMessageConverter  extends AbstractJackson2HttpMessageConverter {
 
 	private String jsonPrefix;
+
+
 
 	/**
 	 * Construct a new {@link MappingJackson2HttpMessageConverter} using default configuration
 	 * provided by {@link Jackson2ObjectMapperBuilder}.
 	 */
 	public MappingJackson2HttpMessageConverter() {
-		this(Jackson2ObjectMapperBuilder.json().build());
+		this(Jackson2ObjectMapperBuilder.json()
+								.build()
+								.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false));
 	}
 
 	/**
@@ -27,6 +31,10 @@ public class MappingJackson2HttpMessageConverter  extends AbstractJackson2HttpMe
 	public MappingJackson2HttpMessageConverter(ObjectMapper objectMapper) {
 		super(objectMapper, MediaType.APPLICATION_JSON_UTF8,
 				new MediaType("application", "*+json", DEFAULT_CHARSET));
+	}
+
+	public void setFailedOnUnknownProperties(boolean failedOnUnknownProperties) {
+		this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,failedOnUnknownProperties);
 	}
 
 	/**
