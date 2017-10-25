@@ -23,11 +23,7 @@ sourceSets {
 project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.install)
 dependencies {
     compile (
-           	[group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25', transitive: true],
-            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
-            [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
-            [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
-            [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: true],
             [group: 'org.apache.commons', name: 'commons-pool2', version: '2.4.2', transitive: false],
             [group: 'redis.clients', name: 'jedis', version: '2.9.0', transitive: false],
             [group: 'org.mongodb', name: 'mongo-java-driver', version: "${mongodbversion}", transitive: false],

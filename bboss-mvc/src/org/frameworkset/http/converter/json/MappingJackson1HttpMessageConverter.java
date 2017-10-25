@@ -16,12 +16,6 @@
 
 package org.frameworkset.http.converter.json;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.codehaus.jackson.JsonEncoding;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
@@ -38,9 +32,14 @@ import org.frameworkset.http.converter.HttpMessageNotReadableException;
 import org.frameworkset.http.converter.HttpMessageNotWritableException;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.annotations.ValueConstants;
+import org.codehaus.jackson.map.DeserializationConfig;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.List;
 
 /**
- * Implementation of {@link converter.HttpMessageConverter HttpMessageConverter}
+ * Implementation of {@link  }
  * that can read and write JSON using <a href="http://jackson.codehaus.org/">Jackson's</a> {@link ObjectMapper}.
  *
  * <p>This converter can be used to bind to typed beans, or untyped {@link java.util.HashMap HashMap} instances.
@@ -68,6 +67,10 @@ public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConv
 	public MappingJackson1HttpMessageConverter() {
 		super(jsonmediatypes);
 		objectMapper = new ObjectMapper();
+		this.objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+	}
+	public void setFailedOnUnknownProperties(boolean failedOnUnknownProperties) {
+		this.objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES,failedOnUnknownProperties);
 	}
 
 	/**

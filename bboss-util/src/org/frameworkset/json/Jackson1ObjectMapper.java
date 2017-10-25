@@ -1,16 +1,21 @@
 package org.frameworkset.json;
 
+import org.codehaus.jackson.JsonParser.Feature;
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.lang.reflect.Type;
-
-import org.codehaus.jackson.JsonParser.Feature;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 public class Jackson1ObjectMapper implements JacksonObjectMapper {
-	ObjectMapper mapper = new ObjectMapper();
+	ObjectMapper mapper = null;
+	public Jackson1ObjectMapper(){
+		mapper = new ObjectMapper();
+		mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+	}
 	 /* (non-Javadoc)
 		 * @see org.frameworkset.json.JacksonObjectMapper#json2Object(java.lang.String, java.lang.Class)
 		 */

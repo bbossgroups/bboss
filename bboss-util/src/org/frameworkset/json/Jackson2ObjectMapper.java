@@ -1,16 +1,23 @@
 package org.frameworkset.json;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.lang.reflect.Type;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
 public class Jackson2ObjectMapper implements JacksonObjectMapper {
-	ObjectMapper mapper = new ObjectMapper();
+	protected ObjectMapper mapper = null;
+	public Jackson2ObjectMapper(){
+		mapper = new ObjectMapper();
+		//反序列化时，属性不存在时忽略属性
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+	}
+
+
  
 
 	 /* (non-Javadoc)

@@ -67,6 +67,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	private  static HttpClient defaultHttpclient;
 	private int timeoutConnection = TIMEOUT_CONNECTION;
 	private int timeoutSocket = TIMEOUT_SOCKET;
+	private int connectionRequestTimeout = TIMEOUT_SOCKET;
 	private int retryTime = RETRY_TIME;
 	private int maxLineLength = 2000;
 	private int maxHeaderCount = 200;
@@ -262,7 +263,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	            .setExpectContinueEnabled(true)
 	            .setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM, AuthSchemes.DIGEST))
 	            .setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC))
-	            .setConnectTimeout(this.timeoutConnection).setConnectionRequestTimeout(TIMEOUT_CONNECTION)
+	            .setConnectTimeout(this.timeoutConnection).setConnectionRequestTimeout(connectionRequestTimeout)
 	            .build();
 	
 	        // Create an HttpClient with the given custom dependencies and configuration.
@@ -373,8 +374,9 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 				 f:maxTotal = "200"
 				 f:defaultMaxPerRoute = "10"
 				 */
-				clientConfiguration.setTimeoutConnection(20000);
-				clientConfiguration.setTimeoutSocket(20000);
+				clientConfiguration.setTimeoutConnection(40000);
+				clientConfiguration.setTimeoutSocket(40000);
+				clientConfiguration.setConnectionRequestTimeout(40000);
 				clientConfiguration.setRetryTime(-1);
 				clientConfiguration.setMaxLineLength(Integer.MAX_VALUE);
 				clientConfiguration.setMaxHeaderCount(Integer.MAX_VALUE);
@@ -423,5 +425,15 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 
 	public void setMaxHeaderCount(int maxHeaderCount) {
 		this.maxHeaderCount = maxHeaderCount;
+	}
+
+
+	public int getConnectionRequestTimeout() {
+		return connectionRequestTimeout;
+	}
+
+
+	public void setConnectionRequestTimeout(int connectionRequestTimeout) {
+		this.connectionRequestTimeout = connectionRequestTimeout;
 	}
 }

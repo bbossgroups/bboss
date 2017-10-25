@@ -26,7 +26,7 @@ public class AESCoder {
 	public AESCoder(String aesKey) {
 //		if (aesKey.length() > 8)
 //			aesKey = aesKey.substring(0, 7);
-		this.aesKey = aesKey.getBytes();
+		this.aesKey = aesKey.getBytes(CHARSET);
 	}
 
 	/**
@@ -99,8 +99,8 @@ public class AESCoder {
 	}
 	
 	 public static void main(String[] args) throws Exception{
-		 AESCoder dd = new AESCoder("1234567812345678");
-	    	String r = dd.encrypt("bb");
+		 AESCoder dd = new AESCoder("1234567812345678dddddddddd");
+	    	String r = dd.encrypt("bbbbbbbbbbbbbbbbbbbbb");
 	    	System.out.println(r);
 	    	System.out.println(dd.decrypt(r));
 	    }

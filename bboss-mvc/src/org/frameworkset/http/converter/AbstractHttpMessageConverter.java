@@ -16,23 +16,18 @@
 
 package org.frameworkset.http.converter;
 
+import org.frameworkset.http.*;
+import org.frameworkset.util.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.frameworkset.http.HttpHeaders;
-import org.frameworkset.http.HttpInputMessage;
-import org.frameworkset.http.HttpOutputMessage;
-import org.frameworkset.http.MediaType;
-import org.frameworkset.http.StreamingHttpOutputMessage;
-import org.frameworkset.util.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for most {@link HttpMessageConverter} implementations.
@@ -57,6 +52,8 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	public void setResponseCharset(String charset) {
 		
 	}
+
+//	public abstract void setFailedOnUnknownProperties(boolean failedOnUnknownProperties);
 
 	 
 	/**
