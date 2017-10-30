@@ -38,7 +38,14 @@ import java.util.Map.Entry;
  * @Date:2016-11-20 11:39:59
  */
 public class HttpRequestUtil {
-
+    public static final String HTTP_GET = "get";
+    public static final String HTTP_POST = "post";
+    public static final String HTTP_DELETE = "delete";
+    public static final String HTTP_PUT = "put";
+    public static final String HTTP_HEAD = "head";
+    public static final String HTTP_TRACE = "trace";
+    public static final String HTTP_OPTIONS = "options";
+    public static final String HTTP_PATCH = "patch";
     public static final String UTF_8 = "UTF-8";
     // public static final String DESC = "descend";
     // public static final String ASC = "ascend";
@@ -92,11 +99,86 @@ public class HttpRequestUtil {
 
         httpget.setConfig(requestConfig);
 //        httpget.addHeader("Host", "www.bbossgroups.com");
-        httpget.addHeader("Connection", "Keep-Alive");
-        if (cookie != null)
-            httpget.addHeader("Cookie", cookie);
-        if (userAgent != null)
-            httpget.addHeader("User-Agent", userAgent);
+//        httpget.addHeader("Connection", "Keep-Alive");
+//        if (cookie != null && )
+//            httpget.addHeader("Cookie", cookie);
+//        if (userAgent != null)
+//            httpget.addHeader("User-Agent", userAgent);
+        if (headers != null && headers.size() > 0) {
+            Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
+            while (entries.hasNext()) {
+                Entry<String, String> entry = entries.next();
+                httpget.addHeader(entry.getKey(), entry.getValue());
+            }
+        }
+        return httpget;
+    }
+    private static HttpTrace getHttpTrace(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
+
+        HttpTrace httpget = new HttpTrace(url);
+        // Request configuration can be overridden at the request level.
+        // They will take precedence over the one set at the client level.
+        RequestConfig requestConfig = config.getRequestConfig();
+
+
+        httpget.setConfig(requestConfig);
+//        httpget.addHeader("Host", "www.bbossgroups.com");
+        
+//        httpget.addHeader("Connection", "Keep-Alive");
+//        if (cookie != null)
+//            httpget.addHeader("Cookie", cookie);
+//        if (userAgent != null)
+//            httpget.addHeader("User-Agent", userAgent);
+        if (headers != null && headers.size() > 0) {
+            Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
+            while (entries.hasNext()) {
+                Entry<String, String> entry = entries.next();
+                httpget.addHeader(entry.getKey(), entry.getValue());
+            }
+        }
+        return httpget;
+    }
+
+    private static HttpOptions getHttpOptions(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
+
+        HttpOptions httpget = new HttpOptions(url);
+        // Request configuration can be overridden at the request level.
+        // They will take precedence over the one set at the client level.
+        RequestConfig requestConfig = config.getRequestConfig();
+
+
+        httpget.setConfig(requestConfig);
+//        httpget.addHeader("Host", "www.bbossgroups.com");
+//        httpget.addHeader("Connection", "Keep-Alive");
+//        if (cookie != null)
+//            httpget.addHeader("Cookie", cookie);
+//        if (userAgent != null)
+//            httpget.addHeader("User-Agent", userAgent);
+        if (headers != null && headers.size() > 0) {
+            Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
+            while (entries.hasNext()) {
+                Entry<String, String> entry = entries.next();
+                httpget.addHeader(entry.getKey(), entry.getValue());
+            }
+        }
+        return httpget;
+    }
+
+    private static HttpPatch getHttpPatch(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
+
+        HttpPatch httpget = new HttpPatch(url);
+        // Request configuration can be overridden at the request level.
+        // They will take precedence over the one set at the client level.
+        RequestConfig requestConfig = config.getRequestConfig();
+
+
+        httpget.setConfig(requestConfig);
+//        httpget.addHeader("Host", "www.bbossgroups.com");
+//        httpget.addHeader("Connection", "Keep-Alive");
+//        if (cookie != null)
+//            httpget.addHeader("Cookie", cookie);
+//        if (userAgent != null)
+//            httpget.addHeader("User-Agent", userAgent);
         if (headers != null && headers.size() > 0) {
             Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
             while (entries.hasNext()) {
@@ -1317,6 +1399,116 @@ public class HttpRequestUtil {
                 // 释放连接
             	if(httpPost != null)
             		httpPost.releaseConnection();
+                httpClient = null;
+            }
+
+        } while (time < RETRY_TIME);
+        return responseBody;
+    }
+    private static HttpRequestBase getHttpEntityEnclosingRequestBase(String action,ClientConfiguration config, String url,  Map<String, String> headers){
+        if(action.equals(HTTP_POST)){
+            return getHttpPost(config, url, null, null, headers);
+        }
+        else if(action.equals(HTTP_GET)){
+            return getHttpGet(config, url, null, null, headers);
+        }
+        else if(action.equals(HTTP_PUT)){
+            return getHttpPut(config, url, null, null, headers);
+        }
+        else if(action.equals(HTTP_DELETE)){
+            return getHttpDelete(config, url, null, null, headers);
+        }
+        else if(action.equals(HTTP_HEAD)){
+            return getHttpHead(config, url, null, null, headers);
+        }
+        else if(action.equals(HTTP_TRACE)){
+            return getHttpTrace(config, url, null, null, headers);
+        }
+        else if(action.equals(HTTP_OPTIONS)){
+            return getHttpOptions(config, url, null, null, headers);
+        }
+        else if(action.equals(HTTP_PATCH)){
+            return getHttpPatch(config, url, null, null, headers);
+        }
+        throw new java.lang.IllegalArgumentException("not support http action:"+action);
+    }
+    public static <T> T sendBody(String poolname,String requestBody, String url, Map<String, String> headers,ContentType contentType, ResponseHandler<T> responseHandler,String action) throws Exception {
+        CloseableHttpClient httpClient = null;
+        HttpEntityEnclosingRequestBase httpPost = null;
+
+
+        HttpEntity httpEntity = requestBody != null?new StringEntity(
+                requestBody,
+                contentType):null;
+        ClientConfiguration config = ClientConfiguration.getClientConfiguration(poolname);
+        int RETRY_TIME = config.getRetryTime();
+        T responseBody = null;
+        int time = 0;
+        do {
+            try {
+                httpClient = getHttpClient(config);
+                httpPost = (HttpEntityEnclosingRequestBase)getHttpEntityEnclosingRequestBase(action,config, url,headers);
+                if (httpEntity != null) {
+                    httpPost.setEntity(httpEntity);
+                }
+//                // Create a custom response handler
+//                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+//
+//                    @Override
+//                    public String handleResponse(final HttpResponse response)
+//                            throws ClientProtocolException, IOException {
+//                        int status = response.getStatusLine().getStatusCode();
+//
+//                        if (status >= 200 && status < 300) {
+//                            HttpEntity entity = response.getEntity();
+//                            return entity != null ? EntityUtils.toString(entity) : null;
+//                        } else {
+//                            HttpEntity entity = response.getEntity();
+//                            if (entity != null )
+//                                return EntityUtils.toString(entity);
+//                            else
+//                                throw new ClientProtocolException("Unexpected response status: " + status);
+//                        }
+//                    }
+//
+//                };
+                responseBody = httpClient.execute(httpPost,responseHandler);
+                break;
+            } catch (ClientProtocolException e) {
+                throw   e;
+            } catch (HttpHostConnectException e) {
+                time++;
+                if (time < RETRY_TIME) {
+                    if(config.getRetryInterval() > 0)
+                        try {
+                            Thread.sleep(config.getRetryInterval());
+                        } catch (InterruptedException e1) {
+                            break;
+                        }
+                    continue;
+                }
+                // 发生致命的异常，可能是协议不对或者返回的内容有问题
+                throw   e;
+            } catch (UnknownHostException e) {
+                time++;
+                if (time < RETRY_TIME) {
+                    if(config.getRetryInterval() > 0)
+                        try {
+                            Thread.sleep(config.getRetryInterval());
+                        } catch (InterruptedException e1) {
+                            break;
+                        }
+                    continue;
+                }
+                // 发生网络异常
+                throw   e;
+            }
+            catch (Exception e) {
+                throw   e;
+            }  finally {
+                // 释放连接
+                if(httpPost != null)
+                    httpPost.releaseConnection();
                 httpClient = null;
             }
 
