@@ -199,11 +199,11 @@ public class HttpRequestUtil {
 
         httpHead.setConfig(requestConfig);
 //        httpget.addHeader("Host", "www.bbossgroups.com");
-        httpHead.addHeader("Connection", "Keep-Alive");
-        if (cookie != null)
-            httpHead.addHeader("Cookie", cookie);
-        if (userAgent != null)
-            httpHead.addHeader("User-Agent", userAgent);
+//        httpHead.addHeader("Connection", "Keep-Alive");
+//        if (cookie != null)
+//            httpHead.addHeader("Cookie", cookie);
+//        if (userAgent != null)
+//            httpHead.addHeader("User-Agent", userAgent);
         if (headers != null && headers.size() > 0) {
             Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
             while (entries.hasNext()) {
@@ -223,11 +223,11 @@ public class HttpRequestUtil {
         RequestConfig requestConfig =   config.getRequestConfig();
         httpPost.setConfig(requestConfig);
 //        httpPost.addHeader("Host", "www.bbossgroups.com");
-        httpPost.addHeader("Connection", "Keep-Alive");
-        if (cookie != null)
-            httpPost.addHeader("Cookie", cookie);
-        if (userAgent != null)
-            httpPost.addHeader("User-Agent", userAgent);
+//        httpPost.addHeader("Connection", "Keep-Alive");
+//        if (cookie != null)
+//            httpPost.addHeader("Cookie", cookie);
+//        if (userAgent != null)
+//            httpPost.addHeader("User-Agent", userAgent);
         if (headers != null && headers.size() > 0) {
             Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
             while (entries.hasNext()) {
@@ -245,11 +245,11 @@ public class HttpRequestUtil {
         RequestConfig requestConfig =   config.getRequestConfig();
         httpDelete.setConfig(requestConfig);
 //        httpDelete.addHeader("Host", "www.bbossgroups.com");
-        httpDelete.addHeader("Connection", "Keep-Alive");
-        if (cookie != null)
-            httpDelete.addHeader("Cookie", cookie);
-        if (userAgent != null)
-            httpDelete.addHeader("User-Agent", userAgent);
+//        httpDelete.addHeader("Connection", "Keep-Alive");
+//        if (cookie != null)
+//            httpDelete.addHeader("Cookie", cookie);
+//        if (userAgent != null)
+//            httpDelete.addHeader("User-Agent", userAgent);
         if (headers != null && headers.size() > 0) {
             Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
             while (entries.hasNext()) {
@@ -267,11 +267,11 @@ public class HttpRequestUtil {
         RequestConfig requestConfig =   config .getRequestConfig();
         httpPut.setConfig(requestConfig);
 //        httpDelete.addHeader("Host", "www.bbossgroups.com");
-        httpPut.addHeader("Connection", "Keep-Alive");
-        if (cookie != null)
-        	httpPut.addHeader("Cookie", cookie);
-        if (userAgent != null)
-        	httpPut.addHeader("User-Agent", userAgent);
+//        httpPut.addHeader("Connection", "Keep-Alive");
+//        if (cookie != null)
+//        	httpPut.addHeader("Cookie", cookie);
+//        if (userAgent != null)
+//        	httpPut.addHeader("User-Agent", userAgent);
         if (headers != null && headers.size() > 0) {
             Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
             while (entries.hasNext()) {
