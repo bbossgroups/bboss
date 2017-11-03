@@ -1729,7 +1729,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 		if(o == null)
 			return 1;
 		
-		return this.hashCode() > o.hashCode()? 1:-1;
+		return 1;
 	}
 
 	
