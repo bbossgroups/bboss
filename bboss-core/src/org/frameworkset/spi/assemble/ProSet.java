@@ -95,11 +95,13 @@ public  class ProSet<V extends Pro> extends TreeSet<V>
         Iterator<V> it = this.iterator();
         int t = 0;
         int size = this.size();
+        V pro = null;
         while(t < size && it.hasNext())
         {
+        	pro = it.next();
             if(i == t)
             {
-                return it.next();
+                return pro;
             }
             else
             {
