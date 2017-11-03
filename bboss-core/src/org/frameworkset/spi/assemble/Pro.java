@@ -393,7 +393,6 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 					error.append("初始化List组件").append(this.getName() != null?this.getName():"").append("@").append(this.configFile).append("失败：");
 					throw new BeanInstanceException(error.toString(),e);
 				}
-//				retvalue = ((ProList) value).getComponentList();
 			}
 			else
 			{

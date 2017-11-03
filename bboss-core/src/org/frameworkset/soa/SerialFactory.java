@@ -16,15 +16,15 @@
 
 package org.frameworkset.soa;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * <p>Title: SerialFactory.java</p> 
@@ -44,7 +44,17 @@ public class SerialFactory {
 	 */
 	private Map<String,MagicClass> defaultPlugins = new HashMap<String,MagicClass>();
 	private Map<String,MagicClass> defaultmagicclassesByMagicNumber = new HashMap<String,MagicClass>();
-	
+	private static PluginFactory hibernatePluginFactory;
+	static {
+		try {
+			Class<PluginFactory> hibernatePluginFactoryClass = (Class<PluginFactory>) Class.forName("org.frameworkset.hibernate.serial.HibernatePluginFactory");
+			hibernatePluginFactory = hibernatePluginFactoryClass.newInstance();
+		} catch (ClassNotFoundException e) {
+		}
+		catch (Throwable e) {
+			log.debug("Init HibernatePluginFactory failed:",e);
+		}
+	}
 	private static String defaultPluginNames[] = new String[]{
 		"org.frameworkset.soa.plugin.UnmodifiableRandomAccessListPreSerial",
 		"org.frameworkset.soa.plugin.SublistPreSerial",
@@ -54,13 +64,6 @@ public class SerialFactory {
 		"org.frameworkset.soa.plugin.UnmodifiableSetPreSerial",
 		"org.frameworkset.soa.plugin.UnmodifiableSortedMapPreSerial",
 		"org.frameworkset.soa.plugin.UnmodifiableSortedSetPreSerial"
-		/**
-		"org.frameworkset.hibernate.serial.PersistentBagSerial",
-		"org.frameworkset.hibernate.serial.PersistentList",
-		"org.frameworkset.hibernate.serial.PersistentMap",
-		"org.frameworkset.hibernate.serial.PersistentSet",
-		"org.frameworkset.hibernate.serial.PersistentSortedMap",
-		"org.frameworkset.hibernate.serial.PersistentSortedSet",*/
 	};
 	/**
 	 * 在序列化对象的过程中默认忽略的异常清单，碰到异常就忽略并继续进行后续的序列化操作
@@ -220,7 +223,7 @@ public class SerialFactory {
 		}
 	}
 
-	private MagicClass buildMagicClass(String preclazz )
+	private MagicClass buildMagicClass(String preclazz ,boolean debugInfo)
 	{
 		MagicClass magicClass = null;
 //		magicClass.setPreserial("org.frameworkset.soa.plugin.UnmodifiableRandomAccessListPreSerial");
@@ -236,11 +239,14 @@ public class SerialFactory {
 			this.defaultmagicclassesByMagicNumber.put(preSerial.getClazz(), magicClass);
 			this.defaultPlugins.put(preSerial.getClazz(), magicClass);
 		} catch (InstantiationException e) {
+			if(debugInfo && log.isDebugEnabled())
 			 log.debug("buildMagicClass ["+preclazz+"] InstantiationException:"+e.getMessage());
 		} catch (IllegalAccessException e) {
-			log.debug("buildMagicClass ["+preclazz+"] IllegalAccessException:"+e.getMessage());
+			if(debugInfo && log.isDebugEnabled())
+				log.debug("buildMagicClass ["+preclazz+"] IllegalAccessException:"+e.getMessage());
 		} catch (ClassNotFoundException e) {
-			log.debug("buildMagicClass ["+preclazz+"] ClassNotFoundException:"+e.getMessage());
+			if(debugInfo && log.isDebugEnabled())
+				log.debug("buildMagicClass ["+preclazz+"] ClassNotFoundException:"+e.getMessage());
 		}
 		return magicClass;
 	}
@@ -251,7 +257,13 @@ public class SerialFactory {
 	{
 		for(String clazz:defaultPluginNames)
 		{
-			this.buildMagicClass(clazz);
+			this.buildMagicClass(clazz,true);
+		}
+		if(hibernatePluginFactory != null && hibernatePluginFactory.getPlugins() != null){
+			for(String clazz:hibernatePluginFactory.getPlugins())
+			{
+				this.buildMagicClass(clazz,false);
+			}
 		}
 	}
 	
