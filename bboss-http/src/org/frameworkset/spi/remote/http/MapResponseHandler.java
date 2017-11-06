@@ -1,6 +1,5 @@
 package org.frameworkset.spi.remote.http;
 
-import com.frameworkset.util.SimpleStringUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -10,7 +9,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.util.Map;
 
-public class MapResponseHandler  implements ResponseHandler<Map> {
+public class MapResponseHandler extends BaseResponseHandler implements ResponseHandler<Map> {
 
 	public MapResponseHandler() {
 		// TODO Auto-generated constructor stub
@@ -23,8 +22,9 @@ public class MapResponseHandler  implements ResponseHandler<Map> {
 
          if (status >= 200 && status < 300) {
              HttpEntity entity = response.getEntity();
-             return SimpleStringUtil.json2Object(entity.getContent(), Map.class);
-             //return entity != null ? EntityUtils.toString(entity) : null;
+             return super.converJson(entity,Map.class);
+
+			 //return entity != null ? EntityUtils.toString(entity) : null;
          } else {
              HttpEntity entity = response.getEntity();
              if (entity != null )
