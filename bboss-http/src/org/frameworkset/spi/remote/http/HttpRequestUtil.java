@@ -3,6 +3,15 @@
  */
 package org.frameworkset.spi.remote.http;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -12,7 +21,16 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.*;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
+import org.apache.http.client.methods.HttpOptions;
+import org.apache.http.client.methods.HttpPatch;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.HttpTrace;
 import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -23,15 +41,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author yinbp
@@ -99,7 +108,8 @@ public class HttpRequestUtil {
 
         httpget.setConfig(requestConfig);
 //        httpget.addHeader("Host", "www.bbossgroups.com");
-//        httpget.addHeader("Connection", "Keep-Alive");
+        if(config.getKeepAlive()>0)
+        	httpget.addHeader("Connection", "Keep-Alive");
 //        if (cookie != null && )
 //            httpget.addHeader("Cookie", cookie);
 //        if (userAgent != null)
@@ -124,7 +134,8 @@ public class HttpRequestUtil {
         httpget.setConfig(requestConfig);
 //        httpget.addHeader("Host", "www.bbossgroups.com");
         
-//        httpget.addHeader("Connection", "Keep-Alive");
+        if(config.getKeepAlive()>0)
+        	httpget.addHeader("Connection", "Keep-Alive");
 //        if (cookie != null)
 //            httpget.addHeader("Cookie", cookie);
 //        if (userAgent != null)
@@ -149,7 +160,8 @@ public class HttpRequestUtil {
 
         httpget.setConfig(requestConfig);
 //        httpget.addHeader("Host", "www.bbossgroups.com");
-//        httpget.addHeader("Connection", "Keep-Alive");
+        if(config.getKeepAlive()>0)
+        	httpget.addHeader("Connection", "Keep-Alive");
 //        if (cookie != null)
 //            httpget.addHeader("Cookie", cookie);
 //        if (userAgent != null)
@@ -174,7 +186,8 @@ public class HttpRequestUtil {
 
         httpget.setConfig(requestConfig);
 //        httpget.addHeader("Host", "www.bbossgroups.com");
-//        httpget.addHeader("Connection", "Keep-Alive");
+        if(config.getKeepAlive()>0)
+        	 httpget.addHeader("Connection", "Keep-Alive");
 //        if (cookie != null)
 //            httpget.addHeader("Cookie", cookie);
 //        if (userAgent != null)
@@ -199,7 +212,8 @@ public class HttpRequestUtil {
 
         httpHead.setConfig(requestConfig);
 //        httpget.addHeader("Host", "www.bbossgroups.com");
-//        httpHead.addHeader("Connection", "Keep-Alive");
+        if(config.getKeepAlive()>0)
+        	httpHead.addHeader("Connection", "Keep-Alive");
 //        if (cookie != null)
 //            httpHead.addHeader("Cookie", cookie);
 //        if (userAgent != null)
@@ -223,7 +237,8 @@ public class HttpRequestUtil {
         RequestConfig requestConfig =   config.getRequestConfig();
         httpPost.setConfig(requestConfig);
 //        httpPost.addHeader("Host", "www.bbossgroups.com");
-//        httpPost.addHeader("Connection", "Keep-Alive");
+        if(config.getKeepAlive()>0)
+        	httpPost.addHeader("Connection", "Keep-Alive");
 //        if (cookie != null)
 //            httpPost.addHeader("Cookie", cookie);
 //        if (userAgent != null)
@@ -245,7 +260,8 @@ public class HttpRequestUtil {
         RequestConfig requestConfig =   config.getRequestConfig();
         httpDelete.setConfig(requestConfig);
 //        httpDelete.addHeader("Host", "www.bbossgroups.com");
-//        httpDelete.addHeader("Connection", "Keep-Alive");
+        if(config.getKeepAlive()>0)
+        	 httpDelete.addHeader("Connection", "Keep-Alive");
 //        if (cookie != null)
 //            httpDelete.addHeader("Cookie", cookie);
 //        if (userAgent != null)
@@ -267,7 +283,8 @@ public class HttpRequestUtil {
         RequestConfig requestConfig =   config .getRequestConfig();
         httpPut.setConfig(requestConfig);
 //        httpDelete.addHeader("Host", "www.bbossgroups.com");
-//        httpPut.addHeader("Connection", "Keep-Alive");
+        if(config.getKeepAlive()>0)
+        	httpPut.addHeader("Connection", "Keep-Alive");
 //        if (cookie != null)
 //        	httpPut.addHeader("Cookie", cookie);
 //        if (userAgent != null)
