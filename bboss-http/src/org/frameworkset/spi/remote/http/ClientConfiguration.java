@@ -441,7 +441,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	}
 
 
-	public long isKeepAlive() {
+	public long getKeepAlive() {
 		return keepAlive;
 	}
 
