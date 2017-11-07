@@ -3,7 +3,7 @@
  */
 package org.frameworkset.spi.remote.http;
 
-import org.apache.http.*;
+import org.apache.http.Consts;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
@@ -12,29 +12,17 @@ import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.*;
 import org.apache.http.conn.DnsResolver;
-import org.apache.http.conn.HttpConnectionFactory;
-import org.apache.http.conn.ManagedHttpClientConnection;
-import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.ContentType;
-import org.apache.http.impl.DefaultHttpResponseFactory;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.*;
-import org.apache.http.impl.io.DefaultHttpRequestWriterFactory;
-import org.apache.http.io.HttpMessageParser;
-import org.apache.http.io.HttpMessageParserFactory;
-import org.apache.http.io.HttpMessageWriterFactory;
-import org.apache.http.io.SessionInputBuffer;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.message.BasicLineParser;
-import org.apache.http.message.LineParser;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.impl.conn.SystemDefaultDnsResolver;
 import org.apache.http.ssl.SSLContexts;
-import org.apache.http.util.CharArrayBuffer;
 import org.frameworkset.spi.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +62,10 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	private int maxTotal = 200; 
 	private int defaultMaxPerRoute = 10;
 	private long retryInterval = -1;
+	/**
+	 * 默认保活1小时
+	 */
+	private long keepAlive = 1000l*60l*60l;
 	public long getRetryInterval() {
 		return retryInterval;
 	}
@@ -137,149 +129,160 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	public final CloseableHttpClient getHttpClient()  throws Exception {
 		if(httpclient != null)
 			return httpclient;
-//		synchronized(ClientConfiguration.class)
-		{
-//			if(httpclient != null)
-//				return httpclient;
-	        // Use custom message parser / writer to customize the way HTTP
-	        // messages are parsed from and written out to the data stream.
-	        HttpMessageParserFactory<HttpResponse> responseParserFactory = new DefaultHttpResponseParserFactory() {
+ 
+//	    HttpMessageParserFactory<HttpResponse> responseParserFactory = new DefaultHttpResponseParserFactory() {
+//	
+//	        @Override
+//	        public HttpMessageParser<HttpResponse> create(
+//	            SessionInputBuffer buffer, MessageConstraints constraints) {
+//	            LineParser lineParser = new BasicLineParser() {
+//	
+//	                @Override
+//	                public Header parseHeader(final CharArrayBuffer buffer) {
+//	                    try {
+//	                        return super.parseHeader(buffer);
+//	                    } catch (ParseException ex) {
+//	                        return new BasicHeader(buffer.toString(), null);
+//	                    }
+//	                }
+//	
+//	            };
+//	            return new DefaultHttpResponseParser(
+//	                buffer, lineParser, DefaultHttpResponseFactory.INSTANCE, constraints) {
+//	
+//	                @Override
+//	                protected boolean reject(final CharArrayBuffer line, int count) {
+//	                    // try to ignore all garbage preceding a status line infinitely
+//	                    return false;
+//	                }
+//	
+//	            };
+//	        }
+//	
+//	    };
+//	    HttpMessageWriterFactory<HttpRequest> requestWriterFactory = new DefaultHttpRequestWriterFactory();
+//	
+//	    // Use a custom connection factory to customize the process of
+//	    // initialization of outgoing HTTP connections. Beside standard connection
+//	    // configuration parameters HTTP connection factory can define message
+//	    // parser / writer routines to be employed by individual connections.
+//	    HttpConnectionFactory<HttpRoute, ManagedHttpClientConnection> connFactory = new ManagedHttpClientConnectionFactory(
+//	            requestWriterFactory, responseParserFactory);
 	
-	            @Override
-	            public HttpMessageParser<HttpResponse> create(
-	                SessionInputBuffer buffer, MessageConstraints constraints) {
-	                LineParser lineParser = new BasicLineParser() {
+	    // Client HTTP connection objects when fully initialized can be bound to
+	    // an arbitrary network socket. The process of network socket initialization,
+	    // its connection to a remote address and binding to a local one is controlled
+	    // by a connection socket factory.
 	
-	                    @Override
-	                    public Header parseHeader(final CharArrayBuffer buffer) {
-	                        try {
-	                            return super.parseHeader(buffer);
-	                        } catch (ParseException ex) {
-	                            return new BasicHeader(buffer.toString(), null);
-	                        }
-	                    }
+	    // SSL context for secure connections can be created either based on
+	    // system or application specific properties.
+	    SSLContext sslcontext = SSLContexts.createSystemDefault();
 	
-	                };
-	                return new DefaultHttpResponseParser(
-	                    buffer, lineParser, DefaultHttpResponseFactory.INSTANCE, constraints) {
+	    // Create a registry of custom connection socket factories for supported
+	    // protocol schemes.
+	    Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+	        .register("http", PlainConnectionSocketFactory.INSTANCE)
+	        .register("https", new SSLConnectionSocketFactory(sslcontext))
+	        .build();
 	
-	                    @Override
-	                    protected boolean reject(final CharArrayBuffer line, int count) {
-	                        // try to ignore all garbage preceding a status line infinitely
-	                        return false;
-	                    }
+	    // Use custom DNS resolver to override the system DNS resolution.
+	    DnsResolver dnsResolver = new SystemDefaultDnsResolver() {
 	
-	                };
+	        @Override
+	        public InetAddress[] resolve(final String host) throws UnknownHostException {
+	            if (host.equalsIgnoreCase("localhost")) {
+	                return new InetAddress[] { InetAddress.getByAddress(new byte[] {127, 0, 0, 1}) };
+	            } else {
+	                return super.resolve(host);
 	            }
-	
-	        };
-	        HttpMessageWriterFactory<HttpRequest> requestWriterFactory = new DefaultHttpRequestWriterFactory();
-	
-	        // Use a custom connection factory to customize the process of
-	        // initialization of outgoing HTTP connections. Beside standard connection
-	        // configuration parameters HTTP connection factory can define message
-	        // parser / writer routines to be employed by individual connections.
-	        HttpConnectionFactory<HttpRoute, ManagedHttpClientConnection> connFactory = new ManagedHttpClientConnectionFactory(
-	                requestWriterFactory, responseParserFactory);
-	
-	        // Client HTTP connection objects when fully initialized can be bound to
-	        // an arbitrary network socket. The process of network socket initialization,
-	        // its connection to a remote address and binding to a local one is controlled
-	        // by a connection socket factory.
-	
-	        // SSL context for secure connections can be created either based on
-	        // system or application specific properties.
-	        SSLContext sslcontext = SSLContexts.createSystemDefault();
-	
-	        // Create a registry of custom connection socket factories for supported
-	        // protocol schemes.
-	        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
-	            .register("http", PlainConnectionSocketFactory.INSTANCE)
-	            .register("https", new SSLConnectionSocketFactory(sslcontext))
-	            .build();
-	
-	        // Use custom DNS resolver to override the system DNS resolution.
-	        DnsResolver dnsResolver = new SystemDefaultDnsResolver() {
-	
-	            @Override
-	            public InetAddress[] resolve(final String host) throws UnknownHostException {
-	                if (host.equalsIgnoreCase("localhost")) {
-	                    return new InetAddress[] { InetAddress.getByAddress(new byte[] {127, 0, 0, 1}) };
-	                } else {
-	                    return super.resolve(host);
-	                }
-	            }
-	
-	        };
-	
-	        // Create a connection manager with custom configuration.
-	        PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(
-	                socketFactoryRegistry, connFactory, dnsResolver);
-	
-	        // Create socket configuration
-	        SocketConfig socketConfig = SocketConfig.custom()
-	            .setTcpNoDelay(true)
-	            .setSoTimeout(timeoutSocket)
-	            .build();
-	        // Configure the connection manager to use socket configuration either
-	        // by default or for a specific host.
-	        connManager.setDefaultSocketConfig(socketConfig);
-//	        connManager.setSocketConfig(new HttpHost("localhost", 80), socketConfig);
-	        // Validate connections after 1 sec of inactivity
-	        connManager.setValidateAfterInactivity(1000);
-	        
-	        
-	        // Create message constraints
-	        MessageConstraints messageConstraints = MessageConstraints.custom()
-	            .setMaxHeaderCount(this.maxHeaderCount)
-	            .setMaxLineLength(this.maxLineLength)
-	            .build();
-	        // Create connection configuration
-	        ConnectionConfig connectionConfig = ConnectionConfig.custom()
-	            .setMalformedInputAction(CodingErrorAction.IGNORE)
-	            .setUnmappableInputAction(CodingErrorAction.IGNORE)
-	            .setCharset(Consts.UTF_8)
-	            .setMessageConstraints(messageConstraints)
-	            .build();
-	        // Configure the connection manager to use connection configuration either
-	        // by default or for a specific host.
-	        connManager.setDefaultConnectionConfig(connectionConfig);
-//	        connManager.setConnectionConfig(new HttpHost("localhost", 80), ConnectionConfig.DEFAULT);
-	
-	        // Configure total max or per route limits for persistent connections
-	        // that can be kept in the pool or leased by the connection manager.
-	        connManager.setMaxTotal(maxTotal);
-	        connManager.setDefaultMaxPerRoute(defaultMaxPerRoute);
-//	        connManager.setMaxPerRoute(new HttpRoute(new HttpHost("localhost", 80)), 20);
-	
-	        // Use custom cookie store if necessary.
-	        CookieStore cookieStore = new BasicCookieStore();
-	        
-	        // Use custom credentials provider if necessary.
-	        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-	        // Create global request configuration
-	        RequestConfig requestConfig = RequestConfig.custom()
-	            .setCookieSpec(CookieSpecs.DEFAULT)
-	            .setExpectContinueEnabled(true)
-	            .setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM, AuthSchemes.DIGEST))
-	            .setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC))
-	            .setConnectTimeout(this.timeoutConnection).setConnectionRequestTimeout(connectionRequestTimeout)
-	            .build();
-	
-	        // Create an HttpClient with the given custom dependencies and configuration.
-	        httpclient = HttpClients.custom()
-	            .setConnectionManager(connManager)
-	            .setDefaultCookieStore(cookieStore)
-	            .setDefaultCredentialsProvider(credentialsProvider)
-	            //.setProxy(new HttpHost("myproxy", 8080))
-	            .setDefaultRequestConfig(requestConfig)
-	            .build();
-	        if(this.beanName.equals("default")){
-	        	defaultRequestConfig = requestConfig;
-	        	defaultHttpclient = httpclient;
 	        }
-	        clientConfigs.put(beanName, this);
-		}
+	
+	    };
+	
+	    // Create a connection manager with custom configuration.
+//	    PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(
+//	            socketFactoryRegistry, connFactory, dnsResolver);
+	    PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(
+	            socketFactoryRegistry, null, dnsResolver);
+	
+	    // Create socket configuration
+	    SocketConfig socketConfig = SocketConfig.custom()
+	        .setTcpNoDelay(true)
+	        .setSoTimeout(timeoutSocket)
+	        .build();
+	    // Configure the connection manager to use socket configuration either
+	    // by default or for a specific host.
+	    connManager.setDefaultSocketConfig(socketConfig);
+	//	        connManager.setSocketConfig(new HttpHost("localhost", 80), socketConfig);
+	    // Validate connections after 1 sec of inactivity
+	    connManager.setValidateAfterInactivity(1000);
+	    
+	    
+	    // Create message constraints
+	    MessageConstraints messageConstraints = MessageConstraints.custom()
+	        .setMaxHeaderCount(this.maxHeaderCount)
+	        .setMaxLineLength(this.maxLineLength)
+	        .build();
+	    // Create connection configuration
+	    ConnectionConfig connectionConfig = ConnectionConfig.custom()
+	        .setMalformedInputAction(CodingErrorAction.IGNORE)
+	        .setUnmappableInputAction(CodingErrorAction.IGNORE)
+	        .setCharset(Consts.UTF_8)
+	        .setMessageConstraints(messageConstraints)
+	        .build();
+	    // Configure the connection manager to use connection configuration either
+	    // by default or for a specific host.
+	    connManager.setDefaultConnectionConfig(connectionConfig);
+	//	        connManager.setConnectionConfig(new HttpHost("localhost", 80), ConnectionConfig.DEFAULT);
+	
+	    // Configure total max or per route limits for persistent connections
+	    // that can be kept in the pool or leased by the connection manager.
+	    connManager.setMaxTotal(maxTotal);
+	    connManager.setDefaultMaxPerRoute(defaultMaxPerRoute);
+	//	        connManager.setMaxPerRoute(new HttpRoute(new HttpHost("localhost", 80)), 20);
+	
+	    // Use custom cookie store if necessary.
+	    CookieStore cookieStore = new BasicCookieStore();
+	    
+	    // Use custom credentials provider if necessary.
+	    CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+	    // Create global request configuration
+	    RequestConfig requestConfig = RequestConfig.custom()
+	        .setCookieSpec(CookieSpecs.DEFAULT)
+	        .setExpectContinueEnabled(true)
+	        .setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM, AuthSchemes.DIGEST))
+	        .setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC))
+	        .setConnectTimeout(this.timeoutConnection).setConnectionRequestTimeout(connectionRequestTimeout)
+	        .build();
+	
+	    // Create an HttpClient with the given custom dependencies and configuration.
+	    if(keepAlive > 0)//设置链接保活策略
+	    {
+	    	HttpConnectionKeepAliveStrategy httpConnectionKeepAliveStrategy = new HttpConnectionKeepAliveStrategy(this.keepAlive);
+	    	httpclient = HttpClients.custom()
+	    	        .setConnectionManager(connManager)
+	    	        .setDefaultCookieStore(cookieStore)
+	    	        .setDefaultCredentialsProvider(credentialsProvider)
+	    	        //.setProxy(new HttpHost("myproxy", 8080))
+	    	        .setDefaultRequestConfig(requestConfig).setKeepAliveStrategy(httpConnectionKeepAliveStrategy)
+	    	        .build();
+	    }
+	    else
+	    {
+		    httpclient = HttpClients.custom()
+		        .setConnectionManager(connManager)
+		        .setDefaultCookieStore(cookieStore)
+		        .setDefaultCredentialsProvider(credentialsProvider)
+		        //.setProxy(new HttpHost("myproxy", 8080))
+		        .setDefaultRequestConfig(requestConfig)
+		        .build();
+	    }
+	    if(this.beanName.equals("default")){
+	    	defaultRequestConfig = requestConfig;
+	    	defaultHttpclient = httpclient;
+	    }
+	    clientConfigs.put(beanName, this);
+		 
         return httpclient;
 
 
@@ -435,5 +438,15 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 
 	public void setConnectionRequestTimeout(int connectionRequestTimeout) {
 		this.connectionRequestTimeout = connectionRequestTimeout;
+	}
+
+
+	public long isKeepAlive() {
+		return keepAlive;
+	}
+
+
+	public void setKeepAlive(long keepAlive) {
+		this.keepAlive = keepAlive;
 	}
 }

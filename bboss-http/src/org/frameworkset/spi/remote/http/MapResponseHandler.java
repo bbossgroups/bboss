@@ -1,16 +1,15 @@
 package org.frameworkset.spi.remote.http;
 
-import java.io.IOException;
-import java.util.Map;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.util.EntityUtils;
 
-import com.frameworkset.util.SimpleStringUtil;
+import java.io.IOException;
+import java.util.Map;
 
-public class MapResponseHandler  implements ResponseHandler<Map> {
+public class MapResponseHandler extends BaseResponseHandler implements ResponseHandler<Map> {
 
 	public MapResponseHandler() {
 		// TODO Auto-generated constructor stub
@@ -23,12 +22,14 @@ public class MapResponseHandler  implements ResponseHandler<Map> {
 
          if (status >= 200 && status < 300) {
              HttpEntity entity = response.getEntity();
-             return SimpleStringUtil.json2Object(entity.getContent(), Map.class);
-             //return entity != null ? EntityUtils.toString(entity) : null;
+             return super.converJson(entity,Map.class);
+
+			 //return entity != null ? EntityUtils.toString(entity) : null;
          } else {
              HttpEntity entity = response.getEntity();
              if (entity != null )
-            	 return SimpleStringUtil.json2Object(entity.getContent(), Map.class);
+//            	 return SimpleStringUtil.json2Object(entity.getContent(), Map.class);
+				 throw new ClientProtocolException(EntityUtils.toString(entity));
              else
                  throw new ClientProtocolException("Unexpected response status: " + status);
          }
