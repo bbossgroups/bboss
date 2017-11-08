@@ -29,9 +29,9 @@ public class MapResponseHandler extends BaseResponseHandler implements ResponseH
              HttpEntity entity = response.getEntity();
              if (entity != null )
 //            	 return SimpleStringUtil.json2Object(entity.getContent(), Map.class);
-				 throw new ClientProtocolException(EntityUtils.toString(entity));
+				 throw new HttpRuntimeException(EntityUtils.toString(entity));
              else
-                 throw new ClientProtocolException("Unexpected response status: " + status);
+                 throw new HttpRuntimeException("Unexpected response status: " + status);
          }
      }
 	
