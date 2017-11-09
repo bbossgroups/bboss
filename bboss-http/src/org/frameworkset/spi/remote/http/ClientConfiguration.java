@@ -34,6 +34,7 @@ import java.nio.charset.CodingErrorAction;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This example demonstrates how to customize and configure the most common aspects
@@ -62,10 +63,49 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	private int maxTotal = 200; 
 	private int defaultMaxPerRoute = 10;
 	private long retryInterval = -1;
+	private Boolean soKeepAlive = false;
+	private Boolean soReuseAddress = false;
+	private int validateAfterInactivity = -1;
+	private int timeToLive = 3600000;
+
+	public int getTimeToLive() {
+		return timeToLive;
+	}
+
+	public void setTimeToLive(int timeToLive) {
+		this.timeToLive = timeToLive;
+	}
+
 	/**
 	 * 默认保活1小时
+
 	 */
 	private long keepAlive = 1000l*60l*60l;
+
+	public Boolean getSoKeepAlive() {
+		return soKeepAlive;
+	}
+
+	public void setSoKeepAlive(Boolean soKeepAlive) {
+		this.soKeepAlive = soKeepAlive;
+	}
+
+	public Boolean getSoReuseAddress() {
+		return soReuseAddress;
+	}
+
+	public void setSoReuseAddress(Boolean soReuseAddress) {
+		this.soReuseAddress = soReuseAddress;
+	}
+
+	public int getValidateAfterInactivity() {
+		return validateAfterInactivity;
+	}
+
+	public void setValidateAfterInactivity(int validateAfterInactivity) {
+		this.validateAfterInactivity = validateAfterInactivity;
+	}
+
 	public long getRetryInterval() {
 		return retryInterval;
 	}
@@ -202,21 +242,24 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	    // Create a connection manager with custom configuration.
 //	    PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(
 //	            socketFactoryRegistry, connFactory, dnsResolver);
-	    PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(
-	            socketFactoryRegistry, null, dnsResolver);
-	
+
+		PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry, null, null, dnsResolver,
+				this.timeToLive, TimeUnit.MILLISECONDS);
+
 	    // Create socket configuration
 	    SocketConfig socketConfig = SocketConfig.custom()
 	        .setTcpNoDelay(true)
 	        .setSoTimeout(timeoutSocket)
+			.setSoKeepAlive(this.soKeepAlive)
+			.setSoReuseAddress(this.soReuseAddress)
 	        .build();
 	    // Configure the connection manager to use socket configuration either
 	    // by default or for a specific host.
 	    connManager.setDefaultSocketConfig(socketConfig);
 	//	        connManager.setSocketConfig(new HttpHost("localhost", 80), socketConfig);
 	    // Validate connections after 1 sec of inactivity
-	    connManager.setValidateAfterInactivity(1000);
-	    
+	    connManager.setValidateAfterInactivity(validateAfterInactivity);
+
 	    
 	    // Create message constraints
 	    MessageConstraints messageConstraints = MessageConstraints.custom()
