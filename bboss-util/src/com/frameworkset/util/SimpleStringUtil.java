@@ -32,16 +32,18 @@
  *****************************************************************************/
 package com.frameworkset.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
+import org.apache.oro.text.regex.*;
+import org.frameworkset.json.JacksonObjectMapperWrapper;
+import org.frameworkset.json.JsonTypeReference;
+import org.frameworkset.soa.BBossStringWriter;
+import org.frameworkset.util.CollectionUtils;
+import org.frameworkset.util.DataFormatUtil;
+import org.frameworkset.util.ObjectUtils;
+import org.frameworkset.util.encoder.Charsets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
 import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.URLDecoder;
@@ -49,41 +51,7 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.TimeZone;
-import java.util.TreeSet;
-
-import org.apache.oro.text.regex.MalformedPatternException;
-import org.apache.oro.text.regex.MatchResult;
-import org.apache.oro.text.regex.Pattern;
-import org.apache.oro.text.regex.PatternCompiler;
-import org.apache.oro.text.regex.PatternMatcher;
-import org.apache.oro.text.regex.PatternMatcherInput;
-import org.apache.oro.text.regex.Perl5Compiler;
-import org.apache.oro.text.regex.Perl5Matcher;
-import org.apache.oro.text.regex.StringSubstitution;
-import org.frameworkset.json.JacksonObjectMapperWrapper;
-import org.frameworkset.json.JsonTypeReference;
-import org.frameworkset.util.CollectionUtils;
-import org.frameworkset.util.DataFormatUtil;
-import org.frameworkset.util.ObjectUtils;
-import org.frameworkset.util.encoder.Charsets;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.*;
 
 /**
  * To change for your class or interface DAO中VOObject String类型与PO数据类型转换工具类.
@@ -2716,6 +2684,10 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
     
     public static void object2json(Object object,Writer writer) {
     	objectMapper.object2json(object,writer,true) ;
+	}
+	public static void object2json(Object object,StringBuilder builder) {
+    	BBossStringWriter writer = new BBossStringWriter(builder);
+		objectMapper.object2json(object,writer,true) ;
 	}
     
     public static void object2json(Object object,OutputStream writer,boolean ALLOW_SINGLE_QUOTES) {
