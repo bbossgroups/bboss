@@ -426,8 +426,8 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 				clientConfiguration.setRetryTime(-1);
 				clientConfiguration.setMaxLineLength(Integer.MAX_VALUE);
 				clientConfiguration.setMaxHeaderCount(Integer.MAX_VALUE);
-				clientConfiguration.setMaxTotal(1000);
-				clientConfiguration.setDefaultMaxPerRoute(200);
+				clientConfiguration.setMaxTotal(500);
+				clientConfiguration.setDefaultMaxPerRoute(100);
 				clientConfiguration.setBeanName(name);
 
 				clientConfiguration.afterPropertiesSet();
