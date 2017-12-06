@@ -81,16 +81,22 @@ public class FileUtil
 {
 	private static Logger log = LoggerFactory.getLogger(FileContentCache.class);
 	private static final ListResourceBundle mimeTypes = new FileMIMETypes();
-	public static final String apppath;
+	public static String apppath;
 	static{
-		 URL location = (FileUtil.class).getProtectionDomain().getCodeSource().getLocation();
-	        File appDir = computeApplicationDir(location, new File("."));
-		apppath = appDir.getParentFile().getPath();
+	    try {
+            URL location = (FileUtil.class).getProtectionDomain().getCodeSource().getLocation();
+            File appDir = computeApplicationDir(location, new File("."));
+            apppath = appDir.getParentFile().getPath();
+        }
+        catch (Throwable e){
+            log.warn("Init apppath failed:",e);
+        }
+
 	}
 	
 	/**
 	 * 获取页面类型
-	 * @param fileName
+	 * @param fileExt
 	 * @return
 	 */
 	public static String getMimeType(String fileExt) {
@@ -529,13 +535,12 @@ public class FileUtil
     {
     	return getFileContent(new File( filePath),charSet);
     }
-    
-    
+
+
     /**
-     * 获取文件得内容
-     * 
-     * @param filePath
-     *            文件得物理路径
+     * 获取文件内容
+     * @param file
+     * @param charSet
      * @return
      * @throws IOException
      */
@@ -604,7 +609,7 @@ public class FileUtil
     /**
      * 获取文件得内容
      * 
-     * @param filePath
+     * @param reader
      *            文件得物理路径
      * @return
      * @throws IOException
