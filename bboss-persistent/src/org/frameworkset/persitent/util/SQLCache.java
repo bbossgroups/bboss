@@ -16,15 +16,17 @@
 
 package org.frameworkset.persitent.util;
 
+import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
+import com.frameworkset.util.VariableHandler;
+import com.frameworkset.util.VariableHandler.SQLStruction;
+
 import java.lang.ref.SoftReference;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
-import com.frameworkset.util.VariableHandler;
-import com.frameworkset.util.VariableHandler.SQLStruction;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * <p>Title: SQLCache.java</p> 
@@ -36,9 +38,13 @@ import com.frameworkset.util.VariableHandler.SQLStruction;
  * @version 1.0
  */
 public class SQLCache {
-	private Object lock = new Object();
-	private Map<String,SQLStruction> parserSQLStructions = new java.util.WeakHashMap<String,SQLStruction>();
-	private Map<String,SQLStruction> parsertotalsizeSQLStructions = new java.util.WeakHashMap<String,SQLStruction>();
+	private Lock lock = new ReentrantLock();
+	private Lock vtplLock = new ReentrantLock();
+	private Map<String,SQLStruction> parserSQLStructions = new java.util.HashMap<String,SQLStruction>();
+	private Map<String,SQLStruction> parsertotalsizeSQLStructions = new java.util.HashMap<String,SQLStruction>();
+	private Map<String,Map<String,VariableHandler.SQLStruction>> parserTPLSQLStructions = new java.util.HashMap<String,Map<String,VariableHandler.SQLStruction>>();
+	private Map<String,Map<String,VariableHandler.SQLStruction>> parserTPLTotalsizeSQLStructions = new java.util.HashMap<String,Map<String,VariableHandler.SQLStruction>>();
+
 	protected Map<String,Map<String, SoftReference<PoolManResultSetMetaData>>> metas = new HashMap<String,Map<String, SoftReference<PoolManResultSetMetaData>>>();
 	public SQLCache() {
 		// TODO Auto-generated constructor stub
@@ -50,6 +56,9 @@ public class SQLCache {
 		metas.clear();
 		parserSQLStructions.clear();
 		parsertotalsizeSQLStructions.clear();
+		parserTPLSQLStructions.clear();
+		parserTPLTotalsizeSQLStructions.clear();
+
 	}
 	
 	private boolean needRefreshMeta(PoolManResultSetMetaData meta,ResultSetMetaData rsmetadata) throws SQLException
@@ -115,70 +124,162 @@ public class SQLCache {
 	
 	public SQLStruction getSQLStruction(SQLInfo sqlinfo,String newsql)
 	{
-		String sql = newsql;
-		String key = null;
+//		String sql = newsql;
+//		String key = null;
 		if(sqlinfo.getSqlutil() == null 
-				|| sqlinfo.getSqlutil() == SQLUtil.getGlobalSQLUtil())
-			key = sql;
+				|| sqlinfo.getSqlutil() == SQLUtil.getGlobalSQLUtil()) {
+//			key = sql;
+			return this._getVTPLSQLStruction(parserTPLSQLStructions,sqlinfo,newsql,"___GlobalSQLUtil_");
+		}
 		else
 		{
+//			if(sqlinfo.istpl() )
+//			{
+//				key = sql;
+//			}
+//			else
+//			{
+//				key = sqlinfo.getSqlname();
+//			}
+
 			if(sqlinfo.istpl() )
 			{
-				key = sql;
+				return this._getVTPLSQLStruction(parserTPLSQLStructions,sqlinfo,newsql,sqlinfo.getSqlname());
 			}
 			else
 			{
-				key = sqlinfo.getSqlname();
+				return _getSQLStruction(parserSQLStructions,sqlinfo, newsql);
 			}
 		}
-		SQLStruction sqlstruction =  parserSQLStructions.get(key);
-        if(sqlstruction == null)
-        {
-            synchronized(lock)
-            {
-            	sqlstruction =  parserSQLStructions.get(key);
-                if(sqlstruction == null)
-                {
-                	sqlstruction = VariableHandler.parserSQLStruction(sql);
-                	parserSQLStructions.put(key,sqlstruction);
-                }
-            }
-        }  
-        return sqlstruction;
+//		SQLStruction sqlstruction =  parserSQLStructions.get(key);
+//        if(sqlstruction == null)
+//        {
+//            synchronized(lock)
+//            {
+//            	sqlstruction =  parserSQLStructions.get(key);
+//                if(sqlstruction == null)
+//                {
+//                	sqlstruction = VariableHandler.parserSQLStruction(sql);
+//                	parserSQLStructions.put(key,sqlstruction);
+//                }
+//            }
+//        }
+//        return sqlstruction;
+	}
+
+	private VariableHandler.SQLStruction _getSQLStruction(Map<String,SQLStruction> parserSQLStructions ,SQLInfo sqlinfo, String newsql)
+	{
+
+		String key = sqlinfo.getSqlname();
+		VariableHandler.SQLStruction sqlstruction =  parserSQLStructions.get(key);
+		if(sqlstruction == null)
+		{
+			try
+			{
+				lock.lock();
+				sqlstruction =  parserSQLStructions.get(key);
+				if(sqlstruction == null)
+				{
+					sqlstruction = VariableHandler.parserSQLStruction(newsql);
+					parserSQLStructions.put(key,sqlstruction);
+				}
+			}
+			finally {
+				lock.unlock();
+			}
+		}
+		return sqlstruction;
+	}
+
+	/**
+	 * vtpl需要进行分级缓存
+	 * @param sqlinfo
+	 * @param newsql
+	 * @return
+	 */
+	private VariableHandler.SQLStruction _getVTPLSQLStruction(Map<String,Map<String,VariableHandler.SQLStruction>> parserTPLSQLStructions,SQLInfo sqlinfo, String newsql,String okey)
+	{
+
+		String ikey = newsql;
+//		String okey = sqlinfo.getSqlname();
+		Map<String,VariableHandler.SQLStruction> sqlstructionMap =  parserTPLSQLStructions.get(okey);
+		if(sqlstructionMap == null)
+		{
+			try
+			{
+				this.vtplLock.lock();
+				sqlstructionMap =  parserTPLSQLStructions.get(okey);
+				if(sqlstructionMap == null)
+				{
+					sqlstructionMap = new   java.util.WeakHashMap<String,VariableHandler.SQLStruction>();
+					parserTPLSQLStructions.put(okey,sqlstructionMap);
+				}
+			}
+			finally {
+				vtplLock.unlock();
+			}
+		}
+		VariableHandler.SQLStruction urlStruction = sqlstructionMap.get(ikey);
+		if(urlStruction == null){
+			try
+			{
+				this.vtplLock.lock();
+				urlStruction = sqlstructionMap.get(ikey);
+				if(urlStruction == null){
+					urlStruction = VariableHandler.parserSQLStruction(newsql);
+					sqlstructionMap.put(ikey,urlStruction);
+				}
+			}
+			finally {
+				this.vtplLock.unlock();
+			}
+		}
+		return urlStruction;
 	}
 	
 	public SQLStruction getTotalsizeSQLStruction(SQLInfo totalsizesqlinfo,String newtotalsizesql)
 	{
-		String totalsizesql = newtotalsizesql;
-		String key = null;
+//		String totalsizesql = newtotalsizesql;
+//		String key = null;
 		if(totalsizesqlinfo.getSqlutil() == null 
-				|| totalsizesqlinfo.getSqlutil() == SQLUtil.getGlobalSQLUtil())
-			key = totalsizesql;
+				|| totalsizesqlinfo.getSqlutil() == SQLUtil.getGlobalSQLUtil()) {
+//			key = totalsizesql;
+			return this._getVTPLSQLStruction(this.parserTPLTotalsizeSQLStructions, totalsizesqlinfo, newtotalsizesql, "___GlobalSQLUtil_");
+		}
 		else
 		{
+//			if(totalsizesqlinfo.istpl() )
+//			{
+//				key = totalsizesql;
+//			}
+//			else
+//			{
+//				key = totalsizesqlinfo.getSqlname();
+//			}
+
 			if(totalsizesqlinfo.istpl() )
 			{
-				key = totalsizesql;
+				return this._getVTPLSQLStruction(this.parserTPLTotalsizeSQLStructions,totalsizesqlinfo,newtotalsizesql,totalsizesqlinfo.getSqlname());
 			}
 			else
 			{
-				key = totalsizesqlinfo.getSqlname();
+				return _getSQLStruction(parsertotalsizeSQLStructions,totalsizesqlinfo, newtotalsizesql);
 			}
 		}
-		SQLStruction totalsizesqlstruction =  parsertotalsizeSQLStructions.get(key);
-	    if(totalsizesqlstruction == null)
-	    {
-	        synchronized(lock)
-	        {
-	        	totalsizesqlstruction =  parsertotalsizeSQLStructions.get(key);
-	            if(totalsizesqlstruction == null)
-	            {
-	            	totalsizesqlstruction = VariableHandler.parserSQLStruction(totalsizesql);
-	            	parsertotalsizeSQLStructions.put(key,totalsizesqlstruction);
-	            }
-	        }
-	    } 
-        return totalsizesqlstruction;
+//		SQLStruction totalsizesqlstruction =  parsertotalsizeSQLStructions.get(key);
+//	    if(totalsizesqlstruction == null)
+//	    {
+//	        synchronized(lock)
+//	        {
+//	        	totalsizesqlstruction =  parsertotalsizeSQLStructions.get(key);
+//	            if(totalsizesqlstruction == null)
+//	            {
+//	            	totalsizesqlstruction = VariableHandler.parserSQLStruction(totalsizesql);
+//	            	parsertotalsizeSQLStructions.put(key,totalsizesqlstruction);
+//	            }
+//	        }
+//	    }
+//        return totalsizesqlstruction;
 	}
 
 }

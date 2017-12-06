@@ -1,28 +1,23 @@
 package com.frameworkset.util;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import bboss.org.apache.velocity.Template;
 import bboss.org.apache.velocity.VelocityContext;
 import bboss.org.apache.velocity.app.Velocity;
 import bboss.org.apache.velocity.exception.MethodInvocationException;
 import bboss.org.apache.velocity.exception.ParseErrorException;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
-//import org.frameworkset.spi.BaseApplicationContext;
 import bboss.org.apache.velocity.runtime.resource.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+
+//import org.frameworkset.spi.BaseApplicationContext;
 
 
 //
@@ -171,8 +166,7 @@ public class VelocityUtil{
 		    			 }
 	    			 }
 	    		 }
-	//    		 URL location = (VelocityUtil.class).getProtectionDomain().getCodeSource().getLocation();
-	//    	        File appDir = computeApplicationDir(location, new File("."));
+
 	    		    String appDir = FileUtil.apppath + "/WEB-INF";
 	    		    log.debug("FileUtil.apppath:"+FileUtil.apppath);
 	    		    if(approot != null && !new File(appDir).exists())
@@ -243,8 +237,12 @@ public class VelocityUtil{
 	            
 	         } catch (Exception e) {
 	        	 inited = true;
-	             log.error("Init velocity failed:velocity.properties (系统找不到指定的文件。) 检查classpath中是否配置正确:"+ e.getMessage(),e);
-	         }
+	             log.error("Init velocity failed:"+ e.getMessage(),e);
+	         } catch (Throwable ex) {
+				 inited = true;
+				 log.error("Init velocity failed:"+ ex.getMessage(),ex);
+
+			 }
     	 }
     	 
     	 
