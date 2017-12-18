@@ -15,6 +15,7 @@ import org.apache.http.conn.DnsResolver;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.BasicCredentialsProvider;
@@ -27,10 +28,17 @@ import org.frameworkset.spi.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.CodingErrorAction;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,6 +75,46 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	private Boolean soReuseAddress = false;
 	private int validateAfterInactivity = -1;
 	private int timeToLive = 3600000;
+
+	private String keystore;
+	private String keyPassword ;
+	private String supportedProtocols;
+	private String[] _supportedProtocols;
+	private HostnameVerifier hostnameVerifier;
+	private String[] defaultSupportedProtocols = new String[] {"TLSv1"};
+	public String getKeystore() {
+		return keystore;
+	}
+
+	public void setKeystore(String keystore) {
+		this.keystore = keystore;
+	}
+
+	public String getKeyPassword() {
+		return keyPassword;
+	}
+
+	public void setKeyPassword(String keyPassword) {
+		this.keyPassword = keyPassword;
+	}
+
+	public String getSupportedProtocols() {
+		return supportedProtocols;
+	}
+
+	public void setSupportedProtocols(String supportedProtocols) {
+		this.supportedProtocols = supportedProtocols;
+	}
+
+	public HostnameVerifier getHostnameVerifier() {
+		return hostnameVerifier;
+	}
+
+	public void setHostnameVerifier(HostnameVerifier hostnameVerifier) {
+		this.hostnameVerifier = hostnameVerifier;
+	}
+
+
 
 	public int getTimeToLive() {
 		return timeToLive;
@@ -166,6 +214,32 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	public void setRetryTime(int retryTime) {
 		this.retryTime = retryTime;
 	}
+
+
+	private SSLConnectionSocketFactory buildSSLConnectionSocketFactory() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, KeyManagementException {
+		// Trust own CA and all self-signed certs
+		if(this.keystore == null || this.keystore.equals("")) {
+			return new SSLConnectionSocketFactory(SSLContexts.createSystemDefault());
+		}
+		else {
+
+			SSLContext sslcontext = SSLContexts.custom()
+					.loadTrustMaterial(new File(keystore), this.keyPassword.toCharArray(),
+							new TrustSelfSignedStrategy())
+					.build();
+			// Allow TLSv1 protocol only
+
+			HostnameVerifier hostnameVerifier = this.hostnameVerifier != null ? this.hostnameVerifier:
+					SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+					sslcontext,
+					_supportedProtocols,
+					null,hostnameVerifier
+					);
+//					SSLConnectionSocketFactory.getDefaultHostnameVerifier());
+			return sslsf;
+		}
+	}
 	public final CloseableHttpClient getHttpClient()  throws Exception {
 		if(httpclient != null)
 			return httpclient;
@@ -216,13 +290,13 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	
 	    // SSL context for secure connections can be created either based on
 	    // system or application specific properties.
-	    SSLContext sslcontext = SSLContexts.createSystemDefault();
+		SSLConnectionSocketFactory SSLConnectionSocketFactory = this.buildSSLConnectionSocketFactory();//SSLContexts.createSystemDefault();
 	
 	    // Create a registry of custom connection socket factories for supported
 	    // protocol schemes.
 	    Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
 	        .register("http", PlainConnectionSocketFactory.INSTANCE)
-	        .register("https", new SSLConnectionSocketFactory(sslcontext))
+	        .register("https", SSLConnectionSocketFactory)
 	        .build();
 	
 	    // Use custom DNS resolver to override the system DNS resolution.
@@ -356,6 +430,13 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
+		if(this.supportedProtocols != null && !this.supportedProtocols.equals("")){
+			this._supportedProtocols = this.supportedProtocols.split(",");
+		}
+		else
+		{
+			this._supportedProtocols = this.defaultSupportedProtocols;
+		}
 		this.getHttpClient();
 		
 	}
