@@ -1,15 +1,25 @@
 #!/bin/sh
 
+parse_jvm_options() {
+  if [ -f "\$1" ]; then
+    echo "`grep "^-" "\$1" | tr '\n' ' '`"
+  fi
+}
+
+JVM_OPTIONS_FILE=jvm.options
+
+RT_JAVA_OPTS="`parse_jvm_options "\$JVM_OPTIONS_FILE"` \$RT_JAVA_OPTS"
+echo \$RT_JAVA_OPTS
 case \$1 in
    start)
-    nohup java ${vm} -jar ${project}-${bboss_version}.jar > ${project}.log &
+    nohup java \$RT_JAVA_OPTS -jar ${project}-${bboss_version}.jar > ${project}.log &
     tail -f ${project}.log
      ;;
    stop)
-    java -jar ${project}-${bboss_version}.jar  stop --shutdownLevel=C
+    java -jar ${project}-${bboss_version}.jar  stop --shutdownLevel=9
      ;;
    restart)
-    nohup java ${vm} -jar ${project}-${bboss_version}.jar restart --shutdownLevel=C > ${project}.log &
+    nohup java \$RT_JAVA_OPTS -jar ${project}-${bboss_version}.jar restart --shutdownLevel=9 > ${project}.log &
     tail -f ${project}.log
     ;;
    *)

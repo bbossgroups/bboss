@@ -26,35 +26,19 @@ sourceSets {
 configurations {
     //compile.exclude  module: 'slf4j-log4j12'
     //compile.exclude group: 'org.apache.logging.log4j'
-    compile.exclude group: 'ch.qos.logback'
-	compile.exclude group: 'io.netty', module: 'netty-all'
 }
 dependencies {
-	compile project(':spark-service-util')
      compile  (
-     [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${bboss_version}", transitive: true],
-
-          [group: 'org.apache.thrift', name: 'libthrift', version: "0.9.2", transitive: false],
-
-     [group: 'org.apache.hadoop', name: 'hadoop-annotations', version: "${hadoop_version}", transitive: true],
-	            [group: 'org.apache.hadoop', name: 'hadoop-auth', version: "${hadoop_version}", transitive: true],
-	            [group: 'org.apache.hadoop', name: 'hadoop-common', version: "${hadoop_version}", transitive: true],
-	            [group: 'org.apache.hadoop', name: 'hadoop-hdfs', version: "${hadoop_version}", transitive: true],
-	            [group: 'org.apache.hadoop', name: 'hadoop-hdfs-nfs', version: "${hadoop_version}", transitive: true],
-	            [group: 'org.apache.htrace', name: 'htrace-core', version: '3.1.0-incubating', transitive: true],
-	            [group: 'com.fasterxml.uuid', name: 'java-uuid-generator', version: '3.1.2', transitive: false],
-	            [group: 'com.google.protobuf', name: 'protobuf-java', version: '2.5.0', transitive: false],
-	            [group: 'com.bbossgroups.plugins', name: 'bboss-plugin-kafka', version: "5.0.3.6", transitive: true],
-	            [group: 'com.bbossgroups.plugins', name: 'bboss-plugin-elasticsearch', version: "5.0.3.6", transitive: true],
+     [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${bboss_version}", transitive: true]
      )
 
     runtime(
 		[group: 'com.bbossgroups', name: 'bboss-rt', version: "${bboss_version}", transitive: false],
     )
 
-    testCompile(
-     [group: 'org.apache.hive', name: 'hive-jdbc', version: "2.1.1", transitive: true],
-    )
+    //testCompile(
+    // [group: 'org.apache.hive', name: 'hive-jdbc', version: "2.1.1", transitive: true],
+    //)
 
 
 }
@@ -81,8 +65,7 @@ task copyToolFiles(type: Copy ,dependsOn:'copyRTJarFiles')  {
 			{
 				expand(
 						bboss_version:"${bboss_version}",
-                        project:"${project.name}",
-                        vm:"-Xms512m -Xmx512m -Xmn256m -XX:PermSize=128M -XX:MaxPermSize=128M"
+                        project:"${project.name}"
 						)
 
 			}
