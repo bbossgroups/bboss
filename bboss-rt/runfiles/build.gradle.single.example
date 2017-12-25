@@ -1,0 +1,90 @@
+sourceSets {
+	main {
+		java {
+			srcDir 'src/main/java'
+
+		}
+		resources {
+			srcDir 'src/main/resources'
+			srcDir 'src/main/java'  exclude '**/*.java'
+		}
+
+	}
+	test {
+		java {
+			srcDir 'src/test/java'
+
+		}
+		resources {
+			srcDir 'src/test/resources'
+			srcDir 'src/test/java'  exclude '**/*.java'
+		}
+
+	}
+
+}
+configurations {
+    //compile.exclude  module: 'slf4j-log4j12'
+    //compile.exclude group: 'org.apache.logging.log4j'
+}
+dependencies {
+     compile  (
+     [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${bboss_version}", transitive: true]
+     )
+
+    runtime(
+		[group: 'com.bbossgroups', name: 'bboss-rt', version: "${bboss_version}", transitive: false],
+    )
+
+    //testCompile(
+    // [group: 'org.apache.hive', name: 'hive-jdbc', version: "2.1.1", transitive: true],
+    //)
+
+
+}
+
+
+task copyJarFiles(type: Sync,dependsOn:'jar'){
+
+
+
+	 from configurations.compile
+	 from jar.outputs
+	 exclude { details -> details.file.name.startsWith('bboss-rt')  }
+	 into 'build/dist/lib'
+
+}
+
+task copyRTJarFiles(type: Copy,dependsOn:'copyJarFiles'){
+	 from configurations.runtime - configurations.compile
+	 into 'build/dist'
+     rename ("bboss-rt-${bboss_version}.jar", "${project.name}-${bboss_version}.jar")
+}
+task copyToolFiles(type: Copy ,dependsOn:'copyRTJarFiles')  {
+			from ('runfiles')
+			{
+				expand(
+						bboss_version:"${bboss_version}",
+                        project:"${project.name}"
+						)
+
+			}
+		  filteringCharset = 'UTF-8'
+			into 'build/dist/'
+
+
+
+}
+task copyResourcesfiles(type: Sync )  {
+	from fileTree(dir: 'src/test/resources')
+	filteringCharset = 'UTF-8'
+	into 'build/dist/resources'
+}
+
+task releaseVersion(type: Zip,dependsOn:['copyToolFiles','copyResourcesfiles']) {
+
+    //appendix = 'wrapper'
+   classifier = 'released'
+   from 'build/dist/'
+
+}
