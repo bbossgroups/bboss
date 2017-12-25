@@ -1,0 +1,35 @@
+PROJ_GROUP=com.bbossgroups.rt
+PROJ_VERSION=1.0.0
+
+bboss_version=5.0.3.7.9
+bboss_es_version=5.0.3.8.7
+bboss_plugin_version=5.0.3.7.4
+jacksonversion=2.9.1
+
+skipTest=true  
+PROJ_WEBSITEURL=http://www.bbossgroups.com
+PROJ_ISSUETRACKERURL=https://github.com/bbossgroups/sessiondemo/issues
+PROJ_VCSURL=https://github.com/bbossgroups/sessiondemo.git
+PROJ_DESCRIPTION=support session share between application cluster nodes and cross domain application nodes.support good application session monitor and session data statitic module.demo site http://session.bbossgroups.com/ 
+
+PROJ_LICENCE_NAME=The Apache Software License, Version 2.0
+PROJ_LICENCE_URL=http://www.apache.org/licenses/LICENSE-2.0.txt
+PROJ_LICENCE_DEST=repo
+
+DEVELOPER_ID=yin-bp
+DEVELOPER_NAME=biaoping.yin
+DEVELOPER_EMAIL=yin-bp@163.com
+
+SOURCE_COMPILER_LEVEL=1.7
+TARGET_COMPILER_LEVEL=1.7
+JAVADOC_SOURCE_LEVEL=1.7
+JAVADOC_COMPILER_LEVEL=1.7
+
+
+sonatype_url=https://oss.sonatype.org/service/local/staging/deploy/maven2
+sonatype_username=
+sonatype_password=
+scm_connection=scm:git:git@github.com:bbossgroups/sessiondemo.git
+scm_developerConnection=scm:git:git@github.com:bbossgroups/sessiondemo.git
+scm_url=https://github.com/bbossgroups/sessiondemo
+

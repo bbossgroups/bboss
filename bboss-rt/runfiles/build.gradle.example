@@ -1,90 +1,180 @@
-sourceSets {
-	main {
-		java {
-			srcDir 'src/main/java'
+
+
+
+configure(allprojects) { project ->
+	group = PROJ_GROUP
+	version = PROJ_VERSION
+
+	apply plugin: "java"
+	apply plugin: "maven-publish"
+	apply plugin: "eclipse"
+	apply plugin: "idea"
+	apply plugin: "signing"
+	apply plugin: "maven"
+	eclipse {
+		jdt {
+			//if you want to alter the java versions (by default they are configured with gradle java plugin settings):
+			sourceCompatibility = SOURCE_COMPILER_LEVEL
+			targetCompatibility = TARGET_COMPILER_LEVEL
+			//javaRuntimeName = "../../org.eclipse.jdt.launching.JRE_CONTAINER"
 
 		}
-		resources {
-			srcDir 'src/main/resources'
-			srcDir 'src/main/java'  exclude '**/*.java'
+	}
+
+	tasks.withType(JavaCompile) {
+
+		sourceCompatibility = SOURCE_COMPILER_LEVEL
+		targetCompatibility = TARGET_COMPILER_LEVEL
+		options.encoding = 'UTF-8'
+	}
+
+	tasks.withType(Javadoc) {
+		sourceCompatibility = JAVADOC_SOURCE_LEVEL
+		targetCompatibility = JAVADOC_COMPILER_LEVEL
+		options.encoding = 'UTF-8'
+		// disable the crazy super-strict doclint tool in Java 8
+        // noinspection SpellCheckingInspection
+		if (JavaVersion.current().isJava8Compatible()) {
+			options.addStringOption('Xdoclint:none', '-quiet')
 		}
+	}
+
+	task sourcesJar(type: Jar) {
+		classifier = "sources"
+		from sourceSets.main.allJava
+	}
+
+	task javaDocJar(type: Jar, dependsOn: javadoc) {
+		classifier = "javadoc"
+		from javadoc.destinationDir
+	}
+	artifacts {
+		archives sourcesJar, javaDocJar
+	}
+
+	jar {
+		manifest {
+			attributes (
+					'Implementation': version,
+					'Specification-Version': version,
+					'Implementation-Vendor': 'bbossgroups',
+					'Implementation-ProductID': project.name,
+					'Compile-Timestamp': new Date().format('yyyy-MM-dd HH:mm:ss'),
+					'Compile-User': DEVELOPER_NAME
+			)
+		}
+	}
+
+
+
+
+	repositories {
+		mavenLocal()
+		 maven {
+	        url "http://maven.aliyun.com/nexus/content/groups/public"
+	    }
+		maven {
+			url "https://artifacts.elastic.co/maven"
+		}
+		mavenCentral()
 
 	}
-	test {
-		java {
-			srcDir 'src/test/java'
-
-		}
-		resources {
-			srcDir 'src/test/resources'
-			srcDir 'src/test/java'  exclude '**/*.java'
-		}
-
+	if(project.getProperty('skipTest').equals("true"))
+	{
+		compileTestJava.enabled=false
+		processTestResources.enabled=false
+		testClasses.enabled = false
+		test.enabled = false
 	}
 
-}
-configurations {
-    //compile.exclude  module: 'slf4j-log4j12'
-    //compile.exclude group: 'org.apache.logging.log4j'
-}
-dependencies {
-     compile  (
-     [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${bboss_version}", transitive: true]
-     )
-
-    runtime(
-		[group: 'com.bbossgroups', name: 'bboss-rt', version: "${bboss_version}", transitive: false],
-    )
-
-    //testCompile(
-    // [group: 'org.apache.hive', name: 'hive-jdbc', version: "2.1.1", transitive: true],
-    //)
-
-
-}
-
-
-task copyJarFiles(type: Sync,dependsOn:'jar'){
-
-
-
-	 from configurations.compile
-	 from jar.outputs
-	 exclude { details -> details.file.name.startsWith('bboss-rt')  }
-	 into 'build/dist/lib'
-
-}
-
-task copyRTJarFiles(type: Copy,dependsOn:'copyJarFiles'){
-	 from configurations.runtime - configurations.compile
-	 into 'build/dist'
-     rename ("bboss-rt-${bboss_version}.jar", "${project.name}-${bboss_version}.jar")
-}
-task copyToolFiles(type: Copy ,dependsOn:'copyRTJarFiles')  {
-			from ('runfiles')
-			{
-				expand(
-						bboss_version:"${bboss_version}",
-                        project:"${project.name}"
-						)
+	sourceSets {
+		main {
+			java {
+				srcDir 'src/main/java'
 
 			}
-		  filteringCharset = 'UTF-8'
-			into 'build/dist/'
+			resources {
+				srcDir 'src/main/resources'
+				srcDir 'src/main/java'  exclude '**/*.java'
+			}
+			compileClasspath = configurations.compile + configurations.runtime
+		}
+		test {
+			java {
+				srcDir 'src/test/java'
+
+			}
+			resources {
+				srcDir 'src/test/resources'
+				srcDir 'src/test/java'  exclude '**/*.java'
+			}
+
+		}
+
+	}
 
 
+
+	dependencies {
+		testCompile 'junit:junit:4.12'
+
+		compile(
+
+				[group: 'com.bbossgroups', name: 'bboss-schedule', version: "${bboss_version}", transitive: true],
+				[group: 'com.bbossgroups.plugins', name: 'bboss-elasticsearch-rest', version: "${bboss_es_version}", transitive: true],
+		)
+		runtime(
+				[group: 'com.bbossgroups', name: 'bboss-rt', version: "${bboss_version}", transitive: false],
+		)
+	}
+
+
+
+	task copyJarFiles(type: Sync,dependsOn:'jar'){
+		from fileTree(dir: 'lib', include: '**/*.jar')
+		from configurations.compile
+		from jar.outputs
+		exclude { details -> details.file.name.startsWith('bboss-rt')  }
+		into 'build/dist/lib'
+
+	}
+
+	task copyRTJarFiles(type: Copy,dependsOn:'copyJarFiles'){
+		from configurations.runtime - configurations.compile
+		into 'build/dist'
+		rename ("bboss-rt-${bboss_version}.jar", "${project.name}-${bboss_version}.jar")
+	}
+	task copyToolFiles(type: Copy ,dependsOn:'copyRTJarFiles')  {
+		from ('runfiles')
+				{
+					expand(
+							bboss_version:"${bboss_version}",
+							project:"${project.name}",
+                        	vm:"-Xms512m -Xmx512m -Xmn256m -XX:PermSize=128M -XX:MaxPermSize=256M"
+						)
+
+				}
+		filteringCharset = 'UTF-8'
+		into 'build/dist/'
+
+
+
+	}
+	task copyResourcesfiles(type: Sync )  {
+		from fileTree(dir: 'src/test/resources')
+		filteringCharset = 'UTF-8'
+		into 'build/dist/resources'
+	}
+
+	task releaseVersion(type: Zip,dependsOn:['copyToolFiles','copyResourcesfiles']) {
+
+		//appendix = 'wrapper'
+		classifier = 'released'
+		from 'build/dist/'
+
+	}
 
 }
-task copyResourcesfiles(type: Sync )  {
-	from fileTree(dir: 'src/test/resources')
-	filteringCharset = 'UTF-8'
-	into 'build/dist/resources'
-}
 
-task releaseVersion(type: Zip,dependsOn:['copyToolFiles','copyResourcesfiles']) {
 
-    //appendix = 'wrapper'
-   classifier = 'released'
-   from 'build/dist/'
 
-}
