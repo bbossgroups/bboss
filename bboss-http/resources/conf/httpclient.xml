@@ -10,7 +10,7 @@
 			  f:soKeepAlive="true"
 			  f:soReuseAddress="true"
 			  f:timeToLive="3600000"
-			  f:keystore="F:/6_environment/apache-tomcat-8.5-ssl/conf/ssl/kserver.keystore"
+			  f:keystore="F:/6_environment/bboss/apache-tomcat-8.5-ssl/conf/ssl/kserver.keystore"
 			  f:keyPassword="123456"
 		class="org.frameworkset.spi.remote.http.ClientConfiguration">
 		<!--
