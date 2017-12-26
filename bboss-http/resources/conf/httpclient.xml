@@ -17,6 +17,7 @@
 			采用hostname校验器，证书中使用的alias必须与hostname一致，例如：
 			alias为bboss，则服务访问地址必须为：
 				https://bboss:8443/xmlrequest/xml/echohttpjson.page
+		    如果不指定hostnameVerifier，默认为：SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER
 		-->
 		<property name="hostnameVerifier" factory-class="org.apache.http.conn.ssl.SSLConnectionSocketFactory" factory-method="getDefaultHostnameVerifier"/>
 	</property>
