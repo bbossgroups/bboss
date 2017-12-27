@@ -8,6 +8,7 @@ configure(allprojects) { project ->
 	apply plugin: "idea"
 	apply plugin: "signing"
 	apply plugin: "maven"
+
 	eclipse {
 		jdt {
 			//if you want to alter the java versions (by default they are configured with gradle java plugin settings):
@@ -104,71 +105,62 @@ configure(allprojects) { project ->
 				srcDir 'src/test/resources'
 				srcDir 'src/test/java'  exclude '**/*.java'
 			}
-
 		}
-
 	}
-
-
 
 	dependencies {
 		testCompile 'junit:junit:4.12'
 
-		compile(
-
-				//[group: 'com.bbossgroups', name: 'bboss-schedule', version: "${bboss_version}", transitive: true],
-				//[group: 'com.bbossgroups.plugins', name: 'bboss-elasticsearch-rest', version: "${bboss_es_version}", transitive: true],
-		)
-		runtime(
+		 compile  (
+		 [group: 'org.frameworkset.boot', name: 'bboot-web', version: "${bboot_version}", transitive: true]
+		 )
+		compileOnly(
 				[group: 'com.bbossgroups', name: 'bboss-rt', version: "${bboss_version}", transitive: false],
 		)
 	}
 
+    task releaseVersion(type: Zip,dependsOn:['copyToolFiles','copyWebrootFiles','copyResourceFiles']) {
+        //appendix = 'wrapper'
+       from 'build/dist/'
 
+    }
 
-	task copyJarFiles(type: Sync,dependsOn:'jar'){
-		from fileTree(dir: 'lib', include: '**/*.jar')
-		from configurations.compile
-		from jar.outputs
-		exclude { details -> details.file.name.startsWith('bboss-rt')  }
-		into 'build/dist/lib'
+    task copyJarFiles(type: Sync,dependsOn:'jar'){
+    	from fileTree(dir: 'lib', include: '**/*.jar')
+    	from configurations.compile
+    	from jar.outputs
+    	exclude { details -> details.file.name.startsWith('bboss-rt')  }
+    	into 'build/dist/lib'
+    }
 
-	}
-
-	task copyRTJarFiles(type: Copy,dependsOn:'copyJarFiles'){
-		from configurations.runtime - configurations.compile
-		into 'build/dist'
+    task copyRTJarFiles(type: Copy,dependsOn:'copyJarFiles'){
+    	from configurations.runtime - configurations.compile
+    	into 'build/dist/'
 		include { details -> details.file.name.startsWith('bboss-rt')  }
-		rename ("bboss-rt-${bboss_version}.jar", "${project.name}-boot-${bboss_version}.jar")
-	}
-	task copyToolFiles(type: Copy ,dependsOn:'copyRTJarFiles')  {
-		from ('runfiles')
-				{
-					expand(
-							bboss_version:"${bboss_version}",
-							project:"${project.name}"
-						)
+    	rename ("bboss-rt-${bboss_version}.jar", "${project.name}-boot-${bboss_version}.jar")
+    }
+    task copyToolFiles(type: Copy ,dependsOn:'copyRTJarFiles')  {
+    	from ('runfiles')
+    	{
+    		expand(
+    				bboss_version:"${bboss_version}",
+    				project:"${project.name}"
+    		)
 
-				}
-		filteringCharset = 'UTF-8'
-		into 'build/dist/'
+    	}
+    	filteringCharset = 'UTF-8'
+    	into 'build/dist/'
+    }
 
+    task copyWebrootFiles(type: Sync ){
+    	from fileTree(dir: 'WebRoot')
+    	into 'build/dist/WebRoot'
+    }
 
-
-	}
-	task copyResourcesfiles(type: Sync )  {
-		from fileTree(dir: 'src/test/resources')
-		filteringCharset = 'UTF-8'
-		into 'build/dist/resources'
-	}
-
-	task releaseVersion(type: Zip,dependsOn:['copyToolFiles','copyResourcesfiles']) {
-
-		//appendix = 'wrapper'
-		classifier = 'released'
-		from 'build/dist/'
-
-	}
+    task copyResourceFiles(type: Sync ){
+    	from fileTree(dir: 'resources')
+    	into 'build/dist/resources'
+    }
 
 }
 

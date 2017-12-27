@@ -1,1 +1,1 @@
-java -jar ${project}-${bboss_version}.jar  stop
+java -jar ${project}-boot-${bboss_version}.jar  stop

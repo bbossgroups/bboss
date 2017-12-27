@@ -1,0 +1,84 @@
+sourceSets {
+	main {
+		java {
+			srcDir 'src/main/java'
+
+		}
+		resources {
+			srcDir 'src/main/resources'
+			srcDir 'src/main/java'  exclude '**/*.java'
+		}
+
+	}
+	test {
+		java {
+			srcDir 'src/test/java'
+
+		}
+		resources {
+			srcDir 'src/test/resources'
+			srcDir 'src/test/java'  exclude '**/*.java'
+		}
+
+	}
+
+}
+configurations {
+    //compile.exclude  module: 'slf4j-log4j12'
+    //compile.exclude group: 'org.apache.logging.log4j'
+}
+dependencies {
+     compile  (
+     [group: 'org.frameworkset.boot', name: 'bboot-web', version: "${bboot_version}", transitive: true]
+     )
+
+    compileOnly(
+		[group: 'com.bbossgroups', name: 'bboss-rt', version: "${bboss_version}", transitive: false],
+    )
+}
+
+
+
+task releaseVersion(type: Zip,dependsOn:['copyToolFiles','copyWebrootFiles','copyResourceFiles']) {
+    //appendix = 'wrapper'
+   baseName='${project.name}'
+   from 'build/dist'
+
+}
+
+task copyJarFiles(type: Sync,dependsOn:'jar'){
+	from fileTree(dir: 'lib', include: '**/*.jar')
+	from configurations.compile
+	from jar.outputs
+	exclude { details -> details.file.name.startsWith('bboss-rt')  }
+	into 'build/dist/lib'
+}
+
+task copyRTJarFiles(type: Copy,dependsOn:'copyJarFiles'){
+	from configurations.runtime - configurations.compile
+	into 'build/dist/'
+	rename ("bboss-rt-${bboss_version}.jar", "${project.name}-boot-${bboss_version}.jar")
+}
+task copyToolFiles(type: Copy ,dependsOn:'copyRTJarFiles')  {
+	from ('runfiles')
+	{
+		expand(
+				bboss_version:"${bboss_version}",
+                project:"${project.name}"
+		)
+
+	}
+	filteringCharset = 'UTF-8'
+	into 'build/dist'
+}
+
+task copyWebrootFiles(type: Sync ){
+	from fileTree(dir: 'WebRoot')
+	into 'build/dist/WebRoot'
+}
+
+task copyResourceFiles(type: Sync ){
+	from fileTree(dir: 'resources')
+	into 'build/dist/resources'
+}
+

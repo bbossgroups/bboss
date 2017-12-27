@@ -29,13 +29,13 @@ goto end
 
 
 :start
-    java %RT_JAVA_OPTS% -jar ${project}-${bboss_version}.jar
+    java %RT_JAVA_OPTS% -jar ${project}-boot-${bboss_version}.jar
 goto end
 :stop
-    java -jar ${project}-${bboss_version}.jar stop
+    java -jar ${project}-boot-${bboss_version}.jar stop
 goto end
 :restart
-    java %RT_JAVA_OPTS% -jar ${project}-${bboss_version}.jar restart
+    java %RT_JAVA_OPTS% -jar ${project}-boot-${bboss_version}.jar restart
 goto end
 
 :end

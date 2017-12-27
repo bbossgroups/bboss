@@ -101,3 +101,6 @@
 #-XX:+UseGCLogFileRotation
 #-XX:NumberOfGCLogFiles=32
 #-XX:GCLogFileSize=128M
+
+# jetty server should set org.apache.jasper.compiler.disablejsr199=true
+#-Dorg.apache.jasper.compiler.disablejsr199=true

@@ -1,19 +1,6 @@
 package org.frameworkset.web.servlet;
 
-import java.io.IOException;
-import java.security.Principal;
-import java.util.Locale;
-import java.util.concurrent.Callable;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-import javax.servlet.jsp.JspFactory;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-
+import com.frameworkset.util.StringUtil;
 import org.frameworkset.http.CorsUtils;
 import org.frameworkset.spi.support.LocaleContext;
 import org.frameworkset.spi.support.LocaleContextHolder;
@@ -31,7 +18,18 @@ import org.frameworkset.web.util.UrlPathHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.util.StringUtil;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.jsp.JspFactory;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
+import java.io.IOException;
+import java.security.Principal;
+import java.util.Locale;
+import java.util.concurrent.Callable;
 
 public abstract class BaseServlet extends HttpServlet{
 	/** Checking for Servlet 3.0+ HttpServletResponse.getStatus() */
@@ -48,7 +46,6 @@ public abstract class BaseServlet extends HttpServlet{
 	private static boolean threadContextInheritable = false;
 	/**
 	 * Close the WebApplicationContext of this servlet.
-	 * @see org.frameworkset.context.ConfigurableApplicationContext#close()
 	 */
 	@Override
 	public void destroy() {
@@ -256,9 +253,12 @@ public abstract class BaseServlet extends HttpServlet{
 		// Expose current RequestAttributes to current thread.
 //		previousRequestAttributes = RequestContextHolder.getRequestAttributes();
 		PageContext pageContext = null;
-		JspFactory fac= null;
-		fac=JspFactory.getDefaultFactory();
-		pageContext=fac.getPageContext(this, request,response, null, false, JspWriter.DEFAULT_BUFFER <= 0?8192:JspWriter.DEFAULT_BUFFER, true); 
+		JspFactory fac= JspFactory.getDefaultFactory();
+
+		if(fac != null)
+			pageContext=fac.getPageContext(this, request,response, null, false, JspWriter.DEFAULT_BUFFER <= 0?8192:JspWriter.DEFAULT_BUFFER, true);
+		else
+			logger.info("JspFactory is null：JspFactory.getDefaultFactory() ");
 //		requestAttributes = new ServletRequestAttributes(request, response,pageContext);
 //		RequestContextHolder.setRequestAttributes(requestAttributes, this.threadContextInheritable);
 		

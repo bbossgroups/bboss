@@ -138,26 +138,26 @@ configure(subprojects) { subproject ->
 	
 	
 	
-publishing {
-			
-		publications {
-			mavenJava(MavenPublication) {
-				from components.java				
-				artifact sourcesJar
-				artifact javaDocJar
-				
+	publishing {
+
+			publications {
+				mavenJava(MavenPublication) {
+					from components.java
+					artifact sourcesJar
+					artifact javaDocJar
+
+				}
 			}
+			repositories {
+				/**maven {
+					url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+					credentials {
+						username ""
+						password ""
+					}
+				}*/
+				mavenLocal()
+			}
+
 		}
-		repositories {
-	        /**maven {
-	            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-	            credentials {
-	                username ""
-	                password ""
-	            }
-	        }*/
-	        mavenLocal()    
-	    }
-		
 	}
-}
