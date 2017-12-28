@@ -29,7 +29,7 @@ configurations {
 }
 dependencies {
      compile  (
-     [group: 'org.frameworkset.boot', name: 'bboot-web', version: "${bboot_version}", transitive: true]
+     [group: 'com.bbossgroups.boot', name: 'bboot-web', version: "${bboot_version}", transitive: true]
      )
 
     compileOnly(
