@@ -78,18 +78,35 @@ public class CommonLauncher {
 	}
 
 	public static String getProperty(String pro, boolean trim) {
-		String value = null;
-		if (properts != null)
-			value = (String) properts.get(pro);
-		if (value != null && trim)
-			value = value.trim();
-		return value;
+		return getProperty(pro, null,trim);
 	}
 
-	public static String getProperty(String pro, String defaultValue, boolean trim) {
+
+	/**
+	 * 先从配置文件获取属性，如果配置文件中没有，则从系统jvm变量中取，如果系统变量中没有，则采用默认值
+	 * @param propertyName
+	 * @param defaultValue
+	 * @return
+	 */
+	public static Integer getIntProperty(String propertyName,String defaultValue){
+		String property = getProperty(  propertyName,  defaultValue);
+		if(property == null)
+			return null;
+		int p = Integer.parseInt(property.trim());
+		return p;
+	}
+
+	/**
+	 * 先从配置文件获取属性，如果配置文件中没有，则从系统jvm变量中取，如果系统变量中没有，则采用默认值
+	 * @param propertyName
+	 * @param defaultValue
+	 * @return
+	 */
+	public static  String getProperty(String propertyName,String defaultValue, boolean trim){
+		defaultValue = System.getProperty(propertyName,defaultValue);
 		String value = null;
 		if (properts != null)
-			value = (String) properts.get(pro);
+			value = (String) properts.get(propertyName);
 		if (value == null)
 			return defaultValue;
 		else {
@@ -97,6 +114,7 @@ public class CommonLauncher {
 				value = value.trim();
 		}
 		return value;
+
 	}
 
 	private static void loadConfig(File appDir) throws IOException {
