@@ -46,4 +46,26 @@ public class DateFormateMeta {
 		return ret.toString();
 	}
 
+	public static DateFormateMeta buildDateFormateMeta(String dataformat,String _locale){
+		if(dataformat == null || _locale.equals(""))
+			return null;
+		DateFormateMeta dateFormateMeta = new DateFormateMeta();
+		Locale locale = null;
+		if(_locale != null && !_locale.equals(""))
+		{
+			try
+			{
+				locale = new Locale(_locale);
+			}
+			catch(Exception e)
+			{
+
+			}
+			dateFormateMeta.setLocale(locale);
+			dateFormateMeta.setLocale_str(_locale);
+		}
+		dateFormateMeta.setDateformat(dataformat);
+		return dateFormateMeta;
+	}
+
 }

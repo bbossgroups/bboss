@@ -1,25 +1,15 @@
 package org.frameworkset.nosql.redis;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.frameworkset.spi.BeanInfoAware;
 import org.frameworkset.spi.InitializingBean;
+import redis.clients.jedis.*;
+import redis.clients.jedis.exceptions.JedisException;
 
-import redis.clients.jedis.HostAndPort;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisCluster;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisShardInfo;
-import redis.clients.jedis.Protocol;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPool;
+import java.io.IOException;
+import java.util.*;
+
+import static java.lang.Thread.sleep;
 
 public class RedisDB extends BeanInfoAware implements InitializingBean,org.frameworkset.spi.DisposableBean{
 	private ShardedJedisPool shardedJedispool;
@@ -27,6 +17,15 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	private Map<String,String> properties;
 	private List<NodeInfo> nodes;
 	private String servers;
+	/**
+	 * 等待超时重试次数
+	 */
+	private int poolTimeoutRetry  = 3;
+	/**
+	 * 等待超时重试时间间隔
+	 */
+	private long poolTimeoutRetryInterval  = 500l;
+
 	public String getServers() {
 		return servers;
 	}
@@ -41,6 +40,7 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	private int timeout = Protocol.DEFAULT_TIMEOUT;
 	private int soTimeout =  Protocol.DEFAULT_TIMEOUT;
 	private int maxRedirections = 5;
+	private boolean needAuthPerJedis = false;
 	private boolean testOnBorrow = false;
 	private boolean testOnReturn = false;
 	private boolean testWhileIdle = false;
@@ -59,7 +59,9 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	public RedisDB() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
+
+
 	public void startSharedPool() {
 		  GenericObjectPoolConfig config = new GenericObjectPoolConfig();
 		    config.setMaxTotal(poolMaxTotal);
@@ -133,16 +135,51 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	
 	public Jedis getRedis()
 	{
-		 Jedis jedis = jedisPool.getResource();
-		 if(auth != null)
-			 jedis.auth(this.auth);
-		 return jedis;
+		int count = 0;
+		Jedis jedis = null;
+		if(poolTimeoutRetry <= 0){//忽略重试
+			jedis = jedisPool.getResource();
+			if(needAuthPerJedis && this.auth != null)
+				jedis.auth(auth);
+			return jedis;
+		}
+		do {
+			try {
+				jedis = jedisPool.getResource();
+				if(needAuthPerJedis && this.auth != null)
+					jedis.auth(auth);
+				break;
+			} catch (JedisException jedisException) {
+				Throwable noSuchElementException = jedisException.getCause();
+				if (noSuchElementException instanceof NoSuchElementException) {
+					String message = noSuchElementException.getMessage();
+					if (message != null && message.startsWith("Timeout Waiting")) {//如果从连接池获取jedis对象失败，则进行重试
+						if (count < this.poolTimeoutRetry) {
+							try {
+								sleep(this.poolTimeoutRetryInterval);
+								count ++;
+								continue;
+							} catch (InterruptedException e) {
+								throw jedisException;
+							}
+						}
+						else {
+							throw jedisException;
+						}
+					}
+					else{
+						throw jedisException;
+					}
+				} else {
+					throw jedisException;
+				}
+			}
+		}while(true);
+		return jedis;
 	}
 	public ShardedJedis getSharedRedis()
 	{
 		 ShardedJedis jedis = shardedJedispool.getResource();
-		 
-			 
 		 return jedis;
 	}
 	public JedisCluster geJedisCluster()
@@ -262,9 +299,21 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		// TODO Auto-generated method stub
 		close();
 	}
-	
-	
-	
-	
 
+
+	public int getPoolTimeoutRetry() {
+		return poolTimeoutRetry;
+	}
+
+	public void setPoolTimeoutRetry(int poolTimeoutRetry) {
+		this.poolTimeoutRetry = poolTimeoutRetry;
+	}
+
+	public long getPoolTimeoutRetryInterval() {
+		return poolTimeoutRetryInterval;
+	}
+
+	public void setPoolTimeoutRetryInterval(long poolTimeoutRetryInterval) {
+		this.poolTimeoutRetryInterval = poolTimeoutRetryInterval;
+	}
 }

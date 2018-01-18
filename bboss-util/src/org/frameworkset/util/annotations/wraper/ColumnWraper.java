@@ -15,14 +15,12 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
-import java.util.Locale;
-
+import com.frameworkset.orm.annotation.Column;
+import com.frameworkset.util.ColumnEditorInf;
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.DateFormateMeta;
 
-import com.frameworkset.orm.annotation.Column;
-import com.frameworkset.util.ColumnEditorInf;
-import com.frameworkset.util.SimpleStringUtil;
+import java.util.Locale;
 
 /**
  * <p>ColumnWraper.java</p>
@@ -60,24 +58,26 @@ public class ColumnWraper {
 		this.editor = AnnotationUtils.converDefaultValue(column.editor());
 		this.ignoreCUDbind = column.ignoreCUDbind();
 		this.ignorebind = column.ignorebind();
-		if(SimpleStringUtil.isNotEmpty(dataformat))
-		{
-			dateFormateMeta = new DateFormateMeta();
-			if(SimpleStringUtil.isNotEmpty(column.locale() ))
-			 {
-				 try
-				 {
-					 locale = new Locale(column.locale());
-				 }
-				 catch(Exception e)
-				 {
-					 
-				 }
-				 dateFormateMeta.setLocale(locale);
-				dateFormateMeta.setLocale_str(column.locale());
-			 }
-			dateFormateMeta.setDateformat(dataformat);
-		}
+		dateFormateMeta = DateFormateMeta.buildDateFormateMeta(dataformat,column.locale());
+		this.locale = dateFormateMeta.getLocale();
+//		if(SimpleStringUtil.isNotEmpty(dataformat))
+//		{
+//			dateFormateMeta = new DateFormateMeta();
+//			if(SimpleStringUtil.isNotEmpty(column.locale() ))
+//			 {
+//				 try
+//				 {
+//					 locale = new Locale(column.locale());
+//				 }
+//				 catch(Exception e)
+//				 {
+//
+//				 }
+//				 dateFormateMeta.setLocale(locale);
+//				dateFormateMeta.setLocale_str(column.locale());
+//			 }
+//			dateFormateMeta.setDateformat(dataformat);
+//		}
 		
 	}
 	public String dataformat(){

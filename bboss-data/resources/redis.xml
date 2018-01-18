@@ -9,8 +9,26 @@
 		</property>
 		<!-- single|cluster|shared -->
 		<property name="mode" value="single" />
-		<property name="poolMaxTotal" value="10"/>	
-		<property name="poolMaxWaitMillis" value="2000"/>	
+		<property name="auth" value="123456" />
+		<property name="poolMaxTotal" value="10"/>
+		<property name="poolMaxWaitMillis" value="2000"/>
+		<!--
+		mode为single起作用
+		获取连接等待超时重试次数，poolTimeoutRetry<=0时关闭重试机制
+		-->
+		<property name="poolTimeoutRetry" value="3"/>
+		<!--
+		mode为single起作用
+		获取连接等待超时重试时间间隔，单位：毫秒
+		-->
+		<property name="poolTimeoutRetryInterval" value="500"/>
+		<!--
+		mode为single起作用
+			after jedis 2.9.0 set false,before jedis 2.9.0 set true
+		-->
+		<property name="needAuthPerJedis" value="false"/>
+
+
 		 
 	</property>
 	 

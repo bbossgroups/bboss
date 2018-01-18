@@ -42,7 +42,7 @@ public class VariableHandler
     
     private static String buildVariableRegex(String pretoken,String endtoken)
     {
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
 //        ret.append(pretoken).append("([^").append(endtoken).append("]+)").append(endtoken);
         ret.append(pretoken).append("(.+?)").append(endtoken);
         return ret.toString();
@@ -198,6 +198,9 @@ public class VariableHandler
 		protected void after(){
 			if(variables != null && variables.size() >= 0){
 				this.hasVars = true;
+//				for(Variable var:variables){
+//					var.after();
+//				}
 			}
 		}
 		public List<String> getTokens() {
@@ -246,7 +249,7 @@ public class VariableHandler
     			if(this.variables != null && variables.size() > 0)
     			{
     				
-	    			StringBuffer sql_ = new StringBuffer();
+	    			StringBuilder sql_ = new StringBuilder();
 	    			int tsize = this.tokens.size();
 	    			int vsize = this.variables.size();
 	    			if(tsize == vsize)
@@ -281,12 +284,12 @@ public class VariableHandler
 	}
 
 	public static class Variable {
-		private String variableName;
-		private int position;
-		private List<Index> indexs;
-		
-		private Variable parent;
-		private Variable next;
+		protected String variableName;
+		protected int position;
+		protected List<Index> indexs;
+
+		protected Variable parent;
+		protected Variable next;
 		public String getVariableName() {
 			return variableName;
 		}
@@ -329,7 +332,7 @@ public class VariableHandler
 		
 		public String toString()
 		{
-			StringBuffer ret = new StringBuffer();
+			StringBuilder ret = new StringBuilder();
 			ret.append(this.variableName);
 			if(this.indexs != null && this.indexs.size() >0)
 			{
@@ -345,6 +348,13 @@ public class VariableHandler
 			if(this.parent == null)
 				ret.append(",position=").append(this.position);
 			return ret.toString();
+		}
+
+		/**
+		 * 变量解析完毕后，对变量定义信息进行额外处理
+		 */
+		public void after(){
+
 		}
 		
 
@@ -395,8 +405,8 @@ public class VariableHandler
 			return null;
 		int len = url.length();
 		int i = 0;
-		StringBuffer token = new StringBuffer();
-		StringBuffer var = new StringBuffer();
+		StringBuilder token = new StringBuilder();
+		StringBuilder var = new StringBuilder();
 		boolean varstart = false;
 		int varstartposition = -1;
 
@@ -513,9 +523,10 @@ public class VariableHandler
 	public static SQLStruction parserSQLStruction(String sql) {
 		return (SQLStruction)VariableHandler._parserStruction(sql,sqlStructionBuiler);
 	}
-	static abstract interface StructionBuiler{
+	public static abstract interface StructionBuiler{
 		abstract URLStruction buildStruction();
 		abstract URLStruction buildStruction(String token);
+		abstract Variable buildVariable();
 	}
 	static class SQLStructionBuiler implements StructionBuiler{
 
@@ -529,9 +540,14 @@ public class VariableHandler
 			return  new SQLStruction(token);
 		}
 
+		@Override
+		public Variable buildVariable() {
+			return new Variable();
+		}
+
 	}
 
-	static class URLStructionBuiler implements StructionBuiler{
+	public static class URLStructionBuiler implements StructionBuiler{
 
 		@Override
 		public URLStruction buildStruction() {
@@ -541,8 +557,22 @@ public class VariableHandler
 		public URLStruction buildStruction(String token) {
 			return  new URLStruction(token);
 		}
+		@Override
+		public Variable buildVariable() {
+			return new Variable();
+		}
 	}
-
+	/**
+	 * 将包含变量的sql语句解析成常量字符串列表和变量名称两个列表
+	 * 变量的分界符为#[和],如果url中没有包含变量那么返回null值
+	 * 变量数组、list、map的元素取值采用[]结合数字下标和key名称
+	 * 变量引用采用->连接符
+	 * @param sql
+	 * @return
+	 */
+	public static URLStruction parserStruction(String sql,StructionBuiler structionBuiler){
+		return _parserStruction(  sql,  structionBuiler);
+	}
 	/**
      * 将包含变量的sql语句解析成常量字符串列表和变量名称两个列表
      * 变量的分界符为#[和],如果url中没有包含变量那么返回null值
@@ -556,9 +586,9 @@ public class VariableHandler
 			return null;
 		int len = sql.length();
 		int i = 0;
-		StringBuffer token = new StringBuffer();
-		StringBuffer var = new StringBuffer();
-//		StringBuffer index = new StringBuffer();
+		StringBuilder token = new StringBuilder();
+		StringBuilder var = new StringBuilder();
+//		StringBuilder index = new StringBuilder();
 		
 		boolean varstart = false;
 		int varstartposition = -1;//记录变量的开始位置
@@ -618,7 +648,7 @@ public class VariableHandler
 					{				
 						if(!index_start)
 						{
-							header = new Variable();
+							header = structionBuiler.buildVariable();
 							header.setPosition(varcount);
 							header.setVariableName(var.toString());
 //							variables.add(header);
@@ -629,6 +659,7 @@ public class VariableHandler
 							index_start = true;
 							indexs = new ArrayList<Index>();
 							header.setIndexs(indexs);
+							header.after();
 							hh = header;
 						}
 						else
@@ -641,7 +672,7 @@ public class VariableHandler
 					{
 						if(!index_start)
 						{
-							variable = new Variable();
+							variable = structionBuiler.buildVariable();
 							//variable.setPosition(varcount);
 							variable.setVariableName(var.toString());
 							var.setLength(0);
@@ -651,6 +682,7 @@ public class VariableHandler
 							index_start = true;
 							indexs = new ArrayList<Index>();
 							header.setIndexs(indexs);
+							header.after();
 						}
 					}
 					i++;
@@ -706,13 +738,14 @@ public class VariableHandler
 //							varcount++;
 							if(variable == null)
 							{
-								variable = new Variable();
+								variable = structionBuiler.buildVariable();
 								//variable.setPosition(varcount);
 								variable.setVariableName(var.toString());
 								var.setLength(0);
 								header.setNext(variable);
 								variable.setParent(header);
 								header = variable;
+								header.after();
 							}
 							variables.add(hh);	
 							hh = null;
@@ -722,7 +755,7 @@ public class VariableHandler
 						{
 							if(header == null)
 							{
-								header = new Variable();
+								header = structionBuiler.buildVariable();
 								header.setPosition(varcount);
 								header.setVariableName(var.toString());
 //								variables.add(header);								
@@ -731,6 +764,7 @@ public class VariableHandler
 								token.setLength(0);
 								varcount++;
 								hh = header;
+								header.after();
 							}							
 							varstart = false;
 							variables.add(hh);	
@@ -760,7 +794,7 @@ public class VariableHandler
 									{
 										if(header == null)
 										{
-											header = new Variable();
+											header = structionBuiler.buildVariable();
 											header.setPosition(varcount);
 											header.setVariableName(var.toString());
 		//									variables.add(header);
@@ -770,12 +804,13 @@ public class VariableHandler
 											token.setLength(0);
 											varcount++;
 											hh = header;
+											header.after();
 										}
 										else
 										{
 											if(var.length() > 0)
 											{
-												variable = new Variable();
+												variable = structionBuiler.buildVariable();
 												//variable.setPosition(varcount);
 												variable.setVariableName(var.toString());
 												var.setLength(0);
@@ -783,6 +818,7 @@ public class VariableHandler
 												header.setNext(variable);
 												variable.setParent(header);
 												header = variable;
+												header.after();
 											}
 										}
 									}
@@ -791,7 +827,7 @@ public class VariableHandler
 								{
 									if(variable == null)//没有因为索引下标导致引用对象已经创建，则开始创建对象
 									{
-										variable = new Variable();
+										variable = structionBuiler.buildVariable();
 										//variable.setPosition(varcount);
 										variable.setVariableName(var.toString());
 										var.setLength(0);
@@ -799,12 +835,13 @@ public class VariableHandler
 										header.setNext(variable);
 										variable.setParent(header);
 										header = variable;
+										header.after();
 									}
 									else
 									{
 										if(var.length() > 0)
 										{
-											variable = new Variable();
+											variable = structionBuiler.buildVariable();
 											//variable.setPosition(varcount);
 											variable.setVariableName(var.toString());
 											var.setLength(0);
@@ -812,6 +849,7 @@ public class VariableHandler
 											header.setNext(variable);
 											variable.setParent(header);
 											header = variable;
+											header.after();
 										}
 									}
 								}

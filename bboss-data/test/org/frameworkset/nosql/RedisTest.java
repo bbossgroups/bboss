@@ -30,7 +30,6 @@ public class RedisTest {
 			
 			System.out.println("fowwero="+value);
 			value = redisHelper.getSet("fowwero","eeee");//获取后修改数据
-			
 			System.out.println("fowwero="+value);
 			
 			value = redisHelper.get("fowwero");
