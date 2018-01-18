@@ -45,8 +45,10 @@ public class DateFormateMeta {
 		ret.append("dateformat=").append(dateformat).append(",").append("locale=").append(locale_str).append(",").append("timeZone=").append(timeZone_str);
 		return ret.toString();
 	}
-
 	public static DateFormateMeta buildDateFormateMeta(String dataformat,String _locale){
+		return buildDateFormateMeta(dataformat,_locale,null);
+	}
+	public static DateFormateMeta buildDateFormateMeta(String dataformat,String _locale,String timeZone){
 		if(dataformat == null || _locale.equals(""))
 			return null;
 		DateFormateMeta dateFormateMeta = new DateFormateMeta();
@@ -63,6 +65,20 @@ public class DateFormateMeta {
 			}
 			dateFormateMeta.setLocale(locale);
 			dateFormateMeta.setLocale_str(_locale);
+
+		}
+		if(timeZone != null && !timeZone.equals(""))
+		{
+			try
+			{
+				dateFormateMeta.setTimeZone(TimeZone.getTimeZone(timeZone));
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			dateFormateMeta.setTimeZone_str(timeZone);
+
 		}
 		dateFormateMeta.setDateformat(dataformat);
 		return dateFormateMeta;
