@@ -143,6 +143,7 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 				jedis.auth(auth);
 			return jedis;
 		}
+		long interval = poolTimeoutRetryInterval;
 		do {
 			try {
 				jedis = jedisPool.getResource();
@@ -156,7 +157,11 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 					if (message != null && message.startsWith("Timeout Waiting")) {//如果从连接池获取jedis对象失败，则进行重试
 						if (count < this.poolTimeoutRetry) {
 							try {
-								sleep(this.poolTimeoutRetryInterval);
+								if(interval > 0) {
+									sleep(interval);
+									//每次等待延长500毫秒
+									interval = interval + 500;
+								}
 								count ++;
 								continue;
 							} catch (InterruptedException e) {
