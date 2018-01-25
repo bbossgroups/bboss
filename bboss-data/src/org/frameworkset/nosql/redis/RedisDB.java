@@ -159,8 +159,10 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 							try {
 								if(interval > 0) {
 									sleep(interval);
-									//每次等待延长500毫秒
-									interval = interval + 500l;
+									if(interval < 10000l) {//最大等待10秒
+										//每次等待延长100毫秒
+										interval = interval + 100l;
+									}
 								}
 								count ++;
 								continue;

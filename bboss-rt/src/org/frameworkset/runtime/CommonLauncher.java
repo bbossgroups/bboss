@@ -435,9 +435,10 @@ public class CommonLauncher {
 				public boolean accept(File pathname) {
 					if (pathname.isFile()) {
 						String name = pathname.getName();
-						return name.endsWith(".jar") || name.endsWith(".zip") || name.endsWith(".dll")
-								|| name.endsWith(".lib") || name.endsWith(".sigar_shellrc") || name.endsWith(".sl")
-								|| name.endsWith(".so") || name.endsWith(".dylib");
+//						return name.endsWith(".jar") || name.endsWith(".zip") || name.endsWith(".dll")
+//								|| name.endsWith(".lib") || name.endsWith(".sigar_shellrc") || name.endsWith(".sl")
+//								|| name.endsWith(".so") || name.endsWith(".dylib");
+						return true;
 					} else
 						return true;
 				}
