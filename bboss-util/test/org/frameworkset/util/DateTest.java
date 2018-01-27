@@ -1,7 +1,12 @@
 package org.frameworkset.util;
 
+import org.frameworkset.util.annotations.DateFormateMeta;
+import org.junit.Test;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
@@ -28,6 +33,13 @@ public class DateTest {
 		   
 		  sf.setTimeZone(TimeZone.getTimeZone("GMT+0"));
 		  System.out.println(sf.format(gmtlocal.getTime()));  
+
+	}
+	@Test
+	public void dateformatMeta(){
+		DateFormateMeta dateFormateMeta = DateFormateMeta.buildDateFormateMeta("yyyy-MM-dd'T'HH:mm:ss.SSS","zh_CN","Asia/Shanghai");
+		DateFormat dateFormat = dateFormateMeta.toDateFormat();
+		System.out.println(dateFormat.format(new Date()));
 
 	}
 
