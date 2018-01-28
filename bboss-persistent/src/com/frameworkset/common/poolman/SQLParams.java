@@ -1193,8 +1193,8 @@ public class SQLParams
 			 return handleDataWithDateFormateMeta(name,value, type,(DateFormateMeta)null);
 		 else
 		 {
-			 DateFormateMeta dd = new DateFormateMeta();
-			 dd.setDateformat(dataformat);
+			 DateFormateMeta dd = DateFormateMeta.buildDateFormateMeta(dataformat, null);
+			 
 			 return handleDataWithDateFormateMeta(name,value, type,dd);
 		 }
 	 }

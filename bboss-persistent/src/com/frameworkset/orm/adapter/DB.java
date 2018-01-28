@@ -34,17 +34,16 @@ package com.frameworkset.orm.adapter;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -847,13 +846,14 @@ public abstract class DB implements  IDMethod,Platform
 	    public java.sql.Date getDate(String date,DateFormateMeta  dateFormateMeta) throws ParseException
 	    {
 	    	String format = null;
+	    	DateFormat f = null;
 	        if(dateFormateMeta == null )
 	        {
 	            format = this.getJavaDateFormat();
+				dateFormateMeta = DateFormateMeta.buildDateFormateMeta(format);
 	        }
-	        else
-	        	format = dateFormateMeta.getDateformat();
-	        SimpleDateFormat f = dateFormateMeta == null?new SimpleDateFormat(format):new SimpleDateFormat(format,dateFormateMeta.getLocale());
+	        f = dateFormateMeta.toDateFormat();
+	        
 	        Date _date = f.parse(date);
 	        java.sql.Date ret = new java.sql.Date(_date.getTime());
 	        return ret;
@@ -862,13 +862,14 @@ public abstract class DB implements  IDMethod,Platform
 	    public Timestamp getTimestamp(String timestamp,DateFormateMeta dateFormateMeta) throws ParseException
         {
 	    	String format = null;
+	    	DateFormat f = null;
 	        if(dateFormateMeta == null )
 	        {
 	            format = this.getJavaDateFormat();
-	        }
-	        else
-	        	format = dateFormateMeta.getDateformat();
-	        SimpleDateFormat f = dateFormateMeta == null?new SimpleDateFormat(format):new SimpleDateFormat(format,dateFormateMeta.getLocale());
+				dateFormateMeta = DateFormateMeta.buildDateFormateMeta(format);
+			}
+			f = dateFormateMeta.toDateFormat();
+	        
             Date date = f.parse(timestamp);
             Timestamp timestamp_ = new Timestamp(date.getTime());
             return timestamp_;

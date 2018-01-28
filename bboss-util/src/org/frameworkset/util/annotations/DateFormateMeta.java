@@ -2,7 +2,9 @@ package org.frameworkset.util.annotations;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -17,6 +19,9 @@ public class DateFormateMeta {
 	private String timeZone_str;
 	private TimeZone timeZone;
 	private SimpleDateFormat simpleDateFormat = null;
+	private DateFormateMeta(){
+		
+	}
 	public String getDateformat() {
 		return dateformat;
 	}
@@ -47,7 +52,7 @@ public class DateFormateMeta {
 			return (DateFormat) simpleDateFormat.clone();
 		}
 		else
-			return null;
+			return simpleDateFormat;
 	}
 
 	  void setDateformat(String dateformat) {
@@ -86,41 +91,131 @@ public class DateFormateMeta {
 	public static DateFormateMeta buildDateFormateMeta(String dataformat,String _locale){
 		return buildDateFormateMeta(dataformat,_locale,null);
 	}
+	private static Map<String,DateFormateMeta> baseDataformatMap = new HashMap<String,DateFormateMeta>(20);
+	private static Map<String,DateFormateMeta> localDataformatMap = new HashMap<String,DateFormateMeta>(20);
+	private static Map<String,DateFormateMeta> timeZoneDataformatMap = new HashMap<String,DateFormateMeta>(20);
+	private static Map<String,DateFormateMeta> localTimeZoneDataformatMap = new HashMap<String,DateFormateMeta>(20);
+	public static DateFormateMeta buildDateFormateMeta(String dataformat){
+		return buildDateFormateMeta(dataformat,null,null);
+	}
 	public static DateFormateMeta buildDateFormateMeta(String dataformat,String _locale,String timeZone){
 		if(dataformat == null )
 			return null;
-		DateFormateMeta dateFormateMeta = new DateFormateMeta();
-		Locale locale = null;
-		if(_locale != null && !_locale.equals(""))
-		{
-			try
-			{
-				locale = new Locale(_locale);
+		if(_locale == null && timeZone == null){
+			DateFormateMeta dateFormateMeta = baseDataformatMap.get(dataformat);
+			if(dateFormateMeta != null){
+				return dateFormateMeta;
 			}
-			catch(Exception e)
-			{
-
+			synchronized(baseDataformatMap){
+				dateFormateMeta = baseDataformatMap.get(dataformat);
+				if(dateFormateMeta != null){
+					return dateFormateMeta;
+				}
+				dateFormateMeta = new DateFormateMeta();
+				dateFormateMeta.setDateformat(dataformat);
+				dateFormateMeta.toDateFormat(false);
+				baseDataformatMap.put(dataformat, dateFormateMeta);
+				return dateFormateMeta;
+				
 			}
-			dateFormateMeta.setLocale(locale);
-			dateFormateMeta.setLocale_str(_locale);
-
+			
 		}
-		if(timeZone != null && !timeZone.equals(""))
-		{
-			try
-			{
-				dateFormateMeta.setTimeZone(TimeZone.getTimeZone(timeZone));
+		else if(_locale != null && timeZone != null){
+			String key = dataformat + "_" + _locale + "_"+timeZone;
+			DateFormateMeta dateFormateMeta = localTimeZoneDataformatMap.get(key);
+			if(dateFormateMeta != null){
+				return dateFormateMeta;
 			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
+			synchronized(localTimeZoneDataformatMap){
+				dateFormateMeta = localTimeZoneDataformatMap.get(key);
+				if(dateFormateMeta != null){
+					return dateFormateMeta;
+				}
+				dateFormateMeta = new DateFormateMeta();
+				dateFormateMeta.setDateformat(dataformat);
+				Locale locale = null;
+				try
+				{
+					locale = new Locale(_locale);
+					dateFormateMeta.setLocale(locale);
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException("buildDateFormateMeta failed:",e);
+				}
+				dateFormateMeta.setLocale_str(_locale);
+				try
+				{
+					dateFormateMeta.setTimeZone(TimeZone.getTimeZone(timeZone));
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException("buildDateFormateMeta failed:",e);
+				}
+				dateFormateMeta.setTimeZone_str(timeZone);
+				dateFormateMeta.toDateFormat(false);
+				localTimeZoneDataformatMap.put(key, dateFormateMeta);
+				return dateFormateMeta;
 			}
-			dateFormateMeta.setTimeZone_str(timeZone);
-
 		}
-		dateFormateMeta.setDateformat(dataformat);
-		dateFormateMeta.toDateFormat(false);
-		return dateFormateMeta;
+		else if(_locale != null ){
+			String key = dataformat + "_" + _locale ;
+			DateFormateMeta dateFormateMeta = localDataformatMap.get(key);
+			if(dateFormateMeta != null){
+				return dateFormateMeta;
+			}
+			synchronized(localDataformatMap){
+				dateFormateMeta = localDataformatMap.get(key);
+				if(dateFormateMeta != null){
+					return dateFormateMeta;
+				}
+				dateFormateMeta = new DateFormateMeta();
+				dateFormateMeta.setDateformat(dataformat);
+				Locale locale = null;
+				try
+				{
+					locale = new Locale(_locale);
+					dateFormateMeta.setLocale(locale);
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException("buildDateFormateMeta failed:",e);
+				}
+				dateFormateMeta.setLocale_str(_locale);
+
+				dateFormateMeta.toDateFormat(false);
+				localDataformatMap.put(key, dateFormateMeta);
+				return dateFormateMeta;
+			}
+		}
+		else {
+			String key = dataformat + "_" + timeZone ;
+			DateFormateMeta dateFormateMeta = timeZoneDataformatMap.get(key);
+			if(dateFormateMeta != null){
+				return dateFormateMeta;
+			}
+			synchronized(timeZoneDataformatMap){
+				dateFormateMeta = timeZoneDataformatMap.get(key);
+				if(dateFormateMeta != null){
+					return dateFormateMeta;
+				}
+				dateFormateMeta = new DateFormateMeta();
+				dateFormateMeta.setDateformat(dataformat);
+				try
+				{
+					dateFormateMeta.setTimeZone(TimeZone.getTimeZone(timeZone));
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException("buildDateFormateMeta failed:",e);
+				}
+				dateFormateMeta.setTimeZone_str(timeZone);
+				dateFormateMeta.toDateFormat(false);
+				timeZoneDataformatMap.put(key, dateFormateMeta);
+				return dateFormateMeta;
+			}
+		}
+
 	}
 
 }
