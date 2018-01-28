@@ -63,11 +63,17 @@ public class CommonLauncher {
 	private static String[] args;
 	private static String extlibs[];
 	private static String extresources[];
+	private static List<URL> alljars;
+	private static List<String> resourceFilters;
+	/**
+	 * 需要过滤的资源文件或者目录
+	 */
+	private static String[] excludes;
 	private static File appDir;
 	private static boolean shutdown = false;
 	private static int shutdownLevel = 9;
 	private static boolean restart = false;
-	private static List<URL> alljars;
+
 
 	public static String getProperty(String pro) {
 		return getProperty(pro, true);
@@ -117,6 +123,42 @@ public class CommonLauncher {
 
 	}
 
+	private static void initExcludeResources(){
+		List<String> filters = new ArrayList<String>();
+		if(excludes != null && excludes.length > 0){
+			for(String exclude:excludes){
+				File file = new File(exclude);
+				if(file.exists()){
+					try {
+						filters.add(file.getCanonicalPath());
+					} catch (MalformedURLException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			resourceFilters = filters;
+		}
+	}
+	private static boolean isFilter(File file){
+		if(resourceFilters == null || resourceFilters.size() == 0){
+			return false;
+		}
+		try {
+			String path = file.getCanonicalPath();
+			for(String filterPath:resourceFilters){
+				if(filterPath.equals(path)){
+					System.out.println("Ignore load file["+path+"]");
+					return true;
+				}
+			}
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 	private static void loadConfig(File appDir) throws IOException {
 		System.out.println("appDir:" + appDir);
 		InputStream in = null;
@@ -129,11 +171,21 @@ public class CommonLauncher {
 			properts.load(read);
 			mainclass = properts.getProperty("mainclass");
 			String extlib = properts.getProperty("extlibs");
+
 			if (extlib != null) {
 				extlibs = extlib.split(";");
 				for (int i = 0; i < extlibs.length; i++) {
 					extlibs[i] = extlibs[i].trim();
 				}
+			}
+			String excludes_ = properts.getProperty("excludes");
+			System.out.println("Exclude Resources:"+excludes_);
+			if(excludes_ != null && !excludes_.equals("")){
+				excludes = excludes_.split(";");
+				for (int i = 0; i < excludes.length; i++) {
+					excludes[i] = excludes[i].trim();
+				}
+				initExcludeResources();
 			}
 			String extresources_ = properts.getProperty("extresources");
 			if (extresources_ != null) {
@@ -397,13 +449,13 @@ public class CommonLauncher {
 		List<URL> allpublicjars = new ArrayList<URL>();
 		System.out.println(lib.getAbsolutePath());
 		//
-		loadSubdirJars(lib, allpublicjars);
+		loadSubdirJars(lib, allpublicjars,false);
 		if (weblibFile.exists())
-			loadSubdirJars(weblibFile, allpublicjars);
+			loadSubdirJars(weblibFile, allpublicjars,false);
 		if (extlibs != null && extlibs.length > 0) {
 			for (String ext : extlibs) {
 				File elib = new File(appDir, ext);
-				loadSubdirJars(elib, allpublicjars);
+				loadSubdirJars(elib, allpublicjars,false);
 			}
 		}
 
@@ -414,7 +466,8 @@ public class CommonLauncher {
 		if (extresources != null && extresources.length > 0) {
 			for (String resource : extresources) {
 				File elib = new File(appDir, resource);
-				alljars.add(elib.toURI().toURL());
+				if(!isFilter(elib))
+					alljars.add(elib.toURI().toURL());
 			}
 		}
 		alljars.add(resourcesFile.toURI().toURL());
@@ -427,12 +480,17 @@ public class CommonLauncher {
 
 	}
 
-	private static void loadSubdirJars(File file, List<URL> alljars) throws MalformedURLException {
+	private static void loadSubdirJars(File file, List<URL> alljars,boolean rootFilter) throws MalformedURLException {
+		if(rootFilter && isFilter(file))
+			return;
 		if (file.isFile()) {
+
 			alljars.add(file.toURI().toURL());
 		} else {
-			File[] jarfiles = file.listFiles(new FileFilter() {
+			File[] jarFiles = file.listFiles(new FileFilter() {
 				public boolean accept(File pathname) {
+					if(isFilter(pathname))
+						return false;
 					if (pathname.isFile()) {
 						String name = pathname.getName();
 //						return name.endsWith(".jar") || name.endsWith(".zip") || name.endsWith(".dll")
@@ -444,14 +502,14 @@ public class CommonLauncher {
 				}
 			});
 
-			if (jarfiles == null || jarfiles.length == 0)
+			if (jarFiles == null || jarFiles.length == 0)
 				return;
-			for (File jarfile : jarfiles) {
+			for (File jarFile : jarFiles) {
 
-				if (jarfile.isFile()) {
-					alljars.add(jarfile.toURI().toURL());
+				if (jarFile.isFile()) {
+					alljars.add(jarFile.toURI().toURL());
 				} else {
-					loadSubdirJars(jarfile, alljars);
+					loadSubdirJars(jarFile, alljars,false);
 				}
 			}
 		}
