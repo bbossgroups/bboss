@@ -535,14 +535,15 @@ public class CommonLauncher {
 				restart = true;
 			}
 			else if (args[i].startsWith("--shutdownLevel=")) {
-				String level = args[1].substring("--shutdownLevel=".length());
+				String level = args[i].substring("--shutdownLevel=".length());
 				try {
 					if(level.equals("C"))
 						shutdownLevel = -1;
 					else 
 						shutdownLevel = Integer.parseInt(level);
 				} catch (Exception e) {
-					System.err.println("shutdownLevel 必须制定定为2 9 或者C");
+					e.printStackTrace();
+					System.err.println("shutdownLevel 必须制定定为2 9 或者C:args["+args[i]+"],level["+level+"]");
 				}
 				restart = true;
 			}
