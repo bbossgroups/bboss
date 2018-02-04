@@ -15,6 +15,12 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	private AbstractHttpMessageConverter<Object> convert;
 	
 	public static final String JSONPCALLBACK_PARAM_NAME = "jsonp_callback";
+	private String dateFormat;
+
+	private String locale;
+
+	private String timeZone;
+	private boolean disableTimestamp = false;
 	public MappingJacksonHttpMessageConverter()
 	{
 		String jacson2Class = "org.frameworkset.http.converter.json.MappingJackson2HttpMessageConverter";
@@ -62,11 +68,47 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 		}
 	}
 
+	public String getDateFormat() {
+		return dateFormat;
+	}
+
+	public void setDateFormat(String dateFormat) {
+		this.dateFormat = dateFormat;
+		((JsonConvertInf)this.convert).setDateFormat(dateFormat);
+	}
+
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+		((JsonConvertInf)this.convert).setLocale(  locale);
+	}
+
+	public String getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(String timeZone) {
+		this.timeZone = timeZone;
+		((JsonConvertInf)this.convert).setTimeZone(  timeZone);
+	}
+
+	public boolean isDisableTimestamp() {
+		return disableTimestamp;
+	}
+
+	public void setDisableTimestamp(boolean disableTimestamp) {
+		this.disableTimestamp = disableTimestamp;
+		((JsonConvertInf)this.convert).setDisableTimestamp(  disableTimestamp);
+	}
+
 	/**
 	 * FAIL_ON_UNKNOWN_PROPERTIES
 	 */
 	public void setFailedOnUnknownProperties(boolean failedOnUnknownProperties){
-
+		((JsonConvertInf)this.convert).setFailedOnUnknownProperties( failedOnUnknownProperties);
 	}
 	@Override
 	public boolean canWrite(String dataype) {
@@ -188,4 +230,8 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 		((JsonConvertInf)convert).setObjectMapper( objectMapper);
 	}
 
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		((JsonConvertInf)convert).afterPropertiesSet();
+	}
 }

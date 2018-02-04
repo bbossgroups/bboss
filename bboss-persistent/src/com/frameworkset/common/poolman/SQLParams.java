@@ -1049,7 +1049,7 @@ public class SQLParams
 					PrimaryKey pka = property.getPk();
 					if( pka != null)
 					{
-						if(pka.auto() && action == PreparedDBUtil.INSERT)
+						if((pka.auto()) && action == PreparedDBUtil.INSERT)
 						{
 							String pkname = pka.pkname();
 							if(StringUtil.isNotEmpty(pkname))
@@ -1075,7 +1075,8 @@ public class SQLParams
 							else
 							{
 								IdGenerator idGenerator = SQLManager.getInstance().getPool(dbname).getIdGenerator();
-								value = idGenerator.getNextId();
+
+								value = idGenerator.getNextId(pka,dbname,type,name);
 							}
 							//设置主键到对象中
 //								Method writeMethod = null;

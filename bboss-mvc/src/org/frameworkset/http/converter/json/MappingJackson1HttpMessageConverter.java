@@ -20,7 +20,9 @@ import org.codehaus.jackson.JsonEncoding;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.type.TypeFactory;
 import org.codehaus.jackson.type.JavaType;
 import org.frameworkset.http.HttpInputMessage;
@@ -30,9 +32,11 @@ import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.converter.AbstractHttpMessageConverter;
 import org.frameworkset.http.converter.HttpMessageNotReadableException;
 import org.frameworkset.http.converter.HttpMessageNotWritableException;
+import org.frameworkset.spi.InitializingBean;
 import org.frameworkset.util.Assert;
+import org.frameworkset.util.annotations.DateFormateMeta;
 import org.frameworkset.util.annotations.ValueConstants;
-import org.codehaus.jackson.map.DeserializationConfig;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -51,15 +55,20 @@ import java.util.List;
  * @since 3.0
  * @see org.frameworkset.web.servlet.view.json.MappingJacksonJsonView
  */
-public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConverter<Object>  implements JsonConvertInf{
+public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConverter<Object>  implements JsonConvertInf,InitializingBean{
 
 
 	private String jsonpCallback = ServerHttpRequest.JSONPCALLBACK_PARAM_NAME;
 	private ObjectMapper objectMapper = null;
+	private String dateFormat;
 
+	private String locale;
+
+	private String timeZone;
+	private boolean disableTimestamp = false;
 	private boolean prefixJson = false;
 
-	
+
 
 	/**
 	 * Construct a new {@code BindingJacksonHttpMessageConverter}.
@@ -71,6 +80,38 @@ public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConv
 	}
 	public void setFailedOnUnknownProperties(boolean failedOnUnknownProperties) {
 		this.objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES,failedOnUnknownProperties);
+	}
+
+	public String getDateFormat() {
+		return dateFormat;
+	}
+
+	public void setDateFormat(String dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public String getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(String timeZone) {
+		this.timeZone = timeZone;
+	}
+
+	public boolean isDisableTimestamp() {
+		return disableTimestamp;
+	}
+
+	public void setDisableTimestamp(boolean disableTimestamp) {
+		this.disableTimestamp = disableTimestamp;
 	}
 
 	/**
@@ -85,7 +126,19 @@ public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConv
 		Assert.notNull(objectMapper, "'objectMapper' must not be null");
 		this.objectMapper = (ObjectMapper)objectMapper;
 	}
-	
+
+	public void init() {
+		if(dateFormat != null && !dateFormat.equals("")) {
+			DateFormateMeta dateFormateMeta = DateFormateMeta.buildDateFormateMeta(this.dateFormat, this.locale, this.timeZone);
+			this.objectMapper.setDateFormat(dateFormateMeta.toDateFormat());
+
+
+		}
+		if(this.disableTimestamp){
+			objectMapper.disable(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS);
+		}
+	}
+
 	public boolean canWrite(MediaType mediaType) {
 		if (mediaType == null || MediaType.ALL.equals(mediaType)) {
 			return false;
@@ -255,5 +308,10 @@ public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConv
 
 	public void setJsonpCallback(String jsonpCallback) {
 		this.jsonpCallback = jsonpCallback;
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		this.init();
 	}
 }

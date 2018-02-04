@@ -15,6 +15,8 @@
  */
 package com.frameworkset.common.poolman.sql;
 
+import com.frameworkset.common.poolman.DBUtil;
+import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.util.UUID;
 
 /**
@@ -27,7 +29,7 @@ import com.frameworkset.util.UUID;
  * @author biaoping.yin
  * @version 1.0
  */
-public class BBossUuidGenerator  implements IdGenerator{
+public class BBossUuidGenerator   extends BaseIdGenerator {
 
 	/**
 	 * 
@@ -44,5 +46,7 @@ public class BBossUuidGenerator  implements IdGenerator{
 		
 		return UUID.randomUUID().toString();
 	}
+
+
 
 }

@@ -15,6 +15,9 @@
  */
 package com.frameworkset.common.poolman.sql;
 
+import com.frameworkset.orm.annotation.PrimaryKey;
+
 public interface IdGenerator {
 	 String getNextId();
+	 Object getNextId(PrimaryKey pka,String dbName,Class type,String proName );
 }

@@ -3,6 +3,8 @@ package org.frameworkset.json;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.frameworkset.util.annotations.DateFormateMeta;
 
 import java.io.File;
 import java.io.InputStream;
@@ -11,6 +13,63 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	protected ObjectMapper mapper = null;
+	private String dateFormat;
+
+	private String locale;
+
+	private String timeZone;
+	private boolean disableTimestamp = false;
+	boolean failedOnUnknownProperties = false;
+
+	@Override
+	public String getDateFormat() {
+		return dateFormat;
+	}
+
+	@Override
+	public void setDateFormat(String dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
+	@Override
+	public String getLocale() {
+		return locale;
+	}
+
+	@Override
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	@Override
+	public String getTimeZone() {
+		return timeZone;
+	}
+
+	@Override
+	public void setTimeZone(String timeZone) {
+		this.timeZone = timeZone;
+	}
+
+	@Override
+	public boolean isDisableTimestamp() {
+		return disableTimestamp;
+	}
+
+	@Override
+	public void setDisableTimestamp(boolean disableTimestamp) {
+		this.disableTimestamp = disableTimestamp;
+	}
+
+	public boolean isFailedOnUnknownProperties() {
+		return failedOnUnknownProperties;
+	}
+
+	@Override
+	public void setFailedOnUnknownProperties(boolean failedOnUnknownProperties) {
+		this.failedOnUnknownProperties = failedOnUnknownProperties;
+	}
+
 	public Jackson2ObjectMapper(){
 		mapper = new ObjectMapper();
 		//反序列化时，属性不存在时忽略属性
@@ -300,7 +359,19 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			
 		
 		}
+	@Override
+	public void init() {
+		if(dateFormat != null && !dateFormat.equals("")) {
+			DateFormateMeta dateFormateMeta = DateFormateMeta.buildDateFormateMeta(this.dateFormat, this.locale, this.timeZone);
+			this.mapper.setDateFormat(dateFormateMeta.toDateFormat());
 
+
+		}
+		if(this.disableTimestamp){
+			mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		}
+		this.mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,failedOnUnknownProperties);
+	}
 
 
 }

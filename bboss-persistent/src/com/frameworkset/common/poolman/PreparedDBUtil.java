@@ -15,42 +15,6 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.math.BigDecimal;
-import java.sql.Array;
-import java.sql.BatchUpdateException;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.Ref;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import org.frameworkset.persitent.util.SQLInfo;
-import org.frameworkset.persitent.util.SQLUtil;
-import org.frameworkset.util.BigFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.XMLMark;
@@ -60,6 +24,18 @@ import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.common.poolman.util.StatementParser;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.util.FileUtil;
+import org.frameworkset.persitent.util.SQLInfo;
+import org.frameworkset.persitent.util.SQLUtil;
+import org.frameworkset.util.BigFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.math.BigDecimal;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * 执行预编sql语句
@@ -1135,13 +1111,13 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	
-	public Object executePreparedForObject(Class objectType) throws SQLException {
+	public <T> T executePreparedForObject(Class<T> objectType) throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
 		return executePreparedForObject(null,objectType);
 	}
 	
-	public Object[] executePreparedForObjectArray(Class objectType) throws SQLException {
+	public <T> T[] executePreparedForObjectArray(Class<T> objectType) throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
 		return executePreparedForObjectArray(null,objectType);
@@ -1160,16 +1136,16 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	
-	public Object executePreparedForObject(Connection con,Class objectType) throws SQLException {
+	public <T> T executePreparedForObject(Connection con,Class<T> objectType) throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
-		return executePreparedForObject(con,objectType,null);
+		return (T)executePreparedForObject(con,objectType,null);
 	}
 	
-	public Object[] executePreparedForObjectArray(Connection con,Class objectType) throws SQLException {
+	public <T> T[] executePreparedForObjectArray(Connection con,Class<T> objectType) throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
-		return executePreparedForObjectArray(con,objectType,null);
+		return (T[])executePreparedForObjectArray(con,objectType,null);
 	}
 	
 	public <T> List<T> executePreparedForList(Connection con,Class<T> objectType) throws SQLException {
@@ -1197,16 +1173,16 @@ public class PreparedDBUtil extends DBUtil {
 	/******************************************************************
 	 * 带行处理器的方法开始
 	 *****************************************************************/
-	public Object executePreparedForObject(Class objectType,RowHandler rowhandler) throws SQLException {
+	public <T> T executePreparedForObject(Class<T> objectType,RowHandler rowhandler) throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
-		return executePreparedForObject(null,objectType,rowhandler);
+		return (T)executePreparedForObject(null,objectType,rowhandler);
 	}
 	
-	public Object[] executePreparedForObjectArray(Class objectType,RowHandler rowhandler) throws SQLException {
+	public <T> T[] executePreparedForObjectArray(Class<T> objectType,RowHandler rowhandler) throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
-		return executePreparedForObjectArray(null,objectType,rowhandler);
+		return (T[])executePreparedForObjectArray(null,objectType,rowhandler);
 	}
 	
 	public <T> List<T> executePreparedForList(Class<T> objectType,RowHandler rowhandler) throws SQLException {
@@ -1222,25 +1198,25 @@ public class PreparedDBUtil extends DBUtil {
 	}
 	
 	
-	public Object executePreparedForObject(Connection con,Class objectType,RowHandler rowhandler) throws SQLException {
+	public <T> T executePreparedForObject(Connection con,Class<T> objectType,RowHandler rowhandler) throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
 		if(objectType != null)
 		{
-		    return innerExecute(con,objectType,rowhandler,ResultMap.type_objcet,false);
+		    return (T)innerExecute(con,objectType,rowhandler,ResultMap.type_objcet,false);
 		}
 		else
 		{
-		    return innerExecute(con,objectType,rowhandler,ResultMap.type_null,false);
+		    return (T)innerExecute(con,objectType,rowhandler,ResultMap.type_null,false);
 		}
 	}
 	
 	
 	
-	public Object[] executePreparedForObjectArray(Connection con,Class objectType,RowHandler rowhandler) throws SQLException {
+	public  <T> T[] executePreparedForObjectArray(Connection con,Class<T> objectType,RowHandler rowhandler) throws SQLException {
 		if(this.batchparams != null && batchparams.size() > 0)
 			throw new SQLException("Can not execute batch prepared operations as single prepared operation,Please call method executePreparedBatch()!");
-		return (Object[])innerExecute(con,objectType,rowhandler,ResultMap.type_objectarray,false);
+		return (T[])innerExecute(con,objectType,rowhandler,ResultMap.type_objectarray,false);
 	}
 	
 	public <T> List<T> executePreparedForList(Connection con,Class<T> objectType,RowHandler rowhandler) throws SQLException {
@@ -2225,7 +2201,7 @@ public class PreparedDBUtil extends DBUtil {
 	 * 
 	 * @param i
 	 * @param keyvalue
-	 * @param keyName
+	 * @param keyname
 	 * @throws SQLException
 	 */
 	public void setPrimaryKey(int i, long keyvalue, String keyname)
@@ -2557,7 +2533,7 @@ public class PreparedDBUtil extends DBUtil {
     /**
      * 创建特定数据库的预编译插入语句
      * 
-     * @param dbName
+     * @param params
      * @param sql
      * @throws SQLException
      */
@@ -2569,7 +2545,7 @@ public class PreparedDBUtil extends DBUtil {
     /**
      * 创建特定数据库的预编译插入语句
      * 
-     * @param dbName
+     T
      * @param sql
      * @throws SQLException
      */
@@ -3601,7 +3577,7 @@ public class PreparedDBUtil extends DBUtil {
     /**
      * 创建特定数据库的预编译更新语句
      * 
-     * @param dbName
+     * @param params
      * @param sql
      * @throws SQLException
      */
@@ -3613,7 +3589,7 @@ public class PreparedDBUtil extends DBUtil {
     /**
      * 创建特定数据库的预编译更新语句
      * 
-     * @param dbName
+     * @param params
      * @param sql
      * @throws SQLException
      */
@@ -3625,7 +3601,7 @@ public class PreparedDBUtil extends DBUtil {
     /**
      * 创建特定数据库的预编译更新语句
      * 
-     * @param dbName
+     * @param params
      * @param sql
      * @throws SQLException
      */
@@ -3750,7 +3726,7 @@ public class PreparedDBUtil extends DBUtil {
     /**
      * 创建特定数据库预编译删除语句
      * 
-     * @param dbName
+     * @param params
      * @param sql
      * @throws SQLException
      */
@@ -3761,7 +3737,7 @@ public class PreparedDBUtil extends DBUtil {
     /**
      * 创建特定数据库预编译删除语句
      * 
-     * @param dbName
+     * @param params
      * @param sql
      * @throws SQLException
      */
@@ -4790,8 +4766,8 @@ public class PreparedDBUtil extends DBUtil {
 	 * 如果不存在则从链接池中获取一个链接,所有的批处理操作不会包含在一个事务之中。
 	 * 如果想指定特定数据库的事务则需要调用this.setPrepareDBName(prepareDBName);方法指定执行的逻辑
 	 * 数据库名称	
-	 * @param con 外部传入的数据库链接
-	 * @param getCUDResult 是否返回处理结果：批处理数据的处理情况，比如更新记录数，自动产生的主键信息
+	 * @param con_ 外部传入的数据库链接
+	 * @param CUDResult 是否返回处理结果：批处理数据的处理情况，比如更新记录数，自动产生的主键信息
 	 * @return
 	 * @throws SQLException
 	 */
