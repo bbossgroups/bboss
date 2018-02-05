@@ -26,7 +26,8 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 
 	@Override
 	public void init() {
-		this.jacksonObjectMapper.init();
+		if(jacksonObjectMapper != null)
+			this.jacksonObjectMapper.init();
 	}
 
 	public String getDateFormat() {
@@ -72,15 +73,15 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 			 
 			jacksonObjectMapper = (JacksonObjectMapper) Class.forName("org.frameworkset.json.Jackson2ObjectMapper").newInstance();
 		} catch (ClassNotFoundException e) {
-			 
+
 		} catch (InstantiationException e) {
-			 
+
 		} catch (IllegalAccessException e) {
-			 
+
 		} catch (NoClassDefFoundError e) {
-			
+
 		}catch (Exception e) {
-			
+
 		}
 		if(jacksonObjectMapper == null)
 		{
@@ -88,15 +89,15 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 				
 				jacksonObjectMapper = (JacksonObjectMapper) Class.forName("org.frameworkset.json.Jackson1ObjectMapper").newInstance();
 			} catch (ClassNotFoundException e) {
-				 
+
 			} catch (InstantiationException e) {
-				 
+
 			} catch (IllegalAccessException e) {
-				 
+
 			} catch (NoClassDefFoundError e) {
-				
+
 			}catch (Exception e) {
-				
+
 			}
 		}
 	}
