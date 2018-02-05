@@ -75,14 +75,14 @@ public abstract class BaseIdGenerator implements IdGenerator{
 			StringBuilder sql = new StringBuilder();
 			if(pka.id() == null || pka.id().equals("")) {
 				sql.append("select max(").append(proName)
-						.append(")+1 as pkvalue from ")
+						.append(") as pkvalue from ")
 						.append(pka.tableName())
 				;
 			}
 			else
 			{
 				sql.append("select max(").append(pka.id())
-						.append(")+1 as pkvalue from ")
+						.append(") as pkvalue from ")
 						.append(pka.tableName())
 				;
 			}
