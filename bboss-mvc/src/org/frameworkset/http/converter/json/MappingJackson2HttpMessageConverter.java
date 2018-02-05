@@ -3,13 +3,54 @@ package org.frameworkset.http.converter.json;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.frameworkset.http.MediaType;
+import org.frameworkset.spi.InitializingBean;
+import org.frameworkset.util.annotations.DateFormateMeta;
 
 import java.io.IOException;
 
-public class MappingJackson2HttpMessageConverter  extends AbstractJackson2HttpMessageConverter {
+public class MappingJackson2HttpMessageConverter  extends AbstractJackson2HttpMessageConverter implements InitializingBean {
 
 	private String jsonPrefix;
+	private String dateFormat;
+
+	private String locale;
+
+	private String timeZone;
+	private boolean disableTimestamp = false;
+	public String getDateFormat() {
+		return dateFormat;
+	}
+
+	public void setDateFormat(String dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public String getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(String timeZone) {
+		this.timeZone = timeZone;
+	}
+
+	public boolean isDisableTimestamp() {
+		return disableTimestamp;
+	}
+
+	public void setDisableTimestamp(boolean disableTimestamp) {
+		this.disableTimestamp = disableTimestamp;
+	}
+
 
 
 
@@ -85,5 +126,21 @@ public class MappingJackson2HttpMessageConverter  extends AbstractJackson2HttpMe
 			generator.writeRaw(");");
 		}
 	}
-	
+
+	public void init() {
+		if(dateFormat != null && !dateFormat.equals("")) {
+			DateFormateMeta dateFormateMeta = DateFormateMeta.buildDateFormateMeta(this.dateFormat, this.locale, this.timeZone);
+			this.objectMapper.setDateFormat(dateFormateMeta.toDateFormat());
+
+
+		}
+		if(this.disableTimestamp){
+			objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		}
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		this.init();
+	}
 }

@@ -59,5 +59,22 @@ public interface JacksonObjectMapper {
 	<T> T json2ObjectWithType(String jsonString, JsonTypeReference<T> ref, boolean aLLOW_SINGLE_QUOTES);
 	
 	<T> T json2ObjectWithType(InputStream jsonString, JsonTypeReference<T> ref, boolean aLLOW_SINGLE_QUOTES);
+	public String getDateFormat();
 
+	public void setDateFormat(String dateFormat) ;
+
+	public String getLocale() ;
+
+	public void setLocale(String locale) ;
+
+	public String getTimeZone();
+
+	public void setTimeZone(String timeZone);
+
+	public boolean isDisableTimestamp() ;
+
+	public void setDisableTimestamp(boolean disableTimestamp) ;
+
+	void setFailedOnUnknownProperties(boolean failedOnUnknownProperties);
+	void init();
 }

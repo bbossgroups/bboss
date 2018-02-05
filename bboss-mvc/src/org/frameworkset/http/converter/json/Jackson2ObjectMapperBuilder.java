@@ -52,6 +52,7 @@ public class Jackson2ObjectMapperBuilder {
 	private Locale locale;
 
 	private TimeZone timeZone;
+	private boolean disableTimestamp = false;
 
 	private AnnotationIntrospector annotationIntrospector;
 

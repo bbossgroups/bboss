@@ -70,8 +70,11 @@ public class SimpleStringUtil  {
 
 	// 空串常量
 	public static final String BLANK = "";
-	private static JacksonObjectMapperWrapper objectMapper = new JacksonObjectMapperWrapper();
-
+	private static JacksonObjectMapperWrapper objectMapper = null;
+    static {
+		objectMapper = new JacksonObjectMapperWrapper();
+		objectMapper.init();
+	}
 	public JacksonObjectMapperWrapper getJacksonObjectMapper(){
 		return objectMapper;
 	}

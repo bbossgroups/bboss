@@ -6,7 +6,65 @@ import java.io.OutputStream;
 import java.io.Writer;
 
 public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
-	
+	private String dateFormat;
+
+	private String locale;
+
+	private String timeZone;
+	private boolean disableTimestamp = false;
+	boolean failedOnUnknownProperties = false;
+
+	public boolean isFailedOnUnknownProperties() {
+		return failedOnUnknownProperties;
+	}
+
+	@Override
+	public void setFailedOnUnknownProperties(boolean failedOnUnknownProperties) {
+		this.failedOnUnknownProperties = failedOnUnknownProperties;
+		this.jacksonObjectMapper.setFailedOnUnknownProperties(failedOnUnknownProperties);
+	}
+
+	@Override
+	public void init() {
+		this.jacksonObjectMapper.init();
+	}
+
+	public String getDateFormat() {
+		return dateFormat;
+	}
+
+	public void setDateFormat(String dateFormat) {
+		this.dateFormat = dateFormat;
+		this.jacksonObjectMapper.setDateFormat(dateFormat);
+	}
+
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+		this.jacksonObjectMapper.setLocale(locale);
+	}
+
+	public String getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(String timeZone) {
+		this.timeZone = timeZone;
+		this.jacksonObjectMapper.setTimeZone(timeZone);
+	}
+
+	public boolean isDisableTimestamp() {
+		return disableTimestamp;
+	}
+
+	public void setDisableTimestamp(boolean disableTimestamp) {
+		this.disableTimestamp = disableTimestamp;
+		this.jacksonObjectMapper.setDisableTimestamp(disableTimestamp);
+	}
+
 	public JacksonObjectMapperWrapper()
 	{
 		 
