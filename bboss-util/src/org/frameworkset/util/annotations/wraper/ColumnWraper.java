@@ -49,17 +49,19 @@ public class ColumnWraper {
 	private Locale locale;
 	private DateFormateMeta dateFormateMeta;
 	public ColumnWraper(Column column) {
-		dataformat =  AnnotationUtils.converDefaultValue(column.dataformat());
-		editorparams =  AnnotationUtils.converDefaultValue(column.editorparams());
-		
+		dataformat = AnnotationUtils.converDefaultValue(column.dataformat());
+		editorparams = AnnotationUtils.converDefaultValue(column.editorparams());
+
 		name = column.name();
-		type =  AnnotationUtils.converDefaultValue(column.type());
-		charset =  AnnotationUtils.converDefaultValue(column.charset());
+		type = AnnotationUtils.converDefaultValue(column.type());
+		charset = AnnotationUtils.converDefaultValue(column.charset());
 		this.editor = AnnotationUtils.converDefaultValue(column.editor());
 		this.ignoreCUDbind = column.ignoreCUDbind();
 		this.ignorebind = column.ignorebind();
-		dateFormateMeta = DateFormateMeta.buildDateFormateMeta(dataformat,column.locale());
-		this.locale = dateFormateMeta.getLocale();
+		if (dataformat != null && !dataformat.trim().equals("")){
+			dateFormateMeta = DateFormateMeta.buildDateFormateMeta(dataformat, column.locale());
+			this.locale = dateFormateMeta.getLocale();
+		}
 //		if(SimpleStringUtil.isNotEmpty(dataformat))
 //		{
 //			dateFormateMeta = new DateFormateMeta();

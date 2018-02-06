@@ -17,6 +17,13 @@ import redis.clients.jedis.params.sortedset.ZIncrByParams;
 
 public class RedisHelper {
 
+	public Jedis getJedis() {
+		init();
+		return jedis;
+	}
+
+
+
 	private Jedis jedis;
 	private ShardedJedis shardedJedis; 
 	private JedisCluster jc; 

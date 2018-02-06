@@ -55,7 +55,7 @@ public abstract class BaseIdGenerator implements IdGenerator{
 
 		else if(type == Long.class || type == Integer.class||type == int.class || type == long.class){//数字主键
 
-			if(pka.tableName() == null)
+			if(pka.tableName() == null || pka.tableName().equals(""))
 				return genDummyKey(type);
 			else
 				return genDummyKey(type,pka,dbName,  proName);

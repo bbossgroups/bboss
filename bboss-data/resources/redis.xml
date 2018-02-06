@@ -9,7 +9,7 @@
 		</property>
 		<!-- single|cluster|shared -->
 		<property name="mode" value="single" />
-		<property name="auth" value="123456" />
+		<!--<property name="auth" value="123456" />-->
 		<property name="poolMaxTotal" value="10"/>
 		<property name="poolMaxWaitMillis" value="2000"/>
 		<!--

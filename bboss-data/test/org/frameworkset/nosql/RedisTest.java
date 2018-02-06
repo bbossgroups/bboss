@@ -3,6 +3,10 @@ package org.frameworkset.nosql;
 import org.frameworkset.nosql.redis.RedisFactory;
 import org.frameworkset.nosql.redis.RedisHelper;
 import org.junit.Test;
+import redis.clients.jedis.Jedis;
+import redis.clients.util.Slowlog;
+
+import java.util.List;
 
 public class RedisTest {
 
@@ -35,6 +39,27 @@ public class RedisTest {
 			value = redisHelper.get("fowwero");
 			
 			System.out.println("fowwero="+value);
+		}
+		finally
+		{
+			if(redisHelper != null)
+				redisHelper.release();
+		}
+	}
+	@Test
+	public void testconfigGet(){
+		RedisHelper redisHelper = null;
+		try
+		{
+			redisHelper = RedisFactory.getRedisHelper();
+			Jedis jedis = redisHelper.getJedis();
+			System.out.println(jedis.info());
+
+			List<String> redis_maxclients = jedis.configGet("maxclients");
+			List<String>  redis_maxmemory = jedis.configGet("maxmemory");
+			System.out.println(redis_maxmemory);
+			List<Slowlog> slowlogs = jedis.slowlogGet();
+			System.out.println(slowlogs.size());
 		}
 		finally
 		{

@@ -1,12 +1,13 @@
 package org.frameworkset.nosql.redis;
 
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.DefaultApplicationContext;
+import redis.clients.jedis.Jedis;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.frameworkset.spi.BaseApplicationContext;
-import org.frameworkset.spi.DefaultApplicationContext;
 
 public class RedisFactory {
 
@@ -154,6 +155,14 @@ public class RedisFactory {
 				holder.release();
 			}
 		}
+	}
+
+	public static Jedis buildJedis(String host , int port , String password ){
+		Jedis jedis = new Jedis(host, port);
+		if(password != null && !password.equals("")) {
+			jedis.auth(password);
+		}
+		return jedis;
 	}
 
 }
