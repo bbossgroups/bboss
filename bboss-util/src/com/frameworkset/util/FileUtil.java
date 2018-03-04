@@ -86,7 +86,10 @@ public class FileUtil
 	    try {
             URL location = (FileUtil.class).getProtectionDomain().getCodeSource().getLocation();
             File appDir = computeApplicationDir(location, new File("."));
-            apppath = appDir.getParentFile().getPath();
+            if(appDir != null && appDir.exists()){
+            	apppath = appDir.getParentFile().getPath();
+            }
+            
         }
         catch (Throwable e){
             log.warn("Init apppath failed:",e);
