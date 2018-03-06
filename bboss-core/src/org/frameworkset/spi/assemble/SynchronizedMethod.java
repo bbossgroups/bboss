@@ -15,22 +15,23 @@
  */
 package org.frameworkset.spi.assemble;
 
+import com.frameworkset.orm.annotation.TransactionType;
+import com.frameworkset.orm.transaction.TransactionException;
+import com.frameworkset.util.RegexUtil;
+import org.frameworkset.spi.async.annotation.Async;
+import org.frameworkset.spi.async.annotation.Constants;
+import org.frameworkset.spi.async.annotation.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.transaction.TXUtil;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.frameworkset.spi.async.annotation.Async;
-import org.frameworkset.spi.async.annotation.Constants;
-import org.frameworkset.spi.async.annotation.Result;
 //import org.frameworkset.spi.remote.RPCMethodCall;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.frameworkset.orm.annotation.TransactionType;
-import com.frameworkset.orm.transaction.TransactionException;
-import com.frameworkset.util.RegexUtil;
 
 /**
  * <p>Title: SynchronizedMethod</p>
@@ -339,7 +340,7 @@ public class SynchronizedMethod implements java.io.Serializable {
      * 构建方法的惟一标识id，一个类中的一个方法只对应一个标识，标识生成的规则
      * 是：方法名+'_' + 参数类型1 + ... + '_' +  参数类型n
      * @param method 方法对象，存放所有的方法信息，包括方法名，方法参数类型数组，方法返回值类型，方法异常类型等等
-     * @param args 方法参数
+     * @param paramTypes 方法参数
      * @return 方法标识
      */
     public static String buildMethodUUID(String method, Class[] paramTypes)
@@ -576,7 +577,7 @@ public class SynchronizedMethod implements java.io.Serializable {
 			{				
 				//系统级别的异常，需要回滚
 				if((throwable instanceof TransactionException) 
-						|| (throwable instanceof javax.transaction.RollbackException)
+						|| TXUtil.isRollbackException(throwable.getClass())
 						|| throwable instanceof java.sql.SQLException
 						|| throwable instanceof java.lang.RuntimeException
 						|| throwable instanceof java.lang.Error)
