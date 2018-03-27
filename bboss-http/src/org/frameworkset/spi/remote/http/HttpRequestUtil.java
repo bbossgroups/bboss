@@ -1311,8 +1311,8 @@ public class HttpRequestUtil {
 
 
         HttpClient httpClient = null;
-        HttpDeleteWithBody httpDelete = null;
-
+        HttpDeleteWithBody httpDeleteWithBody = null;
+        HttpDelete httpDelete = null;
 
 
         T responseBody = null;
@@ -1325,20 +1325,36 @@ public class HttpRequestUtil {
         do {
             try {
                 httpClient = getHttpClient(config);
-                httpDelete = getHttpDeleteWithBody(config, url, cookie, userAgent, headers);
+                HttpParams httpParams = null;
                 if(params != null && params.size() > 0) {
-                    HttpParams httpParams = new BasicHttpParams();
+                    httpParams = new BasicHttpParams();
                     Iterator<Entry<String, Object>> it = params.entrySet().iterator();
                     NameValuePair paramPair_ = null;
                     for (int i = 0; it.hasNext(); i++) {
                         Entry<String, Object> entry = it.next();
                         httpParams.setParameter(entry.getKey(), entry.getValue());
                     }
-                    httpDelete.setParams(httpParams);
                 }
+                if(httpEntity != null) {
+                    httpDeleteWithBody = getHttpDeleteWithBody(config, url, cookie, userAgent, headers);
+                    httpDeleteWithBody.setEntity(httpEntity);
+                    if(httpParams != null) {
+
+                        httpDeleteWithBody.setParams(httpParams);
+                    }
+                    responseBody = httpClient.execute(httpDeleteWithBody, responseHandler);
+                }
+                else {
+                    httpDelete = getHttpDelete(config, url, cookie, userAgent, headers);
+                    if(httpParams != null) {
+                        httpDelete.setParams(httpParams);
+                    }
+                    responseBody = httpClient.execute(httpDelete, responseHandler);
+                }
+
                 // Create a custom response handler
-                httpDelete.setEntity(httpEntity);
-                responseBody = httpClient.execute(httpDelete, responseHandler);
+
+
                 break;
             } catch (ClientProtocolException e) {
                 throw   e;
