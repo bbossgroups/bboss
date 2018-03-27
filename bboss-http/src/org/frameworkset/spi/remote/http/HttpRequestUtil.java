@@ -3,15 +3,6 @@
  */
 package org.frameworkset.spi.remote.http;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -21,16 +12,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.methods.HttpOptions;
-import org.apache.http.client.methods.HttpPatch;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.client.methods.HttpTrace;
+import org.apache.http.client.methods.*;
 import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -41,6 +23,15 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author yinbp
@@ -262,6 +253,29 @@ public class HttpRequestUtil {
 //        httpDelete.addHeader("Host", "www.bbossgroups.com");
         if(config.getKeepAlive()>0)
         	 httpDelete.addHeader("Connection", "Keep-Alive");
+//        if (cookie != null)
+//            httpDelete.addHeader("Cookie", cookie);
+//        if (userAgent != null)
+//            httpDelete.addHeader("User-Agent", userAgent);
+        if (headers != null && headers.size() > 0) {
+            Iterator<Entry<String, String>> entries = headers.entrySet().iterator();
+            while (entries.hasNext()) {
+                Entry<String, String> entry = entries.next();
+                httpDelete.addHeader(entry.getKey(), entry.getValue());
+            }
+        }
+
+
+        return httpDelete;
+    }
+
+    private static HttpDeleteWithBody getHttpDeleteWithBody(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
+        HttpDeleteWithBody httpDelete = new HttpDeleteWithBody(url);
+        RequestConfig requestConfig =   config.getRequestConfig();
+        httpDelete.setConfig(requestConfig);
+//        httpDelete.addHeader("Host", "www.bbossgroups.com");
+        if(config.getKeepAlive()>0)
+            httpDelete.addHeader("Connection", "Keep-Alive");
 //        if (cookie != null)
 //            httpDelete.addHeader("Cookie", cookie);
 //        if (userAgent != null)
@@ -1147,6 +1161,18 @@ public class HttpRequestUtil {
                 (Map<String, String>) null);
 
     }
+    /**
+     * 公用delete方法
+     *
+     * @param url
+
+     * @throws Exception
+     */
+    public static String httpDeleteWithbody( String url,String requestBody) throws Exception{
+        return httpDelete(  "default",   url,requestBody, (String) null, (String) null, (Map<String, Object>) null,
+                (Map<String, String>) null);
+
+    }
 
     /**
      * 公用delete方法
@@ -1168,14 +1194,48 @@ public class HttpRequestUtil {
 
      * @throws Exception
      */
+    public static String httpDelete( String url,String requestBody,Map<String, String> headers) throws Exception{
+        return httpDelete(  "default",   url,  requestBody, (String) null, (String) null, (Map<String, Object>) null,
+                headers);
+
+    }
+
+    /**
+     * 公用delete方法
+     *
+     * @param url
+
+     * @throws Exception
+     */
+    public static String httpDeleteWithbody( String url,String requestBody,Map<String, Object> params,Map<String, String> headers) throws Exception{
+        return httpDelete(  "default",   url, requestBody, (String) null, (String) null, params,
+                headers);
+
+    }
+
+    /**
+     * 公用delete方法
+     *
+     * @param url
+
+     * @throws Exception
+     */
     public static String httpDelete( String url,Map<String, Object> params,Map<String, String> headers) throws Exception{
         return httpDelete(  "default",   url, (String) null, (String) null, params,
                 headers);
 
     }
 
+
+
     public static <T> T httpDelete( String url,Map<String, Object> params,Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception{
-        return httpDelete(  "default",   url, (String) null, (String) null, params,
+        return httpDelete(  "default",   url, (String)null,(String) null, (String) null, params,
+                headers, responseHandler);
+
+    }
+
+    public static <T> T httpDeleteWithBody (String url,String requestBody,Map<String, Object> params,Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception{
+        return httpDelete(  "default",   url, requestBody,(String) null, (String) null, params,
                 headers, responseHandler);
 
     }
@@ -1186,8 +1246,20 @@ public class HttpRequestUtil {
 
     }
 
+    public static String httpDelete ( String poolname,String url,String requestBody,Map<String, Object> params,Map<String, String> headers) throws Exception{
+        return httpDelete(  poolname,   url,  requestBody,(String)null, (String) null, params,
+                headers);
+
+    }
+
     public static <T> T httpDelete( String poolname,String url,Map<String, Object> params,Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception{
-        return httpDelete(  poolname,   url, (String) null, (String) null, params,
+        return httpDelete(  poolname,   url,(String)null, (String) null, (String) null, params,
+                headers,responseHandler);
+
+    }
+
+    public static <T> T httpDelete( String poolname,String url,String requestBody,Map<String, Object> params,Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception{
+        return httpDelete(  poolname,     url, requestBody,(String) null, (String) null, params,
                 headers,responseHandler);
 
     }
@@ -1204,7 +1276,7 @@ public class HttpRequestUtil {
      */
     public static String httpDelete(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
                                                 Map<String, String> headers) throws Exception {
-    	return httpDelete(  poolname,   url,   cookie,   userAgent,   params,
+    	return httpDelete(  poolname,   url, (String)null  ,cookie,   userAgent,   params,
                   headers,new StringResponseHandler());
     }
     /**
@@ -1218,12 +1290,28 @@ public class HttpRequestUtil {
      * @param headers
      * @throws Exception
      */
-    public static <T> T httpDelete(String poolname, String url, String cookie, String userAgent, Map<String, Object> params,
+    public static String httpDelete(String poolname,String url,String requestBody,  String cookie, String userAgent, Map<String, Object> params,
+                                    Map<String, String> headers) throws Exception {
+        return httpDelete(  poolname,   url,  requestBody, cookie,   userAgent,   params,
+                headers,new StringResponseHandler());
+    }
+    /**
+     * 公用delete方法
+     *
+     * @param poolname
+     * @param url
+     * @param cookie
+     * @param userAgent
+     * @param params
+     * @param headers
+     * @throws Exception
+     */
+    public static <T> T httpDelete(String poolname, String url, String requestBody, String cookie, String userAgent, Map<String, Object> params,
                                                 Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
 
 
         HttpClient httpClient = null;
-        HttpDelete httpDelete = null;
+        HttpDeleteWithBody httpDelete = null;
 
 
 
@@ -1231,10 +1319,13 @@ public class HttpRequestUtil {
         int time = 0;
         ClientConfiguration config = ClientConfiguration.getClientConfiguration(poolname);
         int RETRY_TIME = config.getRetryTime();
+        HttpEntity httpEntity = requestBody == null?null:new StringEntity(
+                requestBody,
+                ContentType.APPLICATION_JSON);
         do {
             try {
                 httpClient = getHttpClient(config);
-                httpDelete = getHttpDelete(config, url, cookie, userAgent, headers);
+                httpDelete = getHttpDeleteWithBody(config, url, cookie, userAgent, headers);
                 if(params != null && params.size() > 0) {
                     HttpParams httpParams = new BasicHttpParams();
                     Iterator<Entry<String, Object>> it = params.entrySet().iterator();
@@ -1246,7 +1337,7 @@ public class HttpRequestUtil {
                     httpDelete.setParams(httpParams);
                 }
                 // Create a custom response handler
-                 
+                httpDelete.setEntity(httpEntity);
                 responseBody = httpClient.execute(httpDelete, responseHandler);
                 break;
             } catch (ClientProtocolException e) {

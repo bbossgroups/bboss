@@ -347,6 +347,14 @@ public class TestVaribleHandler
     	SQLStruction ss = VariableHandler.parserSQLStruction(sql);
     	System.out.println();
     }
+    
+    @org.junit.Test
+    public void testListBeanField2()
+    {
+    	String sql = "select * from TD_ORDER_REPAYMENT_PLAN where order_id in(#[orders],#[orders2] )";
+    	URLStruction ss = VariableHandler.parserTempateStruction(sql);
+    	System.out.println();
+    }
     	
     
 }
