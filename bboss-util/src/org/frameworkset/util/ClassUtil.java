@@ -610,6 +610,23 @@ public class ClassUtil
 	     * 识别class是否是基本数据类型或者基本数据类型数组
 	     */
 	    private boolean primary;
+		/**
+		 * 标识class是否map类型
+		 */
+	    private boolean map;
+		/**
+		 * 标识class是否list类型
+		 */
+		private boolean list;
+		/**
+		 * 标识class是否array类型
+		 */
+	    private boolean array;
+
+		/**
+		 * 标识class是否array类型
+		 */
+		private boolean enums;
 	    /**
 	     * 识别class是否是基本数据类型
 	     */
@@ -680,6 +697,7 @@ public class ClassUtil
 	    		this.clazz = clazz.getSuperclass();
 	    		cglib = true;
 	    	}
+
 	    	try {
 				defaultConstruction  = this.clazz.getDeclaredConstructor();
 				if(defaultConstruction != null)
@@ -785,6 +803,10 @@ public class ClassUtil
 	    {
 	    	
 	    	this.primary = ValueObjectUtil.isPrimaryType(clazz);
+	    	this.map = ValueObjectUtil.isMapType(clazz);
+			this.list = ValueObjectUtil.isListType(clazz);
+			this.array = ValueObjectUtil.isArrayType(clazz);
+			this.enums = ValueObjectUtil.isEnumType(clazz);
 	    	this.baseprimary = ValueObjectUtil.isBasePrimaryType(clazz);
 	    	//初始化所有父类信息：
 	    	if(superClasses == null)
@@ -1325,8 +1347,38 @@ public class ClassUtil
 			return cglib;
 		}
 
-		
-		
+
+		public boolean isMap() {
+			return map;
+		}
+
+		public void setMap(boolean map) {
+			this.map = map;
+		}
+
+		public boolean isList() {
+			return list;
+		}
+
+		public void setList(boolean list) {
+			this.list = list;
+		}
+
+		public boolean isArray() {
+			return array;
+		}
+
+		public void setArray(boolean array) {
+			this.array = array;
+		}
+
+		public boolean isEnums() {
+			return enums;
+		}
+
+		public void setEnums(boolean enums) {
+			this.enums = enums;
+		}
 	}
 	
 	private static  Map<Class,ClassInfo> classInfos = new HashMap<Class,ClassInfo>();
