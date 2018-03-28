@@ -5649,8 +5649,58 @@ public class ValueObjectUtil {
     	}
     	
     }
-    
-    /**
+
+	/**
+	 * 判断类type是否是数组
+	 * @param type
+	 * @return
+	 */
+	public static boolean isArrayType(Class type)
+	{
+		return type.isArray();
+
+
+	}
+
+	/**
+	 * 判断类type是否是List
+	 * @param type
+	 * @return
+	 */
+	public static boolean isListType(Class type)
+	{
+		return List.class.isAssignableFrom(type);
+
+
+	}
+
+	/**
+	 * 判断类type是否是List
+	 * @param type
+	 * @return
+	 */
+	public static boolean isMapType(Class type)
+	{
+		return Map.class.isAssignableFrom(type);
+
+
+	}
+
+	/**
+	 * 判断类type是否是List
+	 * @param type
+	 * @return
+	 */
+	public static boolean isEnumType(Class type)
+	{
+		return type.isEnum();
+
+
+	}
+
+
+
+	/**
      * 判断类type是否是基础数据类型
      * @param type
      * @return
