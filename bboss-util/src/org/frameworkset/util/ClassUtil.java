@@ -15,9 +15,7 @@
  */
 package org.frameworkset.util;
 
-import com.frameworkset.orm.annotation.Column;
-import com.frameworkset.orm.annotation.IgnoreORMapping;
-import com.frameworkset.orm.annotation.PrimaryKey;
+import com.frameworkset.orm.annotation.*;
 import com.frameworkset.util.BeanUtils;
 import com.frameworkset.util.EditorInf;
 import com.frameworkset.util.ValueObjectUtil;
@@ -346,6 +344,15 @@ public class ClassUtil
 					pk = (PrimaryKey)a;
 					classInfo.setPkProperty(this);
 				}
+				else if(a instanceof ESId)
+				{
+
+					classInfo.setEsIdProperty(this);
+				}
+				else if(a instanceof ESParentId)
+				{
+					classInfo.setEsParentProperty(this);
+				}
 				else if(a instanceof Column )
 				{
 					column = new ColumnWraper((Column )a);
@@ -584,8 +591,20 @@ public class ClassUtil
 	{
 
 
-
+		/**
+		 * es和持久层共用
+		 */
 		private volatile transient  PropertieDescription pkProperty;
+
+		/**
+		 * es父id属性
+		 */
+		private volatile transient  PropertieDescription esParentProperty;
+
+		/**
+		 * es父id属性
+		 */
+		private volatile transient  PropertieDescription esIdProperty;
 		/**
 		 * declaredFields保存了类clazz以及父类中的所有属性字段定义，如果子类中和父类变量
 		 * 重名，则安顺包含在数组中，这种情况是不允许的必须过滤掉，也就是说子类中有了和父类中相同签名的方法，则自动过滤掉
@@ -1378,6 +1397,24 @@ public class ClassUtil
 
 		public void setEnums(boolean enums) {
 			this.enums = enums;
+		}
+
+
+
+		public PropertieDescription getEsIdProperty() {
+			return esIdProperty;
+		}
+
+		public void setEsIdProperty(PropertieDescription esIdProperty) {
+			this.esIdProperty = esIdProperty;
+		}
+
+		public PropertieDescription getEsParentProperty() {
+			return esParentProperty;
+		}
+
+		public void setEsParentProperty(PropertieDescription esParentProperty) {
+			this.esParentProperty = esParentProperty;
 		}
 	}
 	

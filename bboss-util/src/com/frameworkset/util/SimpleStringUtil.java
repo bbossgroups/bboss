@@ -284,7 +284,7 @@ public class SimpleStringUtil  {
 					return "/";
 				else
 				{
-					return path.startsWith("/")?path:"/"+path;
+					return path.startsWith("/")?path:new StringBuilder().append("/").append(path).toString();
 				}
 			}
 			else
@@ -303,16 +303,16 @@ public class SimpleStringUtil  {
 		if (path.startsWith("/") ) {
 			
 			if (!contextPath.endsWith("/"))
-				return contextPath + path;
+				return new StringBuilder().append(contextPath).append( path).toString();
 			else {
-				return contextPath.substring(0,contextPath.length() - 1) + path;
+				return new StringBuilder().append(contextPath.substring(0,contextPath.length() - 1)).append( path).toString();
 			}
 
 		} else {
 			if (!contextPath.endsWith("/"))
-				return contextPath + "/" + path;
+				return new StringBuilder().append(contextPath).append("/" ).append(path).toString();
 			else {
-				return contextPath + path;
+				return new StringBuilder().append(contextPath).append( path).toString();
 			}
 		}
 

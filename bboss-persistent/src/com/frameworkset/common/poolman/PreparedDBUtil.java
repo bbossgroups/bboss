@@ -3837,6 +3837,12 @@ public class PreparedDBUtil extends DBUtil {
 	// // bigData.bigdata = this.statement.setBlob(i, x);
 	// }
 
+	/**
+	 *
+	 * @param i set i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param x
+	 * @throws SQLException
+	 */
 	public void setBlob(int i, byte[] x) throws SQLException {
 		try {
 //			this.initBigdata();
@@ -3869,7 +3875,13 @@ public class PreparedDBUtil extends DBUtil {
 		}
 
 	}
-	
+
+	/**
+	 *
+	 * @param i set i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param blob
+	 * @throws SQLException
+	 */
 	public void setBlob(int i, Blob blob) throws SQLException {
 		try {
 //			this.initBigdata();
@@ -4330,6 +4342,12 @@ public class PreparedDBUtil extends DBUtil {
 
 	}
 
+	/**
+	 *
+	 * @param i set i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param d
+	 * @throws SQLException
+	 */
 	public void setDate(int i, java.sql.Date d) throws SQLException {
 		try {
 //			if (this.action == SELECT)
@@ -4344,7 +4362,7 @@ public class PreparedDBUtil extends DBUtil {
 	/**
 	 * 适用于通用的date类型的数据
 	 * 
-	 * @param i
+	 * @param i set i parameterIndex the first parameter is 1, the second is 2, ...
 	 * @param d
 	 *            日期类型
 	 * @throws SQLException
@@ -4369,6 +4387,13 @@ public class PreparedDBUtil extends DBUtil {
 
 	}
 
+	/**
+	 *
+	 * @param i set i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param d
+	 * @param cal
+	 * @throws SQLException
+	 */
 	public void setDate(int i, java.sql.Date d, Calendar cal)
 			throws SQLException {
 		try {
@@ -4381,6 +4406,12 @@ public class PreparedDBUtil extends DBUtil {
 		}
 	}
 
+	/**
+	 *
+	 * @param i set i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param d
+	 * @throws SQLException
+	 */
 	public void setDouble(int i, double d) throws SQLException {
 		try {
 //			if (this.action == SELECT)
@@ -4392,6 +4423,12 @@ public class PreparedDBUtil extends DBUtil {
 		}
 	}
 
+	/**
+	 *
+	 * @param i set i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param f
+	 * @throws SQLException
+	 */
 	public void setFloat(int i, float f) throws SQLException {
 		try {
 //			if (this.action == SELECT)
@@ -4436,6 +4473,12 @@ public class PreparedDBUtil extends DBUtil {
 	// this.statement.setString(i, value);
 	// }
 
+	/**
+	 *
+	 * @param i set i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param x
+	 * @throws SQLException
+	 */
 	public void setInt(int i, int x) throws SQLException {
 		try {
 //			if (this.action == SELECT)
@@ -4447,6 +4490,12 @@ public class PreparedDBUtil extends DBUtil {
 		}
 	}
 
+	/**
+	 *
+	 * @param i set i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param l
+	 * @throws SQLException
+	 */
 	public void setLong(int i, long l) throws SQLException {
 		try {
 //			if (this.action == SELECT)
@@ -4458,6 +4507,12 @@ public class PreparedDBUtil extends DBUtil {
 		}
 	}
 
+	/**
+	 *
+	 * @param i set i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param sqlType
+	 * @throws SQLException
+	 */
 	public void setNull(int i, int sqlType) throws SQLException {
 		try {
 //			if (this.action == SELECT)
@@ -4551,6 +4606,12 @@ public class PreparedDBUtil extends DBUtil {
 		}
 	}
 
+	/**
+	 *
+	 * @param i set i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param s
+	 * @throws SQLException
+	 */
 	public void setString(int i, String s) throws SQLException {
 		try {
 //			if (this.action == SELECT)
@@ -4584,6 +4645,12 @@ public class PreparedDBUtil extends DBUtil {
 		}
 	}
 
+	/**
+	 *
+	 * @param i set i parameterIndex the first parameter is 1, the second is 2, ...
+	 * @param t
+	 * @throws SQLException
+	 */
 	public void setTimestamp(int i, Timestamp t) throws SQLException {
 		try {
 //			if (this.action == SELECT)
