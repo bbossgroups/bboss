@@ -222,6 +222,34 @@ public class DBOracle extends DB
 
     }
     
+    /**
+     * This method is used to format any date string.
+     *
+     * @param date the Date to format
+     * @return The date formatted String for Oracle.
+     */
+    public String filedToDateFunction(String date)
+    {
+    	 return filedToDateFunction( date,this.date_format);
+    }
+    
+    /**
+     * This method is used to format any date string.
+     *
+     * @param date the Date to format
+     * @return The date formatted String for Oracle.
+     */
+    public String filedToDateFunction(String date,String format)
+    {
+    	if(date == null)
+    		return null;
+    	if (date == null)
+            return null;
+
+        return "TO_DATE(" + date
+                + ", '"+format+"')";
+    }
+    
     
 
     /**

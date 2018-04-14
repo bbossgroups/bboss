@@ -257,6 +257,13 @@ public class SimpleStringUtil  {
 		return getRealPath(contextPath, path,false); 
 
 	}
+
+	public static void getRealPath(StringBuilder builder,String contextPath, String path) {
+
+
+		getRealPath(builder,contextPath, path,false);
+
+	}
 	
 	public static boolean isHttpUrl(String path)
 	{
@@ -313,6 +320,69 @@ public class SimpleStringUtil  {
 				return new StringBuilder().append(contextPath).append("/" ).append(path).toString();
 			else {
 				return new StringBuilder().append(contextPath).append( path).toString();
+			}
+		}
+
+	}
+
+	public static void getRealPath(StringBuilder builder,String contextPath, String path,boolean usebase) {
+
+		if(isHttpUrl(path)) {
+			builder.append(path);
+			return;
+		}
+		if (contextPath == null || contextPath.equals("") || contextPath.equals("/")) {
+//			System.out.println("SimpleStringUtil.getRealPath() contextPath:"
+//					+ contextPath);
+			if(usebase)//如果需要检测上下文路径为空串，那么如果path第一个字符不是/，那么需要补充字符/到第一个位置
+			{
+				if(isEmpty(path)) {
+					builder.append("/");
+					return;
+				}
+				else
+				{
+					if(path.startsWith("/"))
+						builder.append(path);
+					else
+						builder.append("/").append(path);
+					return;
+				}
+			}
+			else
+			{
+				if(path != null)
+					builder.append(path);
+				return;
+			}
+
+		}
+		if (path == null || path.equals("")) {
+
+			builder.append( contextPath);
+			return;
+		}
+
+		contextPath = contextPath.replace('\\', '/');
+		path = path.replace('\\', '/');
+		if (path.startsWith("/") ) {
+
+			if (!contextPath.endsWith("/")) {
+				builder.append(contextPath).append(path);
+				return;
+			}
+			else {
+				builder.append(contextPath.substring(0,contextPath.length() - 1)).append( path);
+				return;
+			}
+
+		} else {
+			if (!contextPath.endsWith("/")) {
+				builder.append(contextPath).append("/").append(path);
+			}
+			else {
+				builder.append(contextPath).append( path);
+				return;
 			}
 		}
 
