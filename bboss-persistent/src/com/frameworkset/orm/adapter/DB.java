@@ -356,10 +356,44 @@ public abstract class DB implements  IDMethod,Platform
      * @param date the Date to format
      * @return The date formatted String for Oracle.
      */
+    public String filedToDateFunction(String date)
+    {
+        return ("{ts '" + date + "'}");
+    }
+    
+    /**
+     * This method is used to format any date string.
+     *
+     * @param date the Date to format
+     * @return The date formatted String for Oracle.
+     */
+    public String filedToDateFunction(String date,String format)
+    {
+        return ("{ts '" + date + "'}");
+    }
+    
+    /**
+     * This method is used to format any date string.
+     *
+     * @param date the Date to format
+     * @return The date formatted String for Oracle.
+     */
     public String to_date(String date)
     {
         return ("{ts '" + date + "'}");
     }
+    
+    /**
+     * This method is used to format any date string.
+     *
+     * @param date the Date to format
+     * @return The date formatted String for Oracle.
+     */
+    public String to_date(String date,String format)
+    {
+        return ("{ts '" + date + "'}");
+    }
+
     
     /**
      * This method is used to format any date string.
@@ -382,16 +416,7 @@ public abstract class DB implements  IDMethod,Platform
 
         return ("{ts '" + ts + "'}");
     }
-    /**
-     * This method is used to format any date string.
-     *
-     * @param date the Date to format
-     * @return The date formatted String for Oracle.
-     */
-    public String to_date(String date,String format)
-    {
-        return ("{ts '" + date + "'}");
-    }
+     
 
     /**
      * This method is used to format any date string.

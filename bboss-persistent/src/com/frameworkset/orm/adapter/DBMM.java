@@ -69,6 +69,7 @@ public class DBMM extends DB
 
 //    /** A specialized date format for MySQL. */
 //    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	private static final String defaultFiledTodateFormat = "%Y-%m-%d %H:%i:%s";
     public String sysdate()
     {
     	return "sysdate()";
@@ -406,6 +407,36 @@ public class DBMM extends DB
     		return null;
         char delim = getStringDelimiter();
         return (delim + new SimpleDateFormat(format == null?this.date_format:format).format(SimpleStringUtil.stringToDate(date,format)) + delim);
+    }
+    
+    /**
+     * This method is used to format any date string.
+     *
+     * @param date the Date to format
+     * @return The date formatted String for Oracle.
+     */
+    public String filedToDateFunction(String date)
+    {
+    	if(date == null)
+    		return null;
+//        char delim = getStringDelimiter();
+    	//str_to_date(a.end_time,'%Y%m%d %H:%i:%s')
+        return new StringBuilder().append("str_to_date(").append(date ).append(",'").append( defaultFiledTodateFormat).append("')").toString();
+    	
+//    	return date;
+    }
+    
+    /**
+     * This method is used to format any date string.
+     *
+     * @param date the Date to format
+     * @return The date formatted String for Oracle.
+     */
+    public String filedToDateFunction(String date,String format)
+    {
+    	if(date == null)
+    		return null;
+    	return new StringBuilder().append("str_to_date(").append(date ).append(",'").append( format).append("')").toString();
     }
     
     /**
