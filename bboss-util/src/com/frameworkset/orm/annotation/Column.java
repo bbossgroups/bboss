@@ -15,12 +15,12 @@
  */
 package com.frameworkset.orm.annotation;
 
+import org.frameworkset.util.annotations.ValueConstants;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import org.frameworkset.util.annotations.ValueConstants;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -32,6 +32,7 @@ public  @interface Column {
 	String type() default ValueConstants.DEFAULT_NONE;
 	String charset() default ValueConstants.DEFAULT_NONE;
 	String editor() default ValueConstants.DEFAULT_NONE;
+	String escape() default ValueConstants.DEFAULT_NONE;
 	/**
 	 * 忽略创建、修改、删除时属性值绑定
 	 * @return
