@@ -39,6 +39,10 @@ public class ColumnWraper {
 	private String charset;
 	private String editor;
 	/**
+	 * 控制elasticsearch条件是否需要转义，默认需要转义
+	 */
+	private Boolean escape = null;
+	/**
 	 * 改进持久or mapping机制，Column注解添加ignorebind和ignoreCUDbind，editorparams
 	 */
 	private String editorparams;
@@ -58,6 +62,14 @@ public class ColumnWraper {
 		this.editor = AnnotationUtils.converDefaultValue(column.editor());
 		this.ignoreCUDbind = column.ignoreCUDbind();
 		this.ignorebind = column.ignorebind();
+		String _escape = AnnotationUtils.converDefaultValue(column.escape());
+		if(_escape != null ){
+			if(_escape.equals("true"))
+				this.escape = true;
+			else if(_escape.equals("false"))
+				this.escape = false;
+		}
+
 		if (dataformat != null && !dataformat.trim().equals("")){
 			dateFormateMeta = DateFormateMeta.buildDateFormateMeta(dataformat, column.locale());
 			this.locale = dateFormateMeta.getLocale();
@@ -137,5 +149,10 @@ public class ColumnWraper {
 	public DateFormateMeta getDateFormateMeta() {
 		return dateFormateMeta;
 	}
+
+	public Boolean isEscape() {
+		return escape;
+	}
+
 
 }
