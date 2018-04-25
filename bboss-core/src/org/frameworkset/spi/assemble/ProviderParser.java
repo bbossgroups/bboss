@@ -15,13 +15,6 @@
  */
 package org.frameworkset.spi.assemble;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
-
 import org.frameworkset.soa.SerialFactory;
 import org.frameworkset.soa.SerialFactory.MagicClass;
 import org.frameworkset.spi.BaseApplicationContext;
@@ -30,6 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.*;
 
 /**
  * 
@@ -602,11 +597,17 @@ public class ProviderParser extends DefaultHandler
     		else if(!Pro.isFixAttribute(name))
     		{
     			String value = attributes.getValue(i);
-    			if(configPropertiesFile != null && configPropertiesFile.size() > 0)
+    			/**
+    			if(configPropertiesFile != null && configPropertiesFile.size() > 0)//有可能文件不存在，并且变量都有默认值，必须强制计算变量这种的值
     			{
     				
     				 value = Pro.evalValue(  value,  configPropertiesFile,this);
-    			}
+    			}*/
+				if(configPropertiesFile != null)//有可能文件不存在，并且变量都有默认值，必须强制计算变量这种的值
+				{
+
+					value = Pro.evalValue(  value,  configPropertiesFile,this);
+				}
     			
     		    extendsAttributes.put(name, value);
     		}
