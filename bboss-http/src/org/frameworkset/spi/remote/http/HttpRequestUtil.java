@@ -449,7 +449,7 @@ public class HttpRequestUtil {
     }
 
     /**
-     * get请求URL
+     * head请求URL
      *
      * @param url
      * @throws Exception
@@ -471,12 +471,34 @@ public class HttpRequestUtil {
     }
 
     /**
-     * get请求URL
+     * head请求URL
      *
      * @param url
      * @throws Exception
      */
+    public static <T> T httpHead(String poolname, String url,Map<String, Object> params,Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
+        return httpHead(  poolname,   url,   null, null,params, (Map<String, String>) headers,responseHandler);
+
+    }
+
+    /**
+     * get请求URL
+     * ,Map<String, Object> params,Map<String, String> headers,
+     * @param url
+     * @throws Exception
+     */
     public static <T> T httpHead(String poolname, String url, String cookie, String userAgent, Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
+       return httpHead(  poolname,   url,   cookie,   userAgent,(Map<String, Object> )null, headers,responseHandler);
+
+    }
+
+    /**
+     * get请求URL
+     * ,Map<String, Object> params,Map<String, String> headers,
+     * @param url
+     * @throws Exception
+     */
+    public static <T> T httpHead(String poolname, String url, String cookie, String userAgent,Map<String, Object> params, Map<String, String> headers,ResponseHandler<T> responseHandler) throws Exception {
         // String cookie = getCookie();
         // String userAgent = getUserAgent();
 
@@ -491,7 +513,17 @@ public class HttpRequestUtil {
             try {
                 httpClient = getHttpClient(config);
                 httpHead = getHttpHead(config, url, cookie, userAgent, headers);
-
+                HttpParams httpParams = null;
+                if(params != null && params.size() > 0) {
+                    httpParams = new BasicHttpParams();
+                    Iterator<Entry<String, Object>> it = params.entrySet().iterator();
+                    NameValuePair paramPair_ = null;
+                    for (int i = 0; it.hasNext(); i++) {
+                        Entry<String, Object> entry = it.next();
+                        httpParams.setParameter(entry.getKey(), entry.getValue());
+                    }
+                    httpHead.setParams(httpParams);
+                }
 //                // Create a custom response handler
 //                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
 //
@@ -520,12 +552,12 @@ public class HttpRequestUtil {
             } catch (HttpHostConnectException e) {
                 time++;
                 if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
+                    if(config.getRetryInterval() > 0)
+                        try {
+                            Thread.sleep(config.getRetryInterval());
+                        } catch (InterruptedException e1) {
+                            break;
+                        }
                     continue;
                 }
                 // 发生致命的异常，可能是协议不对或者返回的内容有问题
@@ -533,18 +565,18 @@ public class HttpRequestUtil {
             } catch (UnknownHostException e) {
                 time++;
                 if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
+                    if(config.getRetryInterval() > 0)
+                        try {
+                            Thread.sleep(config.getRetryInterval());
+                        } catch (InterruptedException e1) {
+                            break;
+                        }
                     continue;
                 }
                 // 发生网络异常
                 throw   e;
             }
-            catch (Exception e) {               
+            catch (Exception e) {
                 throw   e;
             } finally {
                 // 释放连接

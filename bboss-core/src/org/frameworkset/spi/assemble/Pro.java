@@ -1,14 +1,11 @@
 package org.frameworkset.spi.assemble;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
-
+import com.frameworkset.orm.annotation.RollbackExceptions;
+import com.frameworkset.orm.annotation.Transaction;
+import com.frameworkset.orm.annotation.TransactionType;
+import com.frameworkset.spi.assemble.BeanInstanceException;
+import com.frameworkset.util.EditorInf;
+import com.frameworkset.util.ValueObjectUtil;
 import org.frameworkset.soa.SerialFactory.MagicClass;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
@@ -17,12 +14,10 @@ import org.frameworkset.spi.async.annotation.Async;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.orm.annotation.RollbackExceptions;
-import com.frameworkset.orm.annotation.Transaction;
-import com.frameworkset.orm.annotation.TransactionType;
-import com.frameworkset.spi.assemble.BeanInstanceException;
-import com.frameworkset.util.EditorInf;
-import com.frameworkset.util.ValueObjectUtil;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.*;
 
 /**
  * 
@@ -710,19 +705,21 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	}
 	public void setValue(String value,PropertiesContainer configPropertiesFile,ProviderParser providerParser) {
 		modify();
-		if(configPropertiesFile != null )
+		if(configPropertiesFile != null )//有可能文件不存在，并且变量都有默认值，必须强制计算变量这种的值
 		{
+			/**
 			if( configPropertiesFile.size() > 0 ){
 				this.value = evalValue(  value,  configPropertiesFile,providerParser);
 			}
-			else if(providerParser != null && 
+			else if(providerParser != null &&
 					providerParser.getApplicationContext().getServiceProviderManager().findVariableFromSelf())
 			{
-				this.value = evalValue(  value,  configPropertiesFile,providerParser);				
+				this.value = evalValue(  value,  configPropertiesFile,providerParser);
 			}
 			else {
 				this.value = value;
-			}
+			}*/
+			this.value = evalValue(  value,  configPropertiesFile,providerParser);
 		}
 		else
 		{

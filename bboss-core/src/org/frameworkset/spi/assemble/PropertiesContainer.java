@@ -1,16 +1,6 @@
 package org.frameworkset.spi.assemble;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
+import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.util.io.ClassPathResource;
 import org.frameworkset.util.tokenizer.TextGrammarParser;
@@ -18,7 +8,11 @@ import org.frameworkset.util.tokenizer.TextGrammarParser.GrammarToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.util.SimpleStringUtil;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 public class PropertiesContainer {
     protected List<String> configPropertiesFiles;
@@ -34,14 +28,27 @@ public class PropertiesContainer {
     	}
     	if(allProperties  == null)
     		allProperties = new Properties();
-    	this.configPropertiesFiles.add(configPropertiesFile);
-    	evalfile(configPropertiesFile);
+
+    	String[] configPropertiesFiles = configPropertiesFile.split(",");//属性文件可以配置多个，每个用逗号分隔
+		for(String file_:configPropertiesFiles) {
+			this.configPropertiesFiles.add(file_);
+			evalfile(file_, linkfile);
+		}
     	if(linkfile != null)
     		loopback(linkfile);
     	
     }
-    
-    public String evalValue(String value,ProviderParser providerParser)
+
+
+
+	/**
+	 * 计算值中存在的变量的值，首先从外部属性文件中获取变量值，如果没有对应的值，再从ioc对于配置文件中获取，如果都没有获取到，看看有没有默认值，如果
+	 * 有默认值，则采用默认值
+	 * @param value
+	 * @param providerParser
+	 * @return
+	 */
+	public String evalValue(String value,ProviderParser providerParser)
 	{
 		
 		if(SimpleStringUtil.isEmpty(value))
@@ -104,7 +111,7 @@ public class PropertiesContainer {
     {
     	linkfile.loopback(this);
     }
-    private void evalfile(String configPropertiesFile)
+    private void evalfile(String configPropertiesFile,LinkConfigFile linkfile)
     {
     	Properties properties = new java.util.Properties();
     	
@@ -116,21 +123,57 @@ public class PropertiesContainer {
     		if(!configPropertiesFile.startsWith("file:"))
     		{
 		    	ClassPathResource  resource = new ClassPathResource(configPropertiesFile);
-		    	input = resource.getInputStream();
+
 		    	try{
+					input = resource.getInputStream();
 		    		if(log.isDebugEnabled())
 		    			log.debug("load config Properties File :"+resource.getURL());
 		    	}
 		    	catch(Exception e){
-		    		
+		    		if(linkfile == null)
+						log.warn(new StringBuilder().append("Load config Properties File failed:")
+												.append(configPropertiesFile)
+												.append(" in ")
+												.append(" cannot be opened because it does not exist,Ignored load.").toString());
+		    		else {
+						StringBuilder builder = new StringBuilder();
+						builder.append("Load config Properties File failed:")
+								.append(configPropertiesFile)
+								.append(" in ");
+						linkfile.toString(builder);
+						builder.append(" cannot be opened because it does not exist,Ignored load.");
+						log.warn(builder.toString());
+					}
 		    	}
     		}
     		else
     		{
     			String _configPropertiesFile = configPropertiesFile.substring("file:".length());
-    			input = new FileInputStream(new File(_configPropertiesFile));
-    			if(log.isDebugEnabled())
-	    			log.debug("load config Properties File :"+_configPropertiesFile);
+    			File configFile = new File(_configPropertiesFile);
+
+    			if(configFile.exists()) {
+
+					input = new FileInputStream(configFile);
+					if (log.isDebugEnabled())
+						log.debug("load config Properties File :" + _configPropertiesFile);
+				}
+				else
+				{
+					if(linkfile == null)
+						log.warn(new StringBuilder().append("Load config Properties File failed:")
+								.append(configPropertiesFile)
+								.append(" in ")
+								.append(" cannot be opened because it does not exist,Ignored load.").toString());
+					else {
+						StringBuilder builder = new StringBuilder();
+						builder.append("Load config Properties File failed:")
+								.append(configPropertiesFile)
+								.append(" in ");
+						linkfile.toString(builder);
+						builder.append(" cannot be opened because it does not exist,Ignored load.");
+						log.warn(builder.toString());
+					}
+				}
     		}
     		if(input != null) {
 				read = new InputStreamReader(input, "UTF-8");

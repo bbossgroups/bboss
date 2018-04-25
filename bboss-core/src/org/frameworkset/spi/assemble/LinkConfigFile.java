@@ -101,7 +101,7 @@ public class LinkConfigFile {
 	
 	public String toString()
 	{
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		if(parent != null)
 		{
 			ret.append(this.parent.toString())
@@ -113,10 +113,23 @@ public class LinkConfigFile {
 		}
 		return ret.toString();
 	}
+
+	public void toString(StringBuilder builder)
+	{
+		if(parent != null)
+		{
+			builder.append(this.parent.toString())
+					.append("@").append(this.configFile);
+		}
+		else
+		{
+			builder.append(this.configFile);
+		}
+	}
 	
 	public String toString(String subfile)
     {
-        StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
         if(parent != null)
         {
             ret.append(this.parent.toString())
