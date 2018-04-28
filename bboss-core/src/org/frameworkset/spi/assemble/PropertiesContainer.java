@@ -19,6 +19,9 @@ public class PropertiesContainer {
     protected Properties allProperties ;
     protected Properties sonAndParentProperties ;
     private static Logger log = LoggerFactory.getLogger(PropertiesContainer.class);
+    public PropertiesContainer(){
+
+	}
     public void addConfigPropertiesFile(String configPropertiesFile,LinkConfigFile linkfile)
     {
     	if(configPropertiesFiles == null)
@@ -234,9 +237,14 @@ public class PropertiesContainer {
 	
 	public String getPropertyFromSelf2ndSons(String property)
     {
+    	String value = null;
     	if(sonAndParentProperties == null)
-    		return null;
-    	return sonAndParentProperties.getProperty(property);
+			value = null;
+    	else
+			value = sonAndParentProperties.getProperty(property);
+		if(value == null)
+			value = getProperty( property);
+		return value;
     }
     
     public int size()
