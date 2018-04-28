@@ -16,62 +16,27 @@
 
 package org.frameworkset.spi;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.Set;
-
-import org.frameworkset.spi.assemble.BaseTXManager;
-import org.frameworkset.spi.assemble.BeanAccembleHelper;
-import org.frameworkset.spi.assemble.BeanInf;
-import org.frameworkset.spi.assemble.LinkConfigFile;
-import org.frameworkset.spi.assemble.Pro;
-import org.frameworkset.spi.assemble.ProArray;
-import org.frameworkset.spi.assemble.ProList;
-import org.frameworkset.spi.assemble.ProMap;
-import org.frameworkset.spi.assemble.ProProperties;
-import org.frameworkset.spi.assemble.ProSet;
-import org.frameworkset.spi.assemble.ProviderManagerInfo;
-import org.frameworkset.spi.assemble.RefID;
-import org.frameworkset.spi.assemble.ServiceProviderManager;
-import org.frameworkset.spi.assemble.callback.AssembleCallback;
-import org.frameworkset.spi.cglib.BaseCGLibProxy;
-import org.frameworkset.spi.cglib.CGLibProxy;
-import org.frameworkset.spi.cglib.CGLibUtil;
-import org.frameworkset.spi.cglib.SimpleCGLibProxy;
-import org.frameworkset.spi.cglib.SynCGLibProxy;
-import org.frameworkset.spi.cglib.SynTXCGLibProxy;
-import org.frameworkset.spi.support.DelegatingMessageSource;
-import org.frameworkset.spi.support.HotDeployResourceBundleMessageSource;
-import org.frameworkset.spi.support.MessageSource;
-import org.frameworkset.spi.support.MessageSourceResolvable;
-import org.frameworkset.spi.support.NoSuchMessageException;
-import org.frameworkset.util.Assert;
-import org.frameworkset.util.ClassUtil;
-import org.frameworkset.util.ClassUtil.ClassInfo;
-import org.frameworkset.util.io.DefaultResourceLoader;
-import org.frameworkset.util.io.PathMatchingResourcePatternResolver;
-import org.frameworkset.util.io.Resource;
-import org.frameworkset.util.io.ResourceLoader;
-import org.frameworkset.util.io.ResourcePatternResolver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.frameworkset.proxy.InvocationHandler;
 import com.frameworkset.proxy.ProxyFactory;
 import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.util.SimpleStringUtil;
+import org.frameworkset.spi.assemble.*;
+import org.frameworkset.spi.assemble.callback.AssembleCallback;
+import org.frameworkset.spi.cglib.*;
+import org.frameworkset.spi.support.*;
+import org.frameworkset.util.Assert;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.frameworkset.util.io.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.*;
+import java.util.Map.Entry;
 
 
 /**
@@ -135,7 +100,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 * @see MessageSource
 	 */
 	public static final String MESSAGE_SOURCE_BEAN_NAME = "messageSource";
-	
+
 	/**
 	 * 获取指定根配置文件上下文bean组件管理容器，配置文件从参数configfile对应配置文件开始
 	 * 不同的上下文件环境容器互相隔离，组件间不存在依赖关系，属性也不存在任何引用关系。
@@ -493,7 +458,6 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	/**
 	 * Destroy the given bean instance (typically coming from {@link #createBean}),
 	 * applying the {@link DisposableBean} contract as well as
-	 * registered {@link DestructionAwareBeanPostProcessor DestructionAwareBeanPostProcessors}.
 	 * <p>Any exception that arises during destruction should be caught
 	 * and logged instead of propagated to the caller of this method.
 	 * @param existingBean the bean instance to destroy
@@ -567,10 +531,6 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	/**
 	 * Fill the given properties from the given resource.
 	 * 
-	 * @param props
-	 *            the Properties instance to fill
-	 * @param resource
-	 *            the resource to load from
 	 * @throws IOException
 	 *             if loading failed
 	 */
@@ -711,6 +671,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 	static Object lockshutdown = new Object();
 	static PriorComparator priorComparator = new PriorComparator();
+
+
 	static class PriorComparator implements Comparator<WrapperRunnable>{
 		
 		public int compare(WrapperRunnable o1, WrapperRunnable o2) {
@@ -1736,7 +1698,6 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 * @param context
 	 * @param providerManagerInfo
 	 * @param defaultValue
-	 * @param serviceID
 	 * @return
 	 */
 	public Object getBeanObject(CallContext context, Pro providerManagerInfo,
@@ -1811,7 +1772,6 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 * @param context
 	 * @param providerManagerInfo
 	 * @param defaultValue
-	 * @param serviceID
 	 * @return
 	 */
 	protected Object getBeanObjectFromRefID(CallContext context, Pro providerManagerInfo,
@@ -2531,13 +2491,24 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		return providerManager.getType(beanNameToCheck);
 	}
 	/**
-	 * 获取外部属性
+	 * 获取外部属性配置文件中的属性值
 	 * @param property
 	 * @return
 	 */
 	public String getExternalProperty(String property)
 	{
 		return providerManager.getExternalProperty(property);
+	}
+
+	/**
+	 * 获取外部属性配置文件中的属性值,如果属性值为空，则返回defaultValue
+	 * @param property
+	 * @param defaultValue
+	 * @return
+	 */
+	public String getExternalProperty(String property,String defaultValue)
+	{
+		return providerManager.getExternalProperty(property,defaultValue);
 	}
 
 	/**

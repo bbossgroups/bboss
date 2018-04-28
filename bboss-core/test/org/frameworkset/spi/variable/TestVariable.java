@@ -28,11 +28,20 @@ public class TestVariable {
 	@Test
 	public void testExternal()
 	{
-		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/variable/parent-var.xml");
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/variable/ioc-var.xml");
 		System.out.println(context.getExternalProperty("varValue"));
 		System.out.println(context.getExternalProperty("varValue1"));
 		System.out.println(context.getExternalProperty("varValue2"));
 		 
+	}
+	@Test
+	public void testExternal1()
+	{
+		BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("org/frameworkset/spi/variable/parent-var.xml");
+		System.out.println(context.getExternalProperty("varValue"));
+		System.out.println(context.getExternalProperty("varValue1"));
+		System.out.println(context.getExternalProperty("varValue2"));
+
 	}
 	@Test
 	public void testVariableDefualtValue()

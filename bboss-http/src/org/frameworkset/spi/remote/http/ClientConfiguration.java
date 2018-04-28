@@ -470,6 +470,20 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		}
 		return defaultClientConfiguration;
 	}
+	private static ClientConfiguration _getDefaultClientConfiguration(BaseApplicationContext context){
+//		loadClientConfiguration();
+		if(defaultClientConfiguration != null)
+			return defaultClientConfiguration;
+		{
+
+			try {
+				defaultClientConfiguration = makeDefualtClientConfiguration("default",context);
+			} catch (Exception e) {
+				throw new HttpRuntimeException("Get DefaultClientConfiguration[default] failed:",e);
+			}
+		}
+		return defaultClientConfiguration;
+	}
 	private static ClientConfiguration makeDefualtClientConfiguration(String name) throws Exception {
 
 		ClientConfiguration clientConfiguration = clientConfigs.get(name);
@@ -517,6 +531,154 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		}
 		return clientConfiguration;
 
+	}
+
+	private static long _getLongValue(String poolName,String propertyName,BaseApplicationContext context,long defaultValue) throws Exception {
+		String _value = null;
+		if(poolName.equals("default")){
+			_value = (String)context.getExternalProperty(propertyName);
+			if(_value == null)
+				_value = (String)context.getExternalProperty(poolName+"."+propertyName);
+
+		}
+		else{
+			_value = (String)context.getExternalProperty(poolName+"."+propertyName);
+		}
+		if(_value == null){
+			return defaultValue;
+		}
+		try {
+			long ret = Long.parseLong(_value);
+			return ret;
+		}
+		catch (Exception e){
+			throw e;
+		}
+	}
+
+	private static int _getIntValue(String poolName,String propertyName,BaseApplicationContext context,int defaultValue) throws Exception {
+		String _value = null;
+		if(poolName.equals("default")){
+			_value = (String)context.getExternalProperty(propertyName);
+			if(_value == null)
+				_value = (String)context.getExternalProperty(poolName+"."+propertyName);
+
+		}
+		else{
+			_value = (String)context.getExternalProperty(poolName+"."+propertyName);
+		}
+		if(_value == null){
+			return defaultValue;
+		}
+		try {
+			int ret = Integer.parseInt(_value);
+			return ret;
+		}
+		catch (Exception e){
+			throw e;
+		}
+	}
+	private static String _getStringValue(String poolName,String propertyName,BaseApplicationContext context,String defaultValue) throws Exception {
+		String _value = null;
+		if(poolName.equals("default")){
+			_value = (String)context.getExternalProperty(propertyName);
+			if(_value == null)
+				_value = (String)context.getExternalProperty(poolName+"."+propertyName);
+
+		}
+		else{
+			_value = (String)context.getExternalProperty(poolName+"."+propertyName);
+		}
+		if(_value == null){
+			return defaultValue;
+		}
+		return _value;
+	}
+
+	private static HostnameVerifier _getHostnameVerifier(String hostnameVerifier) throws Exception {
+
+		if(hostnameVerifier == null){
+			return null;
+		}
+		if(hostnameVerifier.equals("defualt"))
+			return org.apache.http.conn.ssl.SSLConnectionSocketFactory.getDefaultHostnameVerifier();
+		else
+			return org.apache.http.conn.ssl.SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+	}
+
+	private static ClientConfiguration makeDefualtClientConfiguration(String name,BaseApplicationContext context) throws Exception {
+
+		ClientConfiguration clientConfiguration = clientConfigs.get(name);
+		if(clientConfiguration != null){
+			return clientConfiguration;
+		}
+		synchronized (ClientConfiguration.class){
+			clientConfiguration = clientConfigs.get(name);
+			if(clientConfiguration != null){
+				return clientConfiguration;
+			}
+
+			 {
+				clientConfiguration = new ClientConfiguration();
+				/**
+				 *http.timeoutConnection = 400000
+				 * http.timeoutSocket = 400000
+				 * http.connectionRequestTimeout=400000
+				 * http.retryTime = 1
+				 * http.maxLineLength = -1
+				 * http.maxHeaderCount = 200
+				 * http.maxTotal = 400
+				 * http.defaultMaxPerRoute = 200
+				 * #http.keystore =
+				 * #http.keyPassword =
+				 * #http.hostnameVerifier =
+				 */
+
+				int timeoutConnection = ClientConfiguration._getIntValue(name,"http.timeoutConnection",context,40000);
+
+				clientConfiguration.setTimeoutConnection(timeoutConnection);
+				int timeoutSocket = ClientConfiguration._getIntValue(name,"http.timeoutSocket",context,40000);
+				clientConfiguration.setTimeoutSocket(timeoutSocket);
+				int connectionRequestTimeout = ClientConfiguration._getIntValue(name,"http.connectionRequestTimeout",context,40000);
+				clientConfiguration.setConnectionRequestTimeout(connectionRequestTimeout);
+				int retryTime = ClientConfiguration._getIntValue(name,"http.retryTime",context,-1);
+				clientConfiguration.setRetryTime(retryTime);
+				int maxLineLength = ClientConfiguration._getIntValue(name,"http.maxLineLength",context,-1);
+				clientConfiguration.setMaxLineLength(maxLineLength);
+				int maxHeaderCount = ClientConfiguration._getIntValue(name,"http.maxHeaderCount",context,500);
+				clientConfiguration.setMaxHeaderCount(maxHeaderCount);
+				int maxTotal = ClientConfiguration._getIntValue(name,"http.maxTotal",context,1000);
+				clientConfiguration.setMaxTotal(maxTotal);
+				int defaultMaxPerRoute = ClientConfiguration._getIntValue(name,"http.defaultMaxPerRoute",context,200);
+				clientConfiguration.setDefaultMaxPerRoute(defaultMaxPerRoute);
+				String keystore = ClientConfiguration._getStringValue(name,"http.keystore",context,null);
+				clientConfiguration.setKeystore(keystore);
+				String keyPassword = ClientConfiguration._getStringValue(name,"http.keyPassword",context,null);
+				clientConfiguration.setKeyPassword(keyPassword);
+				String hostnameVerifier = ClientConfiguration._getStringValue(name,"http.hostnameVerifier",context,null);
+				clientConfiguration.setHostnameVerifier(_getHostnameVerifier(hostnameVerifier));
+				clientConfiguration.setBeanName(name);
+
+				clientConfiguration.afterPropertiesSet();
+				clientConfigs.put(name, clientConfiguration);
+			}
+		}
+		return clientConfiguration;
+
+	}
+		//初始化Http连接池
+			ClientConfiguration.configClientConfiguation(serverName,context);
+		}
+	}
+	private static ClientConfiguration configClientConfiguation(String poolname,BaseApplicationContext context){
+//		loadClientConfiguration();
+		if(poolname == null || poolname.equals("default"))
+			return _getDefaultClientConfiguration(context);
+		try {
+			return makeDefualtClientConfiguration(poolname,context);
+		} catch (Exception e) {
+			throw new HttpRuntimeException("makeDefualtClientConfiguration ["+poolname+"] failed:",e);
+		}
 	}
 	public static ClientConfiguration getClientConfiguration(String poolname){
 		loadClientConfiguration();
