@@ -666,7 +666,9 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		return clientConfiguration;
 
 	}
+	public static void bootClientConfiguations(String[] serverNames,BaseApplicationContext context){
 		//初始化Http连接池
+		for(String serverName:serverNames){
 			ClientConfiguration.configClientConfiguation(serverName,context);
 		}
 	}
