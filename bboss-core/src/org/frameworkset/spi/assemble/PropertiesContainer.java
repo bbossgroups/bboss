@@ -2,6 +2,7 @@ package org.frameworkset.spi.assemble;
 
 import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.assemble.plugin.PropertiesFilePlugin;
 import org.frameworkset.util.io.ClassPathResource;
 import org.frameworkset.util.tokenizer.TextGrammarParser;
 import org.frameworkset.util.tokenizer.TextGrammarParser.GrammarToken;
@@ -41,6 +42,35 @@ public class PropertiesContainer {
     		loopback(linkfile);
     	
     }
+
+	public void addConfigPropertiesFromPlugin(String configPropertiesPlugin, LinkConfigFile linkfile, BaseApplicationContext applicationContext)
+	{
+
+		if(configPropertiesFiles == null)
+		{
+			configPropertiesFiles = new ArrayList<String>();
+
+		}
+		if(allProperties  == null)
+			allProperties = new Properties();
+
+		try {
+			Class clazz = Class.forName(configPropertiesPlugin.trim());
+			PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin)clazz.newInstance();
+			String configPropertiesFile = propertiesFilePlugin.getFiles( applicationContext);
+			String[] configPropertiesFiles = configPropertiesFile.split(",");//属性文件可以配置多个，每个用逗号分隔
+			for(String file_:configPropertiesFiles) {
+				this.configPropertiesFiles.add(file_);
+				evalfile(file_, linkfile);
+			}
+			if(linkfile != null)
+				loopback(linkfile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+	}
 
 
 

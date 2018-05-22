@@ -1191,8 +1191,13 @@ public class ProviderParser extends DefaultHandler
         	if(this.configPropertiesFile == null)
         		configPropertiesFile = new PropertiesContainer();
         	String file = attributes.getValue("file");
-        	if(file != null)
-        		this.configPropertiesFile.addConfigPropertiesFile(file,this.linkfile);
+        	if(file != null) {
+				this.configPropertiesFile.addConfigPropertiesFile(file, this.linkfile);
+			}
+        	else{
+				file = attributes.getValue("plugin");
+				this.configPropertiesFile.addConfigPropertiesFromPlugin(file, this.linkfile,this.applicationContext);
+			}
         }
         else
         {
