@@ -153,6 +153,19 @@ public class ClassUtil
 		private IgnoreBind ignoreBind;
 		private IgnoreORMapping ignoreORMapping;
 		private MapKey mapkey;
+
+		/**es相关属性*/
+		private boolean persistentESId;
+		private boolean persistentESParentId;
+		private boolean persistentESVersion;
+		private boolean persistentESVersionType;
+		private boolean persistentESRetryOnConflict;
+		private boolean persistentESRouting;
+		private boolean persistentESDocAsUpsert;
+		private boolean persistentESSource;
+
+
+
 		public IgnoreBind getIgnoreBind() {
 			return ignoreBind;
 		}
@@ -346,13 +359,45 @@ public class ClassUtil
 				}
 				else if(a instanceof ESId)
 				{
-
 					classInfo.setEsIdProperty(this);
+					this.persistentESId = ((ESId)a).persistent();
 				}
 				else if(a instanceof ESParentId)
 				{
 					classInfo.setEsParentProperty(this);
+					this.persistentESParentId = ((ESParentId)a).persistent();
 				}
+				else if(a instanceof ESVersion)
+				{
+					classInfo.setEsVersionProperty(this);
+					this.persistentESVersion = ((ESVersion)a).persistent();
+				}
+				else if(a instanceof ESVersionType)
+				{
+					classInfo.setEsVersionTypeProperty(this);
+					this.persistentESVersionType = ((ESVersionType)a).persistent();
+				}
+				else if(a instanceof ESRetryOnConflict)
+				{
+					classInfo.setEsRetryOnConflictProperty(this);
+					this.persistentESRetryOnConflict = ((ESRetryOnConflict)a).persistent();
+				}
+				else if(a instanceof ESRouting)
+				{
+					classInfo.setEsRoutingProperty(this);
+					this.persistentESRouting = ((ESRouting)a).persistent();
+				}
+				else if(a instanceof ESDocAsUpsert)
+				{
+					classInfo.setEsDocAsUpsertProperty(this);
+					this.persistentESDocAsUpsert = ((ESDocAsUpsert)a).persistent();
+				}
+				else if(a instanceof ESSource)
+				{
+					classInfo.setEsReturnSourceProperty(this);
+					this.persistentESSource = ((ESSource)a).persistent();
+				}
+
 				else if(a instanceof Column )
 				{
 					column = new ColumnWraper((Column )a);
@@ -586,25 +631,99 @@ public class ClassUtil
 			return ignoreORMapping;
 		}
 
+		public boolean isPersistentESId() {
+			return persistentESId;
+		}
+
+		public boolean isPersistentESParentId() {
+			return persistentESParentId;
+		}
+
+		public boolean isPersistentESVersion() {
+			return persistentESVersion;
+		}
+
+		public boolean isPersistentESVersionType() {
+			return persistentESVersionType;
+		}
+
+		public boolean isPersistentESRetryOnConflict() {
+			return persistentESRetryOnConflict;
+		}
+
+		public boolean isPersistentESRouting() {
+			return persistentESRouting;
+		}
+
+		public boolean isPersistentESDocAsUpsert() {
+			return persistentESDocAsUpsert;
+		}
+
+		public boolean isPersistentESSource() {
+			return persistentESSource;
+		}
 	}
 	public static class ClassInfo
 	{
 
 
 		/**
-		 * es和持久层共用
+		 * 持久层主键
 		 */
 		private volatile transient  PropertieDescription pkProperty;
+		private volatile transient List<PropertieDescription> esAnnonationProperties = new ArrayList<PropertieDescription>(10);
 
 		/**
-		 * es父id属性
+		 * es父id属性标识
 		 */
 		private volatile transient  PropertieDescription esParentProperty;
 
 		/**
-		 * es父id属性
+		 * esid属性
 		 */
 		private volatile transient  PropertieDescription esIdProperty;
+
+		/**
+		@ESVersion
+		protected int version;
+		@ESVersionType
+		protected String versionType;
+		@ESRetryOnConflict
+		protected int retryOnConflict;
+		@ESRouting
+		protected String routing;
+		@ESDocAsUpsert
+		protected boolean docAsUpsert;
+		@ESSource
+		protected boolean returnSource;
+		*/
+		/**
+		 * es父id属性标识
+		 */
+		private volatile transient  PropertieDescription esVersionProperty;
+
+		/**
+		 * esid属性
+		 */
+		private volatile transient  PropertieDescription esVersionTypeProperty;
+		/**
+		 * es父id属性标识
+		 */
+		private volatile transient  PropertieDescription esRetryOnConflictProperty;
+
+		/**
+		 * esid属性
+		 */
+		private volatile transient  PropertieDescription esRoutingProperty;
+		/**
+		 * es父id属性标识
+		 */
+		private volatile transient  PropertieDescription esDocAsUpsertProperty;
+
+		/**
+		 * esid属性
+		 */
+		private volatile transient  PropertieDescription esReturnSourceProperty;
 		/**
 		 * declaredFields保存了类clazz以及父类中的所有属性字段定义，如果子类中和父类变量
 		 * 重名，则安顺包含在数组中，这种情况是不允许的必须过滤掉，也就是说子类中有了和父类中相同签名的方法，则自动过滤掉
@@ -1407,6 +1526,7 @@ public class ClassUtil
 
 		public void setEsIdProperty(PropertieDescription esIdProperty) {
 			this.esIdProperty = esIdProperty;
+			this.esAnnonationProperties.add(this.esIdProperty);
 		}
 
 		public PropertieDescription getEsParentProperty() {
@@ -1415,6 +1535,65 @@ public class ClassUtil
 
 		public void setEsParentProperty(PropertieDescription esParentProperty) {
 			this.esParentProperty = esParentProperty;
+			this.esAnnonationProperties.add(this.esParentProperty);
+		}
+
+		public PropertieDescription getEsReturnSourceProperty() {
+			return esReturnSourceProperty;
+		}
+
+		public PropertieDescription getEsDocAsUpsertProperty() {
+			return esDocAsUpsertProperty;
+		}
+
+		public PropertieDescription getEsRoutingProperty() {
+			return esRoutingProperty;
+		}
+
+		public PropertieDescription getEsRetryOnConflictProperty() {
+			return esRetryOnConflictProperty;
+		}
+
+		public PropertieDescription getEsVersionTypeProperty() {
+			return esVersionTypeProperty;
+		}
+
+		public PropertieDescription getEsVersionProperty() {
+			return esVersionProperty;
+		}
+
+		public void setEsVersionProperty(PropertieDescription esVersionProperty) {
+			this.esVersionProperty = esVersionProperty;
+			this.esAnnonationProperties.add(this.esVersionProperty);
+		}
+
+		public void setEsVersionTypeProperty(PropertieDescription esVersionTypeProperty) {
+			this.esVersionTypeProperty = esVersionTypeProperty;
+			this.esAnnonationProperties.add(this.esVersionTypeProperty);
+		}
+
+		public void setEsRetryOnConflictProperty(PropertieDescription esRetryOnConflictProperty) {
+			this.esRetryOnConflictProperty = esRetryOnConflictProperty;
+			this.esAnnonationProperties.add(this.esRetryOnConflictProperty);
+		}
+
+		public void setEsRoutingProperty(PropertieDescription esRoutingProperty) {
+			this.esRoutingProperty = esRoutingProperty;
+			this.esAnnonationProperties.add(this.esRoutingProperty);
+		}
+
+		public void setEsDocAsUpsertProperty(PropertieDescription esDocAsUpsertProperty) {
+			this.esDocAsUpsertProperty = esDocAsUpsertProperty;
+			this.esAnnonationProperties.add(this.esDocAsUpsertProperty);
+		}
+
+		public void setEsReturnSourceProperty(PropertieDescription esReturnSourceProperty) {
+			this.esReturnSourceProperty = esReturnSourceProperty;
+			this.esAnnonationProperties.add(this.esReturnSourceProperty);
+		}
+
+		public List<PropertieDescription> getEsAnnonationProperties() {
+			return esAnnonationProperties;
 		}
 	}
 	

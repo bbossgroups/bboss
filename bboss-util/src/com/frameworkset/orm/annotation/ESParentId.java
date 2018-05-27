@@ -22,5 +22,10 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ESParentId {
+	/**
+	 * 标识是否保存注解对应的字段的值
+	 * @return
+	 */
+	boolean persistent() default true;
 
 }
