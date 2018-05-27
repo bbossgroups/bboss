@@ -19,46 +19,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * 用于控制update操作是否返回source字段
+ * Allows to control if and how the updated source should be returned in the response. By default the updated source is not returned. See source filtering for details.
+ */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface  ESId {
-	/**
-	 * 主键名称-对于tableinfo表中的主键信息配置
-	 * @return
-	 */
-	String name() default "";
-	String pkname() default "";
-
-	boolean auto() default true;
-
-//	/**
-//	 * 如果auto为true，将强制生成主键，不过主键字段的值是否已经设置，如果设置
-//	 * 设置autoIfNull则只有在值为空，或者数字为0时才生成主键
-//	 * @return
-//	 */
-//	boolean autoIfNull() default false;
-
-	/**
-	 * sequence,string,int,long
-	 * @return
-	 */
-	String type() default "long";
-
-	/**
-	 * 用于单机单节点环境主键生成，与id属性配合使用
-	 * 表名称
-	 * @return
-	 */
-	String tableName() default "";
-	/**
-	 * 用于单机单节点环境主键生成，与tableName属性配合使用
-	 * 表的物理主键名称
-	 * @return
-	 */
-	String id() default "";
+public @interface ESSource {
 	/**
 	 * 标识是否保存注解对应的字段的值
 	 * @return
 	 */
-	boolean persistent() default true;
+	boolean persistent() default false;
 }
