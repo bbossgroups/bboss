@@ -556,6 +556,28 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		}
 	}
 
+	private static boolean _getBooleanValue(String poolName,String propertyName,BaseApplicationContext context,boolean defaultValue) throws Exception {
+		String _value = null;
+		if(poolName.equals("default")){
+			_value = (String)context.getExternalProperty(propertyName);
+			if(_value == null)
+				_value = (String)context.getExternalProperty(poolName+"."+propertyName);
+
+		}
+		else{
+			_value = (String)context.getExternalProperty(poolName+"."+propertyName);
+		}
+		if(_value == null){
+			return defaultValue;
+		}
+		try {
+			boolean ret = Boolean.parseBoolean(_value);
+			return ret;
+		}
+		catch (Exception e){
+			throw e;
+		}
+	}
 	private static int _getIntValue(String poolName,String propertyName,BaseApplicationContext context,int defaultValue) throws Exception {
 		String _value = null;
 		if(poolName.equals("default")){
@@ -632,6 +654,10 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 				 * #http.keystore =
 				 * #http.keyPassword =
 				 * #http.hostnameVerifier =
+				 * http.soReuseAddress = false
+				 * http.soKeepAlive = false
+				 * http.timeToLive = 3600000
+				 * http.keepAlive = 3600000
 				 */
 
 				int timeoutConnection = ClientConfiguration._getIntValue(name,"http.timeoutConnection",context,40000);
@@ -649,9 +675,20 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 				clientConfiguration.setMaxHeaderCount(maxHeaderCount);
 				int maxTotal = ClientConfiguration._getIntValue(name,"http.maxTotal",context,1000);
 				clientConfiguration.setMaxTotal(maxTotal);
+
+				 boolean soReuseAddress = ClientConfiguration._getBooleanValue(name,"http.soReuseAddress",context,false);
+				 clientConfiguration.setSoReuseAddress(soReuseAddress);
+				 boolean soKeepAlive = ClientConfiguration._getBooleanValue(name,"http.soKeepAlive",context,false);
+				 clientConfiguration.setSoKeepAlive(soKeepAlive);
+				 int timeToLive = ClientConfiguration._getIntValue(name,"http.timeToLive",context,3600000);
+				 clientConfiguration.setTimeToLive(timeToLive);
+				 int keepAlive = ClientConfiguration._getIntValue(name,"http.keepAlive",context,3600000);
+				 clientConfiguration.setKeepAlive(keepAlive);
+
 				int defaultMaxPerRoute = ClientConfiguration._getIntValue(name,"http.defaultMaxPerRoute",context,200);
 				clientConfiguration.setDefaultMaxPerRoute(defaultMaxPerRoute);
 				String keystore = ClientConfiguration._getStringValue(name,"http.keystore",context,null);
+
 				clientConfiguration.setKeystore(keystore);
 				String keyPassword = ClientConfiguration._getStringValue(name,"http.keyPassword",context,null);
 				clientConfiguration.setKeyPassword(keyPassword);
