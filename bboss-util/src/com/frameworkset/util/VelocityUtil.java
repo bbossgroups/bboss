@@ -167,7 +167,7 @@ public class VelocityUtil{
 	    			 }
 	    		 }
 
-	    		    String appDir = FileUtil.apppath + "/WEB-INF";
+	    		    String appDir = FileUtil.apppath != null ?FileUtil.apppath + "/WEB-INF":"/WEB-INF";
 	    		    log.debug("FileUtil.apppath:"+FileUtil.apppath);
 	    		    if(approot != null && !new File(appDir).exists())
 	    		    {

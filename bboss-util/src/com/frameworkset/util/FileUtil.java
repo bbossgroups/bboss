@@ -37,45 +37,16 @@ package com.frameworkset.util;
  * 文件处理实用类
  */
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.ListResourceBundle;
-import java.util.Properties;
-import java.util.Vector;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
-
 import org.frameworkset.cache.FileContentCache;
 import org.frameworkset.util.io.ClassPathResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.util.*;
+import java.util.zip.*;
 
 public class FileUtil 
 {
@@ -87,7 +58,10 @@ public class FileUtil
             URL location = (FileUtil.class).getProtectionDomain().getCodeSource().getLocation();
             File appDir = computeApplicationDir(location, new File("."));
             if(appDir != null && appDir.exists()){
-            	apppath = appDir.getParentFile().getPath();
+                File parent = appDir.getParentFile();
+                if(parent != null) {
+                    apppath = parent.getPath();
+                }
             }
             
         }
@@ -96,6 +70,8 @@ public class FileUtil
         }
 
 	}
+
+
 	
 	/**
 	 * 获取页面类型
@@ -712,12 +688,11 @@ public class FileUtil
     
     public static void main(String[] args)
     {
-    	try {
-			System.out.println(FileUtil.getFileContent("D:\\workspace\\bbossgroup-2.0-RC2\\bboss-mvc/WebRoot/jsp/databind/table.jsp","UTF-8"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        File f = new File("d:/");
+        File pf = f.getParentFile();
+
+    	    System.out.println(pf +"/aaa");
+//
     }
 
     private static final int EOF = -1;
@@ -746,7 +721,7 @@ public class FileUtil
     /**
      * 删除文件目录下的所有子文件和子目录，操作一定要小心
      * 
-     * @param publishTemppath
+     * @param path
      */
     public static void deleteFile(String path)
     {
@@ -757,7 +732,7 @@ public class FileUtil
     /**
      * 删除文件目录下的所有子文件和子目录，操作一定要小心
      * 
-     * @param publishTemppath
+     * @param file
      */
     public static void deleteFile(File file)
     {
@@ -773,7 +748,7 @@ public class FileUtil
     /**
      * 删除文件目录下的所有子文件和子目录，操作一定要小心
      * 
-     * @param publishTemppath
+     * @param path
      */
     public static void removeFileOrDirectory(String path)
     {
@@ -784,7 +759,7 @@ public class FileUtil
     /**
      * 删除文件目录下的所有子文件和子目录，操作一定要小心
      * 
-     * @param publishTemppath
+     * @param file
      */
     public static void removeFileOrDirectory(File file)
     {
