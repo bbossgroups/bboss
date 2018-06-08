@@ -107,7 +107,7 @@ public class TestCallableFunction {
 				 */
 				public void handleRow(Object rowValue,Record record)
 				{
-					StringBuffer objects = (StringBuffer)rowValue;
+					StringBuilder objects = (StringBuilder)rowValue;
 					objects.append(record);
 					System.out.println("objects:" + objects);
 					

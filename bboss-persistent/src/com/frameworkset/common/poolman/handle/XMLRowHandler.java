@@ -1,13 +1,13 @@
 package com.frameworkset.common.poolman.handle;
 
+import com.frameworkset.common.poolman.Record;
+import com.frameworkset.common.poolman.util.SQLUtil;
+import com.frameworkset.orm.engine.model.SchemaType;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import com.frameworkset.common.poolman.Record;
-import com.frameworkset.common.poolman.util.SQLUtil;
-import com.frameworkset.orm.engine.model.SchemaType;
 
 /**
  * 
@@ -23,18 +23,18 @@ import com.frameworkset.orm.engine.model.SchemaType;
  * @author biaoping.yin
  * @version 1.0
  */
-public class XMLRowHandler extends BaseRowHandler<StringBuffer> {
+public class XMLRowHandler extends BaseRowHandler<StringBuilder> {
        
         /**
          * rowValue类型为StringBuffer
          */
-	public void handleRow(StringBuffer rowValue,Record origine) 
+	public void handleRow(StringBuilder rowValue,Record origine)
 	{
 	    if(meta == null)
             {
                 throw new RowHandlerException("源数据对象[meta]未初始化,无法进行行处理.");
             }
-	    StringBuffer record = (StringBuffer)rowValue;
+		StringBuilder record = (StringBuilder)rowValue;
 	    record.append("    <record>\r\n");
 	    
 	    try
@@ -122,7 +122,7 @@ public class XMLRowHandler extends BaseRowHandler<StringBuffer> {
                               attributes,
                               value,
                               split);
-//            StringBuffer record = new StringBuffer();
+//            StringBuilder record = new StringBuilder();
 //            record.append("\t\t<").append(columnNodeName).append(" name=\"")
 //                                                             .append(columnName)
 //                                                             .append("\" type=\"").append(columnType)
@@ -145,7 +145,7 @@ public class XMLRowHandler extends BaseRowHandler<StringBuffer> {
                                 String value,
                                 String split)
       {
-          StringBuffer record = new StringBuffer();
+		  StringBuilder record = new StringBuilder();
           
           record.append("\t<").append(columnNodeName);
           if(attributes != null && attributes.size() > 0)

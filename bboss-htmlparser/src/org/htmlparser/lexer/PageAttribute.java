@@ -221,7 +221,7 @@ public class PageAttribute
      * @param buffer The buffer to place the name in.
      * @see #getName()
      */
-    public void getName (StringBuffer buffer)
+    public void getName (StringBuilder buffer)
     {
         String name;
 
@@ -267,7 +267,7 @@ public class PageAttribute
      * @param buffer The buffer to place the assignment string in.
      * @see #getAssignment()
      */
-    public void getAssignment (StringBuffer buffer)
+    public void getAssignment (StringBuilder buffer)
     {
         int length;
         char ch;
@@ -323,7 +323,7 @@ public class PageAttribute
      * @param buffer The buffer to place the value in.
      * @see #getValue()
      */
-    public void getValue (StringBuffer buffer)
+    public void getValue (StringBuilder buffer)
     {
         String value;
 
@@ -347,13 +347,13 @@ public class PageAttribute
     public String getRawValue ()
     {
         char quote;
-        StringBuffer buffer;
+        StringBuilder buffer;
         String ret;
 
         ret = getValue ();
         if (null != ret && (0 != (quote = getQuote ())))
         {
-            buffer = new StringBuffer (ret.length() + 2);
+            buffer = new StringBuilder (ret.length() + 2);
             buffer.append (quote);
             buffer.append (ret);
             buffer.append (quote);
@@ -370,7 +370,7 @@ public class PageAttribute
      * @param buffer The string buffer to append the attribute value to.
      * @see #getRawValue()
      */
-    public void getRawValue (StringBuffer buffer)
+    public void getRawValue (StringBuilder buffer)
     {
         char quote;
 

@@ -910,9 +910,9 @@ public class CommonLauncher {
 	 */
 	public static final String rightPad(String ret, int limit) {
 		if (ret == null)
-			return rightPad(new StringBuffer(), limit);
+			return rightPad(new StringBuilder(), limit);
 		else
-			return rightPad(new StringBuffer(ret), limit);
+			return rightPad(new StringBuilder(ret), limit);
 	}
 
 	/**
@@ -921,12 +921,12 @@ public class CommonLauncher {
 	 * truncated.
 	 * 
 	 * @param ret
-	 *            The StringBuffer to pad
+	 *            The StringBuilder to pad
 	 * @param limit
 	 *            The desired length of the padded string.
 	 * @return The padded String.
 	 */
-	public static final String rightPad(StringBuffer ret, int limit) {
+	public static final String rightPad(StringBuilder ret, int limit) {
 		int len = ret.length();
 		int l;
 

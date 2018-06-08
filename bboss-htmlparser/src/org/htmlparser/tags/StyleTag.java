@@ -89,9 +89,9 @@ public class StyleTag extends CompositeTag
     public String toString()
     {
         String guts;
-        StringBuffer ret;
+        StringBuilder ret;
         
-        ret = new StringBuffer ();
+        ret = new StringBuilder ();
 
         guts = toHtml ();
         guts = guts.substring (1, guts.length () - 1);

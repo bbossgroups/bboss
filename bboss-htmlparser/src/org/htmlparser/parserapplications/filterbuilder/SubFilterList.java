@@ -280,9 +280,9 @@ public class SubFilterList
     public String toString (int indent, int level)
     {
         Filter[] filters;
-        StringBuffer ret;
+        StringBuilder ret;
         
-        ret = new StringBuffer ();
+        ret = new StringBuilder ();
 
         filters = getFilters ();
         for (int i = 0; i < filters.length; i++)

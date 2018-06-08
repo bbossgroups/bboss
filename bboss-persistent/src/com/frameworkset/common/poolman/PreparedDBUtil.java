@@ -4809,7 +4809,7 @@ public class PreparedDBUtil extends DBUtil {
 	{
 		if(r.length == 0)
 			return "No sql been executed.";
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		for(int i = 0; i < r.length; i ++)
 		{
 			if(i == 0)
@@ -4915,7 +4915,7 @@ public class PreparedDBUtil extends DBUtil {
 						if(showsql)
 						{
 							if(log.isInfoEnabled())
-			        			log.info(new StringBuffer("Execute prepared Batch sql[")
+			        			log.info(new StringBuilder("Execute prepared Batch sql[")
 							.append(old_sql.getNewsql())
 							.append("] success")
 							.toString());
@@ -4968,7 +4968,7 @@ public class PreparedDBUtil extends DBUtil {
 						if(showsql)
 						{
 							if(log.isInfoEnabled() )
-			        			log.info(new StringBuffer("Execute prepared Batch sql[")
+			        			log.info(new StringBuilder("Execute prepared Batch sql[")
 							.append(old_sql.getNewsql())
 							.append("] success")
 							.toString());

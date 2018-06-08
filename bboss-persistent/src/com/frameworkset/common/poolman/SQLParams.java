@@ -118,7 +118,7 @@ public class SQLParams
     
     public String toString()
     {
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         ret.append("sql{").append(this.newsql.getNewsql()).append(",").append(this.pagineOrderby == null?"":pagineOrderby.toString(null)).append("},params");
         if(sqlparams != null && sqlparams.size() > 0)
         {

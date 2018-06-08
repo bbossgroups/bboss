@@ -357,9 +357,9 @@ public class SiteCapturer
         int start;
         int index;
         int value;
-        StringBuffer ret;
+        StringBuilder ret;
         
-        ret = new StringBuffer (raw.length ());
+        ret = new StringBuilder (raw.length ());
 
         length = raw.length ();
         start = 0;

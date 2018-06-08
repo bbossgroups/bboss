@@ -1548,10 +1548,10 @@ public class SQLUtil{
 	}
 	public static void debugStatus(String DBName)
 	{
-		System.out.println(new StringBuffer("[").append(DBName).append("] idle connenctions:").append(SQLUtil.getNumIdle(DBName)));
-		System.out.println(new StringBuffer("[").append(DBName).append("] active connenctions:").append(SQLUtil.getNumActive(DBName)));
-		System.out.println(new StringBuffer("[").append(DBName).append("] max active connenctions:").append(SQLUtil.getMaxNumActive(DBName)));		
-		System.out.println(new StringBuffer("[").append(DBName).append("] max active connenctions time:").append(SQLUtil.getMaxActiveNumFormatTime(DBName)));
+		System.out.println(new StringBuilder("[").append(DBName).append("] idle connenctions:").append(SQLUtil.getNumIdle(DBName)));
+		System.out.println(new StringBuilder("[").append(DBName).append("] active connenctions:").append(SQLUtil.getNumActive(DBName)));
+		System.out.println(new StringBuilder("[").append(DBName).append("] max active connenctions:").append(SQLUtil.getMaxNumActive(DBName)));		
+		System.out.println(new StringBuilder("[").append(DBName).append("] max active connenctions time:").append(SQLUtil.getMaxActiveNumFormatTime(DBName)));
 		
 	}
 	

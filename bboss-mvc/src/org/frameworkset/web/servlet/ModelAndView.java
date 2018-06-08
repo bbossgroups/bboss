@@ -285,7 +285,7 @@ public class ModelAndView {
 	 * Return diagnostic information about this model and view.
 	 */
 	public String toString() {
-		StringBuffer buf = new StringBuffer("ModelAndView: ");
+		StringBuilder buf = new StringBuilder("ModelAndView: ");
 		if (isReference()) {
 			buf.append("reference to view with name '").append(this.view).append("'");
 		}

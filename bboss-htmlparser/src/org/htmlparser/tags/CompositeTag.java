@@ -26,18 +26,18 @@
 
 package org.htmlparser.tags;
 
-import java.util.Locale;
-
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
+import org.htmlparser.Tag;
 import org.htmlparser.Text;
 import org.htmlparser.nodes.AbstractNode;
 import org.htmlparser.nodes.TagNode;
-import org.htmlparser.Tag;
 import org.htmlparser.scanners.CompositeTagScanner;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.SimpleNodeIterator;
 import org.htmlparser.visitors.NodeVisitor;
+
+import java.util.Locale;
 
 /**
  * The base class for tags that have an end tag.
@@ -132,7 +132,7 @@ public class CompositeTag extends TagNode
      * @return The 'browser' text contents of this tag.
      */
     public String toPlainTextString() {
-        StringBuffer stringRepresentation = new StringBuffer();
+        StringBuilder stringRepresentation = new StringBuilder();
         for (SimpleNodeIterator e=children();e.hasMoreNodes();) {
             stringRepresentation.append(e.nextNode().toPlainTextString());
         }
@@ -143,7 +143,7 @@ public class CompositeTag extends TagNode
      * Add the textual contents of the children of this node to the buffer.
      * @param sb The buffer to append to.
      */
-    protected void putChildrenInto(StringBuffer sb)
+    protected void putChildrenInto(StringBuilder sb)
     {
         Node node;
         for (SimpleNodeIterator e = children (); e.hasMoreNodes ();)
@@ -159,7 +159,7 @@ public class CompositeTag extends TagNode
      * Add the textual contents of the end tag of this node to the buffer.
      * @param sb The buffer to append to.
      */
-    protected void putEndTagInto(StringBuffer sb)
+    protected void putEndTagInto(StringBuilder sb)
     {
         // eliminate virtual tags
 //        if (!(endTag.getStartPosition () == endTag.getEndPosition ()))
@@ -172,7 +172,7 @@ public class CompositeTag extends TagNode
      * as HTML code.
      */
     public String toHtml() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append (super.toHtml ());
         if (!isEmptyXmlTag())
         {
@@ -425,7 +425,7 @@ public class CompositeTag extends TagNode
      * @return A string with the HTML code for the contents of this tag.
      */
     public String getChildrenHTML() {
-        StringBuffer buff = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
         for (SimpleNodeIterator e = children();e.hasMoreNodes();) {
             AbstractNode node = (AbstractNode)e.nextNode();
             buff.append(node.toHtml());
@@ -540,9 +540,9 @@ public class CompositeTag extends TagNode
      */
     public String toString ()
     {
-        StringBuffer ret;
+        StringBuilder ret;
         
-        ret = new StringBuffer (1024);
+        ret = new StringBuilder (1024);
         toString (0, ret);
         
         return (ret.toString ());
@@ -581,7 +581,7 @@ public class CompositeTag extends TagNode
      * @param level The indentation level to use.
      * @param buffer The buffer to append to.
      */
-    public void toString (int level, StringBuffer buffer)
+    public void toString (int level, StringBuilder buffer)
     {
         Node node;
 

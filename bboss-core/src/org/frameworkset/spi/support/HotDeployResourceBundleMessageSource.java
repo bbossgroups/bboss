@@ -16,19 +16,10 @@
 
 package org.frameworkset.spi.support;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-
+import com.frameworkset.util.DaemonThread;
+import com.frameworkset.util.DefaultPropertiesPersister;
+import com.frameworkset.util.ResourceInitial;
+import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.ResourceLoaderAware;
 import org.frameworkset.util.Assert;
@@ -38,10 +29,12 @@ import org.frameworkset.util.io.Resource;
 import org.frameworkset.util.io.ResourceEditor;
 import org.frameworkset.util.io.ResourceLoader;
 
-import com.frameworkset.util.DaemonThread;
-import com.frameworkset.util.DefaultPropertiesPersister;
-import com.frameworkset.util.ResourceInitial;
-import com.frameworkset.util.SimpleStringUtil;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.MessageFormat;
+import java.util.*;
 
 /**
  * <p>
@@ -506,7 +499,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	 * relativefile = "org/frameworkset/spi/support/messages_en_US.properties";
 	 * basename = "org/frameworkset/spi/support/messages_en_US";
 	 * filepath = "d:/workspace/org/frameworkset/spi/support/messages_en_US.properties";
-	 * @param filename
+	 * @param filepath
 	 * @param basename
 	 * @param relativefile
 	 * @return
@@ -567,14 +560,14 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 				catch(Throwable e)
 				{
 					logger.warn(
-							new StringBuffer().append("Get properties file from ").append( resource.getClass().getCanonicalName() ).append( " failed:"+e.getMessage()).toString());
+							new StringBuilder().append("Get properties file from ").append( resource.getClass().getCanonicalName() ).append( " failed:"+e.getMessage()).toString());
 				}
 				propHolder = new PropertiesHolder(props,f,filename,name);
 			} catch (IOException ex) {
 				{
 					try {
 						logger.warn(
-								new StringBuffer().append("Could not parse properties file [").append(
+								new StringBuilder().append("Could not parse properties file [").append(
 										resource.getFile().getCanonicalPath() ).append( "]").toString(), ex);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -796,7 +789,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		String language = locale.getLanguage();
 		String country = locale.getCountry();
 		String variant = locale.getVariant();
-		StringBuffer temp = new StringBuffer(basename);
+		StringBuilder temp = new StringBuilder(basename);
 
 		if (language.length() > 0) {
 			temp.append('_').append(language);

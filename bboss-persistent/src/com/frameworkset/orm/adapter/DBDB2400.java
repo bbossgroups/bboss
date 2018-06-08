@@ -76,7 +76,7 @@ public class DBDB2400 extends DBDB2App
      */
     private String formatCase(String in)
     {
-        return new StringBuffer(UCASE + "(").append(in).append(")").toString();
+        return new StringBuilder(UCASE + "(").append(in).append(")").toString();
     }
 
     /**

@@ -1110,7 +1110,7 @@ public class ASMifier extends Printer {
      *            an {@link Integer}, {@link Float}, {@link Long},
      *            {@link Double} or {@link String} object. May be <tt>null</tt>.
      */
-    static void appendConstant(final StringBuffer buf, final Object cst) {
+    static void appendConstant(final StringBuilder buf, final Object cst) {
         if (cst == null) {
             buf.append("null");
         } else if (cst instanceof String) {

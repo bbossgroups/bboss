@@ -42,7 +42,7 @@ public class SignatureWriter extends SignatureVisitor {
     /**
      * Buffer used to construct the signature.
      */
-    private final StringBuffer buf = new StringBuffer();
+    private final StringBuilder buf = new StringBuilder();
 
     /**
      * Indicates if the signature contains formal type parameters.

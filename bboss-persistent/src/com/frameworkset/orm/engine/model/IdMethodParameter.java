@@ -31,9 +31,9 @@ package com.frameworkset.orm.engine.model;
  * limitations under the License.
  */
 
-import java.io.Serializable;
-
 import org.xml.sax.Attributes;
+
+import java.io.Serializable;
 
 /**
  * Information related to an ID method.
@@ -118,7 +118,7 @@ public class IdMethodParameter implements Serializable
      */
     public String toString()
     {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         result.append(" <id-method-parameter");
         if (getName() != null)
         {

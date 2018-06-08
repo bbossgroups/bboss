@@ -31,14 +31,14 @@ package com.frameworkset.orm.adapter;
  * limitations under the License.
  */
 
+import com.frameworkset.common.poolman.PreparedDBUtil;
+import com.frameworkset.orm.platform.PlatformSybaseImpl;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import com.frameworkset.common.poolman.PreparedDBUtil;
-import com.frameworkset.orm.platform.PlatformSybaseImpl;
 
 /**
  * This is used to connect to a Sybase database using Sybase's
@@ -72,7 +72,7 @@ public class DBSybase extends DB
      */
     public String toUpperCase(String in)
     {
-        return new StringBuffer("UPPER(").append(in).append(")").toString();
+        return new StringBuilder("UPPER(").append(in).append(")").toString();
     }
 
     /**
@@ -83,7 +83,7 @@ public class DBSybase extends DB
      */
     public String ignoreCase(String in)
     {
-        return new StringBuffer("UPPER(").append(in).append(")").toString();
+        return new StringBuilder("UPPER(").append(in).append(")").toString();
     }
 
     /**
@@ -117,7 +117,7 @@ public class DBSybase extends DB
     {
         Statement statement = con.createStatement();
 
-        StringBuffer stmt = new StringBuffer();
+        StringBuilder stmt = new StringBuilder();
         stmt.append("SELECT next_id FROM ")
         .append(table)
         .append(" FOR UPDATE");

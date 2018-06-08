@@ -1,12 +1,11 @@
 package com.frameworkset.common.tag.pager.tags;
 
-import javax.servlet.jsp.JspException;
-
+import com.frameworkset.common.tag.pager.TextListInfo;
+import com.frameworkset.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.common.tag.pager.TextListInfo;
-import com.frameworkset.util.StringUtil;
+import javax.servlet.jsp.JspException;
 
 /**
  * <p>Title: TextIndexTag</p>
@@ -35,7 +34,7 @@ public class TextIndexTag extends TextSupportTag {
         {
             try
             {
-                StringBuffer output = new StringBuffer();
+                StringBuilder output = new StringBuilder();
                 output.append("<br/>");
                 output.append(StringUtil.toUTF("第" + listInfo.getCurPage() + "页"));
                 output.append(StringUtil.toUTF("  共" + listInfo.getTotal() + "页"))

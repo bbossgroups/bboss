@@ -780,7 +780,7 @@ public abstract class DB implements  IDMethod,Platform
 //     */
 //	 
 //	public String getOracleDBPagineSql(String sql, long offset, int maxsize,String rownum) {
-//		StringBuffer ret = new StringBuffer("select * from (")
+//		StringBuilder ret = new StringBuilder("select * from (")
 //									.append(sql)
 //									.append(") where ").append(rownum).append(" between ")
 //									.append((offset + 1) + "")

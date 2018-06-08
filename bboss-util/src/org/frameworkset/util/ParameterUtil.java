@@ -29,7 +29,7 @@ public class ParameterUtil {
 			return property.getRequestParamName();
 		else if(vars != null && vars.size() > 0)
 		{
-			StringBuffer name = new StringBuffer();
+			StringBuilder name = new StringBuilder();
 			for(Var var:vars)
 			{
 				if(!var.isIsvar())
@@ -118,7 +118,7 @@ public class ParameterUtil {
 		else 
 		{
 			List<Var> vars = parameter.getRequestParamNameToken();
-			StringBuffer name = new StringBuffer();
+			StringBuilder name = new StringBuilder();
 			for(Var var:vars)
 			{
 				if(!var.isIsvar())

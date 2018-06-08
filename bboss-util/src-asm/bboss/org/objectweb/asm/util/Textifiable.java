@@ -29,9 +29,9 @@
  */
 package bboss.org.objectweb.asm.util;
 
-import java.util.Map;
-
 import bboss.org.objectweb.asm.Label;
+
+import java.util.Map;
 
 /**
  * An {@link bboss.org.objectweb.asm.Attribute Attribute} that can print a readable
@@ -52,5 +52,5 @@ public interface Textifiable {
      * @param labelNames
      *            map of label instances to their names.
      */
-    void textify(StringBuffer buf, Map<Label, String> labelNames);
+    void textify(StringBuilder buf, Map<Label, String> labelNames);
 }

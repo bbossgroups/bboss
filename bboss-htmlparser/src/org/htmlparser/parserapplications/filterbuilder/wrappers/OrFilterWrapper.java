@@ -146,7 +146,7 @@ public class OrFilterWrapper
      * <li>filter array number - the next available array of filters number</li>
      * @return The variable name to use when referencing this filter (usually "filter" + context[1]++) 
      */
-    public String toJavaCode (StringBuffer out, int[] context)
+    public String toJavaCode (StringBuilder out, int[] context)
     {
         String array;
         NodeFilter[] predicates;

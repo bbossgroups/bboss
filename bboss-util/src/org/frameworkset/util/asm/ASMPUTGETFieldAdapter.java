@@ -103,7 +103,7 @@ public class ASMPUTGETFieldAdapter extends ClassVisitor{
 			//我们接着需要增加一个execute方法
 			if(pro.getReadMethod() == null)
 			{
-				String getMd = new StringBuffer(6).append(AsmUtil.bboss_field_getMethod_prex)
+				String getMd = new StringBuilder(6).append(AsmUtil.bboss_field_getMethod_prex)
 	            .append(Character.toTitleCase(name.charAt(0)))
 	            .append(name.substring(1))
 	            .toString();
@@ -125,7 +125,7 @@ public class ASMPUTGETFieldAdapter extends ClassVisitor{
 			
 			if(pro.getWriteMethod() == null)
 			{
-				String setMd = new StringBuffer(6).append(AsmUtil.bboss_field_setMethod_prex)
+				String setMd = new StringBuilder(6).append(AsmUtil.bboss_field_setMethod_prex)
 		            .append(Character.toTitleCase(name.charAt(0)))
 		            .append(name.substring(1))
 		            .toString();

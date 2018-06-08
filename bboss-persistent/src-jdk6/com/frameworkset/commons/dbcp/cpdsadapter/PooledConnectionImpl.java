@@ -587,7 +587,7 @@ class PooledConnectionImpl
         }
 
         public String toString() {
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             buf.append("PStmtKey: sql=");
             buf.append(_sql);
             buf.append(", resultSetType=");
@@ -606,7 +606,7 @@ class PooledConnectionImpl
             arrayToString(buf,_columnNames);
             return buf.toString();
         }
-        private void arrayToString(StringBuffer sb, int[] array){
+        private void arrayToString(StringBuilder sb, int[] array){
             if (array == null) {
                 sb.append("null");
                 return;
@@ -620,7 +620,7 @@ class PooledConnectionImpl
             }
             sb.append(']');
         }
-        private void arrayToString(StringBuffer sb, String[] array){
+        private void arrayToString(StringBuilder sb, String[] array){
             if (array == null) {
                 sb.append("null");
                 return;

@@ -127,13 +127,13 @@ public class Tabby
         boolean modified;
         char ch;
         int last;
-        StringBuffer buffer;
+        StringBuilder buffer;
         FileOutputStream out;
 
         try
         {
             in = new FileInputStream (file);
-            buffer = new StringBuffer (in.available ());
+            buffer = new StringBuilder (in.available ());
             try
             {
                 page = new Page (in, null);

@@ -1108,7 +1108,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		boolean needToChange = false;
 		boolean wroteUnencodedChar = false;
 		int maxBytesPerChar = 10; // rather arbitrary limit, but safe for now
-		StringBuffer out = new StringBuffer(s.length());
+		StringBuilder out = new StringBuilder(s.length());
 		ByteArrayOutputStream buf = new ByteArrayOutputStream(maxBytesPerChar);
 
 		OutputStreamWriter writer = null;
@@ -1301,7 +1301,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		if (src == null)
 			return null;
 		List segs = new ArrayList();
-		StringBuffer seg = new StringBuffer();
+		StringBuilder seg = new StringBuilder();
 		while (src.length() > size) {
 
 		}
@@ -1502,7 +1502,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	public static String buildStringMessage(List messages) {
 		if (messages == null || messages.size() == 0)
 			return null;
-		StringBuffer str = new StringBuffer();
+		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < messages.size(); i++) {
 			if (i == 0)
 				str.append(messages.get(i));
@@ -1792,7 +1792,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		if (!hasLength(inString) || !hasLength(charsToDelete)) {
 			return inString;
 		}
-		StringBuffer out = new StringBuffer();
+		StringBuilder out = new StringBuilder();
 		for (int i = 0; i < inString.length(); i++) {
 			char c = inString.charAt(i);
 			if (charsToDelete.indexOf(c) == -1) {
@@ -1815,7 +1815,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		if (CollectionUtils.isEmpty(coll)) {
 			return "";
 		}
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		Iterator it = coll.iterator();
 		while (it.hasNext()) {
 			sb.append(prefix).append(it.next()).append(suffix);
@@ -1973,7 +1973,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		if (ObjectUtils.isEmpty(arr)) {
 			return "";
 		}
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < arr.length; i++) {
 			if (i > 0) {
 				sb.append(delim);
@@ -1993,7 +1993,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		if (!hasLength(str)) {
 			return str;
 		}
-		StringBuffer buf = new StringBuffer(str);
+		StringBuilder buf = new StringBuilder(str);
 		while (buf.length() > 0 && Character.isWhitespace(buf.charAt(buf.length() - 1))) {
 			buf.deleteCharAt(buf.length() - 1);
 		}
@@ -2010,7 +2010,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		if (!hasLength(str)) {
 			return str;
 		}
-		StringBuffer buf = new StringBuffer(str);
+		StringBuilder buf = new StringBuilder(str);
 		while (buf.length() > 0 && buf.charAt(0) == leadingCharacter) {
 			buf.deleteCharAt(0);
 		}
@@ -2027,7 +2027,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		if (!hasLength(str)) {
 			return str;
 		}
-		StringBuffer buf = new StringBuffer(str);
+		StringBuilder buf = new StringBuilder(str);
 		while (buf.length() > 0 && buf.charAt(buf.length() - 1) == trailingCharacter) {
 			buf.deleteCharAt(buf.length() - 1);
 		}
@@ -2044,7 +2044,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		if (!hasLength(str)) {
 			return str;
 		}
-		StringBuffer buf = new StringBuffer(str);
+		StringBuilder buf = new StringBuilder(str);
 		while (buf.length() > 0 && Character.isWhitespace(buf.charAt(0))) {
 			buf.deleteCharAt(0);
 		}
@@ -2120,7 +2120,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		if (!hasLength(str)) {
 			return str;
 		}
-		StringBuffer buf = new StringBuffer(str);
+		StringBuilder buf = new StringBuilder(str);
 		int index = 0;
 		while (buf.length() > index) {
 			if (Character.isWhitespace(buf.charAt(index))) {
@@ -2830,12 +2830,12 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
     
     public static String tostring(Object data)
     {
-    	StringBuffer ret = new StringBuffer();
+    	StringBuilder ret = new StringBuilder();
     	tostring(ret ,data);
     	return ret.toString();
     }
     
-    public static void tostring(StringBuffer ret ,Object data)
+    public static void tostring(StringBuilder ret ,Object data)
 	{
 		if(data == null )
 		{
@@ -2873,7 +2873,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		long minutes = (mss % (1000 * 60 * 60)) / (1000 * 60);
 		long seconds = (mss % (1000 * 60)) / 1000;
 
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		if (days != 0) {
 			sb.append(days + "天");
 		}
@@ -2915,7 +2915,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
     
     public static String native2ascii( String s )
 	   {
-	      StringBuffer res = new StringBuffer();
+	      StringBuilder res = new StringBuilder();
 	      for ( int i = 0; i < s.length(); i++ ){
 	         char ch = s.charAt( i );
 	         int val = (int) ch;
@@ -2932,7 +2932,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	   }
 	public static String ascii2native( String s )
 	   {
-	      StringBuffer res = new StringBuffer(s.length());
+	      StringBuilder res = new StringBuilder(s.length());
 	      for ( int i = 0; i < s.length(); i++ ){
 	         char ch = s.charAt( i );
 	         if (ch == '\\' && i+1>=s.length()){

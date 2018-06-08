@@ -16,9 +16,9 @@
  */
 package com.frameworkset.commons.dbcp2.cpdsadapter;
 
-import java.util.Arrays;
-
 import com.frameworkset.commons.dbcp2.PStmtKey;
+
+import java.util.Arrays;
 
 /**
  * A key uniquely identifying a {@link java.sql.PreparedStatement PreparedStatement}.
@@ -116,7 +116,7 @@ public class PStmtKeyCPDS extends PStmtKey {
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append("PStmtKey: sql=");
         buf.append(getSql());
         buf.append(", catalog=");

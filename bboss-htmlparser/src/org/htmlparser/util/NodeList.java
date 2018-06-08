@@ -26,13 +26,13 @@
 
 package org.htmlparser.util;
 
-import java.io.Serializable;
-import java.util.NoSuchElementException;
-
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.filters.NodeClassFilter;
 import org.htmlparser.visitors.NodeVisitor;
+
+import java.io.Serializable;
+import java.util.NoSuchElementException;
 
 public class NodeList implements Serializable {
     private static final int INITIAL_CAPACITY=10;
@@ -145,7 +145,7 @@ public class NodeList implements Serializable {
     }
 
     public String asString() {
-        StringBuffer buff = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
         for (int i=0;i<size;i++)
             buff.append(nodeData[i].toPlainTextString());
         return buff.toString();
@@ -167,7 +167,7 @@ public class NodeList implements Serializable {
      */
     public String toHtml()
     {
-        StringBuffer buff = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
         for (int i=0;i<size;i++)
             buff.append(nodeData[i].toHtml());
         return buff.toString();
@@ -197,7 +197,7 @@ public class NodeList implements Serializable {
      */
     public String toString()
     {
-        StringBuffer text = new StringBuffer();
+        StringBuilder text = new StringBuilder();
         for (int i=0;i<size;i++)
             text.append (nodeData[i]);
         return (text.toString ());

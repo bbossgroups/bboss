@@ -468,17 +468,17 @@ public class StatementParser
             return ret;
         }
         //将表的主键字段属性插入到insert语句中
-        StringBuffer temp = new StringBuffer(fields);
+        StringBuilder temp = new StringBuilder(fields);
         temp.insert(1,idName + ",");
         fields = temp.toString();
 
         
-        temp = new StringBuffer(values);
+        temp = new StringBuilder(values);
 //      //定义主键值变量
         Sequence idValue = primaryKey.generateObjectKey(con);
         temp.insert(1,PrimaryKey.changeID(idValue.getPrimaryKey(),dbname,primaryKey.getType()) + ",");
         values = temp.toString();
-        temp = new StringBuffer(insert);
+        temp = new StringBuilder(insert);
         temp.append(" ")
 			.append(into)
 			.append(" ")

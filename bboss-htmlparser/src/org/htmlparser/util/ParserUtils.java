@@ -26,9 +26,6 @@
 
 package org.htmlparser.util;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -38,14 +35,15 @@ import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.lexer.Lexer;
 import org.htmlparser.lexer.Page;
 import org.htmlparser.tags.CompositeTag;
-import org.htmlparser.util.NodeList;
-import org.htmlparser.util.ParserException;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 
 public class ParserUtils
 {
     public static String removeChars(String s, char occur) {
-        StringBuffer newString = new StringBuffer();
+        StringBuilder newString = new StringBuilder();
         char ch;
         for (int i = 0; i < s.length(); i++) {
             ch = s.charAt(i);
@@ -105,7 +103,7 @@ public class ParserUtils
  	
         ArrayList output = new ArrayList();
         int minCapacity = 0;
-        StringBuffer str = new StringBuffer();
+        StringBuilder str = new StringBuilder();
 
         boolean charFound = false;
         boolean toBeAdd = false;
@@ -128,7 +126,7 @@ public class ParserUtils
                 minCapacity++;
                 output.ensureCapacity(minCapacity);
                 if (output.add(str.toString()))
-                    str = new StringBuffer();
+                    str = new StringBuilder();
                 else
                     minCapacity--;
             }
@@ -138,7 +136,7 @@ public class ParserUtils
             minCapacity++;
             output.ensureCapacity(minCapacity);
             if (output.add(str.toString()))
-                str = new StringBuffer();
+                str = new StringBuilder();
             else
                 minCapacity--;
         }
@@ -165,8 +163,8 @@ public class ParserUtils
     */
     public static String trimButDigits (String input, String charsDoNotBeRemoved)
     {
- 	
-        StringBuffer output = new StringBuffer();
+
+        StringBuilder output = new StringBuilder();
 
         boolean charFound=false;
         for (int index=0; index<input.length(); index++)
@@ -250,7 +248,7 @@ public class ParserUtils
  	
         ArrayList output = new ArrayList();
         int minCapacity = 0;
-        StringBuffer str = new StringBuffer();
+        StringBuilder str = new StringBuilder();
 
         boolean charFound = false;
         boolean toBeAdd = false;
@@ -273,7 +271,7 @@ public class ParserUtils
                 minCapacity++;
                 output.ensureCapacity(minCapacity);
                 if (output.add(str.toString()))
-                    str = new StringBuffer();
+                    str = new StringBuilder();
                 else
                     minCapacity--;
             }
@@ -283,7 +281,7 @@ public class ParserUtils
             minCapacity++;
             output.ensureCapacity(minCapacity);
             if (output.add(str.toString()))
-                str = new StringBuffer();
+                str = new StringBuilder();
             else
                 minCapacity--;
         }
@@ -310,8 +308,8 @@ public class ParserUtils
     */
     public static String trimSpaces (String input, String charsToBeRemoved)
     {
- 	
-        StringBuffer output = new StringBuffer();
+
+        StringBuilder output = new StringBuilder();
 
         boolean charFound=false;
         for (int index=0; index<input.length(); index++)
@@ -395,7 +393,7 @@ public class ParserUtils
  	
         ArrayList output = new ArrayList();
         int minCapacity = 0;
-        StringBuffer str = new StringBuffer();
+        StringBuilder str = new StringBuilder();
 
         boolean charFound = false;
         boolean toBeAdd = false;
@@ -418,7 +416,7 @@ public class ParserUtils
                 minCapacity++;
                 output.ensureCapacity(minCapacity);
                 if (output.add(str.toString()))
-                    str = new StringBuffer();
+                    str = new StringBuilder();
                 else
                     minCapacity--;
             }
@@ -428,7 +426,7 @@ public class ParserUtils
             minCapacity++;
             output.ensureCapacity(minCapacity);
             if (output.add(str.toString()))
-                str = new StringBuffer();
+                str = new StringBuilder();
             else
                 minCapacity--;
         }
@@ -455,8 +453,8 @@ public class ParserUtils
     */
     public static String trimButChars (String input, String charsDoNotBeRemoved)
     {
- 	
-        StringBuffer output = new StringBuffer();
+
+        StringBuilder output = new StringBuilder();
 
         boolean charFound=false;
         for (int index=0; index<input.length(); index++)
@@ -539,7 +537,7 @@ public class ParserUtils
  	
         ArrayList output = new ArrayList();
         int minCapacity = 0;
-        StringBuffer str = new StringBuffer();
+        StringBuilder str = new StringBuilder();
 
         boolean charFound = false;
         boolean toBeAdd = false;
@@ -562,7 +560,7 @@ public class ParserUtils
                 minCapacity++;
                 output.ensureCapacity(minCapacity);
                 if (output.add(str.toString()))
-                    str = new StringBuffer();
+                    str = new StringBuilder();
                 else
                     minCapacity--;
             }
@@ -572,7 +570,7 @@ public class ParserUtils
             minCapacity++;
             output.ensureCapacity(minCapacity);
             if (output.add(str.toString()))
-                str = new StringBuffer();
+                str = new StringBuilder();
             else
                 minCapacity--;
         }
@@ -598,8 +596,8 @@ public class ParserUtils
     */
     public static String trimChars (String input, String charsToBeRemoved)
     {
- 	
-        StringBuffer output = new StringBuffer();
+
+        StringBuilder output = new StringBuilder();
 
         boolean charFound=false;
         for (int index=0; index<input.length(); index++)
@@ -762,17 +760,17 @@ public class ParserUtils
                         minCapacity--;
                 }
             }
-            StringBuffer outputStringBuffer = new StringBuffer();
+            StringBuilder outputStringBuilder = new StringBuilder();
             outputArrayList.trimToSize();
             Object[] outputObj = outputArrayList.toArray();
             outputStr = new String[outputArrayList.size()];
             for (int j=0; j<outputArrayList.size(); j++)
             {
                 outputStr[j] = new String((String) outputObj[j]);
-                outputStringBuffer.append(outputStr[j]);
+                outputStringBuilder.append(outputStr[j]);
             }
             outputArrayList = new ArrayList();
-            inputModified = new String(outputStringBuffer.toString());
+            inputModified = new String(outputStringBuilder.toString());
             dummyString = createDummyString (' ', inputModified.length());
         }
         
@@ -910,8 +908,8 @@ public class ParserUtils
      */
     public static String trimAllTags (String input, boolean inside)
     {
- 	
-        StringBuffer output = new StringBuffer();
+
+        StringBuilder output = new StringBuilder();
 
         if (inside) {
             if ((input.indexOf('<')==-1) || (input.lastIndexOf('>')==-1) || (input.lastIndexOf('>')<input.indexOf('<'))) {
@@ -970,15 +968,15 @@ public class ParserUtils
     public static String trimTags (String input, String[] tags, boolean recursive, boolean insideTag)
         throws ParserException, UnsupportedEncodingException
     {
- 	
-        StringBuffer output = new StringBuffer();
+
+        StringBuilder output = new StringBuilder();
         String inputModified = new String(input);
         String dummyString = createDummyString (' ', input.length());
             
         // loop inside the different tags to be trimmed
         for (int i=0; i<tags.length; i++)
         {
-            output = new StringBuffer();
+            output = new StringBuilder();
             
             // loop inside the tags of the same type
             NodeList links = getLinks (inputModified, tags[i], recursive);
@@ -1079,8 +1077,8 @@ public class ParserUtils
     public static String trimTags (String input, NodeFilter filter, boolean recursive, boolean insideTag)
         throws ParserException, UnsupportedEncodingException
     {
- 	
-        StringBuffer output = new StringBuffer();
+
+        StringBuilder output = new StringBuilder();
         
         String dummyString = createDummyString (' ', input.length());
 
@@ -1230,10 +1228,10 @@ public class ParserUtils
     
     private static String createDummyString (char fillingChar, int length)
     {
-        StringBuffer dummyStringBuffer = new StringBuffer();
+        StringBuilder dummyStringBuilder = new StringBuilder();
         for (int j=0; j<length; j++)
-            dummyStringBuffer = dummyStringBuffer.append(fillingChar);
-        return new String(dummyStringBuffer);
+            dummyStringBuilder = dummyStringBuilder.append(fillingChar);
+        return new String(dummyStringBuilder);
     }
     
     private static String modifyDummyString (String dummyString, int beginTag, int endTag)

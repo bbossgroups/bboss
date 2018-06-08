@@ -129,11 +129,11 @@ public class TextNode
         Cursor start;
         Cursor end;
         char c;
-        StringBuffer ret;
+        StringBuilder ret;
 
         startpos = getStartPosition ();
         endpos = getEndPosition ();
-        ret = new StringBuffer (endpos - startpos + 20);
+        ret = new StringBuilder (endpos - startpos + 20);
         if (null == mText)
         {
             start = new Cursor (getPage (), startpos);

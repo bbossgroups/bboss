@@ -49,7 +49,7 @@ public abstract class HtmlUtils {
 		if (input == null) {
 			return null;
 		}
-		StringBuffer escaped = new StringBuffer(input.length() * 2);
+		StringBuilder escaped = new StringBuilder(input.length() * 2);
 		for (int i = 0; i < input.length(); i++) {
 			char character = input.charAt(i);
 			String reference = characterEntityReferences.convertToReference(character);
@@ -79,7 +79,7 @@ public abstract class HtmlUtils {
 		if (input == null) {
 			return null;
 		}
-		StringBuffer escaped = new StringBuffer(input.length() * 2);
+		StringBuilder escaped = new StringBuilder(input.length() * 2);
 		for (int i = 0; i < input.length(); i++) {
 			char character = input.charAt(i);
 			if (characterEntityReferences.isMappedToReference(character)) {
@@ -110,7 +110,7 @@ public abstract class HtmlUtils {
 		if (input == null) {
 			return null;
 		}
-		StringBuffer escaped = new StringBuffer(input.length() * 2);
+		StringBuilder escaped = new StringBuilder(input.length() * 2);
 		for (int i = 0; i < input.length(); i++) {
 			char character = input.charAt(i);
 			if (characterEntityReferences.isMappedToReference(character)) {

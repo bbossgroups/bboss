@@ -1,3 +1,0 @@
-<properties>
-	<property name="rpc.test" singlable="true" class="org.frameworkset.spi.remote.RPCTest"/>
-</properties>

@@ -72,7 +72,7 @@ public class DBPostgres extends DB
      */
     public String toUpperCase(String in)
     {
-        String s = new StringBuffer("UPPER(").append(in).append(")").toString();
+        String s = new StringBuilder("UPPER(").append(in).append(")").toString();
         return s;
     }
 
@@ -84,7 +84,7 @@ public class DBPostgres extends DB
      */
     public String ignoreCase(String in)
     {
-        String s = new StringBuffer("UPPER(").append(in).append(")").toString();
+        String s = new StringBuilder("UPPER(").append(in).append(")").toString();
         return s;
     }
 
@@ -185,7 +185,7 @@ public class DBPostgres extends DB
      */
     public String getDateString(Date date)
     {
-        StringBuffer dateBuf = new StringBuffer();
+        StringBuilder dateBuf = new StringBuilder();
         char delim = getStringDelimiter();
         dateBuf.append(delim);
         dateBuf.append(sdf.format(date));

@@ -35,7 +35,7 @@ public abstract class NestedExceptionUtils {
 	 */
 	public static String buildMessage(String message, Throwable cause) {
 		if (cause != null) {
-			StringBuffer buf = new StringBuffer();
+			StringBuilder buf = new StringBuilder();
 			if (message != null) {
 				buf.append(message).append("; ");
 			}

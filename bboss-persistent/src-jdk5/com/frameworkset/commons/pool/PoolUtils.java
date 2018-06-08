@@ -413,7 +413,7 @@ public final class PoolUtils {
         }
 
         public String toString() {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             sb.append("PoolableObjectFactoryAdaptor");
             sb.append("{key=").append(key);
             sb.append(", keyedFactory=").append(keyedFactory);
@@ -453,7 +453,7 @@ public final class PoolUtils {
         }
 
         public String toString() {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             sb.append("KeyedPoolableObjectFactoryAdaptor");
             sb.append("{factory=").append(factory);
             sb.append('}');
@@ -513,7 +513,7 @@ public final class PoolUtils {
         }
 
         public String toString() {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             sb.append("ObjectPoolAdaptor");
             sb.append("{key=").append(key);
             sb.append(", keyedPool=").append(keyedPool);
@@ -581,7 +581,7 @@ public final class PoolUtils {
         }
 
         public String toString() {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             sb.append("KeyedObjectPoolAdaptor");
             sb.append("{keyedPool=").append(pool);
             sb.append('}');
@@ -654,7 +654,7 @@ public final class PoolUtils {
         }
 
         public String toString() {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             sb.append("CheckedObjectPool");
             sb.append("{type=").append(type);
             sb.append(", keyedPool=").append(pool);
@@ -740,7 +740,7 @@ public final class PoolUtils {
         }
 
         public String toString() {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             sb.append("CheckedKeyedObjectPool");
             sb.append("{type=").append(type);
             sb.append(", keyedPool=").append(keyedPool);
@@ -781,7 +781,7 @@ public final class PoolUtils {
         }
 
         public String toString() {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             sb.append("ObjectPoolMinIdleTimerTask");
             sb.append("{minIdle=").append(minIdle);
             sb.append(", keyedPool=").append(pool);
@@ -824,7 +824,7 @@ public final class PoolUtils {
         }
 
         public String toString() {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             sb.append("KeyedObjectPoolMinIdleTimerTask");
             sb.append("{minIdle=").append(minIdle);
             sb.append(", key=").append(key);
@@ -901,7 +901,7 @@ public final class PoolUtils {
         }
 
         public String toString() {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             sb.append("SynchronizedObjectPool");
             sb.append("{keyedPool=").append(pool);
             sb.append('}');
@@ -994,7 +994,7 @@ public final class PoolUtils {
         }
 
         public String toString() {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             sb.append("SynchronizedKeyedObjectPool");
             sb.append("{keyedPool=").append(keyedPool);
             sb.append('}');
@@ -1045,7 +1045,7 @@ public final class PoolUtils {
         }
 
         public String toString() {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             sb.append("SynchronizedPoolableObjectFactory");
             sb.append("{factory=").append(factory);
             sb.append('}');
@@ -1096,7 +1096,7 @@ public final class PoolUtils {
         }
 
         public String toString() {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             sb.append("SynchronizedKeyedPoolableObjectFactory");
             sb.append("{keyedFactory=").append(keyedFactory);
             sb.append('}');

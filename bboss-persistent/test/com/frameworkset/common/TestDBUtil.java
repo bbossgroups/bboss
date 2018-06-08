@@ -1,12 +1,11 @@
 package com.frameworkset.common;
 
-import java.sql.SQLException;
-import java.util.Hashtable;
-
-import org.junit.Test;
-
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.Record;
+import org.junit.Test;
+
+import java.sql.SQLException;
+import java.util.Hashtable;
 
 public class TestDBUtil {
 
@@ -94,7 +93,7 @@ public class TestDBUtil {
 	
 	public static void testSelectMutitable()
 	{
-		StringBuffer sql = new StringBuffer();
+		StringBuilder sql = new StringBuilder();
 		sql.append("select a.id,e.name tax_person,a.acc_identity_id,c.name reg_identity_type,")
 		  .append("a.send_write_id,a.send_write_name,a.accept_send_user,a.send_user_code,a.send_user_name")
 		  .append(" from td_reg_tax_send_returnreceipt a,TD_REG_ACC_IDENTITY b,TB_REG_ACC_IDENTITY_TYPE c,")

@@ -29,15 +29,11 @@
  */
 package bboss.org.objectweb.asm.util;
 
+import bboss.org.objectweb.asm.*;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-
-import bboss.org.objectweb.asm.Attribute;
-import bboss.org.objectweb.asm.Handle;
-import bboss.org.objectweb.asm.Label;
-import bboss.org.objectweb.asm.Opcodes;
-import bboss.org.objectweb.asm.TypePath;
 
 /**
  * An abstract converter from visit events to text.
@@ -124,7 +120,7 @@ public abstract class Printer {
     /**
      * A buffer that can be used to create strings.
      */
-    protected final StringBuffer buf;
+    protected final StringBuilder buf;
 
     /**
      * The text to be printed. Since the code of methods is not necessarily
@@ -145,7 +141,7 @@ public abstract class Printer {
      */
     protected Printer(final int api) {
         this.api = api;
-        this.buf = new StringBuffer();
+        this.buf = new StringBuilder();
         this.text = new ArrayList<Object>();
     }
 
@@ -538,7 +534,7 @@ public abstract class Printer {
      * @param s
      *            the string to be added.
      */
-    public static void appendString(final StringBuffer buf, final String s) {
+    public static void appendString(final StringBuilder buf, final String s) {
         buf.append('\"');
         for (int i = 0; i < s.length(); ++i) {
             char c = s.charAt(i);

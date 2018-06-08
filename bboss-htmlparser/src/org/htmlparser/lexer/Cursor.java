@@ -26,8 +26,9 @@
 
 package org.htmlparser.lexer;
 
-import java.io.Serializable;
 import org.htmlparser.util.sort.Ordered;
+
+import java.io.Serializable;
 
 /**
  * A bookmark in a page.
@@ -129,9 +130,9 @@ public class Cursor
      */
     public String toString ()
     {
-        StringBuffer ret;
+        StringBuilder ret;
 
-        ret = new StringBuffer (9 * 3 + 3); // three ints and delimiters
+        ret = new StringBuilder (9 * 3 + 3); // three ints and delimiters
         ret.append (getPosition ());
         ret.append ("[");
         if (null != mPage)

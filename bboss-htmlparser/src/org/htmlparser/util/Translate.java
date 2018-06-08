@@ -26,18 +26,9 @@
 
 package org.htmlparser.util;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-
 import org.htmlparser.util.sort.Sort;
+
+import java.io.*;
 
 /**
  * Extended character entity reference.
@@ -769,7 +760,7 @@ public class Translate
         int amp;
         int index;
         int length;
-        StringBuffer buffer;
+        StringBuilder buffer;
         char character;
         int number;
         int radix;
@@ -786,7 +777,7 @@ public class Translate
             key = null;
             index = 0;
             length = string.length ();
-            buffer = new StringBuffer (length);
+            buffer = new StringBuilder (length);
             do
             {
                 // equivalent to buffer.append (string.substring (index, amp));
@@ -936,10 +927,10 @@ public class Translate
      * Decode the characters in a string buffer containing references.
      * Change all numeric character reference and character entity references
      * to unicode characters.
-     * @param buffer The StringBuffer containing references.
+     * @param buffer The StringBuilder containing references.
      * @return The decoded string.
      */
-    public static String decode (StringBuffer buffer)
+    public static String decode (StringBuilder buffer)
     {
         return decode (buffer.toString());
     }
@@ -959,7 +950,7 @@ public class Translate
     public static void decode (InputStream in, PrintStream out)
     {
         Reader reader;
-        StringBuffer buffer;
+        StringBuilder buffer;
         int character;
         String string;
         boolean newlines;
@@ -975,7 +966,7 @@ public class Translate
                 // yeah, like this will happen; OK, assume the default is ISO-8859-1
                 reader = new BufferedReader (new InputStreamReader (in));
             }
-            buffer = new StringBuffer (1024);
+            buffer = new StringBuilder (1024);
             newlines = false;
             if (DECODE_LINE_BY_LINE)
                 while (-1 != (character = reader.read ()))
@@ -1049,9 +1040,9 @@ public class Translate
      */
     public static String encode (int character)
     {
-        StringBuffer ret;
+        StringBuilder ret;
 
-        ret = new StringBuffer (13); /* &#2147483647; */
+        ret = new StringBuilder (13); /* &#2147483647; */
         ret.append ("&#");
         if (ENCODE_HEXADECIMAL)
         {
@@ -1077,9 +1068,9 @@ public class Translate
         int length;
         char c;
         CharacterReference candidate;
-        StringBuffer ret;
+        StringBuilder ret;
 
-        ret = new StringBuffer (string.length () * 6);
+        ret = new StringBuilder (string.length () * 6);
         length  = string.length ();
         for (int i = 0; i < length; i++)
         {

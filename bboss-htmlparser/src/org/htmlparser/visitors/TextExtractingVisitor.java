@@ -42,11 +42,11 @@ import org.htmlparser.util.Translate;
  * </code>
  */
 public class TextExtractingVisitor extends NodeVisitor {
-    private StringBuffer textAccumulator;
+    private StringBuilder textAccumulator;
     private boolean preTagBeingProcessed;
 
     public TextExtractingVisitor() {
-        textAccumulator = new StringBuffer();
+        textAccumulator = new StringBuilder();
         preTagBeingProcessed = false;
     }
 

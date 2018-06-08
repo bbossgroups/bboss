@@ -15,31 +15,20 @@
  */
 package org.frameworkset.http;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import com.frameworkset.util.StringUtil;
+import org.frameworkset.util.Assert;
+import org.frameworkset.util.LinkedCaseInsensitiveMap;
+import org.frameworkset.util.annotations.HttpMethod;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.frameworkset.util.Assert;
-import org.frameworkset.util.LinkedCaseInsensitiveMap;
-import org.frameworkset.util.annotations.HttpMethod;
-
-import com.frameworkset.util.StringUtil;
+import java.util.*;
 
 /**
  * <p>Title: ServletServerHttpRequest.java</p> 

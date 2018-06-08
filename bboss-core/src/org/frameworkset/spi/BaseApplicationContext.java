@@ -1907,7 +1907,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	public static String getRealPath(String parent, String file) {
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 
 		if (parent.endsWith("/")) {
 

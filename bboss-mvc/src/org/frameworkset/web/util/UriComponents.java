@@ -1,5 +1,8 @@
 package org.frameworkset.web.util;
 
+import org.frameworkset.util.Assert;
+import org.frameworkset.util.MultiValueMap;
+
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -9,9 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.frameworkset.util.Assert;
-import org.frameworkset.util.MultiValueMap;
 
 public abstract class UriComponents implements Serializable {
 
@@ -157,7 +157,6 @@ public abstract class UriComponents implements Serializable {
 
 	/**
 	 * Normalize the path removing sequences like "path/..".
-	 * @see org.frameworkset.util.StringUtils#cleanPath(String)
 	 */
 	public abstract UriComponents normalize();
 

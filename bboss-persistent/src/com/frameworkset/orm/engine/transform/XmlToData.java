@@ -31,19 +31,9 @@ package com.frameworkset.orm.engine.transform;
  * limitations under the License.
  */
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
+import com.frameworkset.orm.engine.model.Column;
+import com.frameworkset.orm.engine.model.Database;
+import com.frameworkset.orm.engine.model.Table;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,9 +43,13 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.frameworkset.orm.engine.model.Column;
-import com.frameworkset.orm.engine.model.Database;
-import com.frameworkset.orm.engine.model.Table;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Class that is used to parse an input xml schema file and creates and
@@ -260,7 +254,7 @@ public class XmlToData extends DefaultHandler implements EntityResolver, Seriali
 
         public String getEscapedValue()
         {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append("'");
             sb.append(StringUtils.replace(val, "'", "''"));
             sb.append("'");

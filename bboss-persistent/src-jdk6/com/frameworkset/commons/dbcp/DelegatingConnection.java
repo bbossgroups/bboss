@@ -117,7 +117,7 @@ public class DelegatingConnection extends AbandonedTrace
                 else {
                     DatabaseMetaData meta = c.getMetaData();
                     if (meta != null) {
-                        StringBuffer sb = new StringBuffer();
+                        StringBuilder sb = new StringBuilder();
                         sb.append(meta.getURL());
                         sb.append(", UserName=");
                         sb.append(meta.getUserName());

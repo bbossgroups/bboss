@@ -64,7 +64,7 @@ public class DBDerby
      */
     public String toUpperCase(String str)
     {
-        return new StringBuffer("UPPER(")
+        return new StringBuilder("UPPER(")
                 .append(str)
                 .append(")")
                 .toString();
@@ -108,7 +108,7 @@ public class DBDerby
             throws SQLException
     {
         Statement statement = con.createStatement();
-        StringBuffer stmt = new StringBuffer();
+        StringBuilder stmt = new StringBuilder();
         stmt.append("LOCK TABLE ")
                 .append(table).append(" IN EXCLUSIVE MODE");
         statement.executeUpdate(stmt.toString());

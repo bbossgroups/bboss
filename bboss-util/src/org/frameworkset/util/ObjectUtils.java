@@ -587,7 +587,7 @@ public abstract class ObjectUtils {
 		if (length == 0) {
 			return EMPTY_ARRAY;
 		}
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			if (i == 0) {
 				buffer.append(ARRAY_START);
@@ -618,7 +618,7 @@ public abstract class ObjectUtils {
 		if (length == 0) {
 			return EMPTY_ARRAY;
 		}
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			if (i == 0) {
 				buffer.append(ARRAY_START);
@@ -650,7 +650,7 @@ public abstract class ObjectUtils {
 		if (length == 0) {
 			return EMPTY_ARRAY;
 		}
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			if (i == 0) {
 				buffer.append(ARRAY_START);
@@ -681,7 +681,7 @@ public abstract class ObjectUtils {
 		if (length == 0) {
 			return EMPTY_ARRAY;
 		}
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			if (i == 0) {
 				buffer.append(ARRAY_START);
@@ -712,7 +712,7 @@ public abstract class ObjectUtils {
 		if (length == 0) {
 			return EMPTY_ARRAY;
 		}
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			if (i == 0) {
 				buffer.append(ARRAY_START);
@@ -744,7 +744,7 @@ public abstract class ObjectUtils {
 		if (length == 0) {
 			return EMPTY_ARRAY;
 		}
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			if (i == 0) {
 				buffer.append(ARRAY_START);
@@ -776,7 +776,7 @@ public abstract class ObjectUtils {
 		if (length == 0) {
 			return EMPTY_ARRAY;
 		}
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			if (i == 0) {
 				buffer.append(ARRAY_START);
@@ -807,7 +807,7 @@ public abstract class ObjectUtils {
 		if (length == 0) {
 			return EMPTY_ARRAY;
 		}
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			if (i == 0) {
 				buffer.append(ARRAY_START);
@@ -838,7 +838,7 @@ public abstract class ObjectUtils {
 		if (length == 0) {
 			return EMPTY_ARRAY;
 		}
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			if (i == 0) {
 				buffer.append(ARRAY_START);

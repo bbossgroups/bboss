@@ -248,7 +248,7 @@ public class StackKeyedObjectPool extends BaseKeyedObjectPool implements KeyedOb
     }
 
     public synchronized String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append(getClass().getName());
         buf.append(" contains ").append(_pools.size()).append(" distinct pools: ");
         Iterator it = _pools.keySet().iterator();

@@ -31,12 +31,11 @@ package com.frameworkset.orm.engine.model;
  * limitations under the License.
  */
 
-import java.io.Serializable;
-
+import com.frameworkset.orm.platform.Platform;
 import org.apache.commons.lang.StringUtils;
 import org.xml.sax.Attributes;
 
-import com.frameworkset.orm.platform.Platform;
+import java.io.Serializable;
 
 /**
  * A Class for holding data about a column used in an Application.
@@ -282,7 +281,7 @@ public class Domain implements Serializable
      */
     public String getDefaultSetting()
     {
-        StringBuffer dflt = new StringBuffer(0);
+        StringBuilder dflt = new StringBuilder(0);
         if (getDefaultValue() != null)
         {
             dflt.append("default ");

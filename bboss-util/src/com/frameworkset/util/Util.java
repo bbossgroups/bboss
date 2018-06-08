@@ -82,7 +82,7 @@ public class Util implements Serializable{
 
 		public static String dbString(String v)
 		{
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			return isNull(v) ? "" : sb.append("'").append(v).append("'").toString();
 		}
 
@@ -90,7 +90,7 @@ public class Util implements Serializable{
 		{
 			Enumeration keys = table.keys();
 			Enumeration values = table.elements();
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			String eof = "\n";
 			if(html)
 				eof = "<br>\n";
@@ -106,7 +106,7 @@ public class Util implements Serializable{
 
 		public static String addURLParameter(String URL, String parameter)
 		{
-			StringBuffer sb = new StringBuffer(URL);
+			StringBuilder sb = new StringBuilder(URL);
 			if(URL.lastIndexOf('?') == -1)
 				sb.append("?");
 			else

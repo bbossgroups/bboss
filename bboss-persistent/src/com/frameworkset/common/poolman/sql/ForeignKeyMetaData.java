@@ -100,7 +100,7 @@ public class ForeignKeyMetaData extends ColumnMetaData implements Serializable {
 	
 	public String toString()
     {	
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         ret.append("		PKTABLE_NAME=")
            .append(PKTABLE_NAME)
            .append(",")

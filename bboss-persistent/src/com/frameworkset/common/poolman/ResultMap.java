@@ -15,29 +15,7 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.CallableStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.frameworkset.util.BigFile;
-import org.frameworkset.util.ClassUtil;
-import org.frameworkset.util.ClassUtil.ClassInfo;
-import org.frameworkset.util.ClassUtil.PropertieDescription;
-import org.frameworkset.util.annotations.wraper.ColumnWraper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.frameworkset.common.poolman.handle.FieldRowHandler;
-import com.frameworkset.common.poolman.handle.ResultSetNullRowHandler;
-import com.frameworkset.common.poolman.handle.RowHandler;
-import com.frameworkset.common.poolman.handle.ValueExchange;
-import com.frameworkset.common.poolman.handle.XMLMark;
-import com.frameworkset.common.poolman.handle.XMLRowHandler;
+import com.frameworkset.common.poolman.handle.*;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData.WrapInteger;
 import com.frameworkset.common.poolman.util.JDBCPool;
@@ -47,6 +25,22 @@ import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.orm.engine.model.SchemaType;
 import com.frameworkset.util.ColumnEditorInf;
 import com.frameworkset.util.ValueObjectUtil;
+import org.frameworkset.util.BigFile;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.frameworkset.util.ClassUtil.PropertieDescription;
+import org.frameworkset.util.annotations.wraper.ColumnWraper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -333,7 +327,7 @@ public class ResultMap {
 									stmtInfo.getDbadapter(),editor,cl);
 		
 						} catch (Exception e) {
-							StringBuffer err = new StringBuffer(
+							StringBuilder err = new StringBuilder(
 									"Build ValueObject for ResultSet[").append(
 											stmtInfo.getSql()).append("] Get Column[")
 									.append(columnName).append("] from  ResultSet to ").append(valueObject).append(".")
@@ -353,7 +347,7 @@ public class ResultMap {
 	//								new Object[] { propsVal });
 							break;
 						} catch (Exception e) {
-							StringBuffer err = new StringBuffer(
+							StringBuilder err = new StringBuilder(
 							"Build ValueObject for ResultSet[").append(
 									stmtInfo.getSql()).append("] Get Column[")
 							.append(columnName).append("] from  ResultSet to ").append(valueObject).append(".")
@@ -557,7 +551,7 @@ public class ResultMap {
 						CallableParam param = (CallableParam) outparams.outParams
 								.get(i);
 						if (param.parameterName == null) {
-							String msg = new StringBuffer(
+							String msg = new StringBuilder(
 									"Build ValueObject for callablestatement[").append(
 									outparams.prepareSqlifo.getNewsql()).append(
 									"] need named binding variable,ignore handle ")
@@ -581,7 +575,7 @@ public class ResultMap {
 									cstmt, param.parameterName, param.sqlType, type,
 									stmtInfo.getDbname(),editor,cl);
 						} catch (Exception e) {
-							StringBuffer err = new StringBuffer(
+							StringBuilder err = new StringBuilder(
 									"Build ValueObject for callablestatement[").append(
 									outparams.prepareSqlifo.getNewsql()).append("] Get Param[")
 									.append(param).append("] from  ").append(cstmt)
@@ -610,7 +604,7 @@ public class ResultMap {
 							outparams.outParams.remove(i);
 							break;
 						} catch (Exception e) {
-							StringBuffer err = new StringBuffer("set Param[").append(
+							StringBuilder err = new StringBuilder("set Param[").append(
 									param).append("] into ").append(valueObject)
 									.append(".").append(attrName).append("[").append(
 											type.getName()).append("] failed:").append(
@@ -627,7 +621,7 @@ public class ResultMap {
 		
 				}
 				if (outparams.outParams.size() > 0) {
-					StringBuffer msg = new StringBuffer();
+					StringBuilder msg = new StringBuilder();
 					msg.append("Following outparams not mapping attributes in ")
 							.append(valueObjectType.getName()).append(":\r\n");
 					for (int i = 0; i < outparams.outParams.size(); i++) {
@@ -644,7 +638,7 @@ public class ResultMap {
 							cstmt, param.parameterName, param.sqlType, valueObjectType,
 							stmtInfo.getDbname(),(ColumnEditorInf)null,(ColumnWraper)null);
 				} catch (Exception e) {
-					StringBuffer err = new StringBuffer(
+					StringBuilder err = new StringBuilder(
 							"Build ValueObject for callablestatement[").append(
 							outparams.prepareSqlifo.getNewsql()).append("] Get Param[")
 							.append(param).append("] from  ").append(cstmt)
@@ -695,7 +689,7 @@ public class ResultMap {
 						data.put(new Integer(_param.index), object);
 					}
 				} else {
-					throw new SQLException(new StringBuffer("Param[").append(
+					throw new SQLException(new StringBuilder("Param[").append(
 							param).append("] is not an out parameter.")
 							.toString());
 				}
@@ -730,7 +724,7 @@ public class ResultMap {
 						data.put(new Integer(_param.index), object);
 					}
 				} else {
-					throw new SQLException(new StringBuffer("Param[").append(
+					throw new SQLException(new StringBuilder("Param[").append(
 							param).append("] is not an out parameter.")
 							.toString());
 				}
@@ -874,10 +868,10 @@ public class ResultMap {
 	
 	
 	
-	public static StringBuffer buildSingleRecordXMLString(ResultSet rs,
+	public static StringBuilder buildSingleRecordXMLString(ResultSet rs,
 			StatementInfo stmtInfo,
 			RowHandler rowHander,DB db) throws SQLException {			
-		StringBuffer record = new StringBuffer();
+		StringBuilder record = new StringBuilder();
 //		if (rowHander != null)
 //		{		        
 			Record data = buildMap(rs, stmtInfo,db);
@@ -933,7 +927,7 @@ public class ResultMap {
 		// this.origineprocresult = new Record(data);
 		if (outparams.outParams != null && outparams.outParams.size() > 0) {
 
-			StringBuffer records = new StringBuffer(2000);
+			StringBuilder records = new StringBuilder(2000);
 
 			boolean isxmlhandler = rowHander != null && rowHander instanceof XMLRowHandler; 
 	                XMLRowHandler xhdl = null;
@@ -954,7 +948,7 @@ public class ResultMap {
 	                           .append(xhdl.getRootName())
 	                           .append(">\r\n");
 	                }
-			StringBuffer record = new StringBuffer(100);
+			StringBuilder record = new StringBuilder(100);
 			if (rowHander != null)
 			{
 				Record origineprocresult = buildMap(cstmt, outparams, stmtInfo);
@@ -1021,7 +1015,7 @@ public class ResultMap {
 							// data.put(new Integer(_param.index), object);
 						}
 					} else {
-						throw new SQLException(new StringBuffer("Param[").append(
+						throw new SQLException(new StringBuilder("Param[").append(
 								param).append("] is not an out parameter.")
 								.toString());
 					}

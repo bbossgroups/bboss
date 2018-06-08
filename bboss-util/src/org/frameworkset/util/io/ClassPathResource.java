@@ -145,6 +145,8 @@ public class ClassPathResource extends AbstractResource {
 		return is;
 	}
 
+
+
 	/**
 	 * This implementation returns a URL for the underlying class path resource.
 	 * @see java.lang.ClassLoader#getResource(String)

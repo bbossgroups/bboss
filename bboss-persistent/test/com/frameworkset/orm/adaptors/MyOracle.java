@@ -21,23 +21,23 @@ public class MyOracle extends DBOracle {
 
     public PagineSql getDBPagineSql(String sql, long offset, int maxsize,boolean prepared)
     {
-        // StringBuffer ret = new
+        // StringBuilder ret = new
         // StringBuffer("select ss1.* from (select tt1.*,rownum rowno_ from (")
         // .append(sql)
         // .append(") tt1) ss1 where ss1.rowno_ between ")
         // .append((offset + 1) + "")
         // .append(" and ")
         // .append((offset + maxsize) + "");
-//        StringBuffer ret = new StringBuffer("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
+//        StringBuilder ret = new StringBuilder("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
 //                ") tt1 where rownum <= ").append((offset + maxsize)).append(") ss1 where ss1.rowno_ >= ").append(
 //                (offset + 1));
 //        return ret.toString();
-    	StringBuffer ret = null;
+		StringBuilder ret = null;
     	if(prepared)
-    		ret = new StringBuffer().append("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
+    		ret = new StringBuilder().append("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
                 ") tt1 where rownum <= ?) ss1 where ss1.rowno_ >= ?");
     	else
-    		ret = new StringBuffer("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
+    		ret = new StringBuilder("select ss1.* from (select tt1.*,rownum rowno_ from (").append(sql).append(
                   ") tt1 where rownum <= ").append((offset + maxsize)).append(") ss1 where ss1.rowno_ >= ").append(
                   (offset + 1));
         return new PagineSql(ret.toString(),offset + maxsize,offset + 1,offset, maxsize, prepared);

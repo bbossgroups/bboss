@@ -410,7 +410,7 @@ public class ValueObjectUtil {
 //			|| !type.getName().startsWith("[")
 //			&& toType.getName().startsWith("["))
 			throw new IllegalArgumentException(
-				new StringBuffer("类型无法转换,不支持[")
+				new StringBuilder("类型无法转换,不支持[")
 					.append(type.getName())
 					.append("]向[")
 					.append(toType.getName())
@@ -484,7 +484,7 @@ public class ValueObjectUtil {
 		 */
 //		if (type != String.class)
 //			throw new NoSupportTypeCastException(
-//				new StringBuffer("不支持[")
+//				new StringBuilder("不支持[")
 //					.append(type)
 //					.append("]向[")
 //					.append(toType)
@@ -555,7 +555,7 @@ public class ValueObjectUtil {
 		}
 
 		throw new NoSupportTypeCastException(
-			new StringBuffer("不支持[")
+			new StringBuilder("不支持[")
 				.append(type)
 				.append("]向[")
 				.append(toType)
@@ -600,7 +600,7 @@ public class ValueObjectUtil {
 			return obj;
 //		if (type != String[].class)
 //			throw new NoSupportTypeCastException(
-//				new StringBuffer("不支持[")
+//				new StringBuilder("不支持[")
 //					.append(type)
 //					.append("]向[")
 //					.append(toType)
@@ -767,7 +767,7 @@ public class ValueObjectUtil {
 		}
 
 		throw new NoSupportTypeCastException(
-			new StringBuffer("不支持[")
+			new StringBuilder("不支持[")
 				.append(type)
 				.append("]向[")
 				.append(toType)

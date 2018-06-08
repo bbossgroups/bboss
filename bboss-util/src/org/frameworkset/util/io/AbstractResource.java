@@ -16,20 +16,14 @@
 
 package org.frameworkset.util.io;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-
 import org.frameworkset.util.ResourceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 
 
@@ -67,7 +61,7 @@ public abstract class AbstractResource implements Resource {
 				return true;
 			}
 			catch (Throwable isEx) {
-				log.error("",isEx);
+//				log.debug("",isEx);
 				return false;
 			}
 		}

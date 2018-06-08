@@ -57,7 +57,7 @@ public class DBInterbase extends DB
      */
     public String toUpperCase(String in)
     {
-        return new StringBuffer("UPPER(").append(in).append(")").toString();
+        return new StringBuilder("UPPER(").append(in).append(")").toString();
     }
 
     /**
@@ -68,7 +68,7 @@ public class DBInterbase extends DB
      */
     public String ignoreCase(String in)
     {
-        return new StringBuffer("UPPER(").append(in).append(")").toString();
+        return new StringBuilder("UPPER(").append(in).append(")").toString();
     }
 
     /**
@@ -122,7 +122,7 @@ public class DBInterbase extends DB
     {
         Statement statement = con.createStatement();
 
-        StringBuffer stmt = new StringBuffer();
+        StringBuilder stmt = new StringBuilder();
         stmt.append("SET TRANSACTION ")
                 .append("ISOLATION LEVEL READ COMMITTED ")
                 .append("NO RECORD_VERSION WAIT ")

@@ -15,32 +15,21 @@
  */
 package com.frameworkset.common.poolman.management;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-//import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.util.ValueObjectUtil;
 import com.frameworkset.velocity.BBossVelocityUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.*;
+
+//import java.util.Hashtable;
 
 /**
  * This service configures ObjectPools by first looking for 'poolman.xml' in the
@@ -341,7 +330,7 @@ public class PoolManConfiguration   {
 			// get rid of the "_"
 			String adjustedKey = key;
 			if (key.indexOf("_") != -1) {
-				StringBuffer sb = new StringBuffer(key.substring(0, key
+				StringBuilder sb = new StringBuilder(key.substring(0, key
 						.indexOf("_")));
 				sb.append(key.substring(key.indexOf("_") + 1, key.length()));
 				adjustedKey = sb.toString();

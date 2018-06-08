@@ -103,7 +103,7 @@ public class CodeUtils {
 	            charset = Charset.forName(charsetName);
 	        }
 
-	        StringBuffer out = new StringBuffer();
+	        StringBuilder out = new StringBuilder();
 	        BufferedReader r = new BufferedReader(new InputStreamReader(is, charset), 4096);
 	        try {
 	            String b;
@@ -345,7 +345,7 @@ public class CodeUtils {
 	            // we number the lines we could end up with a line number and no line
 	            // to avoid that we just ignore the first line alltogether.
 	            //
-	            StringBuffer buffer = new StringBuffer();
+	            StringBuilder buffer = new StringBuilder();
 	            long counter = 0;
 	            while (tokenizer.hasMore()) {
 	                Token tk = tokenizer.nextToken();
@@ -367,7 +367,7 @@ public class CodeUtils {
 	    }
 
 	    public static String leftPad(String s, int len, String fill) {
-	        StringBuffer sb = new StringBuffer(len);
+	        StringBuilder sb = new StringBuilder(len);
 	        if (s.length() < len) {
 	            for (int i = s.length(); i < len; i++) {
 	                sb.append(fill);
@@ -382,7 +382,7 @@ public class CodeUtils {
 	        String language = locale.getLanguage();
 	        String country = locale.getCountry();
 	        String variant = locale.getVariant();
-	        StringBuffer temp = new StringBuffer(baseName);
+	        StringBuilder temp = new StringBuilder(baseName);
 
 	        if (language.length() > 0) {
 	            temp.append('_').append(language);

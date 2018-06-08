@@ -21,12 +21,11 @@
  */
 package org.ditchnet.jsp.taglib.tabs.handler;
 
-import java.io.IOException;
+import com.frameworkset.common.tag.BaseBodyTag;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-
-import com.frameworkset.common.tag.BaseBodyTag;
+import java.io.IOException;
 
 
 /**
@@ -70,7 +69,7 @@ public final class TabLinkTag extends BaseBodyTag {
 		} else {
 			prefix = QUESTION_MARK;
 		}
-		StringBuffer buff = new StringBuffer();
+		StringBuilder buff = new StringBuilder();
 		buff.append(prefix).append(PARAM_NAME_TAB_PANE_ID).append(EQUALS)
 			.append(selectedTabPaneId);
 		return buff.toString();
@@ -79,8 +78,8 @@ public final class TabLinkTag extends BaseBodyTag {
 	public int doAfterBody() throws JspException {
 				
 //		StringWriter evalResult = new StringWriter();
-//		StringBuffer buff = evalResult.getBuffer();
-		StringBuffer buff = new StringBuffer();
+//		StringBuilder buff = evalResult.getBuffer();
+		StringBuilder buff = new StringBuilder();
 		
 		buff.append("\n<a ");
 		if (isHrefSameAsRequestURI()) {

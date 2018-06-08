@@ -942,7 +942,7 @@ public class Formula implements ModelObject
     
     public String toString()
     {
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         for(int j = 0;j < tokens.size(); j ++)
     	{        	
     		Object[] token  = (Object[])tokens.get(j); 

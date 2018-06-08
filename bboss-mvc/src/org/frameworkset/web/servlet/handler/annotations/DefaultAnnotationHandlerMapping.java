@@ -236,7 +236,7 @@ public class DefaultAnnotationHandlerMapping  extends AbstractDetectingUrlHandle
 //		String[] mappedPaths = mapping.value();
 //		if (mappedPaths != null && mappedPaths.length > 0) {	
 //			String mappedPath = mappedPaths[0];
-//			StringBuffer pathUrl = new StringBuffer();
+//			StringBuilder pathUrl = new StringBuilder();
 //			pathUrl.append(url);
 //			for(int i = 0; i < mappedPath.length(); i ++ )
 //			{

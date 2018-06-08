@@ -248,8 +248,8 @@ public class SynchronizedMethod implements java.io.Serializable {
 	    	{
 	    		return this.uuid = this.pattern;
 	    	}
-	    		
-	    	StringBuffer uuid_ = new StringBuffer();    	
+
+			StringBuilder uuid_ = new StringBuilder();
 	    	uuid_.append(this.methodName);
 	    	if(this.params != null)
 	    	{
@@ -282,7 +282,7 @@ public class SynchronizedMethod implements java.io.Serializable {
 //    {
 //    	try
 //    	{
-//	    	StringBuffer uuid = new StringBuffer();
+//	    	StringBuilder uuid = new StringBuilder();
 //	    	Class[] paramTypes = method_call.getTypes();
 //	    	uuid.append(method_call.getMethodName());
 //	    	if(paramTypes == null || paramTypes.length == 0)
@@ -314,7 +314,7 @@ public class SynchronizedMethod implements java.io.Serializable {
     {
 //        try
 //        {
-//            StringBuffer uuid = new StringBuffer();
+//            StringBuilder uuid = new StringBuilder();
 //            Class[] paramTypes = method.getParameterTypes();
 //            uuid.append(method.getName());
 //            if(paramTypes == null || paramTypes.length == 0)
@@ -347,7 +347,7 @@ public class SynchronizedMethod implements java.io.Serializable {
     {
         try
         {
-            StringBuffer uuid = new StringBuffer();
+			StringBuilder uuid = new StringBuilder();
             
             uuid.append(method);
             if(paramTypes == null || paramTypes.length == 0)

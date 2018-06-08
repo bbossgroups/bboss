@@ -2254,7 +2254,7 @@ public class CallableDBUtil extends PreparedDBUtil {
 		catch(Exception e)
 		{
 			try{
-				String error = new StringBuffer("Execute ")
+				String error = new StringBuilder("Execute ")
 				.append(Params.prepareSqlifo.getNewsql()).append(" on ")
 				.append(prepareDBName)
 				.append(" failed:").append(e.getMessage()).toString();

@@ -31,10 +31,10 @@ package com.frameworkset.orm.adapter;
  * limitations under the License.
  */
 
+import com.frameworkset.orm.platform.PlatformDb2Impl;
+
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import com.frameworkset.orm.platform.PlatformDb2Impl;
 
 
 public class DBDB2App extends DB2Base
@@ -55,7 +55,7 @@ public class DBDB2App extends DB2Base
      */
     public String toUpperCase(String in)
     {
-        String s = new StringBuffer("UPPER(").append(in).append(")").toString();
+        String s = new StringBuilder("UPPER(").append(in).append(")").toString();
         return s;
     }
 
@@ -67,7 +67,7 @@ public class DBDB2App extends DB2Base
      */
     public String ignoreCase(String in)
     {
-        String s = new StringBuffer("UPPER(").append(in).append(")").toString();
+        String s = new StringBuilder("UPPER(").append(in).append(")").toString();
         return s;
     }
 

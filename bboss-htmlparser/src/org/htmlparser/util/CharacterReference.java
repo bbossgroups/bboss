@@ -6,9 +6,9 @@
 
 package org.htmlparser.util;
 
-import java.io.Serializable;
-
 import org.htmlparser.util.sort.Ordered;
+
+import java.io.Serializable;
 
 /**
  * Structure to hold a character and it's equivalent entity reference kernel.
@@ -93,9 +93,9 @@ public class CharacterReference
     public String toString ()
     {
         String hex;
-        StringBuffer ret;
+        StringBuilder ret;
 
-        ret = new StringBuffer (6 + 8 + 2); // max 8 in string
+        ret = new StringBuilder (6 + 8 + 2); // max 8 in string
         hex = Integer.toHexString (getCharacter ());
         ret.append ("\\u");
         for (int i = hex.length (); i < 4; i++)

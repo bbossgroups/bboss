@@ -137,12 +137,12 @@ public class AsmUtil {
 //					String className = Foo.class.getName();
 //					className = className.replace(".", "/");
 //					//我们接着需要增加一个execute方法
-//					String getMd = new StringBuffer(6).append("get")
+//					String getMd = new StringBuilder(6).append("get")
 //		            .append(Character.toTitleCase(name.charAt(0)))
 //		            .append(name.substring(1))
 //		            .toString();
 //					
-//					String setMd = new StringBuffer(6).append("set")
+//					String setMd = new StringBuilder(6).append("set")
 //				            .append(Character.toTitleCase(name.charAt(0)))
 //				            .append(name.substring(1))
 //				            .toString();

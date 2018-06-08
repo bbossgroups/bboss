@@ -530,7 +530,7 @@ class SequencedHashMap implements Map, Cloneable, Externalizable {
    *  iterate over the entries in the map formatting them as appropriate.
    **/
   public String toString() {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     buf.append('[');
     for(Entry pos = sentinel.next; pos != sentinel; pos = pos.next) {
       buf.append(pos.getKey());

@@ -1932,8 +1932,8 @@ public class PagerDataSet extends PagerTagSupport {
 
 	protected String buildColnameKey(String colName)
 	{
-		
-		StringBuffer buf = new StringBuffer();
+
+		StringBuilder buf = new StringBuilder();
 		if(this.index >= 0)
 		{
 			buf.append(index).append(".").append( this.getRowidByIndex(index) ).append(".").append(colName);

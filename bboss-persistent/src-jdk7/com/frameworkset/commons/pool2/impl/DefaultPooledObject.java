@@ -16,14 +16,14 @@
  */
 package com.frameworkset.commons.pool2.impl;
 
+import com.frameworkset.commons.pool2.PooledObject;
+import com.frameworkset.commons.pool2.PooledObjectState;
+import com.frameworkset.commons.pool2.TrackedUse;
+
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Deque;
-
-import com.frameworkset.commons.pool2.PooledObject;
-import com.frameworkset.commons.pool2.PooledObjectState;
-import com.frameworkset.commons.pool2.TrackedUse;
 
 /**
  * This wrapper is used to track the additional information, such as state, for
@@ -316,7 +316,7 @@ public class DefaultPooledObject<T> implements PooledObject<T> {
         // dates unless the log message will actually be used.
         @Override
         public String getMessage() {
-            StringBuffer msg = new StringBuffer();
+            StringBuilder msg = new StringBuilder();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
             msg.append(pre);
             msg.append(format.format(new Date(_createdTime)));

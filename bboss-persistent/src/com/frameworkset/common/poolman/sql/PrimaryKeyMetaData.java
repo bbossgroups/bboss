@@ -29,7 +29,7 @@ public class PrimaryKeyMetaData extends ColumnMetaData {
 	
 	public String toString()
     {
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         ret.append("		columnName=").append(getColumnName()).append(",");
         ret.append("pkName=").append(pkName).append(",").append("keySEQ=").append(keySEQ + "");
         return ret.toString();

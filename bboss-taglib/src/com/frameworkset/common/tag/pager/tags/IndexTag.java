@@ -1524,7 +1524,7 @@ public final class IndexTag extends PagerTagSupport {
 //     * @return String
 //     */
 //    private String getGoContent() {
-//		StringBuffer ret = new StringBuffer(); //.append("跳转到");
+//		StringBuilder ret = new StringBuilder(); //.append("跳转到");
 //		//ret.append("<a id=\"bridge\"></a>");
 //		//ret.append(this.getScript());
 //		long pages = pagerContext.getPageCount();
@@ -1533,7 +1533,7 @@ public final class IndexTag extends PagerTagSupport {
 //			
 //			
 //			String goTo = null;
-//			StringBuffer gogo = new StringBuffer();
+//			StringBuilder gogo = new StringBuilder();
 //			if(pagerContext.getForm() == null)
 //			{
 //			    if(pagerContext.getSortKey() != null)

@@ -1107,7 +1107,7 @@ public class GenericObjectPool extends BaseObjectPool implements ObjectPool {
     }
 
     synchronized String debugInfo() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append("Active: ").append(getNumActive()).append("\n");
         buf.append("Idle: ").append(getNumIdle()).append("\n");
         buf.append("Idle Objects:\n");

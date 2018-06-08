@@ -26,13 +26,6 @@
 
 package org.htmlparser.tags;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.htmlparser.Attribute;
 import org.htmlparser.Node;
 import org.htmlparser.Tag;
@@ -40,6 +33,9 @@ import org.htmlparser.nodes.TagNode;
 import org.htmlparser.nodes.TextNode;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.SimpleNodeIterator;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * ObjectTag represents an &lt;Object&gt; tag.
@@ -368,9 +364,9 @@ public class ObjectTag extends CompositeTag
         String paramValue;
         boolean found;
         Node node;
-        StringBuffer ret;
+        StringBuilder ret;
         
-        ret = new StringBuffer (500);
+        ret = new StringBuilder (500);
         ret.append ("Object Tag\n");
         ret.append ("**********\n");
         ret.append ("ClassId = ");

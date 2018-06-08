@@ -89,7 +89,7 @@ public class TableMetaData implements Comparable,Serializable{
 
     public String toString()
     {
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         ret.append(this.tableName).append("(");
         Object[] objs = this.columns.toArray();
         boolean flag = false;

@@ -135,7 +135,7 @@ public final class SAXClassAdapter extends ClassVisitor {
     public void visit(final int version, final int access, final String name,
             final String signature, final String superName,
             final String[] interfaces) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         appendAccess(access | ACCESS_CLASS, sb);
 
         AttributesImpl att = new AttributesImpl();
@@ -170,7 +170,7 @@ public final class SAXClassAdapter extends ClassVisitor {
     @Override
     public FieldVisitor visitField(final int access, final String name,
             final String desc, final String signature, final Object value) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         appendAccess(access | ACCESS_FIELD, sb);
 
         AttributesImpl att = new AttributesImpl();
@@ -191,7 +191,7 @@ public final class SAXClassAdapter extends ClassVisitor {
     @Override
     public MethodVisitor visitMethod(final int access, final String name,
             final String desc, final String signature, final String[] exceptions) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         appendAccess(access, sb);
 
         AttributesImpl att = new AttributesImpl();
@@ -219,7 +219,7 @@ public final class SAXClassAdapter extends ClassVisitor {
     @Override
     public final void visitInnerClass(final String name,
             final String outerName, final String innerName, final int access) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         appendAccess(access | ACCESS_INNER, sb);
 
         AttributesImpl att = new AttributesImpl();
@@ -245,7 +245,7 @@ public final class SAXClassAdapter extends ClassVisitor {
     }
 
     static final String encode(final String s) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (c == '\\') {
@@ -267,7 +267,7 @@ public final class SAXClassAdapter extends ClassVisitor {
         return sb.toString();
     }
 
-    static void appendAccess(final int access, final StringBuffer sb) {
+    static void appendAccess(final int access, final StringBuilder sb) {
         if ((access & Opcodes.ACC_PUBLIC) != 0) {
             sb.append("public ");
         }

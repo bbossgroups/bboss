@@ -191,9 +191,9 @@ public class Picture extends Rectangle
      */
     public String toString ()
     {
-        StringBuffer ret;
+        StringBuilder ret;
 
-        ret = new StringBuffer ();
+        ret = new StringBuilder ();
         ret.append (getURL ().toString ());
         ret.append ("[x=");
         ret.append (Integer.toString (x));

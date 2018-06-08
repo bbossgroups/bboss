@@ -104,7 +104,7 @@ public class DBInformix extends DB
     {
         Statement statement = con.createStatement();
 
-        StringBuffer stmt = new StringBuffer();
+        StringBuilder stmt = new StringBuilder();
         stmt.append("LOCK TABLE ")
         .append(table)
         .append(" IN EXCLUSIVE MODE");

@@ -702,7 +702,7 @@ public class Record extends DBHashtable{
 	private String seekField(int column) throws SQLException {
 //		return f_temps[column];
 		if(column > fields.length || column < 0)
-			throw new SQLException(new StringBuffer("column out of range:column=").append(column)
+			throw new SQLException(new StringBuilder("column out of range:column=").append(column)
 					.append(",fields.length=").append(fields.length ).toString());
 		if(this.sameCols == null || column == 0)
 		    return this.fields[column];

@@ -524,7 +524,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 	    
 	    if(this._columnLabel == null || this._columnLabel.length == 0)
 	        return "";
-	    StringBuffer ret = new StringBuffer();
+	    StringBuilder ret = new StringBuilder();
 	    boolean flag = false;
 	    for(String name :this._columnLabel)
 	    {
@@ -546,7 +546,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 	{
 	    if(this._columnLabel == null || this._columnLabel.length == 0)
             return "";
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
 //        boolean flag = false;
         int i = 0;
         for(String name :this._columnLabel)

@@ -1542,7 +1542,7 @@ public class BeanAccembleHelper {
             }
             if (fault_ != null)
                 return fault_;
-            StringBuffer msg = new StringBuffer();
+			StringBuilder msg = new StringBuilder();
             
             msg.append(pro.getName()+"@" 
             		+ pro.getConfigFile() + "， 对象工厂["
@@ -1571,7 +1571,7 @@ public class BeanAccembleHelper {
         }
         catch (Exception e)
         {
-        	StringBuffer msg = new StringBuffer();
+			StringBuilder msg = new StringBuilder();
             
             msg.append(pro.getName()+"@" 
             		+ pro.getConfigFile() + "， 对象工厂["

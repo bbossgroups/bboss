@@ -370,7 +370,7 @@ public abstract class AbstractView  extends WebApplicationObjectSupport implemen
 
 
 	public String toString() {
-		StringBuffer sb = new StringBuffer(getClass().getName());
+		StringBuilder sb = new StringBuilder(getClass().getName());
 		if (getBeanName() != null) {
 			sb.append(": name '").append(getBeanName()).append("'");
 		}

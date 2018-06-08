@@ -1,8 +1,8 @@
 package com.frameworkset;
 
-import java.sql.SQLException;
-
 import com.frameworkset.common.poolman.DBUtil;
+
+import java.sql.SQLException;
 
 public class TestDBUtil {
 
@@ -77,7 +77,7 @@ public class TestDBUtil {
 	
 	public static void testSelectMutitable()
 	{
-		StringBuffer sql = new StringBuffer();
+		StringBuilder sql = new StringBuilder();
 		sql.append("select a.id,e.name tax_person,a.acc_identity_id,c.name reg_identity_type,")
 		  .append("a.send_write_id,a.send_write_name,a.accept_send_user,a.send_user_code,a.send_user_name")
 		  .append(" from td_reg_tax_send_returnreceipt a,TD_REG_ACC_IDENTITY b,TB_REG_ACC_IDENTITY_TYPE c,")

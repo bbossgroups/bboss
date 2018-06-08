@@ -600,7 +600,7 @@ public class TreeTag extends ContextMenuTag {
     //迁移prototype到jquery时解释
 //    private void updateFather(ITreeNode node,String sons) throws IOException
 //    {
-//        StringBuffer script = new StringBuffer();
+//        StringBuilder script = new StringBuilder();
 ////        System.out.println()
 //        sons = StringUtil.replaceAll(sons,"\"","\\\"");
 //        sons = StringUtil.replaceAll(sons,"'","\\'");
