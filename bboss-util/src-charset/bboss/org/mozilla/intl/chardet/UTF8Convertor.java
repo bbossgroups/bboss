@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.URL;
 
 public class UTF8Convertor {
-	private StringBuffer buffer = new StringBuffer();
+	private StringBuilder buffer = new StringBuilder();
 	
 	public String getUnknown()
 	{

@@ -26,14 +26,6 @@
 
 package org.htmlparser.nodes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.htmlparser.Attribute;
 import org.htmlparser.Tag;
 import org.htmlparser.lexer.Cursor;
@@ -44,6 +36,9 @@ import org.htmlparser.scanners.TagScanner;
 import org.htmlparser.util.ParserException;
 import org.htmlparser.util.SpecialHashtable;
 import org.htmlparser.visitors.NodeVisitor;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * TagNode represents a generic tag.
@@ -201,7 +196,7 @@ public class TagNode
         boolean singleq;
         boolean doubleq;
         String ref;
-        StringBuffer buffer;
+        StringBuilder buffer;
         char quote;
         Attribute attribute;
 
@@ -236,7 +231,7 @@ public class TagNode
                 quote = '"';
                 ref = "&quot;"; // Translate.encode (quote);
                 // JDK 1.4: value = value.replaceAll ("\"", ref);
-                buffer = new StringBuffer (value.length() * 5);
+                buffer = new StringBuilder (value.length() * 5);
                 for (int i = 0; i < value.length (); i++)
                 {
                     ch = value.charAt (i);
@@ -672,7 +667,7 @@ public class TagNode
         int size;
         List attributes;
         Attribute attribute;
-        StringBuffer ret;
+        StringBuilder ret;
 
         length = 2;
         attributes = getAttributesEx ();
@@ -682,7 +677,7 @@ public class TagNode
             attribute = (Attribute)attributes.get (i);
             length += attribute.getLength ();
         }
-        ret = new StringBuffer (length);
+        ret = new StringBuilder (length);
         ret.append ("<");
         for (int i = 0; i < size; i++)
         {
@@ -704,10 +699,10 @@ public class TagNode
         String type;
         Cursor start;
         Cursor end;
-        StringBuffer ret;
+        StringBuilder ret;
 
         text = getText ();
-        ret = new StringBuffer (20 + text.length ());
+        ret = new StringBuilder (20 + text.length ());
         if (isEndTag ())
             type = "End";
         else

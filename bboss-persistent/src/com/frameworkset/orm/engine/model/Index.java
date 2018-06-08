@@ -31,16 +31,15 @@ package com.frameworkset.orm.engine.model;
  * limitations under the License.
  */
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import com.frameworkset.orm.engine.EngineException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 
-import com.frameworkset.orm.engine.EngineException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Information about indices of a table.
@@ -229,7 +228,7 @@ public class Index implements Serializable
      */
     public String toString()
     {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         result.append(" <index name=\"")
               .append(getName())
               .append("\"");

@@ -31,12 +31,12 @@ package com.frameworkset.orm.engine.model;
  * limitations under the License.
  */
 
+import org.xml.sax.Attributes;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-
-import org.xml.sax.Attributes;
 
 /**
  * A class for information about foreign keys of a table.
@@ -330,7 +330,7 @@ public class ForeignKey implements Serializable
      */
     public String toString()
     {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         result.append("    <foreign-key foreignTable=\"")
             .append(getForeignTableName())
             .append("\" name=\"")

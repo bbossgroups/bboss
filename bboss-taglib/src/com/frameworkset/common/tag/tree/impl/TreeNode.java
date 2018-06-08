@@ -31,17 +31,12 @@
  */
 package com.frameworkset.common.tag.tree.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Observable;
-
 import com.frameworkset.common.tag.contextmenu.AttachElement;
 import com.frameworkset.common.tag.tree.Const;
 import com.frameworkset.common.tag.tree.itf.ITree;
 import com.frameworkset.common.tag.tree.itf.ITreeNode;
+
+import java.util.*;
 
 /**
  * 树的节点信息对象
@@ -109,18 +104,18 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 	 * 儿子节点串，只有当复选框的属性recursive为true或者节点本身的recursive为true时需要
 	 * 拼接儿子的ids
 	 */
-	protected StringBuffer sonids;
+	protected StringBuilder sonids;
 	/**
 	 * 父节点ids串，只有复选框的uprecursive的值为true或者节点本身的uprecursive的值为true时
 	 * 需要拼接父ids
 	 */
-	protected StringBuffer fatherids;
+	protected StringBuilder fatherids;
 	
 	public void addSonid(String sonid)
 	{
 		if(sonids == null)
 		{
-			sonids = new StringBuffer();
+			sonids = new StringBuilder();
 			sonids.append(sonid);
 		}
 		else
@@ -490,7 +485,7 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 	}
 
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append("(id: ");
 		buffer.append(getId());
 		buffer.append(",    name: ");
@@ -746,18 +741,18 @@ public class TreeNode implements ITreeNode, java.io.Serializable ,AttachElement{
 		this.rightNode = rightNode;
 	}
 
-	public StringBuffer getSonids() {
-		return sonids != null ? sonids:new StringBuffer(0);
+	public StringBuilder getSonids() {
+		return sonids != null ? sonids:new StringBuilder(0);
 	}
 	
 	/**
 	 * 儿子节点会调用
 	 * @return
 	 */
-	public StringBuffer getFatherids() {
+	public StringBuilder getFatherids() {
 		if(fatherids == null)
 		{
-			fatherids = new StringBuffer();
+			fatherids = new StringBuilder();
 			if(this.parent != null)
 			{
 				fatherids.append(parent.getFatherids()).append("##").append(this.getId());

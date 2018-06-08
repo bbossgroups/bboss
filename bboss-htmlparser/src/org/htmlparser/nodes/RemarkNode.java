@@ -123,7 +123,7 @@ public class RemarkNode
      */
     public String toHtml ()
     {
-        StringBuffer buffer;
+        StringBuilder buffer;
         String ret;
         
         if (null == mText)
@@ -132,14 +132,14 @@ public class RemarkNode
         		ret = mPage.getText (getStartPosition (), getEndPosition ());
         	else
         	{
-        		buffer = new StringBuffer();
+        		buffer = new StringBuilder();
         		buffer.append("<").append(mPage.getText (getStartPosition ()+1, getEndPosition () -1)).append(">");
         		ret = buffer.toString();
         	}
         }
         else
         {
-            buffer = new StringBuffer (mText.length () + 7);
+            buffer = new StringBuilder (mText.length () + 7);
             buffer.append ("<!--");
             buffer.append (mText);
             buffer.append ("-->");
@@ -163,11 +163,11 @@ public class RemarkNode
         Cursor start;
         Cursor end;
         char c;
-        StringBuffer ret;
+        StringBuilder ret;
 
         startpos = getStartPosition ();
         endpos = getEndPosition ();
-        ret = new StringBuffer (endpos - startpos + 20);
+        ret = new StringBuilder (endpos - startpos + 20);
         if (null == mText)
         {
             start = new Cursor (getPage (), startpos);

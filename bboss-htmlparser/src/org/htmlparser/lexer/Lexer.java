@@ -26,23 +26,18 @@
 
 package org.htmlparser.lexer;
 
-import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.htmlparser.Node;
-import org.htmlparser.NodeFactory;
-import org.htmlparser.Remark;
-import org.htmlparser.Tag;
-import org.htmlparser.Text;
+import com.frameworkset.util.RegexUtil;
+import org.htmlparser.*;
 import org.htmlparser.nodes.RemarkNode;
 import org.htmlparser.nodes.TagNode;
 import org.htmlparser.nodes.TextNode;
 import org.htmlparser.util.ParserException;
 
-import com.frameworkset.util.RegexUtil;
+import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class parses the HTML stream into nodes.
@@ -1406,7 +1401,7 @@ public class Lexer
                         done = true;
                     else if (Character.isLetter (ch))
                     {
-                    	StringBuffer script = new StringBuffer();
+                        StringBuilder script = new StringBuilder();
                     	script.append(ch);
                      	for(int cor = 0; cor < length; cor ++)
                      	{

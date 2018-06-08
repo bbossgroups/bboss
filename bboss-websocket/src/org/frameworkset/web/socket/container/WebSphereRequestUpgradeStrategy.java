@@ -1,8 +1,8 @@
 package org.frameworkset.web.socket.container;
-import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import org.frameworkset.http.ServerHttpRequest;
+import org.frameworkset.http.ServerHttpResponse;
+import org.frameworkset.web.socket.endpoint.ServerEndpointRegistration;
+import org.frameworkset.web.socket.handler.HandshakeFailureException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,17 +10,16 @@ import javax.websocket.Endpoint;
 import javax.websocket.Extension;
 import javax.websocket.server.ServerContainer;
 import javax.websocket.server.ServerEndpointConfig;
-
-import org.frameworkset.http.ServerHttpRequest;
-import org.frameworkset.http.ServerHttpResponse;
-import org.frameworkset.web.socket.endpoint.ServerEndpointRegistration;
-import org.frameworkset.web.socket.handler.HandshakeFailureException;
+import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * WebSphere support for upgrading an {@link HttpServletRequest} during a
  * WebSocket handshake. To modify properties of the underlying
  * {@link javax.websocket.server.ServerContainer} you can use
- * {@link ServletServerContainerFactoryBean} in XML configuration or, when using
+ * {@link  } in XML configuration or, when using
  * Java configuration, access the container instance through the
  * "javax.websocket.server.ServerContainer" ServletContext attribute.
  *

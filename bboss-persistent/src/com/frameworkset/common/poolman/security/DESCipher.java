@@ -49,7 +49,7 @@ public class DESCipher {
      */
     public static String byteGrpToHexStr(byte[] arrB) throws Exception {
         int iLen = arrB.length;
-        StringBuffer tempSB = new StringBuffer(iLen * 2);
+        StringBuilder tempSB = new StringBuilder(iLen * 2);
         for (int i = 0; i < iLen; i++) {
             int intTmp = arrB[i];
             while (intTmp < 0) {

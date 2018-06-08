@@ -26,13 +26,6 @@
 
 package org.htmlparser.tags;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.htmlparser.Attribute;
 import org.htmlparser.Node;
 import org.htmlparser.Tag;
@@ -40,6 +33,9 @@ import org.htmlparser.Text;
 import org.htmlparser.nodes.TagNode;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.SimpleNodeIterator;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * AppletTag represents an &lt;Applet&gt; tag.
@@ -281,9 +277,9 @@ public class AppletTag
         String paramValue;
         boolean found;
         Node node;
-        StringBuffer ret;
+        StringBuilder ret;
 
-        ret = new StringBuffer(500);
+        ret = new StringBuilder(500);
         ret.append ("Applet Tag\n");
         ret.append ("**********\n");
         ret.append ("Class Name = ");

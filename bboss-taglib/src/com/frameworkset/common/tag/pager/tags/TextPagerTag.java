@@ -1,15 +1,14 @@
 package com.frameworkset.common.tag.pager.tags;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.JspException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.frameworkset.common.tag.BaseTag;
 import com.frameworkset.common.tag.pager.TextListInfo;
 import com.frameworkset.common.tag.pager.TextSpliting;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.JspException;
 
 /**
  * <p>Title: TextPagerTag</p>
@@ -60,9 +59,9 @@ public class TextPagerTag extends BaseTag {
     /**分页信息*/
     private TextListInfo listInfo;
 
-    private StringBuffer pageURI;
+    private StringBuilder pageURI;
 
-    private StringBuffer queryString;
+    private StringBuilder queryString;
 
     public static void main(String[] args) {
         TextPagerTag textpagertag = new TextPagerTag();
@@ -103,8 +102,8 @@ public class TextPagerTag extends BaseTag {
         }
 
         listInfo = TextSpliting.splitStringByPageNumber(text,pageNumber,size);
-        pageURI = new StringBuffer(request.getRequestURI());
-        queryString = new StringBuffer(0);
+        pageURI = new StringBuilder(request.getRequestURI());
+        queryString = new StringBuilder(0);
         return EVAL_BODY_INCLUDE;
     }
 
@@ -143,7 +142,7 @@ public class TextPagerTag extends BaseTag {
 
     protected String getPageURL(int pageNumber)
     {
-        StringBuffer pageUrl = new StringBuffer(pageURI.toString());
+        StringBuilder pageUrl = new StringBuilder(pageURI.toString());
         if(queryString.length() > 0)
             pageUrl.append("?")
                    .append(queryString.toString())

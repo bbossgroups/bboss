@@ -16,18 +16,8 @@
 
 package org.frameworkset.spi.support;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-
+import com.frameworkset.util.DefaultPropertiesPersister;
+import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.spi.ResourceLoaderAware;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.PropertiesPersister;
@@ -36,8 +26,11 @@ import org.frameworkset.util.io.Resource;
 import org.frameworkset.util.io.ResourceEditor;
 import org.frameworkset.util.io.ResourceLoader;
 
-import com.frameworkset.util.DefaultPropertiesPersister;
-import com.frameworkset.util.SimpleStringUtil;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.MessageFormat;
+import java.util.*;
 
 /**
  * <p>Title: ReloadableResourceBundleMessageSource.java</p> 
@@ -605,7 +598,7 @@ public class ReloadableResourceBundleMessageSource extends AbstractMessageSource
 		String language = locale.getLanguage();
 		String country = locale.getCountry();
 		String variant = locale.getVariant();
-		StringBuffer temp = new StringBuffer(basename);
+		StringBuilder temp = new StringBuilder(basename);
 
 		if (language.length() > 0) {
 			temp.append('_').append(language);

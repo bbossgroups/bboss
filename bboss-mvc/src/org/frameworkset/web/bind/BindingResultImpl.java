@@ -385,7 +385,7 @@ public class BindingResultImpl implements BindingResult {
 
 
 	public String toString() {
-		StringBuffer sb = new StringBuffer(getClass().getName());
+		StringBuilder sb = new StringBuilder(getClass().getName());
 		sb.append(": ").append(getErrorCount()).append(" errors");
 		Iterator it = getAllErrors().iterator();
 		while (it.hasNext()) {

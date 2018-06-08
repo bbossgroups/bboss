@@ -93,7 +93,7 @@ public class InjectService implements InjectServiceInf
     @Override
     public String toString()
     {
-       StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
        ret.append("test_int=").append(test_int)
            .append(",test_inject=").append(test_inject)
            .append(",refattr=").append(refattr)

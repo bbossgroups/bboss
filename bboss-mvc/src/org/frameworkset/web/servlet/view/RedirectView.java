@@ -168,7 +168,7 @@ public class RedirectView  extends AbstractUrlBasedView {
 			Map model, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		// Prepare target URL.
-		StringBuffer targetUrl = new StringBuffer();
+		StringBuilder targetUrl = new StringBuilder();
 		if (this.contextRelative && getUrl().startsWith("/")) {
 			// Do not apply context path to relative URLs.
 			targetUrl.append(request.getContextPath());
@@ -191,13 +191,13 @@ public class RedirectView  extends AbstractUrlBasedView {
 	/**
 	 * Append query properties to the redirect URL.
 	 * Stringifies, URL-encodes and formats model attributes as query properties.
-	 * @param targetUrl the StringBuffer to append the properties to
+	 * @param targetUrl the StringBuilder to append the properties to
 	 * @param model Map that contains model attributes
 	 * @param encodingScheme the encoding scheme to use
 	 * @throws UnsupportedEncodingException if string encoding failed
 	 * @see #queryProperties
 	 */
-	protected void appendQueryProperties(StringBuffer targetUrl, Map model, String encodingScheme)
+	protected void appendQueryProperties(StringBuilder targetUrl, Map model, String encodingScheme)
 			throws UnsupportedEncodingException {
 
 		// Extract anchor fragment, if any.

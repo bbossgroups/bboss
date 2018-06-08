@@ -15,13 +15,13 @@
  */
 package com.frameworkset.common;
 
-import java.sql.SQLException;
-import java.util.List;
-
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.handle.RowHandler;
+
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * create table testnewface as select * from all_objects
@@ -167,7 +167,7 @@ public class TestDBUtilNewInterface {
 			{
 
 				public void handleRow(Object rowValue, Record record) {
-					StringBuffer object = (StringBuffer)rowValue;
+					StringBuilder object = (StringBuilder)rowValue;
 //					<record>
 //			        <column name="OWNER" type="VARCHAR" javatype="String">
 //			            <![CDATA[SYS]]>

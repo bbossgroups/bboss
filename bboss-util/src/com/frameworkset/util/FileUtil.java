@@ -192,12 +192,12 @@ public class FileUtil
      * @throws Exception
      *             StringBuffer
      */
-    public static StringBuffer read(String file) throws Exception
+    public static StringBuilder read(String file) throws Exception
     {
         BufferedReader in = null;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         String s = null;
-        StringBuffer stringbuffer;
+        StringBuilder stringbuffer;
         try
         {
             in = new BufferedReader(new FileReader(file));

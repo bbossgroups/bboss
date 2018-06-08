@@ -26,11 +26,11 @@
 
 package org.htmlparser.lexer;
 
+import org.htmlparser.util.ParserException;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Serializable;
-
-import org.htmlparser.util.ParserException;
 
 /**
  * A buffered source of characters.
@@ -222,7 +222,7 @@ public abstract class Source
      * @exception IOException If the source is closed or the offset or
      * (offset + length) is beyond {@link #offset()}.
      */
-    public abstract void getCharacters (StringBuffer buffer, int offset, int length) throws IOException;
+    public abstract void getCharacters (StringBuilder buffer, int offset, int length) throws IOException;
 
     /**
      * Close the source.

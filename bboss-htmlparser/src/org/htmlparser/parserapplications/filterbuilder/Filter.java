@@ -180,7 +180,7 @@ public abstract class Filter
      * <li>filter array number - the next available array of filters number</li>
      * @return The variable name to use when referencing this filter (usually "filter" + context[1]++) 
      */
-    public abstract String toJavaCode (StringBuffer out, int[] context);
+    public abstract String toJavaCode (StringBuilder out, int[] context);
 
     /**
      * Get the icon for the filter.
@@ -286,9 +286,9 @@ public abstract class Filter
     public static String serialize (byte[] data)
     {
         String string;
-        StringBuffer ret;
+        StringBuilder ret;
         
-        ret = new StringBuffer (data.length * 2);
+        ret = new StringBuilder (data.length * 2);
 
         for (int i = 0; i < data.length; i++)
         {
@@ -326,9 +326,9 @@ public abstract class Filter
      */
     public static String deconstitute (Filter[] filters) throws IOException
     {
-        StringBuffer ret;
+        StringBuilder ret;
 
-        ret = new StringBuffer (1024);
+        ret = new StringBuilder (1024);
         for (int i = 0; i < filters.length; i++)
         {
             ret.append ("[");
@@ -508,7 +508,7 @@ public abstract class Filter
      * @param out The buffer to append to.
      * @param count The number of spaces to append.
      */
-    public static void spaces (StringBuffer out, int count)
+    public static void spaces (StringBuilder out, int count)
     {
         for (int i = 0; i < count; i++)
             out.append (' ');
@@ -518,7 +518,7 @@ public abstract class Filter
      * Append a newline to the buffer.
      * @param out The buffer to append to.
      */
-    public static void newline (StringBuffer out)
+    public static void newline (StringBuilder out)
     {
         out.append ('\n');
     }

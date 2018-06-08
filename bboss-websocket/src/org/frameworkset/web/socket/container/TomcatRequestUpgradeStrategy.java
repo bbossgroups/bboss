@@ -1,29 +1,28 @@
 package org.frameworkset.web.socket.container;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.websocket.Endpoint;
-import javax.websocket.Extension;
-
 import org.apache.tomcat.websocket.server.WsServerContainer;
 import org.frameworkset.http.ServerHttpRequest;
 import org.frameworkset.http.ServerHttpResponse;
 import org.frameworkset.web.socket.endpoint.ServerEndpointRegistration;
 import org.frameworkset.web.socket.handler.HandshakeFailureException;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Endpoint;
+import javax.websocket.Extension;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 /**
  * A WebSocket {@code RequestUpgradeStrategy} for Apache Tomcat. Compatible with
  * all versions of Tomcat that support JSR-356, i.e. Tomcat 7.0.47+ and higher.
  *
  * <p>To modify properties of the underlying {@link javax.websocket.server.ServerContainer}
- * you can use {@link ServletServerContainerFactoryBean} in XML configuration or,
+ * you can use {@link  } in XML configuration or,
  * when using Java configuration, access the container instance through the
  * "javax.websocket.server.ServerContainer" ServletContext attribute.
  *

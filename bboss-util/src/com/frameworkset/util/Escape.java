@@ -43,7 +43,7 @@ public class Escape {
     };
     public static String escape(String s) {
     	if(isEmpty(s))return s;
-        StringBuffer sbuf = new StringBuffer();
+        StringBuilder sbuf = new StringBuilder();
         int len = s.length();
         for (int i = 0; i < len; i++) {
             int ch = s.charAt(i);
@@ -75,7 +75,7 @@ public class Escape {
     }
     public static String unescape(String s) {
     	if(isEmpty(s))return s;
-        StringBuffer sbuf = new StringBuffer();
+        StringBuilder sbuf = new StringBuilder();
         int i = 0;
         int len = s.length();
         while (i < len) {

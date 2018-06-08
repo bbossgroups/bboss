@@ -1,12 +1,11 @@
 package org.frameworkset.web.servlet.handler;
 
-import java.util.List;
+import org.frameworkset.spi.support.StylerUtils;
+import org.frameworkset.util.ClassUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-
-import org.frameworkset.spi.support.StylerUtils;
-import org.frameworkset.util.ClassUtil;
+import java.util.List;
 
 public class PathURLNotSetException  extends ServletException  {
 
@@ -34,7 +33,7 @@ public class PathURLNotSetException  extends ServletException  {
 	
 	public static String buildLooppath(List<String> looppaths)
 	{
-		StringBuffer temp = new StringBuffer();
+		StringBuilder temp = new StringBuilder();
 		
 		for(String oldpath:looppaths)
 		{

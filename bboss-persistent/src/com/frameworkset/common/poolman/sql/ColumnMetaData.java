@@ -128,7 +128,7 @@ public class ColumnMetaData implements Comparable,Serializable{
 
     public String toString()
      {
-         StringBuffer ret = new StringBuffer();
+         StringBuilder ret = new StringBuilder();
          ret.append("		columnName=")
             .append(columnName)
             .append(",")

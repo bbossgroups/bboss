@@ -350,7 +350,7 @@ public class Attribute
      * @param buffer The buffer to place the name in.
      * @see #getName()
      */
-    public void getName (StringBuffer buffer)
+    public void getName (StringBuilder buffer)
     {
         if (null != mName)
             buffer.append (mName);
@@ -385,7 +385,7 @@ public class Attribute
      * @param buffer The buffer to place the assignment string in.
      * @see #getAssignment()
      */
-    public void getAssignment (StringBuffer buffer)
+    public void getAssignment (StringBuilder buffer)
     {
         if (null != mAssignment)
             buffer.append (mAssignment);
@@ -424,7 +424,7 @@ public class Attribute
      * @param buffer The buffer to place the value in.
      * @see #getValue()
      */
-    public void getValue (StringBuffer buffer)
+    public void getValue (StringBuilder buffer)
     {
         if (null != mValue)
             buffer.append (mValue);
@@ -459,7 +459,7 @@ public class Attribute
      * @param buffer The buffer to place the quote in.
      * @see #getQuote()
      */
-    public void getQuote (StringBuffer buffer)
+    public void getQuote (StringBuilder buffer)
     {
         if (0 != mQuote)
             buffer.append (mQuote);
@@ -487,7 +487,7 @@ public class Attribute
     public String getRawValue ()
     {
         char quote;
-        StringBuffer buffer;
+        StringBuilder buffer;
         String ret;
 
         if (isValued ())
@@ -495,7 +495,7 @@ public class Attribute
             quote = getQuote ();
             if (0 != quote)
             {
-                buffer = new StringBuffer (); // todo: what is the value length?
+                buffer = new StringBuilder (); // todo: what is the value length?
                 buffer.append (quote);
                 getValue (buffer);
                 buffer.append (quote);
@@ -517,7 +517,7 @@ public class Attribute
      * @param buffer The string buffer to append the attribute value to.
      * @see #getRawValue()
      */
-    public void getRawValue (StringBuffer buffer)
+    public void getRawValue (StringBuilder buffer)
     {
         getQuote (buffer);
         getValue (buffer);
@@ -542,7 +542,7 @@ public class Attribute
         boolean singleq;
         boolean doubleq;
         String ref;
-        StringBuffer buffer;
+        StringBuilder buffer;
         char quote;
 
         quote = 0;
@@ -601,7 +601,7 @@ public class Attribute
                         quote = '"';
                         ref = "&quot;"; // Translate.encode (quote);
                         // JDK 1.4: value = value.replaceAll ("\"", ref);
-                        buffer = new StringBuffer (
+                        buffer = new StringBuilder (
                                 value.length() * (ref.length () - 1));
                         for (int i = 0; i < value.length (); i++)
                         {
@@ -708,11 +708,11 @@ public class Attribute
     public String toString ()
     {
         int length;
-        StringBuffer ret;
+        StringBuilder ret;
 
-        // get the size to avoid extra StringBuffer allocations
+        // get the size to avoid extra StringBuilder allocations
         length = getLength ();
-        ret = new StringBuffer (length);
+        ret = new StringBuilder (length);
         toString (ret);
 
         return (ret.toString ());
@@ -723,7 +723,7 @@ public class Attribute
      * @param buffer The accumulator for placing the text into.
      * @see #toString()
      */
-    public void toString (StringBuffer buffer)
+    public void toString (StringBuilder buffer)
     {
         getName (buffer);
         getAssignment (buffer);

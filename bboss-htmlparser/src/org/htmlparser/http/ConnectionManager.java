@@ -26,27 +26,15 @@
 
 package org.htmlparser.http;
 
+import org.htmlparser.util.ParserException;
+
 import java.io.File;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.StringTokenizer;
-
-import org.htmlparser.util.ParserException;
 
 /**
  * Handles proxies, password protected URLs and request properties
@@ -258,12 +246,12 @@ public class ConnectionManager
     public static String getRequestHeader (HttpURLConnection connection)
     {
         // dump it
-        StringBuffer buffer;
+        StringBuilder buffer;
         Map map;
         String key;
         List items;
 
-        buffer = new StringBuffer (1024);
+        buffer = new StringBuilder (1024);
         buffer.append (connection.getRequestMethod ());
         buffer.append (" ");
         buffer.append (connection.getURL ());
@@ -300,13 +288,13 @@ public class ConnectionManager
     public static String getResponseHeader (HttpURLConnection conn)
     {
         // dump it
-        StringBuffer buffer;
+        StringBuilder buffer;
         int code;
         String message;
         String key;
         String value;
 
-        buffer = new StringBuffer (1024);
+        buffer = new StringBuilder (1024);
         try
         {
             code = conn.getResponseCode ();
@@ -802,13 +790,13 @@ public class ConnectionManager
         int index;
         int length;
         char ch;
-        StringBuffer buffer;
+        StringBuilder buffer;
 
         index = url.indexOf (' ');
         if (-1 != index)
         {
             length = url.length ();
-            buffer = new StringBuffer (length * 3);
+            buffer = new StringBuilder (length * 3);
             buffer.append (url.substring (0, index));
             for (int i = index; i < length; i++)
             {
@@ -841,7 +829,7 @@ public class ConnectionManager
         final String prefix = "file://localhost";
         String resource;
         URL url;
-        StringBuffer buffer;
+        StringBuilder buffer;
         URLConnection ret;
 
         try
@@ -855,7 +843,7 @@ public class ConnectionManager
             {
                 File file = new File (string);
                 resource = file.getCanonicalPath ();
-                buffer = new StringBuffer (prefix.length ()
+                buffer = new StringBuilder (prefix.length ()
                     + resource.length ());
                 buffer.append (prefix);
                 if (!resource.startsWith ("/"))
@@ -1028,12 +1016,12 @@ public class ConnectionManager
     {
         int version;
         Cookie cookie;
-        StringBuffer buffer;
+        StringBuilder buffer;
         String ret;
         
         ret = null;
 
-        buffer = new StringBuffer ();
+        buffer = new StringBuilder ();
         version = 0;
         for (int i = 0; i < cookies.size (); i++)
             version = Math.max (version,

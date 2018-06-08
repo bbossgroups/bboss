@@ -150,7 +150,7 @@ public class StringBean extends NodeVisitor implements Serializable
     /**
      * The buffer text is stored in while traversing the HTML.
      */
-    protected StringBuffer mBuffer;
+    protected StringBuilder mBuffer;
 
     /**
      * Set <code>true</code> when traversing a SCRIPT tag.
@@ -188,7 +188,7 @@ public class StringBean extends NodeVisitor implements Serializable
         mLinks = false;
         mReplaceSpace = true;
         mCollapse = true;
-        mBuffer = new StringBuffer (4096);
+        mBuffer = new StringBuilder (4096);
         mIsScript = false;
         mIsPre = false;
         mIsStyle = false;
@@ -234,7 +234,7 @@ public class StringBean extends NodeVisitor implements Serializable
      * @param buffer The buffer to append to.
      * @param string The string to append.
      */
-    protected void collapse (StringBuffer buffer, String string)
+    protected void collapse (StringBuilder buffer, String string)
     {
         int chars;
         int length;
@@ -290,7 +290,7 @@ public class StringBean extends NodeVisitor implements Serializable
 
         mParser.visitAllNodesWith (this);
         ret = mBuffer.toString ();
-        mBuffer = new StringBuffer(4096);
+        mBuffer = new StringBuilder(4096);
 
         return (ret);
     }
@@ -328,7 +328,7 @@ public class StringBean extends NodeVisitor implements Serializable
                 }
                 finally
                 {
-                    mBuffer = new StringBuffer (4096);
+                    mBuffer = new StringBuilder (4096);
                 }
             }
             catch (EncodingChangeException ece)
@@ -339,7 +339,7 @@ public class StringBean extends NodeVisitor implements Serializable
                 try
                 {   // try again with the encoding now in force
                     mParser.reset ();
-                    mBuffer = new StringBuffer (4096);
+                    mBuffer = new StringBuilder (4096);
                     mParser.visitAllNodesWith (this);
                     updateStrings (mBuffer.toString ());
                 }
@@ -349,7 +349,7 @@ public class StringBean extends NodeVisitor implements Serializable
                 }
                 finally
                 {
-                    mBuffer = new StringBuffer (4096);
+                    mBuffer = new StringBuilder (4096);
                 }
              }
             catch (ParserException pe)
@@ -361,7 +361,7 @@ public class StringBean extends NodeVisitor implements Serializable
             // reset in case this StringBean is used as a visitor
             // on another parser, not it's own
             mStrings = null;
-            mBuffer = new StringBuffer (4096);
+            mBuffer = new StringBuilder (4096);
         }
     }
 

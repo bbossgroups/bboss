@@ -36,12 +36,12 @@ import org.htmlparser.Tag;
 
 public class UrlModifyingVisitor extends NodeVisitor {
     private String linkPrefix;
-    private StringBuffer modifiedResult;
+    private StringBuilder modifiedResult;
 
     public UrlModifyingVisitor(String linkPrefix) {
         super(true,true);
         this.linkPrefix =linkPrefix;
-        modifiedResult = new StringBuffer();
+        modifiedResult = new StringBuilder();
     }
 
     public void visitRemarkNode (Remark remarkNode)

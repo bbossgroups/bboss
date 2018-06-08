@@ -696,7 +696,7 @@ class CursorableLinkedList implements List, Serializable {
      * @return a {@link String} representation of this list, suitable for debugging.
      */
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append("[");
         for(Listable elt = _head.next(), past = null; null != elt && past != _head.prev(); elt = (past = elt).next()) {
             if(_head.next() != elt) {

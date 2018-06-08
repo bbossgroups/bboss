@@ -1,36 +1,18 @@
 package com.frameworkset.common.poolman.handle;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.math.BigDecimal;
-import java.sql.Blob;
-import java.sql.CallableStatement;
-import java.sql.Clob;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.text.DecimalFormat;
-import java.util.Locale;
-
-import org.frameworkset.util.annotations.wraper.ColumnWraper;
-
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.adapter.DB;
-import com.frameworkset.util.ColumnEditorInf;
-import com.frameworkset.util.EditorInf;
-import com.frameworkset.util.FieldToColumnEditor;
-import com.frameworkset.util.NoSupportTypeCastException;
-import com.frameworkset.util.ValueObjectUtil;
-
+import com.frameworkset.util.*;
 import oracle.jdbc.OracleTypes;
+import org.frameworkset.util.annotations.wraper.ColumnWraper;
 import sun.misc.BASE64Encoder;
+
+import java.io.*;
+import java.math.BigDecimal;
+import java.sql.*;
+import java.text.DecimalFormat;
+import java.util.Locale;
 
 /**
  * 
@@ -1444,7 +1426,7 @@ public class ValueExchange {
 		 char[] cnNumbers={'零','壹','贰','叁','肆','伍','陆','柒','捌','玖'};
 	
 		 if(!"".equals(column)){
-			 StringBuffer stringbuffer = new StringBuffer();
+			 StringBuilder stringbuffer = new StringBuilder();
 			 for(int i=0;i<column.length();i++){
 				 char temp = column.charAt(i);
 				 int number =0;
@@ -1479,7 +1461,7 @@ public class ValueExchange {
 		}
 		
 //		//接着做长度、精度处理
-//		StringBuffer fmt=new StringBuffer();
+//		StringBuilder fmt=new StringBuilder();
 
 //		int i;
 //		DecimalFormat form;
@@ -1535,7 +1517,7 @@ public class ValueExchange {
 				}
 				else if(sn.length() < precision_)
 				{
-					StringBuffer ret_ = new StringBuffer();
+					StringBuilder ret_ = new StringBuilder();
 					int rap = precision_ - sn.length();
 					for(int i = 0; i < rap; i ++)
 						ret_.append("0");
@@ -1577,7 +1559,7 @@ public class ValueExchange {
 		else
 			ret = value + "";
 //		//接着做长度处理
-//		StringBuffer fmt=new StringBuffer();
+//		StringBuilder fmt=new StringBuilder();
 //		int i;
 //		DecimalFormat form;
 //
@@ -1613,7 +1595,7 @@ public class ValueExchange {
 		
 //		
 //		//接着做长度处理
-//		StringBuffer retbuffer = new StringBuffer(ret);
+//		StringBuilder retbuffer = new StringBuilder(ret);
 //		int length_ = 0;
 //		if(length != null && !"".equals(length)){
 //			length_ = Integer.parseInt(length);
@@ -1623,7 +1605,7 @@ public class ValueExchange {
 		return ret;
 	}
 	
-	public static final String rightPad(StringBuffer ret, int limit)
+	public static final String rightPad(StringBuilder ret, int limit)
 	{
 		int len = ret.length();
 		int l;
@@ -1647,7 +1629,7 @@ public class ValueExchange {
 		}
 			
 		String retval=null;
-		StringBuffer ret = new StringBuffer(origin);
+		StringBuilder ret = new StringBuilder(origin);
 		
 		int length_ = 0;
 		if( length != null  && !"".equals(length)){

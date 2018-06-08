@@ -64,7 +64,7 @@ public class DBSapDB extends DB
      */
     public String toUpperCase(String in)
     {
-        return new StringBuffer("UPPER(").append(in).append(")").toString();
+        return new StringBuilder("UPPER(").append(in).append(")").toString();
     }
 
     /**
@@ -75,7 +75,7 @@ public class DBSapDB extends DB
      */
     public String ignoreCase(String in)
     {
-        return new StringBuffer("UPPER(").append(in).append(")").toString();
+        return new StringBuilder("UPPER(").append(in).append(")").toString();
     }
 
     /**
@@ -115,7 +115,7 @@ public class DBSapDB extends DB
     {
         Statement statement = con.createStatement();
 
-        StringBuffer stmt = new StringBuffer();
+        StringBuilder stmt = new StringBuilder();
         stmt.append("SELECT next_id FROM ")
         .append(table)
         .append(" FOR UPDATE");

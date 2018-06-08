@@ -153,7 +153,7 @@ public class JavaNameGenerator implements NameGenerator
      */
     protected String underscoreMethod(String schemaName,boolean IGNORE_FIRST_TOKEN)
     {
-        StringBuffer name = new StringBuffer();
+        StringBuilder name = new StringBuilder();
         
         // remove the STD_SEPARATOR_CHARs and capitalize 
         // the tokens
@@ -168,7 +168,7 @@ public class JavaNameGenerator implements NameGenerator
         // remove the SCHEMA_SEPARATOR_CHARs and capitalize 
         // the tokens
         schemaName = name.toString();
-        name = new StringBuffer();
+        name = new StringBuilder();
         tok = new StringTokenizer
             (schemaName, String.valueOf(SCHEMA_SEPARATOR_CHAR));
         while (tok.hasMoreTokens())
@@ -199,7 +199,7 @@ public class JavaNameGenerator implements NameGenerator
         if (lastDotPos != -1) {
             schemaName = schemaName.substring(lastDotPos + 1);
         }
-        StringBuffer name = new StringBuffer();
+        StringBuilder name = new StringBuilder();
         StringTokenizer tok = new StringTokenizer
             (schemaName, String.valueOf(STD_SEPARATOR_CHAR));
         while (tok.hasMoreTokens())
@@ -222,7 +222,7 @@ public class JavaNameGenerator implements NameGenerator
      */
     protected String javanameMethod(String schemaName,boolean IGNORE_FIRST_TOKEN)
     {
-        StringBuffer name = new StringBuffer();
+        StringBuilder name = new StringBuilder();
         StringTokenizer tok = new StringTokenizer
             (schemaName, String.valueOf(STD_SEPARATOR_CHAR));
         boolean first = true;
@@ -249,7 +249,7 @@ public class JavaNameGenerator implements NameGenerator
         	schemaName = name.toString();
         else if(IGNORE_FIRST_TOKEN && firstNamepart != null)
         	schemaName = firstNamepart;
-        name = new StringBuffer();
+        name = new StringBuilder();
         
         tok = new StringTokenizer
             (schemaName, String.valueOf(SCHEMA_SEPARATOR_CHAR));
@@ -273,7 +273,7 @@ public class JavaNameGenerator implements NameGenerator
      */
     protected String javanameField(String schemaName,boolean IGNORE_FIRST_TOKEN)
     {
-        StringBuffer name = new StringBuffer();
+        StringBuilder name = new StringBuilder();
         StringTokenizer tok = new StringTokenizer
             (schemaName, String.valueOf(STD_SEPARATOR_CHAR));
         boolean first = true;
@@ -295,7 +295,7 @@ public class JavaNameGenerator implements NameGenerator
         // remove the SCHEMA_SEPARATOR_CHARs and capitalize 
         // the tokens
         schemaName = name.toString();
-        name = new StringBuffer();
+        name = new StringBuilder();
         
         tok = new StringTokenizer
             (schemaName, String.valueOf(SCHEMA_SEPARATOR_CHAR));

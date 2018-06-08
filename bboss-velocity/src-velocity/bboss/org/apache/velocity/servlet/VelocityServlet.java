@@ -19,22 +19,6 @@ package bboss.org.apache.velocity.servlet;
  * under the License.    
  */
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.Properties;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import bboss.org.apache.velocity.Template;
 import bboss.org.apache.velocity.VelocityContext;
 import bboss.org.apache.velocity.app.Velocity;
@@ -46,6 +30,16 @@ import bboss.org.apache.velocity.io.VelocityWriter;
 import bboss.org.apache.velocity.runtime.RuntimeConstants;
 import bboss.org.apache.velocity.runtime.RuntimeSingleton;
 import bboss.org.apache.velocity.util.SimplePool;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.Properties;
 
 /**
  * Base class which simplifies the use of Velocity with Servlets.
@@ -682,7 +676,7 @@ public abstract class VelocityServlet extends HttpServlet
     protected void error( HttpServletRequest request, HttpServletResponse response, Exception cause )
         throws ServletException, IOException
     {
-        StringBuffer html = new StringBuffer();
+        StringBuilder html = new StringBuilder();
         html.append("<html>");
         html.append("<title>Error</title>");
         html.append("<body bgcolor=\"#ffffff\">");

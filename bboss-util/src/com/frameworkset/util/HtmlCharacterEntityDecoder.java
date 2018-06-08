@@ -33,7 +33,7 @@ public class HtmlCharacterEntityDecoder {
 
 	private final String originalMessage;
 
-	private final StringBuffer decodedMessage;
+	private final StringBuilder decodedMessage;
 
 	private int currentPosition = 0;
 
@@ -45,7 +45,7 @@ public class HtmlCharacterEntityDecoder {
 	public HtmlCharacterEntityDecoder(HtmlCharacterEntityReferences characterEntityReferences, String original) {
 		this.characterEntityReferences = characterEntityReferences;
 		this.originalMessage = original;
-		this.decodedMessage = new StringBuffer(originalMessage.length());
+		this.decodedMessage = new StringBuilder(originalMessage.length());
 	}
 
 	public String decode() {

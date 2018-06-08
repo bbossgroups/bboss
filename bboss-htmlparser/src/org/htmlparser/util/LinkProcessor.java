@@ -151,13 +151,13 @@ public class LinkProcessor
         int index;
         int length;
         char ch;
-        StringBuffer returnURL;
+        StringBuilder returnURL;
 
         index = url.indexOf (' ');
         if (-1 != index)
         {
             length = url.length ();
-            returnURL = new StringBuffer (length * 3);
+            returnURL = new StringBuilder (length * 3);
             returnURL.append (url.substring (0, index));
             for (int i = index; i < length; i++)
             {

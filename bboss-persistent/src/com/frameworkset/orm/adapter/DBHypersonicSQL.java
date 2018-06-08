@@ -63,7 +63,7 @@ public class DBHypersonicSQL
      */
     public String toUpperCase(String in)
     {
-        String s = new StringBuffer("UPPER(").append(in).append(")").toString();
+        String s = new StringBuilder("UPPER(").append(in).append(")").toString();
         return s;
     }
 
@@ -91,7 +91,7 @@ public class DBHypersonicSQL
      */
     public String getIDMethodSQL(Object obj)
     {
-        StringBuffer command = new StringBuffer("select IDENTITY() from ");
+        StringBuilder command = new StringBuilder("select IDENTITY() from ");
         String qualifiedIdentifier = (String) obj;
         command.append(qualifiedIdentifier);
         return command.toString();

@@ -93,7 +93,7 @@ public abstract class WebMessageSourceUtil extends MessageSourceUtil {
 	{
 		if(basenames == null || basenames.length == 0)
 			return null;
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		for(int i = 0; i < basenames.length; i ++)
 		{
 			String name = basenames[i];

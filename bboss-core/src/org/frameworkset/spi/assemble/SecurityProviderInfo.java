@@ -15,18 +15,17 @@
  */
 package org.frameworkset.spi.assemble;
 
-import java.beans.IntrospectionException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-
+import com.frameworkset.common.util.NoSupportTypeCastException;
+import com.frameworkset.spi.assemble.CurrentlyInCreationException;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.common.util.NoSupportTypeCastException;
-import com.frameworkset.spi.assemble.CurrentlyInCreationException;
+import java.beans.IntrospectionException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * <p>
@@ -664,7 +663,7 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
 
     public String toString()
     {
-        StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
         ret.append("type=").append(this.type).append(",").append("class=").append(this.getProviderClass()).append(",")
                 .append("used=").append(this.isUsed()).append(",").append("default=").append(this.isIsdefault())
                 .append(",").append("prior=").append(this.getPrior() + "");

@@ -31,19 +31,18 @@ package com.frameworkset.orm.engine.model;
  * limitations under the License.
  */
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import com.frameworkset.orm.engine.EngineException;
+import com.frameworkset.orm.platform.Platform;
+import com.frameworkset.orm.platform.PlatformDefaultImpl;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 
-import com.frameworkset.orm.engine.EngineException;
-import com.frameworkset.orm.platform.Platform;
-import com.frameworkset.orm.platform.PlatformDefaultImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * A Class for holding data about a column used in an Application.
@@ -122,7 +121,7 @@ public class Column implements Serializable
         {
             obj = ((Column) obj).getName();
         }
-        StringBuffer buf = new StringBuffer((String) obj);
+        StringBuilder buf = new StringBuilder((String) obj);
         for (int i = 1; i < columns.size(); i++)
         {
             obj = columns.get(i);
@@ -670,7 +669,7 @@ public class Column implements Serializable
      */
     public String toString()
     {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         result.append("    <column name=\"").append(name).append('"');
 
         if (javaName != null)
@@ -1020,7 +1019,7 @@ public class Column implements Serializable
 
     public String getSqlString()
     {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(getName());
         sb.append(' ');
         sb.append(getDomain().getSqlType());

@@ -379,9 +379,9 @@ public class Cookie
      */
     public String toString ()
     {
-        StringBuffer ret;
+        StringBuilder ret;
 
-        ret = new StringBuffer (50);
+        ret = new StringBuilder (50);
         if (getSecure ())
             ret.append ("secure ");
         if (0 != getVersion ())

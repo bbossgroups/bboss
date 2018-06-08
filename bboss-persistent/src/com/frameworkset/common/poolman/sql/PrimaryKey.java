@@ -1020,7 +1020,7 @@ public class PrimaryKey
 	
 	public String toString()
 	{
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append("table=").append(this.tableName).append(",primaryKey=").append(this.primaryKeyName)
 			.append(",type=").append(this.type);
 		return buffer.toString();

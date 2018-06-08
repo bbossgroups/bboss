@@ -15,12 +15,12 @@
  */
 package com.frameworkset.orm.engine.transform;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.frameworkset.orm.engine.model.Column;
 import com.frameworkset.orm.engine.model.Table;
 import com.frameworkset.util.SimpleStringUtil;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>Title: BeanData</p>
@@ -92,7 +92,7 @@ public class BeanToData implements Serializable {
 
         public String getEscapedValue()
         {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append("'");
             sb.append(SimpleStringUtil.replace(val, "'", "''"));
             sb.append("'");

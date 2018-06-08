@@ -533,7 +533,7 @@ public class MethodInfo {
 			
 //		String baseurl;
 //		String mappedPath = paths[0];
-//		StringBuffer pathUrl = new StringBuffer();
+//		StringBuilder pathUrl = new StringBuilder();
 //		pathUrl.append(baseurl);
 //		for(int i = 0; i < mappedPath.length(); i ++ )
 //		{

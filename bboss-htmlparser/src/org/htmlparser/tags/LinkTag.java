@@ -272,7 +272,7 @@ public class LinkTag extends CompositeTag
      */
     public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("Link to : "+ getLink() + "; titled : "+getLinkText ()+"; begins at : "+getStartPosition ()+"; ends at : "+getEndPosition ()+ ", AccessKey=");
         if (getAccessKey ()==null)
             sb.append("null\n");

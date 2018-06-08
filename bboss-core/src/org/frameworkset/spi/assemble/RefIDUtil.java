@@ -16,10 +16,10 @@
 
 package org.frameworkset.spi.assemble;
 
+import org.frameworkset.spi.assemble.RefID.Index;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.frameworkset.spi.assemble.RefID.Index;
 
 /**
  * <p>Title: RefIDUtil.java</p> 
@@ -34,8 +34,8 @@ public class RefIDUtil {
 	public static RefID parsedRefID(String refid)
 	{
 		char[] tokens = refid.toCharArray();
-		StringBuffer name = new StringBuffer();
-		StringBuffer index = new StringBuffer();		
+		StringBuilder name = new StringBuilder();
+		StringBuilder index = new StringBuilder();
 		RefID ref = null;
 		RefID header = null;
 		

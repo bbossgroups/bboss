@@ -37,7 +37,7 @@ public class JavaScriptUtils {
 			return input;
 		}
 
-		StringBuffer filtered = new StringBuffer(input.length());
+		StringBuilder filtered = new StringBuilder(input.length());
 		char prevChar = '\u0000';
 		char c;
 		for (int i = 0; i < input.length(); i++) {

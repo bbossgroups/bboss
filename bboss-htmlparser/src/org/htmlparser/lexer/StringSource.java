@@ -374,7 +374,7 @@ public class StringSource
      * @exception IOException If the source is closed or an attempt is made to
      * read beyond {@link #offset()}.
      */
-    public void getCharacters (StringBuffer buffer, int offset, int length) throws IOException
+    public void getCharacters (StringBuilder buffer, int offset, int length) throws IOException
     {
         if (null == mString)
             throw new IOException ("source is closed");

@@ -832,7 +832,7 @@ public class StatementInfo {
 	public String buildResultForXml(ResultSet res, int containersize,
 			boolean ispagine, Class objectType, RowHandler rowHandler)
 			throws SQLException {
-		StringBuffer results = new StringBuffer();
+		StringBuilder results = new StringBuilder();
 		XMLRowHandler xhdl = null;
 		try
 		{
@@ -883,7 +883,7 @@ public class StatementInfo {
         			go = res.next();
         		// 从结果集中获取当前游标后maxsize条记录
         		while (go) {
-        			StringBuffer record = ResultMap.buildSingleRecordXMLString(res,
+        			StringBuilder record = ResultMap.buildSingleRecordXMLString(res,
         					this, rowHandler,this.dbadapter);
         			results.append(record);
         			rowcount++;

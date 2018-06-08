@@ -92,7 +92,7 @@ public class DBCloudscape extends DB
      */
     public String getIDMethodSQL(Object obj)
     {
-        StringBuffer sql = new StringBuffer(132);
+        StringBuilder sql = new StringBuilder(132);
         sql.append("select distinct ConnectionInfo.lastAutoincrementValue(");
 
         String qualifiedIdentifier = (String) obj;

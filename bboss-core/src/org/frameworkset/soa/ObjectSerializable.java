@@ -285,7 +285,7 @@ public class ObjectSerializable {
 //			Class type, String dateformat, String charset)
 //			throws NumberFormatException, IllegalArgumentException,
 //			IntrospectionException {
-//		StringBuffer ret = new StringBuffer();
+//		StringBuilder ret = new StringBuilder();
 //
 //		if (charset.equals(CHARSET_UTF_8)) {
 //			ret.append(content_header_utf_8);
@@ -357,7 +357,7 @@ public class ObjectSerializable {
 	public final static void convertBeanObjectToXML(String name, Object obj,
 			Class ptype, String dateformat, String charset,Writer ret)
 			throws Exception {
-//		StringBuffer ret = new StringBuffer();
+//		StringBuilder ret = new StringBuilder();
 
 		try {
 //			if (charset.equals(CHARSET_UTF_8)) {
@@ -1229,7 +1229,7 @@ public class ObjectSerializable {
 		 */
 		// if (type != String.class)
 		// throw new NoSupportTypeCastException(
-		// new StringBuffer("不支持[")
+		// new StringBuilder("不支持[")
 		// .append(type)
 		// .append("]向[")
 		// .append(toType)

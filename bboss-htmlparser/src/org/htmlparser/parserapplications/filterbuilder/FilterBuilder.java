@@ -728,7 +728,7 @@ public class FilterBuilder
      * @param out The buffer to append to.
      * @param bean The bean to extract the filters from to make the program.
      */
-    protected void makeProgram (String name, StringBuffer out, FilterBean bean)
+    protected void makeProgram (String name, StringBuilder out, FilterBean bean)
     {
         // so we need to keep track of filters and arrays of filters to give them unique numbers
         // each Filter is responsible for outputting it's code and returning it's variable name
@@ -891,7 +891,7 @@ public class FilterBuilder
     {
         Filter[] selections;
         FilterBean bean;
-        StringBuffer buffer;
+        StringBuilder buffer;
         PrintWriter out;
         String ok = "OK";
 
@@ -901,7 +901,7 @@ public class FilterBuilder
             bean = new FilterBean ();
             bean.setURL (mURLField.getText ());
             bean.setFilters (selections);
-            buffer = new StringBuffer ();
+            buffer = new StringBuilder ();
             makeProgram (classFromFile (name), buffer, bean);
             try
             {

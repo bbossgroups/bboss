@@ -32,7 +32,6 @@ import org.htmlparser.lexer.Cursor;
 import org.htmlparser.lexer.Lexer;
 import org.htmlparser.lexer.Page;
 import org.htmlparser.scanners.Scanner;
-import org.htmlparser.util.NodeIterator;
 
 public class IteratorImpl implements NodeIterator
 {
@@ -101,7 +100,7 @@ public class IteratorImpl implements NodeIterator
         }
         catch (Exception e)
         {
-            StringBuffer msgBuffer = new StringBuffer ();
+            StringBuilder msgBuffer = new StringBuilder ();
             msgBuffer.append ("Unexpected Exception occurred while reading ");
             msgBuffer.append (mLexer.getPage ().getUrl ());
             msgBuffer.append (", in nextNode");

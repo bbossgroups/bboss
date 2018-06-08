@@ -66,7 +66,7 @@ public class Unique extends Index implements Serializable
      */
     public String toString()
     {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         result.append(" <unique name=\"")
             .append(getName())
             .append("\">\n");

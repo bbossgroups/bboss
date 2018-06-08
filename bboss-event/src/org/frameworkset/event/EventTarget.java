@@ -87,7 +87,7 @@ public class EventTarget   implements java.io.Serializable {
 	
 	public String toString()
 	{
-//		StringBuffer ret = new StringBuffer();
+//		StringBuilder ret = new StringBuilder();
 //		if(this.protocol != null)
 //			ret.append(protocol).append("::");
 //		if(destination != null)

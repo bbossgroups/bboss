@@ -31,9 +31,9 @@ package com.frameworkset.orm.engine.model;
  * limitations under the License.
  */
 
-import java.io.Serializable;
-
 import org.xml.sax.Attributes;
+
+import java.io.Serializable;
 
 /**
  * A Class for information regarding possible objects representing a table
@@ -140,7 +140,7 @@ public class Inheritance implements Serializable
      */
     public String toString()
     {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         result.append(" <inheritance key=\"")
               .append(key)
               .append("\" class=\"")

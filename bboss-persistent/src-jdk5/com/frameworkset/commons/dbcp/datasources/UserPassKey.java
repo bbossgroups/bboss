@@ -86,7 +86,7 @@ class UserPassKey implements Serializable {
     }
 
     public String toString() {
-        StringBuffer sb = new StringBuffer(50);
+        StringBuilder sb = new StringBuilder(50);
         sb.append("UserPassKey(");
         sb.append(username).append(", ").append(password).append(')');
         return sb.toString();

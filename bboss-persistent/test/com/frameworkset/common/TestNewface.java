@@ -123,7 +123,7 @@ public class TestNewface {
 	
 	public String toString()
 	{
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		ret.append("[OWNER=").append(OWNER).append("]")
 		.append("[OBJECT_NAME=").append(OBJECT_NAME).append("]")
 		.append("[SUBOBJECT_NAME=").append(SUBOBJECT_NAME).append("]")

@@ -36,7 +36,7 @@ import bboss.org.apache.velocity.runtime.log.Log;
  *
  * For example, a method with the following signature:
  *
- * public void method(String a, StringBuffer b)
+ * public void method(String a, StringBuilder b)
  *
  * would be mapped by the key:
  *

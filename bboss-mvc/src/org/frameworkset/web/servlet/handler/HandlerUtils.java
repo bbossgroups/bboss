@@ -803,7 +803,7 @@ public abstract class HandlerUtils {
 			if (isrequired) {
 				String paramName = null;
 				if (methodParameters.size() > 1) {
-					StringBuffer buffer = new StringBuffer();
+					StringBuilder buffer = new StringBuilder();
 					boolean flag = false;
 					for (MethodParameter methodParameter : methodParameters) {
 						if (flag)
@@ -3196,7 +3196,7 @@ public abstract class HandlerUtils {
 	protected static String getRestfulUrl(String methodpath) {
 
 //		String mappedPath = methodpath;
-//		StringBuffer pathUrl = new StringBuffer();
+//		StringBuilder pathUrl = new StringBuilder();
 //
 //		String tmp[] = mappedPath.split("/");
 //		for (int i = 1; i < tmp.length; i++) {
@@ -3226,7 +3226,7 @@ public abstract class HandlerUtils {
 //			String[] mappedPaths = mapping.value();
 //			if (mappedPaths != null && mappedPaths.length > 0) {
 //				String mappedPath = mappedPaths[0];
-//				StringBuffer pathUrl = new StringBuffer();
+//				StringBuilder pathUrl = new StringBuilder();
 //				pathUrl.append(url);
 //				String tmp[] = mappedPath.split("/");
 //				for (int i = 1; i < tmp.length; i++) {
@@ -3255,7 +3255,7 @@ public abstract class HandlerUtils {
 			String[] mappedPaths = mapping.value();
 			if (mappedPaths != null && mappedPaths.length > 0) {
 				String mappedPath = mappedPaths[0];
-//				StringBuffer pathUrl = new StringBuffer();
+//				StringBuilder pathUrl = new StringBuilder();
 //				pathUrl.append(url);
 //				String tmp[] = mappedPath.split("/");
 //				for (int i = 1; i < tmp.length; i++) {

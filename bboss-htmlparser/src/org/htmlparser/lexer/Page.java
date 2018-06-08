@@ -571,9 +571,9 @@ public class Page
             }
             catch (UnsupportedEncodingException uee)
             {
-//                StringBuffer msg;
+//                StringBuilder msg;
 //
-//                msg = new StringBuffer (1024);
+//                msg = new StringBuilder (1024);
 //                msg.append (getConnection ().getURL ().toExternalForm ());
 //                msg.append (" has an encoding (");
 //                msg.append (charset);
@@ -992,7 +992,7 @@ public class Page
      * @exception IllegalArgumentException If an attempt is made to get
      * characters ahead of the current source offset (character position).
      */
-    public void getText (StringBuffer buffer, int start, int end)
+    public void getText (StringBuilder buffer, int start, int end)
         throws
             IllegalArgumentException
     {
@@ -1040,7 +1040,7 @@ public class Page
      * @param buffer The accumulator for the characters.
      * @see #getText(StringBuffer,int,int)
      */
-    public void getText (StringBuffer buffer)
+    public void getText (StringBuilder buffer)
     {
         getText (buffer, 0, mSource.offset ());
     }
@@ -1138,13 +1138,13 @@ public class Page
      */
     public String toString ()
     {
-        StringBuffer buffer;
+        StringBuilder buffer;
         int start;
         String ret;
 
         if (mSource.offset () > 0)
         {
-            buffer = new StringBuffer (43);
+            buffer = new StringBuilder (43);
             start = mSource.offset () - 40;
             if (0 > start)
                 start = 0;

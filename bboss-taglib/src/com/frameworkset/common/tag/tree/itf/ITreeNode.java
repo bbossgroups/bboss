@@ -27,11 +27,11 @@
 
 package com.frameworkset.common.tag.tree.itf;
 
-import java.util.List;
-import java.util.Map;
-
 import com.frameworkset.common.tag.contextmenu.AttachElement;
 import com.frameworkset.common.tag.tree.impl.Tree;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * The ITreeNode interface represents a node in a tree.
@@ -237,7 +237,7 @@ public interface ITreeNode extends AttachElement{
 	
 	
 	
-	public StringBuffer getSonids();
+	public StringBuilder getSonids();
 	
 	public void addSonid(String sonid);
 	
@@ -245,7 +245,7 @@ public interface ITreeNode extends AttachElement{
 	 * 儿子节点会调用
 	 * @return
 	 */
-	public StringBuffer getFatherids() ;
+	public StringBuilder getFatherids() ;
 	
     
   

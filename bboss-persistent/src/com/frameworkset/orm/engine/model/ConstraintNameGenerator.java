@@ -31,12 +31,11 @@ package com.frameworkset.orm.engine.model;
  * limitations under the License.
  */
 
-import java.util.List;
-
+import com.frameworkset.orm.engine.EngineException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.orm.engine.EngineException;
+import java.util.List;
 
 /**
  * A <code>NameGenerator</code> implementation for table-specific
@@ -64,7 +63,7 @@ public class ConstraintNameGenerator implements NameGenerator
     public String generateName(List inputs)
         throws EngineException
     {
-        StringBuffer name = new StringBuffer();
+		StringBuilder name = new StringBuilder();
         Database db = (Database) inputs.get(0);
         name.append((String) inputs.get(1));
         String namePostfix = (String) inputs.get(2);
@@ -103,7 +102,7 @@ public class ConstraintNameGenerator implements NameGenerator
 	@Override
 	public String generateName(List inputs, boolean IGNORE_FIRST_TOKEN)
 			throws EngineException {
-		 StringBuffer name = new StringBuffer();
+		StringBuilder name = new StringBuilder();
 	        Database db = (Database) inputs.get(0);
 	        name.append((String) inputs.get(1));
 	        String namePostfix = (String) inputs.get(2);

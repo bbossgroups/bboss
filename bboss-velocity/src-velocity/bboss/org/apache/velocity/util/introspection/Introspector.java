@@ -39,7 +39,7 @@ import bboss.org.apache.velocity.runtime.log.RuntimeLoggerLog;
  *
  * For example, a method with the following signature:
  *
- * public void method(String a, StringBuffer b)
+ * public void method(String a, StringBuilder b)
  *
  * would be mapped by the key:
  *
@@ -99,7 +99,7 @@ public class Introspector extends IntrospectorBase
              *  whoops.  Ambiguous.  Make a nice log message and return null...
              */
 
-            StringBuffer msg = new StringBuffer("Introspection Error : Ambiguous method invocation ")
+            StringBuilder msg = new StringBuilder("Introspection Error : Ambiguous method invocation ")
                     .append(name)
                     .append("(");
 

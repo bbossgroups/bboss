@@ -226,7 +226,7 @@ public abstract class ExpressionEvaluationUtils {
 		Assert.notNull(pageContext, "PageContext must not be null");
 
 		if (resultClass.isAssignableFrom(String.class)) {
-			StringBuffer resultValue = null;
+			StringBuilder resultValue = null;
 			int exprPrefixIndex = -1;
 			int exprSuffixIndex = 0;
 			do {
@@ -250,7 +250,7 @@ public abstract class ExpressionEvaluationUtils {
 					else {
 						// We actually need to concatenate partial expressions into a String.
 						if (resultValue == null) {
-							resultValue = new StringBuffer();
+							resultValue = new StringBuilder();
 						}
 						resultValue.append(attrValue.substring(prevExprSuffixIndex, exprPrefixIndex));
 						resultValue.append(helper.evaluate(attrName, expr, String.class, pageContext));
@@ -258,7 +258,7 @@ public abstract class ExpressionEvaluationUtils {
 				}
 				else {
 					if (resultValue == null) {
-						resultValue = new StringBuffer();
+						resultValue = new StringBuilder();
 					}
 					resultValue.append(attrValue.substring(exprSuffixIndex));
 				}

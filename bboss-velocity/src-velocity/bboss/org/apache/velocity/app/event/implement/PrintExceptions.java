@@ -19,11 +19,12 @@ package bboss.org.apache.velocity.app.event.implement;
  * under the License.    
  */
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import bboss.org.apache.velocity.app.event.MethodExceptionEventHandler;
 import bboss.org.apache.velocity.runtime.RuntimeServices;
 import bboss.org.apache.velocity.util.RuntimeServicesAware;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * Simple event handler that renders method exceptions in the page
@@ -62,29 +63,29 @@ public class PrintExceptions implements MethodExceptionEventHandler, RuntimeServ
         boolean showMessage = rs.getBoolean(SHOW_MESSAGE,false);
         boolean showStackTrace = rs.getBoolean(SHOW_STACK_TRACE,false);
 
-        StringBuffer st;
+        StringBuilder st;
         if (showMessage && showStackTrace)
         {
-            st = new StringBuffer(200);
+            st = new StringBuilder(200);
             st.append(e.getClass().getName()).append("\n");
             st.append(e.getMessage()).append("\n");
             st.append(getStackTrace(e));
 
         } else if (showMessage)
         {
-            st = new StringBuffer(50);
+            st = new StringBuilder(50);
             st.append(e.getClass().getName()).append("\n");
             st.append(e.getMessage()).append("\n");
 
         } else if (showStackTrace)
         {
-            st = new StringBuffer(200);
+            st = new StringBuilder(200);
             st.append(e.getClass().getName()).append("\n");
             st.append(getStackTrace(e));
 
         } else
         {
-            st = new StringBuffer(15);
+            st = new StringBuilder(15);
             st.append(e.getClass().getName()).append("\n");
         }
 

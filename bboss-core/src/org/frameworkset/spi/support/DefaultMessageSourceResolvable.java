@@ -16,11 +16,10 @@
 
 package org.frameworkset.spi.support;
 
-import java.io.Serializable;
-
+import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.util.ObjectUtils;
 
-import com.frameworkset.util.SimpleStringUtil;
+import java.io.Serializable;
 
 
 
@@ -123,7 +122,7 @@ public class DefaultMessageSourceResolvable  implements MessageSourceResolvable,
 	 * including codes, arguments, and default message.
 	 */
 	protected final String resolvableToString() {
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 		buf.append("codes [").append(SimpleStringUtil.arrayToDelimitedString(this.codes, ","));
 		buf.append("]; arguments [" + SimpleStringUtil.arrayToDelimitedString(this.arguments, ","));
 		buf.append("]; default message [").append(this.defaultMessage).append(']');

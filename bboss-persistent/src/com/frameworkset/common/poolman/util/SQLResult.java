@@ -89,7 +89,7 @@ public class SQLResult implements Serializable{
 //        if (records == null)
 //            return "SQLResult [0]";
 //
-//        StringBuffer out = new StringBuffer();
+//        StringBuilder out = new StringBuilder();
 //        out.append("SQLResult [" + records.length + "]\n");
 //        if (records.length > 0) {
 //            out.append("[");
@@ -139,7 +139,7 @@ public class SQLResult implements Serializable{
 //        if (records == null)
 //            return "<h3>SQLResult [0]</h3>";
 //
-//        StringBuffer out = new StringBuffer();
+//        StringBuilder out = new StringBuilder();
 //        //out.append("<h3>SQLResult ["+records.length+"]</h3>");
 //        out.append("<table bgcolor='#505050' cellspacing='1' cellpadding='1'>");
 //        if (records.length > 0) {

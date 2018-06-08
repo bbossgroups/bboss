@@ -20,7 +20,7 @@ public class Test_p {
 	}
 	public String toString()
 	{
-		return new StringBuffer().append("name=").append(name).append(",name1=").append(name1).append(",test=").append(test).append(",nomatch=").append(nomatch).toString();
+		return new StringBuilder().append("name=").append(name).append(",name1=").append(name1).append(",test=").append(test).append(",nomatch=").append(nomatch).toString();
 	}
 	public String getTest() {
 		return test;

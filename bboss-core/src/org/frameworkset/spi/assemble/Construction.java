@@ -60,7 +60,7 @@ public class Construction implements Serializable {
 	
 	public String toString()
 	{
-	    StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 	    if(params == null || params.size() == 0)
 	        return "";
 	    for(Pro pro:params)

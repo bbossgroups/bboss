@@ -291,9 +291,9 @@ public class ScriptDecoder
         char character;
         int input_character;
         boolean found;
-        StringBuffer ret;
+        StringBuilder ret;
         
-        ret = new StringBuffer (1024);
+        ret = new StringBuilder (1024);
 
         state = STATE_INITIAL;
         substate_initial = 0;

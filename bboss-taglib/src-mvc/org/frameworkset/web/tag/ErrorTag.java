@@ -186,7 +186,7 @@ public class ErrorTag extends HtmlEscapingAwareTag  {
 				MessageSource msr = this.getMessageSource();
 				Locale locale = this.getRequestContext().getLocale();
 //				FieldError error_ = null;
-				StringBuffer buffer = new StringBuffer();
+				StringBuilder buffer = new StringBuilder();
 				for (int i = 0; errors_ != null && i < errors_.size(); i++) {
 					 error_ = (FieldError) errors_.get(i);
 //					 handlerError( error_);

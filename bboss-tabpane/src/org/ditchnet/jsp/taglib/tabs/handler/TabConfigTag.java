@@ -21,15 +21,12 @@
  */
 package org.ditchnet.jsp.taglib.tabs.handler;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.JspException;
-
+import com.frameworkset.common.tag.BaseTag;
 import org.ditchnet.jsp.taglib.tabs.listener.TabServletContextListener;
 
-import com.frameworkset.common.tag.BaseTag;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+import java.io.IOException;
 
 
 /**
@@ -48,8 +45,8 @@ public final class TabConfigTag extends BaseTag {
 	private String contextPath;
 
 	public int doEndTag() throws  JspException{
-		
-		StringBuffer buff = new StringBuffer();
+
+		StringBuilder buff = new StringBuilder();
 		
 		findContextPath();
 		renderScriptTag(buff);
@@ -78,7 +75,7 @@ public final class TabConfigTag extends BaseTag {
 		contextPath = request.getContextPath();
 	}
 	
-	private void renderScriptTag(final StringBuffer buff) {
+	private void renderScriptTag(final StringBuilder buff) {
 		String uri = 
 			getEncodedContextRelativePath(TabServletContextListener.SCRIPT_URI);
 
@@ -87,7 +84,7 @@ public final class TabConfigTag extends BaseTag {
 			.append("</script>\n");
 	}
 	
-	private void renderStyleTag(final StringBuffer buff) {
+	private void renderStyleTag(final StringBuilder buff) {
 		String uri = 
 			getEncodedContextRelativePath(TabServletContextListener.STYLE_URI);
 

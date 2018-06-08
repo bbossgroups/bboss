@@ -15,18 +15,14 @@
  */
 package com.frameworkset.orm.cache;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 
@@ -343,7 +339,7 @@ public class CacheModel {
 	   */
 	  protected void log(String action, boolean addValue,
 	  		             Object cacheValue)  {
-	    StringBuffer output = new StringBuffer("Cache '");
+		  StringBuilder output = new StringBuilder("Cache '");
 	    output.append(getId());
 	    output.append("': ");
 	    output.append(action);

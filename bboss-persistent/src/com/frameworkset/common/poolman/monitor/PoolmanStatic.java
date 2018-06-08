@@ -194,7 +194,7 @@ public class PoolmanStatic extends JDBCPoolMetaData{
     }
     public String toString()
     {
-        StringBuffer ret = new StringBuffer(100);
+        StringBuilder ret = new StringBuilder(100);
         ret.append(super.toString());
         ret.append("dbname:").append(this.getDbname()).append(",")
         .append("minconnections:").append(this.getMaximumSize()).append(",")

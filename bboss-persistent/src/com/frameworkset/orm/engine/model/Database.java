@@ -31,21 +31,13 @@ package com.frameworkset.orm.engine.model;
  * limitations under the License.
  */
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
-import org.xml.sax.Attributes;
-
 import com.frameworkset.orm.engine.EngineException;
 import com.frameworkset.orm.platform.Platform;
 import com.frameworkset.orm.platform.PlatformFactory;
+import org.xml.sax.Attributes;
+
+import java.io.Serializable;
+import java.util.*;
 
 
 /**
@@ -528,7 +520,7 @@ public class Database implements Serializable
      */
     public String toString()
     {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         result.append ("<?xml version=\"1.0\"?>\n");
         //noted by biaoping.yin on 2005.9.7

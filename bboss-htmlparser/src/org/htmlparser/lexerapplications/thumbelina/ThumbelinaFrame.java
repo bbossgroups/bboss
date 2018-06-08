@@ -908,7 +908,7 @@ public class ThumbelinaFrame
         Preferences prefs;
         String query;
         String terms;
-        StringBuffer buffer;
+        StringBuilder buffer;
         HttpURLConnection connection;
         URL url;
         Lexer lexer;
@@ -930,7 +930,7 @@ public class ThumbelinaFrame
             {
                 // replace spaces with +
                 terms = query.replace (' ', '+');
-                buffer = new StringBuffer (1024);
+                buffer = new StringBuilder (1024);
                 buffer.append ("http://www.google.ca/search?");
                 buffer.append ("q=");
                 buffer.append (terms);

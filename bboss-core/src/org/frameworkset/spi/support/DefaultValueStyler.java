@@ -16,15 +16,11 @@
 
 package org.frameworkset.spi.support;
 
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.ObjectUtils;
+
+import java.lang.reflect.Method;
+import java.util.*;
 
 
 
@@ -80,7 +76,7 @@ public class DefaultValueStyler  implements ValueStyler {
 	}
 
 	private String style(Map value) {
-		StringBuffer buffer = new StringBuffer(value.size() * 8 + 16);
+		StringBuilder buffer = new StringBuilder(value.size() * 8 + 16);
 		buffer.append(MAP + "[");
 		for (Iterator it = value.entrySet().iterator(); it.hasNext();) {
 			Map.Entry entry = (Map.Entry) it.next();
@@ -101,7 +97,7 @@ public class DefaultValueStyler  implements ValueStyler {
 	}
 
 	private String style(Collection value) {
-		StringBuffer buffer = new StringBuffer(value.size() * 8 + 16);
+		StringBuilder buffer = new StringBuilder(value.size() * 8 + 16);
 		buffer.append(getCollectionTypeString(value)).append('[');
 		for (Iterator i = value.iterator(); i.hasNext();) {
 			buffer.append(style(i.next()));
@@ -129,7 +125,7 @@ public class DefaultValueStyler  implements ValueStyler {
 	}
 
 	private String styleArray(Object[] array) {
-		StringBuffer buffer = new StringBuffer(array.length * 8 + 16);
+		StringBuilder buffer = new StringBuilder(array.length * 8 + 16);
 		buffer.append(ARRAY + "<" + ClassUtils.getShortName(array.getClass().getComponentType()) + ">[");
 		for (int i = 0; i < array.length - 1; i++) {
 			buffer.append(style(array[i]));

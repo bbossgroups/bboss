@@ -41,7 +41,7 @@ public abstract class SystemPropertyUtils {
 	 * @see #PLACEHOLDER_SUFFIX
 	 */
 	public static String resolvePlaceholders(String text) {
-		StringBuffer buf = new StringBuffer(text);
+		StringBuilder buf = new StringBuilder(text);
 
 		int startIndex = buf.indexOf(PLACEHOLDER_PREFIX);
 		while (startIndex != -1) {

@@ -1659,7 +1659,7 @@ public class ClassUtil
 			return null;
 		String tableColumn_ = tableColumn.toLowerCase();
 		int length = tableColumn.length();
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		
 		for(int i = 0; i < length; i ++)
 		{

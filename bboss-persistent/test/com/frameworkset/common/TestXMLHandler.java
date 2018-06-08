@@ -47,7 +47,7 @@ public class TestXMLHandler {
             String results_ = db.executePreparedForXML(new XMLRowHandler(){
 //
 //               
-                public void handleRow(StringBuffer record, Record origine)  {
+                public void handleRow(StringBuilder record, Record origine)  {
                    
                     record.append("    <row>\r\n");
    

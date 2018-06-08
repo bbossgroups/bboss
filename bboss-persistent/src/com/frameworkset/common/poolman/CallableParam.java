@@ -661,7 +661,7 @@ public class CallableParam extends Param
     
     public String toString()
 	{
-		return new StringBuffer("method[")
+		return new StringBuilder("method[")
 				.append(method)
 				.append("]index[")
 				.append(index)
@@ -680,7 +680,7 @@ public class CallableParam extends Param
     
     public String toString(String dbName)
 	{
-		return new StringBuffer("method[")
+		return new StringBuilder("method[")
 				.append(method)
 				.append("]index[")
 				.append(index)

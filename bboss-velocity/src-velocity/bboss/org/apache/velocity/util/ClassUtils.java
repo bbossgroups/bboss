@@ -19,16 +19,16 @@ package bboss.org.apache.velocity.util;
  * under the License.    
  */
 
-import java.io.InputStream;
-
 import bboss.org.apache.velocity.context.InternalContextAdapter;
 import bboss.org.apache.velocity.exception.MethodInvocationException;
 import bboss.org.apache.velocity.exception.VelocityException;
-import bboss.org.apache.velocity.runtime.parser.node.SimpleNode;
 import bboss.org.apache.velocity.runtime.parser.node.ASTMethod.MethodCacheKey;
+import bboss.org.apache.velocity.runtime.parser.node.SimpleNode;
 import bboss.org.apache.velocity.util.introspection.Info;
 import bboss.org.apache.velocity.util.introspection.IntrospectionCacheData;
 import bboss.org.apache.velocity.util.introspection.VelMethod;
+
+import java.io.InputStream;
 
 
 
@@ -221,7 +221,7 @@ public class ClassUtils {
         if (strictRef)
         {
           // Create a parameter list for the exception error message
-          StringBuffer plist = new StringBuffer();
+            StringBuilder plist = new StringBuilder();
           for (int i = 0; i < params.length; i++)
           {
             Class param = paramClasses[i];

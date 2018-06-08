@@ -242,8 +242,8 @@ public class Tokenizer {
 }
 
 class TokenizerToken implements Token{
-    final StringBuffer text = new StringBuffer();
-    final StringBuffer innerText = new StringBuffer();
+    final StringBuilder text = new StringBuilder();
+    final StringBuilder innerText = new StringBuilder();
     String name = "";
     int type = Tokenizer.TT_ERROR;
     int line = 0;

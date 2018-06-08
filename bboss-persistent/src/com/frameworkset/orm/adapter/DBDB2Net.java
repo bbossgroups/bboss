@@ -31,11 +31,11 @@ package com.frameworkset.orm.adapter;
  * limitations under the License.
  */
 
+import com.frameworkset.orm.platform.PlatformDb2Impl;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import com.frameworkset.orm.platform.PlatformDb2Impl;
 
 
 public class DBDB2Net
@@ -57,7 +57,7 @@ public class DBDB2Net
      */
     public String toUpperCase(String in)
     {
-        String s = new StringBuffer("UPPER(").append(in).append(")").toString();
+        String s = new StringBuilder("UPPER(").append(in).append(")").toString();
         return s;
     }
 
@@ -69,7 +69,7 @@ public class DBDB2Net
      */
     public String ignoreCase(String in)
     {
-        String s = new StringBuffer("UPPER(").append(in).append(")").toString();
+        String s = new StringBuilder("UPPER(").append(in).append(")").toString();
         return s;
     }
 
@@ -140,6 +140,6 @@ public class DBDB2Net
 //	 */
 //	public String getDBPagineSql(String sql, long offset, int maxsize) {
 //		
-//		return new StringBuffer(sql).append(" limit ").append(offset).append(",").append(maxsize).toString();
+//		return new StringBuilder(sql).append(" limit ").append(offset).append(",").append(maxsize).toString();
 //	}
 }

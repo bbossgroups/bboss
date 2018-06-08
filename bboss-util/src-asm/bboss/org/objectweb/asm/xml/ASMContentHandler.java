@@ -29,23 +29,15 @@
  */
 package bboss.org.objectweb.asm.xml;
 
+import bboss.org.objectweb.asm.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import bboss.org.objectweb.asm.AnnotationVisitor;
-import bboss.org.objectweb.asm.ClassVisitor;
-import bboss.org.objectweb.asm.FieldVisitor;
-import bboss.org.objectweb.asm.Handle;
-import bboss.org.objectweb.asm.Label;
-import bboss.org.objectweb.asm.MethodVisitor;
-import bboss.org.objectweb.asm.Opcodes;
-import bboss.org.objectweb.asm.Type;
-import bboss.org.objectweb.asm.TypePath;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * A {@link org.xml.sax.ContentHandler ContentHandler} that transforms XML
@@ -362,7 +354,7 @@ public class ASMContentHandler extends DefaultHandler implements Opcodes {
         String name = lName == null || lName.length() == 0 ? qName : lName;
 
         // Compute the current matching rule
-        StringBuffer sb = new StringBuffer(match);
+        StringBuilder sb = new StringBuilder(match);
         if (match.length() > 0) {
             sb.append('/');
         }
@@ -568,7 +560,7 @@ public class ASMContentHandler extends DefaultHandler implements Opcodes {
         }
 
         private final String decode(final String val) throws SAXException {
-            StringBuffer sb = new StringBuffer(val.length());
+            StringBuilder sb = new StringBuilder(val.length());
             try {
                 int n = 0;
                 while (n < val.length()) {

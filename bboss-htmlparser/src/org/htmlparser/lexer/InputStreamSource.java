@@ -26,16 +26,10 @@
 
 package org.htmlparser.lexer;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.UnsupportedEncodingException;
-
 import org.htmlparser.util.EncodingChangeException;
 import org.htmlparser.util.ParserException;
+
+import java.io.*;
 
 /**
  * A source of characters based on an InputStream such as from a URLConnection.
@@ -634,7 +628,7 @@ public class InputStreamSource
      * @exception IOException If the offset or (offset + length) is beyond
      * {@link #offset()} or the source is closed.
      */
-    public void getCharacters (StringBuffer buffer, int offset, int length) throws IOException
+    public void getCharacters (StringBuilder buffer, int offset, int length) throws IOException
     {
         if (null == mStream)
             throw new IOException ("source is closed");

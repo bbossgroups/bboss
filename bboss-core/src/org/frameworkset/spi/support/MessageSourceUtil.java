@@ -16,13 +16,13 @@
 
 package org.frameworkset.spi.support;
 
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.util.io.ResourceLoader;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.frameworkset.spi.BaseApplicationContext;
-import org.frameworkset.util.io.ResourceLoader;
 
 /**
  * <p>Title: MessageSourceUtil.java</p> 
@@ -122,7 +122,7 @@ public abstract class MessageSourceUtil {
 	{
 		if(basenames == null || basenames.length == 0)
 			return null;
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		for(int i = 0; i < basenames.length; i ++)
 		{
 			String name = basenames[i];

@@ -570,7 +570,7 @@ public class ClassUtils
 	private static String getQualifiedNameForArray(Class clazz)
 	{
 
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		while (clazz.isArray())
 		{
 			clazz = clazz.getComponentType();
@@ -614,7 +614,7 @@ public class ClassUtils
 		Class clazz = value.getClass();
 		if (Proxy.isProxyClass(clazz))
 		{
-			StringBuffer buf = new StringBuffer(clazz.getName());
+			StringBuilder buf = new StringBuilder(clazz.getName());
 			buf.append(" implementing ");
 			Class[] ifcs = clazz.getInterfaces();
 			for (int i = 0; i < ifcs.length; i++)
@@ -1122,7 +1122,7 @@ public class ClassUtils
 		{
 			return "[]";
 		}
-		StringBuffer sb = new StringBuffer("[");
+		StringBuilder sb = new StringBuilder("[");
 		for (Iterator it = classes.iterator(); it.hasNext();)
 		{
 			Class clazz = (Class) it.next();

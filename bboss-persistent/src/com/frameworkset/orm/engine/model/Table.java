@@ -1023,7 +1023,7 @@ public class Table implements IDMethod,Comparable,Serializable
      */
     public String toString()
     {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         result.append ("<table name=\"")
               .append(name)
@@ -1153,7 +1153,7 @@ public class Table implements IDMethod,Comparable,Serializable
      */
     private String printList(List list)
     {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         boolean comma = false;
         for (Iterator iter = list.iterator(); iter.hasNext();)
         {

@@ -177,7 +177,7 @@ public class TransferObjectFactory
 //				if(value == null)
 //				{
 //					log.info(
-//						new StringBuffer("warning:[")
+//						new StringBuilder("warning:[")
 //							.append(wfield)
 //							.append(" not found in hashmap")
 //							.append("]!")
@@ -222,7 +222,7 @@ public class TransferObjectFactory
 //			catch (NullPointerException e)
 //			{
 //				log.info(
-//					new StringBuffer("warning NullPointerException:[")
+//					new StringBuilder("warning NullPointerException:[")
 //						.append(wfield)
 //						.append("] not found in [map]!")
 //						.toString());
@@ -231,7 +231,7 @@ public class TransferObjectFactory
 //			catch (NoSuchMethodException e)
 //			{
 //				log.info(
-//					new StringBuffer("warning NoSuchMethodException:[")
+//					new StringBuilder("warning NoSuchMethodException:[")
 //						.append(e.getMessage())
 //						.append("]")
 //						.toString());
@@ -241,7 +241,7 @@ public class TransferObjectFactory
 //			catch (SecurityException securitye)
 //			{
 //				log.info(
-//					new StringBuffer("warning SecurityException:[")
+//					new StringBuilder("warning SecurityException:[")
 //						.append(securitye.getMessage())
 //						.append("]")
 //						.toString());
@@ -251,7 +251,7 @@ public class TransferObjectFactory
 //			catch (NoSupportTypeCastException castException)
 //			{
 //				log.info(
-//					new StringBuffer("warning NoSupportTypeCastException:[")
+//					new StringBuilder("warning NoSupportTypeCastException:[")
 //							 .append(wfield).append("][")
 //							 .append(wMethods[i])
 //							 .append("] return value type not match the param type!")
@@ -261,7 +261,7 @@ public class TransferObjectFactory
 //			catch (NumberFormatException e)
 //			{
 //				log.info(
-//					new StringBuffer("warning NumberFormatException:[")
+//					new StringBuilder("warning NumberFormatException:[")
 //							 .append(e.getMessage())
 //							 .append("]")
 //							 .toString());
@@ -271,7 +271,7 @@ public class TransferObjectFactory
 //			catch (IllegalArgumentException e)
 //			{
 //				log.info(
-//					new StringBuffer("warning IllegalArgumentException:[")
+//					new StringBuilder("warning IllegalArgumentException:[")
 //							 .append(e.getMessage())
 //							 .append("]")
 //							 .toString());
@@ -281,7 +281,7 @@ public class TransferObjectFactory
 //			catch (Exception e)
 //			{
 //				log.info(
-//					new StringBuffer("warning Exception:[")
+//					new StringBuilder("warning Exception:[")
 //							 .append(e.getMessage())
 //							 .append("]")
 //							 .toString());
@@ -434,7 +434,7 @@ public class TransferObjectFactory
 				if(value == null)
 				{
 					log.info(
-						new StringBuffer("warning:[")
+						new StringBuilder("warning:[")
 							.append(wfield)
 							.append(" not found in hashmap")
 							.append("]!")
@@ -479,7 +479,7 @@ public class TransferObjectFactory
 			catch (NullPointerException e)
 			{
 				log.info(
-					new StringBuffer("warning NullPointerException:[")
+					new StringBuilder("warning NullPointerException:[")
 						.append(wfield)
 						.append("] not found in [map]!")
 						.toString());
@@ -488,7 +488,7 @@ public class TransferObjectFactory
 			catch (NoSuchMethodException e)
 			{
 				log.info(
-					new StringBuffer("warning NoSuchMethodException:[")
+					new StringBuilder("warning NoSuchMethodException:[")
 						.append(e.getMessage())
 						.append("]")
 						.toString());
@@ -498,7 +498,7 @@ public class TransferObjectFactory
 			catch (SecurityException securitye)
 			{
 				log.info(
-					new StringBuffer("warning SecurityException:[")
+					new StringBuilder("warning SecurityException:[")
 						.append(securitye.getMessage())
 						.append("]")
 						.toString());
@@ -508,7 +508,7 @@ public class TransferObjectFactory
 			catch (NoSupportTypeCastException castException)
 			{
 				log.info(
-					new StringBuffer("warning NoSupportTypeCastException:[")
+					new StringBuilder("warning NoSupportTypeCastException:[")
 							 .append(wfield).append("][")
 							 .append(wMethods[i])
 							 .append("] return value type not match the param type!")
@@ -518,7 +518,7 @@ public class TransferObjectFactory
 			catch (NumberFormatException e)
 			{
 				log.info(
-					new StringBuffer("warning NumberFormatException:[")
+					new StringBuilder("warning NumberFormatException:[")
 							 .append(e.getMessage())
 							 .append("]")
 							 .toString());
@@ -528,7 +528,7 @@ public class TransferObjectFactory
 			catch (IllegalArgumentException e)
 			{
 				log.info(
-					new StringBuffer("warning IllegalArgumentException:[")
+					new StringBuilder("warning IllegalArgumentException:[")
 							 .append(e.getMessage())
 							 .append("]")
 							 .toString());
@@ -538,7 +538,7 @@ public class TransferObjectFactory
 			catch (Exception e)
 			{
 				log.info(
-					new StringBuffer("warning Exception:[")
+					new StringBuilder("warning Exception:[")
 							 .append(e.getMessage())
 							 .append("]")
 							 .toString());
@@ -593,7 +593,7 @@ public class TransferObjectFactory
 						if(cMethod == null)
 						{
 							log.info(
-							new StringBuffer("warning:[")
+							new StringBuilder("warning:[")
 								.append(wMethods[i])
 								.append("]")
 								.append(ValueObjectUtil.getMethodName(wfield))
@@ -605,7 +605,7 @@ public class TransferObjectFactory
 						}
 					} catch (Exception e) {
 							log.info(
-							new StringBuffer("warning:[")
+							new StringBuilder("warning:[")
 								.append(wMethods[i])
 								.append("]")
 								.append(ValueObjectUtil.getMethodName(wfield))
@@ -662,7 +662,7 @@ public class TransferObjectFactory
 			catch (NullPointerException e)
 			{
 				log.info(
-					new StringBuffer("warning NullPointerException:[")
+					new StringBuilder("warning NullPointerException:[")
 						.append(wMethods[i])
 						.append("] not found in [")
 						.append(cClazz)
@@ -673,7 +673,7 @@ public class TransferObjectFactory
 			catch (NoSuchMethodException e)
 			{
 				log.info(
-					new StringBuffer("warning NoSuchMethodException:[")
+					new StringBuilder("warning NoSuchMethodException:[")
 						.append(e.getMessage())
 						.append("]")
 						.toString());
@@ -683,7 +683,7 @@ public class TransferObjectFactory
 			catch (SecurityException securitye)
 			{
 				log.info(
-					new StringBuffer("warning SecurityException:[")
+					new StringBuilder("warning SecurityException:[")
 						.append(securitye.getMessage())
 						.append("]")
 						.toString());
@@ -693,7 +693,7 @@ public class TransferObjectFactory
 			catch (NoSupportTypeCastException castException)
 			{
 				log.info(
-					new StringBuffer("warning NoSupportTypeCastException:[")
+					new StringBuilder("warning NoSupportTypeCastException:[")
 							 .append(cMethod).append("][")
 							 .append(wMethods[i])
 							 .append("] return value type not match the param type!"+ castException.getMessage())
@@ -703,7 +703,7 @@ public class TransferObjectFactory
 			catch (NumberFormatException e)
 			{
 				log.info(
-					new StringBuffer("warning NumberFormatException:[")
+					new StringBuilder("warning NumberFormatException:[")
 							 .append(e.getMessage())
 							 .append("]")
 							 .toString());
@@ -713,7 +713,7 @@ public class TransferObjectFactory
 			catch (IllegalArgumentException e)
 			{
 				log.info(
-					new StringBuffer("warning IllegalArgumentException:[")
+					new StringBuilder("warning IllegalArgumentException:[")
 							 .append(e.getMessage())
 							 .append("]")
 							 .toString());
@@ -723,7 +723,7 @@ public class TransferObjectFactory
 			catch (Exception e)
 			{
 				log.info(
-					new StringBuffer("warning Exception:[")
+					new StringBuilder("warning Exception:[")
 							 .append(e.getMessage())
 							 .append("]")
 							 .toString());

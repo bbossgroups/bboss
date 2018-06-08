@@ -26,20 +26,17 @@
                                                                                                   
 package org.htmlparser.parserapplications.filterbuilder;
 
-import java.awt.Component;
-import java.util.List;
-
-import javax.swing.JTree;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.TreeCellRenderer;
-
 import org.htmlparser.Attribute;
 import org.htmlparser.Node;
-import org.htmlparser.lexer.Cursor;
 import org.htmlparser.nodes.TagNode;
 import org.htmlparser.nodes.TextNode;
-import org.htmlparser.util.ParserException;
 import org.htmlparser.util.Translate;
+
+import javax.swing.*;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreeCellRenderer;
+import java.awt.*;
+import java.util.List;
 
 /**
  * Renderer for tree view of a NodeList.
@@ -77,7 +74,7 @@ public class HtmlTreeCellRenderer
         Attribute attribute;
         String s;
         boolean children;
-        StringBuffer ret;
+        StringBuilder ret;
 
         length = 2;
         attributes = tag.getAttributesEx ();
@@ -87,7 +84,7 @@ public class HtmlTreeCellRenderer
             attribute = (Attribute)attributes.get (i);
             length += attribute.getLength ();
         }
-        ret = new StringBuffer (length);
+        ret = new StringBuilder (length);
         ret.append ("<");
         for (int i = 0; i < size; i++)
         {
@@ -97,7 +94,7 @@ public class HtmlTreeCellRenderer
         ret.append (">");
         s = Translate.encode (ret.toString ());
         children = null != tag.getChildren ();
-        ret = new StringBuffer (s.length () + 13 + (children ? 16 : 0));
+        ret = new StringBuilder (s.length () + 13 + (children ? 16 : 0));
         ret.append ("<html>");
         if (children)
             ret.append ("<font color=\"blue\">");
@@ -123,11 +120,11 @@ public class HtmlTreeCellRenderer
         int endpos;
         String s;
         char c;
-        StringBuffer ret;
+        StringBuilder ret;
 
         startpos = node.getStartPosition ();
         endpos = node.getEndPosition ();
-        ret = new StringBuffer (endpos - startpos + 20);
+        ret = new StringBuilder (endpos - startpos + 20);
         s = node.toHtml ();
         for (int i = 0; i < s.length (); i++)
         {

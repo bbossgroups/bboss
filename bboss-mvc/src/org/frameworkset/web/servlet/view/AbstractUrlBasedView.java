@@ -80,7 +80,7 @@ public abstract class AbstractUrlBasedView  extends AbstractView implements Init
 
 
 	public String toString() {
-		StringBuffer sb = new StringBuffer(super.toString());
+		StringBuilder sb = new StringBuilder(super.toString());
 		sb.append("; URL [").append(getUrl()).append("]");
 		return sb.toString();
 	}

@@ -18,7 +18,7 @@ public class Test_f {
 	}
 	public String toString()
 	{
-		return new StringBuffer("ret=").append(ret).append(",name=").append(name).append(",name1=").append(name1).toString();
+		return new StringBuilder("ret=").append(ret).append(",name=").append(name).append(",name1=").append(name1).toString();
 	}
 	public String getRet() {
 		return ret;

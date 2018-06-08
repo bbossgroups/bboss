@@ -143,7 +143,7 @@ public class ScriptTag extends CompositeTag
      * Places the script contents into the provided buffer.
      * @param sb The buffer to add the script to.
      */
-    protected void putChildrenInto (StringBuffer sb)
+    protected void putChildrenInto (StringBuilder sb)
     {
         Node node;
 
@@ -165,7 +165,7 @@ public class ScriptTag extends CompositeTag
      */
     public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("Script Node : \n");
         if (getLanguage () != null || getType () != null)
         {

@@ -160,7 +160,7 @@ public class Param
 	{
 		if(variable == null)
 		{
-			StringBuffer ret = new StringBuffer();
+			StringBuilder ret = new StringBuilder();
 			ret.append("[name=").append(name)
 			.append(",index=").append(index)
 			.append(",value=");
@@ -172,7 +172,7 @@ public class Param
 		}
 		else
 		{
-			StringBuffer ret = new StringBuffer();
+			StringBuilder ret = new StringBuilder();
 			ret.append("[name=").append(name)
 			.append(",index=").append(index)
 			.append(",value=");

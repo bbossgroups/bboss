@@ -956,9 +956,9 @@ public class Thumbelina
      */
     protected void updateQueueSize (final int original, final int current)
     {
-        StringBuffer buffer;
+        StringBuilder buffer;
 
-        buffer = new StringBuffer ();
+        buffer = new StringBuilder ();
         buffer.append (current);
         while (buffer.length () < 5)
             buffer.insert (0, '0');
@@ -976,9 +976,9 @@ public class Thumbelina
      */
     protected void updateVisitedSize (final int original, final int current)
     {
-        StringBuffer buffer;
+        StringBuilder buffer;
 
-        buffer = new StringBuffer ();
+        buffer = new StringBuilder ();
         buffer.append (current);
         while (buffer.length () < 5)
             buffer.insert (0, '0');

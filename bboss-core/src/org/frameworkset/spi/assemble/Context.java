@@ -83,7 +83,7 @@ public class Context {
 	
 	public String toString()
 	{
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
 		if(this.isroot)
 		{
 			ret.append(refid);

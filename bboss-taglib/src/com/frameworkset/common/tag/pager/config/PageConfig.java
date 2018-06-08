@@ -74,7 +74,7 @@ public class PageConfig extends BaseTag
 //        {
 //            return "";
 //        }
-//        StringBuffer output = new StringBuffer(150);
+//        StringBuilder output = new StringBuilder(150);
         String enablecontextmenu_flag = (String)request.getAttribute(popscript_set_flag);
         String parent_indent = request.getParameter(node_parent_indent);
        
@@ -164,7 +164,7 @@ public class PageConfig extends BaseTag
 //        String configed = (String)request.getAttribute(treescript_set_flag);
 //        if(configed == null || !configed.equals("true"))
 //        {
-//            StringBuffer output = new StringBuffer(150);
+//            StringBuilder output = new StringBuilder(150);
 //            
 //            output.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"").append(request.getContextPath()).append("/include/treeview.css\"/>");
 //            request.setAttribute(treescript_set_flag,"true");
@@ -185,7 +185,7 @@ public class PageConfig extends BaseTag
 //        
 //        if(configed == null || !configed.equals("true"))
 //        {
-//            StringBuffer output = new StringBuffer(150);
+//            StringBuilder output = new StringBuilder(150);
 //            
 //            output.append("<script src=\"").append(request.getContextPath())
 //            .append("/include/jquery-1.4.2.min.js\" type=\"text/javascript\"></script>");
@@ -201,7 +201,7 @@ public class PageConfig extends BaseTag
 //        String configed = (String)request.getAttribute(pagerscript_set_flag);
 //        if(configed == null || !configed.equals("true"))
 //        {
-//            StringBuffer output = new StringBuffer(150);
+//            StringBuilder output = new StringBuilder(150);
 //            output.append("<script src=\"").append(request.getContextPath())
 //            .append("/include/pager.js\" type=\"text/javascript\"></script>");
 //            
@@ -219,7 +219,7 @@ public class PageConfig extends BaseTag
 //        String configed = (String)request.getAttribute(pagerscript_set_flag);
 //        if(configed == null || !configed.equals("true"))
 //        {
-//            StringBuffer output = new StringBuffer(150);
+//            StringBuilder output = new StringBuilder(150);
 //            output.append("<script src=\"").append(request.getContextPath())
 //            .append("/include/pager.js\" type=\"text/javascript\"></script>");
 //            

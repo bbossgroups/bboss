@@ -150,7 +150,7 @@ public class DefaultPropertiesPersister  implements PropertiesPersister {
 	}
 
 	protected String unescape(String str) {
-		StringBuffer outBuffer = new StringBuffer(str.length());
+		StringBuilder outBuffer = new StringBuilder(str.length());
 		for (int index = 0; index < str.length();) {
 			char c = str.charAt(index++);
 			if (c == '\\') {
@@ -221,7 +221,7 @@ public class DefaultPropertiesPersister  implements PropertiesPersister {
 
 	protected String escape(String str, boolean isKey) {
 		int len = str.length();
-		StringBuffer outBuffer = new StringBuffer(len * 2);
+		StringBuilder outBuffer = new StringBuilder(len * 2);
 		for (int index = 0; index < len; index++) {
 			char c = str.charAt(index);
 			switch (c) {

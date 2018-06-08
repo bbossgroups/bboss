@@ -31,13 +31,12 @@ package com.frameworkset.orm.engine.model;
  * limitations under the License.
  */
 
+import com.frameworkset.orm.engine.EngineException;
+import junit.framework.TestCase;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import junit.framework.TestCase;
-
-import com.frameworkset.orm.engine.EngineException;
 
 /**
  * <p>Unit tests for class <code>NameFactory</code> and known
@@ -150,7 +149,7 @@ public class NameFactoryTest extends TestCase
      */
     private static final String makeString(int len)
     {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (int i = 0; i < len; i++)
         {
             buf.append('A');

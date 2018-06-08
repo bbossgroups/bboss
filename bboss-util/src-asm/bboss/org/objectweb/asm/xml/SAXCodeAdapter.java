@@ -29,18 +29,12 @@
  */
 package bboss.org.objectweb.asm.xml;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import bboss.org.objectweb.asm.AnnotationVisitor;
-import bboss.org.objectweb.asm.Handle;
-import bboss.org.objectweb.asm.Label;
-import bboss.org.objectweb.asm.MethodVisitor;
-import bboss.org.objectweb.asm.Opcodes;
-import bboss.org.objectweb.asm.Type;
-import bboss.org.objectweb.asm.TypePath;
+import bboss.org.objectweb.asm.*;
 import bboss.org.objectweb.asm.util.Printer;
 import org.xml.sax.helpers.AttributesImpl;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A {@link MethodVisitor} that generates SAX 2.0 events from the visited
@@ -81,7 +75,7 @@ public final class SAXCodeAdapter extends MethodVisitor {
         if (name != null) {
             attrs.addAttribute("", "name", "name", "", name);
         }
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         SAXClassAdapter.appendAccess(access, sb);
         attrs.addAttribute("", "access", "access", "", sb.toString());
         sa.addElement("parameter", attrs);

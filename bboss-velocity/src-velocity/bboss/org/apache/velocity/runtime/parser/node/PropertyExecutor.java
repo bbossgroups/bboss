@@ -93,7 +93,7 @@ public class PropertyExecutor extends AbstractExecutor
         {
             Object [] params = {};
 
-            StringBuffer sb = new StringBuffer("get");
+            StringBuilder sb = new StringBuilder("get");
             sb.append(property);
 
             setMethod(introspector.getMethod(clazz, sb.toString(), params));
