@@ -378,7 +378,6 @@ public class StatementInfo {
 	/**
 	 * 分页查询，构建查询数据库总记录数的sql语句
 	 * 
-	 * @param sql
 	 *            分页查询的sql语句
 	 * @return 查询总记录数的sql语句
 	 * @throws SQLException

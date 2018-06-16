@@ -58,10 +58,15 @@ public class PropertiesContainer {
 			Class clazz = Class.forName(configPropertiesPlugin.trim());
 			PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin)clazz.newInstance();
 			String configPropertiesFile = propertiesFilePlugin.getFiles( applicationContext);
-			String[] configPropertiesFiles = configPropertiesFile.split(",");//属性文件可以配置多个，每个用逗号分隔
-			for(String file_:configPropertiesFiles) {
-				this.configPropertiesFiles.add(file_);
-				evalfile(file_, linkfile);
+			if(SimpleStringUtil.isNotEmpty(configPropertiesFile)) {
+				loadPropertiesFromFiles(configPropertiesFile, linkfile);
+			}
+			else
+			{
+				Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext);
+				if(configProperties != null && configProperties.size() > 0){
+					allProperties.putAll(configProperties);
+				}
 			}
 			if(linkfile != null)
 				loopback(linkfile);
@@ -70,6 +75,14 @@ public class PropertiesContainer {
 		}
 
 
+	}
+
+	private void loadPropertiesFromFiles(String configPropertiesFile,LinkConfigFile linkfile ){
+		String[] configPropertiesFiles = configPropertiesFile.split(",");//属性文件可以配置多个，每个用逗号分隔
+		for(String file_:configPropertiesFiles) {
+			this.configPropertiesFiles.add(file_);
+			evalfile(file_, linkfile);
+		}
 	}
 
 
