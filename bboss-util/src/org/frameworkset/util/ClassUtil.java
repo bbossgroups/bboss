@@ -1656,7 +1656,7 @@ public class ClassUtil
 	{
 		int idx = tableColumn.indexOf('_');
 		if(idx == -1)
-			return null;
+			return tableColumn.toLowerCase();
 		String tableColumn_ = tableColumn.toLowerCase();
 		int length = tableColumn.length();
 		StringBuilder ret = new StringBuilder();

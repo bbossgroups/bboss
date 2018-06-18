@@ -15,22 +15,7 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.frameworkset.util.ClassUtil;
-import org.frameworkset.util.ClassUtil.ClassInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.frameworkset.common.poolman.handle.ResultSetHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.XMLRowHandler;
 import com.frameworkset.common.poolman.interceptor.InterceptorInf;
@@ -44,6 +29,16 @@ import com.frameworkset.orm.transaction.JDBCTransaction;
 import com.frameworkset.orm.transaction.TXConnection;
 import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class StatementInfo {
 	private static final Logger log = LoggerFactory.getLogger(StatementInfo.class);
@@ -805,25 +800,37 @@ public class StatementInfo {
         if (meta == null)
             this.cacheResultSetMetaData(res,ispagine);
 
-        
-        
+        if(!(rowHandler instanceof ResultSetHandler)) {
 
-        boolean go = true;
-        if (ispagine)
-            go = res.next() && rowcount < getMaxsize();
-        else
-            go = res.next();
-        // 从结果集中获取当前游标后maxsize条记录
-        while (go) {
-            ResultMap.buildRecord(res, this,
-                    rowHandler,this.dbadapter);
-            rowcount++;
-            if (ispagine)
-                go = res.next() && rowcount < getMaxsize();
-            else
-                go = res.next();
 
-        }
+			boolean go = true;
+			if (ispagine)
+				go = res.next() && rowcount < getMaxsize();
+			else
+				go = res.next();
+			// 从结果集中获取当前游标后maxsize条记录
+			while (go) {
+				ResultMap.buildRecord(res, this,
+						rowHandler, this.dbadapter);
+				rowcount++;
+				if (ispagine)
+					go = res.next() && rowcount < getMaxsize();
+				else
+					go = res.next();
+
+			}
+		}
+		else{
+        	try {
+				((ResultSetHandler) rowHandler).handleResult(res,this);
+			}
+			catch (SQLException e){
+        		throw e;
+			}
+			catch (Exception e){
+				throw new NestedSQLException(e);
+			}
+		}
 
         return rowcount;
     }
@@ -1109,8 +1116,7 @@ public class StatementInfo {
 	/**
 	 * 获取指定数据库的分页数据sql语句
 	 * 
-	 * @param dbName
-	 * @param sql
+	 * @param prepared
 	 * @return
 	 */
 	public PagineSql getDBPagineSql(boolean prepared) {
@@ -1126,8 +1132,7 @@ public class StatementInfo {
 	/**
 	 * 获取指定数据库的分页数据sql语句，通过oracle的高效查询语句
 	 * 
-	 * @param dbName
-	 * @param sql
+	 * @param prepared
 	 * @return
 	 */
 	public PagineSql getDBPagineSqlForOracle(boolean prepared) {
