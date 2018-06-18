@@ -16,6 +16,8 @@ package org.frameworkset.spi.assemble.plugin;/*
 
 import org.frameworkset.spi.BaseApplicationContext;
 
+import java.util.Map;
+
 public interface PropertiesFilePlugin {
 	/**
 	 * 返回多个属性配置文件，对应的路径格式为（多个用逗号分隔）：
@@ -29,4 +31,11 @@ public interface PropertiesFilePlugin {
 	 * @param applicationContext
 	 */
 	public String getFiles(BaseApplicationContext applicationContext);
+
+	/**
+	 * 直接获取配置属性集合
+	 * @param applicationContext
+	 * @return
+	 */
+	public Map getConfigProperties(BaseApplicationContext applicationContext);
 }
