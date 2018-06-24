@@ -56,16 +56,22 @@ public class PropertiesContainer {
 
 		try {
 			Class clazz = Class.forName(configPropertiesPlugin.trim());
-			PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin)clazz.newInstance();
-			String configPropertiesFile = propertiesFilePlugin.getFiles( applicationContext);
-			if(SimpleStringUtil.isNotEmpty(configPropertiesFile)) {
-				loadPropertiesFromFiles(configPropertiesFile, linkfile);
-			}
-			else
-			{
-				Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext);
-				if(configProperties != null && configProperties.size() > 0){
-					allProperties.putAll(configProperties);
+			synchronized (PropertiesFilePlugin.class) {
+				PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin) clazz.newInstance();
+				try {
+					if (propertiesFilePlugin.getInitType() != 1) {
+						String configPropertiesFile = propertiesFilePlugin.getFiles(applicationContext);
+						if (SimpleStringUtil.isNotEmpty(configPropertiesFile)) {
+							loadPropertiesFromFiles(configPropertiesFile, linkfile);
+						}
+					} else {
+						Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext);
+						if (configProperties != null && configProperties.size() > 0) {
+							allProperties.putAll(configProperties);
+						}
+					}
+				} finally {
+					propertiesFilePlugin.restore();
 				}
 			}
 			if(linkfile != null)
