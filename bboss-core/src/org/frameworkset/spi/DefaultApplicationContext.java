@@ -16,13 +16,13 @@
 
 package org.frameworkset.spi;
 
-import java.io.InputStream;
-import java.net.URL;
-
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.InputStream;
+import java.net.URL;
 
 /**
  * <p>Title: DefaultApplicationContext.java</p> 
@@ -62,6 +62,53 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 			BaseApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
 			applicationContexts.put(configfile, instance);
 			
+
+		}
+		instance.initApplicationContext();
+		return instance;
+	}
+
+	/**
+	 * 获取指定根配置文件上下文bean组件管理容器，配置文件从参数configfile对应配置文件开始
+	 * 不同的上下文件环境容器互相隔离，组件间不存在依赖关系，属性也不存在任何引用关系。
+	 * 如果配置文件已经加载过了，则忽略其加载
+	 *
+	 * @return
+	 */
+	public static DefaultApplicationContext getApplicationContext(String configfile,boolean forceReload) {
+		if (configfile == null || configfile.equals("")) {
+			log.debug("configfile is null or empty.default Config File["
+					+ ServiceProviderManager.defaultConfigFile
+					+ "] will be used. ");
+			configfile = ServiceProviderManager.defaultConfigFile;
+		}
+		DefaultApplicationContext instance = (DefaultApplicationContext)applicationContexts.get(configfile);
+		if(forceReload) {
+			synchronized (lock) {
+				if (instance != null) {
+					instance.destroy(true);
+				}
+				instance = new DefaultApplicationContext(configfile);
+				BaseApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
+				applicationContexts.put(configfile, instance);
+			}
+
+		}
+		else{
+			if (instance != null) {
+				instance.initApplicationContext();
+				return instance;
+			}
+			synchronized (lock) {
+				instance = (DefaultApplicationContext) applicationContexts.get(configfile);
+				if (instance != null)
+					return instance;
+				instance = new DefaultApplicationContext(configfile);
+				BaseApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
+				applicationContexts.put(configfile, instance);
+
+
+			}
 
 		}
 		instance.initApplicationContext();
