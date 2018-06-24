@@ -38,4 +38,12 @@ public interface PropertiesFilePlugin {
 	 * @return
 	 */
 	public Map getConfigProperties(BaseApplicationContext applicationContext);
+	/**
+	 * 0: 外部自定义配置文件
+	 * 1：外部自定义属性
+	 * -1:采用默认配置文件
+	 */
+	public int getInitType();
+
+	public void restore();
 }

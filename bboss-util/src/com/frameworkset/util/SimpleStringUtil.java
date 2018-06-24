@@ -71,15 +71,23 @@ public class SimpleStringUtil  {
 	// 空串常量
 	public static final String BLANK = "";
 	private static JacksonObjectMapperWrapper objectMapper = null;
-    static {
-		objectMapper = new JacksonObjectMapperWrapper();
-		objectMapper.init();
+
+	private static void initJacksonObjectMapperWrapper(){
+		if(objectMapper == null) {
+			synchronized (SimpleStringUtil.class) {
+				if(objectMapper == null) {
+					objectMapper = new JacksonObjectMapperWrapper();
+					objectMapper.init();
+				}
+			}
+		}
 	}
-	public JacksonObjectMapperWrapper getJacksonObjectMapper(){
+	public static JacksonObjectMapperWrapper getJacksonObjectMapper(){
+		initJacksonObjectMapperWrapper();
 		return objectMapper;
 	}
 	/**
-	 * A constant passed to the {@link #split split()}methods indicating that
+	 * A constant passed to the {@link # split()}methods indicating that
 	 * all occurrences of a pattern should be used to split a string.
 	 */
 	public static final int SPLIT_ALL = 0;
@@ -92,10 +100,21 @@ public class SimpleStringUtil  {
 	private static BitSet dontNeedEncoding;
 
 	private static String dfltEncName = null;
+	private static String getDfltEncName(){
+		if(dfltEncName == null) {
+			synchronized (SimpleStringUtil.class) {
+				if(dfltEncName == null) {
+					dfltEncName = System.getProperty("file.encoding");
+				}
+			}
+		}
+		return dfltEncName;
+	}
+
 
 	static final int caseDiff = ('a' - 'A');
 
-	static {
+	private static BitSet initDontNeedEncoding(){
 
 		/*
 		 * The list of characters that are not encoded has been determined as
@@ -128,41 +147,55 @@ public class SimpleStringUtil  {
 		 * consistent with the RFC in this matter, as is Netscape.
 		 */
 
-		dontNeedEncoding = new BitSet(256);
-		int i;
-		for (i = 'a'; i <= 'z'; i++) {
-			dontNeedEncoding.set(i);
+		if(dontNeedEncoding == null) {
+			synchronized (SimpleStringUtil.class) {
+				if(dontNeedEncoding == null) {
+					dontNeedEncoding = new BitSet(256);
+					int i;
+					for (i = 'a'; i <= 'z'; i++) {
+						dontNeedEncoding.set(i);
+					}
+					for (i = 'A'; i <= 'Z'; i++) {
+						dontNeedEncoding.set(i);
+					}
+					for (i = '0'; i <= '9'; i++) {
+						dontNeedEncoding.set(i);
+					}
+					dontNeedEncoding.set(' '); /*
+					 * encoding a space to a + is done in the
+					 * encode() method
+					 */
+					dontNeedEncoding.set('-');
+					dontNeedEncoding.set('_');
+					dontNeedEncoding.set('.');
+					dontNeedEncoding.set('*');
+				}
+			}
 		}
-		for (i = 'A'; i <= 'Z'; i++) {
-			dontNeedEncoding.set(i);
-		}
-		for (i = '0'; i <= '9'; i++) {
-			dontNeedEncoding.set(i);
-		}
-		dontNeedEncoding.set(' '); /*
-									 * encoding a space to a + is done in the
-									 * encode() method
-									 */
-		dontNeedEncoding.set('-');
-		dontNeedEncoding.set('_');
-		dontNeedEncoding.set('.');
-		dontNeedEncoding.set('*');
 
-		dfltEncName = System.getProperty("file.encoding");
+
+		return dontNeedEncoding;
 	}
 	private static String ip;
-	static
+	private static String getIp()
 	{
-		try {
-			InetAddress addr = InetAddress.getLocalHost();
-			String ip_=addr.getHostAddress();//获得本机IP
-			String address=addr.getHostName();//获得本机名称
-			ip = ip_ + "-" + address;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			ip = "";
+		if(ip != null)
+			return ip;
+		synchronized (SimpleStringUtil.class) {
+			if(ip == null) {
+				try {
+					InetAddress addr = InetAddress.getLocalHost();
+					String ip_ = addr.getHostAddress();//获得本机IP
+					String address = addr.getHostName();//获得本机名称
+					ip = ip_ + "-" + address;
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					ip = "";
+				}
+			}
 		}
+		return ip;
 	}
 	/**
 	 * 获取服务器IP和名称
@@ -170,7 +203,7 @@ public class SimpleStringUtil  {
 	 */
 	public static String getHostIP()
 	  {
-		return ip;
+		return getIp();
 	  }
 
 	/**
@@ -1103,7 +1136,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	 */
 	public static String encode(String s, String enc) {
 		if (enc == null || enc.trim().equals("")) {
-			enc = dfltEncName;
+			enc = getDfltEncName();
 		}
 		boolean needToChange = false;
 		boolean wroteUnencodedChar = false;
@@ -1121,7 +1154,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		for (int i = 0; i < s.length(); i++) {
 			int c = (int) s.charAt(i);
 			// System.out.println("Examining character: " + c);
-			if (dontNeedEncoding.get(c)) {
+			if (initDontNeedEncoding().get(c)) {
 				if (c == ' ') {
 					c = '+';
 					needToChange = true;
@@ -1219,7 +1252,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	 * @since 1.4
 	 */
 	public static String encode(String s) {
-		return encode(s, dfltEncName);
+		return encode(s, getDfltEncName());
 	}
 
 	public static String toUTF(String inpara) {
@@ -2647,7 +2680,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 //		} catch (Exception e) {
 //			throw new IllegalArgumentException(jsonString,e);
 //		}
-    	return objectMapper.json2Object(jsonString,toclass,ALLOW_SINGLE_QUOTES);
+    	return getJacksonObjectMapper().json2Object(jsonString,toclass,ALLOW_SINGLE_QUOTES);
 		
 		
 	
@@ -2677,7 +2710,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 //		} catch (Exception e) {
 //			throw new IllegalArgumentException(jsonString,e);
 //		}
-    	return objectMapper.json2ObjectWithType(jsonString, ref, ALLOW_SINGLE_QUOTES);
+    	return getJacksonObjectMapper().json2ObjectWithType(jsonString, ref, ALLOW_SINGLE_QUOTES);
 		
 	
 	}
@@ -2696,20 +2729,20 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 //		} catch (Exception e) {
 //			throw new IllegalArgumentException(jsonString,e);
 //		}
-    	return objectMapper.json2ObjectWithType(json, ref, ALLOW_SINGLE_QUOTES);
+    	return getJacksonObjectMapper().json2ObjectWithType(json, ref, ALLOW_SINGLE_QUOTES);
 		
 	
 	}
     
     public static <T> T json2Object(String jsonString,Class<T> toclass) {
 		// TODO Auto-generated method stub
-		return objectMapper.json2Object(jsonString,toclass,true);
+		return getJacksonObjectMapper().json2Object(jsonString,toclass,true);
 		
 	
 	}
     public static <T> T json2Object(InputStream jsonString,Class<T> toclass) {
 		// TODO Auto-generated method stub
-		return objectMapper.json2Object(jsonString,toclass,true);
+		return getJacksonObjectMapper().json2Object(jsonString,toclass,true);
 		
 	
 	}
@@ -2726,7 +2759,7 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 //		} catch (Exception e) {
 //			throw new IllegalArgumentException("错误的json序列化操作",e);
 //		}
-    	return objectMapper.object2json(  object,  ALLOW_SINGLE_QUOTES);
+    	return getJacksonObjectMapper().object2json(  object,  ALLOW_SINGLE_QUOTES);
 		
 	
 	}
@@ -2751,16 +2784,16 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 //			throw new IllegalArgumentException("错误的json序列化操作",e);
 //		}
 		
-    	objectMapper.object2json(object,writer,ALLOW_SINGLE_QUOTES);
+    	getJacksonObjectMapper().object2json(object,writer,ALLOW_SINGLE_QUOTES);
 	
 	}
     
     public static void object2json(Object object,Writer writer) {
-    	objectMapper.object2json(object,writer,true) ;
+    	getJacksonObjectMapper().object2json(object,writer,true) ;
 	}
 	public static void object2json(Object object,StringBuilder builder) {
     	BBossStringWriter writer = new BBossStringWriter(builder);
-		objectMapper.object2json(object,writer,true) ;
+		getJacksonObjectMapper().object2json(object,writer,true) ;
 	}
     
     public static void object2json(Object object,OutputStream writer,boolean ALLOW_SINGLE_QUOTES) {
@@ -2775,13 +2808,13 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 //		} catch (Exception e) {
 //			throw new IllegalArgumentException("错误的json序列化操作",e);
 //		}
-    	objectMapper.object2json(object,writer,ALLOW_SINGLE_QUOTES);
+    	getJacksonObjectMapper().object2json(object,writer,ALLOW_SINGLE_QUOTES);
 		
 	
 	}
     
     public static void object2json(Object object,OutputStream writer) {
-    	objectMapper.object2json(object,writer,true) ;
+    	getJacksonObjectMapper().object2json(object,writer,true) ;
 	}
     
     public static void object2json(Object object,File writer,boolean ALLOW_SINGLE_QUOTES) {
@@ -2796,13 +2829,13 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 //		} catch (Exception e) {
 //			throw new IllegalArgumentException("错误的json序列化操作",e);
 //		}
-    	  objectMapper.object2json(object,writer,ALLOW_SINGLE_QUOTES);
+    	  getJacksonObjectMapper().object2json(object,writer,ALLOW_SINGLE_QUOTES);
 		
 	
 	}
     
     public static void object2json(Object object,File writer) {
-    	objectMapper.object2json(object,writer,true) ;
+    	getJacksonObjectMapper().object2json(object,writer,true) ;
 	}
     
     public static byte[] object2jsonAsbyte(Object object,boolean ALLOW_SINGLE_QUOTES) {
@@ -2818,12 +2851,12 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 //			throw new IllegalArgumentException("错误的json序列化操作",e);
 //		}
 		
-    	return objectMapper.object2jsonAsbyte(  object,  ALLOW_SINGLE_QUOTES);
+    	return getJacksonObjectMapper().object2jsonAsbyte(  object,  ALLOW_SINGLE_QUOTES);
 	
 	}
     
     public static byte[] object2jsonAsbyte(Object object) {
-    	return objectMapper.object2jsonAsbyte(object,true) ;
+    	return getJacksonObjectMapper().object2jsonAsbyte(object,true) ;
 	}
     
     

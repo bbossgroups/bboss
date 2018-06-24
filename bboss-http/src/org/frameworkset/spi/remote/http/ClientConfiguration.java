@@ -25,6 +25,7 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.conn.SystemDefaultDnsResolver;
 import org.apache.http.ssl.SSLContexts;
 import org.frameworkset.spi.*;
+import org.frameworkset.spi.assemble.GetProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -470,7 +471,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		}
 		return defaultClientConfiguration;
 	}
-	private static ClientConfiguration _getDefaultClientConfiguration(BaseApplicationContext context){
+	private static ClientConfiguration _getDefaultClientConfiguration(GetProperties context){
 //		loadClientConfiguration();
 		if(defaultClientConfiguration != null)
 			return defaultClientConfiguration;
@@ -533,7 +534,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 
 	}
 
-	private static long _getLongValue(String poolName,String propertyName,BaseApplicationContext context,long defaultValue) throws Exception {
+	private static long _getLongValue(String poolName,String propertyName,GetProperties context,long defaultValue) throws Exception {
 		String _value = null;
 		if(poolName.equals("default")){
 			_value = (String)context.getExternalProperty(propertyName);
@@ -556,7 +557,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		}
 	}
 
-	private static boolean _getBooleanValue(String poolName,String propertyName,BaseApplicationContext context,boolean defaultValue) throws Exception {
+	private static boolean _getBooleanValue(String poolName,String propertyName,GetProperties context,boolean defaultValue) throws Exception {
 		String _value = null;
 		if(poolName.equals("default")){
 			_value = (String)context.getExternalProperty(propertyName);
@@ -578,7 +579,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 			throw e;
 		}
 	}
-	private static int _getIntValue(String poolName,String propertyName,BaseApplicationContext context,int defaultValue) throws Exception {
+	private static int _getIntValue(String poolName,String propertyName,GetProperties context,int defaultValue) throws Exception {
 		String _value = null;
 		if(poolName.equals("default")){
 			_value = (String)context.getExternalProperty(propertyName);
@@ -600,7 +601,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 			throw e;
 		}
 	}
-	private static String _getStringValue(String poolName,String propertyName,BaseApplicationContext context,String defaultValue) throws Exception {
+	private static String _getStringValue(String poolName,String propertyName,GetProperties context,String defaultValue) throws Exception {
 		String _value = null;
 		if(poolName.equals("default")){
 			_value = (String)context.getExternalProperty(propertyName);
@@ -628,7 +629,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 			return org.apache.http.conn.ssl.SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
 	}
 
-	private static ClientConfiguration makeDefualtClientConfiguration(String name,BaseApplicationContext context) throws Exception {
+	private static ClientConfiguration makeDefualtClientConfiguration(String name,GetProperties context) throws Exception {
 
 		ClientConfiguration clientConfiguration = clientConfigs.get(name);
 		if(clientConfiguration != null){
@@ -703,13 +704,13 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		return clientConfiguration;
 
 	}
-	public static void bootClientConfiguations(String[] serverNames,BaseApplicationContext context){
+	public static void bootClientConfiguations(String[] serverNames,GetProperties context){
 		//初始化Http连接池
 		for(String serverName:serverNames){
 			ClientConfiguration.configClientConfiguation(serverName,context);
 		}
 	}
-	private static ClientConfiguration configClientConfiguation(String poolname,BaseApplicationContext context){
+	private static ClientConfiguration configClientConfiguation(String poolname,GetProperties context){
 //		loadClientConfiguration();
 		if(poolname == null || poolname.equals("default"))
 			return _getDefaultClientConfiguration(context);

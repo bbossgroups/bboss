@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public class PropertiesContainer {
+public class PropertiesContainer implements GetProperties{
     protected List<String> configPropertiesFiles;
     protected Properties allProperties ;
     protected Properties sonAndParentProperties ;
@@ -43,6 +43,35 @@ public class PropertiesContainer {
     	
     }
 
+    public void addAll(Map properties){
+		if(configPropertiesFiles == null)
+		{
+			configPropertiesFiles = new ArrayList<String>();
+
+		}
+		if(allProperties  == null)
+			allProperties = new Properties();
+		if (properties != null && properties.size() > 0) {
+			allProperties.putAll(properties);
+		}
+
+	}
+
+	public String getExternalProperty(String property)
+	{
+
+		return getPropertyFromSelf2ndSons(property);
+	}
+	public String getExternalProperty(String property,String defaultValue)
+	{
+		String value = getPropertyFromSelf2ndSons(property);
+
+		if(value != null)
+			return value;
+		else
+			return defaultValue;
+	}
+
 	public void addConfigPropertiesFromPlugin(String configPropertiesPlugin, LinkConfigFile linkfile, BaseApplicationContext applicationContext)
 	{
 
@@ -56,16 +85,22 @@ public class PropertiesContainer {
 
 		try {
 			Class clazz = Class.forName(configPropertiesPlugin.trim());
-			PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin)clazz.newInstance();
-			String configPropertiesFile = propertiesFilePlugin.getFiles( applicationContext);
-			if(SimpleStringUtil.isNotEmpty(configPropertiesFile)) {
-				loadPropertiesFromFiles(configPropertiesFile, linkfile);
-			}
-			else
-			{
-				Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext);
-				if(configProperties != null && configProperties.size() > 0){
-					allProperties.putAll(configProperties);
+			synchronized (PropertiesFilePlugin.class) {
+				PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin) clazz.newInstance();
+				try {
+					if (propertiesFilePlugin.getInitType() != 1) {
+						String configPropertiesFile = propertiesFilePlugin.getFiles(applicationContext);
+						if (SimpleStringUtil.isNotEmpty(configPropertiesFile)) {
+							loadPropertiesFromFiles(configPropertiesFile, linkfile);
+						}
+					} else {
+						Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext);
+						if (configProperties != null && configProperties.size() > 0) {
+							allProperties.putAll(configProperties);
+						}
+					}
+				} finally {
+					propertiesFilePlugin.restore();
 				}
 			}
 			if(linkfile != null)

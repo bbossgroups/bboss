@@ -49,7 +49,7 @@ import java.util.Map.Entry;
  * @version 1.0
  */
 public abstract class  BaseApplicationContext extends DefaultResourceLoader implements
-		MessageSource, ResourcePatternResolver, ResourceLoader {
+		MessageSource, ResourcePatternResolver, ResourceLoader,GetProperties{
  
 	/** Reference to the JVM shutdown hook, if registered */
 	private static Thread shutdownHook;
