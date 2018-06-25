@@ -1103,5 +1103,13 @@ public class ServiceProviderManager {
 	public boolean findVariableFromSelf(){
 		return false;
 	}
-
+	public String getEscapePre(){
+		return null;
+	}
+	public String getEscapeEnd(){
+		return null;
+	}
+	public void escapeValue(String value,StringBuilder builder){
+		builder.append(value);
+	}
 }

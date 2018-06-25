@@ -183,6 +183,40 @@ public class PropertiesContainer implements GetProperties{
 		return re.toString();
 		
 	}
+	public String escapeValue(String value, ProviderParser providerParser) {
+		if(SimpleStringUtil.isEmpty(value))
+			return value;
+		String escapePre = null;
+		String escapeEnd = null;
+		ServiceProviderManager serviceProviderManager = null;
+		if(providerParser != null){
+			BaseApplicationContext context = providerParser.getApplicationContext();
+			if(context != null){
+				serviceProviderManager = context.getServiceProviderManager();
+				escapePre = serviceProviderManager.getEscapePre();
+				escapeEnd = serviceProviderManager.getEscapeEnd();
+			}
+		}
+		if(SimpleStringUtil.isEmpty(escapeEnd ) || SimpleStringUtil.isEmpty(escapePre ))
+			return value;
+
+
+		List<GrammarToken> tokens = TextGrammarParser.parser(value, escapePre, escapeEnd);
+		StringBuilder re = new StringBuilder();
+		for(int i = 0; tokens != null && i < tokens.size(); i ++)
+		{
+			GrammarToken token = tokens.get(i);
+			if(token.texttoken())
+				re.append(token.getText());
+			else
+			{
+				re.append("\"");
+				serviceProviderManager.escapeValue(token.getText(),re);
+				re.append("\"");
+			}
+		}
+		return re.toString();
+	}
     public void addConfigPropertiesFile(String configPropertiesFile)
     {
     	addConfigPropertiesFile(  configPropertiesFile,null);
@@ -337,5 +371,6 @@ public class PropertiesContainer implements GetProperties{
     	String _configPropertiesFile = "file:/opt/local/xxx.propertis".substring("file:".length());
     	System.out.println(_configPropertiesFile);
     }
+
 
 }
