@@ -679,12 +679,13 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	}
 	public static String evalValue(String value,PropertiesContainer configPropertiesFile,ProviderParser providerParser)
 	{
-		//片段解析
-		String resultValue = configPropertiesFile.evalValue(value, providerParser);
-		//特殊语法转换
-		if(resultValue != null && !resultValue.equals("")){
-			resultValue = configPropertiesFile.escapeValue(resultValue, providerParser);
+		//先进行特殊字符转换
+		if(value != null && !value.equals("")){
+			value = configPropertiesFile.escapeValue(value, providerParser);
 		}
+		//再进行片段解析
+		String resultValue = configPropertiesFile.evalValue(value, providerParser);
+
 		return resultValue;
 	}
 	public void setValue(String value,PropertiesContainer configPropertiesFile,ProviderParser providerParser) {
