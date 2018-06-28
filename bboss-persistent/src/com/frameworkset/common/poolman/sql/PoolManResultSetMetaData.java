@@ -1,13 +1,12 @@
 package com.frameworkset.common.poolman.sql;
 
+import com.frameworkset.common.poolman.handle.RowHandlerException;
+import com.frameworkset.common.poolman.util.JDBCPool;
+import org.frameworkset.util.ClassUtil;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.frameworkset.util.ClassUtil;
-
-import com.frameworkset.common.poolman.handle.RowHandlerException;
-import com.frameworkset.common.poolman.util.JDBCPool;
 
 /*
  *  An addition to the PoolMan Java Object Pooling and Caching Library
@@ -177,7 +176,8 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         }
         Map testM = new HashMap(); 
         
-
+        String columnLabel = null;
+        String columnName = null;
         for (int c = 0; c < _columnCount; c++) {
         	int rc = c + 1;
             _columnTypeName[c] = other.getColumnTypeName(rc);
@@ -198,8 +198,15 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
             }
 
             _scale[c] = other.getScale(rc);
-
-            _columnLabel[c] = other.getColumnLabel(rc);
+            columnName = other.getColumnName(rc);
+            _columnName[c] = columnName;
+            columnLabel = other.getColumnLabel(rc);
+            if(columnLabel == null || columnLabel.equals("")) {
+                _columnLabel[c] = columnName;
+            }
+            else{
+                _columnLabel[c] = columnLabel;
+            }
             _columnLabel_upper[c] =  _columnLabel[c].toUpperCase();
            if(JDBCPool.nameMapping)
            {
@@ -226,7 +233,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
             if (_catalogName[c] == null)
                 _catalogName[c] = "";
 
-            _columnName[c] = other.getColumnName(rc);
+
             
             if(db != null)
             {

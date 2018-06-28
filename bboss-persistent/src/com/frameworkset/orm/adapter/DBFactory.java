@@ -98,9 +98,9 @@ public class DBFactory
         adapters.put("com.jnetdirect.jsql.JSQLDriver", DBMSSQL.class);
         adapters.put("org.gjt.mm.mysql.Driver", DBMM.class);
         adapters.put("com.mysql.jdbc.Driver", DBMM.class);
-		adapters.put("org.elasticsearch.xpack.sql.jdbc.jdbc.JdbcDriver", DBMM.class);
+		adapters.put("org.elasticsearch.xpack.sql.jdbc.jdbc.JdbcDriver", DBElasticsearch.class);
 		adapters.put("elasticsearch", DBElasticsearch.class);
-        adapters.put("org.mariadb.jdbc.Driver", DBElasticsearch.class);
+        adapters.put("org.mariadb.jdbc.Driver", DBMariaDB.class);
         adapters.put("oracle.jdbc.driver.OracleDriver", DBOracle.class);
         adapters.put("oracle.jdbc.OracleDriver", DBOracle.class);
         adapters.put("org.postgresql.Driver", DBPostgres.class);
