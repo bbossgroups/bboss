@@ -747,6 +747,21 @@ public class VariableHandler
 								header = variable;
 								header.after();
 							}
+							else
+							{
+								if(var.length() > 0)
+								{
+									variable = structionBuiler.buildVariable();
+									//variable.setPosition(varcount);
+									variable.setVariableName(var.toString());
+									var.setLength(0);
+									indexs = null;
+									header.setNext(variable);
+									variable.setParent(header);
+									header = variable;
+									header.after();
+								}
+							}
 							variables.add(hh);	
 							hh = null;
 							i++;
