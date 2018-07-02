@@ -290,8 +290,16 @@ public class VariableHandler
 
 		protected Variable parent;
 		protected Variable next;
+		protected String attributes;
 		public String getVariableName() {
 			return variableName;
+		}
+
+		public void setAttributes(String attributes){
+			this.attributes = attributes;
+		}
+		public String getAttributes(){
+			return this.attributes;
 		}
 
 		public void setVariableName(String variableName) {
@@ -594,6 +602,9 @@ public class VariableHandler
 		int varstartposition = -1;//记录变量的开始位置
 		//集合索引开始
 		boolean index_start = false;
+
+		//变量属性定义开始
+		boolean attr_start = false;
 		Variable header = null;
 		Variable hh = null;
 		Variable variable = null;
@@ -612,7 +623,9 @@ public class VariableHandler
 				{
 					if( sql.charAt(i + 1) == '[')
 					{
-				
+						if(attr_start ){
+							 throw new VariableParserException(sql +",非法属性变量定义语法at position["+ i +"]：属性中不允许出现#[组合串!");
+						}
 						if (varstart) {//fixed me
 							String partvar = sql.substring(varstartposition,i);
 //							token.append("#[").append(var);							
@@ -621,8 +634,8 @@ public class VariableHandler
 						}
 						index_start = false;
 						varstart = true;
+						attr_start = false;
 						variable = null;
-						header = null;
 						header = null;
 						hh = null;
 						indexs = null;
@@ -709,14 +722,12 @@ public class VariableHandler
 								indexs.add(new Index(t));
 							}
 							var.setLength(0);
-//							index_start = false;
 							if(i + 1 < len)
 							{
-								if(sql.charAt(i + 1) == ']')
+								if(sql.charAt(i + 1) == ']' || sql.charAt(i + 1) == ',')
 								{
 									index_start = false;
 									indexs = null;
-//									i ++;
 								}
 							}
 							i++;
@@ -725,17 +736,7 @@ public class VariableHandler
 						else if(ref_start)//引用结束，变量定义结束a->b[0]
 						{
 							ref_start = false;
-//							if(sql.charAt(i + 1) == '-' && sql.charAt(i + 2) == '>')
-//							{
-//								
-//							}
-//							else
-							{
-								varstart = false;
-							}
-//							tokens.add(token.toString());
-//							token.setLength(0);
-//							varcount++;
+							varstart = false;
 							if(variable == null)
 							{
 								variable = structionBuiler.buildVariable();
@@ -766,7 +767,28 @@ public class VariableHandler
 							hh = null;
 							i++;
 						}
-						else if(varstart)
+						else if(attr_start){
+							if(var.length() > 0){
+								if(hh == null){
+									throw new VariableParserException(sql +",非法变量定义语法["+(i - var.length()) +","+var.toString()+"]");
+								}
+								else{
+									hh.setAttributes(var.toString());
+									hh.after();
+									var.setLength(0);
+									attr_start = false;
+									varstart = false;
+									variables.add(hh);
+									hh = null;
+									i++;
+								}
+							}
+							else{//没有属性，自然结束
+								attr_start = false;
+								i++;
+							}
+						}
+						else //if(varstart)
 						{
 							if(header == null)
 							{
@@ -786,6 +808,7 @@ public class VariableHandler
 							hh = null;
 							i++;
 						}
+
 					}
 				}
 				else if (sql.charAt(i) == '-')
@@ -794,7 +817,7 @@ public class VariableHandler
 					{
 						if(sql.charAt(i+1) == '>')
 						{
-							if(varstart)
+//							if(varstart)
 							{
 								if(!ref_start)
 								{
@@ -871,10 +894,10 @@ public class VariableHandler
 								index_start = false;
 								indexs = null;
 							}
-							else
-							{
-								token.append("->");
-							}
+//							else
+//							{
+//								token.append("->");
+//							}
 							i++;
 							i++;
 							continue;
@@ -886,8 +909,90 @@ public class VariableHandler
 						}
 					}
 				}
+				else if(sql.charAt(i) == ','){
+					if(attr_start) {
+						var.append(sql.charAt(i));
+					}
+					else{
+						if(index_start){
+							throw new VariableParserException(sql +",非法变量定义语法at position["+ i +"],index中不允许出现逗号!");
+						}
+						else if(ref_start)
+						{
+							ref_start = false;
+							if(variable == null)
+							{
+								variable = structionBuiler.buildVariable();
+								//variable.setPosition(varcount);
+								variable.setVariableName(var.toString());
+								var.setLength(0);
+								header.setNext(variable);
+								variable.setParent(header);
+								header = variable;
+								header.after();
+							}
+							else
+							{
+								if(var.length() > 0)
+								{
+									variable = structionBuiler.buildVariable();
+									//variable.setPosition(varcount);
+									variable.setVariableName(var.toString());
+									var.setLength(0);
+									indexs = null;
+									header.setNext(variable);
+									variable.setParent(header);
+									header = variable;
+									header.after();
+								}
+							}
+//							variables.add(hh);
+//							hh = null;
+//							i++;
+						}
+						else{
+							if(header == null && var.length() > 0)
+							{
+								header = structionBuiler.buildVariable();
+								header.setPosition(varcount);
+								header.setVariableName(var.toString());
+								//									variables.add(header);
+								var.setLength(0);
+								//fixed
+								tokens.add(token.toString());
+								token.setLength(0);
+								varcount++;
+								hh = header;
+								header.after();
+							}
+							//只有引用的场景下head才不会为null
+//							else
+//							{
+//								if(var.length() > 0)
+//								{
+//									variable = structionBuiler.buildVariable();
+//									//variable.setPosition(varcount);
+//									variable.setVariableName(var.toString());
+//									var.setLength(0);
+//									indexs = null;
+//									header.setNext(variable);
+//									variable.setParent(header);
+//									header = variable;
+//									header.after();
+//								}
+//							}
+						}
+						attr_start = true;
+					}
+					i ++;
+				}
 				else {
-					var.append(sql.charAt(i)); 
+					char c = sql.charAt(i);
+					if(attr_start ){
+						if(c == '#' && sql.charAt(i+1) == '[')
+							throw new VariableParserException(sql +",非法属性变量定义语法at position["+ i +"]：属性中不允许出现#[组合串!");
+					}
+					var.append(c );
 					i ++;
 				}
 
@@ -904,6 +1009,9 @@ public class VariableHandler
 		 * b.有部分变量定义，但是不全
 		 * 
 		 */
+		if(attr_start ){
+			throw new VariableParserException(sql +",非法变量定义语法：变量属性定义没有结束!");
+		}
 		if (token.length() > 0) {//情况2.后面的字符串没有变量
 			if (var.length() > 0) {// b.有部分变量定义，但是不全，从变量开始的位置恢复token
 				String partvar = sql.substring(varstartposition);

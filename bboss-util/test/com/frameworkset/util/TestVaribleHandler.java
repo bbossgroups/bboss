@@ -16,14 +16,13 @@
 
 package com.frameworkset.util;
 
-import java.util.List;
-
-import org.apache.oro.text.regex.Perl5Compiler;
-
 import com.frameworkset.util.VariableHandler.Index;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.util.VariableHandler.URLStruction;
 import com.frameworkset.util.VariableHandler.Variable;
+import org.apache.oro.text.regex.Perl5Compiler;
+
+import java.util.List;
 
 /**
  * <p>Title: TestVaribleHandler.java</p> 
@@ -52,7 +51,7 @@ public class TestVaribleHandler
     {
         String pretoken = "#\\[";
         String endtoken = "\\]";
-        String url = "#[context]/#[context0]/#[context1]creatorepp";
+        String url = "#[context]/#[context0]/#[context1,aaa=bbb]creatorepp";
         String[] vars = VariableHandler.variableParser(url, pretoken, endtoken);
         
         System.out.println(vars[0]);
@@ -101,7 +100,7 @@ public class TestVaribleHandler
 //		 
 		 a = VariableHandler.parserURLStruction(url);
 		 url =
-			 "http://localhost:80/detail.html?user=#[account&password=#[password&love=#[account";
+			 "http://localhost:80/detail.html?user=#[account&password=#[password&love=#[account,";
 		 a = VariableHandler.parserURLStruction(url);
 //		 url =
 //			 "http://localhost:80/detail.html";
@@ -160,7 +159,7 @@ public class TestVaribleHandler
  		 a = VariableHandler.parserSQLStruction(url);
  		 
  		 url =
- 			 "http://localhost:80/#[detail.html,user=#[account],password=#[password],account=#[account]";
+ 			 "http://localhost:80/#[d,aaa=bbb]u=#[account],password=#[password],account=#[account]";
  		 a = VariableHandler.parserSQLStruction(url);
 // 		 url =
 // 			 "http://localhost:80/detail.html";
@@ -192,6 +191,7 @@ public class TestVaribleHandler
 	
 	 			System.out.println("变量名称：" + as.getVariableName());
 	 			System.out.println("变量对应位置：" + as.getPosition());
+				System.out.println("变量属性：" + as.getAttributes());
 	 			//如果变量是对应的数组或者list、set、map中元素的应用，则解析相应的元素索引下标信息
 	 			List<Index> idxs = as.getIndexs();
 	 			if(idxs != null)
