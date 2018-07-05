@@ -26,9 +26,9 @@ public class StringResponseHandler implements ResponseHandler<String> {
          } else {
              HttpEntity entity = response.getEntity();
              if (entity != null )
-                 throw new HttpRuntimeException(EntityUtils.toString(entity));
+                 throw new HttpRuntimeException(EntityUtils.toString(entity),status);
              else
-                 throw new HttpRuntimeException("Unexpected response status: " + status);
+                 throw new HttpRuntimeException("Unexpected response status: " + status,status);
          }
      }
 

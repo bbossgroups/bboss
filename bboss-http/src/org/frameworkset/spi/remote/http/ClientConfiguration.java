@@ -466,7 +466,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 			try {
 				defaultClientConfiguration = makeDefualtClientConfiguration("default");
 			} catch (Exception e) {
-				throw new HttpRuntimeException("Get DefaultClientConfiguration[default] failed:",e);
+				throw new ConfigHttpRuntimeException("Get DefaultClientConfiguration[default] failed:",e);
 			}
 		}
 		return defaultClientConfiguration;
@@ -480,7 +480,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 			try {
 				defaultClientConfiguration = makeDefualtClientConfiguration("default",context);
 			} catch (Exception e) {
-				throw new HttpRuntimeException("Get DefaultClientConfiguration[default] failed:",e);
+				throw new ConfigHttpRuntimeException("Get DefaultClientConfiguration[default] failed:",e);
 			}
 		}
 		return defaultClientConfiguration;
@@ -717,7 +717,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		try {
 			return makeDefualtClientConfiguration(poolname,context);
 		} catch (Exception e) {
-			throw new HttpRuntimeException("makeDefualtClientConfiguration ["+poolname+"] failed:",e);
+			throw new ConfigHttpRuntimeException("makeDefualtClientConfiguration ["+poolname+"] failed:",e);
 		}
 	}
 	public static ClientConfiguration getClientConfiguration(String poolname){
@@ -727,7 +727,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		try {
 			return makeDefualtClientConfiguration(poolname);
 		} catch (Exception e) {
-			throw new HttpRuntimeException("makeDefualtClientConfiguration ["+poolname+"] failed:",e);
+			throw new ConfigHttpRuntimeException("makeDefualtClientConfiguration ["+poolname+"] failed:",e);
 		}
 //		ClientConfiguration config = clientConfigs.get(poolname);
 //		if(config != null)

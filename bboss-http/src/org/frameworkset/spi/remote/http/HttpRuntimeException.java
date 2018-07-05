@@ -27,24 +27,32 @@ package org.frameworkset.spi.remote.http;
  */
 public class HttpRuntimeException extends RuntimeException {
 
-	public HttpRuntimeException() {
+	protected int httpStatusCode = -1;
+	public HttpRuntimeException(){
+
+	}
+	public HttpRuntimeException(int httpStatusCode) {
 		super();
-		// TODO Auto-generated constructor stub
+		this.httpStatusCode = httpStatusCode;
 	}
 
-	public HttpRuntimeException(String message, Throwable cause) {
+	public HttpRuntimeException(String message, Throwable cause,int httpStatusCode) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
+		this.httpStatusCode = httpStatusCode;
 	}
 
-	public HttpRuntimeException(String message) {
+	public HttpRuntimeException(String message,int httpStatusCode) {
 		super(message);
-		// TODO Auto-generated constructor stub
+		this.httpStatusCode = httpStatusCode;
 	}
 
-	public HttpRuntimeException(Throwable cause) {
+	public HttpRuntimeException(Throwable cause,int httpStatusCode) {
 		super(cause);
-		// TODO Auto-generated constructor stub
+		this.httpStatusCode = httpStatusCode;
 	}
 
+
+	public int getHttpStatusCode() {
+		return httpStatusCode;
+	}
 }
