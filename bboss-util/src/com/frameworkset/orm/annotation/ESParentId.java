@@ -27,5 +27,9 @@ public @interface ESParentId {
 	 * @return
 	 */
 	boolean persistent() default true;
-
+	/**
+	 * 查询/检索文档时，是否将文档parent设置给对应被注解的属性
+	 * @return
+	 */
+	boolean readSet() default false;
 }

@@ -11,7 +11,7 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *  limitations under the License.  
+ *  limitations under the License.
  */
 package org.frameworkset.util;
 
@@ -44,14 +44,12 @@ import java.util.Map;
  * </p>
  * <p> bboss workgroup </p>
  * <p> Copyright (c) 2009 </p>
- * 
  * @Date 2011-9-6
  * @author biaoping.yin
  * @version 1.0
  */
 public class ClassUtil
 {
-	
 	private static final Logger log = LoggerFactory.getLogger(ClassUtil.class);
 	private static final ParameterNameDiscoverer parameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
 	public static void destroy()
@@ -95,13 +93,13 @@ public class ClassUtil
 	{
 		if(param == null)
 			return null;
-		
-		String editor = param.editor();					
+
+		String editor = param.editor();
 		if(editor != null && !editor.equals(""))
 		{
 			return (EditorInf) BeanUtils.instantiateClass(editor);
 		}
-		
+
 		return null;
 	}
 	public final static RequestParamWraper getWriterMethodRequestParam(Method writeMethod)
@@ -123,15 +121,15 @@ public class ClassUtil
 	}
 	public static class PropertieDescription
 	{
-		private Class propertyType;		
+		private Class propertyType;
 		private Method writeMethod;
-		
+
 		private RequestParamWraper  writeMethodRequestParam;
 		private EditorInf writeMethodEditor;
 		private Method readMethod;
 		private Field field;
 		private String name;
-		
+
 		private boolean canwrite = false;
 		private boolean canread = false;
 		private boolean canseriable = true;
@@ -156,7 +154,9 @@ public class ClassUtil
 
 		/**es相关属性*/
 		private boolean persistentESId;
+		private boolean esIdReadSet;
 		private boolean persistentESParentId;
+		private boolean esParentIdReadSet;
 		private boolean persistentESVersion;
 		private boolean persistentESVersionType;
 		private boolean persistentESRetryOnConflict;
@@ -196,7 +196,7 @@ public class ClassUtil
 		 * 参数名称由常量和变量部分组成，变量var中包含了变量对应的request参数名称和变量在整个参数名称中所处的位置
 		 */
 		private List<Var> requestParamNameToken;
-		
+
 		public String toString()
 		{
 			if(this.field != null)
@@ -220,7 +220,7 @@ public class ClassUtil
 			{
 				this.readMethod = null;
 			}
-			
+
 			if(this.writeMethod != null && !ReflectionUtils.isAccessible(writeMethod))
 			{
 				this.writeMethod = null;
@@ -229,8 +229,8 @@ public class ClassUtil
 			if(name != null)
 				this.uperName = name.toUpperCase();
 			this.field = field;
-			
-			
+
+
 			if(this.field != null)
 				oldAccessible = this.field.isAccessible();
 			if((writeMethod == null || this.readMethod == null))
@@ -243,12 +243,12 @@ public class ClassUtil
 						 if(!Modifier.isPublic(mode))
 						 {
 							 this.field.setAccessible(true);
-							 
+
 						 }
 						 if(!Modifier.isFinal(mode))
 							 canwrite = true;
 						 canread = true;
-						
+
 					 }
 					 if(Modifier.isPublic(mode))
 					 {
@@ -258,32 +258,32 @@ public class ClassUtil
 							 canwrite = true;
 						 }
 					 }
-					
+
 				}
 			}
-			
+
 			if(!canread && readMethod != null)
 				this.canread = true;
-			
+
 			if(!canwrite && writeMethod != null)
 				this.canwrite = true;
 			if(this.field != null )
 			{
 				 int mode = this.field.getModifiers();
-				 if( Modifier.isFinal(mode) 
-							|| Modifier.isStatic(mode) 
-							|| Modifier.isTransient(mode) 
+				 if( Modifier.isFinal(mode)
+							|| Modifier.isStatic(mode)
+							|| Modifier.isTransient(mode)
 							|| findAnnotation(ExcludeField.class) != null)
 				 {
 					 canseriable = false;
 				 }
 			}
-			
+
 			if(canseriable && (readMethod == null || writeMethod == null) && this.field == null)
 			{
 				canseriable = false;
 			}
-			
+
 			if(this.writeMethod != null)
 			{
 				this.writeMethodPropertyGenericType = ClassUtils.getPropertyGenericTypes(writeMethod);
@@ -314,10 +314,10 @@ public class ClassUtil
 				annotations = this.field.getAnnotations();
 				initParam(classInfo,this.field.getAnnotations());
 			}
-			
-				
+
+
 		}
-		
+
 		private void initParam(ClassInfo classInfo,Annotation[] annotations)
 		{
 			if(annotations == null || annotations.length == 0)
@@ -345,12 +345,12 @@ public class ClassUtil
 						{
 							this.namevariabled = true;
 							this.requestParamNameToken = ParameterUtil.evalVars(vstart, name);
-							
-							
+
+
 						}
 					}
 					break;
-					
+
 				}
 				else if(a instanceof PrimaryKey)
 				{
@@ -361,11 +361,13 @@ public class ClassUtil
 				{
 					classInfo.setEsIdProperty(this);
 					this.persistentESId = ((ESId)a).persistent();
+					this.esIdReadSet = ((ESId)a).readSet();
 				}
 				else if(a instanceof ESParentId)
 				{
 					classInfo.setEsParentProperty(this);
 					this.persistentESParentId = ((ESParentId)a).persistent();
+					this.esParentIdReadSet = ((ESParentId)a).readSet();
 				}
 				else if(a instanceof ESVersion)
 				{
@@ -440,7 +442,7 @@ public class ClassUtil
 				}
 			}
 		}
-		
+
 		public Class[] getPropertyGenericTypes()
 		{
 //			if(this.writeMethod != null)
@@ -453,7 +455,7 @@ public class ClassUtil
 //			}
 			return writeMethodPropertyGenericType;
 		}
-		
+
 		public Class getPropertyGenericType()
 		{
 //			if(this.writeMethod != null)
@@ -466,14 +468,14 @@ public class ClassUtil
 //			}
 			return this.propertyGenericType;
 		}
-		
+
 		public <T extends Annotation> T findAnnotation(Class<T> type)
 		{
 			if(this.field != null)
 				return (T)this.field.getAnnotation(type);
 			return null;
 		}
-		
+
 //		public Annotation[] findAnnotations()
 //		{
 ////			if(this.field != null)
@@ -481,25 +483,25 @@ public class ClassUtil
 ////			return null;
 //			return annotations;
 //		}
-		
+
 		public boolean canread()
 		{
 			return canread;
 		}
-		
+
 		public boolean canwrite()
 		{
 			return canwrite;
 		}
-		
+
 		public boolean canseriable()
 		{
 			return canseriable;
 		}
-		
-		
-		
-		
+
+
+
+
 		public Object getValue(Object po) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
 		{
 			if(po == null)
@@ -509,7 +511,7 @@ public class ClassUtil
 			else if(this.field != null)
 				return this.field.get(po);
 			throw new IllegalAccessException("Get value for property["+this.name+"] failed:get Method or field not exist");
-			
+
 		}
 		public void setValue(Object po,Object value) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
 		{
@@ -518,7 +520,7 @@ public class ClassUtil
 			if(this.writeMethod != null)
 			{
 				this.writeMethod.invoke(po,value);
-				
+
 			}
 			else if(this.field != null)
 			{
@@ -528,26 +530,26 @@ public class ClassUtil
 			{
 				throw new IllegalAccessException("Set value for property["+this.name+"] failed: set Method or field not exist.");
 			}
-			
+
 		}
-		
-		
+
+
 		public Class getPropertyType(){
 			return propertyType;
 		}
 		public Method getWriteMethod(){
 			return this.writeMethod;
 		}
-		
-		
+
+
 		public String getName(){
 			return this.name;
 		}
 
-		
+
 		public Method getReadMethod()
 		{
-		
+
 			return readMethod;
 		}
 
@@ -662,6 +664,16 @@ public class ClassUtil
 		public boolean isPersistentESSource() {
 			return persistentESSource;
 		}
+
+
+
+		public boolean isEsParentIdReadSet() {
+			return esParentIdReadSet;
+		}
+
+		public boolean isEsIdReadSet() {
+			return esIdReadSet;
+		}
 	}
 	public static class ClassInfo
 	{
@@ -729,7 +741,7 @@ public class ClassUtil
 		 * 重名，则安顺包含在数组中，这种情况是不允许的必须过滤掉，也就是说子类中有了和父类中相同签名的方法，则自动过滤掉
 		 */
 	    private volatile transient Field[] declaredFields;
-	    
+
 //	    private volatile transient Map<String ,PropertieDescription> propertyDescriptors;
 	    private volatile transient List<PropertieDescription> propertyDescriptors;
 	    /**
@@ -738,12 +750,12 @@ public class ClassUtil
 		 * 也就是说子类中有了和父类中相同签名的方法，则自动过滤掉
 		 */
 	    private volatile transient Method[] declaredMethods;
-	    
+
 	    private volatile transient Constructor defaultConstruction;
 	    private volatile transient Constructor[] constructions;
 
 	    private  Class<?> clazz;
-	    private List<Class> superClasses; 
+	    private List<Class> superClasses;
 	    /**
 	     * 识别class是否是基本数据类型或者基本数据类型数组
 	     */
@@ -788,13 +800,13 @@ public class ClassUtil
 	    				}
 	    				if(j == pt.length)
 	    					return c;
-	    					
+
 	    			}
 	    		}
 //				Constructor c = this.clazz.getDeclaredConstructor(paramTypes);
-				
+
 				//ReflectionUtils.makeAccessible(c);
-				
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -828,7 +840,7 @@ public class ClassUtil
 	    			this.clazz = clazz.getSuperclass();
 		    		cglib = true;
 	    		}
-	    		
+
 	    	}
 	    	else
 	    	{
@@ -840,13 +852,13 @@ public class ClassUtil
 				defaultConstruction  = this.clazz.getDeclaredConstructor();
 				if(defaultConstruction != null)
 					ReflectionUtils.makeAccessible(defaultConstruction);
-				
+
 			} catch (Exception e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
-			} 
+			}
 	    	try {
-				
+
 				constructions = this.clazz.getDeclaredConstructors();
 				for(int i = 0; constructions != null && i < constructions.length;i ++)
 				{
@@ -855,10 +867,10 @@ public class ClassUtil
 			} catch (Exception e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
-			} 
+			}
 	    	this.init();
 	    }
-	    
+
 	    public void setPropertyValue(Object obj,String property, Object value)
 	    {
 	    	try {
@@ -874,7 +886,7 @@ public class ClassUtil
 				throw new RuntimeException(e);
 			}
 	    }
-	    
+
 	    public Object getPropertyValue(Object obj,String property)
 	    {
 	    	try {
@@ -894,7 +906,7 @@ public class ClassUtil
 	    private static final Method[] NULL_M = new Method[0];
 
 		private static final List<PropertieDescription>	NULL_P	= new ArrayList<PropertieDescription>();
-	 
+
 	    private Object declaredMethodLock = new Object();
 	    /**
 	     * 获取类的公共方法数组，包括类以及父类的public方法
@@ -918,8 +930,8 @@ public class ClassUtil
 		    	}
 		    	Method[] retmethods = null;
 				try
-				{		    				
-					retmethods = getRecursiveDeclaredMehtods();		    			
+				{
+					retmethods = getRecursiveDeclaredMehtods();
 				}
 				catch(Exception e)
 				{
@@ -933,13 +945,13 @@ public class ClassUtil
 	    	if(declaredMethods == NULL_M)
     				return null;
     		return declaredMethods;
-    		
-		
+
+
 		}
-	    
+
 	    private void init()
 	    {
-	    	
+
 	    	this.primary = ValueObjectUtil.isPrimaryType(clazz);
 	    	this.map = ValueObjectUtil.isMapType(clazz);
 			this.list = ValueObjectUtil.isListType(clazz);
@@ -964,9 +976,9 @@ public class ClassUtil
     		{
 				Field[] retfs = null;
     			try
-    			{		    				
+    			{
     				retfs = getRecursiveDeclaredFileds();
-    				
+
     			}
     			catch(Exception e)
     			{
@@ -975,36 +987,36 @@ public class ClassUtil
     			}
     			List<PropertieDescription> retpropertyDescriptors = null;
     			try
-    			{		    				
-    				retpropertyDescriptors = initBeaninfo(retfs);	 
-    				
+    			{
+    				retpropertyDescriptors = initBeaninfo(retfs);
+
     			}
     			catch(Exception e)
     			{
     				log.error(e.getMessage(),e);
     				retpropertyDescriptors = NULL_P;
     			}
-    			
+
     			this.propertyDescriptors = retpropertyDescriptors;
-    			
+
     			if(retfs == null)
 					declaredFields = NULL;
 				else
 					declaredFields = retfs;
-    			
+
     		}
-    		
-	    	
-	    	
+
+
+
 	    }
 	    public Field[] getDeclaredFields()
 	    {
 //	    	init();
     		if(declaredFields == NULL)
     			return null;
-    		return declaredFields;    			
+    		return declaredFields;
 	    }
-	    
+
 	    public List<PropertieDescription> getPropertyDescriptors()
 	    {
 	    	return propertyDescriptors ;
@@ -1021,19 +1033,19 @@ public class ClassUtil
     			return false;
     		Class[] parameterTypes = method.getParameterTypes();
     		Class[] otherparameterTypes = other.getParameterTypes();
-    		if((parameterTypes == null || parameterTypes.length == 0)  
+    		if((parameterTypes == null || parameterTypes.length == 0)
     				&& (otherparameterTypes == null || otherparameterTypes.length == 0))
     			return true;
     		if(parameterTypes == null)
     		{
     			return false;
     		}
-    		
+
     		if(otherparameterTypes == null)
     		{
     			return false;
     		}
-    		
+
     		if(parameterTypes.length != otherparameterTypes.length)
     			return false;
     		for(int i = 0; i < parameterTypes.length; i ++)
@@ -1054,10 +1066,10 @@ public class ClassUtil
 	    	}
 	    	return false;
 	    }
-	    
-	    
-	    
-	    
+
+
+
+
 	    private Method[] getRecursiveDeclaredMehtods()
 	    {
 	    	Method[] methods = null;
@@ -1068,7 +1080,7 @@ public class ClassUtil
 	    	{
 		    	try
 		    	{
-		    		methods = clazz_super.getMethods();	
+		    		methods = clazz_super.getMethods();
 		    		if(methods != null && methods.length > 0)
 		    		{
 		    			for(Method f:methods)
@@ -1077,13 +1089,13 @@ public class ClassUtil
 		    					lfs.add(f);
 			    		}
 		    		}
-			    		
+
 		    		clazz_super = clazz_super.getSuperclass();
 		    		if(clazz_super == null || clazz_super == Object.class)
 		    		{
 		    			break;
 		    		}
-		    		
+
 		    	}
 		    	catch(Exception e)
 		    	{
@@ -1102,16 +1114,16 @@ public class ClassUtil
 		    	}
 	    	}
 	    	return methods;
-	    	
+
 	    }
-	    
+
 	    private boolean issamefield(Field field,Field other)
 	    {
 	    	if(!field.getName().equals(other.getName()))
 	    	{
 	    		return false;
 	    	}
-	    	
+
 	    	if(field.getType() != other.getType())
 	    		return false;
 	    	return true;
@@ -1150,7 +1162,7 @@ public class ClassUtil
 		    		{
 		    			break;
 		    		}
-		    		
+
 		    	}
 		    	catch(Exception e)
 		    	{
@@ -1169,9 +1181,9 @@ public class ClassUtil
 		    	}
 	    	}
 	    	return fields;
-	    	
+
 	    }
-	    
+
 	    public Method getDeclaredMethod(String name)
 		{
 
@@ -1184,7 +1196,7 @@ public class ClassUtil
     	    		return f;
     	    }
     	    return null;
-			
+
 		}
 	    public Field getDeclaredField(String name)
 	    {
@@ -1197,10 +1209,10 @@ public class ClassUtil
 	    	    		return f;
 	    	    }
 	    	    return null;
-	    	
-	    		
+
+
 	    }
-	    
+
 	    private Field getDeclaredField(Field[] declaredFields,String name,Class type)
 	    {
 //	    	    Field[] declaredFields = this.getDeclaredFields();
@@ -1210,23 +1222,23 @@ public class ClassUtil
 	    	    for(int i = declaredFields.length - 1; i >=0; i --)
 	    	    {
 	    	    	Field f = declaredFields[i];
-	    	    	
+
 	    	    	if(f.getName().equals(name) )
 	    	    	{
 	    	    		if( f.getType() == type )
 	    	    			return f;
-	    	    		
-	    	    		
-	    	    		 
+
+
+
 	    	    	}
 	    	    }
 	    	    return null;
-	    	
-	    		
+
+
 	    }
-	    
-	    
-	    
+
+
+
 	    private List<Field> copyFields(Field[] declaredFields)
 	    {
 	    	if(declaredFields == null || declaredFields.length == 0)
@@ -1247,7 +1259,7 @@ public class ClassUtil
 	     */
 	    private Field containFieldAndRemove(String name,List<Field> fields)
 		{
-	    	
+
 			for(int i = 0; fields != null && i < fields.size(); i ++)
 			{
 				Field p = fields.get(i);
@@ -1260,12 +1272,12 @@ public class ClassUtil
 			}
 			return null;
 		}
-	    
+
 	    public  Class<?> getClazz()
 	    {
 	    	return this.clazz;
 	    }
-	    
+
 	    private boolean containFieldInPropertyDescriptors(List<PropertieDescription> propertyDescriptors,Field field)
 	    {
 	    	if(propertyDescriptors == null || propertyDescriptors.size() == 0)
@@ -1279,7 +1291,7 @@ public class ClassUtil
 	    	}
 	    	return false;
 	    }
-	    
+
 	    private void buildFieldPropertieDescriptions(List<PropertieDescription> propertyDescriptors,Field[] declaredFields)
 	    {
 	    	for(int i = 0; i < declaredFields.length  ;  i++)
@@ -1290,7 +1302,7 @@ public class ClassUtil
 				propertyDescriptors.add(buildPropertieDescription( f));
 			}
 	    }
-	    
+
 	    private void buildFieldPropertieDescriptions(List<PropertieDescription> propertyDescriptors,List<Field> declaredFields)
 	    {
 	    	for(int i = 0; i < declaredFields.size()  ;  i++)
@@ -1304,12 +1316,12 @@ public class ClassUtil
 	    private List<PropertieDescription> initBeaninfo(Field[] declaredFields)
 	    {
 	    	List<PropertieDescription> propertyDescriptors = null;
-	    	
+
 	    	BeanInfo beanInfo = null;
 			try
 			{
 				beanInfo = Introspector.getBeanInfo(this.clazz);
-				
+
 				PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
 //				List<PropertieDescription> asm = new ArrayList<PropertieDescription>();
 				if(attributes == null || attributes.length == 0 ||
@@ -1333,9 +1345,9 @@ public class ClassUtil
 				{
 					List<Field> copyFields = copyFields(declaredFields);
 					propertyDescriptors = new ArrayList<PropertieDescription>();
-					
+
 					for(int i = 0;  i < attributes.length; i ++)
-					{		
+					{
 						PropertyDescriptor attr = attributes[i];
 						if(attr.getName().equals("class"))
 							continue;
@@ -1343,7 +1355,7 @@ public class ClassUtil
 						if(p != null)
 						propertyDescriptors.add( p);
 					}
-					
+
 					if(copyFields != null && copyFields.size() > 0)
 					{
 						List<PropertieDescription> propertyDescriptors_ = new ArrayList<PropertieDescription>(declaredFields.length);
@@ -1356,9 +1368,9 @@ public class ClassUtil
 //						this.clazz = AsmUtil.addGETSETMethodForClass(asm, this.clazz);
 //					}
 				}
-				
-				
-				
+
+
+
 			}
 			catch (Exception e)
 			{
@@ -1366,9 +1378,9 @@ public class ClassUtil
 				log.error("Init Beaninfo[" + clazz.getName() + "] failed:",e);
 			}
 			return propertyDescriptors;
-			
+
 	    }
-	    
+
 	    private PropertieDescription buildPropertieDescription(Field[] declaredFields,List<Field> copeFields,PropertyDescriptor attr )
 	    {
 	    	if(attr.getPropertyType() == null)
@@ -1381,54 +1393,54 @@ public class ClassUtil
 	    	{
 	    		rm = null;
 	    	}
-	    	
+
 	    	if(wm != null )
 	    	{
 	    		if(wm.getParameterTypes() == null || wm.getParameterTypes().length != 1)
 	    			wm = null;
-	    		
+
 	    	}
 	    	else //增强处理，如果set方法有返回值，jdk会认为set方法不是属性方法,begin
 	    	{
 	    		String name = attr.getName();
 	    		String uName = name.length() == 1 ? name.substring(0,1).toUpperCase():name.substring(0,1).toUpperCase()+name.substring(1);
 	    		String wmName = "set"+uName;
-	    		wm = this.getDeclaredMethod(wmName);	    		
+	    		wm = this.getDeclaredMethod(wmName);
 	    		if(wm != null)
 		    	{
 	    			if(wm.getParameterTypes() == null || wm.getParameterTypes().length != 1)
 		    			wm = null;
-	    			
+
 	    			if(wm != null){
 	    				Class<?> ptype = wm.getParameterTypes()[0];
 	    				boolean iswm = attr.getPropertyType().isAssignableFrom(ptype) || ptype.isAssignableFrom(attr.getPropertyType());
 	    				if(!iswm)
 	    					wm = null;
 	    			}
-	    			
+
 		    	}
-	    		
-	    		
-	    		
+
+
+
 	    	}//增强处理，如果set方法有返回值，jdk会认为set方法不是属性方法,end
-	    	
-	    	
-	    	
-	    	
+
+
+
+
 	    	Field field = this.getDeclaredField(declaredFields,attr.getName(),attr.getPropertyType());
-	    	
+
 	    	this.containFieldAndRemove(attr.getName(), copeFields) ;
-	    	
-	    	
+
+
 	    	PropertieDescription pd = new PropertieDescription(this,attr.getPropertyType(),
 	    			                    field,wm,
 	    								rm,attr.getName());
 //	    	if(field != null && (wm == null || rm == null))
 //	    		asm.add(pd);
-	    	
+
 	    	return pd;
 	    }
-	    
+
 	    private PropertieDescription buildPropertieDescription(Field field )
 	    {
 //	    	Method wm = null;
@@ -1454,7 +1466,7 @@ public class ClassUtil
 			}
     		else
     			return null;
-    		
+
 		}
 
 		public Constructor getDefaultConstruction() throws NoSuchMethodException {
@@ -1596,28 +1608,28 @@ public class ClassUtil
 			return esAnnonationProperties;
 		}
 	}
-	
+
 	private static  Map<Class,ClassInfo> classInfos = new HashMap<Class,ClassInfo>();
 	private static Object lock = new Object();
 	public static Field[] getDeclaredFields(Class clazz) throws SecurityException {
 		ClassInfo classinfo = getClassInfo(clazz);
 		return classinfo.getDeclaredFields();
-       
+
     }
-	
-	
+
+
 	public static Field getDeclaredField(Class clazz,String name) throws SecurityException {
 		ClassInfo classinfo = getClassInfo(clazz);
 		return classinfo.getDeclaredField(name);
-       
+
     }
-	
+
 	public static PropertieDescription getPropertyDescriptor(Class clazz,String name)
 	{
 		ClassInfo classinfo = getClassInfo(clazz);
 		return classinfo.getPropertyDescriptor(name);
 	}
-	
+
 	public static ClassInfo  getClassInfo(Class clazz)
 	{
 		ClassInfo classinfo = classInfos.get(clazz);
@@ -1645,13 +1657,13 @@ public class ClassUtil
 		return csinfo.getDeclaredMethod(name);
 	}
 
-	
-	public static Method[] getDeclaredMethods(Class target)	
+
+	public static Method[] getDeclaredMethods(Class target)
 	{
 		ClassInfo  csinfo = getClassInfo(target);
 		return csinfo.getDeclaredMethods();
 	}
-	
+
 	public static String genJavaName(String tableColumn)
 	{
 		int idx = tableColumn.indexOf('_');
@@ -1660,15 +1672,15 @@ public class ClassUtil
 		String tableColumn_ = tableColumn.toLowerCase();
 		int length = tableColumn.length();
 		StringBuilder ret = new StringBuilder();
-		
+
 		for(int i = 0; i < length; i ++)
 		{
-			
+
 			char c = tableColumn_.charAt(i);
 			if(i < idx)
 			{
 				ret.append(c);
-				
+
 			}
 			else if(i > idx)
 			{
@@ -1683,15 +1695,15 @@ public class ClassUtil
 					else
 						ret.append(c);
 				}
-				else 
+				else
 				{
 					ret.append(c);
 				}
-					
+
 			}
-			
+
 		}
 		return ret.toString();
 	}
-	
+
 }
