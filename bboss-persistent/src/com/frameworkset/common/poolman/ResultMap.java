@@ -756,9 +756,17 @@ public class ResultMap {
 				    
 				    if(wi == null || i == 1)
 				    {
-				        record.put(meta
-    				               .getColumnLabelUpper(i),
-    						value);
+				    	if(db.columnLableUpperCase()) {
+							record.put(meta
+											.getColumnLabelUpper(i),
+									value);
+						}
+						else
+						{
+							record.put(meta
+											.getColumnLabel(i),
+									value);
+						}
 				    }
 				    
 				    else
@@ -839,9 +847,16 @@ public class ResultMap {
 				    
 				    if(wi == null || i == 1)
 				    {
-				    	valueObject.put(meta
-					               .getColumnLabelUpper(i),
-							value);
+						if(stmtInfo.getDbadapter().columnLableUpperCase()) {
+							valueObject.put(meta
+											.getColumnLabelUpper(i),
+									value);
+						}
+						else{
+							valueObject.put(meta
+											.getColumnLabel(i),
+									value);
+						}
 				    }
 				    
 				    else

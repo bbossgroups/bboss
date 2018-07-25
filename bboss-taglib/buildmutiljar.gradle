@@ -42,7 +42,7 @@ dependencies {
             [group: 'com.bbossgroups', name: 'bboss-mvc', version: "${version}", transitive: false],
             [group: 'com.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
             [group: 'com.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],
-            [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: false],
+            [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: true],
             [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
             [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
             [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],

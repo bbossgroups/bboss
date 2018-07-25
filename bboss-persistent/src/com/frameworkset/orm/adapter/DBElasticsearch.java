@@ -31,12 +31,15 @@ package com.frameworkset.orm.adapter;
  * limitations under the License.
  */
 
+import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.orm.platform.PlatformMysqlImpl;
 import com.frameworkset.util.SimpleStringUtil;
+import org.frameworkset.util.annotations.DateFormateMeta;
 
+import java.lang.reflect.Method;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -60,6 +63,18 @@ import java.util.Date;
 public class DBElasticsearch extends DBMM
 {
 
+	private static final String serialUtilClass = "org.frameworkset.elasticsearch.serial.SerialUtil";
+	private static DateFormateMeta dateFormateMeta = null;
+	static {
+		try {
+			Class clazz = Class.forName(serialUtilClass);
+			Method getDateFormateMeta = clazz.getMethod("getDateFormateMeta");
+			dateFormateMeta = (DateFormateMeta) getDateFormateMeta.invoke(null);
+		}
+		catch (Exception e){
+
+		}
+	}
 //    /** A specialized date format for MySQL. */
 //    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	private static final String defaultFiledTodateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
@@ -68,6 +83,7 @@ public class DBElasticsearch extends DBMM
 
     	return "NOW";
     }
+
     /**
      * Empty protected constructor.
      */
@@ -84,7 +100,9 @@ public class DBElasticsearch extends DBMM
     	FORMART_YEAR_MM_DD = "%yyyy-MM-dd";
     	FORMART_HH_MM_SS = "HH:mm:ss.SSS";
     }
-
+	public boolean columnLableUpperCase(){
+		return false;
+	}
     public String getDBCatalog(Connection con) throws SQLException{
 
 		return _getDBCatalog(  con);
@@ -630,6 +648,73 @@ public class DBElasticsearch extends DBMM
 	public boolean neadGetGenerateKeys()
 	{
 		return true;
+	}
+	@Override
+	public void setObject(PreparedStatement statement, PreparedStatement statement_count, int parameterIndex, Object x) throws SQLException {
+		if(x != null) {
+			if (x instanceof String) {
+				statement.setString(parameterIndex, (String) x);
+				if (statement_count != null) {
+					statement_count.setString(parameterIndex, (String) x);
+				}
+			}
+			else if (x instanceof Integer ) {
+				statement.setInt(parameterIndex, (Integer) x);
+				if (statement_count != null) {
+					statement_count.setInt(parameterIndex, (Integer) x);
+				}
+			}
+			else if (x instanceof Long ) {
+				statement.setLong(parameterIndex, (Long) x);
+				if (statement_count != null) {
+					statement_count.setLong(parameterIndex, (Long) x);
+				}
+			}
+			else if (x instanceof Short ) {
+				statement.setShort(parameterIndex, (Short) x);
+				if (statement_count != null) {
+					statement_count.setShort(parameterIndex, (Short) x);
+				}
+			}
+			else if (x instanceof Double ) {
+				statement.setDouble(parameterIndex, (Double) x);
+				if (statement_count != null) {
+					statement_count.setDouble(parameterIndex, (Double) x);
+				}
+			}
+			else if (x instanceof Float ) {
+				statement.setFloat(parameterIndex, (Float) x);
+				if (statement_count != null) {
+					statement_count.setFloat(parameterIndex, (Float) x);
+				}
+			}
+			else if (x instanceof Date ) {
+				if(dateFormateMeta != null){
+					String dateStr = dateFormateMeta.toDateFormat().format((Date)x);
+					statement.setString(parameterIndex, dateStr);
+					if (statement_count != null) {
+						statement_count.setString(parameterIndex, dateStr);
+					}
+				}
+				else {
+					Long time = ((Date)x).getTime();
+					statement.setLong(parameterIndex,time);
+					if (statement_count != null) {
+						statement_count.setLong(parameterIndex, time);
+					}
+				}
+			}
+			else {
+				throw new NestedSQLException(x.getClass().getName() +" not supported");
+
+			}
+		}
+		else{
+			statement.setNull(parameterIndex, Types.VARCHAR);
+			if (statement_count != null) {
+				statement_count.setNull(parameterIndex, Types.VARCHAR);
+			}
+		}
 	}
     
 }

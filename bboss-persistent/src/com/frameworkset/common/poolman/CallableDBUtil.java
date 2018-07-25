@@ -18,33 +18,21 @@
  */
 package com.frameworkset.common.poolman;
 
+import com.frameworkset.common.poolman.handle.RowHandler;
+import com.frameworkset.common.poolman.handle.XMLMark;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.CallableStatement;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.Ref;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.frameworkset.common.poolman.handle.RowHandler;
-import com.frameworkset.common.poolman.handle.XMLMark;
 
 /**
  * 
@@ -2222,7 +2210,7 @@ public class CallableDBUtil extends PreparedDBUtil {
 			
 			cstmt = stmtInfo.prepareCallableStatement();
 			resources = new ArrayList();
-			super.setUpParams(Params, cstmt,resources);
+			super.setUpParams(stmtInfo,Params, cstmt,resources);
 			this.setUpCallableParams(_params, cstmt);
 			if(log.isInfoEnabled() && showsql(stmtInfo.getDbname()) )
 			{

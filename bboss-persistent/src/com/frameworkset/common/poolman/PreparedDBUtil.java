@@ -196,14 +196,14 @@ public class PreparedDBUtil extends DBUtil {
 
 	}
 	
-	protected void setUpParams(Params Params,PreparedStatement statement,List resources) throws SQLException
+	protected void setUpParams(StatementInfo stmtInfo,Params Params,PreparedStatement statement,List resources) throws SQLException
 	{
-		setUpParams(Params,statement,null,resources);
+		setUpParams(  stmtInfo,Params,statement,null,resources);
 	}
 	
 	
 	
-	private void setUpParams(Params Params,PreparedStatement statement,PreparedStatement statement_count,List resources)throws SQLException
+	private void setUpParams(StatementInfo stmtInfo,Params Params,PreparedStatement statement,PreparedStatement statement_count,List resources)throws SQLException
 	{
 		if(resources == null)
 			resources = new ArrayList();
@@ -236,11 +236,12 @@ public class PreparedDBUtil extends DBUtil {
 			}
 			else if(param.method.equals(Param.setObject_int_Object))//#25
 			{
-				statement.setObject(param.index, param.data);
-				if(statement_count != null)
-				{
-					statement_count.setObject(param.index, param.data);
-				}
+//				statement.setObject(param.index, param.data);
+//				if(statement_count != null)
+//				{
+//					statement_count.setObject(param.index, param.data);
+//				}
+				stmtInfo.getDbadapter().setObject( statement, statement_count, param.index, param.data);
 			}
 			else if(param.method.equals(Param.setLong_int_long))//#22
 			{
@@ -1427,7 +1428,7 @@ public class PreparedDBUtil extends DBUtil {
 			
 			if (Params.action != SELECT && Params.action != SELECT_COMMON) {
 				resources = new ArrayList();
-				setUpParams(Params,statement,resources);
+				setUpParams(stmtInfo,Params,statement,resources);
 				statement.execute();
 				int updatecount = statement.getUpdateCount();
 				if(result == null)
@@ -1466,7 +1467,7 @@ public class PreparedDBUtil extends DBUtil {
 					return CUDResult;
 			} else if (Params.action == SELECT) {
 				resources = new ArrayList();
-				setUpParams(Params,statement,statement_count,resources);
+				setUpParams(stmtInfo,Params,statement,statement_count,resources);
 				long start = stmtInfo.getPaginesql().getStart();
 				long end = stmtInfo.getPaginesql().getEnd();
 				int startidx = 0;
@@ -1501,7 +1502,7 @@ public class PreparedDBUtil extends DBUtil {
 				
 			} else if (Params.action == SELECT_COMMON) {
 				resources = new ArrayList();
-				setUpParams(Params,statement,resources);
+				setUpParams(stmtInfo,Params,statement,resources);
 				ResultMap resultMap = this.doPrepareSelectCommon(stmtInfo,
 															 statement,
 															 objectType,
@@ -4898,7 +4899,7 @@ public class PreparedDBUtil extends DBUtil {
 							.prepareStatement(Params.prepareSqlifo.getNewsql(),getCUDResult);
 					if(resources == null)
 						resources = new ArrayList();
-					setUpParams(Params,statement,resources);
+					setUpParams(stmtInfo,Params,statement,resources);
 					statement.addBatch();
 					
 				}
@@ -4949,14 +4950,14 @@ public class PreparedDBUtil extends DBUtil {
 							.prepareStatement(Params.prepareSqlifo.getNewsql(),getCUDResult);
 					if(resources == null)
 						resources = new ArrayList();
-					setUpParams(Params,statement,resources);	
+					setUpParams(stmtInfo,Params,statement,resources);
 					statement.addBatch();
 				}	
 				else
 				{			
 					if(resources == null)
 						resources = new ArrayList();
-					setUpParams(Params,statement,resources);	
+					setUpParams(stmtInfo,Params,statement,resources);
 					statement.addBatch();
 				}
 				

@@ -213,11 +213,12 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         	   this.columnJavaName[c] = ClassUtil.genJavaName(_columnLabel[c]); 
            }
 //            Integer idx = new Integer(c);
-            WrapInteger wi = (WrapInteger)testM.get(_columnLabel_upper[c]);
+            String label = db.columnLableUpperCase()?_columnLabel_upper[c]:_columnLabel[c];
+            WrapInteger wi = (WrapInteger)testM.get(label);
             if(wi == null)
             {
-                wi = new WrapInteger(1,c,_columnLabel_upper[c]);  
-                testM.put(_columnLabel_upper[c], wi);
+                wi = new WrapInteger(1,c,label);
+                testM.put(label, wi);
             }
             else
             {
@@ -304,7 +305,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         
         for (int c = 0; c < _columnCount; c++) {
 //            Integer idx = new Integer(c);
-            String name = _columnLabel_upper[c];
+            String name =  db.columnLableUpperCase()?_columnLabel_upper[c]:_columnLabel[c];
             WrapInteger wi = (WrapInteger)testM.get(name);
             if(wi.containsamecol() && !samecols.containsKey(name))
             {
