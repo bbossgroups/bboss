@@ -13,7 +13,6 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
-import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -26,7 +25,6 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -381,43 +379,43 @@ public class HttpRequestUtil {
         HttpGet httpGet = null;
 
         T responseBody = null;
-        int time = 0;
+//        int time = 0;
         ClientConfiguration config = ClientConfiguration.getClientConfiguration(poolname);
-        int RETRY_TIME = config.getRetryTime();
-        do {
+//        int RETRY_TIME = config.getRetryTime();
+//        do {
             try {
                 httpClient = getHttpClient(config);
                 httpGet = getHttpGet(config, url, cookie, userAgent, headers);
                 responseBody = httpClient.execute(httpGet, responseHandler);
-                break;
-            } catch (ClientProtocolException e) {
-                throw   e;
-            } catch (HttpHostConnectException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
-                    continue;
-                }
-                // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                throw   e;
-            } catch (UnknownHostException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
-                    continue;
-                }
-                // 发生网络异常
-                throw   e;
+//                break;
+//            } catch (ClientProtocolException e) {
+//                throw   e;
+//            } catch (HttpHostConnectException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                	if(config.getRetryInterval() > 0)
+//	                    try {
+//	                        Thread.sleep(config.getRetryInterval());
+//	                    } catch (InterruptedException e1) {
+//	                    	break;
+//	                    }
+//                    continue;
+//                }
+//                // 发生致命的异常，可能是协议不对或者返回的内容有问题
+//                throw   e;
+//            } catch (UnknownHostException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                	if(config.getRetryInterval() > 0)
+//	                    try {
+//	                        Thread.sleep(config.getRetryInterval());
+//	                    } catch (InterruptedException e1) {
+//	                    	break;
+//	                    }
+//                    continue;
+//                }
+//                // 发生网络异常
+//                throw   e;
             }
             catch (Exception e) {               
                 throw   e;
@@ -427,7 +425,7 @@ public class HttpRequestUtil {
                     httpGet.releaseConnection();
                 httpClient = null;
             }
-        } while (time < RETRY_TIME);
+//        } while (time < RETRY_TIME);
 
         return responseBody;
         // //responseBody = responseBody.replaceAll("\\p{Cntrl}", "\r\n");
@@ -506,10 +504,10 @@ public class HttpRequestUtil {
         HttpHead httpHead = null;
 
         T responseBody = null;
-        int time = 0;
+//        int time = 0;
         ClientConfiguration config = ClientConfiguration.getClientConfiguration(poolname);
-        int RETRY_TIME = config.getRetryTime();
-        do {
+//        int RETRY_TIME = config.getRetryTime();
+//        do {
             try {
                 httpClient = getHttpClient(config);
                 httpHead = getHttpHead(config, url, cookie, userAgent, headers);
@@ -546,35 +544,35 @@ public class HttpRequestUtil {
 //
 //                };
                 responseBody = httpClient.execute(httpHead, responseHandler);
-                break;
-            } catch (ClientProtocolException e) {
-                throw   e;
-            } catch (HttpHostConnectException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                    if(config.getRetryInterval() > 0)
-                        try {
-                            Thread.sleep(config.getRetryInterval());
-                        } catch (InterruptedException e1) {
-                            break;
-                        }
-                    continue;
-                }
-                // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                throw   e;
-            } catch (UnknownHostException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                    if(config.getRetryInterval() > 0)
-                        try {
-                            Thread.sleep(config.getRetryInterval());
-                        } catch (InterruptedException e1) {
-                            break;
-                        }
-                    continue;
-                }
-                // 发生网络异常
-                throw   e;
+//                break;
+//            } catch (ClientProtocolException e) {
+//                throw   e;
+//            } catch (HttpHostConnectException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                    if(config.getRetryInterval() > 0)
+//                        try {
+//                            Thread.sleep(config.getRetryInterval());
+//                        } catch (InterruptedException e1) {
+//                            break;
+//                        }
+//                    continue;
+//                }
+//                // 发生致命的异常，可能是协议不对或者返回的内容有问题
+//                throw   e;
+//            } catch (UnknownHostException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                    if(config.getRetryInterval() > 0)
+//                        try {
+//                            Thread.sleep(config.getRetryInterval());
+//                        } catch (InterruptedException e1) {
+//                            break;
+//                        }
+//                    continue;
+//                }
+//                // 发生网络异常
+//                throw   e;
             }
             catch (Exception e) {
                 throw   e;
@@ -584,7 +582,7 @@ public class HttpRequestUtil {
                     httpHead.releaseConnection();
                 httpClient = null;
             }
-        } while (time < RETRY_TIME);
+//        } while (time < RETRY_TIME);
 
         return responseBody;
 
@@ -818,10 +816,10 @@ public class HttpRequestUtil {
         }
 
         T responseBody = null;
-        int time = 0;
+//        int time = 0;
         ClientConfiguration config = ClientConfiguration.getClientConfiguration(poolname);
-        int RETRY_TIME = config.getRetryTime();
-        do {
+//        int RETRY_TIME = config.getRetryTime();
+//        do {
             try {
                 httpClient = getHttpClient(config);
                 httpPost = getHttpPost(  config, url, cookie, userAgent, headers);
@@ -837,35 +835,35 @@ public class HttpRequestUtil {
                 }
 
                 responseBody = httpClient.execute(httpPost, responseHandler);
-                break;
-            } catch (ClientProtocolException e) {
-                throw   e;
-            } catch (HttpHostConnectException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
-                    continue;
-                }
-                // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                throw   e;
-            } catch (UnknownHostException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
-                    continue;
-                }
-                // 发生网络异常
-                throw   e;
+//                break;
+//            } catch (ClientProtocolException e) {
+//                throw   e;
+//            } catch (HttpHostConnectException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                	if(config.getRetryInterval() > 0)
+//	                    try {
+//	                        Thread.sleep(config.getRetryInterval());
+//	                    } catch (InterruptedException e1) {
+//	                    	break;
+//	                    }
+//                    continue;
+//                }
+//                // 发生致命的异常，可能是协议不对或者返回的内容有问题
+//                throw   e;
+//            } catch (UnknownHostException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                	if(config.getRetryInterval() > 0)
+//	                    try {
+//	                        Thread.sleep(config.getRetryInterval());
+//	                    } catch (InterruptedException e1) {
+//	                    	break;
+//	                    }
+//                    continue;
+//                }
+//                // 发生网络异常
+//                throw   e;
             }
             catch (Exception e) {               
                 throw   e;
@@ -875,7 +873,7 @@ public class HttpRequestUtil {
             		httpPost.releaseConnection();
                 httpClient = null;
             }
-        } while (time < RETRY_TIME);
+//        } while (time < RETRY_TIME);
         return responseBody;
 
     }
@@ -1062,10 +1060,10 @@ public class HttpRequestUtil {
         }
 
         T responseBody = null;
-        int time = 0;
+//        int time = 0;
         ClientConfiguration config = ClientConfiguration.getClientConfiguration(poolname);
-        int RETRY_TIME = config.getRetryTime();
-        do {
+//        int RETRY_TIME = config.getRetryTime();
+//        do {
             try {
                 httpClient = getHttpClient(config);
                 httpPut = getHttpPut(config, url, cookie, userAgent, headers);
@@ -1102,35 +1100,35 @@ public class HttpRequestUtil {
 //
 //                };
                 responseBody = httpClient.execute(httpPut, responseHandler);
-                break;
-            } catch (ClientProtocolException e) {
-                throw   e;
-            } catch (HttpHostConnectException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
-                    continue;
-                }
-                // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                throw   e;
-            } catch (UnknownHostException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
-                    continue;
-                }
-                // 发生网络异常
-                throw   e;
+//                break;
+//            } catch (ClientProtocolException e) {
+//                throw   e;
+//            } catch (HttpHostConnectException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                	if(config.getRetryInterval() > 0)
+//	                    try {
+//	                        Thread.sleep(config.getRetryInterval());
+//	                    } catch (InterruptedException e1) {
+//	                    	break;
+//	                    }
+//                    continue;
+//                }
+//                // 发生致命的异常，可能是协议不对或者返回的内容有问题
+//                throw   e;
+//            } catch (UnknownHostException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                	if(config.getRetryInterval() > 0)
+//	                    try {
+//	                        Thread.sleep(config.getRetryInterval());
+//	                    } catch (InterruptedException e1) {
+//	                    	break;
+//	                    }
+//                    continue;
+//                }
+//                // 发生网络异常
+//                throw   e;
             }
             catch (Exception e) {               
                 throw   e;
@@ -1140,7 +1138,7 @@ public class HttpRequestUtil {
             		httpPut.releaseConnection();
                 httpClient = null;
             }
-        } while (time < RETRY_TIME);
+//        } while (time < RETRY_TIME);
         return responseBody;
 
     }
@@ -1348,13 +1346,13 @@ public class HttpRequestUtil {
 
 
         T responseBody = null;
-        int time = 0;
+//        int time = 0;
         ClientConfiguration config = ClientConfiguration.getClientConfiguration(poolname);
-        int RETRY_TIME = config.getRetryTime();
+//        int RETRY_TIME = config.getRetryTime();
         HttpEntity httpEntity = requestBody == null?null:new StringEntity(
                 requestBody,
                 ContentType.APPLICATION_JSON);
-        do {
+//        do {
             try {
                 httpClient = getHttpClient(config);
                 HttpParams httpParams = null;
@@ -1387,35 +1385,35 @@ public class HttpRequestUtil {
                 // Create a custom response handler
 
 
-                break;
-            } catch (ClientProtocolException e) {
-                throw   e;
-            } catch (HttpHostConnectException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
-                    continue;
-                }
-                // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                throw   e;
-            } catch (UnknownHostException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
-                    continue;
-                }
-                // 发生网络异常
-                throw   e;
+//                break;
+//            } catch (ClientProtocolException e) {
+//                throw   e;
+//            } catch (HttpHostConnectException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                	if(config.getRetryInterval() > 0)
+//	                    try {
+//	                        Thread.sleep(config.getRetryInterval());
+//	                    } catch (InterruptedException e1) {
+//	                    	break;
+//	                    }
+//                    continue;
+//                }
+//                // 发生致命的异常，可能是协议不对或者返回的内容有问题
+//                throw   e;
+//            } catch (UnknownHostException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                	if(config.getRetryInterval() > 0)
+//	                    try {
+//	                        Thread.sleep(config.getRetryInterval());
+//	                    } catch (InterruptedException e1) {
+//	                    	break;
+//	                    }
+//                    continue;
+//                }
+//                // 发生网络异常
+//                throw   e;
             }
             catch (Exception e) {               
                 throw   e;
@@ -1425,7 +1423,7 @@ public class HttpRequestUtil {
                 	httpDelete.releaseConnection();
                 httpClient = null;
             }
-        } while (time < RETRY_TIME);
+//        } while (time < RETRY_TIME);
         return responseBody;
 
     }
@@ -1487,10 +1485,10 @@ public class HttpRequestUtil {
                 requestBody,
                 contentType);
         ClientConfiguration config = ClientConfiguration.getClientConfiguration(poolname);
-        int RETRY_TIME = config.getRetryTime();
+//        int RETRY_TIME = config.getRetryTime();
         T responseBody = null;
-        int time = 0;
-        do {
+//        int time = 0;
+//        do {
             try {
                 httpClient = getHttpClient(config);
                 httpPost = getHttpPost(config, url, "", "", headers);
@@ -1519,35 +1517,35 @@ public class HttpRequestUtil {
 //
 //                };
                 responseBody = httpClient.execute(httpPost,responseHandler);
-                break;
-            } catch (ClientProtocolException e) {
-                throw   e;
-            } catch (HttpHostConnectException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
-                    continue;
-                }
-                // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                throw   e;
-            } catch (UnknownHostException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
-                    continue;
-                }
-                // 发生网络异常
-                throw   e;
+//                break;
+//            } catch (ClientProtocolException e) {
+//                throw   e;
+//            } catch (HttpHostConnectException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                	if(config.getRetryInterval() > 0)
+//	                    try {
+//	                        Thread.sleep(config.getRetryInterval());
+//	                    } catch (InterruptedException e1) {
+//	                    	break;
+//	                    }
+//                    continue;
+//                }
+//                // 发生致命的异常，可能是协议不对或者返回的内容有问题
+//                throw   e;
+//            } catch (UnknownHostException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                	if(config.getRetryInterval() > 0)
+//	                    try {
+//	                        Thread.sleep(config.getRetryInterval());
+//	                    } catch (InterruptedException e1) {
+//	                    	break;
+//	                    }
+//                    continue;
+//                }
+//                // 发生网络异常
+//                throw   e;
             }
             catch (Exception e) {               
                 throw   e;
@@ -1558,7 +1556,7 @@ public class HttpRequestUtil {
                 httpClient = null;
             }
 
-        } while (time < RETRY_TIME);
+//        } while (time < RETRY_TIME);
         return responseBody;
     }
     private static HttpRequestBase getHttpEntityEnclosingRequestBase(String action,ClientConfiguration config, String url,  Map<String, String> headers){
@@ -1597,10 +1595,10 @@ public class HttpRequestUtil {
                 requestBody,
                 contentType):null;
         ClientConfiguration config = ClientConfiguration.getClientConfiguration(poolname);
-        int RETRY_TIME = config.getRetryTime();
+//        int RETRY_TIME = config.getRetryTime();
         T responseBody = null;
-        int time = 0;
-        do {
+//        int time = 0;
+//        do {
             try {
                 httpClient = getHttpClient(config);
                 httpPost = (HttpEntityEnclosingRequestBase)getHttpEntityEnclosingRequestBase(action,config, url,headers);
@@ -1629,35 +1627,35 @@ public class HttpRequestUtil {
 //
 //                };
                 responseBody = httpClient.execute(httpPost,responseHandler);
-                break;
-            } catch (ClientProtocolException e) {
-                throw   e;
-            } catch (HttpHostConnectException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                    if(config.getRetryInterval() > 0)
-                        try {
-                            Thread.sleep(config.getRetryInterval());
-                        } catch (InterruptedException e1) {
-                            break;
-                        }
-                    continue;
-                }
-                // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                throw   e;
-            } catch (UnknownHostException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                    if(config.getRetryInterval() > 0)
-                        try {
-                            Thread.sleep(config.getRetryInterval());
-                        } catch (InterruptedException e1) {
-                            break;
-                        }
-                    continue;
-                }
-                // 发生网络异常
-                throw   e;
+//                break;
+//            } catch (ClientProtocolException e) {
+//                throw   e;
+//            } catch (HttpHostConnectException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                    if(config.getRetryInterval() > 0)
+//                        try {
+//                            Thread.sleep(config.getRetryInterval());
+//                        } catch (InterruptedException e1) {
+//                            break;
+//                        }
+//                    continue;
+//                }
+//                // 发生致命的异常，可能是协议不对或者返回的内容有问题
+//                throw   e;
+//            } catch (UnknownHostException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                    if(config.getRetryInterval() > 0)
+//                        try {
+//                            Thread.sleep(config.getRetryInterval());
+//                        } catch (InterruptedException e1) {
+//                            break;
+//                        }
+//                    continue;
+//                }
+//                // 发生网络异常
+//                throw   e;
             }
             catch (Exception e) {
                 throw   e;
@@ -1668,7 +1666,7 @@ public class HttpRequestUtil {
                 httpClient = null;
             }
 
-        } while (time < RETRY_TIME);
+//        } while (time < RETRY_TIME);
         return responseBody;
     }
     
@@ -1705,10 +1703,10 @@ public class HttpRequestUtil {
                 requestBody,
                 contentType);
         ClientConfiguration config = ClientConfiguration.getClientConfiguration(poolname);
-        int RETRY_TIME = config.getRetryTime();
+//        int RETRY_TIME = config.getRetryTime();
         T responseBody = null;
-        int time = 0;
-        do {
+//        int time = 0;
+//        do {
             try {
                 httpClient = getHttpClient(config);
                 httpPost = getHttpPut(config, url, "", "", headers);
@@ -1717,35 +1715,35 @@ public class HttpRequestUtil {
                 }
 
                 responseBody = httpClient.execute(httpPost,responseHandler);
-                break;
-            } catch (ClientProtocolException e) {
-                throw   e;
-            } catch (HttpHostConnectException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
-                    continue;
-                }
-                // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                throw   e;
-            } catch (UnknownHostException e) {
-                time++;
-                if (time < RETRY_TIME) {
-                	if(config.getRetryInterval() > 0)
-	                    try {
-	                        Thread.sleep(config.getRetryInterval());
-	                    } catch (InterruptedException e1) {
-	                    	break;
-	                    }
-                    continue;
-                }
-                // 发生网络异常
-                throw   e;
+//                break;
+//            } catch (ClientProtocolException e) {
+//                throw   e;
+//            } catch (HttpHostConnectException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                	if(config.getRetryInterval() > 0)
+//	                    try {
+//	                        Thread.sleep(config.getRetryInterval());
+//	                    } catch (InterruptedException e1) {
+//	                    	break;
+//	                    }
+//                    continue;
+//                }
+//                // 发生致命的异常，可能是协议不对或者返回的内容有问题
+//                throw   e;
+//            } catch (UnknownHostException e) {
+//                time++;
+//                if (time < RETRY_TIME) {
+//                	if(config.getRetryInterval() > 0)
+//	                    try {
+//	                        Thread.sleep(config.getRetryInterval());
+//	                    } catch (InterruptedException e1) {
+//	                    	break;
+//	                    }
+//                    continue;
+//                }
+//                // 发生网络异常
+//                throw   e;
             }
             catch (Exception e) {               
                 throw   e;
@@ -1756,7 +1754,7 @@ public class HttpRequestUtil {
                 httpClient = null;
             }
 
-        } while (time < RETRY_TIME);
+//        } while (time < RETRY_TIME);
         return responseBody;
     }
     

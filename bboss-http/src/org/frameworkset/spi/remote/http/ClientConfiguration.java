@@ -7,22 +7,23 @@ import org.apache.http.Consts;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.AuthSchemes;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.*;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.DnsResolver;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.ContentType;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.conn.SystemDefaultDnsResolver;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContexts;
 import org.frameworkset.spi.*;
 import org.frameworkset.spi.assemble.GetProperties;
@@ -374,26 +375,29 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	        .build();
 	
 	    // Create an HttpClient with the given custom dependencies and configuration.
+		HttpClientBuilder builder = HttpClients.custom();
 	    if(keepAlive > 0)//设置链接保活策略
 	    {
 	    	HttpConnectionKeepAliveStrategy httpConnectionKeepAliveStrategy = new HttpConnectionKeepAliveStrategy(this.keepAlive);
-	    	httpclient = HttpClients.custom()
+	    	builder
 	    	        .setConnectionManager(connManager)
 	    	        .setDefaultCookieStore(cookieStore)
 	    	        .setDefaultCredentialsProvider(credentialsProvider)
 	    	        //.setProxy(new HttpHost("myproxy", 8080))
-	    	        .setDefaultRequestConfig(requestConfig).setKeepAliveStrategy(httpConnectionKeepAliveStrategy)
-	    	        .build();
+	    	        .setDefaultRequestConfig(requestConfig).setKeepAliveStrategy(httpConnectionKeepAliveStrategy);
+			buildRetryHandler(builder);
+			httpclient =      builder.build();
 	    }
 	    else
 	    {
-		    httpclient = HttpClients.custom()
+		   builder
 		        .setConnectionManager(connManager)
 		        .setDefaultCookieStore(cookieStore)
 		        .setDefaultCredentialsProvider(credentialsProvider)
 		        //.setProxy(new HttpHost("myproxy", 8080))
-		        .setDefaultRequestConfig(requestConfig)
-		        .build();
+		        .setDefaultRequestConfig(requestConfig);
+			buildRetryHandler(builder);
+			httpclient =      builder.build();
 	    }
 	    if(this.beanName.equals("default")){
 	    	defaultRequestConfig = requestConfig;
@@ -405,6 +409,40 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 
 
     }
+    private void buildRetryHandler(HttpClientBuilder builder){
+		if (getRetryTime() > 0) {
+			builder.setRetryHandler(new HttpRequestRetryHandler() {
+				/**
+				 * Determines if a method should be retried after an IOException
+				 * occurs during execution.
+				 *
+				 * @param exception      the exception that occurred
+				 * @param executionCount the number of times this method has been
+				 *                       unsuccessfully executed
+				 * @param context        the context for the request execution
+				 * @return {@code true} if the method should be retried, {@code false}
+				 * otherwise
+				 */
+				public boolean retryRequest(IOException exception, int executionCount, HttpContext context) {
+					if (executionCount > getRetryTime()) {
+						logger.warn("Maximum tries[" + getRetryTime() + "] reached for client http pool ");
+						return false;
+					}
+
+					if (exception instanceof HttpHostConnectException     //NoHttpResponseException 重试
+							|| exception instanceof ConnectTimeoutException //连接超时重试
+							|| exception instanceof UnknownHostException
+//              || exception instanceof SocketTimeoutException    //响应超时不重试，避免造成业务数据不一致
+							) {
+						logger.warn(new StringBuilder().append(exception.getClass().getName()).append(" on ")
+								.append(executionCount).append(" call").toString());
+						return true;
+					}
+					return false;
+				}
+			});
+		}
+	}
 
 	public HttpClient getHttpclient() {
 		return httpclient;
