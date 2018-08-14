@@ -436,6 +436,12 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 							) {
 						logger.warn(new StringBuilder().append(exception.getClass().getName()).append(" on ")
 								.append(executionCount).append(" call").toString());
+						if(getRetryInterval() > 0)
+                        try {
+                            Thread.sleep(getRetryInterval());
+                        } catch (InterruptedException e1) {
+                            return false;
+                        }
 						return true;
 					}
 					return false;
