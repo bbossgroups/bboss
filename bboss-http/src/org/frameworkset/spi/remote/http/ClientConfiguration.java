@@ -714,6 +714,8 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 				clientConfiguration.setConnectionRequestTimeout(connectionRequestTimeout);
 				int retryTime = ClientConfiguration._getIntValue(name,"http.retryTime",context,-1);
 				clientConfiguration.setRetryTime(retryTime);
+				long retryInterval = ClientConfiguration._getLongValue(name,"http.retryInterval",context,-1);
+				clientConfiguration.setRetryInterval(retryInterval);
 				int maxLineLength = ClientConfiguration._getIntValue(name,"http.maxLineLength",context,-1);
 				clientConfiguration.setMaxLineLength(maxLineLength);
 				int maxHeaderCount = ClientConfiguration._getIntValue(name,"http.maxHeaderCount",context,500);
