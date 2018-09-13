@@ -15,17 +15,15 @@
  */
 package com.frameworkset.common.poolman.management;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.management.MBeanServer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.adapter.DBFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.management.MBeanServer;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -66,7 +64,6 @@ public class PoolManBootstrap  {
     /**
      *
      * @param configFile String
-     * @param startFromAppServer boolean
      * @throws Exception
      */
     public PoolManBootstrap(String configFile) {
@@ -105,7 +102,7 @@ public class PoolManBootstrap  {
         }
     }
    
-    public static void startFromTemplte(Map<String,String> values) {
+    public static void startFromTemplte(Map<String,Object> values) {
     	log.debug("PoolManBootstrap(configFile): " + PoolManConstants.XML_CONFIG_FILE_TEMPLATE);
         PoolManConfiguration config = new PoolManConfiguration(PoolManConstants.XML_CONFIG_FILE_TEMPLATE,null);
         try {
@@ -144,7 +141,7 @@ public class PoolManBootstrap  {
             try
             {
             	if(config.isNeedtableinfo())
-            		((BaseTableManager)deployer).initTableInfo(values.get("dbname"));
+            		((BaseTableManager)deployer).initTableInfo((String)values.get("dbname"));
             }
             catch(Exception e)
             {
@@ -278,7 +275,6 @@ public class PoolManBootstrap  {
     
     /**
      * 读取配置文件启动特定的数据库
-     * @param configFile
      * @param dbname
      * @throws Exception 
      */

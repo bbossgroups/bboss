@@ -58,7 +58,7 @@
 	#end
 	<usepool>${usepool}</usepool>
 	<RETURN_GENERATED_KEYS>true</RETURN_GENERATED_KEYS>
-	#if($queryfetchsize && $queryfetchsize > 0)
+	#if($queryfetchsize > 0)
 	<queryfetchsize>${queryfetchsize}</queryfetchsize>
 	#end
   </datasource>  

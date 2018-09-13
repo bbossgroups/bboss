@@ -16,6 +16,15 @@
 package com.frameworkset.common.poolman.util;
 
 
+import com.frameworkset.common.poolman.PoolManConstants;
+import com.frameworkset.common.poolman.management.BaseTableManager;
+import com.frameworkset.common.poolman.management.PoolManBootstrap;
+import com.frameworkset.orm.adapter.DB;
+import com.frameworkset.orm.transaction.TXDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,17 +33,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.sql.DataSource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.frameworkset.common.poolman.PoolManConstants;
-import com.frameworkset.common.poolman.management.BaseTableManager;
-import com.frameworkset.common.poolman.management.PoolManBootstrap;
-import com.frameworkset.orm.adapter.DB;
-import com.frameworkset.orm.transaction.TXDataSource;
 
 
 public class SQLManager extends PoolManager{
@@ -216,7 +214,7 @@ public class SQLManager extends PoolManager{
     
     /**
      * 将ds转换为TXDatasource事务代理数据源
-     * @param dbname
+     * @param ds
      * @return
      */
     public static DataSource getTXDatasource(DataSource ds)
@@ -999,7 +997,7 @@ public class SQLManager extends PoolManager{
 		
 		if(temConf.getTxIsolationLevel() == null)
 			temConf.setTxIsolationLevel("");
-		Map<String,String> values = new HashMap<String,String>();
+		Map<String,Object> values = new HashMap<String,Object>();
 		values.put("dbname", temConf.getPoolname());
 		if(temConf.getJndiName() != null && !temConf.getJndiName().equals(""))
 		{
@@ -1089,8 +1087,8 @@ public class SQLManager extends PoolManager{
 		values.put("removeAbandoned", removeAbandoned+"");
 		if(temConf.getExternaljndiName() != null && !temConf.getExternaljndiName().equals(""))
 			values.put("externaljndiName", temConf.getExternaljndiName());
-		if(temConf.getQueryfetchsize() > 0)
-			values.put("queryfetchsize", temConf.getQueryfetchsize()+"");
+
+		values.put("queryfetchsize", temConf.getQueryfetchsize());
 		PoolManBootstrap.startFromTemplte(values);
 	}
 	
