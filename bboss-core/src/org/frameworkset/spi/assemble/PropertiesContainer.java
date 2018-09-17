@@ -188,6 +188,9 @@ public class PropertiesContainer implements GetProperties{
 			return value;
 		String escapePre = null;
 		String escapeEnd = null;
+
+		String escapeRNPre = null;
+		String escapeRNEnd = null;
 		ServiceProviderManager serviceProviderManager = null;
 		if(providerParser != null){
 			BaseApplicationContext context = providerParser.getApplicationContext();
@@ -195,27 +198,45 @@ public class PropertiesContainer implements GetProperties{
 				serviceProviderManager = context.getServiceProviderManager();
 				escapePre = serviceProviderManager.getEscapePre();
 				escapeEnd = serviceProviderManager.getEscapeEnd();
+				escapeRNPre = serviceProviderManager.getEscapeRNPre();
+				escapeRNEnd = serviceProviderManager.getEscapeRNEnd();
 			}
 		}
-		if(SimpleStringUtil.isEmpty(escapeEnd ) || SimpleStringUtil.isEmpty(escapePre ))
-			return value;
+		boolean escape = !(SimpleStringUtil.isEmpty(escapeEnd ) || SimpleStringUtil.isEmpty(escapePre ));
+		boolean escapeRN = !(SimpleStringUtil.isEmpty(escapeRNPre ) || SimpleStringUtil.isEmpty(escapeRNEnd ));
 
-
-		List<GrammarToken> tokens = TextGrammarParser.parser(value, escapePre, escapeEnd);
-		StringBuilder re = new StringBuilder();
-		for(int i = 0; tokens != null && i < tokens.size(); i ++)
-		{
-			GrammarToken token = tokens.get(i);
-			if(token.texttoken())
-				re.append(token.getText());
-			else
-			{
-				re.append("\"");
-				serviceProviderManager.escapeValue(token.getText(),re);
-				re.append("\"");
+		if(escapeRN){
+			List<GrammarToken> tokens = TextGrammarParser.parser(value, escapeRNPre, escapeRNEnd);
+			StringBuilder re = new StringBuilder();
+			for (int i = 0; tokens != null && i < tokens.size(); i++) {
+				GrammarToken token = tokens.get(i);
+				if (token.texttoken())
+					re.append(token.getText());
+				else {
+					re.append("\"");
+					serviceProviderManager.escapeRN(token.getText(), re);
+					re.append("\"");
+				}
 			}
+			value = re.toString();
 		}
-		return re.toString();
+		if(escape) {
+			List<GrammarToken> tokens = TextGrammarParser.parser(value, escapePre, escapeEnd);
+			StringBuilder re = new StringBuilder();
+			for (int i = 0; tokens != null && i < tokens.size(); i++) {
+				GrammarToken token = tokens.get(i);
+				if (token.texttoken())
+					re.append(token.getText());
+				else {
+					re.append("\"");
+					serviceProviderManager.escapeValue(token.getText(), re);
+					re.append("\"");
+				}
+			}
+			value = re.toString();
+		}
+		return value;
+
 	}
     public void addConfigPropertiesFile(String configPropertiesFile)
     {

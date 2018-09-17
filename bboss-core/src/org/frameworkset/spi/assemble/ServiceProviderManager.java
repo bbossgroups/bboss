@@ -1112,4 +1112,18 @@ public class ServiceProviderManager {
 	public void escapeValue(String value,StringBuilder builder){
 		builder.append(value);
 	}
+	public String getEscapeRNPre(){
+		return null;
+	}
+	public String getEscapeRNEnd(){
+		return null;
+	}
+	/**
+	 * 处理回车换行符，
+	 * @param value
+	 * @return
+	 */
+	public void escapeRN(String value,StringBuilder builder){
+		builder.append(value);
+	}
 }
