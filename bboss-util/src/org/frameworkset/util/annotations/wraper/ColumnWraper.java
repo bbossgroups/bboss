@@ -51,6 +51,8 @@ public class ColumnWraper {
 	private boolean ignoreCUDbind = false;
 	private boolean ignorebind = false;
 	private Locale locale;
+	private String timezone;
+	private String localeString;
 	private DateFormateMeta dateFormateMeta;
 	public ColumnWraper(Column column) {
 		dataformat = AnnotationUtils.converDefaultValue(column.dataformat());
@@ -71,7 +73,9 @@ public class ColumnWraper {
 		}
 
 		if (dataformat != null && !dataformat.trim().equals("")){
-			dateFormateMeta = DateFormateMeta.buildDateFormateMeta(dataformat, column.locale());
+			this.timezone = AnnotationUtils.converDefaultValue(column.timezone());
+			this.localeString = AnnotationUtils.converDefaultValue(column.locale());
+			dateFormateMeta = DateFormateMeta.buildDateFormateMeta(dataformat, localeString,timezone);
 			this.locale = dateFormateMeta.getLocale();
 		}
 //		if(SimpleStringUtil.isNotEmpty(dataformat))
@@ -155,4 +159,19 @@ public class ColumnWraper {
 	}
 
 
+	public String getTimezone() {
+		return timezone;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
+	}
+
+	public String getLocaleString() {
+		return localeString;
+	}
+
+	public void setLocaleString(String localeString) {
+		this.localeString = localeString;
+	}
 }

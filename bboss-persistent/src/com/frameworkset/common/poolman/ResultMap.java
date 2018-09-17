@@ -246,12 +246,8 @@ public class ResultMap {
 						{
 //							PrimaryKey apk = field.getAnnotation(PrimaryKey.class);
 							annotationName = apk.name();
-							if(annotationName == null 
-									 || annotationName.equals(""))
-							{
-								
-							}
-							else
+							if(annotationName != null
+									 && !annotationName.equals(""))
 							{
 								attrName = annotationName;
 								upname = annotationName.toUpperCase();
@@ -268,12 +264,8 @@ public class ResultMap {
 							{
 								editor = cl.editor();
 								annotationName = cl.name();
-								if(annotationName == null 
-										|| annotationName.equals(""))
-								{
-									
-								}
-								else
+								if(annotationName != null
+										&& !annotationName.equals(""))
 								{
 									attrName = annotationName;
 									upname = annotationName.toUpperCase();
@@ -330,7 +322,7 @@ public class ResultMap {
 							StringBuilder err = new StringBuilder(
 									"Build ValueObject for ResultSet[").append(
 											stmtInfo.getSql()).append("] Get Column[")
-									.append(columnName).append("] from  ResultSet to ").append(valueObject).append(".")
+									.append(columnName).append("] from  ResultSet to ").append(valueObjectType.getClass().getCanonicalName()).append(".")
 									.append(attrName).append("[")
 									.append(type.getName()).append("] failed:").append(
 											e.getMessage());

@@ -49,6 +49,7 @@ import java.net.InetAddress;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -549,7 +550,7 @@ public class SimpleStringUtil  {
 	 *            Date[] 字符串数组
 	 * @return String[] 日期数组
 	 */
-	public static Date[] stringArrayTODateArray(String[] dates_s,SimpleDateFormat dateformat) {
+	public static Date[] stringArrayTODateArray(String[] dates_s,DateFormat dateformat) {
 		if (dates_s == null) {
 			return null;
 		}
@@ -588,7 +589,7 @@ public class SimpleStringUtil  {
 	 *            Date[] 字符串数组
 	 * @return String[] 日期数组
 	 */
-	public static Date[] longArrayTODateArray(long[] dates_s,SimpleDateFormat dateformat) {
+	public static Date[] longArrayTODateArray(long[] dates_s,DateFormat dateformat) {
 		if (dates_s == null) {
 			return null;
 		}
@@ -609,7 +610,7 @@ public class SimpleStringUtil  {
 	 *            Date[] 字符串数组
 	 * @return String[] 日期数组
 	 */
-	public static java.sql.Date[] stringArrayTOSQLDateArray(String[] dates_s,SimpleDateFormat dateformat) {
+	public static java.sql.Date[] stringArrayTOSQLDateArray(String[] dates_s,DateFormat dateformat) {
 		if (dates_s == null) {
 			return null;
 		}
@@ -652,7 +653,7 @@ public class SimpleStringUtil  {
 	 *            Date[] 字符串数组
 	 * @return String[] 日期数组
 	 */
-	public static java.sql.Date[] longArrayTOSQLDateArray(long[] dates_s,SimpleDateFormat dateformat) {
+	public static java.sql.Date[] longArrayTOSQLDateArray(long[] dates_s,DateFormat dateformat) {
 		if (dates_s == null) {
 			return null;
 		}
@@ -673,7 +674,7 @@ public class SimpleStringUtil  {
 	 *            Date[] 字符串数组
 	 * @return String[] 日期数组
 	 */
-	public static java.sql.Timestamp[] stringArrayTOTimestampArray(String[] dates_s,SimpleDateFormat dateformat) {
+	public static java.sql.Timestamp[] stringArrayTOTimestampArray(String[] dates_s,DateFormat dateformat) {
 		if (dates_s == null) {
 			return null;
 		}
@@ -715,7 +716,7 @@ public class SimpleStringUtil  {
 	 *            Date[] 字符串数组
 	 * @return String[] 日期数组
 	 */
-	public static java.sql.Timestamp[] longArrayTOTimestampArray(long[] dates_s,SimpleDateFormat dateformat) {
+	public static java.sql.Timestamp[] longArrayTOTimestampArray(long[] dates_s,DateFormat dateformat) {
 		if (dates_s == null) {
 			return null;
 		}

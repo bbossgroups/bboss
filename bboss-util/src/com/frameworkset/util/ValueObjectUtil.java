@@ -32,20 +32,21 @@
 
 package com.frameworkset.util;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
+import bsh.Interpreter;
+import com.frameworkset.common.poolman.NestedSQLException;
+import com.frameworkset.spi.assemble.BeanInstanceException;
+import com.frameworkset.spi.assemble.CurrentlyInCreationException;
+import org.frameworkset.util.BigFile;
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.ClassUtil.PropertieDescription;
+import org.frameworkset.util.DataFormatUtil;
+import org.frameworkset.util.MethodParameter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+import java.io.*;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -57,32 +58,10 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
-import org.frameworkset.util.BigFile;
-import org.frameworkset.util.ClassUtil;
-import org.frameworkset.util.ClassUtil.PropertieDescription;
-import org.frameworkset.util.DataFormatUtil;
-import org.frameworkset.util.MethodParameter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.frameworkset.common.poolman.NestedSQLException;
-import com.frameworkset.spi.assemble.BeanInstanceException;
-import com.frameworkset.spi.assemble.CurrentlyInCreationException;
-
-import bsh.Interpreter;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import java.util.*;
 
 /**
  * @author biaoping.yin 改类充分使用java.lang.reflection中提供的功能，提供以下工具： 从对象中获取对应属性的值
@@ -170,8 +149,7 @@ public class ValueObjectUtil {
 	 * 
 	 * @param obj
 	 * @param property
-	 * @param params
-	 *            获取属性方法值的参数
+
 	 * @return Object
 	 */
 	public static Object getValue(Object obj, String property) {
@@ -202,8 +180,6 @@ public class ValueObjectUtil {
 	 * 
 	 * @param obj
 	 * @param property
-	 * @param params
-	 *            获取属性方法值的参数
 	 * @return Object
 	 */
 	public static Object getValueOrSize(Object obj, String property) {
@@ -419,12 +395,11 @@ public class ValueObjectUtil {
 	 * Description:根据方法名称获取， 在对象obj上调用改方法并且返回调用的返回值
 	 * 
 	 * @param obj
-	 * @param methodName
+	 * @param method
 	 *            方法名称
 	 * @param params
 	 *            方法的参数
-	 * @param paramsTtype
-	 *            方法的参数类型
+
 	 * @return Object
 	 */
 	public static Object getValueByMethod(Object obj, Method method,
@@ -691,7 +666,6 @@ public class ValueObjectUtil {
 	 * Boolean Byte
 	 * 
 	 * @param obj
-	 * @param type
 	 * @param toType
 	 * @return Object
 	 * @throws ClassCastException
@@ -707,7 +681,7 @@ public class ValueObjectUtil {
 		return typeCast(obj, obj.getClass(), toType,dateformat,  locale);
 	}
 	
-	public final static Object typeCastWithDateformat(Object obj, Class toType,SimpleDateFormat dateformat)
+	public final static Object typeCastWithDateformat(Object obj, Class toType,DateFormat dateformat)
 			throws NoSupportTypeCastException, NumberFormatException,
 			IllegalArgumentException {
 		if (obj == null)
@@ -1053,7 +1027,6 @@ public class ValueObjectUtil {
 	 * 父类型向子类型转换
 	 * @param obj
 	 * @param toType
-	 * @param type
 	 * @return
 	 */
 	public static Object cast(Object obj,Class toType)
@@ -1354,7 +1327,7 @@ public class ValueObjectUtil {
 		return arrayObj;
 	}
 	
-	public final static Object typeCastWithDateformat(Object obj, Class type, Class toType,SimpleDateFormat dateformat)
+	public final static Object typeCastWithDateformat(Object obj, Class type, Class toType,DateFormat dateformat)
 			throws NoSupportTypeCastException, NumberFormatException,
 			IllegalArgumentException {
 		if (obj == null)
@@ -1881,7 +1854,7 @@ public class ValueObjectUtil {
 	}
 	
 	public final static Object basicTypeCastWithDateformat(Object obj, Class type,
-			Class toType,SimpleDateFormat dateformat) throws NoSupportTypeCastException,
+			Class toType,DateFormat dateformat) throws NoSupportTypeCastException,
 			NumberFormatException {
 		if (obj == null)
 			return null;
@@ -2061,7 +2034,7 @@ public class ValueObjectUtil {
 		else
 			return convertObjToDateWithDateformat(obj,toType,ValueObjectUtil.getDateFormat(dateformat,  locale));
 	}
-	public static Object convertObjToDateWithDateformat(Object obj,Class toType,SimpleDateFormat dateformat)
+	public static Object convertObjToDateWithDateformat(Object obj,Class toType,DateFormat dateformat)
 	{
 		
 		/**
@@ -2097,7 +2070,7 @@ public class ValueObjectUtil {
 							return new java.util.Date(dateformat.parse(data_str).getTime());
 						} catch (ParseException e) {
 							
-							throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+							throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(((SimpleDateFormat)dateformat).toPattern()).append("] can not format date : ").append(data_str).toString(),e);
 	
 						}
 					}
@@ -2116,7 +2089,7 @@ public class ValueObjectUtil {
 						}
 						catch (Exception e1)
 						{
-							throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+							throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(((SimpleDateFormat)dateformat).toPattern()).append("] can not format date : ").append(data_str).toString(),e);
 							
 						}
 						
@@ -2161,7 +2134,7 @@ public class ValueObjectUtil {
 								return new java.sql.Date(dateformat.parse(data_str).getTime());
 							} catch (ParseException e) {
 								
-								throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+								throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(((SimpleDateFormat)dateformat).toPattern()).append("] can not format date : ").append(data_str).toString(),e);
 		
 							}
 						}
@@ -2180,7 +2153,7 @@ public class ValueObjectUtil {
 							}
 							catch (Exception e1)
 							{
-								throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+								throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(((SimpleDateFormat)dateformat).toPattern()).append("] can not format date : ").append(data_str).toString(),e);
 								
 							}
 							
@@ -2227,7 +2200,7 @@ public class ValueObjectUtil {
 							return new java.sql.Timestamp(dateformat.parse(data_str).getTime());
 						} catch (ParseException e) {
 							
-							throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+							throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(((SimpleDateFormat)dateformat).toPattern()).append("] can not format date : ").append(data_str).toString(),e);
 	
 						}
 					}
@@ -2246,7 +2219,7 @@ public class ValueObjectUtil {
 						}
 						catch (Exception e1)
 						{
-							throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(dateformat.toPattern()).append("] can not format date : ").append(data_str).toString(),e);
+							throw new java.lang.IllegalArgumentException(new StringBuilder().append("Date format [").append(((SimpleDateFormat)dateformat).toPattern()).append("] can not format date : ").append(data_str).toString(),e);
 							
 						}
 						
@@ -2378,7 +2351,7 @@ public class ValueObjectUtil {
 	 * @throws NumberFormatException
 	 */
 	public final static Object arrayTypeCastWithDateformat(Object obj, Class type,
-			Class toType,SimpleDateFormat dateformat) throws NoSupportTypeCastException,
+			Class toType,DateFormat dateformat) throws NoSupportTypeCastException,
 			NumberFormatException {
 		if (isSameType(type, toType, obj))
 			return obj;
@@ -2744,7 +2717,7 @@ public class ValueObjectUtil {
 		else
 			return convertObjectToDateArrayWithDateFormat(obj,type,toType,ValueObjectUtil.getDateFormat(dateformat,  locale));
 	}
-	public static Object convertObjectToDateArrayWithDateFormat(Object obj,Class type,Class toType,SimpleDateFormat dateformat)
+	public static Object convertObjectToDateArrayWithDateFormat(Object obj,Class type,Class toType,DateFormat dateformat)
 	{
 		if(dateformat == null)
 			dateformat = ValueObjectUtil.getDefaultDateFormat();
@@ -2754,12 +2727,12 @@ public class ValueObjectUtil {
 				if(type == String[].class)
 				{
 					String[] values = (String[]) obj;
-					return SimpleStringUtil.stringArrayTODateArray(values,(dateformat));
+					return SimpleStringUtil.stringArrayTODateArray(values,dateformat);
 				}
 				else
 				{
 					long[] values = (long[])obj;
-					return SimpleStringUtil.longArrayTODateArray(values,(dateformat));
+					return SimpleStringUtil.longArrayTODateArray(values,dateformat);
 				}
 			}
 			else
@@ -2772,7 +2745,7 @@ public class ValueObjectUtil {
 				else 
 				{
 					long[] values = new long[] {((Long)obj).longValue()};
-					return SimpleStringUtil.longArrayTODateArray(values,(dateformat));
+					return SimpleStringUtil.longArrayTODateArray(values,dateformat);
 				}
 			}
 		}
@@ -2782,13 +2755,13 @@ public class ValueObjectUtil {
 				if(type == String[].class)
 				{
 					String[] values = (String[] )obj;
-					return SimpleStringUtil.stringArrayTOSQLDateArray(values,(dateformat));
+					return SimpleStringUtil.stringArrayTOSQLDateArray(values,dateformat);
 				}
 				else
 				{
 					long[] values = (long[] )obj;
 					
-					return SimpleStringUtil.longArrayTOSQLDateArray(values,(dateformat));
+					return SimpleStringUtil.longArrayTOSQLDateArray(values,dateformat);
 				}
 			}
 			else
@@ -2796,13 +2769,13 @@ public class ValueObjectUtil {
 				if(type == String.class)
 				{
 					String[] values = new String[] {(String)obj};
-					return SimpleStringUtil.stringArrayTOSQLDateArray(values,(dateformat));
+					return SimpleStringUtil.stringArrayTOSQLDateArray(values,dateformat);
 				}
 				else 
 				{
 					long[] values = new long[] {((Long)obj).longValue()};
 					
-					return SimpleStringUtil.longArrayTOSQLDateArray(values,(dateformat));
+					return SimpleStringUtil.longArrayTOSQLDateArray(values,dateformat);
 				}
 			}
 			
@@ -2822,7 +2795,7 @@ public class ValueObjectUtil {
 				{
 					long[] values = (long[] )obj;
 					
-					return SimpleStringUtil.longArrayTOTimestampArray(values,(dateformat));
+					return SimpleStringUtil.longArrayTOTimestampArray(values,dateformat);
 				}
 			}
 			else
@@ -2830,12 +2803,12 @@ public class ValueObjectUtil {
 				if(type == String.class)
 				{
 					String[] values = new String[] {(String)obj};
-					return SimpleStringUtil.stringArrayTOTimestampArray(values,(dateformat));
+					return SimpleStringUtil.stringArrayTOTimestampArray(values,dateformat);
 				}
 				else 
 				{
 					long[] values = new long[] {((Long)obj).longValue()};					
-					return SimpleStringUtil.longArrayTOTimestampArray(values,(dateformat));
+					return SimpleStringUtil.longArrayTOTimestampArray(values,dateformat);
 				}
 			}
 		}
@@ -5755,7 +5728,7 @@ public class ValueObjectUtil {
 	/**
 	 * @param values
 	 * @param targetContainer
-	 * @param objectType
+	 * @param elementType
 	 */
 	public static void typeCastCollection(String[] values,
 			Collection targetContainer, Class elementType) {
@@ -5774,7 +5747,6 @@ public class ValueObjectUtil {
 	/**
 	 * @param values
 	 * @param targetContainer
-	 * @param objectType
 	 */
 	public static void typeCastCollection(Object values,
 			Collection targetContainer, Class elementType,String dateformat,Locale locale) {
@@ -5813,8 +5785,7 @@ public class ValueObjectUtil {
 	}
 	/**
 	 * @param values
-	 * @param targetContainer
-	 * @param objectType
+
 	 */
 	public static Object typeCastCollection(Object values,
 			Class targetContainerType, Class elementType,String dateformat,Locale locale) {

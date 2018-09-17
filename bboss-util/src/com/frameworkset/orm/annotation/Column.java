@@ -25,8 +25,9 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public  @interface Column {
-	String locale() default "";
+	String locale() default ValueConstants.DEFAULT_NONE;
 	String dataformat() default ValueConstants.DEFAULT_NONE;
+	String timezone() default ValueConstants.DEFAULT_NONE;
 	String editorparams() default ValueConstants.DEFAULT_NONE;
 	String name() default "";
 	String type() default ValueConstants.DEFAULT_NONE;
