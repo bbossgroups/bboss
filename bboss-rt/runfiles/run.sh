@@ -1,5 +1,5 @@
 #!/bin/sh
-cd `dirname $0`
+cd `dirname \$0`
 
 parse_jvm_options() {
   if [ -f "\$1" ]; then
