@@ -102,6 +102,46 @@ public class CommonLauncher {
 		return p;
 	}
 
+	public static Boolean getBooleanAttribute(String name) {
+		String property = getProperty(  name);
+		if(property == null)
+			return null;
+		Boolean p = Boolean.parseBoolean(property.toLowerCase());;
+		return p;
+
+
+	}
+
+	public static Boolean getBooleanAttribute(String name, boolean defaultValue) {
+		String property = getProperty(  name);
+		if(property == null)
+			return defaultValue;
+		Boolean p = Boolean.parseBoolean(property.toLowerCase());;
+		return p;
+
+
+	}
+
+	public static Long getLongAttribute(String name) {
+		String property = getProperty(  name);
+		if(property == null)
+			return null;
+		Long p = Long.parseLong(property);
+		return p;
+
+
+	}
+
+	public static Long getLongAttribute(String name, Long defaultValue) {
+		String property = getProperty(  name);
+		if(property == null)
+			return defaultValue;
+		Long p = Long.parseLong(property);
+		return p;
+
+
+	}
+
 	/**
 	 * 先从配置文件获取属性，如果配置文件中没有，则从系统jvm变量中取，如果系统变量中没有，则采用默认值
 	 * @param propertyName
