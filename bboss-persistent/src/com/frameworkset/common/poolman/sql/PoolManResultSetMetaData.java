@@ -47,6 +47,8 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     private int[] _scale;
     private String[] _columnLabel;
     private String[] _columnLabel_upper;
+    private String[] _columnLabel_lower;
+
     private boolean[] _autoIncrement;
     private int[] _columnDisplaySize;
     private String[] _catalogName;
@@ -152,6 +154,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         _scale = new int[_columnCount];
         _columnLabel = new String[_columnCount];
         _columnLabel_upper = new String[_columnCount];
+        _columnLabel_lower = new String[_columnCount];
         _autoIncrement = new boolean[_columnCount];
         _columnDisplaySize = new int[_columnCount];
         _catalogName = new String[_columnCount];
@@ -202,18 +205,17 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
             _columnName[c] = columnName;
             columnLabel = other.getColumnLabel(rc);
             if(columnLabel == null || columnLabel.equals("")) {
-                _columnLabel[c] = columnName;
+                columnLabel = columnName;
             }
-            else{
-                _columnLabel[c] = columnLabel;
-            }
-            _columnLabel_upper[c] =  _columnLabel[c].toUpperCase();
+            _columnLabel[c] = columnLabel;
+            _columnLabel_upper[c] =  columnLabel.toUpperCase();
+            _columnLabel_lower[c] = columnLabel.toLowerCase();
            if(JDBCPool.nameMapping)
            {
-        	   this.columnJavaName[c] = ClassUtil.genJavaName(_columnLabel[c]); 
+        	   this.columnJavaName[c] = ClassUtil.genJavaName(columnLabel);
            }
 //            Integer idx = new Integer(c);
-            String label = db.columnLableUpperCase()?_columnLabel_upper[c]:_columnLabel[c];
+            String label = db.columnLableUpperCase()?_columnLabel_upper[c]:columnLabel;
             WrapInteger wi = (WrapInteger)testM.get(label);
             if(wi == null)
             {
@@ -390,6 +392,14 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     
     public java.lang.String getColumnLabelUpperByIndex(int column) {
         return _columnLabel_upper[column ];
+    }
+
+    public java.lang.String getColumnLabelLower(int column) {
+        return _columnLabel_lower[column - 1];
+    }
+
+    public java.lang.String getColumnLabelLowerByIndex(int column) {
+        return _columnLabel_lower[column ];
     }
     
     public java.lang.String getColumnJavaName(int column) {
@@ -670,6 +680,8 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 	public int[] get_columnType() {
 		return _columnType;
 	}
-
+    public String[] getColumnLabelLower(){
+        return _columnLabel_lower;
+    }
 }
 

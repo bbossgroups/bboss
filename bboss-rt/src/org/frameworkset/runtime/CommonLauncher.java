@@ -98,7 +98,32 @@ public class CommonLauncher {
 		String property = getProperty(  propertyName,  defaultValue);
 		if(property == null)
 			return null;
-		int p = Integer.parseInt(property.trim());
+		int p = Integer.parseInt(property);
+		return p;
+	}
+	/**
+	 * 先从配置文件获取属性，如果配置文件中没有，则从系统jvm变量中取，如果系统变量中没有，则采用默认值
+	 * @param propertyName
+	 * @return
+	 */
+	public static Integer getIntProperty(String propertyName){
+		String property = getProperty(  propertyName);
+		if(property == null)
+			return null;
+		int p = Integer.parseInt(property);
+		return p;
+	}
+	/**
+	 * 先从配置文件获取属性，如果配置文件中没有，则从系统jvm变量中取，如果系统变量中没有，则采用默认值
+	 * @param propertyName
+	 * @param defaultValue
+	 * @return
+	 */
+	public static Integer getIntProperty(String propertyName,Integer defaultValue){
+		String property = getProperty(  propertyName);
+		if(property == null)
+			return defaultValue;
+		int p = Integer.parseInt(property);
 		return p;
 	}
 
@@ -106,17 +131,17 @@ public class CommonLauncher {
 		String property = getProperty(  name);
 		if(property == null)
 			return null;
-		Boolean p = Boolean.parseBoolean(property.toLowerCase());;
+		Boolean p = Boolean.parseBoolean(property.toLowerCase());
 		return p;
 
 
 	}
 
-	public static Boolean getBooleanAttribute(String name, boolean defaultValue) {
+	public static Boolean getBooleanAttribute(String name, Boolean defaultValue) {
 		String property = getProperty(  name);
 		if(property == null)
 			return defaultValue;
-		Boolean p = Boolean.parseBoolean(property.toLowerCase());;
+		Boolean p = Boolean.parseBoolean(property.toLowerCase());
 		return p;
 
 
@@ -137,6 +162,26 @@ public class CommonLauncher {
 		if(property == null)
 			return defaultValue;
 		Long p = Long.parseLong(property);
+		return p;
+
+
+	}
+
+	public static Short getShortAttribute(String name) {
+		String property = getProperty(  name);
+		if(property == null)
+			return null;
+		Short p = Short.parseShort(property);
+		return p;
+
+
+	}
+
+	public static Short getShortAttribute(String name, Short defaultValue) {
+		String property = getProperty(  name);
+		if(property == null)
+			return defaultValue;
+		Short p = Short.parseShort(property);
 		return p;
 
 
