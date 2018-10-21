@@ -39,6 +39,7 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -156,6 +157,12 @@ public class ResultMap {
 				valueObjectType, 
 				stmtInfo, null,false,ClassUtil.getClassInfo(valueObjectType));
 	}
+	private static <T> T makeObject(Class<T> valueObjectType) throws IllegalAccessException, InstantiationException {
+		if(valueObjectType == Map.class){
+			return (T) new HashMap();
+		}
+		return valueObjectType.newInstance();
+	}
 	public static <T> T buildValueObject(ResultSet rs,
 			Class<T> valueObjectType, 
 			StatementInfo stmtInfo, RowHandler rowHander,boolean ismap,ClassInfo beanInfo)
@@ -169,7 +176,7 @@ public class ResultMap {
 			boolean isfieldRowHandler = isFieldRowHandler(rowHander);
 			try {
 				if(!isfieldRowHandler)
-					valueObject = valueObjectType.newInstance();
+					valueObject = makeObject(valueObjectType);
 			} catch (InstantiationException e1) {
 				throw new NestedSQLException(e1);
 			} catch (IllegalAccessException e1) {
@@ -784,6 +791,8 @@ public class ResultMap {
 	private static Map findMapObject(Class valueObjectType,int initialCapacity) throws InstantiationException, IllegalAccessException
 	{
 		try {
+			if(valueObjectType == Map.class)
+				return new HashMap(initialCapacity);
 			Constructor constructor = valueObjectType.getConstructor(int.class);
 			return (Map)constructor.newInstance(initialCapacity);
 			

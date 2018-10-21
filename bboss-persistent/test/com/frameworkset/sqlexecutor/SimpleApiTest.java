@@ -15,24 +15,15 @@
  */
 package com.frameworkset.sqlexecutor;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.Test;
-
-import com.frameworkset.common.poolman.DBUtil;
-import com.frameworkset.common.poolman.GetCUDResult;
-import com.frameworkset.common.poolman.Record;
-import com.frameworkset.common.poolman.SQLExecutor;
-import com.frameworkset.common.poolman.SQLInfoExecutor;
+import com.frameworkset.common.poolman.*;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.sqlexecutor.BeanVariable.Bean;
 import com.frameworkset.util.ListInfo;
+import org.junit.Test;
+
+import java.sql.SQLException;
+import java.util.*;
 
 public class SimpleApiTest {
 	@Test
@@ -1081,6 +1072,12 @@ public class SimpleApiTest {
 		
 		
 		
+	}
+
+	@Test
+	public void testMap() throws SQLException {
+		List<Map> data = SQLExecutor.queryListWithDBName(Map.class,"db1","select * from td_sm_log");
+		System.out.println(data);
 	}
 
 }

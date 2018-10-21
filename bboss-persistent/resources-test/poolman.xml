@@ -14,6 +14,19 @@
  		<keygenerate>composite</keygenerate>
 
  	</datasource>
+
+	<datasource>
+
+		<dbname>db1</dbname>
+		<loadmetadata>false</loadmetadata>
+		<enablejta>true</enablejta>
+		<jndiName>mysql_datasource_jndiname</jndiName>
+		<datasourceFile>dbcp-mysql.xml</datasourceFile>
+		<autoprimarykey>false</autoprimarykey>
+		<showsql>true</showsql>
+		<keygenerate>composite</keygenerate>
+
+	</datasource>
  <!-- <datasource>
 
 		<dbname>mssql</dbname>
