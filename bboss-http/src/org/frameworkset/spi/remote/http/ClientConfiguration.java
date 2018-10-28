@@ -4,6 +4,7 @@
 package org.frameworkset.spi.remote.http;
 
 import org.apache.http.Consts;
+import org.apache.http.NoHttpResponseException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
@@ -432,6 +433,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 					if (exception instanceof HttpHostConnectException     //NoHttpResponseException 重试
 							|| exception instanceof ConnectTimeoutException //连接超时重试
 							|| exception instanceof UnknownHostException
+							|| exception instanceof NoHttpResponseException
 //              || exception instanceof SocketTimeoutException    //响应超时不重试，避免造成业务数据不一致
 							) {
 						logger.warn(new StringBuilder().append(exception.getClass().getName()).append(" on ")
