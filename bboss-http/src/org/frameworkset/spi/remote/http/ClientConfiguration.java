@@ -373,6 +373,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	        .setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM, AuthSchemes.DIGEST))
 	        .setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC))
 	        .setConnectTimeout(this.timeoutConnection).setConnectionRequestTimeout(connectionRequestTimeout)
+				.setSocketTimeout(this.timeoutSocket)
 	        .build();
 	
 	    // Create an HttpClient with the given custom dependencies and configuration.

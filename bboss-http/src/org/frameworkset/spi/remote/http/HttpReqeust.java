@@ -47,7 +47,9 @@ public class HttpReqeust {
 	 * get请求URL
 	 * 
 	 * @param url
-	 * @throws AppException
+	 * @param cookie
+	 * @param userAgent
+	 * @throws Exception
 	 */
 	public static String httpGetforString(String url, String cookie,
 			String userAgent) throws Exception {
@@ -77,7 +79,7 @@ public class HttpReqeust {
 	 * @param url
 	 * @param params
 	 * @param files
-	 * @throws AppException
+	 * @throws Exception
 	 */
 	public static String httpPostforString(String url,Map<String, Object> params,
 			Map<String, File> files) throws Exception
@@ -91,9 +93,8 @@ public class HttpReqeust {
 	 * 公用post方法
 	 * 
 	 * @param url
-	 * @param params
 	 * @param files
-	 * @throws AppException
+	 * @throws Exception
 	 */
 	public static String httpPostforFile(String url,
 			Map<String, File> files) throws Exception
@@ -107,8 +108,7 @@ public class HttpReqeust {
 	 * 
 	 * @param url
 	 * @param params
-	 * @param files
-	 * @throws AppException
+	 * @throws Exception
 	 */
 	public static String httpPostforString(String url,Map<String, Object> params) throws Exception
 	{
@@ -121,9 +121,8 @@ public class HttpReqeust {
 	 * 公用post方法
 	 * 
 	 * @param url
-	 * @param params
-	 * @param files
-	 * @throws AppException
+
+	 * @throws Exception
 	 */
 	public static String httpPostforString(String url) throws Exception
 	{
@@ -137,7 +136,7 @@ public class HttpReqeust {
 	 * @param url
 	 * @param params
 	 * @param files
-	 * @throws AppException
+	 * @throws Exception
 	 */
 	public static String httpPostforString(String url, String cookie,
 			String userAgent, Map<String, Object> params,
@@ -166,9 +165,10 @@ public class HttpReqeust {
 	 * 公用post方法:文件上传方法
 	 * 
 	 * @param url
-	 * @param params
+	 * @param cookie
+	 * @param userAgent
 	 * @param files
-	 * @throws AppException
+	 * @throws Exception
 	 */
 	public static String httpPostforString(String url, String cookie,
 			String userAgent,
