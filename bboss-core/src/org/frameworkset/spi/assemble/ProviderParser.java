@@ -190,7 +190,7 @@ public class ProviderParser extends DefaultHandler
     	return false;
     	
     }
-    private void endProperty(Pro p,String s1, String s2, String name)
+    private void endProperty(Pro p,String uri, String localName, String name)
     {
 //    	Pro p = (Pro) traceStack.pop();
     	boolean isinterceptor = (p instanceof InterceptorInfo);
@@ -219,7 +219,8 @@ public class ProviderParser extends DefaultHandler
 	        		}
 	        		else
 	        		{
-	        			_value = this.currentValue.toString().trim();
+	        			boolean trim = p.getBooleanExtendAttribute("trim",true);
+	        			_value = trim ?this.currentValue.toString().trim():this.currentValue.toString();
 	        			if(_value.length() > 0)
 	    	            {
 	    	        		p.setValue(_value,configPropertiesFile,this);
@@ -341,7 +342,7 @@ public class ProviderParser extends DefaultHandler
 
     }
     @SuppressWarnings("unchecked")
-	public void endElement(String s1, String s2, String name)
+	public void endElement(String uri, String localName, String name)
     {
     	
     	if (name.equals("p") || name.equals("property"))
@@ -349,7 +350,7 @@ public class ProviderParser extends DefaultHandler
     		Pro p = (Pro) traceStack.pop();
 //    		if(p.getIocplugin()!= null)
 //    			System.out.println();
-    		endProperty(p, s1, s2, name);
+    		endProperty(p,   uri,   localName, name);
 
         }
     	 else if (name.equals("l")||name.equals("list"))
@@ -504,7 +505,7 @@ public class ProviderParser extends DefaultHandler
         else if (name.equals("interceptor"))
         {
         	InterceptorInfo interceptor = (InterceptorInfo)this.traceStack.pop();
-        	this.endProperty(interceptor,s1, s2, name);
+        	this.endProperty(interceptor,  uri,   localName, name);
         	
 //        	Object obj = this.traceStack.peek();
 //        	
@@ -746,7 +747,7 @@ public class ProviderParser extends DefaultHandler
 //    	return xpath;
     }
     
-    private void startProperty(Pro p,String s1, String s2, String name, Attributes attributes)
+    private void startProperty(Pro p,String uri, String localName, String name, Attributes attributes)
     {
     	
         String name_ = null;
@@ -870,7 +871,7 @@ public class ProviderParser extends DefaultHandler
        
        
     }
-    public void startElement(String s1, String s2, String name, Attributes attributes)
+    public void startElement(String uri, String localName, String name, Attributes attributes)
     {
     	   
     	if(currentValue.length() > 0)
@@ -887,7 +888,7 @@ public class ProviderParser extends DefaultHandler
         {    
 
         	Pro p = this._buildPro();// new Pro(applicationContext);
-        	startProperty(p,s1, s2, name, attributes);
+        	startProperty(p,  uri,   localName, name, attributes);
         	this.traceStack.push(p);
 
         }
@@ -1101,7 +1102,7 @@ public class ProviderParser extends DefaultHandler
         else if (name.equals("interceptor"))
         {
         	InterceptorInfo interceptor = new InterceptorInfo(this.applicationContext);
-        	this.startProperty(interceptor, s1, s2, name, attributes);
+        	this.startProperty(interceptor,   uri,   localName, name, attributes);
         	this.traceStack.push(interceptor);
 //        	Object obj = this.traceStack.peek();
 //        	
@@ -1244,9 +1245,4 @@ public class ProviderParser extends DefaultHandler
 		return configPropertiesFile;
 	}
 
-    
-    
-    
-    
-   
 }
