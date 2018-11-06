@@ -15,13 +15,12 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
-import java.util.Locale;
-
+import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.Attribute;
 import org.frameworkset.util.annotations.AttributeScope;
 
-import com.frameworkset.util.SimpleStringUtil;
+import java.util.Locale;
 
 /**
  * 
@@ -34,26 +33,27 @@ import com.frameworkset.util.SimpleStringUtil;
  * @author biaoping.yin
  * @version 1.0
  */
-public class AttributeWraper {
+public class AttributeWraper extends BaseWraper{
 	private String name;
 	private boolean required;
 	private String editor;
 	private AttributeScope scope;
-	private String defaultvalue;
+
 	/**
 	 * 指定日期格式
 	 * @return
 	 */
 	private String dateformat;
 	private Locale locale;
-	public AttributeWraper(Attribute attr)
-	{
+	public AttributeWraper(Attribute attr,Class paramType) {
+		super(paramType);
+		convertValue(  attr.defaultvalue());
 		required = attr.required();
 		name = attr.name();
 		this.editor = attr.editor();
 		this.scope = attr.scope();
 		this.dateformat =  AnnotationUtils.converDefaultValue(attr.dateformat());
-		this.defaultvalue = AnnotationUtils.converDefaultValue(attr.defaultvalue());
+
 		if(SimpleStringUtil.isNotEmpty(attr.locale() ))
 		 {
 			 try
@@ -88,9 +88,7 @@ public class AttributeWraper {
 	public AttributeScope scope() {
 		return scope;
 	}
-	public String defaultvalue() {
-		return defaultvalue;
-	}
+
 	public String dateformat() {
 		return dateformat;
 	}

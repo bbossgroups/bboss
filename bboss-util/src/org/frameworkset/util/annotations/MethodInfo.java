@@ -17,6 +17,14 @@
 package org.frameworkset.util.annotations;
 
 
+import com.frameworkset.util.BeanUtils;
+import com.frameworkset.util.EditorInf;
+import com.frameworkset.util.ValueObjectUtil;
+import org.frameworkset.http.MediaType;
+import org.frameworkset.util.*;
+import org.frameworkset.util.annotations.wraper.*;
+import org.frameworkset.util.beans.BeansException;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
@@ -24,26 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.frameworkset.http.MediaType;
-import org.frameworkset.util.ClassUtil;
-import org.frameworkset.util.ClassUtils;
-import org.frameworkset.util.MethodParameter;
-import org.frameworkset.util.ParameterNameDiscoverer;
-import org.frameworkset.util.ParameterUtil;
-import org.frameworkset.util.annotations.wraper.AttributeWraper;
-import org.frameworkset.util.annotations.wraper.CookieValueWraper;
-import org.frameworkset.util.annotations.wraper.PagerParamWraper;
-import org.frameworkset.util.annotations.wraper.PathVariableWraper;
-import org.frameworkset.util.annotations.wraper.RequestBodyWraper;
-import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
-import org.frameworkset.util.annotations.wraper.RequestParamWraper;
-import org.frameworkset.util.annotations.wraper.ResponseBodyWraper;
-import org.frameworkset.util.beans.BeansException;
-
-import com.frameworkset.util.BeanUtils;
-import com.frameworkset.util.EditorInf;
-import com.frameworkset.util.ValueObjectUtil;
 
 /**
  * <p>Title: MethodInfo.java</p> 
@@ -609,7 +597,7 @@ public class MethodInfo {
 			else if(annotation instanceof RequestParam)
 			{
 				paramAnno  = new MethodParameter(method,parampostion);
-				RequestParamWraper param = new RequestParamWraper((RequestParam)annotation);
+				RequestParamWraper param = new RequestParamWraper((RequestParam)annotation,paramType);
 				paramAnno.setRequestParam(param);
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
@@ -631,7 +619,7 @@ public class MethodInfo {
 					paramAnno.setParameterName(methodparamname);
 				paramAnno.setDataBindScope(Scope.REQUEST_PARAM);
 				paramAnno.setRequired(param.required());
-				String aa = param.defaultvalue();
+				Object aa = param.defaultvalue();
 				if(aa != null)
 					paramAnno.setDefaultValue(aa);
 				mutilMethodParamAnnotations.add(paramAnno);
@@ -652,7 +640,7 @@ public class MethodInfo {
 			{
 				this.setPagerMethod(true);
 				paramAnno  = new MethodParameter(method,parampostion);
-				PagerParamWraper param = new PagerParamWraper((PagerParam)annotation);
+				PagerParamWraper param = new PagerParamWraper((PagerParam)annotation,paramType);
 				paramAnno.setPagerParam((param));
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
@@ -679,7 +667,7 @@ public class MethodInfo {
 				}
 				paramAnno.setDataBindScope(Scope.PAGER_PARAM);
 				paramAnno.setRequired(param.required());
-				String aa = param.defaultvalue();
+				Object aa = param.defaultvalue();
 				if(aa != null)
 					paramAnno.setDefaultValue(aa);
 				mutilMethodParamAnnotations.add(paramAnno);
@@ -689,7 +677,7 @@ public class MethodInfo {
 			else if(annotation instanceof PathVariable)
 			{
 				paramAnno  = new MethodParameter(method,parampostion);
-				PathVariableWraper param = new PathVariableWraper((PathVariable)annotation);
+				PathVariableWraper param = new PathVariableWraper((PathVariable)annotation,paramType);
 				paramAnno.setPathVariable((param));
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
@@ -699,7 +687,7 @@ public class MethodInfo {
 				else
 					paramAnno.setParameterName(methodparamname);
 				paramAnno.setDataBindScope(Scope.PATHVARIABLE);
-				String aa = param.defaultvalue();
+				Object aa = param.defaultvalue();
 				if(aa != null)
 					paramAnno.setDefaultValue(aa);
 				mutilMethodParamAnnotations.add(paramAnno);
@@ -709,7 +697,7 @@ public class MethodInfo {
 			else if(annotation instanceof CookieValue)
 			{
 				paramAnno  = new MethodParameter(method,parampostion);
-				CookieValueWraper param = new CookieValueWraper((CookieValue)annotation);
+				CookieValueWraper param = new CookieValueWraper((CookieValue)annotation,paramType);
 				paramAnno.setCookieValue((param));
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
@@ -720,7 +708,7 @@ public class MethodInfo {
 //				paramAnno.setParameterName(param.name());
 				paramAnno.setDataBindScope(Scope.COOKIE);
 				
-				String aa = param.defaultvalue();
+				Object aa = param.defaultvalue();
 				if(aa != null)
 					paramAnno.setDefaultValue(aa);
 				mutilMethodParamAnnotations.add(paramAnno);
@@ -729,7 +717,7 @@ public class MethodInfo {
 			else if(annotation instanceof RequestHeader)
 			{
 				paramAnno  = new MethodParameter(method,parampostion);
-				RequestHeaderWraper param = new RequestHeaderWraper((RequestHeader)annotation);
+				RequestHeaderWraper param = new RequestHeaderWraper((RequestHeader)annotation,paramType);
 				paramAnno.setRequestHeader(param);
 				if(param.editor() != null && !param.editor().equals(""))
 					paramAnno.setEditor((EditorInf)BeanUtils.instantiateClass(param.editor()));
@@ -739,7 +727,7 @@ public class MethodInfo {
 					paramAnno.setParameterName(methodparamname);
 //				paramAnno.setParameterName(param.name());
 				paramAnno.setDataBindScope(Scope.REQUEST_HEADER);
-				String aa = param.defaultvalue();
+				Object aa = param.defaultvalue();
 				if(aa != null)
 					paramAnno.setDefaultValue(aa);
 				mutilMethodParamAnnotations.add(paramAnno);
@@ -750,7 +738,7 @@ public class MethodInfo {
 			else if(annotation instanceof Attribute)
 			{
 				paramAnno  = new MethodParameter(method,parampostion);
-				AttributeWraper param = new AttributeWraper((Attribute)annotation);
+				AttributeWraper param = new AttributeWraper((Attribute)annotation,paramType);
 				paramAnno.setAttribute(param);
 				paramAnno.setRequired(param.required());
 				if(param.editor() != null && !param.editor().equals(""))
@@ -774,7 +762,7 @@ public class MethodInfo {
 					paramAnno.setDataBindScope(Scope.SESSION_ATTRIBUTE);
 				else if(param.scope() == AttributeScope.MODEL_ATTRIBUTE)
 					paramAnno.setDataBindScope(Scope.MODEL_ATTRIBUTE);
-				String aa = param.defaultvalue();
+				Object aa = param.defaultvalue();
 				if(aa != null)
 					paramAnno.setDefaultValue(aa);
 				mutilMethodParamAnnotations.add(paramAnno);

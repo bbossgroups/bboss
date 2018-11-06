@@ -16,18 +16,8 @@
 package org.frameworkset.web.servlet.support;
 
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.jstl.core.Config;
-
+import com.frameworkset.util.HtmlUtils;
+import com.frameworkset.util.StringUtil;
 import org.frameworkset.spi.support.LocaleContext;
 import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.spi.support.MessageSourceResolvable;
@@ -48,8 +38,16 @@ import org.frameworkset.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.util.HtmlUtils;
-import com.frameworkset.util.StringUtil;
+import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.jstl.core.Config;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -116,7 +114,6 @@ public class RequestContext {
 	 * <p><b>Will only work within a DispatcherServlet request.</b> Pass in a
 	 * ServletContext to be able to fallback to the root WebApplicationContext.
 	 * @param request current HTTP request
-	 * @see DispatcherServlet
 	 * @see #RequestContext(javax.servlet.http.HttpServletRequest, javax.servlet.ServletContext)
 	 */
 	public RequestContext(HttpServletRequest request) {
@@ -191,7 +188,6 @@ public class RequestContext {
 	 * @param model the model attributes for the current view
 	 * (can be <code>null</code>, using the request attributes for Errors retrieval)
 	 * @see WebApplicationContext
-	 * @see DispatcherServlet
 	 */
 	public RequestContext(HttpServletRequest request, HttpServletResponse response,
 			ServletContext servletContext, Map<String, Object> model) {
@@ -849,20 +845,7 @@ public class RequestContext {
 	
 	public static int getPagerSize(HttpServletRequest request,Object defauleValue,String cookieid)
 	{
-//		
-//		String cookieid = paramNamePrefix == null ?
-//							PagerDataSet.COOKIE_PREFIX + baseUri :
-//								PagerDataSet.COOKIE_PREFIX + baseUri + "|" +paramNamePrefix;
-//		int default_ = HandlerMapping.DEFAULT_PAGE_SIZE;
-//		if(defauleValue == null || defauleValue.equals(ValueConstants.DEFAULT_NONE) )
-//			default_ = HandlerMapping.DEFAULT_PAGE_SIZE;
-//		else {
-//			try {
-//				default_ = Integer.parseInt(String.valueOf(defauleValue));
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//			}
-//		}
+
 		int default_ = getCustomPageSize( defauleValue);
 		int defaultSize =  consumeCookie(cookieid,default_,request,null);
 		
@@ -918,7 +901,12 @@ public class RequestContext {
 			default_ = HandlerMapping.DEFAULT_PAGE_SIZE;
 		else {
 			try {
-				default_ = Integer.parseInt(String.valueOf(defauleValue));
+				if(defauleValue instanceof Integer){
+					default_ = (Integer)defauleValue;
+				}
+				else {
+					default_ = Integer.parseInt(String.valueOf(defauleValue));
+				}
 			} catch (Exception e) {
 				// TODO: handle exception
 			}

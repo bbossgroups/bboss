@@ -15,12 +15,11 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
-import java.util.Locale;
-
+import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.PathVariable;
 
-import com.frameworkset.util.SimpleStringUtil;
+import java.util.Locale;
 
 /**
  * <p>PathVariableWraper.java</p>
@@ -32,10 +31,9 @@ import com.frameworkset.util.SimpleStringUtil;
  * @author biaoping.yin
  * @version 1.0
  */
-public class PathVariableWraper {
+public class PathVariableWraper extends BaseWraper{
 	private String value;
 	private String editor;
-	private String defaultvalue;
 	/**
 	 * 解码字符集
 	 * @return
@@ -59,11 +57,11 @@ public class PathVariableWraper {
 	 */
 	private String dateformat;
 	private Locale locale;
-	public PathVariableWraper(PathVariable pv) {
-		
+	public PathVariableWraper(PathVariable pv,Class paramType) {
+		super(paramType);
+		convertValue(  pv.defaultvalue());
 		 value = pv.value();
 		 editor = pv.editor();
-		 defaultvalue = AnnotationUtils.converDefaultValue(pv.defaultvalue());
 		/**
 		 * 解码字符集
 		 * @return
@@ -105,9 +103,7 @@ public class PathVariableWraper {
 	public String editor(){
 		return this.editor;
 	}
-	public String defaultvalue(){
-		return this.defaultvalue;
-	}
+
 	/**
 	 * 解码字符集
 	 * @return

@@ -15,12 +15,12 @@
  */
 package com.frameworkset.util;
 
+import junit.framework.TestCase;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import junit.framework.TestCase;
 
 
 
@@ -278,4 +278,13 @@ public class TestValueObjectUtil extends TestCase
 //		testTypeEqual();
 //		testTypeConvert();
 //	}
+
+	@org.junit.Test
+	public void testIntNum(){
+    	boolean value = ValueObjectUtil.isNumeric(int.class);
+
+    	//assertEquals(true,value);
+		value = ValueObjectUtil.isNumber(0);
+		assertEquals(true,value);
+	}
 }

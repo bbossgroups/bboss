@@ -17,6 +17,7 @@ package org.frameworkset.util.annotations.wraper;
 
 import java.util.Locale;
 
+import com.frameworkset.util.ValueObjectUtil;
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.CookieValue;
 
@@ -33,14 +34,15 @@ import com.frameworkset.util.SimpleStringUtil;
  * @author biaoping.yin
  * @version 1.0
  */
-public class CookieValueWraper {
+public class CookieValueWraper extends BaseWraper{
 	private Locale locale;
-	public CookieValueWraper( CookieValue  cookieValue)
-	{
+	public CookieValueWraper( CookieValue  cookieValue,Class paramType) {
+		super(paramType);
 		name = cookieValue.name();
 		required = cookieValue.required();
 		editor = cookieValue.editor();
-		defaultvalue = AnnotationUtils.converDefaultValue(cookieValue.defaultvalue());
+
+		convertValue(  cookieValue.defaultvalue());
 		dateformat = AnnotationUtils.converDefaultValue(cookieValue.dateformat());
 		if(SimpleStringUtil.isNotEmpty(cookieValue.locale() ))
 		 {
@@ -73,11 +75,7 @@ public class CookieValueWraper {
 	
 	private String editor;
 
-	/**
-	 * The default value to use as a fallback. Supplying a default value implicitly
-	 * sets {@link #required()} to false.
-	 */
-	private String defaultvalue;
+
 	/**
 	 * 指定日期格式
 	 * @return
@@ -107,13 +105,7 @@ public class CookieValueWraper {
 	public String editor() {
 		return editor;
 	}
-	/**
-	 * The default value to use as a fallback. Supplying a default value implicitly
-	 * sets {@link #required()} to false.
-	 */
-	public String defaultvalue() {
-		return defaultvalue;
-	}
+
 	/**
 	 * 指定日期格式
 	 * @return

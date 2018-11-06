@@ -15,33 +15,27 @@
  */
 package org.frameworkset.web.bind;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.InvocationTargetException;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
-
+import com.frameworkset.util.EditorInf;
+import com.frameworkset.util.ValueObjectUtil;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.support.validate.BindingResult;
 import org.frameworkset.util.ClassUtil;
-import org.frameworkset.util.ParameterUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
+import org.frameworkset.util.ParameterUtil;
 import org.frameworkset.util.annotations.MethodData;
 import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.servlet.ModelMap;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
 
-import com.frameworkset.util.EditorInf;
-import com.frameworkset.util.ValueObjectUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * <p>Title: WebDataBinder.java</p> 
@@ -89,7 +83,6 @@ public class WebDataBinder  {//extends DataBinder {
 	 * Create a new WebDataBinder instance, with default object name.
 	 * @param target the target object to bind onto (or <code>null</code>
 	 * if the binder is just used to convert a plain parameter value)
-	 * @see #DEFAULT_OBJECT_NAME
 	 */
 	public WebDataBinder(Object target) {
 //		super(target);
@@ -194,7 +187,6 @@ public class WebDataBinder  {//extends DataBinder {
 	 * This implementation performs a field marker check
 	 * before delegating to the superclass binding process.
 	 * @throws Exception 
-	 * @see #checkFieldMarkers
 	 */
 	protected void doBind(HttpServletRequest request,HttpServletResponse response,PageContext pageContext,
 			MethodData handlerMethod,ModelMap model,HttpMessageConverter[] messageConverters) throws Exception {
@@ -349,7 +341,7 @@ public class WebDataBinder  {//extends DataBinder {
 		}
 		
 		
-		public Object getData(String name)
+		public Object getData(String name,boolean numeric)
 		{
 			Object value = null;
 			
@@ -368,7 +360,7 @@ public class WebDataBinder  {//extends DataBinder {
 					e.printStackTrace();
 				}
 				Object defaultValue = this.defaultValues.get(name);
-				if(value == null && defaultValue != null)
+				if(HandlerUtils.useDefaultValue(value,numeric) && defaultValue != null)
 					value = defaultValue;
 					
 			}
@@ -497,9 +489,7 @@ public class WebDataBinder  {//extends DataBinder {
 	/**
 	 * added by biaoping.yin 2005.8.13
 	 * 将map中包含的属性值复制到对象中,对应属性的名称和类型必须一致
-	 * @param completeVO 有属性值的map对象
 	 * @param whichToVO 空对象
-	 * @param validators 
 	 * @return Object
 	 */
 	public  void createTransferObject(

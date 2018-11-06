@@ -15,12 +15,11 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
-import java.util.Locale;
-
+import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.RequestHeader;
 
-import com.frameworkset.util.SimpleStringUtil;
+import java.util.Locale;
 
 /**
  * <p>RequestHeaderWraper.java</p>
@@ -32,7 +31,7 @@ import com.frameworkset.util.SimpleStringUtil;
  * @author biaoping.yin
  * @version 1.0
  */
-public class RequestHeaderWraper {
+public class RequestHeaderWraper extends BaseWraper {
 	/**
 	 * The name of the request header to bind to.
 	 */
@@ -43,22 +42,20 @@ public class RequestHeaderWraper {
 	 * <p>Default is <code>true</code>, leading to an exception thrown in case
 	 * of the header missing in the request. Switch this to <code>false</code>
 	 * if you prefer a <code>null</value> in case of the header missing.
-	 * <p>Alternatively, provide a {@link #defaultValue() defaultValue},
+	 * <p>Alternatively, provide a {@link #defaultvalue() defaultValue},
 	 * which implicitely sets this flag to <code>false</code>.
 	 */
 	private  boolean required;
 
-	/**
-	 * The default value to use as a fallback. Supplying a default value implicitely
-	 * sets {@link #required()} to false.
-	 */
-	private   String defaultvalue;
+
 
 	private   String  editor;
 
 	private   String dateformat;
 	private Locale locale;
-	public RequestHeaderWraper(RequestHeader header) {
+	public RequestHeaderWraper(RequestHeader header,Class paramType) {
+		super(paramType);
+		convertValue(  header.defaultvalue());
 		/**
 		 * The name of the request header to bind to.
 		 */
@@ -74,11 +71,7 @@ public class RequestHeaderWraper {
 		 */
 		 required = header.required();
 
-		/**
-		 * The default value to use as a fallback. Supplying a default value implicitely
-		 * sets {@link #required()} to false.
-		 */
-		 defaultvalue = AnnotationUtils.converDefaultValue(header.defaultvalue());
+
 
 		  editor = header.editor();
 
@@ -107,20 +100,13 @@ public class RequestHeaderWraper {
 	 * <p>Default is <code>true</code>, leading to an exception thrown in case
 	 * of the header missing in the request. Switch this to <code>false</code>
 	 * if you prefer a <code>null</value> in case of the header missing.
-	 * <p>Alternatively, provide a {@link #defaultValue() defaultValue},
+	 * <p>Alternatively, provide a {@link #defaultvalue() defaultValue},
 	 * which implicitely sets this flag to <code>false</code>.
 	 */
 	public boolean required(){
 		return this.required;
 	}
 
-	/**
-	 * The default value to use as a fallback. Supplying a default value implicitely
-	 * sets {@link #required()} to false.
-	 */
-	public String defaultvalue(){
-		return this.defaultvalue;
-	}
 
 	public String  editor(){
 		return this.editor;

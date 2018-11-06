@@ -15,12 +15,11 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
-import java.util.Locale;
-
+import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.RequestParam;
 
-import com.frameworkset.util.SimpleStringUtil;
+import java.util.Locale;
 
 /**
  * <p>RequestParamWraper.java</p>
@@ -32,7 +31,7 @@ import com.frameworkset.util.SimpleStringUtil;
  * @author biaoping.yin
  * @version 1.0
  */
-public class RequestParamWraper {
+public class RequestParamWraper extends BaseWraper{
 	/**
 	 * 参数名称，默认为""
 	 * @return
@@ -49,7 +48,6 @@ public class RequestParamWraper {
 	 * 日期格式
      */
 	private String dateformat;
-	private String defaultvalue;
 	/**
 	 * 解码字符集
 	 * @return
@@ -69,8 +67,8 @@ public class RequestParamWraper {
 	 * @return
 	 */
 	private String convertcharset;
-	public RequestParamWraper(RequestParam param) {
-		
+	public RequestParamWraper(RequestParam param,Class paramType) {
+		super(paramType);
 		/**
 		 * 参数名称，默认为""
 		 * @return
@@ -98,7 +96,11 @@ public class RequestParamWraper {
 				 
 			 }
 		 }
-		 defaultvalue = AnnotationUtils.converDefaultValue(param.defaultvalue());
+		 if(paramType != null)
+			 convertValue(param.defaultvalue());
+		 else{
+		 	defaultvalue = AnnotationUtils.converDefaultValue(param.defaultvalue());
+		 }
 		/**
 		 * 解码字符集
 		 * @return
@@ -143,9 +145,7 @@ public class RequestParamWraper {
 	public String dateformat(){
 		return this.dateformat;
 	}
-	public String defaultvalue(){
-		return this.defaultvalue;
-	}
+
 	/**
 	 * 解码字符集
 	 * @return

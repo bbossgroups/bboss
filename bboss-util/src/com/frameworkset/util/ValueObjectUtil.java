@@ -4939,6 +4939,11 @@ public class ValueObjectUtil {
 
 		return null;
 	}
+
+
+
+
+
 	static enum Test
 	{
 		A,B,C
@@ -5633,6 +5638,43 @@ public class ValueObjectUtil {
 		return type.isArray();
 
 
+	}
+
+	/**
+	 * 判断类type是否是数字类型，或者数组的元素类型是否是数字类型
+	 * @param type
+	 * @return
+	 */
+	public static boolean isNumeric(Class type)
+	{
+		if(!type.isArray()) {
+			return Integer.class.isAssignableFrom(type)
+					|| int.class.isAssignableFrom(type)
+					|| Long.class.isAssignableFrom(type)
+					|| long.class.isAssignableFrom(type)
+					|| Short.class.isAssignableFrom(type)
+					|| short.class.isAssignableFrom(type)
+					|| Double.class.isAssignableFrom(type)
+					|| double.class.isAssignableFrom(type)
+					|| float.class.isAssignableFrom(type)
+					|| Float.class.isAssignableFrom(type)
+					|| char.class.isAssignableFrom(type)
+					|| BigDecimal.class.isAssignableFrom(type)
+					|| BigInteger.class.isAssignableFrom(type)
+					;
+		}
+		else{
+			return isNumeric(type.getComponentType());
+		}
+	}
+
+
+	public static Class getComponentType(Class type){
+		if(!type.isArray())
+			return type ;
+		else{
+			return getComponentType(type.getComponentType());
+		}
 	}
 
 	/**

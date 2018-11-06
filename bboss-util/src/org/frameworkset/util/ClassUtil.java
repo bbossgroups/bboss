@@ -114,7 +114,11 @@ public class ClassUtil
 			if(annotation instanceof RequestParam)
 			{
 				RequestParam param = (RequestParam)annotation;
-				return new RequestParamWraper(param);
+				if(writeMethod.getParameterTypes().length > 0)
+					return new RequestParamWraper(param,  writeMethod.getParameterTypes()[0]);
+				else{
+					return new RequestParamWraper(param,  null);
+				}
 			}
 		}
 		return null;
@@ -122,6 +126,7 @@ public class ClassUtil
 	public static class PropertieDescription
 	{
 		private Class propertyType;
+		private boolean numeric;
 		private Method writeMethod;
 
 		private RequestParamWraper  writeMethodRequestParam;
@@ -309,16 +314,20 @@ public class ClassUtil
 			{
 				this.propertyGenericType = ClassUtils.genericType(this.field);
 			}
+
 			if(this.field != null)
 			{
+				this.numeric = ValueObjectUtil.isNumeric(field.getType());
 				annotations = this.field.getAnnotations();
-				initParam(classInfo,this.field.getAnnotations());
+				initParam(classInfo,annotations,field.getType());
 			}
-
+			else if(this.propertyType != null){
+				this.numeric = ValueObjectUtil.isNumeric(propertyType);
+			}
 
 		}
 
-		private void initParam(ClassInfo classInfo,Annotation[] annotations)
+		private void initParam(ClassInfo classInfo,Annotation[] annotations,Class paramType)
 		{
 			if(annotations == null || annotations.length == 0)
 				return;
@@ -327,7 +336,7 @@ public class ClassUtil
 				Annotation a = annotations[i];
 				if(a instanceof RequestParam)
 				{
-					requestParam = new RequestParamWraper((RequestParam)a);
+					requestParam = new RequestParamWraper((RequestParam)a,  paramType);
 					if(requestParam.name() == null || requestParam.name().equals(""))
 					{
 						this.requestParamName = name;
@@ -406,15 +415,15 @@ public class ClassUtil
 				}
 				else if(a instanceof Attribute )
 				{
-					attribute = new AttributeWraper((Attribute )a);
+					attribute = new AttributeWraper((Attribute )a,  paramType);
 				}
 				else if(a instanceof RequestHeader )
 				{
-					header = new RequestHeaderWraper((RequestHeader )a);
+					header = new RequestHeaderWraper((RequestHeader )a,  paramType);
 				}
 				else if(a instanceof PathVariable )
 				{
-					pathVariable = new PathVariableWraper((PathVariable )a);
+					pathVariable = new PathVariableWraper((PathVariable )a,  paramType);
 				}
 				else if(a instanceof DataBind )
 				{
@@ -426,7 +435,7 @@ public class ClassUtil
 				}
 				else if(a instanceof CookieValue )
 				{
-					cookie = new CookieValueWraper ((CookieValue )a);
+					cookie = new CookieValueWraper ((CookieValue )a,  paramType);
 				}
 				else if(a instanceof IgnoreBind)
 				{
@@ -674,6 +683,10 @@ public class ClassUtil
 		public boolean isEsIdReadSet() {
 			return esIdReadSet;
 		}
+
+		public boolean isNumeric() {
+			return numeric;
+		}
 	}
 	public static class ClassInfo
 	{
@@ -755,11 +768,16 @@ public class ClassUtil
 	    private volatile transient Constructor[] constructions;
 
 	    private  Class<?> clazz;
+		/**
+		 * 数字元素类型或者就是clazz（非数组类型）
+		 */
+		private  Class<?> componentType;
 	    private List<Class> superClasses;
 	    /**
 	     * 识别class是否是基本数据类型或者基本数据类型数组
 	     */
 	    private boolean primary;
+	    private boolean numeric;
 		/**
 		 * 标识class是否map类型
 		 */
@@ -958,6 +976,8 @@ public class ClassUtil
 			this.array = ValueObjectUtil.isArrayType(clazz);
 			this.enums = ValueObjectUtil.isEnumType(clazz);
 	    	this.baseprimary = ValueObjectUtil.isBasePrimaryType(clazz);
+	    	this.numeric = ValueObjectUtil.isNumeric(clazz);
+	    	this.componentType = ValueObjectUtil.getComponentType(clazz);
 	    	//初始化所有父类信息：
 	    	if(superClasses == null)
 	    	{
@@ -1606,6 +1626,14 @@ public class ClassUtil
 
 		public List<PropertieDescription> getEsAnnonationProperties() {
 			return esAnnonationProperties;
+		}
+
+		public boolean isNumeric() {
+			return numeric;
+		}
+
+		public Class<?> getComponentType() {
+			return componentType;
 		}
 	}
 

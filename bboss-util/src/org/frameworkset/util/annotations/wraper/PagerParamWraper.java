@@ -15,7 +15,6 @@
  */
 package org.frameworkset.util.annotations.wraper;
 
-import org.frameworkset.util.annotations.AnnotationUtils;
 import org.frameworkset.util.annotations.PagerParam;
 import org.frameworkset.util.annotations.ValueConstants;
 
@@ -29,7 +28,7 @@ import org.frameworkset.util.annotations.ValueConstants;
  * @author biaoping.yin
  * @version 1.0
  */
-public class PagerParamWraper {
+public class PagerParamWraper extends BaseWraper{
 	private String id;
 	/**
 	 * 分页参数名称
@@ -38,9 +37,9 @@ public class PagerParamWraper {
 	private String name ;	
 	private boolean required;
 	private String editor;
-	private String defaultvalue;
-	public PagerParamWraper(PagerParam param)
-	{
+	public PagerParamWraper(PagerParam param,Class paramType) {
+		super(paramType);
+		convertValue(  param.defaultvalue());
 		id = param.id();
 		if(id.equals(ValueConstants.DEFAULT_NONE))
 			id = null;
@@ -51,7 +50,6 @@ public class PagerParamWraper {
 		name = param.name();	
 		required = param.required();
 		editor = param.editor();
-		defaultvalue = AnnotationUtils.converDefaultValue(param.defaultvalue());
 	}
 	
 	public String id() {
@@ -72,9 +70,7 @@ public class PagerParamWraper {
 		return this.editor;
 	}
 	
-	public String defaultvalue(){
-		return this.defaultvalue;
-	}
+
 	
 
 }

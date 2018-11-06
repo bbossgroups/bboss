@@ -15,90 +15,18 @@
  */
 package org.frameworkset.web.servlet.handler;
 
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
-
-import org.frameworkset.http.HttpEntity;
-import org.frameworkset.http.HttpHeaders;
-import org.frameworkset.http.HttpInputMessage;
-import org.frameworkset.http.HttpOutputMessage;
-import org.frameworkset.http.MediaType;
-import org.frameworkset.http.ResponseEntity;
-import org.frameworkset.http.ServerHttpResponse;
-import org.frameworkset.http.ServletServerHttpRequest;
-import org.frameworkset.http.ServletServerHttpResponse;
+import com.frameworkset.util.*;
+import org.frameworkset.http.*;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.support.validate.BindingResult;
 import org.frameworkset.spi.support.validate.ValidationUtils;
 import org.frameworkset.spi.support.validate.Validator;
-import org.frameworkset.util.AntPathMatcher;
-import org.frameworkset.util.ClassUtil;
+import org.frameworkset.util.*;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
-import org.frameworkset.util.ClassUtils;
-import org.frameworkset.util.Conventions;
-import org.frameworkset.util.GenericTypeResolver;
-import org.frameworkset.util.LinkedMultiValueMap;
-import org.frameworkset.util.MethodParameter;
-import org.frameworkset.util.MultiValueMap;
-import org.frameworkset.util.ParameterUtil;
-import org.frameworkset.util.PathMatcher;
-import org.frameworkset.util.ReflectionUtils;
-import org.frameworkset.util.annotations.AnnotationUtils;
-import org.frameworkset.util.annotations.Attribute;
-import org.frameworkset.util.annotations.AttributeScope;
-import org.frameworkset.util.annotations.CookieValue;
-import org.frameworkset.util.annotations.DataBind;
-import org.frameworkset.util.annotations.HandlerMapping;
-import org.frameworkset.util.annotations.HttpMethod;
-import org.frameworkset.util.annotations.MapKey;
-import org.frameworkset.util.annotations.MethodData;
-import org.frameworkset.util.annotations.MethodInfo;
-import org.frameworkset.util.annotations.ModelAttribute;
-import org.frameworkset.util.annotations.PagerParam;
-import org.frameworkset.util.annotations.PathVariable;
-import org.frameworkset.util.annotations.RequestBody;
-import org.frameworkset.util.annotations.RequestHeader;
-import org.frameworkset.util.annotations.RequestParam;
-import org.frameworkset.util.annotations.ResponseBody;
-import org.frameworkset.util.annotations.Scope;
-import org.frameworkset.util.annotations.ValueConstants;
-import org.frameworkset.util.annotations.wraper.AttributeWraper;
-import org.frameworkset.util.annotations.wraper.CookieValueWraper;
-import org.frameworkset.util.annotations.wraper.PathVariableWraper;
-import org.frameworkset.util.annotations.wraper.RequestBodyWraper;
-import org.frameworkset.util.annotations.wraper.RequestHeaderWraper;
-import org.frameworkset.util.annotations.wraper.RequestParamWraper;
-import org.frameworkset.util.annotations.wraper.ResponseBodyWraper;
+import org.frameworkset.util.annotations.*;
+import org.frameworkset.util.annotations.wraper.*;
 import org.frameworkset.web.HttpMediaTypeNotAcceptableException;
 import org.frameworkset.web.HttpSessionRequiredException;
 import org.frameworkset.web.bind.MissingServletRequestParameterException;
@@ -109,8 +37,6 @@ import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.servlet.ModelAndView;
 import org.frameworkset.web.servlet.ModelMap;
-import org.frameworkset.web.servlet.handler.HandlerUtils.ServletHandlerMethodInvoker;
-import org.frameworkset.web.servlet.handler.HandlerUtils.ServletHandlerMethodResolver;
 import org.frameworkset.web.servlet.handler.annotations.ExcludeMethod;
 import org.frameworkset.web.servlet.handler.annotations.HandlerMethodInvoker;
 import org.frameworkset.web.servlet.handler.annotations.HandlerMethodResolver;
@@ -128,11 +54,22 @@ import org.frameworkset.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.util.ArrayEditorInf;
-import com.frameworkset.util.BeanUtils;
-import com.frameworkset.util.EditorInf;
-import com.frameworkset.util.StringUtil;
-import com.frameworkset.util.ValueObjectUtil;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.PageContext;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * <p>
@@ -147,37 +84,52 @@ import com.frameworkset.util.ValueObjectUtil;
  * <p>
  * Copyright (c) 2008
  * </p>
- * 
- * @Date 2010-11-7
+ *
  * @author biaoping.yin
  * @version 1.0
+ * @Date 2010-11-7
  */
 public abstract class HandlerUtils {
-	protected static final Logger logger = LoggerFactory.getLogger(HandlerUtils.class);
-	/** Default command name used for binding command objects: "command" */
+	/**
+	 * Default command name used for binding command objects: "command"
+	 */
 	public static final String DEFAULT_COMMAND_NAME = "command";
 	public static final String USE_MVC_DENCODE_KEY = "org.frameworkset.web.servlet.handler.HandlerUtils.USE_MVC_DENCODE_KEY";
 	public static final Boolean TRUE = new Boolean(true);
 	public static final PathMatcher pathMatcher = new AntPathMatcher();
-	private static Method assertTokenMethod ;
-	static
-	{
+	/**
+	 * Log category to use when no mapped handler is found for a request.
+	 *
+	 * @see #pageNotFoundLogger
+	 */
+	public static final String PAGE_NOT_FOUND_LOG_CATEGORY = "org.frameworkset.web.servlet.PageNotFound";
+	protected static final Logger logger = LoggerFactory.getLogger(HandlerUtils.class);
+	/**
+	 * Additional logger to use when no mapped handler is found for a request.
+	 *
+	 * @see #PAGE_NOT_FOUND_LOG_CATEGORY
+	 */
+	protected final static Logger pageNotFoundLogger = LoggerFactory
+			.getLogger(PAGE_NOT_FOUND_LOG_CATEGORY);
+	private static Method assertTokenMethod;
+
+	static {
 		try {
 			Class clazz = Class.forName("org.frameworkset.web.token.TokenFilter");
 			assertTokenMethod = clazz.getMethod("assertDToken", ServletRequest.class,
 					ServletResponse.class, MethodData.class);
 		} catch (ClassNotFoundException e) {
-			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter ClassNotFoundException:"+e.getMessage());
+			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter ClassNotFoundException:" + e.getMessage());
 		} catch (NoSuchMethodException e) {
-			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter NoSuchMethodException:"+e.getMessage());
+			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter NoSuchMethodException:" + e.getMessage());
 		} catch (Exception e) {
-			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter failed:"+e.getMessage());
+			logger.info("get assertDToken method from org.frameworkset.web.token.TokenFilter failed:" + e.getMessage());
 		}
-		
+
 	}
 
 	public static boolean isExcludehandleMethod(Class<?> handlerType,
-			Method method) {
+												Method method) {
 		String methodName = method.getName();
 
 		if (methodName.equals("notifyAll") || methodName.equals("notify"))
@@ -306,14 +258,14 @@ public abstract class HandlerUtils {
 	}
 
 	private static Object evaluateStringParam(RequestParamWraper requestParam,
-			HttpServletRequest request, String requestParamName, Class type,
-			EditorInf editor) {
+											  HttpServletRequest request, String requestParamName, Class type,
+											  EditorInf editor) {
 		Object paramValue = null;
 
 		String decodeCharset = requestParam.decodeCharset();
 		String charset = requestParam.charset();
 		String convertcharset = requestParam.convertcharset();
-		if (decodeCharset != null){
+		if (decodeCharset != null) {
 			request.setAttribute(USE_MVC_DENCODE_KEY, TRUE);
 		}
 		String[] values = request.getParameterValues(requestParamName);
@@ -440,7 +392,7 @@ public abstract class HandlerUtils {
 	}
 
 	private static Object evaluateMultipartFileParam(RequestParamWraper requestParam,
-			HttpServletRequest request, String requestParamName, Class type) {
+													 HttpServletRequest request, String requestParamName, Class type) {
 		Object paramValue = null;
 		if (request instanceof MultipartHttpServletRequest) {
 
@@ -530,30 +482,23 @@ public abstract class HandlerUtils {
 	}
 
 	private static Object evaluateMethodArg(MethodParameter methodParameter_,
-			HttpServletRequest request, HttpServletResponse response,
-			PageContext pageContext, MethodData handlerMethod, ModelMap model,
-			Map pathVarDatas, Validator[] validators,
-			HttpMessageConverter[] messageConverters, Class type,
-			MethodInfo methodInfo, int position) throws Exception {
+											HttpServletRequest request, HttpServletResponse response,
+											PageContext pageContext, MethodData handlerMethod, ModelMap model,
+											Map pathVarDatas, Validator[] validators,
+											HttpMessageConverter[] messageConverters, Class type,
+											MethodInfo methodInfo, int position) throws Exception {
 		List<MethodParameter> methodParameters = methodParameter_
 				.getMultiAnnotationParams();
 		if (methodParameters != null && methodParameters.size() > 0) {
 			return _evaluateMethodArg(methodParameter_, request, response,
 					pageContext, handlerMethod, model, pathVarDatas,
-					validators, messageConverters, type,methodInfo);
+					validators, messageConverters, type, methodInfo);
 		} else {
 			Object paramValue = null;
 			if (List.class.isAssignableFrom(type)) {// 如果是列表数据集
 				List command = new ArrayList();
 				Class ct = methodInfo.getGenericParameterType(position);// 获取元素类型
-//				if (ct == null) {
-//					model.getErrors().rejectValue(
-//							methodParameter_.getRequestParameterName(),
-//							"evaluateAnnotationsValue.error",
-//							"没有获取到集合参数对象类型,请检查是否指定了集合泛型："
-//									+ methodInfo.getMethod().getName());
-//					paramValue = ValueObjectUtil.getDefaultValue(type);
-//				} else 
+
 				{
 					String paramname = methodParameter_.getRequestParameterName();
 					bind(request, response, pageContext, handlerMethod, model,
@@ -571,10 +516,10 @@ public abstract class HandlerUtils {
 //							"没有获取到集合参数对象类型,请检查是否指定了集合泛型或者通过注解指定绑定变量："
 //									+ methodInfo.getMethod().getName());
 //					paramValue = ValueObjectUtil.getDefaultValue(type);
-//				} else 
+//				} else
 				{
 					bind(request, response, pageContext, handlerMethod, model,
-							command, ct, validators, messageConverters, paramname );
+							command, ct, validators, messageConverters, paramname);
 					paramValue = command;
 				}
 			} else if (isMultipartFile(type)) {
@@ -595,10 +540,10 @@ public abstract class HandlerUtils {
 	}
 
 	private static Object _evaluateMethodArg(MethodParameter methodParameter_,
-			HttpServletRequest request, HttpServletResponse response,
-			PageContext pageContext, MethodData handlerMethod, ModelMap model,
-			Map pathVarDatas, Validator[] validators,
-			HttpMessageConverter[] messageConverters, Class type,MethodInfo methodInfo)
+											 HttpServletRequest request, HttpServletResponse response,
+											 PageContext pageContext, MethodData handlerMethod, ModelMap model,
+											 Map pathVarDatas, Validator[] validators,
+											 HttpMessageConverter[] messageConverters, Class type, MethodInfo methodInfo)
 			throws Exception {
 		Object paramValue = null;
 		Object defaultValue = null;
@@ -610,9 +555,10 @@ public abstract class HandlerUtils {
 				.getMultiAnnotationParams();
 		String dateformat = null;
 		Locale locale = null;
-
+		ClassUtil.ClassInfo classInfo = ClassUtil.getClassInfo(type);
+		boolean numeric = classInfo.isNumeric();
 		for (MethodParameter methodParameter : methodParameters) {
-			String requestParamName = ParameterUtil.getParameterName(methodParameter,  request, 0);
+			String requestParamName = ParameterUtil.getParameterName(methodParameter, request, 0);
 			defaultValue = methodParameter.getDefaultValue();
 			editor = methodParameter.getEditor();
 			if (!isrequired)
@@ -660,7 +606,7 @@ public abstract class HandlerUtils {
 								paramValue = URLDecoder.decode(paramValue_,
 										decodeCharset);
 							} catch (Exception e) {
-								logger.error("",e);
+								logger.error("", e);
 								paramValue = paramValue_;
 							}
 						} else if (charset != null && convertcharset != null) {
@@ -669,7 +615,7 @@ public abstract class HandlerUtils {
 										paramValue_.getBytes(charset),
 										convertcharset);
 							} catch (Exception e) {
-								logger.error("",e);
+								logger.error("", e);
 								paramValue = paramValue_;
 							}
 						} else {
@@ -752,33 +698,21 @@ public abstract class HandlerUtils {
 				userEditor = false;
 
 			}
-			// else {
-			// Object command = newCommandObject(type);
-			// bind(request, response, pageContext, handlerMethod, model,
-			// command, validators, messageConverters);
-			// paramValue = command;
-			// userEditor = false;
-			//
-			// }
-			if (paramValue == null && defaultValue != null)
+
+			if (defaultValue != null && useDefaultValue(paramValue, numeric) )
 				paramValue = defaultValue;
 			if (paramValue != null) {
 				try {
 					if (userEditor) {
-						if (editor == null)
-						{
-							if(!ValueObjectUtil.isCollectionType(type))
-							{
+						if (editor == null) {
+							if (!ValueObjectUtil.isCollectionType(type)) {
 								paramValue = ValueObjectUtil.typeCast(paramValue,
-										type, dateformat,locale);
-							}
-							else
-							{
+										type, dateformat, locale);
+							} else {
 								Class elementType = methodInfo.getGenericParameterType(methodParameter_.getParameterIndex());
-								paramValue = ValueObjectUtil.typeCastCollection(paramValue, type, elementType, dateformat,locale);
+								paramValue = ValueObjectUtil.typeCastCollection(paramValue, type, elementType, dateformat, locale);
 							}
-						}
-						else
+						} else
 							paramValue = ValueObjectUtil.typeCast(paramValue,
 									editor);
 					}
@@ -791,7 +725,7 @@ public abstract class HandlerUtils {
 							"ValueObjectUtil.typeCast.error",
 							String.valueOf(paramValue), type,
 							error.getMessage());
-					logger.error(new StringBuilder().append(methodInfo.toString() ).append(":").append(error.getMessage()).toString());
+					logger.error(new StringBuilder().append(methodInfo.toString()).append(":").append(error.getMessage()).toString());
 					return ValueObjectUtil.getDefaultValue(type);
 				}
 			} else {
@@ -841,10 +775,30 @@ public abstract class HandlerUtils {
 		return paramValue;
 	}
 
+	private static boolean useDefaultValue(Object paramValue, BaseWraper baseWraper) {
+		if (paramValue == null)
+			return true;
+		if (baseWraper.isNumeric() && paramValue.equals("")) {
+			return true;
+		}
+		return false;
+
+	}
+
+	public static boolean useDefaultValue(Object paramValue, boolean numeric) {
+		if (paramValue == null)
+			return true;
+		if (numeric && paramValue instanceof String && paramValue.equals("")) {
+			return true;
+		}
+		return false;
+
+	}
+
 	/**
 	 * 处理基础数据类型绑定，附件如何考虑呢，如果没有注解修饰 最好也是按照基础类型的方式来处理
-	 * 
-	 * @param methodParameter_
+	 *
+	 * @param methodParameter
 	 * @param request
 	 * @param response
 	 * @param pageContext
@@ -895,8 +849,8 @@ public abstract class HandlerUtils {
 				model.getErrors().rejectValue(requestParamName,
 						"ValueObjectUtil.typeCast.error",
 						String.valueOf(paramValue), type, error.getMessage());
-				logger.error(new StringBuilder().append(handlerMethod.getMethodInfo().toString() ).append(":").append(error.getMessage()).toString());
-				
+				logger.error(new StringBuilder().append(handlerMethod.getMethodInfo().toString()).append(":").append(error.getMessage()).toString());
+
 				return ValueObjectUtil.getDefaultValue(type);
 			}
 		}
@@ -905,13 +859,13 @@ public abstract class HandlerUtils {
 
 	/**
 	 * 计算分页参数的值
-	 * 
+	 *
 	 * @param methodParameter
 	 * @param request
 	 * @return
 	 */
 	private static Object resolvePagerParam(MethodParameter methodParameter,
-			HttpServletRequest request) {
+											HttpServletRequest request) {
 		Object paramValue = null;
 		String name = methodParameter.getRequestParameterName();
 		if (name.equals(PagerParam.PAGE_SIZE)) {
@@ -934,30 +888,12 @@ public abstract class HandlerUtils {
 							org.frameworkset.web.servlet.HandlerMapping.PAGER_CUSTOM_PAGESIZE_ATTRIBUTE,
 							RequestContext.getCustomPageSize(methodParameter
 									.getDefaultValue()), request);
-			// String baseUri = RequestContext.getHandlerMappingPath(request);
-			// String cookieid = methodParameter.getParamNamePrefix() == null ?
-			// PagerDataSet.COOKIE_PREFIX + baseUri :
-			// PagerDataSet.COOKIE_PREFIX + baseUri + "|"
-			// +methodParameter.getParamNamePrefix();
-			// int default_ = 10;
-			// if(methodParameter.getDefaultValue().equals(ValueConstants.DEFAULT_NONE)
-			// )
-			// default_ = 10;
-			// else {
-			// try {
-			// default_ = Integer.parseInt(String.valueOf(methodParameter
-			// .getDefaultValue()));
-			// } catch (Exception e) {
-			// // TODO: handle exception
-			// }
-			// }
-			// int defaultSize =
-			// PagerDataSet.consumeCookie(cookieid,default_,request,null);
+
 
 			paramValue = defaultSize;
 		} else {
 			String[] values = request.getParameterValues(name);
-			if (values != null) {
+			if (values != null && !values[0].equals("")) {
 				paramValue = values[0];
 			} else {
 				if (methodParameter.getDefaultValue() != null)
@@ -965,11 +901,11 @@ public abstract class HandlerUtils {
 			}
 			if (name.endsWith("." + PagerParam.OFFSET) && paramValue != null) {
 				try {
-					long offset = Long.parseLong((String) paramValue);
+					long offset = paramValue instanceof Long ? (Long) paramValue : Long.parseLong((String) paramValue);
 					if (offset < 0)
-						paramValue = "0";
+						paramValue = 0;
 				} catch (Exception e) {
-					paramValue = "0";
+					paramValue = 0;
 				}
 
 			}
@@ -979,9 +915,9 @@ public abstract class HandlerUtils {
 	}
 
 	public static Object[] buildMethodCallArgs(HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext,
-			MethodData handlerMethod, ModelMap model, Validator[] validators,
-			HttpMessageConverter[] messageConverters) throws Exception {
+											   HttpServletResponse response, PageContext pageContext,
+											   MethodData handlerMethod, ModelMap model, Validator[] validators,
+											   HttpMessageConverter[] messageConverters) throws Exception {
 		MethodInfo methodInfo = handlerMethod.getMethodInfo();
 		Method method = methodInfo.getMethod();
 		Class[] methodParamTypes = method.getParameterTypes();
@@ -1023,11 +959,8 @@ public abstract class HandlerUtils {
 				MapKey mapKey = methodParameter.getMapKey();
 				if (methodParameter == null || mapKey == null) {
 					paramValue = buildParameterMaps(request);
-				}
-				else if (mapKey != null) 
-				{
-					if(!mapKey.value().equals(""))
-					{
+				} else if (mapKey != null) {
+					if (!mapKey.value().equals("")) {
 						Map command = new HashMap();
 						Class[] ct = methodInfo.getGenericParameterTypes(i);// 获取元素类型
 						if (ct == null) {
@@ -1044,10 +977,8 @@ public abstract class HandlerUtils {
 									messageConverters);
 							paramValue = command;
 						}
-					}
-					else
-					{
-						paramValue = buildParameterMaps(request,mapKey.pattern());
+					} else {
+						paramValue = buildParameterMaps(request, mapKey.pattern());
 					}
 				}
 			} else if (methodParameter != null) {
@@ -1123,46 +1054,7 @@ public abstract class HandlerUtils {
 
 	}
 
-	public static Map buildParameterMaps(HttpServletRequest request) {
-		Map map = new HashMap(request.getParameterMap().size());
-		Enumeration<String> enums = request.getParameterNames();
-		while (enums.hasMoreElements()) {
-			String key = enums.nextElement();
-			String[] parameters = request.getParameterValues(key);
-			if (parameters != null) {
-				if (parameters.length == 1)
-					map.put(key, parameters[0]);
-				else if (parameters.length > 1)
-					map.put(key, parameters);
 
-			}
-		}
-		return map;
-
-	}
-	
-	public static Map buildParameterMaps(HttpServletRequest request,String namepattern) {
-		Map map = new HashMap(request.getParameterMap().size());
-		Enumeration<String> enums = request.getParameterNames();
-		while (enums.hasMoreElements()) {
-			String key = enums.nextElement();
-			if(!pathMatcher.match(namepattern, key))
-				continue;
-			String[] parameters = request.getParameterValues(key);
-			if (parameters != null) {
-				if (parameters.length == 1)
-					map.put(key, parameters[0]);
-				else if (parameters.length > 1)
-					map.put(key, parameters);
-
-			}
-		}
-		return map;
-
-	}
-	
-	
-	
 	// public static Object[] buildMethodCallArgs(HttpServletRequest request,
 	// HttpServletResponse response, PageContext pageContext,
 	// MethodData handlerMethod, ModelMap model, Validator[] validators,
@@ -1334,65 +1226,67 @@ public abstract class HandlerUtils {
 	//
 	// }
 
+	public static Map buildParameterMaps(HttpServletRequest request) {
+		Map map = new HashMap(request.getParameterMap().size());
+		Enumeration<String> enums = request.getParameterNames();
+		while (enums.hasMoreElements()) {
+			String key = enums.nextElement();
+			String[] parameters = request.getParameterValues(key);
+			if (parameters != null) {
+				if (parameters.length == 1)
+					map.put(key, parameters[0]);
+				else if (parameters.length > 1)
+					map.put(key, parameters);
+
+			}
+		}
+		return map;
+
+	}
+
+	public static Map buildParameterMaps(HttpServletRequest request, String namepattern) {
+		Map map = new HashMap(request.getParameterMap().size());
+		Enumeration<String> enums = request.getParameterNames();
+		while (enums.hasMoreElements()) {
+			String key = enums.nextElement();
+			if (!pathMatcher.match(namepattern, key))
+				continue;
+			String[] parameters = request.getParameterValues(key);
+			if (parameters != null) {
+				if (parameters.length == 1)
+					map.put(key, parameters[0]);
+				else if (parameters.length > 1)
+					map.put(key, parameters);
+
+			}
+		}
+		return map;
+
+	}
+
 	/**
 	 * Resolves the given {@link RequestBody @RequestBody} annotation.
 	 */
 	protected static Object resolveRequestBody(MethodParameter methodParam,
-			HttpServletRequest webRequest,
-			HttpMessageConverter[] messageConverters) throws Exception {
+											   HttpServletRequest webRequest,
+											   HttpMessageConverter[] messageConverters) throws Exception {
 
 		return resolveRequestBody(methodParam.getParameterType(),
 				methodParam.getRequestParameterName(), webRequest,
-				messageConverters,  methodParam.getRequestBody());
+				messageConverters, methodParam.getRequestBody());
 	}
 
 	/**
 	 * Resolves the given {@link RequestBody @RequestBody} annotation.
 	 */
 	protected static Object resolveRequestBody(Class paramType,
-			String paramName, HttpServletRequest webRequest,
-			HttpMessageConverter[] messageConverters,RequestBodyWraper requestBody) throws Exception {
+											   String paramName, HttpServletRequest webRequest,
+											   HttpMessageConverter[] messageConverters, RequestBodyWraper requestBody) throws Exception {
 		return readWithMessageConverters(paramType, paramName,
-				createHttpInputMessage(webRequest), messageConverters,   requestBody);
+				createHttpInputMessage(webRequest), messageConverters, requestBody);
 		// return readWithMessageConverters(methodParam,
 		// createHttpInputMessage(webRequest), methodParam
 		// .getParameterType(), messageConverters);
-	}
-
-	/**
-	 * Template method for creating a new HttpInputMessage instance.
-	 * <p>
-	 * The default implementation creates a standard
-	 * {@link ServletServerHttpRequest}. This can be overridden for custom
-	 * {@code HttpInputMessage} implementations
-	 * 
-	 * @param servletRequest
-	 *            current HTTP request
-	 * @return the HttpInputMessage instance to use
-	 * @throws Exception
-	 *             in case of errors
-	 */
-	protected static HttpInputMessage createHttpInputMessage(
-			HttpServletRequest servletRequest) throws Exception {
-		return new ServletServerHttpRequest(servletRequest);
-	}
-
-	/**
-	 * Template method for creating a new HttpOuputMessage instance.
-	 * <p>
-	 * The default implementation creates a standard
-	 * {@link ServletServerHttpResponse}. This can be overridden for custom
-	 * {@code HttpOutputMessage} implementations
-	 * 
-	 * @param servletResponse
-	 *            current HTTP response
-	 * @return the HttpInputMessage instance to use
-	 * @throws Exception
-	 *             in case of errors
-	 */
-	protected static HttpOutputMessage createHttpOutputMessage(
-			HttpServletResponse servletResponse) throws Exception {
-		return new ServletServerHttpResponse(servletResponse);
 	}
 
 	// private HttpEntity resolveHttpEntityRequest(MethodParameter methodParam,
@@ -1449,10 +1343,42 @@ public abstract class HandlerUtils {
 	// messageConverters);
 	// }
 
+	/**
+	 * Template method for creating a new HttpInputMessage instance.
+	 * <p>
+	 * The default implementation creates a standard
+	 * {@link ServletServerHttpRequest}. This can be overridden for custom
+	 * {@code HttpInputMessage} implementations
+	 *
+	 * @param servletRequest current HTTP request
+	 * @return the HttpInputMessage instance to use
+	 * @throws Exception in case of errors
+	 */
+	protected static HttpInputMessage createHttpInputMessage(
+			HttpServletRequest servletRequest) throws Exception {
+		return new ServletServerHttpRequest(servletRequest);
+	}
+
+	/**
+	 * Template method for creating a new HttpOuputMessage instance.
+	 * <p>
+	 * The default implementation creates a standard
+	 * {@link ServletServerHttpResponse}. This can be overridden for custom
+	 * {@code HttpOutputMessage} implementations
+	 *
+	 * @param servletResponse current HTTP response
+	 * @return the HttpInputMessage instance to use
+	 * @throws Exception in case of errors
+	 */
+	protected static HttpOutputMessage createHttpOutputMessage(
+			HttpServletResponse servletResponse) throws Exception {
+		return new ServletServerHttpResponse(servletResponse);
+	}
+
 	private static Object readWithMessageConverters(Class paramType,
-			String paramName, HttpInputMessage inputMessage,
-			HttpMessageConverter[] messageConverters,RequestBodyWraper requestBody) throws Exception {
-		
+													String paramName, HttpInputMessage inputMessage,
+													HttpMessageConverter[] messageConverters, RequestBodyWraper requestBody) throws Exception {
+
 		MediaType contentType = inputMessage.getHeaders().getContentType();
 		if (contentType == null) {
 			StringBuilder builder = new StringBuilder(
@@ -1468,7 +1394,7 @@ public abstract class HandlerUtils {
 					"Cannot extract parameter (" + builder.toString()
 							+ "): no Content-Type found");
 		}
-		logger.debug("Read http request body with contenttype:"+ contentType);
+		logger.debug("Read http request body with contenttype:" + contentType);
 
 //		List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
 		HttpMessageConverter defaultmessageConverter = null;
@@ -1476,8 +1402,7 @@ public abstract class HandlerUtils {
 			for (HttpMessageConverter<?> messageConverter : messageConverters) {
 //				allSupportedMediaTypes.addAll(messageConverter
 //						.getSupportedMediaTypes());
-				if(messageConverter.isdefault())
-				{
+				if (messageConverter.isdefault()) {
 					defaultmessageConverter = messageConverter;
 				}
 				if (messageConverter.canRead(requestBody.getDatatype())) {
@@ -1490,17 +1415,16 @@ public abstract class HandlerUtils {
 				}
 			}
 		}
-		if(defaultmessageConverter != null)
-		{
+		if (defaultmessageConverter != null) {
 			return defaultmessageConverter.read(paramType, inputMessage);
 		}
-		
-			
-		throw new java.lang.IllegalAccessException("RequestBody resolve failed:No messageConverter found.Please check the field or method parameter "+paramName+"'s annotation is been setted correct.");
+
+
+		throw new java.lang.IllegalAccessException("RequestBody resolve failed:No messageConverter found.Please check the field or method parameter " + paramName + "'s annotation is been setted correct.");
 	}
 
 	private static Object resolveCookieValue(MethodParameter methodParam,
-			HttpServletRequest webRequest) throws Exception {
+											 HttpServletRequest webRequest) throws Exception {
 		return resolveCookieValue(methodParam.getParameterType(),
 				methodParam.getRequestParameterName(), webRequest);
 		// Class<?> paramType = methodParam.getParameterType();
@@ -1557,7 +1481,7 @@ public abstract class HandlerUtils {
 	}
 
 	private static Object resolveCookieValue(Class<?> paramType,
-			String paramname, HttpServletRequest webRequest) throws Exception {
+											 String paramname, HttpServletRequest webRequest) throws Exception {
 
 		Cookie cookieValue = WebUtils.getCookie(webRequest, paramname);
 		if (Cookie.class.isAssignableFrom(paramType)) {
@@ -1617,7 +1541,7 @@ public abstract class HandlerUtils {
 	}
 
 	private static Object resolveRequestHeader(MethodParameter methodParam,
-			HttpServletRequest webRequest) throws Exception {
+											   HttpServletRequest webRequest) throws Exception {
 
 		// Class<?> paramType = methodParam.getParameterType();
 		// String headerName = methodParam.getRequestParameterName();
@@ -1661,7 +1585,7 @@ public abstract class HandlerUtils {
 	}
 
 	private static Object resolveRequestHeader(Class<?> paramType,
-			String headerName, HttpServletRequest webRequest) throws Exception {
+											   String headerName, HttpServletRequest webRequest) throws Exception {
 
 		Object headerValue = null;
 		if (Map.class.isAssignableFrom(paramType)) {
@@ -1672,10 +1596,10 @@ public abstract class HandlerUtils {
 		Enumeration<String> headerValues = webRequest.getHeaders(headerName);
 		if (headerValues != null) {
 			List<String> result = new ArrayList<String>();
-			for (Enumeration<String> iterator_ = headerValues; iterator_.hasMoreElements();) {
+			for (Enumeration<String> iterator_ = headerValues; iterator_.hasMoreElements(); ) {
 				result.add(iterator_.nextElement());
 			}
-			if(result.size() > 0)
+			if (result.size() > 0)
 				headerValue = (result.size() == 1 ? result.get(0) : result
 						.toArray());
 			// return headerValue;
@@ -1701,7 +1625,7 @@ public abstract class HandlerUtils {
 	}
 
 	private static Map resolveRequestHeaderMap(Class<? extends Map> mapType,
-			HttpServletRequest webRequest) {
+											   HttpServletRequest webRequest) {
 		if (MultiValueMap.class.isAssignableFrom(mapType)) {
 			MultiValueMap<String, String> result;
 			if (HttpHeaders.class.isAssignableFrom(mapType)) {
@@ -1710,11 +1634,11 @@ public abstract class HandlerUtils {
 				result = new LinkedMultiValueMap<String, String>();
 			}
 			for (Enumeration<String> iterator = webRequest.getHeaderNames(); iterator
-					.hasMoreElements();) {
+					.hasMoreElements(); ) {
 				String headerName = iterator.nextElement();
 
 				for (Enumeration<String> iterator_ = webRequest
-						.getHeaders(headerName); iterator_.hasMoreElements();) {
+						.getHeaders(headerName); iterator_.hasMoreElements(); ) {
 					result.add(headerName, iterator_.nextElement());
 				}
 			}
@@ -1722,7 +1646,7 @@ public abstract class HandlerUtils {
 		} else {
 			Map<String, String> result = new LinkedHashMap<String, String>();
 			for (Enumeration<String> iterator = webRequest.getHeaderNames(); iterator
-					.hasMoreElements();) {
+					.hasMoreElements(); ) {
 				String headerName = iterator.nextElement();
 				String headerValue = webRequest.getHeader(headerName);
 				result.put(headerName, headerValue);
@@ -1732,19 +1656,19 @@ public abstract class HandlerUtils {
 	}
 
 	protected static Exception raiseMissingHeaderException(String headerName,
-			Class paramType) throws Exception {
+														   Class paramType) throws Exception {
 		return new IllegalStateException("Missing header '" + headerName
 				+ "' of type [" + paramType.getName() + "]");
 	}
 
 	protected static Exception raiseMissingCookieException(String cookieName,
-			Class paramType) {
+														   Class paramType) {
 		return new IllegalStateException("Missing cookie value '" + cookieName
 				+ "' of type [" + paramType.getName() + "]");
 	}
 
 	private static boolean hasParameterAnnotation(PropertieDescription field) {
-		
+
 		if (field.getRequestBody() != null
 				|| field.getDataBind() != null
 				|| field.getPathVariable() != null//.isAnnotationPresent(PathVariable.class)
@@ -1757,128 +1681,9 @@ public abstract class HandlerUtils {
 		return false;
 	}
 
-//	/**
-//	 * 指定了多个注解类型的属性，可以选择性地从不同的注解方式获取属性的值
-//	 * 
-//	 * @param writeMethod
-//	 * @param annotations
-//	 * @param pathVarDatas
-//	 * @param request
-//	 * @param pageContext
-//	 * @param handlerMethod
-//	 * @param model
-//	 * @param type
-//	 * @return
-//	 * @throws Exception
-//	 */
-//	private static Object evaluateArrayPositionAnnotationsValue(
-//			Annotation[] annotations, Map pathVarDatas,
-//			HttpServletRequest request, String name, PageContext pageContext,
-//			MethodData handlerMethod, ModelMap model, Class type, Object value)
-//			throws Exception {
-//
-//		boolean required = false;
-//		EditorInf editor = null;
-//		boolean useEditor = true;
-//		// boolean touched = false;
-//		Object defaultValue = null;
-//		String dateformat = null;
-//		for (Annotation anno : annotations) {
-//
-//			if (anno instanceof PathVariable) {
-//
-//				useEditor = false;
-//			} else if (anno instanceof RequestParam) {
-//				RequestParam param = (RequestParam) anno;
-//				if (!isMultipartFile(type)) {
-//					dateformat = param.dateformat();
-//					if (dateformat.equals(ValueConstants.DEFAULT_NONE))
-//						dateformat = null;
-//					// String decodeCharset = param.decodeCharset();
-//					// String charset = param.charset();
-//					// String convertcharset = param.convertcharset();
-//					// if(decodeCharset.equals(ValueConstants.DEFAULT_NONE))
-//					// {
-//					// decodeCharset = null;
-//					// }
-//					// else
-//					// {
-//					// request.setAttribute(USE_MVC_DENCODE_KEY, TRUE);
-//					// }
-//					// if(charset.equals(ValueConstants.DEFAULT_NONE))
-//					// {
-//					// charset = null;
-//					// }
-//					// if(convertcharset.equals(ValueConstants.DEFAULT_NONE))
-//					// {
-//					// convertcharset = null;
-//					// }
-//					//
-//					// request.setAttribute(USE_MVC_DENCODE_KEY, null);
-//
-//					if (param.editor() != null && !param.editor().equals(""))
-//						editor = (EditorInf) BeanUtils.instantiateClass(param
-//								.editor());
-//					if (!required)
-//						required = param.required();
-//					defaultValue = param.defaultvalue();
-//
-//				} else {
-//
-//				}
-//
-//				useEditor = true;
-//
-//			} else if (anno instanceof Attribute) {
-//
-//				useEditor = false;
-//
-//			} else if (anno instanceof CookieValue) {
-//
-//				useEditor = false;
-//
-//			} else if (anno instanceof RequestHeader) {
-//
-//				useEditor = false;
-//
-//			}
-//			if (defaultValue != null
-//					&& defaultValue.equals(ValueConstants.DEFAULT_NONE))
-//				defaultValue = null;
-//			if (value == null)
-//				value = defaultValue;
-//			if (value != null)
-//				break;
-//			dateformat = null;
-//		}
-//
-//		if (useEditor) {
-//			try {
-//				if (editor == null)
-//					value = ValueObjectUtil.typeCast(value, type, dateformat);
-//				else
-//					value = ValueObjectUtil.typeCast(value, editor);
-//			} catch (Exception e) {
-//				Exception error = raiseMissingParameterException(name, type,
-//						value, e);
-//				model.getErrors().rejectValue(name,
-//						"ValueObjectUtil.typeCast.error",
-//						String.valueOf(value), type, error.getMessage());
-//				return ValueObjectUtil.getDefaultValue(type);
-//			}
-//
-//		}
-//		if (value == null && required) {
-//			Exception e = raiseMissingParameterException(name, type);
-//			model.getErrors().rejectValue(name, "value.required.null",
-//					e.getMessage());
-//			return ValueObjectUtil.getDefaultValue(type);
-//
-//		}
-//		return value;
-//	}
 	/**
 	 * 单独获取名称为变量表达式的参数的值
+	 *
 	 * @param property
 	 * @param request
 	 * @param name
@@ -1890,9 +1695,8 @@ public abstract class HandlerUtils {
 	 * @throws Exception
 	 */
 	private static Object getNamedParameterValue(PropertieDescription property,
-			 HttpServletRequest request, String name, ModelMap model,
-			Class type, CallHolder holder,Class elementType) throws Exception
-	{
+												 HttpServletRequest request, String name, ModelMap model,
+												 Class type, CallHolder holder, Class elementType) throws Exception {
 		boolean required = false;
 		EditorInf editor = null;
 		boolean useEditor = true;
@@ -1921,12 +1725,12 @@ public abstract class HandlerUtils {
 			String[] values = request.getParameterValues(paramName);
 			// boolean needAddData = holder.needAddData();
 			value = getRequestData(values, holder, type, decodeCharset,
-					charset, convertcharset, editor,property.isNamevariabled());
+					charset, convertcharset, editor, property.isNamevariabled());
 
 			if (!required)
 				required = param.required();
 			defaultValue = param.defaultvalue();
-			
+
 		} else {
 			MultipartFile[] values = null;
 			String paramName = ParameterUtil.getParameterName(property, name, request, curpostion);
@@ -1941,30 +1745,26 @@ public abstract class HandlerUtils {
 				values = ((MultipartHttpServletRequest) request)
 						.getFirstFieldFiles();
 			}
-			value = getRequestData(values, holder, type,property.isNamevariabled());
+			value = getRequestData(values, holder, type, property.isNamevariabled());
 			if (param.editor() != null && !param.editor().equals(""))
 				editor = (EditorInf) BeanUtils.instantiateClass(param
 						.editor());
 			if (!required)
 				required = param.required();
-			
+
 		}
-		if (value == null)
+		ClassUtil.ClassInfo classInfo = ClassUtil.getClassInfo(type);
+		if (defaultValue != null && useDefaultValue(value,classInfo.isNumeric() ))
 			value = defaultValue;
 		if (useEditor) {
 			try {
-				if (editor == null)
-				{
-					if(!ValueObjectUtil.isCollectionType(type))
-					{
+				if (editor == null) {
+					if (!ValueObjectUtil.isCollectionType(type)) {
 						value = ValueObjectUtil.typeCast(value, type, dateformat);
+					} else {
+						value = ValueObjectUtil.typeCastCollection(value, type, elementType, dateformat);
 					}
-					else
-					{						
-						value = ValueObjectUtil.typeCastCollection(value, type, elementType, dateformat);	
-					}
-				}
-				else
+				} else
 					value = ValueObjectUtil.typeCast(value, editor);
 			} catch (Exception e) {
 				Exception error = raiseMissingParameterException(name, type,
@@ -1972,13 +1772,13 @@ public abstract class HandlerUtils {
 				model.getErrors().rejectValue(name,
 						"ValueObjectUtil.typeCast.error",
 						String.valueOf(value), type, error.getMessage());
-				logger.error(new StringBuilder().append(property.toString() ).append(":").append(error.getMessage()).toString());
-				
+				logger.error(new StringBuilder().append(property.toString()).append(":").append(error.getMessage()).toString());
+
 				return ValueObjectUtil.getDefaultValue(type);
 			}
 
 		}
-		
+
 		if (value == null && required) {
 			Exception e = raiseMissingParameterException(name, type);
 			model.getErrors().rejectValue(name, "value.required.null",
@@ -1986,15 +1786,14 @@ public abstract class HandlerUtils {
 			return ValueObjectUtil.getDefaultValue(type);
 
 		}
-		
+
 		return value;
 	}
 
 	/**
 	 * 指定了多个注解类型的属性，可以选择性地从不同的注解方式获取属性的值
-	 * 
-	 * @param writeMethod
-	 * @param annotations
+	 *
+	 * @param property
 	 * @param pathVarDatas
 	 * @param request
 	 * @param pageContext
@@ -2005,9 +1804,9 @@ public abstract class HandlerUtils {
 	 * @throws Exception
 	 */
 	private static Object evaluateAnnotationsValue(PropertieDescription property,
-			Map pathVarDatas, HttpServletRequest request, String name,
-			PageContext pageContext, MethodData handlerMethod, ModelMap model,
-			Class type, CallHolder holder,Class elementType) throws Exception {
+												   Map pathVarDatas, HttpServletRequest request, String name,
+												   PageContext pageContext, MethodData handlerMethod, ModelMap model,
+												   Class type, CallHolder holder, Class elementType) throws Exception {
 		Object value = null;
 		boolean required = false;
 		EditorInf editor = null;
@@ -2016,172 +1815,169 @@ public abstract class HandlerUtils {
 		Object defaultValue = null;
 		String dateformat = null;
 		Annotation[] annotations = property.getAnnotations();
-//		for (Annotation anno : annotations) 
-		
+//		for (Annotation anno : annotations)
 
-			
-			if ( property.getRequestParam() != null) {
-				
-				RequestParamWraper param = property.getRequestParam();
-				if (!isMultipartFile(type)) {
-					dateformat = param.dateformat();
-					String decodeCharset = param.decodeCharset();
-					String charset = param.charset();
-					String convertcharset = param.convertcharset();
-					if (decodeCharset != null){
-						request.setAttribute(USE_MVC_DENCODE_KEY, TRUE);
-					}
 
-					request.setAttribute(USE_MVC_DENCODE_KEY, null);
-					if (param.editor() != null && !param.editor().equals(""))
-						editor = (EditorInf) BeanUtils.instantiateClass(param
-								.editor());
-					String paramName = ParameterUtil.getParameterName(property, name, request, 0);
+		if (property.getRequestParam() != null) {
+
+			RequestParamWraper param = property.getRequestParam();
+			if (!isMultipartFile(type)) {
+				dateformat = param.dateformat();
+				String decodeCharset = param.decodeCharset();
+				String charset = param.charset();
+				String convertcharset = param.convertcharset();
+				if (decodeCharset != null) {
+					request.setAttribute(USE_MVC_DENCODE_KEY, TRUE);
+				}
+
+				request.setAttribute(USE_MVC_DENCODE_KEY, null);
+				if (param.editor() != null && !param.editor().equals(""))
+					editor = (EditorInf) BeanUtils.instantiateClass(param
+							.editor());
+				String paramName = ParameterUtil.getParameterName(property, name, request, 0);
 //					String[] values = !param.name().equals("") ? request
 //							.getParameterValues(param.name()) : request
 //							.getParameterValues(name);
-					String[] values = request.getParameterValues(paramName);
-					// boolean needAddData = holder.needAddData();
-					value = getRequestData(values, holder, type, decodeCharset,
-							charset, convertcharset, editor,property.isNamevariabled());
+				String[] values = request.getParameterValues(paramName);
+				// boolean needAddData = holder.needAddData();
+				value = getRequestData(values, holder, type, decodeCharset,
+						charset, convertcharset, editor, property.isNamevariabled());
 
-					if (!required)
-						required = param.required();
-					defaultValue = param.defaultvalue();
-					if (!property.isNamevariabled() && holder.needAddData() ) {
-						holder.addData(name, values, true, editor, required,
-								defaultValue, dateformat);
-					}
-				} else {
-					MultipartFile[] values = null;
-					String paramName = ParameterUtil.getParameterName(property, name, request, 0);
-					if (!HandlerUtils.isIgnoreFieldNameMultipartFile(type)) {
+				if (!required)
+					required = param.required();
+				defaultValue = param.defaultvalue();
+				if (!property.isNamevariabled() && holder.needAddData()) {
+					holder.addData(name, values, true, editor, required,
+							defaultValue, dateformat);
+				}
+			} else {
+				MultipartFile[] values = null;
+				String paramName = ParameterUtil.getParameterName(property, name, request, 0);
+				if (!HandlerUtils.isIgnoreFieldNameMultipartFile(type)) {
 //						values = !param.name().equals("") ? ((MultipartHttpServletRequest) request)
 //								.getFiles(param.name())
 //								: ((MultipartHttpServletRequest) request)
 //										.getFiles(name);
-						values = ((MultipartHttpServletRequest) request).getFiles(paramName);
+					values = ((MultipartHttpServletRequest) request).getFiles(paramName);
 
-					} else {
-						values = ((MultipartHttpServletRequest) request)
-								.getFirstFieldFiles();
-					}
-					value = getRequestData(values, holder, type,property.isNamevariabled());
-					if (param.editor() != null && !param.editor().equals(""))
-						editor = (EditorInf) BeanUtils.instantiateClass(param
-								.editor());
-					if (!required)
-						required = param.required();
-					if (!property.isNamevariabled() && holder.needAddData()) {
-						holder.addData(name, values, true, editor, required);
-					}
+				} else {
+					values = ((MultipartHttpServletRequest) request)
+							.getFirstFieldFiles();
 				}
-				touched = true;
-				useEditor = true;
-
-			} 
-			if (value == null && property.getPathVariable() != null) {
-				dateformat = null;
-				PathVariableWraper param = property.getPathVariable();
-				if (pathVarDatas != null) {
-					if (!param.value().equals(""))
-						value = pathVarDatas.get(param.value());
-					else
-						value = pathVarDatas.get(name);
-				}
+				value = getRequestData(values, holder, type, property.isNamevariabled());
 				if (param.editor() != null && !param.editor().equals(""))
 					editor = (EditorInf) BeanUtils.instantiateClass(param
 							.editor());
-				defaultValue = param.defaultvalue();
-				dateformat = param.dateformat();
-				useEditor = true;
-			}
-			
-			if (value == null && property.getAttribute() != null) {
-				dateformat = null;
-				AttributeWraper param = property.getAttribute();
-				String paramName = !param.name().equals("") ? param.name()
-						: name;
 				if (!required)
 					required = param.required();
-
-				if (param.scope() == AttributeScope.PAGECONTEXT_APPLICATION_SCOPE)
-					value = pageContext.getAttribute(paramName,
-							PageContext.APPLICATION_SCOPE);
-
-				else if (param.scope() == AttributeScope.PAGECONTEXT_PAGE_SCOPE) {
-					value = pageContext.getAttribute(paramName,
-							PageContext.PAGE_SCOPE);
-
-				} else if (param.scope() == AttributeScope.PAGECONTEXT_REQUEST_SCOPE) {
-					value = pageContext.getAttribute(paramName,
-							PageContext.REQUEST_SCOPE);
-
-				} else if (param.scope() == AttributeScope.PAGECONTEXT_SESSION_SCOPE) {
-					value = pageContext.getAttribute(paramName,
-							PageContext.SESSION_SCOPE);
-				} else if (param.scope() == AttributeScope.REQUEST_ATTRIBUTE) {
-					value = request.getAttribute(paramName);
-				} else if (param.scope() == AttributeScope.SESSION_ATTRIBUTE) {
-					HttpSession session = request.getSession(false);
-					if (session != null)
-						value = session.getAttribute(paramName);
-				} else if (param.scope() == AttributeScope.MODEL_ATTRIBUTE) {
-
-					if (model != null)
-						value = model.get(paramName);
-
+				if (!property.isNamevariabled() && holder.needAddData()) {
+					holder.addData(name, values, true, editor, required);
 				}
-				dateformat = param.dateformat();
-				if (param.editor() != null && !param.editor().equals(""))
-					editor = (EditorInf) BeanUtils.instantiateClass(param
-							.editor());
-				defaultValue = param.defaultvalue();
-
-				useEditor = true;
-
 			}
-			if (value == null && property.getCookie() != null) {
-				dateformat = null;
-				CookieValueWraper param = property.getCookie();
-				dateformat = param.dateformat();
-				if (!required)
-					required = param.required();
-				if (param.editor() != null && !param.editor().equals(""))
-					editor = (EditorInf) BeanUtils.instantiateClass(param
-							.editor());
-				defaultValue = param.defaultvalue();
-				String paramName = !param.name().equals("") ? param.name()
-						: name;
-				value = resolveCookieValue(type, paramName, request);
-				useEditor = true;
+			touched = true;
+			useEditor = true;
 
+		}
+		if (value == null && property.getPathVariable() != null) {
+			dateformat = null;
+			PathVariableWraper param = property.getPathVariable();
+			if (pathVarDatas != null) {
+				if (!param.value().equals(""))
+					value = pathVarDatas.get(param.value());
+				else
+					value = pathVarDatas.get(name);
 			}
-			if (value == null && property.getHeader() != null) {
-				dateformat = null;
+			if (param.editor() != null && !param.editor().equals(""))
+				editor = (EditorInf) BeanUtils.instantiateClass(param
+						.editor());
+			defaultValue = param.defaultvalue();
+			dateformat = param.dateformat();
+			useEditor = true;
+		}
 
-				// value = resolveRequestHeader(methodParameter, request);
-				RequestHeaderWraper param =  property.getHeader();
-				dateformat = param.dateformat();
-				
+		if (value == null && property.getAttribute() != null) {
+			dateformat = null;
+			AttributeWraper param = property.getAttribute();
+			String paramName = !param.name().equals("") ? param.name()
+					: name;
+			if (!required)
 				required = param.required();
-				if (param.editor() != null && !param.editor().equals(""))
-					editor = (EditorInf) BeanUtils.instantiateClass(param
-							.editor());
-				defaultValue = param.defaultvalue();
 
-				// resolveRequestHeader(Class<?> paramType,String
-				// headerName,Object defaultValue,
-				// HttpServletRequest webRequest,boolean required)
-				String paramName = !param.name().equals("") ? param.name()
-						: name;
-				value = resolveRequestHeader(type, paramName, request);
-				useEditor = true;
+			if (param.scope() == AttributeScope.PAGECONTEXT_APPLICATION_SCOPE)
+				value = pageContext.getAttribute(paramName,
+						PageContext.APPLICATION_SCOPE);
+
+			else if (param.scope() == AttributeScope.PAGECONTEXT_PAGE_SCOPE) {
+				value = pageContext.getAttribute(paramName,
+						PageContext.PAGE_SCOPE);
+
+			} else if (param.scope() == AttributeScope.PAGECONTEXT_REQUEST_SCOPE) {
+				value = pageContext.getAttribute(paramName,
+						PageContext.REQUEST_SCOPE);
+
+			} else if (param.scope() == AttributeScope.PAGECONTEXT_SESSION_SCOPE) {
+				value = pageContext.getAttribute(paramName,
+						PageContext.SESSION_SCOPE);
+			} else if (param.scope() == AttributeScope.REQUEST_ATTRIBUTE) {
+				value = request.getAttribute(paramName);
+			} else if (param.scope() == AttributeScope.SESSION_ATTRIBUTE) {
+				HttpSession session = request.getSession(false);
+				if (session != null)
+					value = session.getAttribute(paramName);
+			} else if (param.scope() == AttributeScope.MODEL_ATTRIBUTE) {
+
+				if (model != null)
+					value = model.get(paramName);
 
 			}
-			if (value == null)
-				value = defaultValue;
-		
+			dateformat = param.dateformat();
+			if (param.editor() != null && !param.editor().equals(""))
+				editor = (EditorInf) BeanUtils.instantiateClass(param
+						.editor());
+			defaultValue = param.defaultvalue();
+
+			useEditor = true;
+
+		}
+		if (value == null && property.getCookie() != null) {
+			dateformat = null;
+			CookieValueWraper param = property.getCookie();
+			dateformat = param.dateformat();
+			if (!required)
+				required = param.required();
+			if (param.editor() != null && !param.editor().equals(""))
+				editor = (EditorInf) BeanUtils.instantiateClass(param
+						.editor());
+			defaultValue = param.defaultvalue();
+			String paramName = !param.name().equals("") ? param.name()
+					: name;
+			value = resolveCookieValue(type, paramName, request);
+			useEditor = true;
+
+		}
+		if (value == null && property.getHeader() != null) {
+			dateformat = null;
+
+			// value = resolveRequestHeader(methodParameter, request);
+			RequestHeaderWraper param = property.getHeader();
+			dateformat = param.dateformat();
+
+			required = param.required();
+			if (param.editor() != null && !param.editor().equals(""))
+				editor = (EditorInf) BeanUtils.instantiateClass(param
+						.editor());
+			defaultValue = param.defaultvalue();
+
+			String paramName = !param.name().equals("") ? param.name()
+					: name;
+			value = resolveRequestHeader(type, paramName, request);
+			useEditor = true;
+
+		}
+		ClassUtil.ClassInfo classInfo = ClassUtil.getClassInfo(type);
+		if (defaultValue != null && useDefaultValue(value,classInfo.isNumeric() ))
+			value = defaultValue;
+
 
 		if (!property.isNamevariabled() && !touched && holder.needAddData()) {
 			holder.addData(name, value, editor, required, defaultValue);
@@ -2189,18 +1985,13 @@ public abstract class HandlerUtils {
 
 		if (useEditor) {
 			try {
-				if (editor == null)
-				{
-					if(!ValueObjectUtil.isCollectionType(type))
-					{
+				if (editor == null) {
+					if (!ValueObjectUtil.isCollectionType(type)) {
 						value = ValueObjectUtil.typeCast(value, type, dateformat);
+					} else {
+						value = ValueObjectUtil.typeCastCollection(value, type, elementType, dateformat);
 					}
-					else
-					{						
-						value = ValueObjectUtil.typeCastCollection(value, type, elementType, dateformat);	
-					}
-				}
-				else
+				} else
 					value = ValueObjectUtil.typeCast(value, editor);
 			} catch (Exception e) {
 				Exception error = raiseMissingParameterException(name, type,
@@ -2208,8 +1999,8 @@ public abstract class HandlerUtils {
 				model.getErrors().rejectValue(name,
 						"ValueObjectUtil.typeCast.error",
 						String.valueOf(value), type, error.getMessage());
-				logger.error(new StringBuilder().append(handlerMethod.getMethodInfo().toString() ).append(":").append(error.getMessage()).toString());
-				
+				logger.error(new StringBuilder().append(handlerMethod.getMethodInfo().toString()).append(":").append(error.getMessage()).toString());
+
 				return ValueObjectUtil.getDefaultValue(type);
 			}
 
@@ -2226,17 +2017,15 @@ public abstract class HandlerUtils {
 
 	/**
 	 * 多文件附件上传参数获取
-	 * 
+	 *
 	 * @param values
 	 * @param holder
 	 * @param type
-	 * @param decodeCharset
-	 * @param charset
-	 * @param convertcharset
+	 * @param isNamevariabled
 	 * @return
 	 */
 	public static Object getRequestData(MultipartFile values[],
-			CallHolder holder, Class type,boolean isNamevariabled) {
+										CallHolder holder, Class type, boolean isNamevariabled) {
 		Object value = null;
 		if (values != null) {
 			if (!isNamevariabled && holder.isCollection()) {
@@ -2271,7 +2060,7 @@ public abstract class HandlerUtils {
 
 	/**
 	 * 普通Request参数处理
-	 * 
+	 *
 	 * @param values
 	 * @param holder
 	 * @param type
@@ -2281,8 +2070,8 @@ public abstract class HandlerUtils {
 	 * @return
 	 */
 	public static Object getRequestData(String values[], CallHolder holder,
-			Class type, String decodeCharset, String charset,
-			String convertcharset, EditorInf editor,boolean namevariabled) {
+										Class type, String decodeCharset, String charset,
+										String convertcharset, EditorInf editor, boolean namevariabled) {
 		Object value = null;
 		if (values != null) {
 			if (!namevariabled && holder.isCollection()) {
@@ -2297,7 +2086,7 @@ public abstract class HandlerUtils {
 								value = URLDecoder
 										.decode(value_, decodeCharset);
 							} catch (Exception e) {
-								logger.error("",e);
+								logger.error("", e);
 								value = value_;
 							}
 						} else if (charset != null && convertcharset != null) {
@@ -2305,7 +2094,7 @@ public abstract class HandlerUtils {
 								value = new String(value_.getBytes(charset),
 										convertcharset);
 							} catch (Exception e) {
-								logger.error("",e);
+								logger.error("", e);
 								value = value_;
 							}
 						} else {
@@ -2362,7 +2151,7 @@ public abstract class HandlerUtils {
 	}
 
 	private static Object _getRequestDatas(String values[],
-			String decodeCharset, String charset, String convertcharset) {
+										   String decodeCharset, String charset, String convertcharset) {
 		Object value = null;
 		if (decodeCharset != null) {
 			String[] values_ = new String[values.length];
@@ -2399,7 +2188,7 @@ public abstract class HandlerUtils {
 	}
 
 	private static Object _getRequestData(String values[],
-			String decodeCharset, String charset, String convertcharset) {
+										  String decodeCharset, String charset, String convertcharset) {
 		Object value = null;
 		String value_ = values[0];
 		if (decodeCharset != null) {
@@ -2425,12 +2214,12 @@ public abstract class HandlerUtils {
 	}
 
 	private static Object buildArrayPositionData(PropertieDescription property,
-			HttpServletRequest request, HttpServletResponse response,
-			PageContext pageContext, MethodData handlerMethod, ModelMap model,
-			HttpMessageConverter[] messageConverters, CallHolder holder,
-			Class objectType, Map pathVarDatas) throws Exception {
+												 HttpServletRequest request, HttpServletResponse response,
+												 PageContext pageContext, MethodData handlerMethod, ModelMap model,
+												 HttpMessageConverter[] messageConverters, CallHolder holder,
+												 Class objectType, Map pathVarDatas) throws Exception {
 		String name = property.getName();
-		Object value = holder.getData(name);
+		Object value = holder.getData(name,property.isNumeric());
 		boolean required = false;
 
 		EditorInf editor = null;
@@ -2449,57 +2238,7 @@ public abstract class HandlerUtils {
 			return null;
 		}
 
-		// if (HttpSession.class.isAssignableFrom(type)) {
-		//
-		//
-		//
-		// }
-		// else if (HttpServletRequest.class.isAssignableFrom(type))
-		// {
-		//
-		// } else if (javax.servlet.http.HttpServletResponse.class
-		// .isAssignableFrom(type))
-		// {
-		//
-		// } else if (PageContext.class.isAssignableFrom(type)) {
-		//
-		// } else if (ModelMap.class.isAssignableFrom(type)) {
-		//
-		// }
-		// else if(Map.class.isAssignableFrom(type))
-		// {
-		//
-		// }
-		// else if (field.getAnnotations() == null
-		// || field.getAnnotations().length == 0 ||
-		// !hasParameterAnnotation(field)) {
-		//
-		// }
-		//
-		// else if (field.isAnnotationPresent(RequestBody.class)) {
-		//
-		// }
-		// else if (field.isAnnotationPresent(DataBind.class)) {
-		//
-		// }
-		// else
-		// {
-		// Annotation[] annotations = field.getAnnotations();
-		// try
-		// {
-		// value = evaluateArrayPositionAnnotationsValue( annotations,
-		// pathVarDatas, request, name,
-		// pageContext, handlerMethod, model, type,value);
-		//
-		// return value;
-		// }
-		// catch(Exception e)
-		// {
-		// model.getErrors().rejectValue(name,
-		// "evaluateAnnotationsValue.error",e.getMessage());
-		// return ValueObjectUtil.getDefaultValue(type);
-		// }
-		// }
+
 		if (useEditor) {
 			try {
 				if (editor == null)
@@ -2513,7 +2252,7 @@ public abstract class HandlerUtils {
 				model.getErrors().rejectValue(name,
 						"ValueObjectUtil.typeCast.error",
 						String.valueOf(value), type, error.getMessage());
-				logger.error(new StringBuilder().append(handlerMethod.getMethodInfo().toString() ).append(":").append(error.getMessage()).toString());
+				logger.error(new StringBuilder().append(handlerMethod.getMethodInfo().toString()).append(":").append(error.getMessage()).toString());
 				return ValueObjectUtil.getDefaultValue(type);
 			}
 
@@ -2528,10 +2267,10 @@ public abstract class HandlerUtils {
 	}
 
 	public static Object buildPropertyValue(PropertieDescription property,
-			HttpServletRequest request, HttpServletResponse response,
-			PageContext pageContext, MethodData handlerMethod, ModelMap model,
-			HttpMessageConverter[] messageConverters, CallHolder holder,
-			Class objectType) throws Exception {
+											HttpServletRequest request, HttpServletResponse response,
+											PageContext pageContext, MethodData handlerMethod, ModelMap model,
+											HttpMessageConverter[] messageConverters, CallHolder holder,
+											Class objectType) throws Exception {
 		MethodInfo methodInfo = handlerMethod.getMethodInfo();
 		Map pathVarDatas = handlerMethod.getPathVariableDatas();
 		String name = property.getName();
@@ -2544,34 +2283,17 @@ public abstract class HandlerUtils {
 		EditorInf editor = null;
 		boolean useEditor = true;
 		if (holder.isCollection() && holder.getPosition() > 0) {
-			// value = holder.getData(name);
-			// if(holder.isArray(name))
-			// {
-			// useEditor = true;
-			// editor = holder.getEditor(name);
-			// required = holder.isRequired(name);
-			// }
-			if(!property.isNamevariabled())
-			{
-				// 解决问题：List<Bean>中如果bean有日期类型并且指定了日期格式，对应多条记录情况下格式化日期报错的问题			
+
+			if (!property.isNamevariabled()) {
+				// 解决问题：List<Bean>中如果bean有日期类型并且指定了日期格式，对应多条记录情况下格式化日期报错的问题
 				value = buildArrayPositionData(property, request, response,
 						pageContext, handlerMethod, model, messageConverters,
 						holder, objectType, pathVarDatas);
-			}
-			else
-			{
-				/**
-				 * Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// 获取元素类型
-					value = evaluateAnnotationsValue(property, pathVarDatas,
-							request, name, pageContext, handlerMethod, model,
-							type, holder,ct);
-					useEditor = false;
-					return value;
-				 */
-				Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// 获取元素类型
-				value = getNamedParameterValue( property,
-						   request,  name,  model,
-						 type,  holder, ct) ;
+			} else {
+				Class ct = ValueObjectUtil.isCollectionType(type) ? property.getPropertyGenericType() : null;// 获取元素类型
+				value = getNamedParameterValue(property,
+						request, name, model,
+						type, holder, ct);
 			}
 			return value;
 		} else {
@@ -2625,13 +2347,10 @@ public abstract class HandlerUtils {
 					mapKey = property.getMapkey();
 				if (mapKey == null) {
 					value = buildParameterMaps(request);
-				}
-				else 
-				{
-					if(!mapKey.value().equals(""))
-					{
+				} else {
+					if (!mapKey.value().equals("")) {
 						Map command = new HashMap();
-	
+
 						Class[] ct = property.getPropertyGenericTypes();// 获取元素类型
 						if (ct == null) {
 							model.getErrors().rejectValue(
@@ -2649,10 +2368,8 @@ public abstract class HandlerUtils {
 						if (holder.needAddData()) {
 							holder.addData(name, value);
 						}
-					}
-					else
-					{
-						value = buildParameterMaps(request,mapKey.pattern());
+					} else {
+						value = buildParameterMaps(request, mapKey.pattern());
 					}
 				}
 				useEditor = false;
@@ -2669,7 +2386,7 @@ public abstract class HandlerUtils {
 //						return ValueObjectUtil.getDefaultValue(type);
 //					}
 					bind(request, response, pageContext, handlerMethod, model,
-							command, ct, null, messageConverters,name);
+							command, ct, null, messageConverters, name);
 					value = command;
 					if (holder.needAddData()) {
 						holder.addData(name, value);
@@ -2687,7 +2404,7 @@ public abstract class HandlerUtils {
 //						return ValueObjectUtil.getDefaultValue(type);
 //					}
 					bind(request, response, pageContext, handlerMethod, model,
-							command, ct, null, messageConverters,name);
+							command, ct, null, messageConverters, name);
 					value = command;
 					if (holder.needAddData()) {
 						holder.addData(name, value);
@@ -2697,7 +2414,7 @@ public abstract class HandlerUtils {
 					if (!isMultipartFile(type)) {
 						String[] values = request.getParameterValues(name);
 						value = getRequestData(values, holder, type, null,
-								null, null, null,false);
+								null, null, null, false);
 						if (holder.needAddData()) {
 							holder.addData(name, values, true, null, false);
 						}
@@ -2707,7 +2424,7 @@ public abstract class HandlerUtils {
 									.isIgnoreFieldNameMultipartFile(type)) {
 								MultipartFile[] values = ((MultipartHttpServletRequest) request)
 										.getFiles(name);
-								value = getRequestData(values, holder, type,false);
+								value = getRequestData(values, holder, type, false);
 								if (holder.needAddData()) {
 									holder.addData(name, values, true, null,
 											false);
@@ -2715,7 +2432,7 @@ public abstract class HandlerUtils {
 							} else {
 								MultipartFile[] values = ((MultipartHttpServletRequest) request)
 										.getFirstFieldFiles();
-								value = getRequestData(values, holder, type,false);
+								value = getRequestData(values, holder, type, false);
 								if (holder.needAddData()) {
 									holder.addData(name, values, true, null,
 											false);
@@ -2733,7 +2450,7 @@ public abstract class HandlerUtils {
 //			else if (field.isAnnotationPresent(RequestBody.class)) {
 			else if (property.getRequestBody() != null) {
 				value = resolveRequestBody(type, name, request,
-						messageConverters,property.getRequestBody());
+						messageConverters, property.getRequestBody());
 				if (holder.needAddData()) {
 					holder.addData(name, value);
 				}
@@ -2750,10 +2467,10 @@ public abstract class HandlerUtils {
 			} else {
 				Annotation[] annotations = property.getAnnotations();
 				try {
-					Class ct = ValueObjectUtil.isCollectionType(type)?property.getPropertyGenericType():null;// 获取元素类型
+					Class ct = ValueObjectUtil.isCollectionType(type) ? property.getPropertyGenericType() : null;// 获取元素类型
 					value = evaluateAnnotationsValue(property, pathVarDatas,
 							request, name, pageContext, handlerMethod, model,
-							type, holder,ct);
+							type, holder, ct);
 					useEditor = false;
 					return value;
 				} catch (Exception e) {
@@ -2767,13 +2484,11 @@ public abstract class HandlerUtils {
 
 		if (useEditor) {
 			try {
-				if (editor == null)
-				{
-					
+				if (editor == null) {
+
 					value = ValueObjectUtil.typeCast(value, type);
-					
-				}
-				else
+
+				} else
 					value = ValueObjectUtil.typeCast(value, editor);
 			} catch (Exception e) {
 				Exception error = raiseMissingParameterException(name, type,
@@ -2781,8 +2496,8 @@ public abstract class HandlerUtils {
 				model.getErrors().rejectValue(name,
 						"ValueObjectUtil.typeCast.error",
 						String.valueOf(value), type, error.getMessage());
-				logger.error(new StringBuilder().append(handlerMethod.getMethodInfo().toString() ).append(":").append(error.getMessage()).toString());
-				
+				logger.error(new StringBuilder().append(handlerMethod.getMethodInfo().toString()).append(":").append(error.getMessage()).toString());
+
 				return ValueObjectUtil.getDefaultValue(type);
 			}
 
@@ -2811,18 +2526,15 @@ public abstract class HandlerUtils {
 
 	/**
 	 * Bind request parameters onto the given command bean
-	 * 
-	 * @param request
-	 *            request from which parameters will be bound
-	 * @param command
-	 *            command object, that must be a JavaBean
-	 * @throws Exception
-	 *             in case of invalid state or arguments
+	 *
+	 * @param request request from which parameters will be bound
+	 * @param command command object, that must be a JavaBean
+	 * @throws Exception in case of invalid state or arguments
 	 */
 	public static void bind(HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext,
-			MethodData handlerMethod, ModelMap model, Object command,
-			Validator[] validators, HttpMessageConverter[] messageConverters)
+							HttpServletResponse response, PageContext pageContext,
+							MethodData handlerMethod, ModelMap model, Object command,
+							Validator[] validators, HttpMessageConverter[] messageConverters)
 			throws Exception {
 		logger.debug("Binding request parameters onto MultiActionController command");
 		ServletRequestDataBinder binder = createBinder(request, command,
@@ -2843,19 +2555,16 @@ public abstract class HandlerUtils {
 
 	/**
 	 * Bind request parameters onto the given command bean
-	 * 
-	 * @param request
-	 *            request from which parameters will be bound
-	 * @param command
-	 *            command object, that must be a JavaBean
-	 * @throws Exception
-	 *             in case of invalid state or arguments
+	 *
+	 * @param request request from which parameters will be bound
+	 * @param command command object, that must be a JavaBean
+	 * @throws Exception in case of invalid state or arguments
 	 */
 	public static void bind(HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext,
-			MethodData handlerMethod, ModelMap model, Collection command,
-			Class objectType, Validator[] validators,
-			HttpMessageConverter[] messageConverters,String paramname) throws Exception {
+							HttpServletResponse response, PageContext pageContext,
+							MethodData handlerMethod, ModelMap model, Collection command,
+							Class objectType, Validator[] validators,
+							HttpMessageConverter[] messageConverters, String paramname) throws Exception {
 		logger.debug("Binding request parameters onto  Controller Parameter Object.");
 		ServletRequestDataBinder binder = createBinder(request, command,
 				objectType, (BindingResult) model.getErrors(), paramname);
@@ -2875,19 +2584,16 @@ public abstract class HandlerUtils {
 
 	/**
 	 * Bind request parameters onto the given command bean
-	 * 
-	 * @param request
-	 *            request from which parameters will be bound
-	 * @param command
-	 *            command object, that must be a JavaBean
-	 * @throws Exception
-	 *             in case of invalid state or arguments
+	 *
+	 * @param request request from which parameters will be bound
+	 * @param command command object, that must be a JavaBean
+	 * @throws Exception in case of invalid state or arguments
 	 */
 	public static void bind(HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext,
-			MethodData handlerMethod, ModelMap model, Map command,
-			Class mapkeytype, Class objectType, String mapkeyName,
-			Validator[] validators, HttpMessageConverter[] messageConverters)
+							HttpServletResponse response, PageContext pageContext,
+							MethodData handlerMethod, ModelMap model, Map command,
+							Class mapkeytype, Class objectType, String mapkeyName,
+							Validator[] validators, HttpMessageConverter[] messageConverters)
 			throws Exception {
 		logger.debug("Binding request parameters onto  Controller Parameter Object.");
 		ServletRequestDataBinder binder = createBinder(request, command,
@@ -2916,16 +2622,12 @@ public abstract class HandlerUtils {
 	 * The default implementation creates a standard ServletRequestDataBinder,
 	 * and invokes <code>initBinder</code>. Note that <code>initBinder</code>
 	 * will not be invoked if you override this method!
-	 * 
-	 * @param request
-	 *            current HTTP request
-	 * @param command
-	 *            the command to bind onto
+	 *
+	 * @param request current HTTP request
+	 * @param command the command to bind onto
 	 * @return the new binder instance
-	 * @throws Exception
-	 *             in case of invalid state or arguments
+	 * @throws Exception in case of invalid state or arguments
 	 * @see #bind
-	 * @see #initBinder
 	 */
 	public static ServletRequestDataBinder createBinder(
 			HttpServletRequest request, Object command,
@@ -2940,7 +2642,7 @@ public abstract class HandlerUtils {
 
 	public static ServletRequestDataBinder createBinder(
 			HttpServletRequest request, Collection command, Class objecttype,
-			BindingResult bindingResult,String paramname) throws Exception {
+			BindingResult bindingResult, String paramname) throws Exception {
 		ServletRequestDataBinder binder = new ServletRequestDataBinder(command,
 				getCommandName(command), objecttype, paramname);
 		binder.setBindingResult(bindingResult);
@@ -2967,9 +2669,8 @@ public abstract class HandlerUtils {
 	 * Return the command name to use for the given command object.
 	 * <p>
 	 * Default is "command".
-	 * 
-	 * @param command
-	 *            the command object
+	 *
+	 * @param command the command object
 	 * @return the command name to use
 	 * @see #DEFAULT_COMMAND_NAME
 	 */
@@ -2983,9 +2684,8 @@ public abstract class HandlerUtils {
 	 * This implementation uses <code>BeanUtils.instantiateClass</code>, so
 	 * commands need to have public no-arg constructors. Subclasses can override
 	 * this implementation if desired.
-	 * 
-	 * @throws Exception
-	 *             if the command object could not be instantiated
+	 *
+	 * @throws Exception if the command object could not be instantiated
 	 * @see BeanUtils#instantiateClass(Class)
 	 */
 	public static Object newCommandObject(Class clazz) throws Exception {
@@ -2998,22 +2698,22 @@ public abstract class HandlerUtils {
 	}
 
 	public static Exception raiseMissingParameterException(String paramName,
-			Class paramType) throws Exception {
+														   Class paramType) throws Exception {
 		StringBuilder msg = new StringBuilder();
-		msg.append("Missing parameter '").append( paramName).append( "' of type [" ).append( paramType.getName() ).append( "]");
+		msg.append("Missing parameter '").append(paramName).append("' of type [").append(paramType.getName()).append("]");
 		String _msg = msg.toString();
 		logger.info(_msg);
 		return new IllegalStateException(_msg);
 	}
 
 	public static Exception raiseMissingParameterException(String paramName,
-			Class paramType, Object paramValue, Throwable e) throws Exception {
+														   Class paramType, Object paramValue, Throwable e) throws Exception {
 		StringBuilder msg = new StringBuilder();
-		msg.append("Parameter '" ).append( paramName
-				).append( "' of type [" ).append( paramType.getName() ).append( "],Error value is ["
-						).append( paramValue ).append( "],reason is[" ).append( e.getMessage() ).append( "]");
+		msg.append("Parameter '").append(paramName
+		).append("' of type [").append(paramType.getName()).append("],Error value is ["
+		).append(paramValue).append("],reason is[").append(e.getMessage()).append("]");
 		String _msg = msg.toString();
-		
+
 		return new IllegalStateException(_msg);
 	}
 
@@ -3094,21 +2794,16 @@ public abstract class HandlerUtils {
 				return determineUrlsForHandlerMethods(handlerType);
 			}
 		} catch (NoClassDefFoundError e) {
-			if(logger.isDebugEnabled())
-			{
-				logger.debug("determineUrlsForHandler failed:",e);
+			if (logger.isDebugEnabled()) {
+				logger.debug("determineUrlsForHandler failed:", e);
 			}
-		}
-		catch (Exception e) {
-			if(logger.isDebugEnabled())
-			{
-				logger.debug("determineUrlsForHandler failed:",e);
+		} catch (Exception e) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("determineUrlsForHandler failed:", e);
 			}
-		}
-		catch (Throwable e) {
-			if(logger.isDebugEnabled())
-			{
-				logger.debug("determineUrlsForHandler failed:",e);
+		} catch (Throwable e) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("determineUrlsForHandler failed:", e);
 			}
 		}
 		return null;
@@ -3125,14 +2820,12 @@ public abstract class HandlerUtils {
 
 	/**
 	 * Add URLs and/or URL patterns for the given path.
-	 * 
-	 * @param urls
-	 *            the Set of URLs for the current bean
-	 * @param path
-	 *            the currently introspected path
+	 *
+	 * @param urls the Set of URLs for the current bean
+	 * @param path the currently introspected path
 	 */
 	protected static void addUrlsForRestfulPath(Set<String> urls, String path,
-			Set<Method> handlermethods) {
+												Set<Method> handlermethods) {
 		Iterator<Method> methods = handlermethods.iterator();
 		boolean added = false;
 		while (methods.hasNext()) {
@@ -3146,9 +2839,8 @@ public abstract class HandlerUtils {
 
 	/**
 	 * Derive URL mappings from the handler's method-level mappings.
-	 * 
-	 * @param handlerType
-	 *            the handler type to introspect
+	 *
+	 * @param handlerType the handler type to introspect
 	 * @return the array of mapped URLs
 	 */
 	protected static String[] determineUrlsForHandlerMethods(
@@ -3174,11 +2866,9 @@ public abstract class HandlerUtils {
 
 	/**
 	 * Add URLs and/or URL patterns for the given path.
-	 * 
-	 * @param urls
-	 *            the Set of URLs for the current bean
-	 * @param path
-	 *            the currently introspected path
+	 *
+	 * @param urls the Set of URLs for the current bean
+	 * @param path the currently introspected path
 	 */
 	protected static void addUrlsForPath(Set<String> urls, String path) {
 		// Iterator<Method> methods = handlermethods.iterator();
@@ -3211,6 +2901,34 @@ public abstract class HandlerUtils {
 		return MethodInfo.buildPathPattern(methodpath);
 
 	}
+
+//	private static void assertDToken(ServletRequest request,
+//			ServletResponse response, MethodData handlerMethod)
+//			throws IOException {
+//		if (handlerMethod.getMethodInfo().isRequiredDToken()) {
+//			
+//			if (!TokenHelper.isEnableToken())
+//				return;
+//			TokenHelper.doDTokencheck(request, response);
+//			// if(!memTokenManager.assertDTokenSetted(request))
+//			// {
+//			// if(request instanceof HttpServletRequest)
+//			// {
+//			// memTokenManager.sendRedirect((HttpServletRequest)
+//			// request,(HttpServletResponse) response);
+//			// }
+//			// else
+//			// {
+//			// throw new DTokenValidateFailedException();
+//			// }
+//			// }
+//		}
+//		else if (handlerMethod.getMethodInfo().isRequireTicket())
+//		{			
+//			TokenHelper.doTicketcheck(request, response);
+//		}
+//
+//	}
 
 	// protected int convert(HttpMethod HttpMethod)
 	// {
@@ -3246,7 +2964,7 @@ public abstract class HandlerUtils {
 //			urls.add(url);
 //		}
 //		return urls;
-		
+
 		String url = path;
 		Set<String> urls = new LinkedHashSet<String>();
 		HandlerMapping mapping = method.getAnnotation(HandlerMapping.class);
@@ -3266,7 +2984,7 @@ public abstract class HandlerUtils {
 //					}
 //
 //				}
-				urls.add(MethodInfo.buildPathPattern(url,mappedPath));
+				urls.add(MethodInfo.buildPathPattern(url, mappedPath));
 //				pathUrl = null;
 			} else {
 				urls.add(url);
@@ -3279,17 +2997,16 @@ public abstract class HandlerUtils {
 	}
 
 	public static ModelAndView invokeHandlerMethod(HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext,
-			HandlerMeta handler, ServletHandlerMethodResolver methodResolver,
-			HttpMessageConverter[] messageConverters) throws Exception {
+												   HttpServletResponse response, PageContext pageContext,
+												   HandlerMeta handler, ServletHandlerMethodResolver methodResolver,
+												   HttpMessageConverter[] messageConverters) throws Exception {
 
 		try {
 			// ServletHandlerMethodResolver methodResolver =
 			// getMethodResolver(handler.getClass(),methodResolverCache,urlPathHelper,pathMatcher,methodNameResolver);
 			MethodData handlerMethod = methodResolver
 					.resolveHandlerMethod(request);
-			if(assertTokenMethod != null)
-			{
+			if (assertTokenMethod != null) {
 //				assertDToken(request, response, handlerMethod);
 				assertTokenMethod.invoke(null, request, response, handlerMethod);
 			}
@@ -3316,52 +3033,20 @@ public abstract class HandlerUtils {
 
 	}
 
-//	private static void assertDToken(ServletRequest request,
-//			ServletResponse response, MethodData handlerMethod)
-//			throws IOException {
-//		if (handlerMethod.getMethodInfo().isRequiredDToken()) {
-//			
-//			if (!TokenHelper.isEnableToken())
-//				return;
-//			TokenHelper.doDTokencheck(request, response);
-//			// if(!memTokenManager.assertDTokenSetted(request))
-//			// {
-//			// if(request instanceof HttpServletRequest)
-//			// {
-//			// memTokenManager.sendRedirect((HttpServletRequest)
-//			// request,(HttpServletResponse) response);
-//			// }
-//			// else
-//			// {
-//			// throw new DTokenValidateFailedException();
-//			// }
-//			// }
-//		}
-//		else if (handlerMethod.getMethodInfo().isRequireTicket())
-//		{			
-//			TokenHelper.doTicketcheck(request, response);
-//		}
-//
-//	}
-
 	/**
 	 * Handle the case where no request handler method was found.
 	 * <p>
 	 * The default implementation logs a warning and sends an HTTP 404 error.
 	 * Alternatively, a fallback view could be chosen, or the
 	 * NoSuchRequestHandlingMethodException could be rethrown as-is.
-	 * 
-	 * @param ex
-	 *            the NoSuchRequestHandlingMethodException to be handled
-	 * @param request
-	 *            current HTTP request
-	 * @param response
-	 *            current HTTP response
+	 *
+	 * @param ex       the NoSuchRequestHandlingMethodException to be handled
+	 * @param request  current HTTP request
+	 * @param response current HTTP response
 	 * @return a ModelAndView to render, or <code>null</code> if handled
-	 *         directly
-	 * @throws Exception
-	 *             an Exception that should be thrown as result of the servlet
-	 *             request
+	 * directly
+	 * @throws Exception an Exception that should be thrown as result of the servlet
+	 *                   request
 	 */
 	public static ModelAndView handleNoSuchRequestHandlingMethod(
 			PathURLNotSetException ex, HttpServletRequest request,
@@ -3382,21 +3067,6 @@ public abstract class HandlerUtils {
 		return null;
 	}
 
-	/**
-	 * Log category to use when no mapped handler is found for a request.
-	 * 
-	 * @see #pageNotFoundLogger
-	 */
-	public static final String PAGE_NOT_FOUND_LOG_CATEGORY = "org.frameworkset.web.servlet.PageNotFound";
-
-	/**
-	 * Additional logger to use when no mapped handler is found for a request.
-	 * 
-	 * @see #PAGE_NOT_FOUND_LOG_CATEGORY
-	 */
-	protected final static Logger pageNotFoundLogger = LoggerFactory
-			.getLogger(PAGE_NOT_FOUND_LOG_CATEGORY);
-
 	// protected static final Log pageNotFoundLogger = LogFactory
 	// .getLog(PAGE_NOT_FOUND_LOG_CATEGORY);
 
@@ -3407,8 +3077,8 @@ public abstract class HandlerUtils {
 		private PathMatcher pathMatcher = new AntPathMatcher();
 
 		public ServletHandlerMethodResolver(Class<?> handlerType,
-				UrlPathHelper urlPathHelper, PathMatcher pathMatcher,
-				MethodNameResolver methodNameResolver) {
+											UrlPathHelper urlPathHelper, PathMatcher pathMatcher,
+											MethodNameResolver methodNameResolver) {
 			super(handlerType);
 			this.urlPathHelper = urlPathHelper;
 			this.methodNameResolver = methodNameResolver;
@@ -3416,8 +3086,8 @@ public abstract class HandlerUtils {
 		}
 
 		public ServletHandlerMethodResolver(Class<?> handlerType,
-				UrlPathHelper urlPathHelper, PathMatcher pathMatcher,
-				MethodNameResolver methodNameResolver, String baseurls[]) {
+											UrlPathHelper urlPathHelper, PathMatcher pathMatcher,
+											MethodNameResolver methodNameResolver, String baseurls[]) {
 			super(handlerType, baseurls);
 			this.urlPathHelper = urlPathHelper;
 			this.methodNameResolver = methodNameResolver;
@@ -3457,12 +3127,12 @@ public abstract class HandlerUtils {
 				mappingInfo.paths = handlerMethod.getPathPattern();
 				if (!hasTypeLevelMapping()
 						|| !Arrays.equals(mapping.method(),
-								getTypeLevelMapping().method())) {
+						getTypeLevelMapping().method())) {
 					mappingInfo.methods = mapping.method();
 				}
 				if (!hasTypeLevelMapping()
 						|| !Arrays.equals(mapping.params(),
-								getTypeLevelMapping().params())) {
+						getTypeLevelMapping().params())) {
 					mappingInfo.params = mapping.params();
 				}
 				boolean match = false;
@@ -3569,10 +3239,10 @@ public abstract class HandlerUtils {
 						if (isBetterPathMatch(mappedPath, bestPathMatch,
 								lookupPath)
 								|| (!isBetterPathMatch(bestPathMatch,
-										mappedPath, lookupPath) && (isBetterMethodMatch(
-										mapping, bestMappingMatch) || (!isBetterMethodMatch(
-										bestMappingMatch, mapping) && isBetterParamMatch(
-										mapping, bestMappingMatch))))) {
+								mappedPath, lookupPath) && (isBetterMethodMatch(
+								mapping, bestMappingMatch) || (!isBetterMethodMatch(
+								bestMappingMatch, mapping) && isBetterParamMatch(
+								mapping, bestMappingMatch))))) {
 							bestMappingMatch = mapping;
 							bestPathMatch = mappedPath;
 						}
@@ -3613,15 +3283,15 @@ public abstract class HandlerUtils {
 		}
 
 		private boolean checkParameters(HandlerMappingInfo mapping,
-				HttpServletRequest request) {
+										HttpServletRequest request) {
 			return ServletAnnotationMappingUtils.checkRequestMethod(
 					mapping.methods, request)
 					&& ServletAnnotationMappingUtils.checkParameters(
-							mapping.params, request);
+					mapping.params, request);
 		}
 
 		private boolean isBetterPathMatch(String mappedPath,
-				String mappedPathToCompare, String lookupPath) {
+										  String mappedPathToCompare, String lookupPath) {
 			return (mappedPath != null && (mappedPathToCompare == null
 					|| mappedPathToCompare.length() < mappedPath.length() || (mappedPath
 					.equals(lookupPath) && !mappedPathToCompare
@@ -3629,12 +3299,12 @@ public abstract class HandlerUtils {
 		}
 
 		private boolean isBetterMethodMatch(HandlerMappingInfo mapping,
-				HandlerMappingInfo mappingToCompare) {
+											HandlerMappingInfo mappingToCompare) {
 			return (mappingToCompare.methods.length == 0 && mapping.methods.length > 0);
 		}
 
 		private boolean isBetterParamMatch(HandlerMappingInfo mapping,
-				HandlerMappingInfo mappingToCompare) {
+										   HandlerMappingInfo mappingToCompare) {
 			return (mappingToCompare.params.length < mapping.params.length);
 		}
 	}
@@ -3645,15 +3315,15 @@ public abstract class HandlerUtils {
 		private boolean responseArgumentUsed = false;
 
 		public ServletHandlerMethodInvoker(HandlerMethodResolver resolver,
-				HttpMessageConverter[] messageConverters) {
+										   HttpMessageConverter[] messageConverters) {
 			super(messageConverters, resolver
-			// null, null, null, null
+					// null, null, null, null
 			);
 		}
 
 		@Override
 		protected void raiseMissingParameterException(String paramName,
-				Class paramType) throws Exception {
+													  Class paramType) throws Exception {
 			throw new MissingServletRequestParameterException(paramName,
 					paramType.getName());
 		}
@@ -3679,12 +3349,12 @@ public abstract class HandlerUtils {
 
 		@SuppressWarnings("unchecked")
 		public ModelAndView getModelAndView(MethodInfo handlerMethod,
-				HandlerMeta handlerMeta, Object returnValue,
-				ModelMap implicitModel, ServletWebRequest webRequest)
+											HandlerMeta handlerMeta, Object returnValue,
+											ModelMap implicitModel, ServletWebRequest webRequest)
 				throws Exception {
 
 			if (handlerMethod.isResponseBody()) {
-				handleResponseBody(handlerMethod.getResponsebodyAnno(),returnValue, webRequest );
+				handleResponseBody(handlerMethod.getResponsebodyAnno(), returnValue, webRequest);
 				return null;
 			} else if (returnValue instanceof ModelAndView) {
 				ModelAndView mav = (ModelAndView) returnValue;
@@ -3745,10 +3415,8 @@ public abstract class HandlerUtils {
 					return new ModelAndView((String) returnValue)
 							.addAllObjects(implicitModel);
 				}
-			}
-
-			else if (returnValue instanceof HttpEntity) {
-				handleHttpEntityResponse(handlerMethod.getResponsebodyAnno(),(HttpEntity<?>) returnValue,
+			} else if (returnValue instanceof HttpEntity) {
+				handleHttpEntityResponse(handlerMethod.getResponsebodyAnno(), (HttpEntity<?>) returnValue,
 						webRequest);
 				return null;
 			} else if (returnValue == null) {
@@ -3784,8 +3452,8 @@ public abstract class HandlerUtils {
 			}
 		}
 
-		private void handleResponseBody(ResponseBodyWraper responsebodyAnno,Object returnValue,
-				ServletWebRequest webRequest )
+		private void handleResponseBody(ResponseBodyWraper responsebodyAnno, Object returnValue,
+										ServletWebRequest webRequest)
 				throws Exception {
 			if (returnValue == null) {
 				return;
@@ -3794,12 +3462,12 @@ public abstract class HandlerUtils {
 					.createHttpInputMessage(webRequest.getRequest());
 			HttpOutputMessage outputMessage = HandlerUtils
 					.createHttpOutputMessage(webRequest.getResponse());
-			writeWithMessageConverters(  responsebodyAnno,returnValue, inputMessage,
-					outputMessage  );
+			writeWithMessageConverters(responsebodyAnno, returnValue, inputMessage,
+					outputMessage);
 		}
 
-		private void handleHttpEntityResponse(ResponseBodyWraper responsebodyAnno,HttpEntity<?> responseEntity,
-				ServletWebRequest webRequest) throws Exception {
+		private void handleHttpEntityResponse(ResponseBodyWraper responsebodyAnno, HttpEntity<?> responseEntity,
+											  ServletWebRequest webRequest) throws Exception {
 			if (responseEntity == null) {
 				return;
 			}
@@ -3818,17 +3486,15 @@ public abstract class HandlerUtils {
 				outputMessage.getHeaders().putAll(entityHeaders);
 			}
 			Object body = responseEntity.getBody();
-			
+
 			if (body != null) {
-				if(responsebodyAnno == null)
-				{
-					if(responseEntity instanceof ResponseEntity)
-					{
-						responsebodyAnno = ((ResponseEntity)responseEntity).getReponseBodyWraper();
+				if (responsebodyAnno == null) {
+					if (responseEntity instanceof ResponseEntity) {
+						responsebodyAnno = ((ResponseEntity) responseEntity).getReponseBodyWraper();
 					}
 				}
-				writeWithMessageConverters(  responsebodyAnno,body, inputMessage, outputMessage 
-						 );
+				writeWithMessageConverters(responsebodyAnno, body, inputMessage, outputMessage
+				);
 			} else {
 				// flush headers
 				outputMessage.getBody();
@@ -3836,93 +3502,82 @@ public abstract class HandlerUtils {
 		}
 
 		@SuppressWarnings("unchecked")
-		private void writeWithMessageConverters(ResponseBodyWraper responsebodyAnno,Object returnValue,
-				HttpInputMessage inputMessage, HttpOutputMessage outputMessage
-				) throws IOException,
+		private void writeWithMessageConverters(ResponseBodyWraper responsebodyAnno, Object returnValue,
+												HttpInputMessage inputMessage, HttpOutputMessage outputMessage
+		) throws IOException,
 				HttpMediaTypeNotAcceptableException {
 			HttpMessageConverter defaultMessageConverter = null;
 			MediaType responseMediaType = null;
 			List<MediaType> allSupportedMediaTypes = null;
-			if(responsebodyAnno != null)
-			{
+			if (responsebodyAnno != null) {
 				String datatype = responsebodyAnno.datatype();
-				  responseMediaType = responsebodyAnno.getResponseMediaType();
-				if(responsebodyAnno.isEval())
-				{
+				responseMediaType = responsebodyAnno.getResponseMediaType();
+				if (responsebodyAnno.isEval()) {
 					List<MediaType> acceptedMediaTypes = inputMessage.getHeaders()
 							.getAccept();
-					for(int i = 0; acceptedMediaTypes != null && i < acceptedMediaTypes.size();i ++)
-					{
+					for (int i = 0; acceptedMediaTypes != null && i < acceptedMediaTypes.size(); i++) {
 						MediaType mediaType = acceptedMediaTypes.get(i);
-						if(mediaType.isJson())
-						{
+						if (mediaType.isJson()) {
 							responseMediaType = HttpMessageConverter.jsonmediatypes[0];
 							datatype = ValueConstants.datatype_json;
 							break;
-						}
-						else if(mediaType.isJsonp())
-						{
+						} else if (mediaType.isJsonp()) {
 							responseMediaType = HttpMessageConverter.jsonmediatypes[0];
 							datatype = ValueConstants.datatype_jsonp;
 							break;
 						}
-						
+
 					}
-				}
-				else
-				{
-					if(responseMediaType != null && responseMediaType.isJsonp())
+				} else {
+					if (responseMediaType != null && responseMediaType.isJsonp())
 						responseMediaType = HttpMessageConverter.jsonmediatypes[0];
 				}
-				
+
 				Class<?> returnValueType = returnValue.getClass();
 				allSupportedMediaTypes = new ArrayList<MediaType>();
 				if (getMessageConverters() != null) {
-					
-					
-						for (HttpMessageConverter messageConverter : getMessageConverters()) {
-							if(defaultMessageConverter == null && messageConverter.isdefault())
-								defaultMessageConverter = messageConverter;
-							if (messageConverter.canWrite(datatype))
-							
-	//						if (messageConverter.canWrite(returnValueType,
-	//								acceptedMediaType)) 
-							{
-								messageConverter.write(returnValue,
-										responseMediaType, outputMessage,
-										inputMessage );
-								// if (logger.isDebugEnabled()) {
-								// MediaType contentType = outputMessage
-								// .getHeaders().getContentType();
-								// if (contentType == null) {
-								// contentType = acceptedMediaType;
-								// }
-								// logger
-								// .debug("Written [" + returnValue
-								// + "] as \"" + contentType
-								// + "\" using ["
-								// + messageConverter + "]");
-								// }
-								this.responseArgumentUsed = true;
-								return;
-							}
-							
+
+
+					for (HttpMessageConverter messageConverter : getMessageConverters()) {
+						if (defaultMessageConverter == null && messageConverter.isdefault())
+							defaultMessageConverter = messageConverter;
+						if (messageConverter.canWrite(datatype))
+
+						//						if (messageConverter.canWrite(returnValueType,
+						//								acceptedMediaType))
+						{
+							messageConverter.write(returnValue,
+									responseMediaType, outputMessage,
+									inputMessage);
+							// if (logger.isDebugEnabled()) {
+							// MediaType contentType = outputMessage
+							// .getHeaders().getContentType();
+							// if (contentType == null) {
+							// contentType = acceptedMediaType;
+							// }
+							// logger
+							// .debug("Written [" + returnValue
+							// + "] as \"" + contentType
+							// + "\" using ["
+							// + messageConverter + "]");
+							// }
+							this.responseArgumentUsed = true;
+							return;
 						}
-					
-					if(defaultMessageConverter != null)
-					{
+
+					}
+
+					if (defaultMessageConverter != null) {
 						defaultMessageConverter.write(returnValue,
 								defaultMessageConverter.getDefaultAcceptedMediaType(), outputMessage,
-								inputMessage );
+								inputMessage);
 						this.responseArgumentUsed = true;
 						return;
 					}
 				}
-			}
-			else
-			{
+			} else {
 				List<MediaType> acceptedMediaTypes = inputMessage.getHeaders()
-				.getAccept();
+						.getAccept();
 				boolean usecustomMediaTypeByMethod = false;
 				if (acceptedMediaTypes.isEmpty()) {
 					if (responseMediaType == null)
@@ -3931,7 +3586,7 @@ public abstract class HandlerUtils {
 					else
 						acceptedMediaTypes = Collections
 								.singletonList(responseMediaType);
-		
+
 				} else {
 					if (responseMediaType != null) {
 						acceptedMediaTypes.clear();
@@ -3944,39 +3599,35 @@ public abstract class HandlerUtils {
 				Class<?> returnValueType = returnValue.getClass();
 				allSupportedMediaTypes = new ArrayList<MediaType>();
 				if (getMessageConverters() != null) {
-					
+
 					for (MediaType acceptedMediaType : acceptedMediaTypes) {
 						for (HttpMessageConverter messageConverter : getMessageConverters()) {
-							if(defaultMessageConverter == null && messageConverter.isdefault())
+							if (defaultMessageConverter == null && messageConverter.isdefault())
 								defaultMessageConverter = messageConverter;
- 							
+
 							if (messageConverter.canWrite(returnValueType,
-									acceptedMediaType)) 
-							{
+									acceptedMediaType)) {
 								messageConverter.write(returnValue,
 										responseMediaType, outputMessage,
-										inputMessage );
-								 
+										inputMessage);
+
 								this.responseArgumentUsed = true;
 								return;
 							}
-							
+
 						}
 					}
-					if(defaultMessageConverter != null)
-					{
+					if (defaultMessageConverter != null) {
 						defaultMessageConverter.write(returnValue,
 								defaultMessageConverter.getDefaultAcceptedMediaType(), outputMessage,
-								inputMessage );
+								inputMessage);
 						this.responseArgumentUsed = true;
 						return;
 					}
 				}
 			}
-			
-			
-			
-			
+
+
 //			List<MediaType> acceptedMediaTypes = inputMessage.getHeaders()
 //					.getAccept();
 //			boolean usecustomMediaTypeByMethod = false;
@@ -4047,8 +3698,8 @@ public abstract class HandlerUtils {
 //			}
 			throw new HttpMediaTypeNotAcceptableException(
 					allSupportedMediaTypes);
-			
-			
+
+
 		}
 
 		// protected void doBind(NativeWebRequest webRequest,
@@ -4075,13 +3726,13 @@ public abstract class HandlerUtils {
 			HandlerMappingInfo other = (HandlerMappingInfo) obj;
 			return (Arrays.equals(this.paths, other.paths)
 					&& Arrays.equals(this.methods, other.methods) && Arrays
-						.equals(this.params, other.params));
+					.equals(this.params, other.params));
 		}
 
 		public int hashCode() {
 			return (Arrays.hashCode(this.paths) * 29
 					+ Arrays.hashCode(this.methods) * 31 + Arrays
-						.hashCode(this.params));
+					.hashCode(this.params));
 		}
 	}
 
