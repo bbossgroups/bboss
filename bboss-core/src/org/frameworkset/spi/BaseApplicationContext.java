@@ -2518,7 +2518,11 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	public boolean isEmptyContext(){
 		return providerManager == null || this.providerManager.isEmpty();
 	}
-
+	public String toString(){
+		StringBuilder ret = new StringBuilder();
+		ret.append(this.getClass().getCanonicalName()).append(":").append(this.getConfigfile());
+		return ret.toString();
+	}
 }
 
 

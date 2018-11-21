@@ -16,19 +16,18 @@
 
 package org.frameworkset.spi.assemble.callback;
 
+import com.frameworkset.util.SimpleStringUtil;
+import org.frameworkset.spi.assemble.AssembleUtil;
+import org.frameworkset.spi.assemble.ManagerImport;
+import org.frameworkset.util.AntPathMatcher;
+import org.frameworkset.util.PathMatcher;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.frameworkset.spi.assemble.AssembleUtil;
-import org.frameworkset.spi.assemble.ManagerImport;
-import org.frameworkset.util.AntPathMatcher;
-import org.frameworkset.util.PathMatcher;
-
-import com.frameworkset.util.SimpleStringUtil;
 
 
 /**
@@ -178,10 +177,12 @@ public class DefaultAssembleCallbackResolver implements AssembleCallbackResolver
 				return false;
 			String path = pathname.getAbsolutePath();			
 			path = path.replace('\\', '/');
+			String weblogicPath = "/"+path;
 			if(pathname.isDirectory())
 			{
-			
-				if(!path.startsWith(this.absoluteWEBINFPath))
+				boolean isWEBINFPath  = path.startsWith(this.absoluteWEBINFPath)
+											|| weblogicPath.startsWith(this.absoluteWEBINFPath);
+				if(!isWEBINFPath)
 					return false;
 				if(SimpleStringUtil.containKey(ignoreDirs, pathname.getName()))
 					return false;

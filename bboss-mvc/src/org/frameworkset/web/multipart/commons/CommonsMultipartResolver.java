@@ -1,10 +1,5 @@
 package org.frameworkset.web.multipart.commons;
 
-import java.util.List;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadBase;
@@ -13,14 +8,14 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtils;
-import org.frameworkset.web.multipart.DefaultMultipartHttpServletRequest;
-import org.frameworkset.web.multipart.MaxUploadSizeExceededException;
-import org.frameworkset.web.multipart.MultipartException;
-import org.frameworkset.web.multipart.MultipartHttpServletRequest;
-import org.frameworkset.web.multipart.MultipartResolver;
+import org.frameworkset.web.multipart.*;
 import org.frameworkset.web.servlet.context.ServletContextAware;
 import org.frameworkset.web.servlet.context.WebApplicationContext;
 import org.frameworkset.web.util.WebUtils;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public class CommonsMultipartResolver  extends CommonsFileUploadSupport
 		implements MultipartResolver, ServletContextAware {
@@ -181,5 +176,10 @@ public class CommonsMultipartResolver  extends CommonsFileUploadSupport
 		}
 	}
 
+	public String toString(){
+//		StringBuilder builder = new StringBuilder();
+//		builder.append(this.getClass().getCanonicalName());
+		return this.getClass().getCanonicalName();
+	}
 
 }

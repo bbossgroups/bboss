@@ -15,10 +15,6 @@
  */
 package org.frameworkset.web.ui.context;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.frameworkset.spi.support.HierarchicalMessageSource;
 import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.spi.support.ReloadableResourceBundleMessageSource;
@@ -27,6 +23,10 @@ import org.frameworkset.web.ui.HierarchicalThemeSource;
 import org.frameworkset.web.ui.ThemeSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * <p>Title: ResourceBundleThemeSource.java</p> 
@@ -144,5 +144,11 @@ public class ResourceBundleThemeSource implements HierarchicalThemeSource {
 			}
 		}
 	}
+	public String toString(){
+//		StringBuilder builder = new StringBuilder();
+//		builder.append(this.getClass().getCanonicalName());
+		return this.getClass().getCanonicalName();
+	}
+
 
 }

@@ -15,10 +15,7 @@
  */
 package org.frameworkset.web.servlet.context;
 
-import java.net.MalformedURLException;
-
-import javax.servlet.ServletContext;
-
+import com.frameworkset.spi.assemble.BeanInstanceException;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.BeanDestroyHook;
 import org.frameworkset.spi.DefaultApplicationContext;
@@ -41,7 +38,8 @@ import org.frameworkset.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.spi.assemble.BeanInstanceException;
+import javax.servlet.ServletContext;
+import java.net.MalformedURLException;
 
 
 
@@ -221,8 +219,10 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 				if(docbase == null)
 				{
 					try {
+						if(logger.isInfoEnabled()) {
 //						System.out.print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$servletContext.getResource(/).getFile()："+servletContext.getResource("/").getFile());
-						System.out.print("servletContext.getRealPath(/)："+servletContext.getRealPath("/"));
+							logger.info("servletContext.getRealPath(/)：" + servletContext.getRealPath("/"));
+						}
 //						System.out.print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$servletContext.getResource(/).getPath()："+servletContext.getResource("/").getPath());
 						docbase = servletContext.getResource("/").getPath();
 					} catch (MalformedURLException e) {

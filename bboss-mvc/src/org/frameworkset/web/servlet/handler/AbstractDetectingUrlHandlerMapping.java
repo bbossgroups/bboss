@@ -17,15 +17,14 @@ package org.frameworkset.web.servlet.handler;
 
 
 
-import java.util.Iterator;
-import java.util.Set;
-
+import com.frameworkset.spi.assemble.BeanInstanceException;
 import org.frameworkset.util.ObjectUtils;
 import org.frameworkset.util.beans.BeansException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.spi.assemble.BeanInstanceException;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * <p>Title: AbstractDetectingUrlHandlerMapping.java</p> 
@@ -38,7 +37,7 @@ import com.frameworkset.spi.assemble.BeanInstanceException;
  */
 public abstract class AbstractDetectingUrlHandlerMapping extends AbstractUrlHandlerMapping{
 	private boolean detectHandlersInAncestorContexts = false;
-	private static Logger logger = LoggerFactory.getLogger(AbstractUrlHandlerMapping.class);
+	private static Logger logger = LoggerFactory.getLogger(AbstractDetectingUrlHandlerMapping.class);
 	
 	
 
@@ -114,8 +113,12 @@ public abstract class AbstractDetectingUrlHandlerMapping extends AbstractUrlHand
 			logger.debug("Looking for URL mappings in application context: " + getApplicationContext());
 		}
 		Set<String> beanNames = this.getApplicationContext().getPropertyKeys();
-		if(beanNames == null || beanNames.size() == 0)
-			return ;
+		if(beanNames == null || beanNames.size() == 0) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Looking for URL mappings in  " + getApplicationContext() +" failed: beanNames == null || beanNames.size() == 0");
+			}
+			return;
+		}
 		// Take any bean name that we can determine URLs for.
 		Iterator<String> beanNamesItr = beanNames.iterator();
 		while(beanNamesItr.hasNext()) {

@@ -50,5 +50,9 @@ public abstract class AbstractThemeResolver  implements ThemeResolver {
 	public String getDefaultThemeName() {
 		return this.defaultThemeName;
 	}
-
+	public String toString(){
+//		StringBuilder builder = new StringBuilder();
+//		builder.append(this.getClass().getCanonicalName());
+		return this.getClass().getCanonicalName();
+	}
 }

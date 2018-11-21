@@ -1,15 +1,13 @@
 package org.frameworkset.web.servlet.i18n;
 
-import java.util.Locale;
-import java.util.Map;
+import com.frameworkset.util.SimpleStringUtil;
+import com.frameworkset.util.StringUtil;
+import org.frameworkset.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.frameworkset.web.servlet.LocaleResolver;
-
-import com.frameworkset.util.SimpleStringUtil;
-import com.frameworkset.util.StringUtil;
+import java.util.Locale;
+import java.util.Map;
 
 public abstract class AbstractLocaleResolver implements LocaleResolver {
 
@@ -57,6 +55,12 @@ public abstract class AbstractLocaleResolver implements LocaleResolver {
 	{
 		Locale locale = this.resolveLocale(request);
 		return String.valueOf(locale);
+	}
+
+	public String toString(){
+//		StringBuilder builder = new StringBuilder();
+//		builder.append(this.getClass().getCanonicalName());
+		return this.getClass().getCanonicalName();
 	}
 
 }
