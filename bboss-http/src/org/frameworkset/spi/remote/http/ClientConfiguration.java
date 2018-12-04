@@ -18,6 +18,7 @@ import org.apache.http.conn.DnsResolver;
 import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.ContentType;
@@ -25,7 +26,9 @@ import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.conn.SystemDefaultDnsResolver;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
+import org.apache.http.ssl.TrustStrategy;
 import org.frameworkset.spi.*;
 import org.frameworkset.spi.assemble.GetProperties;
 import org.slf4j.Logger;
@@ -42,6 +45,7 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -222,7 +226,14 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	private SSLConnectionSocketFactory buildSSLConnectionSocketFactory() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, KeyManagementException {
 		// Trust own CA and all self-signed certs
 		if(this.keystore == null || this.keystore.equals("")) {
-			return new SSLConnectionSocketFactory(SSLContexts.createSystemDefault());
+			SSLContextBuilder sslContextBuilder = new SSLContextBuilder();
+			sslContextBuilder.loadTrustMaterial(null,new TrustStrategy(){
+				@Override
+				public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+					return true;
+				}
+			});
+			return new SSLConnectionSocketFactory(sslContextBuilder.build(), NoopHostnameVerifier.INSTANCE);
 		}
 		else {
 
