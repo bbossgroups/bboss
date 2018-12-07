@@ -12,8 +12,8 @@
 	<enablejta>${enablejta}</enablejta>
      <url><![CDATA[${jdbcurl}]]></url> 
    
-    <username>${username}</username>
-    <password>${password}</password>
+    <username><![CDATA[${username}]]></username>
+    <password><![CDATA[${password}]]></password>
 
     <txIsolationLevel>${txIsolationLevel}</txIsolationLevel>
 
