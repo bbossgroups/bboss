@@ -1,21 +1,17 @@
 /**
- * 
+ *
  */
 package org.frameworkset.spi.remote.http;
 
 import org.apache.http.Consts;
-import org.apache.http.NoHttpResponseException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.AuthSchemes;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.*;
-import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.DnsResolver;
-import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
@@ -25,7 +21,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.conn.SystemDefaultDnsResolver;
-import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.ssl.TrustStrategy;
@@ -55,40 +50,390 @@ import java.util.concurrent.TimeUnit;
  * This example demonstrates how to customize and configure the most common aspects
  * of HTTP request execution and connection management.
  */
+
 /**
  * @author yinbp
  *
  * @Date:2016-11-20 11:50:36
  */
-public class ClientConfiguration implements InitializingBean,BeanNameAware{
-	private static Logger logger = LoggerFactory.getLogger(ClientConfiguration.class);
+public class ClientConfiguration implements InitializingBean, BeanNameAware {
+	public static final ContentType TEXT_PLAIN_UTF_8 = ContentType.create(
+			"text/plain", Consts.UTF_8);
 	private final static int TIMEOUT_CONNECTION = 20000;
 	private final static int TIMEOUT_SOCKET = 20000;
 	private final static int RETRY_TIME = 3;
-	private  CloseableHttpClient httpclient;
-	private static RequestConfig defaultRequestConfig ;
+	private static final DefaultHttpRequestRetryHandler defaultHttpRequestRetryHandler = new ConnectionResetHttpRequestRetryHandler();
+	private static Logger logger = LoggerFactory.getLogger(ClientConfiguration.class);
+	private static RequestConfig defaultRequestConfig;
+	private static HttpClient defaultHttpclient;
+	private static Map<String, ClientConfiguration> clientConfigs = new HashMap<String, ClientConfiguration>();
+	private static BaseApplicationContext context;
+	private static boolean emptyContext;
+	private static ClientConfiguration defaultClientConfiguration;
+	private CloseableHttpClient httpclient;
 	private RequestConfig requestConfig;
-	private  static HttpClient defaultHttpclient;
 	private int timeoutConnection = TIMEOUT_CONNECTION;
 	private int timeoutSocket = TIMEOUT_SOCKET;
 	private int connectionRequestTimeout = TIMEOUT_SOCKET;
 	private int retryTime = RETRY_TIME;
 	private int maxLineLength = 2000;
 	private int maxHeaderCount = 200;
-	private int maxTotal = 200; 
+	private int maxTotal = 200;
 	private int defaultMaxPerRoute = 10;
 	private long retryInterval = -1;
 	private Boolean soKeepAlive = false;
 	private Boolean soReuseAddress = false;
-	private int validateAfterInactivity = -1;
+	/**
+	 * 每隔多少毫秒校验空闲connection，自动释放无效链接
+	 * -1 或者0不检查
+	 */
+	private int validateAfterInactivity = 2000;
+	/**
+	 * 每次获取connection时校验连接，true，校验，false不校验，有性能开销，推荐采用
+	 * validateAfterInactivity来控制连接是否有效
+	 * 默认值false
+	 */
+	private boolean staleConnectionCheckEnabled = false;
+	/**
+	 * 自定义重试控制接口，必须实现接口方法
+	 * public interface CustomHttpRequestRetryHandler  {
+	 * 	public boolean retryRequest(IOException exception, int executionCount, HttpContext context,ClientConfiguration configuration);
+	 * }
+	 * 方法返回true，进行重试，false不重试
+	 */
+	private String customHttpRequestRetryHandler;
 	private int timeToLive = 3600000;
-
 	private String keystore;
-	private String keyPassword ;
+	private String keyPassword;
 	private String supportedProtocols;
 	private String[] _supportedProtocols;
 	private HostnameVerifier hostnameVerifier;
-	private String[] defaultSupportedProtocols = new String[] {"TLSv1"};
+	private String[] defaultSupportedProtocols = new String[]{"TLSv1"};
+	/**
+	 * 默认保活1小时
+
+	 */
+	private long keepAlive = 1000l * 60l * 60l;
+	private String beanName;
+
+	/**
+	 *
+	 */
+	public ClientConfiguration() {
+		// TODO Auto-generated constructor stub
+	}
+
+	private static void loadClientConfiguration() {
+		if (context == null) {
+			context = DefaultApplicationContext.getApplicationContext("conf/httpclient.xml");
+			emptyContext = context.isEmptyContext();
+		}
+
+	}
+
+	public static RequestConfig getDefaultRequestConfig() {
+		return defaultRequestConfig;
+	}
+
+	public static HttpClient getDefaultHttpclient() {
+		loadClientConfiguration();
+		return getDefaultClientConfiguration().getHttpclient();
+	}
+
+	public static ClientConfiguration getDefaultClientConfiguration() {
+		loadClientConfiguration();
+		if (defaultClientConfiguration != null)
+			return defaultClientConfiguration;
+
+		if (defaultClientConfiguration == null) {
+
+			try {
+				defaultClientConfiguration = makeDefualtClientConfiguration("default");
+			} catch (Exception e) {
+				throw new ConfigHttpRuntimeException("Get DefaultClientConfiguration[default] failed:", e);
+			}
+		}
+		return defaultClientConfiguration;
+	}
+
+	private static ClientConfiguration _getDefaultClientConfiguration(GetProperties context) {
+//		loadClientConfiguration();
+		if (defaultClientConfiguration != null)
+			return defaultClientConfiguration;
+		{
+
+			try {
+				defaultClientConfiguration = makeDefualtClientConfiguration("default", context);
+			} catch (Exception e) {
+				throw new ConfigHttpRuntimeException("Get DefaultClientConfiguration[default] failed:", e);
+			}
+		}
+		return defaultClientConfiguration;
+	}
+
+	private static ClientConfiguration makeDefualtClientConfiguration(String name) throws Exception {
+
+		ClientConfiguration clientConfiguration = clientConfigs.get(name);
+		if (clientConfiguration != null) {
+			return clientConfiguration;
+		}
+		synchronized (ClientConfiguration.class) {
+			clientConfiguration = clientConfigs.get(name);
+			if (clientConfiguration != null) {
+				return clientConfiguration;
+			}
+			if (!emptyContext) {
+				try {
+					clientConfiguration = context.getTBeanObject(name, ClientConfiguration.class);
+				} catch (SPIException e) {
+					logger.warn(new StringBuilder().append("Make Defualt ClientConfiguration [").append(name).append("] failed,an internal http pool will been constructed:").append(e.getMessage()).toString());
+				}
+
+			}
+			if (clientConfiguration == null) {
+				clientConfiguration = new ClientConfiguration();
+				/**
+				 * f:timeoutConnection = "20000"
+				 f:timeoutSocket = "20000"
+				 f:retryTime = "1"
+				 f:maxLineLength = "2000"
+				 f:maxHeaderCount = "200"
+				 f:maxTotal = "200"
+				 f:defaultMaxPerRoute = "10"
+				 */
+				clientConfiguration.setTimeoutConnection(40000);
+				clientConfiguration.setTimeoutSocket(40000);
+				clientConfiguration.setConnectionRequestTimeout(40000);
+				clientConfiguration.setRetryTime(-1);
+				clientConfiguration.setMaxLineLength(Integer.MAX_VALUE);
+				clientConfiguration.setMaxHeaderCount(Integer.MAX_VALUE);
+				clientConfiguration.setMaxTotal(500);
+				clientConfiguration.setDefaultMaxPerRoute(100);
+				clientConfiguration.setStaleConnectionCheckEnabled(false);
+				clientConfiguration.setValidateAfterInactivity(2000);
+				clientConfiguration.setCustomHttpRequestRetryHandler(null);
+				clientConfiguration.setBeanName(name);
+
+				clientConfiguration.afterPropertiesSet();
+				clientConfigs.put(name, clientConfiguration);
+			}
+		}
+		return clientConfiguration;
+
+	}
+
+	private static long _getLongValue(String poolName, String propertyName, GetProperties context, long defaultValue) throws Exception {
+		String _value = null;
+		if (poolName.equals("default")) {
+			_value = (String) context.getExternalProperty(propertyName);
+			if (_value == null)
+				_value = (String) context.getExternalProperty(poolName + "." + propertyName);
+
+		} else {
+			_value = (String) context.getExternalProperty(poolName + "." + propertyName);
+		}
+		if (_value == null) {
+			return defaultValue;
+		}
+		try {
+			long ret = Long.parseLong(_value);
+			return ret;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	private static boolean _getBooleanValue(String poolName, String propertyName, GetProperties context, boolean defaultValue) throws Exception {
+		String _value = null;
+		if (poolName.equals("default")) {
+			_value = (String) context.getExternalProperty(propertyName);
+			if (_value == null)
+				_value = (String) context.getExternalProperty(poolName + "." + propertyName);
+
+		} else {
+			_value = (String) context.getExternalProperty(poolName + "." + propertyName);
+		}
+		if (_value == null) {
+			return defaultValue;
+		}
+		try {
+			boolean ret = Boolean.parseBoolean(_value);
+			return ret;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	private static int _getIntValue(String poolName, String propertyName, GetProperties context, int defaultValue) throws Exception {
+		String _value = null;
+		if (poolName.equals("default")) {
+			_value = (String) context.getExternalProperty(propertyName);
+			if (_value == null)
+				_value = (String) context.getExternalProperty(poolName + "." + propertyName);
+
+		} else {
+			_value = (String) context.getExternalProperty(poolName + "." + propertyName);
+		}
+		if (_value == null) {
+			return defaultValue;
+		}
+		try {
+			int ret = Integer.parseInt(_value);
+			return ret;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	private static String _getStringValue(String poolName, String propertyName, GetProperties context, String defaultValue) throws Exception {
+		String _value = null;
+		if (poolName.equals("default")) {
+			_value = (String) context.getExternalProperty(propertyName);
+			if (_value == null)
+				_value = (String) context.getExternalProperty(poolName + "." + propertyName);
+
+		} else {
+			_value = (String) context.getExternalProperty(poolName + "." + propertyName);
+		}
+		if (_value == null) {
+			return defaultValue;
+		}
+		return _value;
+	}
+
+	private static HostnameVerifier _getHostnameVerifier(String hostnameVerifier) throws Exception {
+
+		if (hostnameVerifier == null) {
+			return null;
+		}
+		if (hostnameVerifier.equals("defualt"))
+			return org.apache.http.conn.ssl.SSLConnectionSocketFactory.getDefaultHostnameVerifier();
+		else
+			return org.apache.http.conn.ssl.SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+	}
+
+	private static ClientConfiguration makeDefualtClientConfiguration(String name, GetProperties context) throws Exception {
+
+		ClientConfiguration clientConfiguration = clientConfigs.get(name);
+		if (clientConfiguration != null) {
+			return clientConfiguration;
+		}
+		synchronized (ClientConfiguration.class) {
+			clientConfiguration = clientConfigs.get(name);
+			if (clientConfiguration != null) {
+				return clientConfiguration;
+			}
+
+			{
+				clientConfiguration = new ClientConfiguration();
+				/**
+				 *http.timeoutConnection = 400000
+				 * http.timeoutSocket = 400000
+				 * http.connectionRequestTimeout=400000
+				 * http.retryTime = 1
+				 * http.maxLineLength = -1
+				 * http.maxHeaderCount = 200
+				 * http.maxTotal = 400
+				 * http.defaultMaxPerRoute = 200
+				 * #http.keystore =
+				 * #http.keyPassword =
+				 * #http.hostnameVerifier =
+				 * http.soReuseAddress = false
+				 * http.soKeepAlive = false
+				 * http.timeToLive = 3600000
+				 * http.keepAlive = 3600000
+				 */
+
+				int timeoutConnection = ClientConfiguration._getIntValue(name, "http.timeoutConnection", context, 40000);
+
+				clientConfiguration.setTimeoutConnection(timeoutConnection);
+				int timeoutSocket = ClientConfiguration._getIntValue(name, "http.timeoutSocket", context, 40000);
+				clientConfiguration.setTimeoutSocket(timeoutSocket);
+				int connectionRequestTimeout = ClientConfiguration._getIntValue(name, "http.connectionRequestTimeout", context, 40000);
+				clientConfiguration.setConnectionRequestTimeout(connectionRequestTimeout);
+				int retryTime = ClientConfiguration._getIntValue(name, "http.retryTime", context, -1);
+				clientConfiguration.setRetryTime(retryTime);
+				long retryInterval = ClientConfiguration._getLongValue(name, "http.retryInterval", context, -1);
+				clientConfiguration.setRetryInterval(retryInterval);
+				int maxLineLength = ClientConfiguration._getIntValue(name, "http.maxLineLength", context, -1);
+				clientConfiguration.setMaxLineLength(maxLineLength);
+				int maxHeaderCount = ClientConfiguration._getIntValue(name, "http.maxHeaderCount", context, 500);
+				clientConfiguration.setMaxHeaderCount(maxHeaderCount);
+				int maxTotal = ClientConfiguration._getIntValue(name, "http.maxTotal", context, 1000);
+				clientConfiguration.setMaxTotal(maxTotal);
+
+				boolean soReuseAddress = ClientConfiguration._getBooleanValue(name, "http.soReuseAddress", context, false);
+				clientConfiguration.setSoReuseAddress(soReuseAddress);
+				boolean soKeepAlive = ClientConfiguration._getBooleanValue(name, "http.soKeepAlive", context, false);
+				clientConfiguration.setSoKeepAlive(soKeepAlive);
+				int timeToLive = ClientConfiguration._getIntValue(name, "http.timeToLive", context, 3600000);
+				clientConfiguration.setTimeToLive(timeToLive);
+				int keepAlive = ClientConfiguration._getIntValue(name, "http.keepAlive", context, 3600000);
+				clientConfiguration.setKeepAlive(keepAlive);
+
+				int defaultMaxPerRoute = ClientConfiguration._getIntValue(name, "http.defaultMaxPerRoute", context, 200);
+				clientConfiguration.setDefaultMaxPerRoute(defaultMaxPerRoute);
+
+				int validateAfterInactivity = ClientConfiguration._getIntValue(name, "http.validateAfterInactivity", context, 2000);
+				clientConfiguration.setValidateAfterInactivity(validateAfterInactivity);
+
+				boolean staleConnectionCheckEnabled = ClientConfiguration._getBooleanValue(name, "http.staleConnectionCheckEnabled", context, false);
+				clientConfiguration.setStaleConnectionCheckEnabled(staleConnectionCheckEnabled);
+
+				String customHttpRequestRetryHandler = ClientConfiguration._getStringValue(name, "http.customHttpRequestRetryHandler", context, null);
+				clientConfiguration.setCustomHttpRequestRetryHandler(customHttpRequestRetryHandler);
+
+				String keystore = ClientConfiguration._getStringValue(name, "http.keystore", context, null);
+
+				clientConfiguration.setKeystore(keystore);
+				String keyPassword = ClientConfiguration._getStringValue(name, "http.keyPassword", context, null);
+				clientConfiguration.setKeyPassword(keyPassword);
+				String hostnameVerifier = ClientConfiguration._getStringValue(name, "http.hostnameVerifier", context, null);
+				clientConfiguration.setHostnameVerifier(_getHostnameVerifier(hostnameVerifier));
+				clientConfiguration.setBeanName(name);
+
+				clientConfiguration.afterPropertiesSet();
+				clientConfigs.put(name, clientConfiguration);
+			}
+		}
+		return clientConfiguration;
+
+	}
+
+	public static void bootClientConfiguations(String[] serverNames, GetProperties context) {
+		//初始化Http连接池
+		for (String serverName : serverNames) {
+			ClientConfiguration.configClientConfiguation(serverName, context);
+		}
+	}
+
+	private static ClientConfiguration configClientConfiguation(String poolname, GetProperties context) {
+//		loadClientConfiguration();
+		if (poolname == null || poolname.equals("default"))
+			return _getDefaultClientConfiguration(context);
+		try {
+			return makeDefualtClientConfiguration(poolname, context);
+		} catch (Exception e) {
+			throw new ConfigHttpRuntimeException("makeDefualtClientConfiguration [" + poolname + "] failed:", e);
+		}
+	}
+
+	public static ClientConfiguration getClientConfiguration(String poolname) {
+		loadClientConfiguration();
+		if (poolname == null)
+			return getDefaultClientConfiguration();
+		try {
+			return makeDefualtClientConfiguration(poolname);
+		} catch (Exception e) {
+			throw new ConfigHttpRuntimeException("makeDefualtClientConfiguration [" + poolname + "] failed:", e);
+		}
+//		ClientConfiguration config = clientConfigs.get(poolname);
+//		if(config != null)
+//			return config;
+//		config = context.getTBeanObject(poolname, ClientConfiguration.class);
+//		return config;
+	}
+
 	public String getKeystore() {
 		return keystore;
 	}
@@ -121,8 +466,6 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		this.hostnameVerifier = hostnameVerifier;
 	}
 
-
-
 	public int getTimeToLive() {
 		return timeToLive;
 	}
@@ -130,12 +473,6 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	public void setTimeToLive(int timeToLive) {
 		this.timeToLive = timeToLive;
 	}
-
-	/**
-	 * 默认保活1小时
-
-	 */
-	private long keepAlive = 1000l*60l*60l;
 
 	public Boolean getSoKeepAlive() {
 		return soKeepAlive;
@@ -165,37 +502,8 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		return retryInterval;
 	}
 
-
 	public void setRetryInterval(long retryInterval) {
 		this.retryInterval = retryInterval;
-	}
-
-
-	private String beanName;
-	private static Map<String,ClientConfiguration> clientConfigs = new HashMap<String,ClientConfiguration>();
-	private static BaseApplicationContext context;
-	private static boolean emptyContext;
-	private static void loadClientConfiguration(){
-		if(context == null) {
-			context = DefaultApplicationContext.getApplicationContext("conf/httpclient.xml");
-			emptyContext = context.isEmptyContext();
-		}
-		
-	}
-
-
-	public static final ContentType TEXT_PLAIN_UTF_8 = ContentType.create(
-            "text/plain", Consts.UTF_8);
-	/**
-	 * 
-	 */
-	public ClientConfiguration() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-	public  static RequestConfig getDefaultRequestConfig() {
-		return defaultRequestConfig;
 	}
 
 	public int getTimeoutConnection() {
@@ -222,20 +530,18 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 		this.retryTime = retryTime;
 	}
 
-
 	private SSLConnectionSocketFactory buildSSLConnectionSocketFactory() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, KeyManagementException {
 		// Trust own CA and all self-signed certs
-		if(this.keystore == null || this.keystore.equals("")) {
+		if (this.keystore == null || this.keystore.equals("")) {
 			SSLContextBuilder sslContextBuilder = new SSLContextBuilder();
-			sslContextBuilder.loadTrustMaterial(null,new TrustStrategy(){
+			sslContextBuilder.loadTrustMaterial(null, new TrustStrategy() {
 				@Override
 				public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
 					return true;
 				}
 			});
 			return new SSLConnectionSocketFactory(sslContextBuilder.build(), NoopHostnameVerifier.INSTANCE);
-		}
-		else {
+		} else {
 
 			SSLContext sslcontext = SSLContexts.custom()
 					.loadTrustMaterial(new File(keystore), this.keyPassword.toCharArray(),
@@ -243,28 +549,29 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 					.build();
 			// Allow TLSv1 protocol only
 
-			HostnameVerifier hostnameVerifier = this.hostnameVerifier != null ? this.hostnameVerifier:
+			HostnameVerifier hostnameVerifier = this.hostnameVerifier != null ? this.hostnameVerifier :
 					SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
 			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
 					sslcontext,
 					_supportedProtocols,
-					null,hostnameVerifier
-					);
+					null, hostnameVerifier
+			);
 //					SSLConnectionSocketFactory.getDefaultHostnameVerifier());
 			return sslsf;
 		}
 	}
-	public final CloseableHttpClient getHttpClient()  throws Exception {
-		if(httpclient != null)
+
+	public final CloseableHttpClient getHttpClient() throws Exception {
+		if (httpclient != null)
 			return httpclient;
- 
+
 //	    HttpMessageParserFactory<HttpResponse> responseParserFactory = new DefaultHttpResponseParserFactory() {
-//	
+//
 //	        @Override
 //	        public HttpMessageParser<HttpResponse> create(
 //	            SessionInputBuffer buffer, MessageConstraints constraints) {
 //	            LineParser lineParser = new BasicLineParser() {
-//	
+//
 //	                @Override
 //	                public Header parseHeader(final CharArrayBuffer buffer) {
 //	                    try {
@@ -273,194 +580,171 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 //	                        return new BasicHeader(buffer.toString(), null);
 //	                    }
 //	                }
-//	
+//
 //	            };
 //	            return new DefaultHttpResponseParser(
 //	                buffer, lineParser, DefaultHttpResponseFactory.INSTANCE, constraints) {
-//	
+//
 //	                @Override
 //	                protected boolean reject(final CharArrayBuffer line, int count) {
 //	                    // try to ignore all garbage preceding a status line infinitely
 //	                    return false;
 //	                }
-//	
+//
 //	            };
 //	        }
-//	
+//
 //	    };
 //	    HttpMessageWriterFactory<HttpRequest> requestWriterFactory = new DefaultHttpRequestWriterFactory();
-//	
+//
 //	    // Use a custom connection factory to customize the process of
 //	    // initialization of outgoing HTTP connections. Beside standard connection
 //	    // configuration parameters HTTP connection factory can define message
 //	    // parser / writer routines to be employed by individual connections.
 //	    HttpConnectionFactory<HttpRoute, ManagedHttpClientConnection> connFactory = new ManagedHttpClientConnectionFactory(
 //	            requestWriterFactory, responseParserFactory);
-	
-	    // Client HTTP connection objects when fully initialized can be bound to
-	    // an arbitrary network socket. The process of network socket initialization,
-	    // its connection to a remote address and binding to a local one is controlled
-	    // by a connection socket factory.
-	
-	    // SSL context for secure connections can be created either based on
-	    // system or application specific properties.
+
+		// Client HTTP connection objects when fully initialized can be bound to
+		// an arbitrary network socket. The process of network socket initialization,
+		// its connection to a remote address and binding to a local one is controlled
+		// by a connection socket factory.
+
+		// SSL context for secure connections can be created either based on
+		// system or application specific properties.
 		SSLConnectionSocketFactory SSLConnectionSocketFactory = this.buildSSLConnectionSocketFactory();//SSLContexts.createSystemDefault();
-	
-	    // Create a registry of custom connection socket factories for supported
-	    // protocol schemes.
-	    Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
-	        .register("http", PlainConnectionSocketFactory.INSTANCE)
-	        .register("https", SSLConnectionSocketFactory)
-	        .build();
-	
-	    // Use custom DNS resolver to override the system DNS resolution.
-	    DnsResolver dnsResolver = new SystemDefaultDnsResolver() {
-	
-	        @Override
-	        public InetAddress[] resolve(final String host) throws UnknownHostException {
-	            if (host.equalsIgnoreCase("localhost")) {
-	                return new InetAddress[] { InetAddress.getByAddress(new byte[] {127, 0, 0, 1}) };
-	            } else {
-	                return super.resolve(host);
-	            }
-	        }
-	
-	    };
-	
-	    // Create a connection manager with custom configuration.
+
+		// Create a registry of custom connection socket factories for supported
+		// protocol schemes.
+		Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+				.register("http", PlainConnectionSocketFactory.INSTANCE)
+				.register("https", SSLConnectionSocketFactory)
+				.build();
+
+		// Use custom DNS resolver to override the system DNS resolution.
+		DnsResolver dnsResolver = new SystemDefaultDnsResolver() {
+
+			@Override
+			public InetAddress[] resolve(final String host) throws UnknownHostException {
+				if (host.equalsIgnoreCase("localhost")) {
+					return new InetAddress[]{InetAddress.getByAddress(new byte[]{127, 0, 0, 1})};
+				} else {
+					return super.resolve(host);
+				}
+			}
+
+		};
+
+		// Create a connection manager with custom configuration.
 //	    PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(
 //	            socketFactoryRegistry, connFactory, dnsResolver);
 
 		PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry, null, null, dnsResolver,
 				this.timeToLive, TimeUnit.MILLISECONDS);
 
-	    // Create socket configuration
-	    SocketConfig socketConfig = SocketConfig.custom()
-	        .setTcpNoDelay(true)
-	        .setSoTimeout(timeoutSocket)
-			.setSoKeepAlive(this.soKeepAlive)
-			.setSoReuseAddress(this.soReuseAddress)
-	        .build();
-	    // Configure the connection manager to use socket configuration either
-	    // by default or for a specific host.
-	    connManager.setDefaultSocketConfig(socketConfig);
-	//	        connManager.setSocketConfig(new HttpHost("localhost", 80), socketConfig);
-	    // Validate connections after 1 sec of inactivity
-	    connManager.setValidateAfterInactivity(validateAfterInactivity);
+		// Create socket configuration
+		SocketConfig socketConfig = SocketConfig.custom()
+				.setTcpNoDelay(true)
+				.setSoTimeout(timeoutSocket)
+				.setSoKeepAlive(this.soKeepAlive)
+				.setSoReuseAddress(this.soReuseAddress)
+				.build();
+		// Configure the connection manager to use socket configuration either
+		// by default or for a specific host.
+		connManager.setDefaultSocketConfig(socketConfig);
+		//	        connManager.setSocketConfig(new HttpHost("localhost", 80), socketConfig);
+		// Validate connections after 1 sec of inactivity
+		connManager.setValidateAfterInactivity(validateAfterInactivity);
 
-	    
-	    // Create message constraints
-	    MessageConstraints messageConstraints = MessageConstraints.custom()
-	        .setMaxHeaderCount(this.maxHeaderCount)
-	        .setMaxLineLength(this.maxLineLength)
-	        .build();
-	    // Create connection configuration
-	    ConnectionConfig connectionConfig = ConnectionConfig.custom()
-	        .setMalformedInputAction(CodingErrorAction.IGNORE)
-	        .setUnmappableInputAction(CodingErrorAction.IGNORE)
-	        .setCharset(Consts.UTF_8)
-	        .setMessageConstraints(messageConstraints)
-	        .build();
-	    // Configure the connection manager to use connection configuration either
-	    // by default or for a specific host.
-	    connManager.setDefaultConnectionConfig(connectionConfig);
-	//	        connManager.setConnectionConfig(new HttpHost("localhost", 80), ConnectionConfig.DEFAULT);
-	
-	    // Configure total max or per route limits for persistent connections
-	    // that can be kept in the pool or leased by the connection manager.
-	    connManager.setMaxTotal(maxTotal);
-	    connManager.setDefaultMaxPerRoute(defaultMaxPerRoute);
-	//	        connManager.setMaxPerRoute(new HttpRoute(new HttpHost("localhost", 80)), 20);
-	
-	    // Use custom cookie store if necessary.
-	    CookieStore cookieStore = new BasicCookieStore();
-	    
-	    // Use custom credentials provider if necessary.
-	    CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-	    // Create global request configuration
-	    RequestConfig requestConfig = RequestConfig.custom()
-	        .setCookieSpec(CookieSpecs.DEFAULT)
-	        .setExpectContinueEnabled(true)
-	        .setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM, AuthSchemes.DIGEST))
-	        .setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC))
-	        .setConnectTimeout(this.timeoutConnection).setConnectionRequestTimeout(connectionRequestTimeout)
+
+		// Create message constraints
+		MessageConstraints messageConstraints = MessageConstraints.custom()
+				.setMaxHeaderCount(this.maxHeaderCount)
+				.setMaxLineLength(this.maxLineLength)
+				.build();
+		// Create connection configuration
+		ConnectionConfig connectionConfig = ConnectionConfig.custom()
+				.setMalformedInputAction(CodingErrorAction.IGNORE)
+				.setUnmappableInputAction(CodingErrorAction.IGNORE)
+				.setCharset(Consts.UTF_8)
+				.setMessageConstraints(messageConstraints)
+				.build();
+		// Configure the connection manager to use connection configuration either
+		// by default or for a specific host.
+		connManager.setDefaultConnectionConfig(connectionConfig);
+		//	        connManager.setConnectionConfig(new HttpHost("localhost", 80), ConnectionConfig.DEFAULT);
+
+		// Configure total max or per route limits for persistent connections
+		// that can be kept in the pool or leased by the connection manager.
+		connManager.setMaxTotal(maxTotal);
+		connManager.setDefaultMaxPerRoute(defaultMaxPerRoute);
+		//	        connManager.setMaxPerRoute(new HttpRoute(new HttpHost("localhost", 80)), 20);
+
+		// Use custom cookie store if necessary.
+		CookieStore cookieStore = new BasicCookieStore();
+
+		// Use custom credentials provider if necessary.
+		CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+		// Create global request configuration
+		RequestConfig requestConfig = RequestConfig.custom()
+				.setCookieSpec(CookieSpecs.DEFAULT)
+				.setExpectContinueEnabled(true)
+				.setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM, AuthSchemes.DIGEST))
+				.setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC))
+				.setConnectTimeout(this.timeoutConnection).setConnectionRequestTimeout(connectionRequestTimeout)
 				.setSocketTimeout(this.timeoutSocket)
-	        .build();
-	
-	    // Create an HttpClient with the given custom dependencies and configuration.
+				.setStaleConnectionCheckEnabled(staleConnectionCheckEnabled)
+
+				.build();
+
+		// Create an HttpClient with the given custom dependencies and configuration.
 		HttpClientBuilder builder = HttpClients.custom();
-	    if(keepAlive > 0)//设置链接保活策略
-	    {
-	    	HttpConnectionKeepAliveStrategy httpConnectionKeepAliveStrategy = new HttpConnectionKeepAliveStrategy(this.keepAlive);
-	    	builder
-	    	        .setConnectionManager(connManager)
-	    	        .setDefaultCookieStore(cookieStore)
-	    	        .setDefaultCredentialsProvider(credentialsProvider)
-	    	        //.setProxy(new HttpHost("myproxy", 8080))
-	    	        .setDefaultRequestConfig(requestConfig).setKeepAliveStrategy(httpConnectionKeepAliveStrategy);
+		if (keepAlive > 0)//设置链接保活策略
+		{
+			HttpConnectionKeepAliveStrategy httpConnectionKeepAliveStrategy = new HttpConnectionKeepAliveStrategy(this.keepAlive);
+			builder
+					.setConnectionManager(connManager)
+					.setDefaultCookieStore(cookieStore)
+					.setDefaultCredentialsProvider(credentialsProvider)
+					//.setProxy(new HttpHost("myproxy", 8080))
+					.setDefaultRequestConfig(requestConfig).setKeepAliveStrategy(httpConnectionKeepAliveStrategy);
 			buildRetryHandler(builder);
-			httpclient =      builder.build();
-	    }
-	    else
-	    {
-		   builder
-		        .setConnectionManager(connManager)
-		        .setDefaultCookieStore(cookieStore)
-		        .setDefaultCredentialsProvider(credentialsProvider)
-		        //.setProxy(new HttpHost("myproxy", 8080))
-		        .setDefaultRequestConfig(requestConfig);
+			httpclient = builder.build();
+		} else {
+			builder
+					.setConnectionManager(connManager)
+					.setDefaultCookieStore(cookieStore)
+					.setDefaultCredentialsProvider(credentialsProvider)
+					//.setProxy(new HttpHost("myproxy", 8080))
+					.setDefaultRequestConfig(requestConfig);
 			buildRetryHandler(builder);
-			httpclient =      builder.build();
-	    }
-	    if(this.beanName.equals("default")){
-	    	defaultRequestConfig = requestConfig;
-	    	defaultHttpclient = httpclient;
-	    }
-	    clientConfigs.put(beanName, this);
-		 
-        return httpclient;
+			httpclient = builder.build();
+		}
+		if (this.beanName.equals("default")) {
+			defaultRequestConfig = requestConfig;
+			defaultHttpclient = httpclient;
+		}
+		clientConfigs.put(beanName, this);
+
+		return httpclient;
 
 
-    }
-    private void buildRetryHandler(HttpClientBuilder builder){
+	}
+
+	private void buildRetryHandler(HttpClientBuilder builder) {
 		if (getRetryTime() > 0) {
-			builder.setRetryHandler(new HttpRequestRetryHandler() {
-				/**
-				 * Determines if a method should be retried after an IOException
-				 * occurs during execution.
-				 *
-				 * @param exception      the exception that occurred
-				 * @param executionCount the number of times this method has been
-				 *                       unsuccessfully executed
-				 * @param context        the context for the request execution
-				 * @return {@code true} if the method should be retried, {@code false}
-				 * otherwise
-				 */
-				public boolean retryRequest(IOException exception, int executionCount, HttpContext context) {
-					if (executionCount > getRetryTime()) {
-						logger.warn("Maximum tries[" + getRetryTime() + "] reached for client http pool ");
-						return false;
-					}
-
-					if (exception instanceof HttpHostConnectException     //NoHttpResponseException 重试
-							|| exception instanceof ConnectTimeoutException //连接超时重试
-							|| exception instanceof UnknownHostException
-							|| exception instanceof NoHttpResponseException
-//              || exception instanceof SocketTimeoutException    //响应超时不重试，避免造成业务数据不一致
-							) {
-						logger.warn(new StringBuilder().append(exception.getClass().getName()).append(" on ")
-								.append(executionCount).append(" call").toString());
-						if(getRetryInterval() > 0)
-                        try {
-                            Thread.sleep(getRetryInterval());
-                        } catch (InterruptedException e1) {
-                            return false;
-                        }
-						return true;
-					}
-					return false;
+			CustomHttpRequestRetryHandler customHttpRequestRetryHandler = null;
+			if (this.customHttpRequestRetryHandler != null && !this.customHttpRequestRetryHandler.trim().equals("")) {
+				try {
+					customHttpRequestRetryHandler = (CustomHttpRequestRetryHandler) Class.forName(this.customHttpRequestRetryHandler).newInstance();
+				} catch (Exception e) {
+					logger.error("Create CustomHttpRequestRetryHandler[" + this.customHttpRequestRetryHandler + "] failed:", e);
+					customHttpRequestRetryHandler = defaultHttpRequestRetryHandler;
 				}
-			});
+			} else {
+				customHttpRequestRetryHandler = defaultHttpRequestRetryHandler;
+			}
+			HttpRequestRetryHandlerHelper httpRequestRetryHandlerHelper = new HttpRequestRetryHandlerHelper(customHttpRequestRetryHandler, this);
+			builder.setRetryHandler(httpRequestRetryHandlerHelper);
 		}
 	}
 
@@ -489,15 +773,13 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		if(this.supportedProtocols != null && !this.supportedProtocols.equals("")){
+		if (this.supportedProtocols != null && !this.supportedProtocols.equals("")) {
 			this._supportedProtocols = this.supportedProtocols.split(",");
-		}
-		else
-		{
+		} else {
 			this._supportedProtocols = this.defaultSupportedProtocols;
 		}
 		this.getHttpClient();
-		
+
 	}
 
 	/** (non-Javadoc)
@@ -506,294 +788,7 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 	@Override
 	public void setBeanName(String name) {
 		this.beanName = name;
-		
-	}
 
-	public static HttpClient getDefaultHttpclient() {
-		loadClientConfiguration();
-		return getDefaultClientConfiguration().getHttpclient();
-	}
-	private static ClientConfiguration defaultClientConfiguration;
-	public static ClientConfiguration getDefaultClientConfiguration(){
-		loadClientConfiguration();
-		if(defaultClientConfiguration != null)
-			return defaultClientConfiguration;
-
-		if(defaultClientConfiguration == null){
-
-			try {
-				defaultClientConfiguration = makeDefualtClientConfiguration("default");
-			} catch (Exception e) {
-				throw new ConfigHttpRuntimeException("Get DefaultClientConfiguration[default] failed:",e);
-			}
-		}
-		return defaultClientConfiguration;
-	}
-	private static ClientConfiguration _getDefaultClientConfiguration(GetProperties context){
-//		loadClientConfiguration();
-		if(defaultClientConfiguration != null)
-			return defaultClientConfiguration;
-		{
-
-			try {
-				defaultClientConfiguration = makeDefualtClientConfiguration("default",context);
-			} catch (Exception e) {
-				throw new ConfigHttpRuntimeException("Get DefaultClientConfiguration[default] failed:",e);
-			}
-		}
-		return defaultClientConfiguration;
-	}
-	private static ClientConfiguration makeDefualtClientConfiguration(String name) throws Exception {
-
-		ClientConfiguration clientConfiguration = clientConfigs.get(name);
-		if(clientConfiguration != null){
-			return clientConfiguration;
-		}
-		synchronized (ClientConfiguration.class){
-			clientConfiguration = clientConfigs.get(name);
-			if(clientConfiguration != null){
-				return clientConfiguration;
-			}
-			if(!emptyContext) {
-				try {
-					clientConfiguration = context.getTBeanObject(name, ClientConfiguration.class);
-				}
-				catch (SPIException e){
-					logger.warn(new StringBuilder().append("Make Defualt ClientConfiguration [").append(name).append("] failed,an internal http pool will been constructed:").append(e.getMessage()).toString());
-				}
-
-			}
-			if(clientConfiguration == null) {
-				clientConfiguration = new ClientConfiguration();
-				/**
-				 * f:timeoutConnection = "20000"
-				 f:timeoutSocket = "20000"
-				 f:retryTime = "1"
-				 f:maxLineLength = "2000"
-				 f:maxHeaderCount = "200"
-				 f:maxTotal = "200"
-				 f:defaultMaxPerRoute = "10"
-				 */
-				clientConfiguration.setTimeoutConnection(40000);
-				clientConfiguration.setTimeoutSocket(40000);
-				clientConfiguration.setConnectionRequestTimeout(40000);
-				clientConfiguration.setRetryTime(-1);
-				clientConfiguration.setMaxLineLength(Integer.MAX_VALUE);
-				clientConfiguration.setMaxHeaderCount(Integer.MAX_VALUE);
-				clientConfiguration.setMaxTotal(500);
-				clientConfiguration.setDefaultMaxPerRoute(100);
-				clientConfiguration.setBeanName(name);
-
-				clientConfiguration.afterPropertiesSet();
-				clientConfigs.put(name, clientConfiguration);
-			}
-		}
-		return clientConfiguration;
-
-	}
-
-	private static long _getLongValue(String poolName,String propertyName,GetProperties context,long defaultValue) throws Exception {
-		String _value = null;
-		if(poolName.equals("default")){
-			_value = (String)context.getExternalProperty(propertyName);
-			if(_value == null)
-				_value = (String)context.getExternalProperty(poolName+"."+propertyName);
-
-		}
-		else{
-			_value = (String)context.getExternalProperty(poolName+"."+propertyName);
-		}
-		if(_value == null){
-			return defaultValue;
-		}
-		try {
-			long ret = Long.parseLong(_value);
-			return ret;
-		}
-		catch (Exception e){
-			throw e;
-		}
-	}
-
-	private static boolean _getBooleanValue(String poolName,String propertyName,GetProperties context,boolean defaultValue) throws Exception {
-		String _value = null;
-		if(poolName.equals("default")){
-			_value = (String)context.getExternalProperty(propertyName);
-			if(_value == null)
-				_value = (String)context.getExternalProperty(poolName+"."+propertyName);
-
-		}
-		else{
-			_value = (String)context.getExternalProperty(poolName+"."+propertyName);
-		}
-		if(_value == null){
-			return defaultValue;
-		}
-		try {
-			boolean ret = Boolean.parseBoolean(_value);
-			return ret;
-		}
-		catch (Exception e){
-			throw e;
-		}
-	}
-	private static int _getIntValue(String poolName,String propertyName,GetProperties context,int defaultValue) throws Exception {
-		String _value = null;
-		if(poolName.equals("default")){
-			_value = (String)context.getExternalProperty(propertyName);
-			if(_value == null)
-				_value = (String)context.getExternalProperty(poolName+"."+propertyName);
-
-		}
-		else{
-			_value = (String)context.getExternalProperty(poolName+"."+propertyName);
-		}
-		if(_value == null){
-			return defaultValue;
-		}
-		try {
-			int ret = Integer.parseInt(_value);
-			return ret;
-		}
-		catch (Exception e){
-			throw e;
-		}
-	}
-	private static String _getStringValue(String poolName,String propertyName,GetProperties context,String defaultValue) throws Exception {
-		String _value = null;
-		if(poolName.equals("default")){
-			_value = (String)context.getExternalProperty(propertyName);
-			if(_value == null)
-				_value = (String)context.getExternalProperty(poolName+"."+propertyName);
-
-		}
-		else{
-			_value = (String)context.getExternalProperty(poolName+"."+propertyName);
-		}
-		if(_value == null){
-			return defaultValue;
-		}
-		return _value;
-	}
-
-	private static HostnameVerifier _getHostnameVerifier(String hostnameVerifier) throws Exception {
-
-		if(hostnameVerifier == null){
-			return null;
-		}
-		if(hostnameVerifier.equals("defualt"))
-			return org.apache.http.conn.ssl.SSLConnectionSocketFactory.getDefaultHostnameVerifier();
-		else
-			return org.apache.http.conn.ssl.SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
-	}
-
-	private static ClientConfiguration makeDefualtClientConfiguration(String name,GetProperties context) throws Exception {
-
-		ClientConfiguration clientConfiguration = clientConfigs.get(name);
-		if(clientConfiguration != null){
-			return clientConfiguration;
-		}
-		synchronized (ClientConfiguration.class){
-			clientConfiguration = clientConfigs.get(name);
-			if(clientConfiguration != null){
-				return clientConfiguration;
-			}
-
-			 {
-				clientConfiguration = new ClientConfiguration();
-				/**
-				 *http.timeoutConnection = 400000
-				 * http.timeoutSocket = 400000
-				 * http.connectionRequestTimeout=400000
-				 * http.retryTime = 1
-				 * http.maxLineLength = -1
-				 * http.maxHeaderCount = 200
-				 * http.maxTotal = 400
-				 * http.defaultMaxPerRoute = 200
-				 * #http.keystore =
-				 * #http.keyPassword =
-				 * #http.hostnameVerifier =
-				 * http.soReuseAddress = false
-				 * http.soKeepAlive = false
-				 * http.timeToLive = 3600000
-				 * http.keepAlive = 3600000
-				 */
-
-				int timeoutConnection = ClientConfiguration._getIntValue(name,"http.timeoutConnection",context,40000);
-
-				clientConfiguration.setTimeoutConnection(timeoutConnection);
-				int timeoutSocket = ClientConfiguration._getIntValue(name,"http.timeoutSocket",context,40000);
-				clientConfiguration.setTimeoutSocket(timeoutSocket);
-				int connectionRequestTimeout = ClientConfiguration._getIntValue(name,"http.connectionRequestTimeout",context,40000);
-				clientConfiguration.setConnectionRequestTimeout(connectionRequestTimeout);
-				int retryTime = ClientConfiguration._getIntValue(name,"http.retryTime",context,-1);
-				clientConfiguration.setRetryTime(retryTime);
-				long retryInterval = ClientConfiguration._getLongValue(name,"http.retryInterval",context,-1);
-				clientConfiguration.setRetryInterval(retryInterval);
-				int maxLineLength = ClientConfiguration._getIntValue(name,"http.maxLineLength",context,-1);
-				clientConfiguration.setMaxLineLength(maxLineLength);
-				int maxHeaderCount = ClientConfiguration._getIntValue(name,"http.maxHeaderCount",context,500);
-				clientConfiguration.setMaxHeaderCount(maxHeaderCount);
-				int maxTotal = ClientConfiguration._getIntValue(name,"http.maxTotal",context,1000);
-				clientConfiguration.setMaxTotal(maxTotal);
-
-				 boolean soReuseAddress = ClientConfiguration._getBooleanValue(name,"http.soReuseAddress",context,false);
-				 clientConfiguration.setSoReuseAddress(soReuseAddress);
-				 boolean soKeepAlive = ClientConfiguration._getBooleanValue(name,"http.soKeepAlive",context,false);
-				 clientConfiguration.setSoKeepAlive(soKeepAlive);
-				 int timeToLive = ClientConfiguration._getIntValue(name,"http.timeToLive",context,3600000);
-				 clientConfiguration.setTimeToLive(timeToLive);
-				 int keepAlive = ClientConfiguration._getIntValue(name,"http.keepAlive",context,3600000);
-				 clientConfiguration.setKeepAlive(keepAlive);
-
-				int defaultMaxPerRoute = ClientConfiguration._getIntValue(name,"http.defaultMaxPerRoute",context,200);
-				clientConfiguration.setDefaultMaxPerRoute(defaultMaxPerRoute);
-				String keystore = ClientConfiguration._getStringValue(name,"http.keystore",context,null);
-
-				clientConfiguration.setKeystore(keystore);
-				String keyPassword = ClientConfiguration._getStringValue(name,"http.keyPassword",context,null);
-				clientConfiguration.setKeyPassword(keyPassword);
-				String hostnameVerifier = ClientConfiguration._getStringValue(name,"http.hostnameVerifier",context,null);
-				clientConfiguration.setHostnameVerifier(_getHostnameVerifier(hostnameVerifier));
-				clientConfiguration.setBeanName(name);
-
-				clientConfiguration.afterPropertiesSet();
-				clientConfigs.put(name, clientConfiguration);
-			}
-		}
-		return clientConfiguration;
-
-	}
-	public static void bootClientConfiguations(String[] serverNames,GetProperties context){
-		//初始化Http连接池
-		for(String serverName:serverNames){
-			ClientConfiguration.configClientConfiguation(serverName,context);
-		}
-	}
-	private static ClientConfiguration configClientConfiguation(String poolname,GetProperties context){
-//		loadClientConfiguration();
-		if(poolname == null || poolname.equals("default"))
-			return _getDefaultClientConfiguration(context);
-		try {
-			return makeDefualtClientConfiguration(poolname,context);
-		} catch (Exception e) {
-			throw new ConfigHttpRuntimeException("makeDefualtClientConfiguration ["+poolname+"] failed:",e);
-		}
-	}
-	public static ClientConfiguration getClientConfiguration(String poolname){
-		loadClientConfiguration();
-		if(poolname == null)
-			return getDefaultClientConfiguration();
-		try {
-			return makeDefualtClientConfiguration(poolname);
-		} catch (Exception e) {
-			throw new ConfigHttpRuntimeException("makeDefualtClientConfiguration ["+poolname+"] failed:",e);
-		}
-//		ClientConfiguration config = clientConfigs.get(poolname);
-//		if(config != null)
-//			return config;
-//		config = context.getTBeanObject(poolname, ClientConfiguration.class);
-//		return config;
 	}
 
 	public RequestConfig getRequestConfig() {
@@ -834,5 +829,21 @@ public class ClientConfiguration implements InitializingBean,BeanNameAware{
 
 	public void setKeepAlive(long keepAlive) {
 		this.keepAlive = keepAlive;
+	}
+
+	public boolean isStaleConnectionCheckEnabled() {
+		return staleConnectionCheckEnabled;
+	}
+
+	public void setStaleConnectionCheckEnabled(boolean staleConnectionCheckEnabled) {
+		this.staleConnectionCheckEnabled = staleConnectionCheckEnabled;
+	}
+
+	public String getCustomHttpRequestRetryHandler() {
+		return customHttpRequestRetryHandler;
+	}
+
+	public void setCustomHttpRequestRetryHandler(String customHttpRequestRetryHandler) {
+		this.customHttpRequestRetryHandler = customHttpRequestRetryHandler;
 	}
 }

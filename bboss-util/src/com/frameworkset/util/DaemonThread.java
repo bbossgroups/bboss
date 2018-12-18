@@ -1,16 +1,12 @@
 package com.frameworkset.util;
 
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.net.URL;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * <p>Title: </p>
@@ -363,10 +359,84 @@ public class DaemonThread extends java.lang.Thread
 		            		break;
             			Entry<String, FileBean> entry = entries.next();
             			FileBean f = entry.getValue();
+//            			ClassLoader classLoader = this.getClass().getClassLoader();
+//
+//						ClassLoader classLoader1 = Thread.currentThread().getContextClassLoader();
+//						ClassLoader classLoader2 = ClassLoader.getSystemClassLoader();
+//						String classLoadInfo = "++++++++++++++------------ContextClassLoader:"
+//								+classLoader1.getClass().getCanonicalName()+"++++++++++++++------------getClass().getClassLoader():"
+//								+classLoader1.getClass().getCanonicalName()
+//								+ "++++++++++++++------------transform0 classLoader:"+ classLoader.getClass().getCanonicalName()+"------------systemClassLoad:"
+//								+classLoader2.getClass().getCanonicalName();
+//
+//						while(true){
+//							classLoader = classLoader.getParent();
+//							if(classLoader == null )
+//								break;
+//							classLoadInfo = classLoadInfo + "++++++++++++++------------transform0 classLoader:"+ classLoader.getClass().getCanonicalName()+"\n";
+//						}
+//						Exception exception = new Exception(classLoadInfo);
+//							exception.printStackTrace();
+/**
+						try{
+							Class cc = Class.forName("org.apache.catalina.core.StandardHostValve");
+							ClassLoader classLoader = cc.getClassLoader();
+							String classLoadInfo1 = "###############--StandardHostValve ClassLoader:"
+									+classLoader.getClass().getCanonicalName() +","+classLoader + "\n";
+
+
+							while(true){
+								classLoader = classLoader.getParent();
+								if(classLoader == null )
+									break;
+								classLoadInfo1 = classLoadInfo1 + "++++++++++++++------------ StandardHostValve classLoader:"+ classLoader+"\n";
+							}
+							Exception exception = new Exception(classLoadInfo1);
+							exception.printStackTrace();
+						}
+						catch (Exception e){
+							e.printStackTrace();
+						}
+
+						try{
+							Class cc = Class.forName("com.navercorp.pinpoint.bootstrap.interceptor.registry.InterceptorRegistry");
+
+							ClassLoader classLoader = cc.getClassLoader();
+							if(classLoader != null) {
+								String classLoadInfo1 = "###############--InterceptorRegistry ClassLoader:"
+										+ classLoader;
+
+
+								while (true) {
+									classLoader = classLoader.getParent();
+									if (classLoader == null)
+										break;
+									classLoadInfo1 = classLoadInfo1 + "++++++++++++++------------transform0 InterceptorRegistry classLoader:" +
+											classLoader + "\n";
+								}
+								Exception exception = new Exception(classLoadInfo1);
+								exception.printStackTrace();
+							}
+							else{
+								String classLoadInfo1 = "###############--InterceptorRegistry :"
+										+ cc.getCanonicalName();
+
+
+
+								Exception exception = new Exception(classLoadInfo1);
+								exception.printStackTrace();
+							}
+						}
+						catch (Exception e){
+							e.printStackTrace();
+						}
+ */
             			if(f.isRemoveflag())
 		            		continue;
             			try
 		            	{
+
+
             				if(log.isDebugEnabled()){
 	            				String filePath = f.getFile() != null?f.getFile().getAbsolutePath():"";
 	            				log.debug("Thread["+this.getName()+"] Check file["+filePath+"] .");

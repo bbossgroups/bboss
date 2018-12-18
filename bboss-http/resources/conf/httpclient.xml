@@ -12,6 +12,9 @@
 			  f:timeToLive="3600000"
 			  f:keystore="F:/6_environment/bboss/apache-tomcat-8.5-ssl/conf/ssl/kserver.keystore"
 			  f:keyPassword="123456"
+			  f:validateAfterInactivity="2000"
+			  f:staleConnectionCheckEnabled="false"
+			  f:customHttpRequestRetryHandler="org.frameworkset.spi.remote.http.ConnectionResetHttpRequestRetryHandler"
 		class="org.frameworkset.spi.remote.http.ClientConfiguration">
 		<!--
 			采用hostname校验器，证书中使用的alias必须与hostname一致，例如：
