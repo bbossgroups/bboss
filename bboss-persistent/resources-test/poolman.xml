@@ -17,6 +17,19 @@
 
 	<datasource>
 
+		<dbname>derby</dbname>
+		<loadmetadata>false</loadmetadata>
+		<enablejta>true</enablejta>
+		<jndiName>derby_datasource_jndiname</jndiName>
+		<datasourceFile>dbcp-derby.xml</datasourceFile>
+		<autoprimarykey>false</autoprimarykey>
+		<showsql>true</showsql>
+		<keygenerate>composite</keygenerate>
+
+	</datasource>
+
+	<datasource>
+
 		<dbname>db1</dbname>
 		<loadmetadata>false</loadmetadata>
 		<enablejta>true</enablejta>

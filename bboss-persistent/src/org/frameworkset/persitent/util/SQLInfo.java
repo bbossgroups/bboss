@@ -102,6 +102,10 @@ public class SQLInfo {
 	public void setSqlutil(SQLUtil sqlutil) {
 		this.sqlutil = sqlutil;
 	}
+
+	public int hashCode(){
+		return this.getSql().hashCode();
+	}
 	
 	public boolean equals(Object obj)
 	{

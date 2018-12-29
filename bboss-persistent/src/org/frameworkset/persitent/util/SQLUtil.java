@@ -16,29 +16,22 @@
 
 package org.frameworkset.persitent.util;
 
-import java.io.StringWriter;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.frameworkset.spi.BaseApplicationContext;
-import org.frameworkset.spi.assemble.Pro;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import bboss.org.apache.velocity.VelocityContext;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.util.DaemonThread;
 import com.frameworkset.util.ResourceInitial;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.velocity.BBossVelocityUtil;
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.assemble.Pro;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import bboss.org.apache.velocity.VelocityContext;
+import java.io.StringWriter;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.*;
 
 /**
  * <p>
@@ -62,8 +55,10 @@ public class SQLUtil {
 	protected BaseApplicationContext sqlcontext;
 	private static Logger log = LoggerFactory.getLogger(SQLUtil.class);
 	protected static Map<String,SQLUtil> sqlutils = new HashMap<String,SQLUtil>(); 
-	protected SQLCache cache = new SQLCache(); 
+	protected SQLCache cache;
 	protected static long refresh_interval = 5000;
+	protected static int defaultResultMetaCacheSize = 5000;
+	private static int gloableResultMetaCacheSize = 6000;
 	protected String defaultDBName = null;
 	protected Map<String,SQLInfo> sqls;
 	protected Map<String,SQLRef> sqlrefs;
@@ -132,7 +127,7 @@ public class SQLUtil {
 	 /**
      * 默认的sql结构缓存器
      */
-    private static GloableSQLUtil globalSQLUtil = new GloableSQLUtil();
+    private static GloableSQLUtil globalSQLUtil = new GloableSQLUtil(gloableResultMetaCacheSize);
 //	/**
 //	 * sql语句velocity模板索引表，以sql语句的名称为索引
 //	 * 当sql文件重新加载时，这些模板也会被重置
@@ -181,7 +176,7 @@ public class SQLUtil {
 							{
 								sqltpl = new SQLTemplate(sqlinfo);
 								sqlinfo.setSqltpl(sqltpl);
-								BBossVelocityUtil.initTemplate(sqltpl);
+								BBossVelocityUtil.initDBTemplate(sqltpl);
 								sqltpl.process();
 							}
 							
@@ -194,7 +189,11 @@ public class SQLUtil {
 					String sqlname = (String)pro.getExtendAttribute("sqlname");
 					if(sqlname == null)
 					{
-						log.warn(sqlcontext.getConfigfile()+"中name="+key+"的sql被配置为对"+sqlfile+"中的sql引用，但是没有通过sqlname设置要引用的sql语句!");
+						if(log.isWarnEnabled()) {
+							log.warn(new StringBuilder().append(sqlcontext.getConfigfile() ).append( "中name=" )
+									.append( key ).append( "的sql被配置为对" )
+									.append( sqlfile ).append( "中的sql引用，但是没有通过sqlname设置要引用的sql语句!").toString());
+						}
 					}
 					else
 					{
@@ -211,7 +210,7 @@ public class SQLUtil {
 		return this.hasrefs;
 	}
 	
-	void _destroy()
+	protected void _destroy()
 	{
 		if(sqls != null)
 		{
@@ -249,35 +248,7 @@ public class SQLUtil {
 		sqlcontext = new SQLSOAFileApplicationContext(file);		
 		defaultDBName = sqlcontext.getProperty("default.dbname");
 		trimValues();
-//		if(refresh_interval > 0 )
-//		{
-//			if(damon == null)
-//			{
-//				damon = new DaemonThread(file,refresh_interval,new ResourceSQLRefresh(this));
-//				 damon.start();
-//			}
-//		}
-//		else
-//		{
-//			if(damon != null)
-//			{
-//				
-//				 try
-//				 {
-//					 damon.interrupt();
-//				 }
-//				 catch(Exception e)
-//				 {
-//					 try {
-//						damon.stop();
-//					} catch (Exception e2) {
-//						damon.stopped();
-//					}
-//				 }
-//				 damon = null;
-//			}
-//		}
-		
+
 		
 	}
 	public SQLStruction getSQLStruction(SQLInfo sqlinfo,String newsql)
@@ -353,7 +324,8 @@ public class SQLUtil {
 		}
 		
 	}
-	private SQLUtil(String sqlfile) {
+	private SQLUtil(String sqlfile,int resultMetaCacheSize) {
+		cache = new SQLCache( sqlfile, resultMetaCacheSize);
 		sqlcontext = new SQLSOAFileApplicationContext(sqlfile);		
 		this.trimValues();
 		defaultDBName = sqlcontext.getProperty("default.dbname");
@@ -369,14 +341,13 @@ public class SQLUtil {
 	}
 	
 
-	public SQLUtil() {
-		// TODO Auto-generated constructor stub
+	public SQLUtil(int resultMetaCacheSize) {
+		cache = new SQLCache( null, resultMetaCacheSize);
 	}
 
-	
 
-	public static SQLUtil getInstance(String sqlfile) {
-		
+
+	public static SQLUtil getInstance(String sqlfile,int defaultResultMetaCacheSize){
 		SQLUtil sqlUtil = sqlutils.get(sqlfile);
 		if(sqlUtil != null)
 			return sqlUtil;
@@ -385,13 +356,17 @@ public class SQLUtil {
 			sqlUtil = sqlutils.get(sqlfile);
 			if(sqlUtil != null)
 				return sqlUtil;
-			sqlUtil = new SQLUtil(sqlfile);
-			
+			sqlUtil = new SQLUtil(sqlfile,  defaultResultMetaCacheSize);
+
 			sqlutils.put(sqlfile, sqlUtil);
-			
+
 		}
-		
+
 		return sqlUtil;
+	}
+	public static SQLUtil getInstance(String sqlfile) {
+		
+		return getInstance(sqlfile,defaultResultMetaCacheSize);
 	}
 	
 	static void destory()
@@ -551,18 +526,7 @@ public class SQLUtil {
 	
 	public static String _getSQL(SQLInfo sqlinfo,Map variablevalues)
 	{
-//		String newsql = null;
-//		if(sqlinfo.istpl() )
-//		{
-//			StringWriter sw = new StringWriter();
-//			sqlinfo.getSqltpl().merge(BBossVelocityUtil.buildVelocityContext(variablevalues),sw);
-//			newsql = sw.toString();
-//		}
-//		else
-//			newsql = sqlinfo.getSql();
-//		return newsql;
-		
-		
+
 		String sql = null;
     	VelocityContext vcontext = null;
     	if(sqlinfo.istpl())

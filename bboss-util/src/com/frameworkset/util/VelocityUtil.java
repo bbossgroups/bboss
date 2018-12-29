@@ -3,6 +3,7 @@ package com.frameworkset.util;
 import bboss.org.apache.velocity.Template;
 import bboss.org.apache.velocity.VelocityContext;
 import bboss.org.apache.velocity.app.Velocity;
+import bboss.org.apache.velocity.app.VelocityEngine;
 import bboss.org.apache.velocity.exception.MethodInvocationException;
 import bboss.org.apache.velocity.exception.ParseErrorException;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
@@ -128,7 +129,20 @@ public class VelocityUtil{
 		return getOS().startsWith("Linux");
 	}
 	private static Object lock = new Object();
-	
+	public static VelocityEngine initVelocityEngine(String config){
+		try {
+			java.util.Properties pros = SimpleStringUtil.getProperties(config, VelocityUtil.class);
+			VelocityEngine velocityEngine = new VelocityEngine();
+			velocityEngine.init(pros);
+			return velocityEngine;
+		}
+		catch (RuntimeException e){
+			throw e;
+		}
+		catch (Exception e){
+			throw new RuntimeException("Init VelocityEngine from "+config + " failed:",e);
+		}
+	}
     public static  void init(String approot)
     {
     	 if(inited)

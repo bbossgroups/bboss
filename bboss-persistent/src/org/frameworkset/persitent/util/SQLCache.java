@@ -19,6 +19,9 @@ package org.frameworkset.persitent.util;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VariableHandler.SQLStruction;
+import org.frameworkset.cache.EdenConcurrentCache;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.ref.SoftReference;
 import java.sql.ResultSetMetaData;
@@ -38,16 +41,21 @@ import java.util.concurrent.locks.ReentrantLock;
  * @version 1.0
  */
 public class SQLCache {
+	private static final Logger logger = LoggerFactory.getLogger(SQLCache.class);
 	private Lock lock = new ReentrantLock();
 	private Lock vtplLock = new ReentrantLock();
 	private Map<String,SQLStruction> parserSQLStructions = new java.util.HashMap<String,SQLStruction>();
 	private Map<String,SQLStruction> parsertotalsizeSQLStructions = new java.util.HashMap<String,SQLStruction>();
-	private Map<String,Map<String,VariableHandler.SQLStruction>> parserTPLSQLStructions = new java.util.HashMap<String,Map<String,VariableHandler.SQLStruction>>();
-	private Map<String,Map<String,VariableHandler.SQLStruction>> parserTPLTotalsizeSQLStructions = new java.util.HashMap<String,Map<String,VariableHandler.SQLStruction>>();
-
-	protected Map<String,Map<String, SoftReference<PoolManResultSetMetaData>>> metas = new HashMap<String,Map<String, SoftReference<PoolManResultSetMetaData>>>();
-	public SQLCache() {
-		// TODO Auto-generated constructor stub
+	private Map<String,EdenConcurrentCache<String,VariableHandler.SQLStruction>> parserTPLSQLStructions = new java.util.HashMap<String,EdenConcurrentCache<String,VariableHandler.SQLStruction>>();
+	private Map<String,EdenConcurrentCache<String,VariableHandler.SQLStruction>> parserTPLTotalsizeSQLStructions = new java.util.HashMap<String,EdenConcurrentCache<String,VariableHandler.SQLStruction>>();
+	private int resultMetaCacheSize;
+	private final int PER_SQL_STRUCTION_CACHE_SIZE = 5000;
+	private String sqlfile;
+	protected final Map<String, EdenConcurrentCache<String, SoftReference<PoolManResultSetMetaData>>> metas ;
+	public SQLCache(String sqlfile,int resultMetaCacheSize) {
+		this.resultMetaCacheSize = resultMetaCacheSize;
+		this.sqlfile = sqlfile;
+		metas = new HashMap<String,EdenConcurrentCache<String, SoftReference<PoolManResultSetMetaData>>>( );
 	}
 	
 	
@@ -81,7 +89,7 @@ public class SQLCache {
 	public PoolManResultSetMetaData getPoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
 	{
 		PoolManResultSetMetaData meta = null;
-		Map<String, SoftReference<PoolManResultSetMetaData>> dbmetas = metas.get(dbname);
+		EdenConcurrentCache<String, SoftReference<PoolManResultSetMetaData>> dbmetas = metas.get(dbname);
 		if(dbmetas == null)
 		{
 			synchronized(metas)
@@ -89,82 +97,150 @@ public class SQLCache {
 				dbmetas = metas.get(dbname);
 				if(dbmetas == null)
 				{
-					dbmetas = new HashMap<String, SoftReference<PoolManResultSetMetaData>>();
+					dbmetas = new EdenConcurrentCache<String, SoftReference<PoolManResultSetMetaData>>(resultMetaCacheSize);
 					metas.put(dbname, dbmetas);
 				}
 			}
 		}
-//		sqlkey = sqlkey + "__pagine" ;
-//		if (dbmetas.containsKey(sqlkey)) {
+
 		SoftReference<PoolManResultSetMetaData> wr =  dbmetas.get(sqlkey);
+		boolean newMeta = false;
+		boolean outOfSize = false;
 		if (wr != null) {
 			meta = (PoolManResultSetMetaData) wr.get();
-			
-			if (meta == null) {				
-				meta = PoolManResultSetMetaData.getCopy(db,rsmetadata);
-				SoftReference<PoolManResultSetMetaData> wr1 = new SoftReference<PoolManResultSetMetaData>(meta);				
-				dbmetas.put(sqlkey, wr1);
-			}
-			else
-			{
-				if(needRefreshMeta(meta,rsmetadata))
-				{
-					meta = PoolManResultSetMetaData.getCopy(db,rsmetadata);
-					wr = new SoftReference<PoolManResultSetMetaData>(meta);
-					dbmetas.put(sqlkey, wr);
+			if(meta == null){
+				synchronized (dbmetas) {
+					wr =  dbmetas.get(sqlkey);
+					if(wr != null){
+						meta = wr.get();
+					}
+					if(meta == null) {
+						newMeta = true;
+						meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
+						SoftReference<PoolManResultSetMetaData> wr1 = new SoftReference<PoolManResultSetMetaData>(meta);
+						outOfSize = dbmetas.put(sqlkey, wr1);
+
+					}
 				}
 			}
-		} else {
-			meta = PoolManResultSetMetaData.getCopy(db,rsmetadata);
+
+		}
+		else{
+			synchronized (dbmetas) {
+				wr =  dbmetas.get(sqlkey);
+				if(wr != null){
+					meta = wr.get();
+				}
+				if(meta == null) {
+					newMeta = true;
+					meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
+					SoftReference<PoolManResultSetMetaData> wr1 = new SoftReference<PoolManResultSetMetaData>(meta);
+					outOfSize = dbmetas.put(sqlkey, wr1);
+				}
+			}
+		}
+		//检测从缓冲中获取的数据是否发生变化
+		if(!newMeta && needRefreshMeta(meta,rsmetadata))
+		{
+			meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
 			wr = new SoftReference<PoolManResultSetMetaData>(meta);
-			dbmetas.put(sqlkey, wr);
+			outOfSize = dbmetas.put(sqlkey, wr);
+
+		}
+		if(outOfSize && logger.isWarnEnabled()) {
+			logMetaWarn(sqlkey, dbmetas);
 		}
 		return meta;
+	}
+
+	private void logMetaWarn(String sql,EdenConcurrentCache dbmetas ){
+
+		StringBuilder info = new StringBuilder();
+		if(sqlfile != null) {
+			info.append("\n\r**********************************************************************\r\n")
+					.append("*********************************警告:sql file[").append(this.sqlfile).append("]*********************************\r\n")
+					.append("**********************************************************************\r\n")
+					.append("调用方法getPoolManResultSetMetaData从sqlmetacache 中获取sql[")
+					.append(sql).append("]查询元数据信息时，检测到缓冲区信息记录数超出meta cache区允许的最大cache size:")
+					.append(dbmetas.getMaxSize())
+					.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+					.append("\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+					.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量;")
+					.append(", \r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，以提升系统性能!")
+					.append("\n\r**********************************************************************")
+					.append("\n\r**********************************************************************");
+		}
+		else{
+			info.append("\n\r**********************************************************************\r\n")
+					.append("*********************************警告:*********************************\r\n")
+					.append("**********************************************************************\r\n")
+					.append("调用方法getPoolManResultSetMetaData从sqlmetacache 中获取sql[")
+					.append(sql).append("]查询元数据信息时，检测到缓冲区信息记录数超出meta cache区允许的最大cache size:")
+					.append(dbmetas.getMaxSize())
+					.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句直接硬编码在代码中;\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+					.append("\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+					.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量;")
+					.append(", \r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!")
+					.append("\n\r**********************************************************************")
+					.append("\n\r**********************************************************************");
+		}
+		logger.warn(info.toString());
+
+	}
+
+	private void logSqlStructionWarn(String sql,EdenConcurrentCache dbmetas ){
+		StringBuilder info = new StringBuilder();
+		if(sqlfile != null) {
+			info.append("\n\r**********************************************************************\r\n")
+					.append("*********************************警告:sql file[").append(this.sqlfile).append("]*********************************\r\n")
+					.append("**********************************************************************\r\n")
+					.append("调用方法_getVTPLSQLStruction从sql struction cache获取[")
+					.append(sql).append("]sql struction 信息时,检测到缓冲区信息记录数超出SqlStructionCache允许的最大cache size:")
+					.append(dbmetas.getMaxSize())
+					.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+					.append("\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+					.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量;")
+					.append(", \r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，以提升系统性能!")
+					.append("\n\r**********************************************************************")
+					.append("\n\r**********************************************************************");
+		}
+		else{
+			info.append("\n\r**********************************************************************\r\n")
+					.append("*********************************警告*********************************\r\n")
+					.append("**********************************************************************\r\n")
+					.append("调用方法_getVTPLSQLStruction从sql struction cache获取[")
+					.append(sql).append("]sql struction 信息时,检测到缓冲区信息记录数超出SqlStructionCache允许的最大cache size:")
+					.append(dbmetas.getMaxSize())
+					.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句直接硬编码在代码中;\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+					.append("\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+					.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量;")
+					.append(", \r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!")
+					.append("\n\r**********************************************************************")
+					.append("\n\r**********************************************************************");
+		}
+		logger.warn(info.toString());
+
 	}
 	
 	public SQLStruction getSQLStruction(SQLInfo sqlinfo,String newsql)
 	{
-//		String sql = newsql;
-//		String key = null;
+
 		if(sqlinfo.getSqlutil() == null 
 				|| sqlinfo.getSqlutil() == SQLUtil.getGlobalSQLUtil()) {
-//			key = sql;
-			return this._getVTPLSQLStruction(parserTPLSQLStructions,sqlinfo,newsql,"___GlobalSQLUtil_");
+			return this._getVTPLSQLStruction(parserTPLSQLStructions,sqlinfo,newsql,"___GlobalSQLUtil_",this.resultMetaCacheSize);
 		}
 		else
 		{
-//			if(sqlinfo.istpl() )
-//			{
-//				key = sql;
-//			}
-//			else
-//			{
-//				key = sqlinfo.getSqlname();
-//			}
-
 			if(sqlinfo.istpl() )
 			{
-				return this._getVTPLSQLStruction(parserTPLSQLStructions,sqlinfo,newsql,sqlinfo.getSqlname());
+				return this._getVTPLSQLStruction(parserTPLSQLStructions,sqlinfo,newsql,sqlinfo.getSqlname(),PER_SQL_STRUCTION_CACHE_SIZE);
 			}
 			else
 			{
 				return _getSQLStruction(parserSQLStructions,sqlinfo, newsql);
 			}
 		}
-//		SQLStruction sqlstruction =  parserSQLStructions.get(key);
-//        if(sqlstruction == null)
-//        {
-//            synchronized(lock)
-//            {
-//            	sqlstruction =  parserSQLStructions.get(key);
-//                if(sqlstruction == null)
-//                {
-//                	sqlstruction = VariableHandler.parserSQLStruction(sql);
-//                	parserSQLStructions.put(key,sqlstruction);
-//                }
-//            }
-//        }
-//        return sqlstruction;
+
 	}
 
 	private VariableHandler.SQLStruction _getSQLStruction(Map<String,SQLStruction> parserSQLStructions ,SQLInfo sqlinfo, String newsql)
@@ -197,12 +273,12 @@ public class SQLCache {
 	 * @param newsql
 	 * @return
 	 */
-	private VariableHandler.SQLStruction _getVTPLSQLStruction(Map<String,Map<String,VariableHandler.SQLStruction>> parserTPLSQLStructions,SQLInfo sqlinfo, String newsql,String okey)
+	private VariableHandler.SQLStruction _getVTPLSQLStruction(Map<String, EdenConcurrentCache<String, SQLStruction>> parserTPLSQLStructions,
+															  SQLInfo sqlinfo, String newsql, String okey,int cacheSize)
 	{
 
 		String ikey = newsql;
-//		String okey = sqlinfo.getSqlname();
-		Map<String,VariableHandler.SQLStruction> sqlstructionMap =  parserTPLSQLStructions.get(okey);
+		EdenConcurrentCache<String,VariableHandler.SQLStruction> sqlstructionMap =  parserTPLSQLStructions.get(okey);
 		if(sqlstructionMap == null)
 		{
 			try
@@ -211,7 +287,7 @@ public class SQLCache {
 				sqlstructionMap =  parserTPLSQLStructions.get(okey);
 				if(sqlstructionMap == null)
 				{
-					sqlstructionMap = new   java.util.WeakHashMap<String,VariableHandler.SQLStruction>();
+					sqlstructionMap = new   EdenConcurrentCache<String,VariableHandler.SQLStruction>(cacheSize);
 					parserTPLSQLStructions.put(okey,sqlstructionMap);
 				}
 			}
@@ -219,19 +295,29 @@ public class SQLCache {
 				vtplLock.unlock();
 			}
 		}
+//		if(sqlstructionMap.stopCache()){
+//			return VariableHandler.parserSQLStruction(newsql);
+//		}
 		VariableHandler.SQLStruction urlStruction = sqlstructionMap.get(ikey);
+		boolean outOfSize = false;
 		if(urlStruction == null){
 			try
 			{
 				this.vtplLock.lock();
 				urlStruction = sqlstructionMap.get(ikey);
 				if(urlStruction == null){
+//					sqlstructionMap.increamentMissing();
 					urlStruction = VariableHandler.parserSQLStruction(newsql);
-					sqlstructionMap.put(ikey,urlStruction);
+//					if(!sqlstructionMap.stopCache()){
+					outOfSize = sqlstructionMap.put(ikey,urlStruction);
+//					}
 				}
 			}
 			finally {
 				this.vtplLock.unlock();
+			}
+			if(outOfSize && logger.isWarnEnabled()) {
+				this.logSqlStructionWarn( ikey, sqlstructionMap);
 			}
 		}
 		return urlStruction;
@@ -239,47 +325,23 @@ public class SQLCache {
 	
 	public SQLStruction getTotalsizeSQLStruction(SQLInfo totalsizesqlinfo,String newtotalsizesql)
 	{
-//		String totalsizesql = newtotalsizesql;
-//		String key = null;
+
 		if(totalsizesqlinfo.getSqlutil() == null 
 				|| totalsizesqlinfo.getSqlutil() == SQLUtil.getGlobalSQLUtil()) {
-//			key = totalsizesql;
-			return this._getVTPLSQLStruction(this.parserTPLTotalsizeSQLStructions, totalsizesqlinfo, newtotalsizesql, "___GlobalSQLUtil_");
+			return this._getVTPLSQLStruction(this.parserTPLTotalsizeSQLStructions, totalsizesqlinfo, newtotalsizesql, "___GlobalSQLUtil_",this.resultMetaCacheSize);
 		}
 		else
 		{
-//			if(totalsizesqlinfo.istpl() )
-//			{
-//				key = totalsizesql;
-//			}
-//			else
-//			{
-//				key = totalsizesqlinfo.getSqlname();
-//			}
-
 			if(totalsizesqlinfo.istpl() )
 			{
-				return this._getVTPLSQLStruction(this.parserTPLTotalsizeSQLStructions,totalsizesqlinfo,newtotalsizesql,totalsizesqlinfo.getSqlname());
+				return this._getVTPLSQLStruction(this.parserTPLTotalsizeSQLStructions,totalsizesqlinfo,newtotalsizesql,totalsizesqlinfo.getSqlname(),PER_SQL_STRUCTION_CACHE_SIZE);
 			}
 			else
 			{
 				return _getSQLStruction(parsertotalsizeSQLStructions,totalsizesqlinfo, newtotalsizesql);
 			}
 		}
-//		SQLStruction totalsizesqlstruction =  parsertotalsizeSQLStructions.get(key);
-//	    if(totalsizesqlstruction == null)
-//	    {
-//	        synchronized(lock)
-//	        {
-//	        	totalsizesqlstruction =  parsertotalsizeSQLStructions.get(key);
-//	            if(totalsizesqlstruction == null)
-//	            {
-//	            	totalsizesqlstruction = VariableHandler.parserSQLStruction(totalsizesql);
-//	            	parsertotalsizeSQLStructions.put(key,totalsizesqlstruction);
-//	            }
-//	        }
-//	    }
-//        return totalsizesqlstruction;
+
 	}
 
 }

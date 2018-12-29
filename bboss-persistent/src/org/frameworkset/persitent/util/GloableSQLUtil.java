@@ -15,25 +15,32 @@
  */
 package org.frameworkset.persitent.util;
 
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.frameworkset.spi.BaseApplicationContext;
-
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.velocity.BBossVelocityUtil;
+import org.frameworkset.cache.EdenConcurrentCache;
+import org.frameworkset.spi.BaseApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class GloableSQLUtil extends SQLUtil {
+	private static final Logger logger = LoggerFactory.getLogger(GloableSQLUtil.class);
+	protected EdenConcurrentCache<String,SQLInfo> tplEdenConcurrentCache;
+	public static int maxGloableTemplateCacheSize = 6000;
 
-	
-	public GloableSQLUtil()
+	private Lock tplCacheLock = new ReentrantLock();
+	public GloableSQLUtil(int gloableResultMetaCacheSize)
 	{
-		sqls = new HashMap<String,SQLInfo>();
+		super(gloableResultMetaCacheSize);
+		tplEdenConcurrentCache = new EdenConcurrentCache<String,SQLInfo>(maxGloableTemplateCacheSize);
 	}
 	@Override
 	public SQLStruction getSQLStruction(SQLInfo sqlinfo, String newsql) {
@@ -77,37 +84,57 @@ public class GloableSQLUtil extends SQLUtil {
 	}
 	public SQLInfo getSQLInfo(String sql)
 	{
-		return getSQLInfo(sql,true,true);
+		return getSQLInfo( sql, false, false);
 	}
 	
 	public SQLInfo getSQLInfo(String sql,boolean istpl,boolean multiparser) {
 		
 				
 				SQLInfo sqlinfo = null;
-		
-//					sql = sqlcontext.getProperty(sqlname + "-" + dbtype.toLowerCase());		
-				sqlinfo = sqls.get(sql);
+				if(!istpl){
+					sqlinfo = new SQLInfo(sql, sql, istpl, multiparser);
+					sqlinfo.setSqlutil(this);
+					return sqlinfo;
+				}
+				boolean outOfSize = false;
+				sqlinfo = tplEdenConcurrentCache.get(sql);
 				if (sqlinfo == null) {
-//					sql = sqlcontext.getProperty(sqlname);
-					
-					synchronized(GloableSQLUtil.class)
-					{
-						sqlinfo = sqls.get(sql);
+					try {
+						tplCacheLock.lock();
+						sqlinfo = tplEdenConcurrentCache.get(sql);
 						if (sqlinfo != null)
 							return sqlinfo;
 						SQLTemplate sqltpl = null;
-						sqlinfo = new SQLInfo(sql,sql, istpl,multiparser);
+						sqlinfo = new SQLInfo(sql, sql, istpl, multiparser);
 						sqlinfo.setSqlutil(this);
-						if(istpl)
-						{
-							sqltpl = new SQLTemplate(sqlinfo);
-							sqlinfo.setSqltpl(sqltpl);
-							BBossVelocityUtil.initTemplate(sqltpl);
-							sqltpl.process();
-						}
-						sqls.put(sql, sqlinfo);
+
+						sqltpl = new SQLTemplate(sqlinfo);
+						sqlinfo.setSqltpl(sqltpl);
+						BBossVelocityUtil.initDBTemplate(sqltpl);
+						sqltpl.process();
+
+						outOfSize = tplEdenConcurrentCache.put(sql, sqlinfo);
+
 					}
-					
+					finally {
+						tplCacheLock.unlock();
+					}
+					if(outOfSize && logger.isWarnEnabled()) {
+						StringBuilder info = new StringBuilder();
+						info.append("\r\n**********************************************************************\r\n")
+								.append("*********************************警告*********************************\r\n")
+								.append("**********************************************************************\r\n")
+								.append("调用GloableSQLUtil getSQLInfo 方法从tplEdenConcurrentCache获取[")
+								.append(sql).append("] 对应的信息时，检测到缓冲区记录数超出cache允许的最大cache size:")
+								.append(tplEdenConcurrentCache.getMaxSize())
+								.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句直接硬编码在代码中;\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+								.append("\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+								.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量;")
+								.append("\r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!")
+								.append("\n\r**********************************************************************")
+								.append("\n\r**********************************************************************");
+						logger.warn(info.toString());
+					}
 					
 				}
 				return sqlinfo;
@@ -181,5 +208,37 @@ public class GloableSQLUtil extends SQLUtil {
 	public long getRefresh_interval() {
 		throw new java.lang.UnsupportedOperationException();
 	}
+	protected void _destroy(){
+		this.tplEdenConcurrentCache.clear();
+//		this.edenConcurrentCache.clear();
+	}
+	protected void reinit(){
+		this.tplEdenConcurrentCache.clear();
+//		this.edenConcurrentCache.clear();
+	}
 
+	@Override
+	public Map<String, SQLRef> getSQLRefers() {
+		return null;
+	}
+
+	@Override
+	public boolean hasrefs() {
+		return false;
+	}
+
+	@Override
+	public String getPlainSQL(String dbname, String sqlname) {
+		return sqlname;
+	}
+
+	@Override
+	public String getSQL(String sqlname, Map variablevalues) {
+		return _getSQL(this.getSQLInfo(sqlname,true,false),variablevalues);
+	}
+
+	@Override
+	public boolean fromConfig() {
+		return false;
+	}
 }

@@ -29,8 +29,9 @@ public class SimpleApiTest {
 	@Test
 	public void insertOpera()throws SQLException
 	{
-		SQLExecutor.delete("delete from LISTBEAN");
+		SQLExecutor.deleteWithDBName("bspf","delete from LISTBEAN");
 		ListBean lb = new ListBean();
+		lb.setId(0);
 		lb.setFieldLable("tttt");
 		lb.setFieldName("testttt");
 		lb.setFieldType("int");
@@ -45,6 +46,7 @@ public class SimpleApiTest {
 		List<ListBean> beans = new ArrayList<ListBean>();
 		beans.add(lb);
 		lb = new ListBean();
+		lb.setId(1);
 		lb.setFieldLable("sss");
 		lb.setFieldName("ss");
 		lb.setFieldType("int");
@@ -56,6 +58,7 @@ public class SimpleApiTest {
 		beans.add(lb);
 		
 		lb = new ListBean();
+		lb.setId(2);
 		lb.setFieldLable("sss");
 		lb.setFieldName("ss556");
 		lb.setFieldType("int");
@@ -67,6 +70,7 @@ public class SimpleApiTest {
 		beans.add(lb);
 		
 		lb = new ListBean();
+		lb.setId(3);
 		lb.setFieldLable("ddd");
 		lb.setFieldName("sdds");
 		lb.setFieldType("int");
@@ -81,24 +85,24 @@ public class SimpleApiTest {
 				"#[isprimaryKey],#[required],#[fieldLength],#[isvalidated])";
 		SQLExecutor.insertBeans("bspf",sql,beans);
 		
-		 
-		
-		SQLExecutor.insertBean("bspf", sql, lb);
-		
-		SQLExecutor.insertBeans("bspf", sql, beans);
-		
-		
+//
+//
+//		SQLExecutor.insertBean("bspf", sql, lb);
+//
+//		SQLExecutor.insertBeans("bspf", sql, beans);
 		
 		
 		
-		SQLExecutor.insertBean(sql, lb);
 		
 		
-		
-		sql ="insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE) " +
-		"values(?,?,?,?)";
-		SQLExecutor.insertWithDBName("bspf", sql,DBUtil.getNextPrimaryKey("bspf", "ListBean"),"insertOpreation","ttyee","int");
-//		SQLExecutor.insert(sql,122,lb.getFieldName(),lb.getFieldLable(),lb.getFieldType());
+//		SQLExecutor.insertBean(sql, lb);
+//
+//
+//
+//		sql ="insert into LISTBEAN(ID,FIELDNAME,FIELDLABLE,FIELDTYPE) " +
+//		"values(?,?,?,?)";
+//		SQLExecutor.insertWithDBName("bspf", sql,DBUtil.getNextPrimaryKey("bspf", "ListBean"),"insertOpreation","ttyee","int");
+////		SQLExecutor.insert(sql,122,lb.getFieldName(),lb.getFieldLable(),lb.getFieldType());
 		
 		 
 		
@@ -1078,6 +1082,103 @@ public class SimpleApiTest {
 	public void testMap() throws SQLException {
 		List<Map> data = SQLExecutor.queryListWithDBName(Map.class,"db1","select * from td_sm_log");
 		System.out.println(data);
+	}
+
+	/**
+	 * 坏味道的sql语句，bboss将给出下面告警和优化建议：
+	 * **********************************************************************
+	 * *********************************警告*********************************
+	 * **********************************************************************
+	 * 调用GloableSQLUtil getSQLInfo 方法从tplEdenConcurrentCache获取[select * from LISTBEAN where id=10000 and FIELDNAME=#[fieldName]] 对应的信息时，检测到缓冲区记录数超出cache允许的最大cache size:10000,
+	 * 导致告警原因分析:
+	 * 本条sql或者其他sql语句直接硬编码在代码中;
+	 * 本条sql或者其他sql语句可能存在不断变化的值参数;
+	 * 本条sql或者其他sql语句可能存在不断变化的值参数;
+	 * 本条sql或者其他sql语句可能存在的$var模式的变量;
+	 * 优化建议：
+	 * 将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!
+	 * **********************************************************************
+	 * **********************************************************************
+	 * [2018-12-29 23:02:12][WARN][org.frameworkset.persitent.util.GloableSQLUtil]
+	 * **********************************************************************
+	 * *********************************警告*********************************
+	 * **********************************************************************
+	 * 调用GloableSQLUtil getSQLInfo 方法从tplEdenConcurrentCache获取[select * from LISTBEAN where id=20000 and FIELDNAME=#[fieldName]] 对应的信息时，检测到缓冲区记录数超出cache允许的最大cache size:10000,
+	 * 导致告警原因分析:
+	 * 本条sql或者其他sql语句直接硬编码在代码中;
+	 * 本条sql或者其他sql语句可能存在不断变化的值参数;
+	 * 本条sql或者其他sql语句可能存在不断变化的值参数;
+	 * 本条sql或者其他sql语句可能存在的$var模式的变量;
+	 * 优化建议：
+	 * 将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!
+	 * **********************************************************************
+	 * **********************************************************************
+	 * [2018-12-29 23:02:12][WARN][org.frameworkset.persitent.util.SQLCache]
+	 * **********************************************************************
+	 * *********************************警告*********************************
+	 * **********************************************************************
+	 * 调用方法_getVTPLSQLStruction从sql struction cache获取[select * from LISTBEAN where id=20000 and FIELDNAME=#[fieldName]]sql struction 信息时,检测到缓冲区信息记录数超出SqlStructionCache允许的最大cache size:20000,
+	 * 导致告警原因分析:
+	 * 本条sql或者其他sql语句直接硬编码在代码中;
+	 * 本条sql或者其他sql语句可能存在不断变化的值参数;
+	 * 本条sql或者其他sql语句可能存在不断变化的值参数;
+	 * 本条sql或者其他sql语句可能存在的$var模式的变量;,
+	 * 优化建议：
+	 * 将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!
+	 * **********************************************************************
+	 * **********************************************************************
+	 * [2018-12-29 23:02:12][WARN][org.frameworkset.persitent.util.SQLCache]
+	 * **********************************************************************
+	 * *********************************警告:*********************************
+	 * **********************************************************************
+	 * 调用方法getPoolManResultSetMetaData从sqlmetacache 中获取sql[select * from LISTBEAN where id=20000 and FIELDNAME=#[fieldName]]查询元数据信息时，检测到缓冲区信息记录数超出meta cache区允许的最大cache size:20000,
+	 * 导致告警原因分析:
+	 * 本条sql或者其他sql语句直接硬编码在代码中;
+	 * 本条sql或者其他sql语句可能存在不断变化的值参数;
+	 * 本条sql或者其他sql语句可能存在不断变化的值参数;
+	 * 本条sql或者其他sql语句可能存在的$var模式的变量;,
+	 * 优化建议：
+	 * 将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!
+	 * **********************************************************************
+	 * **********************************************************************
+	 * @throws SQLException
+	 */
+	@Test
+	public void testBadQuery() throws SQLException {
+		Map params = new HashMap();
+		params.put("fieldName","test");
+		for(int i = 0;  i < 100000; i ++){
+			SQLExecutor.queryListBean(Map.class,"select * from LISTBEAN where id="+i+ " and FIELDNAME=#[fieldName]",params);
+		}
+	}
+
+	@Test
+	public void testBadQueryConst() throws SQLException {
+		Map params = new HashMap();
+		params.put("fieldName","test");
+		for(int i = 0;  i < 100000; i ++){
+			SQLExecutor.queryList(Map.class,"select * from LISTBEAN where id="+i);
+		}
+	}
+
+	@Test
+	public void testGoodQueryBean() throws SQLException {
+		Map params = new HashMap();
+		params.put("fieldName","test");
+		params.put("i","test");
+		for(int i = 0;  i < 1000000; i ++){
+			params.put("i",i);
+			SQLExecutor.queryListBean(Map.class,"select * from LISTBEAN where id=#[i] and FIELDNAME=#[fieldName]",params);
+		}
+	}
+
+	@Test
+	public void testGoodQueryBindVar() throws SQLException {
+
+		for(int i = 0;  i < 1000000; i ++){
+
+			SQLExecutor.queryList(Map.class,"select * from LISTBEAN where id=? and FIELDNAME=?",i,"test");
+		}
 	}
 
 }

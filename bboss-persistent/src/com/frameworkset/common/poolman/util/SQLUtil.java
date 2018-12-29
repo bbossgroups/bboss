@@ -17,53 +17,12 @@ package com.frameworkset.common.poolman.util;
 
 
 
-import java.io.File;
-import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-import javax.transaction.SystemException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.frameworkset.common.poolman.DBUtil;
-import com.frameworkset.common.poolman.NestedSQLException;
-import com.frameworkset.common.poolman.NewSQLInfo;
-import com.frameworkset.common.poolman.PreparedDBUtil;
-import com.frameworkset.common.poolman.Record;
-import com.frameworkset.common.poolman.ResultMap;
-import com.frameworkset.common.poolman.StatementInfo;
+import com.frameworkset.common.poolman.*;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.interceptor.InterceptorInf;
 import com.frameworkset.common.poolman.management.PoolManBootstrap;
 import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
-import com.frameworkset.common.poolman.sql.ColumnMetaData;
-import com.frameworkset.common.poolman.sql.ForeignKeyMetaData;
-import com.frameworkset.common.poolman.sql.PoolManDataSource;
-import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
-import com.frameworkset.common.poolman.sql.PrimaryKeyMetaData;
-import com.frameworkset.common.poolman.sql.TableMetaData;
-import com.frameworkset.common.poolman.sql.UpdateSQL;
+import com.frameworkset.common.poolman.sql.*;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.adapter.DB.PagineSql;
 import com.frameworkset.orm.adapter.DBFactory;
@@ -72,6 +31,18 @@ import com.frameworkset.orm.transaction.JDBCTransaction;
 import com.frameworkset.orm.transaction.TXConnection;
 import com.frameworkset.orm.transaction.TransactionException;
 import com.frameworkset.orm.transaction.TransactionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import javax.transaction.SystemException;
+import java.io.File;
+import java.io.InputStream;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.*;
 
 /**
  * 
@@ -473,7 +444,6 @@ public class SQLUtil{
 	/**
 	 * 返回缺省的数据库链接池
 	 * 
-	 * @param dbname
 	 * @return
 	 */
 	public static JDBCPool getPool() {

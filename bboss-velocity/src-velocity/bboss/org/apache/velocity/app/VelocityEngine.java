@@ -19,16 +19,6 @@ package bboss.org.apache.velocity.app;
  * under the License.
  */
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.util.Properties;
-
-import org.apache.commons.collections.ExtendedProperties;
 import bboss.org.apache.velocity.Template;
 import bboss.org.apache.velocity.context.Context;
 import bboss.org.apache.velocity.exception.MethodInvocationException;
@@ -37,6 +27,11 @@ import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 import bboss.org.apache.velocity.runtime.RuntimeConstants;
 import bboss.org.apache.velocity.runtime.RuntimeInstance;
 import bboss.org.apache.velocity.runtime.log.Log;
+import bboss.org.apache.velocity.runtime.resource.Resource;
+import org.apache.commons.collections.ExtendedProperties;
+
+import java.io.*;
+import java.util.Properties;
 
 /**
  * <p>
@@ -534,4 +529,14 @@ public class VelocityEngine implements RuntimeConstants
      {
         ri.loadDirective(directiveClass);
      }
+
+    public void initTemplate(Resource template)
+    {
+        ri.initTemplate(template);
+    }
+
+    public void initTemplate(Resource template, String encoding)
+    {
+        ri.initTemplate(template,  encoding);
+    }
 }

@@ -19,36 +19,11 @@ package bboss.org.apache.velocity.runtime;
  * under the License.    
  */
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.Writer;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Properties;
-
-import org.apache.commons.collections.ExtendedProperties;
-import org.apache.commons.lang.text.StrBuilder;
-
 import bboss.org.apache.velocity.Template;
-import bboss.org.apache.velocity.app.event.EventCartridge;
-import bboss.org.apache.velocity.app.event.EventHandler;
-import bboss.org.apache.velocity.app.event.IncludeEventHandler;
-import bboss.org.apache.velocity.app.event.InvalidReferenceEventHandler;
-import bboss.org.apache.velocity.app.event.MethodExceptionEventHandler;
-import bboss.org.apache.velocity.app.event.NullSetEventHandler;
-import bboss.org.apache.velocity.app.event.ReferenceInsertionEventHandler;
+import bboss.org.apache.velocity.app.event.*;
 import bboss.org.apache.velocity.context.Context;
 import bboss.org.apache.velocity.context.InternalContextAdapterImpl;
-import bboss.org.apache.velocity.exception.MethodInvocationException;
-import bboss.org.apache.velocity.exception.ParseErrorException;
-import bboss.org.apache.velocity.exception.ResourceNotFoundException;
-import bboss.org.apache.velocity.exception.TemplateInitException;
-import bboss.org.apache.velocity.exception.VelocityException;
+import bboss.org.apache.velocity.exception.*;
 import bboss.org.apache.velocity.runtime.directive.Directive;
 import bboss.org.apache.velocity.runtime.directive.Scope;
 import bboss.org.apache.velocity.runtime.directive.StopCommand;
@@ -64,11 +39,12 @@ import bboss.org.apache.velocity.runtime.resource.ResourceManager;
 import bboss.org.apache.velocity.util.ClassUtils;
 import bboss.org.apache.velocity.util.RuntimeServicesAware;
 import bboss.org.apache.velocity.util.StringUtils;
-import bboss.org.apache.velocity.util.introspection.ChainableUberspector;
-import bboss.org.apache.velocity.util.introspection.Introspector;
-import bboss.org.apache.velocity.util.introspection.LinkingUberspector;
-import bboss.org.apache.velocity.util.introspection.Uberspect;
-import bboss.org.apache.velocity.util.introspection.UberspectLoggable;
+import bboss.org.apache.velocity.util.introspection.*;
+import org.apache.commons.collections.ExtendedProperties;
+import org.apache.commons.lang.text.StrBuilder;
+
+import java.io.*;
+import java.util.*;
 
 /**
  * This is the Runtime system for Velocity. It is the
@@ -137,14 +113,7 @@ public class RuntimeInstance implements RuntimeConstants, RuntimeServices
      */
     private  ParserPool parserPool;
     
-    /**
-     * The SQL Runtime parser pool
-     */
-    private  ParserPool parserSQLPool;
-    /**
-     * The Elastic Template Runtime parser pool
-     */
-    private  ParserPool parserElasticTemplatePool;
+
     /**
      * Indicate whether the Runtime is in the midst of initialization.
      */
@@ -1111,53 +1080,7 @@ public class RuntimeInstance implements RuntimeConstants, RuntimeServices
             parserPool = (ParserPool) o;
 
             parserPool.initialize(this);
-            try {
-				o = ClassUtils.getNewInstance( pp );
-			}  
-            catch (ClassNotFoundException cnfe )
-            {
-                String err = "The specified class for ParserPool ("
-                    + pp
-                    + ") does not exist (or is not accessible to the current classloader.";
-                log.error(err);
-                throw new VelocityException(err, cnfe);
-            }
-            catch (InstantiationException ie)
-            {
-              throw new VelocityException("Could not instantiate class '" + pp + "'", ie);
-            }
-            catch (IllegalAccessException ae)
-            {
-              throw new VelocityException("Cannot access class '" + pp + "'", ae);
-            }
-            parserSQLPool = (ParserPool) o;
 
-            parserSQLPool.initialize(this);
-            
-            
-            
-            try {
-				o = ClassUtils.getNewInstance( pp );
-			}  
-            catch (ClassNotFoundException cnfe )
-            {
-                String err = "The specified class for ParserPool ("
-                    + pp
-                    + ") does not exist (or is not accessible to the current classloader.";
-                log.error(err);
-                throw new VelocityException(err, cnfe);
-            }
-            catch (InstantiationException ie)
-            {
-              throw new VelocityException("Could not instantiate class '" + pp + "'", ie);
-            }
-            catch (IllegalAccessException ae)
-            {
-              throw new VelocityException("Cannot access class '" + pp + "'", ae);
-            }
-            parserElasticTemplatePool = (ParserPool) o;
-
-            parserElasticTemplatePool.initialize(this);
         }
         else
         {
@@ -1238,31 +1161,6 @@ public class RuntimeInstance implements RuntimeConstants, RuntimeServices
         return parse(reader, templateName, true);
     }
     
-    /**
-     * Parse the input and return the root of
-     * AST node structure.
-     * <br><br>
-     *  In the event that it runs out of parsers in the
-     *  pool, it will create and let them be GC'd
-     *  dynamically, logging that it has to do that.  This
-     *  is considered an exceptional condition.  It is
-     *  expected that the user will set the
-     *  PARSER_POOL_SIZE property appropriately for their
-     *  application.  We will revisit this.
-     *
-     * @param reader Reader retrieved by a resource loader
-     * @param templateName name of the template being parsed
-     * @return A root node representing the template as an AST tree.
-     * @throws ParseException When the template could not be parsed.
-     */
-    public SimpleNode parseSQL(Reader reader, String templateName)
-        throws ParseException
-    {
-        /*
-         *  do it and dump the VM namespace for this template
-         */
-        return parseSQL(reader, templateName, true);
-    }
 
     /**
      *  Parse the input and return the root of the AST node structure.
@@ -1318,97 +1216,10 @@ public class RuntimeInstance implements RuntimeConstants, RuntimeServices
 //
 //        }
     }
-    /**
-     *  Parse the input and return the root of the AST node structure.
-     *
-     * @param reader Reader retrieved by a resource loader
-     * @param templateName name of the template being parsed
-     * @param dumpNamespace flag to dump the Velocimacro namespace for this template
-     * @return A root node representing the template as an AST tree.
-     * @throws ParseException When the template could not be parsed.
-     */
-    public SimpleNode parseElasticTemplate(Reader reader, String elasticTemplate, boolean dumpNamespace)
-        throws ParseException{
-    	return  _parse( reader,  elasticTemplate,  dumpNamespace, parserElasticTemplatePool);
-    }
+
     
     
-    /**
-     * Parse the input SQL and return the root of
-     * AST node structure.
-     * <br><br>
-     *  In the event that it runs out of parsers in the
-     *  pool, it will create and let them be GC'd
-     *  dynamically, logging that it has to do that.  This
-     *  is considered an exceptional condition.  It is
-     *  expected that the user will set the
-     *  PARSER_POOL_SIZE property appropriately for their
-     *  application.  We will revisit this.
-     *
-     * @param reader inputstream retrieved by a resource loader
-     * @param templateName name of the template being parsed
-     * @return The AST representing the template.
-     * @throws ParseException
-     */
-    public  SimpleNode parseElasticTemplate( Reader reader, String elasticTemplate )
-        throws ParseException{
-    	return parseElasticTemplate(  reader,  elasticTemplate ,true);
-    }
-    
-    /**
-     *  Parse the SQL input and return the root of the AST node structure.
-     *
-     * @param reader Reader retrieved by a resource loader
-     * @param templateName name of the template being parsed
-     * @param dumpNamespace flag to dump the Velocimacro namespace for this template
-     * @return A root node representing the template as an AST tree.
-     * @throws ParseException When the template could not be parsed.
-     */
-    public SimpleNode parseSQL(Reader reader, String templateName, boolean dumpNamespace)
-        throws ParseException
-    {
-    	return  _parse( reader,  templateName,  dumpNamespace, parserSQLPool);
-//        requireInitialization();
-//
-//        Parser parser = (Parser) parserSQLPool.get();
-//        boolean keepParser = true;
-//        if (parser == null)
-//        {
-//            /*
-//             *  if we couldn't get a parser from the pool make one and log it.
-//             */
-//            if (log.isInfoEnabled())
-//            {
-//                log.info("Runtime : ran out of parsers. Creating a new one. "
-//                      + " Please increment the parser.pool.size property."
-//                      + " The current value is too small.");
-//            }
-//            parser = createNewParser();
-//            keepParser = false;
-//        }
-//
-//        try
-//        {
-//            /*
-//             *  dump namespace if we are told to.  Generally, you want to
-//             *  do this - you don't in special circumstances, such as
-//             *  when a VM is getting init()-ed & parsed
-//             */
-//            if (dumpNamespace)
-//            {
-//                dumpVMNamespace(templateName);
-//            }
-//            return parser.parse(reader, templateName);
-//        }
-//        finally
-//        {
-//            if (keepParser)
-//            {
-//            	parserSQLPool.put(parser);
-//            }
-//
-//        }
-    }
+
     
     /**
      *  Parse the SQL input and return the root of the AST node structure.
@@ -1773,7 +1584,6 @@ public class RuntimeInstance implements RuntimeConstants, RuntimeServices
     /**
      * Returns a <code>Template</code> from the resource manager
      *
-     * @param name The  name of the desired template.
      * @param encoding Character encoding of the template
      * @return     The template.
      * @throws ResourceNotFoundException if template not found
