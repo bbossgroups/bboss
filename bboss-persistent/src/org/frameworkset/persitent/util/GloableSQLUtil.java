@@ -34,12 +34,11 @@ import java.util.concurrent.locks.ReentrantLock;
 public class GloableSQLUtil extends SQLUtil {
 	private static final Logger logger = LoggerFactory.getLogger(GloableSQLUtil.class);
 	protected EdenConcurrentCache<String,SQLInfo> tplEdenConcurrentCache;
-	public static int maxGloableTemplateCacheSize = 6000;
 
 	private Lock tplCacheLock = new ReentrantLock();
-	public GloableSQLUtil(int gloableResultMetaCacheSize)
+	GloableSQLUtil(int gloableResultMetaCacheSize,int maxGloableTemplateCacheSize,int globalKeySqlStructionCacheSize)
 	{
-		super(gloableResultMetaCacheSize);
+		super(gloableResultMetaCacheSize,globalKeySqlStructionCacheSize);
 		tplEdenConcurrentCache = new EdenConcurrentCache<String,SQLInfo>(maxGloableTemplateCacheSize);
 	}
 	@Override
@@ -127,9 +126,9 @@ public class GloableSQLUtil extends SQLUtil {
 								.append("调用GloableSQLUtil getSQLInfo 方法从tplEdenConcurrentCache获取[")
 								.append(sql).append("] 对应的信息时，检测到缓冲区记录数超出cache允许的最大cache size:")
 								.append(tplEdenConcurrentCache.getMaxSize())
-								.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句直接硬编码在代码中;\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+								.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句直接硬编码在代码中;")
 								.append("\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
-								.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量;")
+								.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量并且$var的值不断变化;")
 								.append("\r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!")
 								.append("\n\r**********************************************************************")
 								.append("\n\r**********************************************************************");

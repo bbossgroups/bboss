@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding='UTF-8'?>
 <properties>
+	<!--本配置文件中最多允许缓存6000条查询sql语句的元数据，超过这个值会提示告警，例如：
+		**********************************************************************
+		*********************************警告:sql file[com/frameworkset/sqlexecutor/sqlfile.xml]*********************************
+		**********************************************************************
+		调用方法getPoolManResultSetMetaData从sqlmetacache 中获取sql[select *  from LISTBEAN  where 1=1
+							 and id = 6000 ]查询元数据信息时，检测到缓冲区信息记录数超出meta cache区允许的最大cache size:6000,
+		导致告警原因分析:
+		本条sql或者其他sql语句可能存在不断变化的值参数;
+		本条sql或者其他sql语句可能存在的$var模式的变量并且$var的值不断变化;,
+		优化建议：
+		将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，以提升系统性能!
+		**********************************************************************
+		**********************************************************************
+		如果值设置过小，可以调整resultMetaCacheSize参数
+	-->
+	<property name="resultMetaCacheSize" value="6000"/>
+	<!--本配置文件中最多允许一个动态sql语句派生出5000条查询sql语句，超过这个值会提示告警，例如：
+			**********************************************************************
+			*********************************警告:sql testBadQuery@file[com/frameworkset/sqlexecutor/sqlfile.xml]*********************************
+			**********************************************************************
+			调用方法_getVTPLSQLStruction从sql struction cache获取[select *  from LISTBEAN  where 1=1
+								 and id = 5000 ]sql struction 信息时,检测到缓冲区信息记录数超出SqlStructionCache允许的最大cache size:5000,
+			导致告警原因分析:
+			本条sql或者其他sql语句可能存在不断变化的值参数;
+			本条sql或者其他sql语句可能存在的$var模式的变量并且$var的值不断变化;,
+			优化建议：
+			将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，以提升系统性能!
+			**********************************************************************
+			**********************************************************************
+			如果值过小可以调整perKeySqlStructionCacheSize参数
+	-->
+	<property name="perKeySqlStructionCacheSize" value="5000"/>
 	<description>
 <![CDATA[
 	sql配置文件
@@ -28,6 +60,11 @@
 	<!-- 动态sql，如果id 不等于-1，并且id不为0将id作为查询条件 -->
 	<property name="dynamicsqltemplateid"><![CDATA[select *  from LISTBEAN  where 1=1 
 					#if($id != -1 && $id != 0) and id = #[id] #end  ]]>
+	</property>
+
+	<!-- 动态sql，如果id 不等于-1，并且id不为0将id作为查询条件 -->
+	<property name="testBadQuery"><![CDATA[select *  from LISTBEAN  where 1=1
+					#if($id != -1 && $id != 0) and id = $id #end  ]]>
 	</property>
 
 	<property name="updatesqltemplate"><![CDATA[update LISTBEAN  set FIELDNAME = #[fieldName] where id = #[id] ]]>

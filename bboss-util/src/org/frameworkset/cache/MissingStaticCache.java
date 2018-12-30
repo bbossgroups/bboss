@@ -33,12 +33,12 @@ public final class MissingStaticCache<K,V> {
     public MissingStaticCache() {
         this.size = DEFAULT_SIZE;
         missesMax = size * 2;
-        this.eden = new ConcurrentHashMap<K,V>(size);
+        this.eden = new ConcurrentHashMap<K,V>();
     }
     public MissingStaticCache(int size) {
         this.size = size;
         this.missesMax = size * 2;
-        this.eden = new ConcurrentHashMap<K,V>(size);
+        this.eden = new ConcurrentHashMap<K,V>();
     }
 
     /**

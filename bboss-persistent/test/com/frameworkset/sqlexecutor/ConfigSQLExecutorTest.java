@@ -15,19 +15,18 @@
  */
 package com.frameworkset.sqlexecutor;
 
+import com.frameworkset.common.poolman.ConfigSQLExecutor;
+import com.frameworkset.common.poolman.SQLParams;
+import org.frameworkset.persitent.util.SQLInfo;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.frameworkset.persitent.util.SQLInfo;
-import org.junit.Before;
-import org.junit.Test;
-
-import com.frameworkset.common.poolman.ConfigSQLExecutor;
-import com.frameworkset.common.poolman.SQLParams;
 
 public class ConfigSQLExecutorTest {
 	private ConfigSQLExecutor executor ;
@@ -252,6 +251,18 @@ public class ConfigSQLExecutorTest {
 		 datas.put("bm","aaa");
 		List ret = executor.queryListBean(HashMap.class, "testsqlinfo", datas);
 		ret = executor.queryListBean(HashMap.class, "testsqlinfo", datas);
+	}
+
+	@Test
+	public void testBadQuery() throws SQLException
+	{
+		Map datas = new HashMap();
+		Map params = new HashMap();
+
+		for(int i = 0;  i < 1000000; i ++){
+			params.put("id",i);
+			executor.queryObjectBean(Map.class,"testBadQuery",params);
+		}
 	}
 
 }

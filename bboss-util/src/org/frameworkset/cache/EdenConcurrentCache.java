@@ -35,13 +35,13 @@ public final class EdenConcurrentCache<K,V> {
     private final Map<K,V> longterm;
     public EdenConcurrentCache() {
         this.size = DEFAULT_SIZE;
-        this.eden = new ConcurrentHashMap<K,V>(size);
-        this.longterm = new WeakHashMap<K,V>(size);
+        this.eden = new ConcurrentHashMap<K,V>();
+        this.longterm = new WeakHashMap<K,V>();
     }
     public EdenConcurrentCache(int size) {
         this.size = size;
-        this.eden = new ConcurrentHashMap<K,V>(size);
-        this.longterm = new WeakHashMap<K,V>(size);
+        this.eden = new ConcurrentHashMap<K,V>();
+        this.longterm = new WeakHashMap<K,V>();
     }
 
 

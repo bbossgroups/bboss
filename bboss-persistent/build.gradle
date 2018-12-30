@@ -20,6 +20,8 @@ sourceSets {
 		}
 		resources {			
 			srcDir 'resources-test'
+			srcDir 'test'
+			include '**/*.xml','**/*.sql','**/*.properties'
 		}
 	}
 }

@@ -49,11 +49,12 @@ public class SQLCache {
 	private Map<String,EdenConcurrentCache<String,VariableHandler.SQLStruction>> parserTPLSQLStructions = new java.util.HashMap<String,EdenConcurrentCache<String,VariableHandler.SQLStruction>>();
 	private Map<String,EdenConcurrentCache<String,VariableHandler.SQLStruction>> parserTPLTotalsizeSQLStructions = new java.util.HashMap<String,EdenConcurrentCache<String,VariableHandler.SQLStruction>>();
 	private int resultMetaCacheSize;
-	private final int PER_SQL_STRUCTION_CACHE_SIZE = 5000;
+	private int perKeySqlStructionCacheSize;
 	private String sqlfile;
 	protected final Map<String, EdenConcurrentCache<String, SoftReference<PoolManResultSetMetaData>>> metas ;
-	public SQLCache(String sqlfile,int resultMetaCacheSize) {
+	public SQLCache(String sqlfile,int resultMetaCacheSize,int perKeySqlStructionCacheSize) {
 		this.resultMetaCacheSize = resultMetaCacheSize;
+		this.perKeySqlStructionCacheSize = perKeySqlStructionCacheSize;
 		this.sqlfile = sqlfile;
 		metas = new HashMap<String,EdenConcurrentCache<String, SoftReference<PoolManResultSetMetaData>>>( );
 	}
@@ -163,10 +164,10 @@ public class SQLCache {
 					.append("调用方法getPoolManResultSetMetaData从sqlmetacache 中获取sql[")
 					.append(sql).append("]查询元数据信息时，检测到缓冲区信息记录数超出meta cache区允许的最大cache size:")
 					.append(dbmetas.getMaxSize())
-					.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+					.append(",\r\n导致告警原因分析:")
 					.append("\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
-					.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量;")
-					.append(", \r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，以提升系统性能!")
+					.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量并且$var的值不断变化;")
+					.append("\r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，以提升系统性能!")
 					.append("\n\r**********************************************************************")
 					.append("\n\r**********************************************************************");
 		}
@@ -177,10 +178,10 @@ public class SQLCache {
 					.append("调用方法getPoolManResultSetMetaData从sqlmetacache 中获取sql[")
 					.append(sql).append("]查询元数据信息时，检测到缓冲区信息记录数超出meta cache区允许的最大cache size:")
 					.append(dbmetas.getMaxSize())
-					.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句直接硬编码在代码中;\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+					.append("\r\n导致告警原因分析:\r\n本条sql或者其他sql语句直接硬编码在代码中;")
 					.append("\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
-					.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量;")
-					.append(", \r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!")
+					.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量并且$var的值不断变化;")
+					.append("\r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!")
 					.append("\n\r**********************************************************************")
 					.append("\n\r**********************************************************************");
 		}
@@ -188,19 +189,19 @@ public class SQLCache {
 
 	}
 
-	private void logSqlStructionWarn(String sql,EdenConcurrentCache dbmetas ){
+	private void logSqlStructionWarn(String sql,EdenConcurrentCache dbmetas ,String okey){
 		StringBuilder info = new StringBuilder();
 		if(sqlfile != null) {
 			info.append("\n\r**********************************************************************\r\n")
-					.append("*********************************警告:sql file[").append(this.sqlfile).append("]*********************************\r\n")
+					.append("*********************************警告:sql ").append(okey).append("@file[").append(this.sqlfile).append("]*********************************\r\n")
 					.append("**********************************************************************\r\n")
 					.append("调用方法_getVTPLSQLStruction从sql struction cache获取[")
 					.append(sql).append("]sql struction 信息时,检测到缓冲区信息记录数超出SqlStructionCache允许的最大cache size:")
 					.append(dbmetas.getMaxSize())
-					.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+					.append(",\r\n导致告警原因分析:")
 					.append("\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
-					.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量;")
-					.append(", \r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，以提升系统性能!")
+					.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量并且$var的值不断变化;")
+					.append("\r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，以提升系统性能!")
 					.append("\n\r**********************************************************************")
 					.append("\n\r**********************************************************************");
 		}
@@ -211,10 +212,10 @@ public class SQLCache {
 					.append("调用方法_getVTPLSQLStruction从sql struction cache获取[")
 					.append(sql).append("]sql struction 信息时,检测到缓冲区信息记录数超出SqlStructionCache允许的最大cache size:")
 					.append(dbmetas.getMaxSize())
-					.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句直接硬编码在代码中;\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+					.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句直接硬编码在代码中;")
 					.append("\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
-					.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量;")
-					.append(", \r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!")
+					.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量并且$var的值不断变化;")
+					.append("\r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!")
 					.append("\n\r**********************************************************************")
 					.append("\n\r**********************************************************************");
 		}
@@ -233,7 +234,7 @@ public class SQLCache {
 		{
 			if(sqlinfo.istpl() )
 			{
-				return this._getVTPLSQLStruction(parserTPLSQLStructions,sqlinfo,newsql,sqlinfo.getSqlname(),PER_SQL_STRUCTION_CACHE_SIZE);
+				return this._getVTPLSQLStruction(parserTPLSQLStructions,sqlinfo,newsql,sqlinfo.getSqlname(),perKeySqlStructionCacheSize);
 			}
 			else
 			{
@@ -317,7 +318,7 @@ public class SQLCache {
 				this.vtplLock.unlock();
 			}
 			if(outOfSize && logger.isWarnEnabled()) {
-				this.logSqlStructionWarn( ikey, sqlstructionMap);
+				this.logSqlStructionWarn( ikey, sqlstructionMap,okey);
 			}
 		}
 		return urlStruction;
@@ -334,7 +335,7 @@ public class SQLCache {
 		{
 			if(totalsizesqlinfo.istpl() )
 			{
-				return this._getVTPLSQLStruction(this.parserTPLTotalsizeSQLStructions,totalsizesqlinfo,newtotalsizesql,totalsizesqlinfo.getSqlname(),PER_SQL_STRUCTION_CACHE_SIZE);
+				return this._getVTPLSQLStruction(this.parserTPLTotalsizeSQLStructions,totalsizesqlinfo,newtotalsizesql,totalsizesqlinfo.getSqlname(),perKeySqlStructionCacheSize);
 			}
 			else
 			{

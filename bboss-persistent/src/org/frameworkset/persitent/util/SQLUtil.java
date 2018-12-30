@@ -57,8 +57,11 @@ public class SQLUtil {
 	protected static Map<String,SQLUtil> sqlutils = new HashMap<String,SQLUtil>(); 
 	protected SQLCache cache;
 	protected static long refresh_interval = 5000;
-	protected static int defaultResultMetaCacheSize = 5000;
-	private static int gloableResultMetaCacheSize = 6000;
+	public static final int defaultResultMetaCacheSize = 6000;
+	public static final int defaultGloableResultMetaCacheSize = 10000;
+	public static final int defaultMaxGloableTemplateCacheSize = 10000;
+	public static final int defaultPerKeySqlStructionCacheSize = 5000;
+	public static final int defaultGlobalKeySqlStructionCacheSize = 5000;
 	protected String defaultDBName = null;
 	protected Map<String,SQLInfo> sqls;
 	protected Map<String,SQLRef> sqlrefs;
@@ -127,7 +130,7 @@ public class SQLUtil {
 	 /**
      * 默认的sql结构缓存器
      */
-    private static GloableSQLUtil globalSQLUtil = new GloableSQLUtil(gloableResultMetaCacheSize);
+    private static GloableSQLUtil globalSQLUtil = null;
 //	/**
 //	 * sql语句velocity模板索引表，以sql语句的名称为索引
 //	 * 当sql文件重新加载时，这些模板也会被重置
@@ -324,8 +327,8 @@ public class SQLUtil {
 		}
 		
 	}
-	private SQLUtil(String sqlfile,int resultMetaCacheSize) {
-		cache = new SQLCache( sqlfile, resultMetaCacheSize);
+	private SQLUtil(String sqlfile,int resultMetaCacheSize,int perKeySqlStructionCacheSize) {
+		cache = new SQLCache( sqlfile, resultMetaCacheSize,  perKeySqlStructionCacheSize);
 		sqlcontext = new SQLSOAFileApplicationContext(sqlfile);		
 		this.trimValues();
 		defaultDBName = sqlcontext.getProperty("default.dbname");
@@ -339,15 +342,34 @@ public class SQLUtil {
 //			 damon.start();
 //		}
 	}
+
+	private SQLUtil(String sqlfile) {
+		sqlcontext = new SQLSOAFileApplicationContext(sqlfile);
+		int resultMetaCacheSize = sqlcontext.getIntProperty("resultMetaCacheSize",SQLUtil.defaultResultMetaCacheSize);
+		int perKeySqlStructionCacheSize = sqlcontext.getIntProperty("perKeySqlStructionCacheSize",SQLUtil.defaultPerKeySqlStructionCacheSize);
+		cache = new SQLCache( sqlfile, resultMetaCacheSize,  perKeySqlStructionCacheSize);
+
+		this.trimValues();
+		defaultDBName = sqlcontext.getProperty("default.dbname");
+//		refresh_interval = ApplicationContext.getApplicationContext().getLongProperty("sqlfile.refresh_interval", -1);
+
+		checkSQLUtil(sqlfile,this);
+
+//		if(refresh_interval > 0)
+//		{
+//			 damon = new DaemonThread(sqlfile,refresh_interval,new ResourceSQLRefresh(this));
+//			 damon.start();
+//		}
+	}
 	
 
-	public SQLUtil(int resultMetaCacheSize) {
-		cache = new SQLCache( null, resultMetaCacheSize);
+	public SQLUtil(int resultMetaCacheSize,int perKeySqlStructionCacheSize) {
+		cache = new SQLCache( null, resultMetaCacheSize,  perKeySqlStructionCacheSize);
 	}
 
 
 
-	public static SQLUtil getInstance(String sqlfile,int defaultResultMetaCacheSize){
+	public static SQLUtil getInstance(String sqlfile){
 		SQLUtil sqlUtil = sqlutils.get(sqlfile);
 		if(sqlUtil != null)
 			return sqlUtil;
@@ -356,7 +378,7 @@ public class SQLUtil {
 			sqlUtil = sqlutils.get(sqlfile);
 			if(sqlUtil != null)
 				return sqlUtil;
-			sqlUtil = new SQLUtil(sqlfile,  defaultResultMetaCacheSize);
+			sqlUtil = new SQLUtil(sqlfile);
 
 			sqlutils.put(sqlfile, sqlUtil);
 
@@ -364,10 +386,7 @@ public class SQLUtil {
 
 		return sqlUtil;
 	}
-	public static SQLUtil getInstance(String sqlfile) {
-		
-		return getInstance(sqlfile,defaultResultMetaCacheSize);
-	}
+
 	
 	static void destory()
 	{
@@ -711,7 +730,15 @@ public class SQLUtil {
 
 
 	public static GloableSQLUtil getGlobalSQLUtil() {
+		if(globalSQLUtil != null)
+			return globalSQLUtil;
+		synchronized (GloableSQLUtil.class){
+			if(globalSQLUtil != null)
+				return globalSQLUtil;
+			globalSQLUtil = new GloableSQLUtil(SQLUtil.defaultGloableResultMetaCacheSize,SQLUtil.defaultMaxGloableTemplateCacheSize,SQLUtil.defaultGlobalKeySqlStructionCacheSize);
+		}
 		return globalSQLUtil;
+
 	}
 
 	public boolean fromConfig() {
