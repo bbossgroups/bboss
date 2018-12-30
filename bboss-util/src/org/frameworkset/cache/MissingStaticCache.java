@@ -40,6 +40,9 @@ public final class MissingStaticCache<K,V> {
         this.missesMax = size * 2;
         this.eden = new ConcurrentHashMap<K,V>();
     }
+    public int getMissesMax(){
+        return this.missesMax;
+    }
 
     /**
 	 * 用于判断缓存命中失败次数是否超过最大允许次数
