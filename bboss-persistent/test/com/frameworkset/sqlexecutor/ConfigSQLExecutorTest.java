@@ -256,12 +256,24 @@ public class ConfigSQLExecutorTest {
 	@Test
 	public void testBadQuery() throws SQLException
 	{
+		Map datas =null;
+		Map params = new HashMap();
+
+		for(int i = 0;  i < 1000000; i ++){
+			params.put("id",i);
+			datas =executor.queryObjectBean(Map.class,"testBadQuery",params);
+		}
+	}
+
+	@Test
+	public void testGoodQuery() throws SQLException
+	{
 		Map datas = new HashMap();
 		Map params = new HashMap();
 
 		for(int i = 0;  i < 1000000; i ++){
 			params.put("id",i);
-			executor.queryObjectBean(Map.class,"testBadQuery",params);
+			executor.queryObjectBean(Map.class,"testGoodQuery",params);
 		}
 	}
 

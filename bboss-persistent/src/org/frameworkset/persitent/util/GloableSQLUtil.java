@@ -19,6 +19,7 @@ import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.velocity.BBossVelocityUtil;
 import org.frameworkset.cache.EdenConcurrentCache;
+import org.frameworkset.cache.MissingStaticCache;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,12 +35,19 @@ import java.util.concurrent.locks.ReentrantLock;
 public class GloableSQLUtil extends SQLUtil {
 	private static final Logger logger = LoggerFactory.getLogger(GloableSQLUtil.class);
 	protected EdenConcurrentCache<String,SQLInfo> tplEdenConcurrentCache;
+	protected MissingStaticCache<String,SQLInfo> tplMissingStaticCache;
 
 	private Lock tplCacheLock = new ReentrantLock();
-	GloableSQLUtil(int gloableResultMetaCacheSize,int maxGloableTemplateCacheSize,int globalKeySqlStructionCacheSize)
+
+	GloableSQLUtil(int gloableResultMetaCacheSize,int maxGloableTemplateCacheSize,int globalKeySqlStructionCacheSize,boolean alwaysCache)
 	{
-		super(gloableResultMetaCacheSize,globalKeySqlStructionCacheSize);
-		tplEdenConcurrentCache = new EdenConcurrentCache<String,SQLInfo>(maxGloableTemplateCacheSize);
+		super(gloableResultMetaCacheSize,globalKeySqlStructionCacheSize,alwaysCache);
+		if(alwaysCache) {
+			tplEdenConcurrentCache = new EdenConcurrentCache<String, SQLInfo>(maxGloableTemplateCacheSize);
+		}
+		else{
+			tplMissingStaticCache = new MissingStaticCache<String, SQLInfo>(maxGloableTemplateCacheSize);
+		}
 	}
 	@Override
 	public SQLStruction getSQLStruction(SQLInfo sqlinfo, String newsql) {
@@ -89,54 +97,101 @@ public class GloableSQLUtil extends SQLUtil {
 	public SQLInfo getSQLInfo(String sql,boolean istpl,boolean multiparser) {
 		
 				
-				SQLInfo sqlinfo = null;
-				if(!istpl){
-					sqlinfo = new SQLInfo(sql, sql, istpl, multiparser);
-					sqlinfo.setSqlutil(this);
-					return sqlinfo;
-				}
-				boolean outOfSize = false;
-				sqlinfo = tplEdenConcurrentCache.get(sql);
-				if (sqlinfo == null) {
-					try {
-						tplCacheLock.lock();
-						sqlinfo = tplEdenConcurrentCache.get(sql);
-						if (sqlinfo != null)
-							return sqlinfo;
-						SQLTemplate sqltpl = null;
-						sqlinfo = new SQLInfo(sql, sql, istpl, multiparser);
-						sqlinfo.setSqlutil(this);
-
-						sqltpl = new SQLTemplate(sqlinfo);
-						sqlinfo.setSqltpl(sqltpl);
-						BBossVelocityUtil.initDBTemplate(sqltpl);
-						sqltpl.process();
-
-						outOfSize = tplEdenConcurrentCache.put(sql, sqlinfo);
-
-					}
-					finally {
-						tplCacheLock.unlock();
-					}
-					if(outOfSize && logger.isWarnEnabled()) {
-						StringBuilder info = new StringBuilder();
-						info.append("\r\n**********************************************************************\r\n")
-								.append("*********************************警告*********************************\r\n")
-								.append("**********************************************************************\r\n")
-								.append("调用GloableSQLUtil getSQLInfo 方法从tplEdenConcurrentCache获取代码中硬编码的[")
-								.append(sql).append("] 模板信息时，检测到缓冲区记录数超出cache允许的最大cache size:")
-								.append(tplEdenConcurrentCache.getMaxSize())
-								.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句直接硬编码在代码中;")
-								.append("\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
-								.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量并且$var的值不断变化;")
-								.append("\r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!")
-								.append("\n\r**********************************************************************")
-								.append("\n\r**********************************************************************");
-						logger.warn(info.toString());
-					}
-					
-				}
+			if(!istpl){
+				SQLInfo sqlinfo = new SQLInfo(sql, sql, istpl, multiparser);
+				sqlinfo.setSqlutil(this);
 				return sqlinfo;
+			}
+			if(alwaysCache){
+				return getAwaysCacheSQLInfo(sql,istpl,multiparser);
+			}
+			else{
+				return getMissingCacheSQLInfo(sql,  istpl,  multiparser);
+			}
+	}
+
+	private SQLInfo getAwaysCacheSQLInfo(String sql,boolean istpl,boolean multiparser){
+		boolean outOfSize = false;
+		SQLInfo sqlinfo = tplEdenConcurrentCache.get(sql);
+		if (sqlinfo == null) {
+			try {
+				tplCacheLock.lock();
+				sqlinfo = tplEdenConcurrentCache.get(sql);
+				if (sqlinfo != null)
+					return sqlinfo;
+				sqlinfo = sqlinfo = buildSQLInfo(  sql,  istpl,  multiparser);
+				outOfSize = tplEdenConcurrentCache.put(sql, sqlinfo);
+
+			}
+			finally {
+				tplCacheLock.unlock();
+			}
+			if(outOfSize && logger.isWarnEnabled()) {
+				logWarn(  sql,  tplEdenConcurrentCache.getMaxSize());
+			}
+
+		}
+		return sqlinfo;
+	}
+	private SQLInfo buildSQLInfo(String sql,boolean istpl,boolean multiparser){
+		SQLInfo sqlinfo = new SQLInfo(sql, sql, istpl, multiparser);
+		sqlinfo.setSqlutil(this);
+
+		SQLTemplate sqltpl = new SQLTemplate(sqlinfo);
+		sqlinfo.setSqltpl(sqltpl);
+		BBossVelocityUtil.initDBTemplate(sqltpl);
+		sqltpl.process();
+		return sqlinfo;
+	}
+	private SQLInfo getMissingCacheSQLInfo(String sql,boolean istpl,boolean multiparser){
+
+		if(tplMissingStaticCache.stopCache()){
+			logWarn(  sql,  tplMissingStaticCache.getMissesMax());
+			return buildSQLInfo(  sql,  istpl,  multiparser);
+		}
+		SQLInfo sqlinfo = tplMissingStaticCache.get(sql);
+		if (sqlinfo == null) {
+			try {
+				tplCacheLock.lock();
+				sqlinfo = tplMissingStaticCache.get(sql);
+				if (sqlinfo != null)
+					return sqlinfo;
+				tplMissingStaticCache.increamentMissing();
+				sqlinfo = buildSQLInfo(  sql,  istpl,  multiparser);
+				if(!tplMissingStaticCache.stopCache()){
+					tplMissingStaticCache.put(sql, sqlinfo);
+				}
+				else{
+					if(logger.isWarnEnabled()){
+						logWarn(  sql,  tplMissingStaticCache.getMissesMax());
+					}
+				}
+
+
+			}
+			finally {
+				tplCacheLock.unlock();
+			}
+
+
+		}
+		return sqlinfo;
+	}
+	private void logWarn(String sql,int maxSize){
+		StringBuilder info = new StringBuilder();
+		info.append("\r\n**********************************************************************\r\n")
+				.append("*********************************警告*********************************\r\n")
+				.append("**********************************************************************\r\n")
+				.append("调用GloableSQLUtil getSQLInfo 方法从tplEdenConcurrentCache获取代码中硬编码的[")
+				.append(sql).append("] 模板信息时，检测到缓冲区记录数超出cache允许的最大cache size:")
+				.append(maxSize)
+				.append(",\r\n导致告警原因分析:\r\n本条sql或者其他sql语句直接硬编码在代码中;")
+				.append("\r\n本条sql或者其他sql语句可能存在不断变化的值参数;")
+				.append("\r\n本条sql或者其他sql语句可能存在的$var模式的变量并且$var的值不断变化;")
+				.append("\r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!")
+				.append("\n\r**********************************************************************")
+				.append("\n\r**********************************************************************");
+		logger.warn(info.toString());
 	}
 
 	@Override
@@ -208,11 +263,29 @@ public class GloableSQLUtil extends SQLUtil {
 		throw new java.lang.UnsupportedOperationException();
 	}
 	protected void _destroy(){
-		this.tplEdenConcurrentCache.clear();
+
+		if(this.alwaysCache) {
+			this.tplEdenConcurrentCache.clear();
+			this.tplEdenConcurrentCache = null;
+		}
+		else
+		{
+			this.tplMissingStaticCache.clear();
+			tplMissingStaticCache = null;
+		}
+		this.alwaysCache = false;
+		super._destroy();
 //		this.edenConcurrentCache.clear();
 	}
 	protected void reinit(){
-		this.tplEdenConcurrentCache.clear();
+		if(this.alwaysCache) {
+			this.tplEdenConcurrentCache.clear();
+		}
+		else
+		{
+			this.tplMissingStaticCache.clear();
+		}
+
 //		this.edenConcurrentCache.clear();
 	}
 

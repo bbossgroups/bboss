@@ -263,12 +263,7 @@ public class StatementInfo {
 	}
 	
 	public PreparedStatement prepareQueryStatement() throws SQLException {
-//		PreparedStatement pstmt = this.con.prepareStatement(this.sql,this.getScrollType(dbname),this.getCursorType(dbname));
-//		int fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
-//		if(fetchsize > 0)
-//			pstmt.setFetchSize(fetchsize);
-//		this.statements.add(pstmt);
-//		return pstmt;
+
 		return _prepareStatement(true);
 	}
 

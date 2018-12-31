@@ -1146,9 +1146,9 @@ public class SimpleApiTest {
 	@Test
 	public void testBadQuery() throws SQLException {
 		Map params = new HashMap();
-		params.put("fieldName","test");
+		params.put("userName","admin");
 		for(int i = 0;  i < 100000; i ++){
-			SQLExecutor.queryListBean(Map.class,"select * from LISTBEAN where id="+i+ " and FIELDNAME=#[fieldName]",params);
+			SQLExecutor.queryListBean(Map.class,"select * from td_sm_log where log_id="+i+ " and log_operuser=#[userName]",params);
 		}
 	}
 
@@ -1157,27 +1157,27 @@ public class SimpleApiTest {
 		Map params = new HashMap();
 		params.put("fieldName","test");
 		for(int i = 0;  i < 100000; i ++){
-			SQLExecutor.queryList(Map.class,"select * from LISTBEAN where id="+i);
+			SQLExecutor.queryList(Map.class,"select * from td_sm_log where log_id="+i);
 		}
 	}
 
 	@Test
 	public void testGoodQueryBean() throws SQLException {
 		Map params = new HashMap();
-		params.put("fieldName","test");
+		params.put("userName","admin");
 		params.put("i","test");
-		for(int i = 0;  i < 1000000; i ++){
+		for(int i = 0;  i < 100000; i ++){
 			params.put("i",i);
-			SQLExecutor.queryListBean(Map.class,"select * from LISTBEAN where id=#[i] and FIELDNAME=#[fieldName]",params);
+			SQLExecutor.queryListBean(Map.class,"select * from td_sm_log where log_id=#[i] and log_operuser=#[userName]",params);
 		}
 	}
 
 	@Test
 	public void testGoodQueryBindVar() throws SQLException {
 
-		for(int i = 0;  i < 1000000; i ++){
+		for(int i = 0;  i < 100000; i ++){
 
-			SQLExecutor.queryList(Map.class,"select * from LISTBEAN where id=? and FIELDNAME=?",i,"test");
+			SQLExecutor.queryList(Map.class,"select * from td_sm_log where log_id=? and log_operuser=?",i,"admin");
 		}
 	}
 
