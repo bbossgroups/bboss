@@ -32,6 +32,13 @@
 			如果值过小可以调整perKeySqlStructionCacheSize参数
 	-->
 	<property name="perKeySqlStructionCacheSize" value="5000"/>
+	<!--
+		sql解析语法结构缓存机制和sql查询元数据缓存机制控制开关，每个配置文件可以单独设置
+		true，命中率低也采用缓存机制
+		false，命中率低则会采用熔断机制，命中率超过resultMetaCacheSize * 2或者perKeySqlStructionCacheSize *2时将不再从缓存读取相关数据
+	-->
+	<property name="alwaysCache" value="true"/>
+
 	<description>
 <![CDATA[
 	sql配置文件
