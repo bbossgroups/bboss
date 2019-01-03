@@ -21,6 +21,10 @@
 
 -Xms1g
 -Xmx1g
+-XX:NewSize=512m
+-XX:MaxNewSize=512m
+# explicitly set the stack size
+-Xss256k
 
 ################################################################
 ## Expert settings
@@ -47,8 +51,7 @@
 # force the server VM
 -server
 
-# explicitly set the stack size
--Xss1m
+
 
 # set to headless, just in case
 -Djava.awt.headless=true

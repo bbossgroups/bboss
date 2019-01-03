@@ -15,7 +15,10 @@
  */
 package com.frameworkset.sqlexecutor;
 
-import com.frameworkset.common.poolman.*;
+import com.frameworkset.common.poolman.GetCUDResult;
+import com.frameworkset.common.poolman.Record;
+import com.frameworkset.common.poolman.SQLExecutor;
+import com.frameworkset.common.poolman.SQLInfoExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.sqlexecutor.BeanVariable.Bean;
@@ -1152,6 +1155,7 @@ public class SimpleApiTest {
 		}
 	}
 
+
 	@Test
 	public void testBadQueryConst() throws SQLException {
 		Map params = new HashMap();
@@ -1166,7 +1170,7 @@ public class SimpleApiTest {
 		Map params = new HashMap();
 		params.put("userName","admin");
 		params.put("i","test");
-		for(int i = 0;  i < 100000; i ++){
+		for(int i = 0;  i < 2; i ++){
 			params.put("i",i);
 			SQLExecutor.queryListBean(Map.class,"select * from td_sm_log where log_id=#[i] and log_operuser=#[userName]",params);
 		}

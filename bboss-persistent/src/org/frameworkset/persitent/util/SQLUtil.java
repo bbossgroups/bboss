@@ -226,7 +226,8 @@ public class SQLUtil {
 			this.sqlrefs.clear();
 			sqlrefs = null;
 		}
-		this.cache.clear();
+		if(cache != null)
+			this.cache.clear();
 		if(sqlcontext != null)
 			sqlcontext.destroy(true);
 		
@@ -246,12 +247,15 @@ public class SQLUtil {
 			this.sqlrefs.clear();
 			sqlrefs = null;
 		}
-		this.cache.clear();
-		String file = sqlcontext.getConfigfile();
-		sqlcontext.destroy(true);
-		sqlcontext = new SQLSOAFileApplicationContext(file);		
-		defaultDBName = sqlcontext.getProperty("default.dbname");
-		trimValues();
+		if(this.cache != null)
+			this.cache.clear();
+		if(sqlcontext != null) {
+			String file = sqlcontext.getConfigfile();
+			sqlcontext.destroy(true);
+			sqlcontext = new SQLSOAFileApplicationContext(file);
+			defaultDBName = sqlcontext.getProperty("default.dbname");
+			trimValues();
+		}
 
 		
 	}

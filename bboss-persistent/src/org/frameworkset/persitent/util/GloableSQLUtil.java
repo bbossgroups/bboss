@@ -286,6 +286,8 @@ public class GloableSQLUtil extends SQLUtil {
 			this.tplMissingStaticCache.clear();
 		}
 
+		super.reinit();
+
 //		this.edenConcurrentCache.clear();
 	}
 

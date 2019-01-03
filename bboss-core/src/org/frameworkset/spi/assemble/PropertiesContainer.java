@@ -266,19 +266,23 @@ public class PropertiesContainer implements GetProperties{
 		    			log.debug("load config Properties File :"+resource.getURL());
 		    	}
 		    	catch(Exception e){
-		    		if(linkfile == null)
-						log.warn(new StringBuilder().append("Load config Properties File failed:")
-												.append(configPropertiesFile)
-												.append(" in ")
-												.append(" cannot be opened because it does not exist,Ignored load.").toString());
+		    		if(linkfile == null) {
+		    			if(log.isInfoEnabled()) {
+							log.info(new StringBuilder().append("load config Properties File :")
+									.append(configPropertiesFile)
+									.append(" does not exist,Ignore load.").toString());
+						}
+					}
 		    		else {
-						StringBuilder builder = new StringBuilder();
-						builder.append("Load config Properties File failed:")
-								.append(configPropertiesFile)
-								.append(" in ");
-						linkfile.toString(builder);
-						builder.append(" cannot be opened because it does not exist,Ignored load.");
-						log.warn(builder.toString());
+		    			if(log.isInfoEnabled()) {
+							StringBuilder builder = new StringBuilder();
+							builder.append("load config Properties File :")
+									.append(configPropertiesFile)
+									.append(" in ");
+							linkfile.toString(builder);
+							builder.append(" does not exist,Ignore load.");
+							log.info(builder.toString());
+						}
 					}
 		    	}
     		}
@@ -296,18 +300,21 @@ public class PropertiesContainer implements GetProperties{
 				else
 				{
 					if(linkfile == null)
-						log.warn(new StringBuilder().append("Load config Properties File failed:")
-								.append(configPropertiesFile)
-								.append(" in ")
-								.append(" cannot be opened because it does not exist,Ignored load.").toString());
+						if(log.isInfoEnabled()) {
+							log.info(new StringBuilder().append("load config Properties File :")
+									.append(configPropertiesFile)
+									.append(" does not exist,Ignore load.").toString());
+						}
 					else {
-						StringBuilder builder = new StringBuilder();
-						builder.append("Load config Properties File failed:")
-								.append(configPropertiesFile)
-								.append(" in ");
-						linkfile.toString(builder);
-						builder.append(" cannot be opened because it does not exist,Ignored load.");
-						log.warn(builder.toString());
+							if(log.isInfoEnabled()) {
+								StringBuilder builder = new StringBuilder();
+								builder.append("load config Properties File :")
+										.append(configPropertiesFile)
+										.append(" in ");
+								linkfile.toString(builder);
+								builder.append(" does not exist,Ignore load.");
+								log.info(builder.toString());
+							}
 					}
 				}
     		}
