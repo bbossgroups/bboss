@@ -306,8 +306,10 @@ public class SQLUtil {
 			public void run() {
 				SQLUtil.stopmonitor();
 				destory();
-				globalSQLUtil._destroy();
-				globalSQLUtil = null;
+				if(globalSQLUtil != null) {
+					globalSQLUtil._destroy();
+					globalSQLUtil = null;
+				}
 			}});
 	}
 	private static Object lock = new Object();
