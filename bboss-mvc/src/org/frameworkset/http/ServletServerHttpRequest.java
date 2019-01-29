@@ -17,7 +17,6 @@ package org.frameworkset.http;
 
 import com.frameworkset.util.StringUtil;
 import org.frameworkset.util.Assert;
-import org.frameworkset.util.LinkedCaseInsensitiveMap;
 import org.frameworkset.util.annotations.HttpMethod;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,9 +25,11 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.security.Principal;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>Title: ServletServerHttpRequest.java</p> 
@@ -93,41 +94,7 @@ public class ServletServerHttpRequest  implements ServerHttpRequest {
 	@Override
 	public HttpHeaders getHeaders() {
 		if (this.headers == null) {
-			this.headers = new HttpHeaders();
-			for (Enumeration<?> headerNames = this.servletRequest.getHeaderNames(); headerNames.hasMoreElements();) {
-				String headerName = (String) headerNames.nextElement();
-				for (Enumeration<?> headerValues = this.servletRequest.getHeaders(headerName);
-						headerValues.hasMoreElements();) {
-					String headerValue = (String) headerValues.nextElement();
-					this.headers.add(headerName, headerValue);
-				}
-			}
-			// HttpServletRequest exposes some headers as properties: we should include those if not already present
-			MediaType contentType = this.headers.getContentType();
-			if (contentType == null) {
-				String requestContentType = this.servletRequest.getContentType();
-				if (StringUtil.hasLength(requestContentType)) {
-					contentType = MediaType.parseMediaType(requestContentType);
-					this.headers.setContentType(contentType);
-				}
-			}
-			if (contentType != null && contentType.getCharSet() == null) {
-				String requestEncoding = this.servletRequest.getCharacterEncoding();
-				if (StringUtil.hasLength(requestEncoding)) {
-					Charset charSet = Charset.forName(requestEncoding);
-					Map<String, String> params = new LinkedCaseInsensitiveMap<String>();
-					params.putAll(contentType.getParameters());
-					params.put("charset", charSet.toString());
-					MediaType newContentType = new MediaType(contentType.getType(), contentType.getSubtype(), params);
-					this.headers.setContentType(newContentType);
-				}
-			}
-			if (this.headers.getContentLength() == -1) {
-				int requestContentLength = this.servletRequest.getContentLength();
-				if (requestContentLength != -1) {
-					this.headers.setContentLength(requestContentLength);
-				}
-			}
+			this.headers = RequestHeaderUtil.getHeaders(this.servletRequest);
 		}
 		return this.headers;
 	}
@@ -175,7 +142,7 @@ public class ServletServerHttpRequest  implements ServerHttpRequest {
 	}
 
 	/**
-	 * Use {@link javax.servlet.ServletRequest#getParameterMap()} to reconstruct the
+	 * Use {link javax.servlet.ServletRequest#getParameterMap()} to reconstruct the
 	 * body of a form 'POST' providing a predictable outcome as opposed to reading
 	 * from the body, which can fail if any other code has used the ServletRequest
 	 * to access a parameter, thus causing the input stream to be "consumed".
