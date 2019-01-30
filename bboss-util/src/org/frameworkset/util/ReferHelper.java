@@ -1,18 +1,30 @@
 package org.frameworkset.util;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.frameworkset.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.util.StringUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class ReferHelper {
 	private static Logger logger = LoggerFactory.getLogger(ReferHelper.class);
 	private String[] refererwallwhilelist;
+	public static final String REQUEST_HEADER_REFER_CHECKED = "REQUEST_HEADER_REFER_CHECKED";
+	// -------------------------------------------------- CORS Request Headers
+	/**
+	 * The Origin header indicates where the cross-origin request or preflight
+	 * request originates from.
+	 */
+	public static final String REQUEST_HEADER_ORIGIN = "Origin";
+	/**
+	 * The Access-Control-Request-Headers header indicates which headers will be
+	 * used in the actual request as part of the preflight request.
+	 */
+	public static final String REQUEST_HEADER_ACCESS_CONTROL_REQUEST_HEADERS =
+			"Access-Control-Request-Headers";
+
 	private boolean refererDefender = false;
 	private PathMatcher pathMatcher;
 	private String[] wallfilterrules;
@@ -39,9 +51,17 @@ public class ReferHelper {
 		return false;
 	}
 
+	public void recordNoCros(HttpServletRequest request,
+							 HttpServletResponse response){
+		request.setAttribute(ReferHelper.REQUEST_HEADER_REFER_CHECKED,false);
+	}
 	public boolean dorefer(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
+		Boolean checked = (Boolean) request.getAttribute(ReferHelper.REQUEST_HEADER_REFER_CHECKED);
+		if(checked != null )
+			return checked;
 		if (refererDefender) {
+
 			/**
 			 * 跨站点请求伪造。修复任务： 拒绝恶意请求。解决方案，过滤器中
 			 * 
@@ -90,25 +110,11 @@ public class ReferHelper {
 				if (basePath80 == null) {
 					if (referer.indexOf(basePath) < 0) {
 						if (this.iswhilerefer(referer)) {
-							// String context = request.getContextPath();
-							// if(!context.equals("/"))
-							// {
-							// String uri = request.getRequestURI();
-							// uri =
-							// uri.substring(request.getContextPath().length());
-							// request.getRequestDispatcher(uri).forward(request,
-							// response);
-							// }
-							// else
-							// {
-							// request.getRequestDispatcher(context).forward(request,
-							// response);
-							// }
-							// return;
-							return false;
+
+							checked = false;
 						} else {
-							sendRedirect403(request, response);
-							return true;
+							sendInvalidCORS(request, response);
+							checked = true;
 						}
 					}
 				} else {
@@ -130,19 +136,47 @@ public class ReferHelper {
 						// }
 						// return;
 						if (this.iswhilerefer(referer)) {
-							return false;
+							checked = false;
 						} else {
-							sendRedirect403(request, response);
-							return true;
+							sendInvalidCORS(request, response);
+							checked = true;
 						}
 					}
 				}
 
 			}
 		}
-		return false;
+		else {
+			checked = false;
+		}
+		request.setAttribute(ReferHelper.REQUEST_HEADER_REFER_CHECKED,checked);
+		return checked;
 	}
+	public void sendInvalidCORS(HttpServletRequest request,
+								HttpServletResponse response)   {
+		String origin = request.getHeader(REQUEST_HEADER_ORIGIN);
+		String method = request.getMethod();
+		String accessControlRequestHeaders = request.getHeader(
+				REQUEST_HEADER_ACCESS_CONTROL_REQUEST_HEADERS);
 
+		response.setContentType("text/plain");
+		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+		response.resetBuffer();
+
+		if (logger.isDebugEnabled()) {
+			// Debug so no need for i18n
+			StringBuilder message =
+					new StringBuilder("Invalid CORS request; Origin=");
+			message.append(origin);
+			message.append(";Method=");
+			message.append(method);
+			if (accessControlRequestHeaders != null) {
+				message.append(";Access-Control-Request-Headers=");
+				message.append(accessControlRequestHeaders);
+			}
+			logger.debug(message.toString());
+		}
+	}
 	public void sendRedirect403(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		if (!response.isCommitted()) {
