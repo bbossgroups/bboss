@@ -74,6 +74,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			e.printStackTrace();
 		}
 	}
+	private static Long resourcefileRefreshInterval;
 	/**
 	 * 定义5种组件容器的类型代码
 	 */
@@ -97,7 +98,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 * Name of the MessageSource bean in the factory. If none is supplied,
 	 * message resolution is delegated to the parent.
 	 * 
-	 * @see MessageSource
+
 	 */
 	public static final String MESSAGE_SOURCE_BEAN_NAME = "messageSource";
 
@@ -235,6 +236,16 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 
 	protected String configfile;
+
+	public URL getConfigFileURL() {
+		return configFileURL;
+	}
+
+	public void setConfigFileURL(URL configFileURL) {
+		this.configFileURL = configFileURL;
+	}
+
+	protected URL configFileURL;
 
 	protected BaseApplicationContext(String configfile) {
 		// if (configfile == null || configfile.equals(""))
@@ -438,6 +449,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 							+ null);
 		this.isfile = false;
 		this.configfile = path;
+		this.configFileURL = file;
 		this.needRecordFile = false;
 		providerManager = _getServiceProviderManager();
 		providerManager.init(AssembleCallback.classpathprex, "", configfile,file);
@@ -613,16 +625,23 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 	
 	public static long getResourceFileRefreshInterval() {
-		
-		Properties pro = null;
-		try {
-			pro = fillProperties();
-			String ResourceFileRefreshInterval = pro.getProperty("resourcefile.refresh_interval", "5000");
-			return Long.parseLong(ResourceFileRefreshInterval);
-			
-		} catch (Exception e) {
-			log.warn(e.getMessage(),e);
-			return 5000l;
+		if(resourcefileRefreshInterval != null){
+			return resourcefileRefreshInterval.longValue();
+		}
+		synchronized (BaseApplicationContext.class) {
+			if(resourcefileRefreshInterval != null){
+				return resourcefileRefreshInterval.longValue();
+			}
+			Properties pro = null;
+			try {
+				pro = fillProperties();
+				String ResourceFileRefreshInterval = pro.getProperty("resourcefile.refresh_interval", "5000");
+				return resourcefileRefreshInterval = Long.parseLong(ResourceFileRefreshInterval);
+
+			} catch (Exception e) {
+				log.warn(e.getMessage(), e);
+				return resourcefileRefreshInterval = 5000l;
+			}
 		}
 		
 	
@@ -2051,7 +2070,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 * as well. Else, default resource pattern matching will apply.
 	 * 
 	 * @see #getResource
-	 * @see DefaultResourceLoader
+	 * @see #DefaultResourceLoader
 
 	 * @see #getResources
 	 */

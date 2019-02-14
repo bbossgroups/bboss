@@ -6,7 +6,7 @@ import org.apache.http.HttpEntity;
 import java.io.IOException;
 import java.io.InputStream;
 
-public abstract class BaseResponseHandler  {
+public abstract class BaseResponseHandler extends StatusResponseHandler {
 	protected <T> T converJson(HttpEntity entity,Class<T> clazz) throws IOException {
 		InputStream inputStream = null;
 		try {

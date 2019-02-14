@@ -8,7 +8,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
-public class StringResponseHandler implements ResponseHandler<String> {
+public class StringResponseHandler extends StatusResponseHandler implements ResponseHandler<String> {
 
 	public StringResponseHandler() {
 		// TODO Auto-generated constructor stub
@@ -17,7 +17,7 @@ public class StringResponseHandler implements ResponseHandler<String> {
 	 @Override
      public String handleResponse(final HttpResponse response)
              throws ClientProtocolException, IOException {
-         int status = response.getStatusLine().getStatusCode();
+         int status = initStatus(  response);
 
          if (status >= 200 && status < 300) {
              HttpEntity entity = response.getEntity();

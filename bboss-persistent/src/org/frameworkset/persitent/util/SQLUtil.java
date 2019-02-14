@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.StringWriter;
+import java.net.URL;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.*;
@@ -313,7 +314,7 @@ public class SQLUtil {
 			}});
 	}
 	private static Object lock = new Object();
-	private static void checkSQLUtil(String sqlfile,SQLUtil sqlutil){
+	private static void checkSQLUtil(URL sqlfileURL,String sqlfile, SQLUtil sqlutil){
 		
 		refresh_interval = BaseApplicationContext.getSQLFileRefreshInterval();
 		if(refresh_interval > 0)
@@ -330,7 +331,7 @@ public class SQLUtil {
 					}
 				}
 			}
-			damon.addFile(sqlfile, new ResourceSQLRefresh(sqlutil));
+			damon.addFile(sqlfileURL,sqlfile, new ResourceSQLRefresh(sqlutil));
 		}
 		
 	}
@@ -350,8 +351,11 @@ public class SQLUtil {
 		this.trimValues();
 		defaultDBName = sqlcontext.getProperty("default.dbname");
 //		refresh_interval = ApplicationContext.getApplicationContext().getLongProperty("sqlfile.refresh_interval", -1);
+		if(sqlcontext.getConfigFileURL() != null)
+			checkSQLUtil(sqlcontext.getConfigFileURL(),sqlfile,this);
+		else{
 
-		checkSQLUtil(sqlfile,this);
+		}
 
 //		if(refresh_interval > 0)
 //		{

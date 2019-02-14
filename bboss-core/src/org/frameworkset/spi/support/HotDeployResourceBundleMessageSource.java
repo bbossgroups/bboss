@@ -33,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -99,7 +100,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	/**
 	 * Set a single basename, following the basic ResourceBundle convention of
 	 * not specifying file extension or language codes, but in contrast to
-	 * {@link ResourceBundleMessageSource} referring to a Bboss resource
+	 * {ResourceBundleMessageSource} referring to a Bboss resource
 	 * location: e.g. "WEB-INF/messages" for "WEB-INF/messages.properties",
 	 * "WEB-INF/messages_en.properties", etc.
 	 * <p>
@@ -122,7 +123,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	/**
 	 * Set an array of basenames, each following the basic ResourceBundle
 	 * convention of not specifying file extension or language codes, but in
-	 * contrast to {@link ResourceBundleMessageSource} referring to a Bboss
+	 * contrast to { ResourceBundleMessageSource} referring to a Bboss
 	 * resource location: e.g. "WEB-INF/messages" for
 	 * "WEB-INF/messages.properties", "WEB-INF/messages_en.properties", etc.
 	 * <p>
@@ -409,8 +410,9 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 //				return propHolder;
 //			}
 			propHolder = this.firstLoadProperties(filename);
-			if(propHolder.getResource() != null && this.isChangemonitor())
-				checkResource(this,propHolder.getResource(),propHolder.getBasename(),propHolder.getRelativefile());
+			if(this.isChangemonitor()) {
+				checkResource(this, propHolder.getResourceURL(),propHolder.getResource(), propHolder.getBasename(), propHolder.getRelativefile());
+			}
 			cachedProperties.put(filename, propHolder);
 			return propHolder;
 		}
@@ -421,81 +423,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	 * can be <code>null</code> if not cached before, or a timed-out cache entry
 	 * (potentially getting re-validated against the current last-modified
 	 * timestamp).
-	 * 
-	 * @param filename
-	 *            the bundle filename (basename + Locale)
-	 * @param propHolder
-	 *            the current PropertiesHolder for the bundle
-	 */
-//	protected PropertiesHolder refreshProperties(String filename,
-//			PropertiesHolder propHolder) {
-//		long refreshTimestamp = (this.cacheMillis < 0) ? -1 : System
-//				.currentTimeMillis();
-//
-//		Resource resource = this.resourceLoader.getResource(filename
-//				+ PROPERTIES_SUFFIX);
-//		if (!resource.exists()) {
-//			resource = this.resourceLoader.getResource(filename + XML_SUFFIX);
-//		}
-//
-//		if (resource.exists()) {
-//			long fileTimestamp = -1;
-//			if (this.cacheMillis >= 0) {
-//				// Last-modified timestamp of file will just be read if caching
-//				// with timeout.
-//				try {
-//					fileTimestamp = resource.lastModified();
-//					if (propHolder != null
-//							&& propHolder.getFileTimestamp() == fileTimestamp) {
-//						if (logger.isDebugEnabled()) {
-//							logger.debug("Re-caching properties for filename ["
-//									+ filename
-//									+ "] - file hasn't been modified");
-//						}
-//						propHolder.setRefreshTimestamp(refreshTimestamp);
-//						return propHolder;
-//					}
-//				} catch (IOException ex) {
-//					// Probably a class path resource: cache it forever.
-//					if (logger.isDebugEnabled()) {
-//						logger.debug(
-//								resource
-//										+ " could not be resolved in the file system - assuming that is hasn't changed",
-//								ex);
-//					}
-//					fileTimestamp = -1;
-//				}
-//			}
-//			try {
-//				Properties props = loadProperties(resource, filename);
-//				propHolder = new PropertiesHolder(props, fileTimestamp);
-//			} catch (IOException ex) {
-//				{
-//					logger.warn(
-//							"Could not parse properties file ["
-//									+ resource.getFilename() + "]", ex);
-//				}
-//				// Empty holder representing "not valid".
-//				propHolder = new PropertiesHolder();
-//			}
-//		}
-//
-//		else {
-//			// Resource does not exist.
-//			if (logger.isDebugEnabled()) {
-//				logger.debug("No properties file found for [" + filename
-//						+ "] - neither plain properties nor XML");
-//			}
-//			// Empty holder representing "not found".
-//			propHolder = new PropertiesHolder();
-//		}
-//
-//		propHolder.setRefreshTimestamp(refreshTimestamp);
-//		this.cachedProperties.put(filename, propHolder);
-//		return propHolder;
-//	}
-	
-	/**
+
 	 * relativefile = "org/frameworkset/spi/support/messages_en_US.properties";
 	 * basename = "org/frameworkset/spi/support/messages_en_US";
 	 * filepath = "d:/workspace/org/frameworkset/spi/support/messages_en_US.properties";
@@ -562,7 +490,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 					logger.warn(
 							new StringBuilder().append("Get properties file from ").append( resource.getClass().getCanonicalName() ).append( " failed:"+e.getMessage()).toString());
 				}
-				propHolder = new PropertiesHolder(props,f,filename,name);
+				propHolder = new PropertiesHolder(props,resource.getURL(),f,filename,name);
 			} catch (IOException ex) {
 				{
 					try {
@@ -682,6 +610,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 
 		private Properties properties;
 		private File resource;
+		private URL resourceURL;
 		private String basename;
 		private String relativefile;
 
@@ -697,6 +626,14 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 			this.resource = resource;
 			this.basename = basename;
 			this.relativefile = relativefile;
+//			this.fileTimestamp = fileTimestamp;
+		}
+		public PropertiesHolder(Properties properties, URL resourceURL, File resource, String basename, String relativefile) {
+			this.properties = properties;
+			this.resource = resource;
+			this.basename = basename;
+			this.relativefile = relativefile;
+			this.resourceURL = resourceURL;
 //			this.fileTimestamp = fileTimestamp;
 		}
 		
@@ -770,6 +707,14 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		public String getRelativefile() {
 			return relativefile;
 		}
+
+		public URL getResourceURL() {
+			return resourceURL;
+		}
+
+		public void setResourceURL(URL resourceURL) {
+			this.resourceURL = resourceURL;
+		}
 	}
 
 	/**
@@ -815,7 +760,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	private static long refresh_interval = 5000;
 	private static DaemonThread damon = null; 
 	private static Object lock = new Object();
-	private static void checkResource(HotDeployResourceBundleMessageSource messagesource,File file,String basename,String filename){
+	private static void checkResource(HotDeployResourceBundleMessageSource messagesource,URL resourceURL,File file,String basename,String filename){
 		
 		refresh_interval = BaseApplicationContext.getResourceFileRefreshInterval();
 		if(refresh_interval > 0)
@@ -832,7 +777,11 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 					}
 				}
 			}
-			damon.addFile(file, new ResourceFileRefresh(messagesource,file,basename,filename));
+			if(file != null)
+				damon.addFile(file,new ResourceFileRefresh(messagesource,file,basename,filename));
+			else{
+				damon.addFile(resourceURL,filename,new ResourceFileRefresh(messagesource,file,basename,filename));
+			}
 		}
 		
 	}

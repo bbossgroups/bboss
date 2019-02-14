@@ -132,7 +132,7 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 
 	/**
 	 * This implementation supports pattern matching in unexpanded WARs too.
-	 * @see ServletContextResourcePatternResolver
+	 * see ServletContextResourcePatternResolver
 	 */
 	protected ResourcePatternResolver getResourcePatternResolver() {
 		return new ServletContextResourcePatternResolver(this);
