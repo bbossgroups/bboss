@@ -55,7 +55,7 @@ public class DaemonThread extends java.lang.Thread
 		}
 		 private boolean removeflag = false;
 		 private File file;
-		 private long lastModifiedTime;
+//		 private long lastModifiedTime;
 		 private long oldModifiedTime; 
 		 private List<WrapperResourceInit> inits;
 		/**
@@ -70,18 +70,18 @@ public class DaemonThread extends java.lang.Thread
 		public void setFile(File file) {
 			this.file = file;
 		}
-		/**
-		 * @return the lastModifiedTime
-		 */
-		public long getLastModifiedTime() {
-			return lastModifiedTime;
-		}
-		/**
-		 * @param lastModifiedTime the lastModifiedTime to set
-		 */
-		public void setLastModifiedTime(long lastModifiedTime) {
-			this.lastModifiedTime = lastModifiedTime;
-		}
+//		/**
+//		 * @return the lastModifiedTime
+//		 */
+//		public long getLastModifiedTime() {
+//			return lastModifiedTime;
+//		}
+//		/**
+//		 * @param lastModifiedTime the lastModifiedTime to set
+//		 */
+//		public void setLastModifiedTime(long lastModifiedTime) {
+//			this.lastModifiedTime = lastModifiedTime;
+//		}
 		/**
 		 * @return the oldModifiedTime
 		 */
@@ -106,8 +106,8 @@ public class DaemonThread extends java.lang.Thread
 	         	//init.destroy();
 	         	return false;
 	         }
-	         this.lastModifiedTime = file.lastModified();
-	         if(this.oldModifiedTime != this.lastModifiedTime)
+	         long lastModifiedTime = file.lastModified();
+	         if(this.oldModifiedTime != lastModifiedTime)
 	         {
 	        	 //begin 1 resolved java.util.ConcurrentModificationException by biaoping.yin on 2015.03.09
 //	             //System.out.println("Reload changed file：" + file.getAbsolutePath());
@@ -137,7 +137,7 @@ public class DaemonThread extends java.lang.Thread
 			if(log.isDebugEnabled()) {
 				log.debug("Reload resources in changed file：" + file.getAbsolutePath());
 			}
-			this.lastModifiedTime = file.lastModified();
+			long lastModifiedTime = file.lastModified();
 			if(lastModifiedTime == this.oldModifiedTime)
 				return;
             this.oldModifiedTime = lastModifiedTime;
