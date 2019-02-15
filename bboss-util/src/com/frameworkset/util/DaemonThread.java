@@ -70,18 +70,7 @@ public class DaemonThread extends java.lang.Thread
 		public void setFile(File file) {
 			this.file = file;
 		}
-//		/**
-//		 * @return the lastModifiedTime
-//		 */
-//		public long getLastModifiedTime() {
-//			return lastModifiedTime;
-//		}
-//		/**
-//		 * @param lastModifiedTime the lastModifiedTime to set
-//		 */
-//		public void setLastModifiedTime(long lastModifiedTime) {
-//			this.lastModifiedTime = lastModifiedTime;
-//		}
+
 		/**
 		 * @return the oldModifiedTime
 		 */
@@ -109,16 +98,6 @@ public class DaemonThread extends java.lang.Thread
 	         long lastModifiedTime = file.lastModified();
 	         if(this.oldModifiedTime != lastModifiedTime)
 	         {
-	        	 //begin 1 resolved java.util.ConcurrentModificationException by biaoping.yin on 2015.03.09
-//	             //System.out.println("Reload changed file：" + file.getAbsolutePath());
-//	             log.debug("Reload changed file：" + file.getAbsolutePath());
-//	             this.oldModifiedTime = this.lastModifiedTime;
-//	             try {
-//					init.reinit();
-//					log.debug("Reload changed file " + file.getAbsolutePath() + " sucessed." );
-//				} catch (Exception e) {
-//					log.debug("Reload changed file " + file.getAbsolutePath() + " failed:" ,e);
-//				}
 
 	             return true;
 	         }
@@ -140,7 +119,28 @@ public class DaemonThread extends java.lang.Thread
 			long lastModifiedTime = file.lastModified();
 			if(lastModifiedTime == this.oldModifiedTime)
 				return;
-            this.oldModifiedTime = lastModifiedTime;
+			else {
+				//检查文件是否已经读写完毕，通过文件长度来判断（不一定准确）
+				long length = file.length();
+				long last = length;
+				do {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						break;
+					}
+					length = file.length();
+					if (last == length) {
+						lastModifiedTime = file.lastModified();
+						break;
+
+					} else {
+						last = length;
+					}
+				}
+				while(true);
+			}
+			this.oldModifiedTime = lastModifiedTime;
 
 			for(int i = 0; inits != null && i < this.inits.size(); i++)
 			{
@@ -279,10 +279,33 @@ public class DaemonThread extends java.lang.Thread
 	    		f.addResourceInit(new WrapperResourceInit(init,fileName));
 	    	}
 	    	if(log.isDebugEnabled())
-	    	 	log.debug("Add file " + fileName+"@"+ file.getAbsolutePath() + " to damon thread which moniting file modified.");
+	    	 	log.debug("Add file " + fileName+"@"+ file.getAbsolutePath() + " to monitor thread which moniting file modified.");
 	    	
     	}
     }
+	/**
+	 * determine the OS name
+	 *
+	 * @return The name of the OS
+	 */
+	public static final String getOS() {
+		String osname = System.getProperty("os.name");
+		return osname;
+	}
+	public static Boolean isWindow = null;
+	/**
+	 * @return True if the OS is a Windows derivate.
+	 */
+	public static final boolean isWindows() {
+		if(isWindow != null)
+			return isWindow.booleanValue();
+		synchronized (DaemonThread.class){
+			if(isWindow != null)
+				return isWindow.booleanValue();
+			isWindow = getOS().startsWith("Windows");
+		}
+		return isWindow;
+	}
 	/**
 	 *
 	 * @param file 触发文件更新的文件句柄
@@ -304,7 +327,7 @@ public class DaemonThread extends java.lang.Thread
 		{
 			if(fileURL != null) {
 				String fileUrl = fileURL.getPath();
-
+				log.debug("Use file URL to monitor: "+fileUrl);
 				file = new File(fileUrl);
 				if(!file.exists()){
 					int idx = fileUrl.indexOf("!");
@@ -314,8 +337,14 @@ public class DaemonThread extends java.lang.Thread
 						if (idx == -1) {
 							idx = fileUrl.indexOf("file:");
 						}
-						if(idx >= 0)
-							fileUrl = fileUrl.substring(idx+6);
+						if(idx >= 0) {
+							if(isWindows()) {
+								fileUrl = fileUrl.substring(idx + 6);
+							}
+							else{
+								fileUrl = fileUrl.substring(idx + 5);
+							}
+						}
 						file = new File(fileUrl);
 					}
 				}
@@ -347,7 +376,7 @@ public class DaemonThread extends java.lang.Thread
         	if(f != null)
         	{
         		f.setRemoveflag(true);
-        		log.debug("marked  file " + file.getAbsolutePath() + " to be removed from damon thread which moniting file modified.");
+        		log.debug("marked  file " + file.getAbsolutePath() + " to be removed from monitor thread which moniting file modified.");
         	}
 //        	for(FileBean f:files)
 //        	{
@@ -383,7 +412,7 @@ public class DaemonThread extends java.lang.Thread
     		return;
     	}
         this.files.put(file.getAbsolutePath(),new FileBean(file,new WrapperResourceInit(init,file.getAbsolutePath())));
-        log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
+        log.debug("Add file " + file.getAbsolutePath() + " to monitor thread which moniting file modified.");
         this.setDaemon(true);
     }
     private Object lock = new Object();
@@ -396,7 +425,7 @@ public class DaemonThread extends java.lang.Thread
 //        this.init = init;
 //    	this.files.add(new FileBean(file,init));
     	 this.files.put(file.getAbsolutePath(),new FileBean(file,new WrapperResourceInit(init,file.getAbsolutePath())));
-    	log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
+    	log.debug("Add file " + file.getAbsolutePath() + " to monitor thread which moniting file modified.");
         this.setDaemon(true);
     }
 
@@ -407,7 +436,7 @@ public class DaemonThread extends java.lang.Thread
     }
     public void run()
     {
-    	 log.info("Start check files is changed or not.if some files is changed,the resources of these files will be refreshed use ResourceInit interface.");
+    	log.info("Start check files is changed or not.if some files is changed,the resources of these files will be refreshed use ResourceInit interface.");
         started = true;
         for(;;)
         {
@@ -421,8 +450,10 @@ public class DaemonThread extends java.lang.Thread
             	break;
             }
             if(files == null || files.size() == 0){
-            	String tname = this.getName() != null?this.getName():"null";
-            	log.debug("Thread["+tname+"] Ignore Monitor change Files : No file to be monitor.");
+            	if(log.isTraceEnabled()) {
+					String tname = this.getName() != null ? this.getName() : "null";
+					log.trace("Thread[" + tname + "] Ignore Monitor change Files : No file to be monitor.");
+				}
             	continue;
             }
             List<FileBean> changedFiles = new ArrayList<FileBean>();
@@ -481,6 +512,7 @@ public class DaemonThread extends java.lang.Thread
             
             if(changedFiles.size() > 0)
             {
+
             	for(FileBean f:changedFiles)
             	{
             		if(stopped)
