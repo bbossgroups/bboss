@@ -15,6 +15,7 @@
  */
 package org.frameworkset.spi.assemble;
 
+import com.frameworkset.util.ParserError;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.CallContext;
 import org.frameworkset.spi.Lifecycle;
@@ -184,8 +185,9 @@ public class ServiceProviderManager {
         }
 
         catch (Exception e) {
-            e.printStackTrace();
-            log.error("Load [" + defaultConfigFile + "]失败", e);
+//            e.printStackTrace();
+			if(log.isErrorEnabled())
+				log.error(new StringBuilder().append("Load [" ).append( defaultConfigFile ).append( "]失败").toString(), e);
         }
 		
 	}
@@ -217,8 +219,9 @@ public class ServiceProviderManager {
          }
 
          catch (Exception e) {
-            
-             log.error("Load [" + defaultConfigFile + "]失败", e);
+
+			 if(log.isErrorEnabled())
+				 log.error(new StringBuilder().append("Load [" ).append( defaultConfigFile ).append( "]失败").toString(), e);
          }
     }
     
@@ -242,8 +245,9 @@ public class ServiceProviderManager {
          }
 
          catch (Exception e) {
-             e.printStackTrace();
-             log.error("Load [" + defaultConfigFile + "]失败", e);
+//             e.printStackTrace();
+			 if(log.isErrorEnabled())
+             	log.error(new StringBuilder().append("Load [" ).append( defaultConfigFile ).append( "]失败").toString(), e);
          }
     }
 
@@ -382,7 +386,8 @@ public class ServiceProviderManager {
             			parser.parse(new File(url), handler);
             		else
             		{
-            			 log.debug("IOC配置文件[" + url+ "]不存在，忽略加载");
+            			if(log.isDebugEnabled())
+            			 log.debug(new StringBuilder().append("IOC配置文件[" ).append( url).append( "]不存在，忽略加载").toString());
             		}
             	}
             }
@@ -393,7 +398,8 @@ public class ServiceProviderManager {
         			parser.parse(new File(url), handler);
         		else
         		{
-        			log.debug("IOC配置文件[" + url+ "]不存在，忽略加载");
+        			if(log.isDebugEnabled())
+        				log.debug(new StringBuilder().append("IOC配置文件[" ).append( url).append( "]不存在，忽略加载").toString());
         		}
             }
 
@@ -413,12 +419,40 @@ public class ServiceProviderManager {
         } catch (Exception e) {
         	if(configFile.equals(defaultConfigFile) || configFile.equals(seriralConfigFile))
         	{
-        		 log.debug("从文件[" + configFile+ "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。");
+//        		log.debug("从文件[" + configFile+ "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。");
+				String message = 	new StringBuilder().append("从文件[" ).append( configFile).append( "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。").toString();
+				if(log.isDebugEnabled())
+					log.debug(message,e);
+				if(applicationContext != null) {
+					ParserError parserError = new ParserError();
+					parserError.setMessage(message);
+					parserError.setException(e);
+					this.applicationContext.setParserError(parserError);
+				}
         	}
         	else if (parentFile == null) {
-                throw new RuntimeException("从文件[" + url + "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。",e);
+				String message = 	new StringBuilder().append("从文件[" ).append( url ).append( "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。").toString();
+				if(log.isErrorEnabled())
+					log.error(message,e);
+				if(applicationContext != null) {
+					ParserError parserError = new ParserError();
+					parserError.setMessage(message);
+					parserError.setException(e);
+					this.applicationContext.setParserError(parserError);
+				}
+                throw new RuntimeException(message,e);
             } else {
-            	 throw new RuntimeException("从文件[" + parentFile + "@" + url + "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。",e);
+				String message = 	new StringBuilder().append("从文件[" ).append( parentFile ).append( "@" ).append( url ).append( "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。").toString();
+				if(log.isErrorEnabled())
+					log.error(message,e);
+				if(applicationContext != null) {
+					ParserError parserError = new ParserError();
+					parserError.setMessage(message);
+					parserError.setException(e);
+					this.applicationContext.setParserError(parserError);
+				}
+				throw new RuntimeException(message,e);
+//            	 throw new RuntimeException("从文件[" + parentFile + "@" + url + "]装载管理服务失败，请检查文件是否存在，或者是否被正确定义。",e);
             }
             
         }
@@ -449,7 +483,16 @@ public class ServiceProviderManager {
             this.addProperties(handler.getProperties());
             handler = null;
         } catch (Exception e) {
-            log.error("解析报文内容出错[" + content + "]，请检查报文是否被正确定义。",e);
+//            log.error("解析报文内容出错[" + content + "]，请检查报文是否被正确定义。",e);
+				String message = 	new StringBuilder().append("解析报文内容出错[" ).append( content ).append( "]，请检查报文是否被正确定义。").toString();
+				if(log.isErrorEnabled())
+					log.error(message,e);
+				if(applicationContext != null) {
+					ParserError parserError = new ParserError();
+					parserError.setMessage(message);
+					parserError.setException(e);
+					this.applicationContext.setParserError(parserError);
+				}
         }
         finally
         {
@@ -497,7 +540,16 @@ public class ServiceProviderManager {
             this.addProperties(handler.getProperties());
             handler = null;
         } catch (Exception e) {
-            log.error("解析报文内容出错[" + in + "]，请检查报文是否被正确定义。",e);
+//            log.error("解析报文内容出错[" + in + "]，请检查报文是否被正确定义。",e);
+				String message = 	new StringBuilder().append("解析报文内容出错[" ).append( in ).append( "]，请检查报文是否被正确定义。").toString();
+				if(log.isErrorEnabled())
+					log.error(message,e);
+				if(applicationContext != null) {
+					ParserError parserError = new ParserError();
+					parserError.setMessage(message);
+					parserError.setException(e);
+					this.applicationContext.setParserError(parserError);
+				}
         }
         finally
         {
@@ -523,8 +575,9 @@ public class ServiceProviderManager {
     private void parseXML(URL contentFile) {
 //    	InputStream in = null;
 //    	ByteArrayInputStream sr = null;
-    		try
-    		{
+		String xmlFilePath = contentFile.toString();
+		try
+		{
             ProviderParser handler = _buildProviderParser();
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setNamespaceAware(false);
@@ -533,12 +586,20 @@ public class ServiceProviderManager {
             SAXParser parser = factory.newSAXParser();
         
 //            in = new java.io.BufferedInputStream(new java.io.FileInputStream(contentFile));
-            parser.parse(contentFile.toString(), handler);            
+            parser.parse(xmlFilePath, handler);
             
             this.addProperties(handler.getProperties());
             handler = null;
         } catch (Exception e) {
-            log.error("解析报文内容出错[" + contentFile.toString() + "]，请检查报文是否被正确定义。",e);
+    		String message = 	new StringBuilder().append("解析报文内容出错[" ).append( xmlFilePath ).append( "]，请检查报文是否被正确定义。").toString();
+    		if(log.isErrorEnabled())
+            	log.error(message,e);
+			if(applicationContext != null) {
+				ParserError parserError = new ParserError();
+				parserError.setMessage(message);
+				parserError.setException(e);
+				this.applicationContext.setParserError(parserError);
+			}
         }
         finally
         {
@@ -648,7 +709,7 @@ public class ServiceProviderManager {
         Pro pro = this.properties.get(name);
         if(pro == null)
         {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！返回缺省值" + defaultValue);
+            log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！返回缺省值" ).append( defaultValue).toString());
             return defaultValue;
         }
         
@@ -659,7 +720,7 @@ public class ServiceProviderManager {
     public ProSet getSetProperty(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return null;
         }
        return value.getSet(); 
@@ -671,7 +732,7 @@ public class ServiceProviderManager {
     public ProSet getSetProperty(String name,ProSet defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return defaultValue;
         }
        return value.getSet(defaultValue);
@@ -684,7 +745,7 @@ public class ServiceProviderManager {
         Pro value = this.properties.get(name);
         if (value == null) {
             
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return null;
         }
        return value.getList();
@@ -696,7 +757,7 @@ public class ServiceProviderManager {
     public ProList getListProperty(String name,ProList defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return defaultValue;
         }
        return value.getList(defaultValue);
@@ -709,7 +770,7 @@ public class ServiceProviderManager {
     public ProMap getMapProperty(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return null;
         }
        return value.getMap();        
@@ -721,7 +782,7 @@ public class ServiceProviderManager {
     public ProProperties getProProperties(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return null;
         }
        return value.getProProperties();        
@@ -733,7 +794,7 @@ public class ServiceProviderManager {
     public ProMap getMapProperty(String name,ProMap defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return defaultValue;
         }
        return value.getMap();
@@ -743,7 +804,7 @@ public class ServiceProviderManager {
     public ProArray getArrayProperty(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return null;
         }
        return value.getArray();        
@@ -755,7 +816,7 @@ public class ServiceProviderManager {
     public ProArray getArrayProperty(String name,ProArray defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return defaultValue;
         }
        return value.getArray(defaultValue);
@@ -764,7 +825,7 @@ public class ServiceProviderManager {
     public int getIntProperty(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            throw new AssembleException("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            throw new AssembleException(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
         }
        return value.getInt();
         
@@ -776,7 +837,7 @@ public class ServiceProviderManager {
     public long getLongProperty(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            throw new AssembleException("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            throw new AssembleException(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
         }
        return value.getLong();
         
@@ -800,7 +861,7 @@ public class ServiceProviderManager {
     public boolean getBooleanProperty(String name) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            throw new AssembleException("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            throw new AssembleException(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
         }
        return value.getBoolean();
     }
@@ -809,7 +870,7 @@ public class ServiceProviderManager {
     {
         Pro pro = this.properties.get(name);
         if(pro == null){
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+            log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return null;
         }
         return pro;
@@ -898,7 +959,8 @@ public class ServiceProviderManager {
     			}
     			if(pro == null)
     			{
-    				 log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + strrefid + "]！");
+    				if(log.isDebugEnabled())
+    				 	log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( strrefid ).append( "]！").toString());
     		         return null;
     			}
     		}
@@ -948,7 +1010,8 @@ public class ServiceProviderManager {
 	        
         
         if(pro == null){
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + strrefid + "]！");
+			if(log.isDebugEnabled())
+				log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( strrefid ).append( "]！").toString());
             return null;
         }
         return pro;
@@ -957,7 +1020,8 @@ public class ServiceProviderManager {
     public String getProperty(String name, String defaultValue) {
         String value = getProperty(name);
         if (value == null) {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！返回缺省值" + defaultValue);
+			if(log.isDebugEnabled())
+				log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！返回缺省值" ).append( defaultValue).toString());
             return defaultValue;
         }
         return value;
@@ -966,7 +1030,8 @@ public class ServiceProviderManager {
     public int getIntProperty(String name, int defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+			if(log.isDebugEnabled())
+				log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return defaultValue;
         }
        return value.getInt(defaultValue);
@@ -976,7 +1041,8 @@ public class ServiceProviderManager {
     public boolean getBooleanProperty(String name, boolean defaultValue) {
         Pro value = this.properties.get(name);
         if (value == null) {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！");
+			if(log.isDebugEnabled())
+				log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return defaultValue;
         }
        return value.getBoolean();
@@ -988,7 +1054,8 @@ public class ServiceProviderManager {
         Pro pro = this.properties.get(name);
         if(pro == null)
         {
-            log.debug("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + name + "]！返回缺省值" + defaultValue);
+			if(log.isDebugEnabled())
+				log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！返回缺省值" ).append( defaultValue).toString());
             return defaultValue;
         }
         
@@ -1050,7 +1117,7 @@ public class ServiceProviderManager {
 		
 		 Pro value = this.properties.get(key);
 	        if (value == null) {
-	            throw new AssembleException("配置文件["+applicationContext.getConfigfile() +"]中没有指定属性[" + key + "]！");
+	            throw new AssembleException(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( key ).append( "]！").toString());
 	        }
 	       return value.getStringArray();
 	}

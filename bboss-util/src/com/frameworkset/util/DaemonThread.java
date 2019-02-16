@@ -113,8 +113,8 @@ public class DaemonThread extends java.lang.Thread
 		public synchronized void reinit()
 		{
 			 //System.out.println("Reload changed file：" + file.getAbsolutePath());
-			if(log.isDebugEnabled()) {
-				log.debug("Reload resources in changed file：" + file.getAbsolutePath());
+			if(log.isInfoEnabled()) {
+				log.info("Reload resources in changed file：" + file.getAbsolutePath());
 			}
 			long lastModifiedTime = file.lastModified();
 			if(lastModifiedTime == this.oldModifiedTime)
@@ -147,12 +147,12 @@ public class DaemonThread extends java.lang.Thread
 				WrapperResourceInit init = inits.get(i);
 				try {
 					init.reinit();
-					if(log.isDebugEnabled()) {
-						log.debug("Reload changed resource file " + init.getUUID()+"@"+ file.getAbsolutePath() + " sucessed.");
+					if(log.isInfoEnabled()) {
+						log.info("Reload changed resource file " + init.getUUID()+"@"+ file.getAbsolutePath() + " sucessed.");
 					}
 				} catch (Exception e) {
-					if(log.isDebugEnabled())
-						log.debug("Reload changed resource  file " + init.getUUID()+"@"+ file.getAbsolutePath() + " failed:" ,e);
+					if(log.isErrorEnabled())
+						log.error("Reload changed resource  file " + init.getUUID()+"@"+ file.getAbsolutePath() + " failed:" ,e);
 				}
 			}
 
@@ -231,7 +231,7 @@ public class DaemonThread extends java.lang.Thread
         }
         addFile(file,fileName,init);
 //    	this.files.add(new FileBean(file,init));
-//    	 log.debug("Add file " + file.getAbsolutePath() + " to damon thread which moniting file modified.");
+//    	 log.debug("Add file " + file.getAbsolutePath() + " to damon thread that moniting changed files.");
     }
     private FileBean containFile(File file,String fileName)
     {
@@ -260,8 +260,8 @@ public class DaemonThread extends java.lang.Thread
     		return;
     	if(!file.exists())
     	{
-    		if(log.isDebugEnabled())
-    			log.debug(fileName+"@"+file.getAbsolutePath()+" 对应的文件不存在，忽略修改检测.");
+    		if(log.isInfoEnabled())
+    			log.info(fileName+"@"+file.getAbsolutePath()+" 对应的文件不存在，忽略修改检测.");
     		return;
     	}
     	
@@ -278,8 +278,8 @@ public class DaemonThread extends java.lang.Thread
 	    	{
 	    		f.addResourceInit(new WrapperResourceInit(init,fileName));
 	    	}
-	    	if(log.isDebugEnabled())
-	    	 	log.debug("Add file " + fileName+"@"+ file.getAbsolutePath() + " to monitor thread which moniting file modified.");
+	    	if(log.isInfoEnabled())
+	    	 	log.info("Add file " + fileName+"@"+ file.getAbsolutePath() + " to monitor thread that moniting changed files.");
 	    	
     	}
     }
@@ -327,7 +327,9 @@ public class DaemonThread extends java.lang.Thread
 		{
 			if(fileURL != null) {
 				String fileUrl = fileURL.getPath();
-				log.debug("Use file URL to monitor: "+fileUrl);
+				if(log.isInfoEnabled()) {
+					log.info("Use out package file URL to monitor: " + fileUrl);
+				}
 				file = new File(fileUrl);
 				if(!file.exists()){
 					int idx = fileUrl.indexOf("!");
@@ -376,7 +378,8 @@ public class DaemonThread extends java.lang.Thread
         	if(f != null)
         	{
         		f.setRemoveflag(true);
-        		log.debug("marked  file " + file.getAbsolutePath() + " to be removed from monitor thread which moniting file modified.");
+        		if(log.isInfoEnabled())
+        			log.info("marked  file " + file.getAbsolutePath() + " to be removed from monitor thread that moniting changed files.");
         	}
 //        	for(FileBean f:files)
 //        	{
@@ -408,11 +411,13 @@ public class DaemonThread extends java.lang.Thread
 //        this.init = init;
         if(!file.exists())
     	{
-    		log.debug(file.getAbsolutePath()+" 对应的文件不存在，忽略修改检测.");
+    		if(log.isInfoEnabled())
+    			log.info(file.getAbsolutePath()+" 对应的文件不存在，忽略修改检测.");
     		return;
     	}
         this.files.put(file.getAbsolutePath(),new FileBean(file,new WrapperResourceInit(init,file.getAbsolutePath())));
-        log.debug("Add file " + file.getAbsolutePath() + " to monitor thread which moniting file modified.");
+        if(log.isInfoEnabled())
+        	log.info("Add file " + file.getAbsolutePath() + " to monitor thread that moniting changed files.");
         this.setDaemon(true);
     }
     private Object lock = new Object();
@@ -425,7 +430,8 @@ public class DaemonThread extends java.lang.Thread
 //        this.init = init;
 //    	this.files.add(new FileBean(file,init));
     	 this.files.put(file.getAbsolutePath(),new FileBean(file,new WrapperResourceInit(init,file.getAbsolutePath())));
-    	log.debug("Add file " + file.getAbsolutePath() + " to monitor thread which moniting file modified.");
+		if(log.isInfoEnabled())
+			log.info("Add file " + file.getAbsolutePath() + " to monitor thread that moniting changed files.");
         this.setDaemon(true);
     }
 
@@ -436,7 +442,8 @@ public class DaemonThread extends java.lang.Thread
     }
     public void run()
     {
-    	log.info("Start check files is changed or not.if some files is changed,the resources of these files will be refreshed use ResourceInit interface.");
+		if(log.isInfoEnabled())
+			log.info("Start check files is changed or not.if some files is changed,the resources of these files will be refreshed use ResourceInit interface.");
         started = true;
         for(;;)
         {
@@ -483,21 +490,21 @@ public class DaemonThread extends java.lang.Thread
 	            				log.trace("Thread["+this.getName()+"] Check file["+filePath+"] .");
             				}
 		            		if(f.checkChanged()){
-		            			if(log.isDebugEnabled()){
+		            			if(log.isInfoEnabled()){
 		            				String filePath = f.getFile() != null?f.getFile().getAbsolutePath():"";
 
-		            				log.debug("Thread["+this.getName()+"] Monitor file["+filePath+"] changed.");
+										log.info("Thread["+this.getName()+"] Monitor file["+filePath+"] changed.");
 		            			}
 		            			changedFiles.add(f);
 		            		}
 		            	}
 		            	catch(Exception e)
 		            	{
-							if(log.isDebugEnabled()) {
+							if(log.isInfoEnabled()) {
 								String filePath = f.getFile() != null ? f.getFile().getAbsolutePath() : "null";
 
 								String tname = this.getName() != null ? this.getName() : "null";
-								log.debug("Thread[" + tname + "] Monitor changed file[" + filePath + "] exception:", e);
+								log.info("Thread[" + tname + "] Monitor changed file[" + filePath + "] exception:", e);
 							}
 		            	}
             		}
@@ -506,13 +513,13 @@ public class DaemonThread extends java.lang.Thread
             	}
             	catch(Exception e)
             	{
-            		log.debug("Thread["+this.getName()+"] Monitor changed files exception:",e);
+					if(log.isInfoEnabled())
+						log.info("Thread["+this.getName()+"] Monitor changed files exception:",e);
             	}
             }
             
             if(changedFiles.size() > 0)
             {
-
             	for(FileBean f:changedFiles)
             	{
             		if(stopped)
@@ -523,12 +530,12 @@ public class DaemonThread extends java.lang.Thread
 	            	}
 	            	catch(Exception e)
 	            	{
-	            		if(log.isDebugEnabled()) {
+	            		if(log.isInfoEnabled()) {
 							String filePath = f.getFile() != null ? f.getFile().getAbsolutePath() : "null";
 
 
 							String tname = this.getName() != null ? this.getName() : "null";
-							log.debug("Thread[" + tname + "] Reinit Monitor changed file[" + filePath + "] exception:", e);
+							log.info("Thread[" + tname + "] Reinit Monitor changed file[" + filePath + "] exception:", e);
 						}
 	            	}
             	}

@@ -19,6 +19,7 @@ package org.frameworkset.spi;
 import com.frameworkset.proxy.InvocationHandler;
 import com.frameworkset.proxy.ProxyFactory;
 import com.frameworkset.spi.assemble.BeanInstanceException;
+import com.frameworkset.util.ParserError;
 import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.spi.assemble.*;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
@@ -50,7 +51,7 @@ import java.util.Map.Entry;
  */
 public abstract class  BaseApplicationContext extends DefaultResourceLoader implements
 		MessageSource, ResourcePatternResolver, ResourceLoader,GetProperties{
- 
+	protected ParserError parserError;
 	/** Reference to the JVM shutdown hook, if registered */
 	private static Thread shutdownHook;
 	static
@@ -225,6 +226,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		this.messageSource = null;
 		this.resourcePatternResolver = null;
 		this.started = false;
+		this.parserError = null;
+
 	}
 
 	public boolean stoped() {
@@ -558,6 +561,24 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 //		}
 		return SimpleStringUtil.getProperties(SimpleStringUtil.AOP_PROPERTIES_PATH, BaseApplicationContext.class);
 	}
+
+	public static Properties fillHotLoadProperties() throws IOException {
+//		InputStream is = getInputStream(BaseApplicationContext.class);
+//		try {
+//			Properties props = new Properties();
+//			props.load(is);
+//			return props;
+//
+//		} finally {
+//			is.close();
+//		}
+		try {
+			return SimpleStringUtil.getProperties("/hotload.properties", BaseApplicationContext.class);
+		}
+		catch (IOException e){
+			return fillProperties();
+		}
+	}
 //	public static InputStream getInputStream(Class clazz) throws IOException {
 //		InputStream is = null;
 //
@@ -611,13 +632,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		
 			Properties pro = null;
 			try {
-				pro = fillProperties();
+				pro = fillHotLoadProperties();
 				String SQLFileRefreshInterval = pro.getProperty("sqlfile.refresh_interval", "5000");
 				return Long.parseLong(SQLFileRefreshInterval);
 				
 			} catch (Exception e) {
 				log.warn(e.getMessage(),e);
-				return 5000;
+				return -1;
 			}
 			
 		
@@ -634,13 +655,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			}
 			Properties pro = null;
 			try {
-				pro = fillProperties();
+				pro = fillHotLoadProperties();
 				String ResourceFileRefreshInterval = pro.getProperty("resourcefile.refresh_interval", "5000");
 				return resourcefileRefreshInterval = Long.parseLong(ResourceFileRefreshInterval);
 
 			} catch (Exception e) {
 				log.warn(e.getMessage(), e);
-				return resourcefileRefreshInterval = 5000l;
+				return resourcefileRefreshInterval = -1l;
 			}
 		}
 		
@@ -690,6 +711,14 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 	static Object lockshutdown = new Object();
 	static PriorComparator priorComparator = new PriorComparator();
+
+	public ParserError getParserError() {
+		return parserError;
+	}
+
+	public void setParserError(ParserError parserError) {
+		this.parserError = parserError;
+	}
 
 
 	static class PriorComparator implements Comparator<WrapperRunnable>{
@@ -2541,6 +2570,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		StringBuilder ret = new StringBuilder();
 		ret.append(this.getClass().getCanonicalName()).append(":").append(this.getConfigfile());
 		return ret.toString();
+	}
+	public BaseApplicationContext removeCacheContext(){
+		return applicationContexts.remove(this.getConfigfile());
+	}
+
+	public void restoreCacheContext(){
+		applicationContexts.put(this.getConfigfile(),this);
 	}
 }
 

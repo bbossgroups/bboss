@@ -238,18 +238,31 @@ public class SQLUtil {
 	           
 	void reinit()
 	{
-		if(sqls != null)
-		{
-			this.sqls.clear();
-			sqls = null;
+		if(sqlcontext != null) {
+			String file = sqlcontext.getConfigfile();
+			sqlcontext.removeCacheContext();
+			SQLSOAFileApplicationContext _sqlcontext = new SQLSOAFileApplicationContext(file);
+			if(_sqlcontext.getParserError() == null) {
+				if (sqls != null) {
+					this.sqls.clear();
+					sqls = null;
+				}
+				if (sqlrefs != null) {
+					this.sqlrefs.clear();
+					sqlrefs = null;
+				}
+				if (this.cache != null)
+					this.cache.clear();
+				sqlcontext.destroy(false);
+				sqlcontext = _sqlcontext;
+				defaultDBName = sqlcontext.getProperty("default.dbname");
+				trimValues();
+			}
+			else{
+				sqlcontext.restoreCacheContext();
+			}
 		}
-		if(sqlrefs != null)
-		{
-			this.sqlrefs.clear();
-			sqlrefs = null;
-		}
-		if(this.cache != null)
-			this.cache.clear();
+		/**
 		if(sqlcontext != null) {
 			String file = sqlcontext.getConfigfile();
 			sqlcontext.destroy(true);
@@ -257,6 +270,7 @@ public class SQLUtil {
 			defaultDBName = sqlcontext.getProperty("default.dbname");
 			trimValues();
 		}
+		 */
 
 		
 	}
