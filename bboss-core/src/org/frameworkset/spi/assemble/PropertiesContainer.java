@@ -262,8 +262,8 @@ public class PropertiesContainer implements GetProperties{
 
 		    	try{
 					input = resource.getInputStream();
-		    		if(log.isDebugEnabled())
-		    			log.debug("load config Properties File :"+resource.getURL());
+		    		if(log.isInfoEnabled())
+		    			log.info("load config Properties File :"+resource.getURL());
 		    	}
 		    	catch(Exception e){
 		    		if(linkfile == null) {
@@ -294,8 +294,8 @@ public class PropertiesContainer implements GetProperties{
     			if(configFile.exists()) {
 
 					input = new FileInputStream(configFile);
-					if (log.isDebugEnabled())
-						log.debug("load config Properties File :" + _configPropertiesFile);
+					if (log.isInfoEnabled())
+						log.info("load config Properties File :" + _configPropertiesFile);
 				}
 				else
 				{
