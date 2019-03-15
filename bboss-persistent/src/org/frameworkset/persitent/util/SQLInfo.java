@@ -27,6 +27,7 @@ package org.frameworkset.persitent.util;
  */
 public class SQLInfo {
 	private String sqlname;
+	/**原始sql*/
 	private String sql;
 	private SQLTemplate sqltpl;
 	private boolean istpl;

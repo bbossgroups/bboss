@@ -112,6 +112,13 @@ public class SQLUtil {
 			}
 			return this.sqlutil.getSQL(dbname, sqlname);
 		}
+		public String getSQL() {
+			if(sqlutil == null)
+			{
+				init();
+			}
+			return this.sqlutil.getSQL(null, sqlname);
+		}
 		public String getSQL(String dbname, Map variablevalues) {
 			if(sqlutil == null)
 			{

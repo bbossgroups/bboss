@@ -16,6 +16,8 @@
 package org.frameworkset.persitent.util;
 
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.assemble.LinkConfigFile;
+import org.frameworkset.spi.assemble.ProviderParser;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 
 public class SQLServiceProviderManager extends ServiceProviderManager {
@@ -42,5 +44,16 @@ public class SQLServiceProviderManager extends ServiceProviderManager {
 	public boolean findVariableFromSelf(){
 		return true;
 	}
+
+	protected ProviderParser _buildProviderParser()
+	{
+		return new SQLProviderParser(this.getApplicationContext());
+	}
+
+	protected ProviderParser _buildProviderParser(String url, LinkConfigFile linkconfigFile)
+	{
+		return new SQLProviderParser(this.getApplicationContext(),url, linkconfigFile);
+	}
+
 
 }
