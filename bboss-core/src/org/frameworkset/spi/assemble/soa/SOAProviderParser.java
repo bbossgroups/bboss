@@ -15,16 +15,15 @@
  */
 package org.frameworkset.spi.assemble.soa;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.LinkConfigFile;
 import org.frameworkset.spi.assemble.Pro;
-import org.frameworkset.spi.assemble.PropertiesContainer;
 import org.frameworkset.spi.assemble.ProviderParser;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 import org.xml.sax.Attributes;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -159,5 +158,20 @@ public class SOAProviderParser extends ProviderParser
     	property.setExtendsAttributes(extendsAttributes);
 //    	return null;
     }
+
+	/**
+	 * 评估属性是否从外部文件引用
+	 * @param name
+	 * @return
+	 */
+	public Pro _getRealProperty(String name){
+		if(properties == null || properties.size() == 0){
+			return null;
+		}
+		else
+		{
+			return this.properties.get(name);
+		}
+	}
       
 }

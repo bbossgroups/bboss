@@ -78,7 +78,7 @@ public class ProviderParser extends DefaultHandler
 		this.serial = serial;
 	}
 
-	private Map<String,Pro> properties = new HashMap<String,Pro>();
+	protected Map<String,Pro> properties = new HashMap<String,Pro>();
     
     protected BaseApplicationContext applicationContext;  
     
@@ -92,8 +92,13 @@ public class ProviderParser extends DefaultHandler
     {
         return properties;
     }
-	
-	public Pro _getProperty(String name){
+
+	/**
+	 * 评估属性是否从外部文件引用
+	 * @param name
+	 * @return
+	 */
+	public Pro _getRealProperty(String name){
 		if(properties == null || properties.size() == 0){
 			return null;
 		}
@@ -101,6 +106,15 @@ public class ProviderParser extends DefaultHandler
 		{
 			return this.properties.get(name);
 		}
+	}
+
+	/**
+	 * 评估属性是否从外部文件引用,如果是从外部属性引用，就需要从外部文件获取对应的属性值，
+	 * @param pro
+	 * @return
+	 */
+	public Object getRealPropertyValue(Pro pro){
+		return pro.getValue();
 	}
 
     protected LinkConfigFile linkfile;

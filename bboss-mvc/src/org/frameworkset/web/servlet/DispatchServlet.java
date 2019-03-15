@@ -15,27 +15,8 @@
  */
 package org.frameworkset.web.servlet;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
-
+import com.frameworkset.spi.assemble.BeanInstanceException;
+import com.frameworkset.util.StringUtil;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.LifeCycleProcessorExecutor;
@@ -56,11 +37,7 @@ import org.frameworkset.web.request.async.WebAsyncManager;
 import org.frameworkset.web.request.async.WebAsyncUtils;
 import org.frameworkset.web.servlet.context.RequestContextHolder;
 import org.frameworkset.web.servlet.context.WebApplicationContext;
-import org.frameworkset.web.servlet.handler.AbstractUrlHandlerMapping;
-import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
-import org.frameworkset.web.servlet.handler.HandlerMeta;
-import org.frameworkset.web.servlet.handler.HandlerUtils;
-import org.frameworkset.web.servlet.handler.PathURLNotSetException;
+import org.frameworkset.web.servlet.handler.*;
 import org.frameworkset.web.servlet.handler.annotations.AnnotationMethodHandlerAdapter;
 import org.frameworkset.web.servlet.handler.annotations.DefaultAnnotationHandlerMapping;
 import org.frameworkset.web.servlet.i18n.DefaultLocaleResolver;
@@ -80,8 +57,15 @@ import org.frameworkset.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.spi.assemble.BeanInstanceException;
-import com.frameworkset.util.StringUtil;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.security.Principal;
+import java.util.*;
 
 
 
@@ -164,7 +148,6 @@ public class DispatchServlet extends BaseServlet {
 	/**
 	 * Well-known name for the HandlerMapping object in the bean factory for this namespace.
 	 * Only used when "detectAllHandlerMappings" is turned off.
-	 * @see #setDetectAllHandlerMappings
 	 */
 	public static final String HANDLER_MAPPING_BEAN_NAME = "handlerMapping";
 
@@ -178,7 +161,6 @@ public class DispatchServlet extends BaseServlet {
 	/**
 	 * Well-known name for the HandlerExceptionResolver object in the bean factory for this
 	 * namespace. Only used when "detectAllHandlerExceptionResolvers" is turned off.
-	 * @see #setDetectAllHandlerExceptionResolvers
 	 */
 	public static final String HANDLER_EXCEPTION_RESOLVER_BEAN_NAME = "handlerExceptionResolver";
 
@@ -191,7 +173,6 @@ public class DispatchServlet extends BaseServlet {
 	/**
 	 * Well-known name for the ViewResolver object in the bean factory for this namespace.
 	 * Only used when "detectAllViewResolvers" is turned off.
-	 * @see #setDetectAllViewResolvers
 	 */
 	public static final String VIEW_RESOLVER_BEAN_NAME = "viewResolver";
 
@@ -261,9 +242,9 @@ public class DispatchServlet extends BaseServlet {
 	/** List of HandlerAdapters used by this servlet */
 //	private List<HandlerAdapter> handlerAdapters;
 	
-	org.frameworkset.web.servlet.handler.annotations.AnnotationMethodHandlerAdapter annotationMethodHandlerAdapter;
-	org.frameworkset.web.servlet.mvc.SimpleControllerHandlerAdapter simpleControllerHandlerAdapter;	
-	org.frameworkset.web.servlet.mvc.HttpRequestHandlerAdapter httpRequestHandlerAdapter; 
+	private org.frameworkset.web.servlet.handler.annotations.AnnotationMethodHandlerAdapter annotationMethodHandlerAdapter;
+	private org.frameworkset.web.servlet.mvc.SimpleControllerHandlerAdapter simpleControllerHandlerAdapter;
+	private org.frameworkset.web.servlet.mvc.HttpRequestHandlerAdapter httpRequestHandlerAdapter;
 	
 	/** List of HandlerAdapters used by this servlet */
 	private List<HandlerInterceptor> gloabelHandlerInterceptors;
@@ -513,13 +494,12 @@ public class DispatchServlet extends BaseServlet {
 	}
 	/**
 	 * Retrieve a <code>WebApplicationContext</code> from the <code>ServletContext</code>
-	 * attribute with the {@link #setContextAttribute configured name}. The
+	 * attribute with the {setContextAttribute configured name}. The
 	 * <code>WebApplicationContext</code> must have already been loaded and stored in the
 	 * <code>ServletContext</code> before this servlet gets initialized (or invoked).
 	 * <p>Subclasses may override this method to provide a different
 	 * <code>WebApplicationContext</code> retrieval strategy.
 	 * @return the WebApplicationContext for this servlet, or <code>null</code> if not found
-	 * @see #getContextAttribute()
 	 */
 	protected WebApplicationContext findWebApplicationContext() {
 		String attrName = getContextAttributeName();
@@ -534,7 +514,7 @@ public class DispatchServlet extends BaseServlet {
 		return wac;
 	}
 	/**
-	 * Overridden method of {@link HttpServletBean}, invoked after any bean properties
+	 * Overridden method of { HttpServletBean}, invoked after any bean properties
 	 * have been set. Creates this servlet's WebApplicationContext.
 	 * @throws Exception 
 	 */
@@ -600,8 +580,6 @@ public class DispatchServlet extends BaseServlet {
 	 * of the context. Can be overridden in subclasses.
 	 * @return the WebApplicationContext instance
 	 * @throws BeansException if the context couldn't be initialized
-	 * @see #setContextClass
-	 * @see #setContextConfigLocation
 	 */
 	protected WebApplicationContext initWebApplicationContext(ServletConfig config) {
 		WebApplicationContext wac = findWebApplicationContext();
@@ -667,15 +645,15 @@ public class DispatchServlet extends BaseServlet {
 	/**
 	 * Instantiate the WebApplicationContext for this servlet, either a default
 	 * 
-	 * or a {@link #setContextClass custom context class}, if set.
+	 * or a {setContextClass custom context class}, if set.
 	 * <p>This implementation expects custom contexts to implement the
 
 	 * interface. Can be overridden in subclasses.
 	 * <p>Do not forget to register this servlet instance as application listener on the
-	 * created context (for triggering its {@link #onRefresh callback}, and to call
+	 * created context (for triggering its {onRefresh callback}, and to call
 
 	 * before returning the context instance.
-	 * @param parent the parent ApplicationContext to use, or <code>null</code> if none
+	 * @param config the parent ApplicationContext to use, or <code>null</code> if none
 	 * @return the WebApplicationContext for this servlet
 	 * @throws BeansException if the context couldn't be initialized
 
@@ -1231,7 +1209,7 @@ public class DispatchServlet extends BaseServlet {
 	 * Determine an error ModelAndView via the registered HandlerExceptionResolvers.
 	 * @param request current HTTP request
 	 * @param response current HTTP response
-	 * @param handler the executed handler, or <code>null</code> if none chosen at the time of
+	 * @param handlerMeta the executed handler, or <code>null</code> if none chosen at the time of
 	 * the exception (for example, if multipart resolution failed)
 	 * @param ex the exception that got thrown during handler execution
 	 * @return a corresponding ModelAndView to forward to

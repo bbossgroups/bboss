@@ -1669,6 +1669,53 @@ public class FileUtil
         return out.toByteArray();
     }
 
+    /**
+     * 从文件中读取字节数组
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static byte[] readFully(File file) throws IOException
+    {
+        FileInputStream in = null;
+        ByteArrayOutputStream out = null;
+        try {
+            in = new FileInputStream(file);
+            // copy buffer
+            byte[] xfer = new byte[2048];
+            // output buffer
+            out = new ByteArrayOutputStream(xfer.length);
+
+            // transfer data from input to output in xfer-sized chunks.
+            for (int bytesRead = in.read(xfer, 0, xfer.length); bytesRead >= 0; bytesRead = in.read(xfer, 0, xfer.length)) {
+                if (bytesRead > 0) {
+                    out.write(xfer, 0, bytesRead);
+                }
+            }
+            return out.toByteArray();
+        }
+        finally {
+            try {
+                if(in != null) {
+                    in.close();
+                }
+            }
+            catch (Exception e){
+
+            }
+            try {
+                if(out != null)
+                    out.close();
+            }
+            catch (Exception e){
+
+            }
+        }
+
+
+    }
+
     // private static final Category cat;
     //
     // static

@@ -162,9 +162,9 @@ public class PropertiesContainer implements GetProperties{
 				
 				String varvalue = this.getProperty(token.getText());
 				if(varvalue == null){
-					Pro p = providerParser._getProperty(token.getText());
+					Pro p = providerParser._getRealProperty(token.getText());
 					if(p != null){
-						varvalue = (String)p.getValue();
+						varvalue = (String)providerParser.getRealPropertyValue(p);
 					}
 				}
 				if(varvalue != null){
