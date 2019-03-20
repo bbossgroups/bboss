@@ -1154,6 +1154,16 @@ public class ValueExchange {
 		}
 //		return null;
 	}
+	public static Object changeLob2String(Object value) throws SQLException {
+		if(value != null ){
+			if(value instanceof Clob)
+				value = ValueExchange.getStringFromClob((Clob) value);
+			else if(value instanceof Blob){
+				value = ValueExchange.getStringFromBlob((Blob) value);
+			}
+		}
+		return value;
+	}
 	public static Object getValueFromRS(ResultSet res, int i, int type,
 			DB db) throws SQLException {
 		Object value = null;

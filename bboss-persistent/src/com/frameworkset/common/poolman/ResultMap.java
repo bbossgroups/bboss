@@ -35,9 +35,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.CallableStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -679,12 +677,14 @@ public class ResultMap {
 								.getValueFromCallableStatement(cstmt,
 										_param.parameterName, _param.sqlType,
 										stmtInfo.getDbname());
+						object = ValueExchange.changeLob2String(object);
 						data.put(_param.parameterName, object);
 					} else {
 						Object object = ValueExchange
 								.getValueFromCallableStatement(cstmt,
 										_param.index, _param.sqlType, stmtInfo
 												.getDbname());
+						object = ValueExchange.changeLob2String(object);
 						data.put(new Integer(_param.index), object);
 					}
 				} else {
@@ -836,9 +836,17 @@ public class ResultMap {
 //			record = new Record(cols,meta.get_columnLabel_upper(),meta.getSamecols());
 //			record.setRowid(rs.getRow());	
 			for (int i = 1; i <= cols; i++) {
-				Object value = ValueExchange.getValueFromRS(rs,  i, meta
-						.getColumnType(i), stmtInfo.getDbadapter());
-		
+				int ctype =  meta.getColumnType(i);
+				Object value = ValueExchange.getValueFromRS(rs,  i, ctype, stmtInfo.getDbadapter());
+				if(value != null ){
+					value = ValueExchange.changeLob2String(value);
+//					if(value instanceof Clob)
+//						value = ValueExchange.getStringFromClob((Clob) value);
+//					else if(value instanceof Blob){
+//						value = ValueExchange.getStringFromBlob((Blob) value);
+//					}
+				}
+
 				
 				// 将属性名称全部转换为大写，统一不同数据库之间的差异
 				if (value != null)
