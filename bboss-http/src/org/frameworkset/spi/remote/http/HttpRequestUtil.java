@@ -25,6 +25,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -1461,6 +1462,11 @@ public class HttpRequestUtil {
     public static String sendStringBody(String requestBody, String url) throws Exception {
         return  sendBody("default",  requestBody,   url,   null,ContentType.create(
                 "text/plain", Consts.UTF_8));
+    }
+
+    public static String sendStringBody(String requestBody, String url, String mimeType, Charset charSet) throws Exception {
+        return  sendBody("default",  requestBody,   url,   null,ContentType.create(
+                mimeType, charSet));
     }
    
     public static String sendJsonBody(String requestBody, String url, Map<String, String> headers ) throws Exception {

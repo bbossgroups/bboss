@@ -59,6 +59,9 @@ import java.util.concurrent.TimeUnit;
 public class ClientConfiguration implements InitializingBean, BeanNameAware {
 	public static final ContentType TEXT_PLAIN_UTF_8 = ContentType.create(
 			"text/plain", Consts.UTF_8);
+
+	public static final ContentType TEXT_HTML_UTF_8 = ContentType.create(
+			"text/html", Consts.UTF_8);
 	private final static int TIMEOUT_CONNECTION = 20000;
 	private final static int TIMEOUT_SOCKET = 20000;
 	private final static int RETRY_TIME = 3;
