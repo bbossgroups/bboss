@@ -15,11 +15,12 @@
  */
 package com.frameworkset.common.poolman.util;
 
+import com.frameworkset.common.poolman.PoolManConstants;
+import com.frameworkset.util.SimpleStringUtil;
+import com.frameworkset.util.StringUtil;
+
 import java.io.Serializable;
 import java.util.Map;
-
-import com.frameworkset.common.poolman.PoolManConstants;
-import com.frameworkset.util.StringUtil;
 
 public class JDBCPoolMetaData implements Serializable{
 
@@ -999,6 +1000,15 @@ public class JDBCPoolMetaData implements Serializable{
 
 	public void setQueryfetchsize(int queryfetchsize) {
 		this.queryfetchsize = queryfetchsize;
+	}
+
+	public String toString(){
+		try {
+			return SimpleStringUtil.object2json(this);
+		}catch (Exception e){
+			e.printStackTrace();
+			return "";
+		}
 	}
 
 //	public boolean isNeadGetGenerateKeys() {

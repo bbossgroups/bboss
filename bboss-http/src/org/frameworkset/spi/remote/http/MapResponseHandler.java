@@ -22,7 +22,12 @@ public class MapResponseHandler extends BaseResponseHandler implements ResponseH
 
          if (status >= 200 && status < 300) {
              HttpEntity entity = response.getEntity();
-             return super.converJson(entity,Map.class);
+			 if(entity.getContentLength() == 0){
+				return null;
+			 }
+             else{
+             	return super.converJson(entity,Map.class);
+			 }
 
 			 //return entity != null ? EntityUtils.toString(entity) : null;
          } else {

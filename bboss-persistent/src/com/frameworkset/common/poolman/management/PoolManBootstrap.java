@@ -103,12 +103,14 @@ public class PoolManBootstrap  {
     }
    
     public static void startFromTemplte(Map<String,Object> values) {
-    	log.debug("PoolManBootstrap(configFile): " + PoolManConstants.XML_CONFIG_FILE_TEMPLATE);
+        if(log.isDebugEnabled()) {
+            log.debug("PoolManBootstrap(configFile): {}", PoolManConstants.XML_CONFIG_FILE_TEMPLATE);
+        }
         PoolManConfiguration config = new PoolManConfiguration(PoolManConstants.XML_CONFIG_FILE_TEMPLATE,null);
         try {
             config.loadConfiguration(values);
         } catch (Exception ex) {
-            log.error("Start(configFile) loadConfiguration error: " + ex.getMessage());
+            log.error("Start(configFile) loadConfiguration error: " + ex.getMessage(),ex);
             //throw ex;
         }
 
@@ -119,7 +121,8 @@ public class PoolManBootstrap  {
             try {
                 deployer.deployConfiguration(config);
             } catch (Exception ex1) {
-                log.error("Start(configFile) deployConfiguration error: " + ex1.getMessage());
+                if(log.isErrorEnabled())
+                    log.error("Start(configFile) deployConfiguration error: {},config: \r\n{}", ex1.getMessage() ,config.toString(),ex1);
                 //throw ex1;
             }
         }
@@ -131,7 +134,8 @@ public class PoolManBootstrap  {
 //                deployer.deployConfiguration(config, values);
             	deployer.deployConfiguration(config, (Map<String,String>)null);
             } catch (Exception ex2) {
-                log.error("LocalPoolDeployer deployConfiguration error: " + ex2.getMessage(),ex2);
+                if(log.isErrorEnabled())
+                    log.error("LocalPoolDeployer deployConfiguration error: {},config: \r\n{}", ex2.getMessage() ,config.toString(),ex2);
                 //throw ex2;
             }
         }
@@ -161,7 +165,7 @@ public class PoolManBootstrap  {
         try {
             config.loadConfiguration(null);
         } catch (Exception ex) {
-            log.error("Start(configFile) loadConfiguration error: " + ex.getMessage(),ex);
+            log.error("Start(configFile) loadConfiguration error: {},config: \r\n{}", ex.getMessage() ,config.toString(),ex);
             //throw ex;
         }
 
@@ -172,7 +176,7 @@ public class PoolManBootstrap  {
             try {
                 deployer.deployConfiguration(config);
             } catch (Exception ex1) {
-                log.error("Start(configFile) deployConfiguration error: " + ex1.getMessage(),ex1);
+                log.error("Start(configFile) deployConfiguration error: {},config: \r\n{}", ex1.getMessage() ,config.toString(),ex1);
                 //throw ex1;
             }
         }
@@ -183,7 +187,7 @@ public class PoolManBootstrap  {
             try {
                 deployer.deployConfiguration(config);
             } catch (Exception ex2) {
-                log.error("LocalPoolDeployer deployConfiguration error: " + ex2.getMessage(),ex2);
+                log.error("LocalPoolDeployer deployConfiguration error: {},config: \r\n{}", ex2.getMessage() ,config.toString(),ex2);
                 //throw ex2;
             }
         }
@@ -224,7 +228,7 @@ public class PoolManBootstrap  {
         try {
             config.loadConfiguration(null);
         } catch (Exception ex) {
-            log.error("Start(configFile) loadConfiguration error: " + ex.getMessage(),ex);
+            log.error("Start(configFile) loadConfiguration error: {},config: \r\n{}", ex.getMessage() ,config.toString(),ex);
             //throw ex;
         }
 
@@ -235,7 +239,7 @@ public class PoolManBootstrap  {
             try {
                 deployer.deployConfiguration(config);
             } catch (Exception ex1) {
-                log.error("Start(configFile) deployConfiguration error: " + ex1.getMessage(),ex1);
+                log.error("Start(configFile) deployConfiguration error: {},config: \r\n{}", ex1.getMessage() ,config.toString(),ex1);
                 //throw ex1;
             }
         }
@@ -246,7 +250,7 @@ public class PoolManBootstrap  {
             try {
                 deployer.deployConfiguration(config);
             } catch (Exception ex2) {
-                log.error("LocalPoolDeployer deployConfiguration error: " + ex2.getMessage(),ex2);
+                log.error("LocalPoolDeployer deployConfiguration error: {},config: \r\n{}", ex2.getMessage() ,config.toString(),ex2);
                 //throw ex2;
             }
         }
@@ -294,7 +298,7 @@ public class PoolManBootstrap  {
             try {
                 deployer.deployConfiguration(config,dbname);
             } catch (Exception ex2) {
-//                log.error("LocalPoolDeployer deployConfiguration error: " + ex2.getMessage(),ex2);
+                log.error("LocalPoolDeployer deployConfiguration error: {},config: \r\n{}", ex2.getMessage() ,config.toString(),ex2);
                 throw ex2;
             }
        

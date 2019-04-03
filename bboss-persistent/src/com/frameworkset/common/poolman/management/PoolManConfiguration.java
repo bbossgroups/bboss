@@ -16,8 +16,10 @@
 package com.frameworkset.common.poolman.management;
 
 import com.frameworkset.common.poolman.PoolManConstants;
+import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.ValueObjectUtil;
 import com.frameworkset.velocity.BBossVelocityUtil;
+import org.frameworkset.soa.BBossStringWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -114,6 +116,26 @@ public class PoolManConfiguration   {
 					+ configFile + ": " + e);
 		}
 
+	}
+
+	@Override
+	public String toString(){
+		try {
+			StringBuilder builder = new StringBuilder();
+			BBossStringWriter writer = new BBossStringWriter(builder);
+			writer.write("adaptors:\r\n");
+			SimpleStringUtil.object2json(this.adaptors, writer);
+			writer.write("\r\ndatasources:\r\n");
+			SimpleStringUtil.object2json(this.datasources, writer);
+			writer.write("\r\nenericObjects:\r\n");
+			SimpleStringUtil.object2json(this.genericObjects, writer);
+			writer.flush();
+			return builder.toString();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			return "";
+		}
 	}
 
 	public ArrayList getDataSources() {

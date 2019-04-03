@@ -17,25 +17,23 @@ package com.frameworkset.common.poolman.management;
 
 // PoolMan Classes
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.beans.PropertyEditor;
-import java.beans.PropertyEditorManager;
+import com.frameworkset.common.poolman.util.JDBCPool;
+import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
+import com.frameworkset.common.poolman.util.SQLManager;
+import org.frameworkset.spi.BaseApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.beans.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
-import org.frameworkset.spi.BaseApplicationContext;
-
-import com.frameworkset.common.poolman.util.JDBCPool;
-import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
-import com.frameworkset.common.poolman.util.SQLManager;
-
 public class LocalPoolDeployer extends BaseTableManager implements PoolManDeployer,Serializable {
 	public static boolean addShutdownHook = false;
+	private static Logger logger = LoggerFactory.getLogger(LocalPoolDeployer.class);
 	public static void shutdownHandle()
 	{
 		if(addShutdownHook)
@@ -231,6 +229,9 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
             }
             metadata.initDatasourceParameters();
             JDBCPool jpool = SQLManager.getInstance().createPool(metadata);
+            if(logger.isInfoEnabled()) {
+				logger.info(" Created JDBC Connection Pool named {},config:{}",metadata.getName(),metadata.toString());
+			}
             //jpool.log("PoolMan Local Pool Deployer: Created JDBC Connection Pool named: " + metadata.getDbname());
         }
        
