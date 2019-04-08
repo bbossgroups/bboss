@@ -220,16 +220,21 @@ public class DaemonThread extends java.lang.Thread
     
     public void addFile(String fileName,ResourceInitial init)
     {
-    	if(this.stopped )
+    	if(this.stopped || fileName == null)
     		return;
-    	File file = new File(fileName);
-        if(!file.exists())
-        {
-        	URL confURL = ResourceInitial.class.getClassLoader().getResource(fileName);
-        	if(confURL != null)
-        		file = new File(confURL.getPath() );
-        }
-        addFile(file,fileName,init);
+    	try {
+			File file = new File(fileName);
+			if (!file.exists()) {
+				URL confURL = ResourceInitial.class.getClassLoader().getResource(fileName);
+				if (confURL != null)
+					file = new File(confURL.getPath());
+			}
+			addFile(file, fileName, init);
+		}
+		catch (Exception e){
+			if (log.isErrorEnabled())
+				log.error("addFile file to monitor Thread failed,fileName:"+fileName ,e);
+		}
 //    	this.files.add(new FileBean(file,init));
 //    	 log.debug("Add file " + file.getAbsolutePath() + " to damon thread that moniting changed files.");
     }
@@ -256,32 +261,33 @@ public class DaemonThread extends java.lang.Thread
 	 */
     public  void addFile(File file,String fileName,ResourceInitial init)
     {   
-    	if(this.stopped )
+    	if(this.stopped || file == null )
     		return;
-    	if(!file.exists())
+    	if( !file.exists())
     	{
-    		if(log.isInfoEnabled())
+    		if(log.isInfoEnabled() )
     			log.info(fileName+"@"+file.getAbsolutePath()+" 对应的文件不存在，忽略修改检测.");
     		return;
     	}
-    	
-    	synchronized(lock)
-    	{
-    		FileBean f = this.containFile(file,fileName);
-	    	if(f == null)
-	    	{
-	    		this.files.put(file.getAbsolutePath(), new FileBean(file,new WrapperResourceInit(init,fileName)));
+    	try {
+			synchronized (lock) {
+				FileBean f = this.containFile(file, fileName);
+				if (f == null) {
+					this.files.put(file.getAbsolutePath(), new FileBean(file, new WrapperResourceInit(init, fileName)));
 //	    		log.debug(file.getAbsolutePath() + " has been monitored,ignore this operation.");
 //	    		return;
-	    	}
-	    	else
-	    	{
-	    		f.addResourceInit(new WrapperResourceInit(init,fileName));
-	    	}
-	    	if(log.isInfoEnabled())
-	    	 	log.info("Add file " + fileName+"@"+ file.getAbsolutePath() + " to monitor thread that moniting changed files.");
-	    	
-    	}
+				} else {
+					f.addResourceInit(new WrapperResourceInit(init, fileName));
+				}
+				if (log.isInfoEnabled())
+					log.info("Add file " + fileName + "@" + file.getAbsolutePath() + " to monitor thread that moniting changed files.");
+
+			}
+		}
+    	catch (Exception e){
+			if (log.isErrorEnabled())
+				log.error("Add file " + fileName + "@" + file.getAbsolutePath() + " to monitor thread that moniting changed files failed:",e);
+		}
     }
 	/**
 	 * determine the OS name
@@ -313,7 +319,7 @@ public class DaemonThread extends java.lang.Thread
 	 */
 	public  void addFile(File file,ResourceInitial init)
 	{
-		if(this.stopped )
+		if(this.stopped || file == null)
 			return;
 		String fileName = file.getAbsolutePath();
 		addFile(  file, fileName, init);
@@ -326,37 +332,41 @@ public class DaemonThread extends java.lang.Thread
 			log.info("Ignore addFile Null file to change monitor Thread:fileName:"+fileName + ",fileURL:"+fileURL);
 			return;
 		}
-		File file = new File(fileName);
-		if(!file.exists())
-		{
-			if(fileURL != null) {
-				String fileUrl = fileURL.getPath();
-				if(log.isInfoEnabled()) {
-					log.info("Use out package file URL to monitor: " + fileUrl);
-				}
-				file = new File(fileUrl);
-				if(!file.exists()){
-					int idx = fileUrl.indexOf("!");
-					if(idx > 0) {
-						fileUrl = fileUrl.substring(0, idx);
-						idx = fileUrl.indexOf("file:");
-						if (idx == -1) {
+		try {
+			File file = new File(fileName);
+			if (!file.exists()) {
+				if (fileURL != null) {
+					String fileUrl = fileURL.getPath();
+					if (log.isInfoEnabled()) {
+						log.info("Use out package file URL to monitor: " + fileUrl);
+					}
+					file = new File(fileUrl);
+					if (!file.exists()) {
+						int idx = fileUrl.indexOf("!");
+						if (idx > 0) {
+							fileUrl = fileUrl.substring(0, idx);
 							idx = fileUrl.indexOf("file:");
-						}
-						if(idx >= 0) {
-							if(isWindows()) {
-								fileUrl = fileUrl.substring(idx + 6);
+							if (idx == -1) {
+								idx = fileUrl.indexOf("file:");
 							}
-							else{
-								fileUrl = fileUrl.substring(idx + 5);
+							if (idx >= 0) {
+								if (isWindows()) {
+									fileUrl = fileUrl.substring(idx + 6);
+								} else {
+									fileUrl = fileUrl.substring(idx + 5);
+								}
 							}
+							file = new File(fileUrl);
 						}
-						file = new File(fileUrl);
 					}
 				}
 			}
+			addFile(file, fileName, init);
 		}
-		addFile(file,fileName,init);
+		catch (Exception e){
+			if (log.isErrorEnabled())
+				log.error("addFile file to monitor Thread failed,fileName:"+fileName + ",fileURL:"+fileURL ,e);
+		}
 	}
     public  void removeFile(String filepath)
     {   
