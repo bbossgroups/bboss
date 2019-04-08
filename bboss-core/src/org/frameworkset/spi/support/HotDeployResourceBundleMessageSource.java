@@ -25,6 +25,8 @@ import org.frameworkset.util.io.DefaultResourceLoader;
 import org.frameworkset.util.io.Resource;
 import org.frameworkset.util.io.ResourceEditor;
 import org.frameworkset.util.io.ResourceLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +56,9 @@ import java.util.*;
  */
 public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		implements ResourceLoaderAware {
-
+	/** Logger available to subclasses */
+	protected static final Logger log = LoggerFactory
+			.getLogger(HotDeployResourceBundleMessageSource.class);
 	private static final String PROPERTIES_SUFFIX = ".properties";
 
 	private static final String XML_SUFFIX = ".xml";
@@ -407,8 +411,14 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 //				return propHolder;
 //			}
 			propHolder = this.firstLoadProperties(filename);
+
 			if(this.isChangemonitor()) {
-				checkResource(this, propHolder.getResourceURL(),propHolder.getResource(), propHolder.getBasename(), propHolder.getRelativefile());
+				if(propHolder == NOTEXIST_propHolder || propHolder == ERROR_propHolder){
+					log.info("LoadProperties from "+filename+" ignored:file NOT EXIST.");
+				}
+				else {
+					checkResource(this, propHolder.getResourceURL(), propHolder.getResource(), propHolder.getBasename(), propHolder.getRelativefile());
+				}
 			}
 			cachedProperties.put(filename, propHolder);
 			return propHolder;
@@ -442,7 +452,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 			propHolder = new PropertiesHolder(props,filepath,basename,relativefile);
 		} catch (IOException ex) {
 			{
-				logger.warn(
+				log.warn(
 						"Could not parse properties file ["
 								+ filepath + "]", ex);
 			}
@@ -484,14 +494,14 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 				}
 				catch(Throwable e)
 				{
-					logger.warn(
+					log.warn(
 							new StringBuilder().append("Get properties file from ").append( resource.getClass().getCanonicalName() ).append( " failed:"+e.getMessage()).toString());
 				}
 				propHolder = new PropertiesHolder(props,resource.getURL(),f,filename,name);
 			} catch (IOException ex) {
 				{
 					try {
-						logger.warn(
+						log.warn(
 								new StringBuilder().append("Could not parse properties file [").append(
 										resource.getFile().getCanonicalPath() ).append( "]").toString(), ex);
 					} catch (IOException e) {
@@ -529,8 +539,8 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 		Properties props = new Properties();
 		try {
 			if (resource.getFilename().endsWith(XML_SUFFIX)) {
-				if (logger.isDebugEnabled()) {
-					logger.debug("Loading properties ["
+				if (log.isDebugEnabled()) {
+					log.debug("Loading properties ["
 							+ resource.getFilename() + "]");
 				}
 				this.propertiesPersister.loadFromXml(props, is);
@@ -543,16 +553,16 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 					encoding = this.defaultEncoding;
 				}
 				if (encoding != null) {
-					if (logger.isDebugEnabled()) {
-						logger.debug("Loading properties ["
+					if (log.isDebugEnabled()) {
+						log.debug("Loading properties ["
 								+ resource.getFilename() + "] with encoding '"
 								+ encoding + "'");
 					}
 					this.propertiesPersister.load(props, new InputStreamReader(
 							is, encoding));
 				} else {
-					if (logger.isDebugEnabled()) {
-						logger.debug("Loading properties ["
+					if (log.isDebugEnabled()) {
+						log.debug("Loading properties ["
 								+ resource.getFilename() + "]");
 					}
 					this.propertiesPersister.load(props, is);
@@ -569,7 +579,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	 * reloading of the properties files.
 	 */
 	public void clearCache() {
-		logger.debug("Clearing entire resource bundle cache");
+		log.debug("Clearing entire resource bundle cache");
 		synchronized (this.cachedProperties) {
 			this.cachedProperties.clear();
 		}
@@ -774,6 +784,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 					}
 				}
 			}
+
 			if(file != null)
 				damon.addFile(file,new ResourceFileRefresh(messagesource,file,basename,filename));
 			else{

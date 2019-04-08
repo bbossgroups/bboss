@@ -322,6 +322,10 @@ public class DaemonThread extends java.lang.Thread
 	{
 		if(this.stopped )
 			return;
+		if(fileName == null){
+			log.info("Ignore addFile Null file to change monitor Thread:fileName:"+fileName + ",fileURL:"+fileURL);
+			return;
+		}
 		File file = new File(fileName);
 		if(!file.exists())
 		{
