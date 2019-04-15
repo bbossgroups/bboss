@@ -73,8 +73,8 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 	private static BaseApplicationContext context;
 	private static boolean emptyContext;
 	private static ClientConfiguration defaultClientConfiguration;
-	private CloseableHttpClient httpclient;
-	private RequestConfig requestConfig;
+	private transient CloseableHttpClient httpclient;
+	private transient RequestConfig requestConfig;
 	private int timeoutConnection = TIMEOUT_CONNECTION;
 	private int timeoutSocket = TIMEOUT_SOCKET;
 	private int connectionRequestTimeout = TIMEOUT_SOCKET;
@@ -86,6 +86,7 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 	private long retryInterval = -1;
 	private Boolean soKeepAlive = false;
 	private Boolean soReuseAddress = false;
+	private String hostnameVerifierString;
 	/**
 	 * 每隔多少毫秒校验空闲connection，自动释放无效链接
 	 * -1 或者0不检查
@@ -110,7 +111,7 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 	private String keyPassword;
 	private String supportedProtocols;
 	private String[] _supportedProtocols;
-	private HostnameVerifier hostnameVerifier;
+	private transient HostnameVerifier hostnameVerifier;
 	private String[] defaultSupportedProtocols = new String[]{"TLSv1"};
 	/**
 	 * 默认保活1小时
@@ -327,77 +328,102 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 				return clientConfiguration;
 			}
 
-			{
-				clientConfiguration = new ClientConfiguration();
-				/**
-				 *http.timeoutConnection = 400000
-				 * http.timeoutSocket = 400000
-				 * http.connectionRequestTimeout=400000
-				 * http.retryTime = 1
-				 * http.maxLineLength = -1
-				 * http.maxHeaderCount = 200
-				 * http.maxTotal = 400
-				 * http.defaultMaxPerRoute = 200
-				 * #http.keystore =
-				 * #http.keyPassword =
-				 * #http.hostnameVerifier =
-				 * http.soReuseAddress = false
-				 * http.soKeepAlive = false
-				 * http.timeToLive = 3600000
-				 * http.keepAlive = 3600000
-				 */
+			clientConfiguration = new ClientConfiguration();
+			/**
+			 *http.timeoutConnection = 400000
+			 * http.timeoutSocket = 400000
+			 * http.connectionRequestTimeout=400000
+			 * http.retryTime = 1
+			 * http.maxLineLength = -1
+			 * http.maxHeaderCount = 200
+			 * http.maxTotal = 400
+			 * http.defaultMaxPerRoute = 200
+			 * #http.keystore =
+			 * #http.keyPassword =
+			 * #http.hostnameVerifier =
+			 * http.soReuseAddress = false
+			 * http.soKeepAlive = false
+			 * http.timeToLive = 3600000
+			 * http.keepAlive = 3600000
+			 */
+			StringBuilder log = new StringBuilder();
+			int timeoutConnection = ClientConfiguration._getIntValue(name, "http.timeoutConnection", context, 50000);
+			log.append("http.timeoutConnection=").append(timeoutConnection);
+			clientConfiguration.setTimeoutConnection(timeoutConnection);
+			int timeoutSocket = ClientConfiguration._getIntValue(name, "http.timeoutSocket", context, 50000);
+			log.append(",http.timeoutSocket=").append(timeoutSocket);
+			clientConfiguration.setTimeoutSocket(timeoutSocket);
+			int connectionRequestTimeout = ClientConfiguration._getIntValue(name, "http.connectionRequestTimeout", context, 50000);
+			log.append(",http.connectionRequestTimeout=").append(connectionRequestTimeout);
+			clientConfiguration.setConnectionRequestTimeout(connectionRequestTimeout);
+			int retryTime = ClientConfiguration._getIntValue(name, "http.retryTime", context, -1);
+			log.append(",http.retryTime=").append(retryTime);
+			clientConfiguration.setRetryTime(retryTime);
+			long retryInterval = ClientConfiguration._getLongValue(name, "http.retryInterval", context, -1);
+			log.append(",http.retryInterval=").append(retryInterval);
+			clientConfiguration.setRetryInterval(retryInterval);
+			int maxLineLength = ClientConfiguration._getIntValue(name, "http.maxLineLength", context, -1);
+			log.append(",http.maxLineLength=").append(maxLineLength);
+			clientConfiguration.setMaxLineLength(maxLineLength);
+			int maxHeaderCount = ClientConfiguration._getIntValue(name, "http.maxHeaderCount", context, 500);
+			log.append(",http.maxHeaderCount=").append(maxHeaderCount);
+			clientConfiguration.setMaxHeaderCount(maxHeaderCount);
+			int maxTotal = ClientConfiguration._getIntValue(name, "http.maxTotal", context, 1000);
+			log.append(",http.maxTotal=").append(maxTotal);
+			clientConfiguration.setMaxTotal(maxTotal);
 
-				int timeoutConnection = ClientConfiguration._getIntValue(name, "http.timeoutConnection", context, 40000);
+			boolean soReuseAddress = ClientConfiguration._getBooleanValue(name, "http.soReuseAddress", context, false);
+			log.append(",http.soReuseAddress=").append(soReuseAddress);
+			clientConfiguration.setSoReuseAddress(soReuseAddress);
+			boolean soKeepAlive = ClientConfiguration._getBooleanValue(name, "http.soKeepAlive", context, false);
+			log.append(",http.soKeepAlive=").append(soKeepAlive);
+			clientConfiguration.setSoKeepAlive(soKeepAlive);
+			int timeToLive = ClientConfiguration._getIntValue(name, "http.timeToLive", context, 3600000);
+			log.append(",http.timeToLive=").append(timeToLive);
+			clientConfiguration.setTimeToLive(timeToLive);
+			int keepAlive = ClientConfiguration._getIntValue(name, "http.keepAlive", context, 3600000);
+			log.append(",http.keepAlive=").append(keepAlive);
+			clientConfiguration.setKeepAlive(keepAlive);
 
-				clientConfiguration.setTimeoutConnection(timeoutConnection);
-				int timeoutSocket = ClientConfiguration._getIntValue(name, "http.timeoutSocket", context, 40000);
-				clientConfiguration.setTimeoutSocket(timeoutSocket);
-				int connectionRequestTimeout = ClientConfiguration._getIntValue(name, "http.connectionRequestTimeout", context, 40000);
-				clientConfiguration.setConnectionRequestTimeout(connectionRequestTimeout);
-				int retryTime = ClientConfiguration._getIntValue(name, "http.retryTime", context, -1);
-				clientConfiguration.setRetryTime(retryTime);
-				long retryInterval = ClientConfiguration._getLongValue(name, "http.retryInterval", context, -1);
-				clientConfiguration.setRetryInterval(retryInterval);
-				int maxLineLength = ClientConfiguration._getIntValue(name, "http.maxLineLength", context, -1);
-				clientConfiguration.setMaxLineLength(maxLineLength);
-				int maxHeaderCount = ClientConfiguration._getIntValue(name, "http.maxHeaderCount", context, 500);
-				clientConfiguration.setMaxHeaderCount(maxHeaderCount);
-				int maxTotal = ClientConfiguration._getIntValue(name, "http.maxTotal", context, 1000);
-				clientConfiguration.setMaxTotal(maxTotal);
+			int defaultMaxPerRoute = ClientConfiguration._getIntValue(name, "http.defaultMaxPerRoute", context, 200);
+			log.append(",http.defaultMaxPerRoute=").append(defaultMaxPerRoute);
+			clientConfiguration.setDefaultMaxPerRoute(defaultMaxPerRoute);
 
-				boolean soReuseAddress = ClientConfiguration._getBooleanValue(name, "http.soReuseAddress", context, false);
-				clientConfiguration.setSoReuseAddress(soReuseAddress);
-				boolean soKeepAlive = ClientConfiguration._getBooleanValue(name, "http.soKeepAlive", context, false);
-				clientConfiguration.setSoKeepAlive(soKeepAlive);
-				int timeToLive = ClientConfiguration._getIntValue(name, "http.timeToLive", context, 3600000);
-				clientConfiguration.setTimeToLive(timeToLive);
-				int keepAlive = ClientConfiguration._getIntValue(name, "http.keepAlive", context, 3600000);
-				clientConfiguration.setKeepAlive(keepAlive);
+			int validateAfterInactivity = ClientConfiguration._getIntValue(name, "http.validateAfterInactivity", context, 2000);
+			log.append(",http.validateAfterInactivity=").append(validateAfterInactivity);
+			clientConfiguration.setValidateAfterInactivity(validateAfterInactivity);
 
-				int defaultMaxPerRoute = ClientConfiguration._getIntValue(name, "http.defaultMaxPerRoute", context, 200);
-				clientConfiguration.setDefaultMaxPerRoute(defaultMaxPerRoute);
+			boolean staleConnectionCheckEnabled = ClientConfiguration._getBooleanValue(name, "http.staleConnectionCheckEnabled", context, false);
+			log.append(",http.staleConnectionCheckEnabled=").append(staleConnectionCheckEnabled);
+			clientConfiguration.setStaleConnectionCheckEnabled(staleConnectionCheckEnabled);
 
-				int validateAfterInactivity = ClientConfiguration._getIntValue(name, "http.validateAfterInactivity", context, 2000);
-				clientConfiguration.setValidateAfterInactivity(validateAfterInactivity);
+			String customHttpRequestRetryHandler = ClientConfiguration._getStringValue(name, "http.customHttpRequestRetryHandler", context, null);
+			log.append(",http.customHttpRequestRetryHandler=").append(customHttpRequestRetryHandler);
+			clientConfiguration.setCustomHttpRequestRetryHandler(customHttpRequestRetryHandler);
 
-				boolean staleConnectionCheckEnabled = ClientConfiguration._getBooleanValue(name, "http.staleConnectionCheckEnabled", context, false);
-				clientConfiguration.setStaleConnectionCheckEnabled(staleConnectionCheckEnabled);
+			String keystore = ClientConfiguration._getStringValue(name, "http.keystore", context, null);
+			log.append(",http.keystore=").append(keystore);
 
-				String customHttpRequestRetryHandler = ClientConfiguration._getStringValue(name, "http.customHttpRequestRetryHandler", context, null);
-				clientConfiguration.setCustomHttpRequestRetryHandler(customHttpRequestRetryHandler);
-
-				String keystore = ClientConfiguration._getStringValue(name, "http.keystore", context, null);
-
-				clientConfiguration.setKeystore(keystore);
-				String keyPassword = ClientConfiguration._getStringValue(name, "http.keyPassword", context, null);
-				clientConfiguration.setKeyPassword(keyPassword);
-				String hostnameVerifier = ClientConfiguration._getStringValue(name, "http.hostnameVerifier", context, null);
-				clientConfiguration.setHostnameVerifier(_getHostnameVerifier(hostnameVerifier));
-				clientConfiguration.setBeanName(name);
-
-				clientConfiguration.afterPropertiesSet();
-				clientConfigs.put(name, clientConfiguration);
+			clientConfiguration.setKeystore(keystore);
+			String keyPassword = ClientConfiguration._getStringValue(name, "http.keyPassword", context, null);
+			log.append(",http.keyPassword=").append(keyPassword);
+			clientConfiguration.setKeyPassword(keyPassword);
+			String hostnameVerifier = ClientConfiguration._getStringValue(name, "http.hostnameVerifier", context, null);
+			log.append(",http.hostnameVerifier=").append(hostnameVerifier);
+			clientConfiguration.setHostnameVerifierString( hostnameVerifier);
+			clientConfiguration.setHostnameVerifier(_getHostnameVerifier(hostnameVerifier));
+			clientConfiguration.setBeanName(name);
+			if(logger.isInfoEnabled()){
+				try {
+					logger.info("Http Pool[{}] config:{}", name, log.toString());
+				}
+				catch (Exception e){
+					e.printStackTrace();
+				}
 			}
+			clientConfiguration.afterPropertiesSet();
+			clientConfigs.put(name, clientConfiguration);
+
 		}
 		return clientConfiguration;
 
@@ -848,5 +874,13 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 
 	public void setCustomHttpRequestRetryHandler(String customHttpRequestRetryHandler) {
 		this.customHttpRequestRetryHandler = customHttpRequestRetryHandler;
+	}
+
+	public String getHostnameVerifierString() {
+		return hostnameVerifierString;
+	}
+
+	public void setHostnameVerifierString(String hostnameVerifierString) {
+		this.hostnameVerifierString = hostnameVerifierString;
 	}
 }
