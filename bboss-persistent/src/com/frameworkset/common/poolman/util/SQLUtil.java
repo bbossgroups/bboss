@@ -1596,6 +1596,12 @@ public class SQLUtil{
         	
         	SQLManager.startPool(dbname);
         }
+
+	public static void startPool(TempConf dbConf) throws Exception
+	{
+
+		SQLManager.startPool(dbConf);
+	}
         
         public static String statusCheck(String dbname)
         {
