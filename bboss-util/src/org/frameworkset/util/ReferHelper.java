@@ -74,37 +74,45 @@ public class ReferHelper {
 				String basePath80 = null;
 				if (!request.getContextPath().equals("/")) {
 					if (request.getServerPort() != 80) {
-						basePath = request.getScheme() + "://"
-								+ request.getServerName() + ":"
-								+ request.getServerPort()
-								+ request.getContextPath() + "/";
+						basePath = new StringBuilder().append(request.getScheme() ).append( "://")
+						.append( request.getServerName() )
+								.append( ":")
+								.append( request.getServerPort())
+								.append( request.getContextPath() )
+								.append( "/").toString();
 					} else {
-						basePath = request.getScheme() + "://"
-								+ request.getServerName() + ":"
-								+ request.getServerPort()
-								+ request.getContextPath() + "/";
-						basePath80 = request.getScheme() + "://"
-								+ request.getServerName()
-								+ request.getContextPath() + "/";
+						basePath = new StringBuilder().append(request.getScheme() )
+								.append( "://")
+								.append( request.getServerName() )
+								.append( ":")
+								.append( request.getServerPort())
+								.append( request.getContextPath() )
+								.append( "/").toString();
+						basePath80 = new StringBuilder().append(request.getScheme() )
+								.append( "://")
+								.append(request.getServerName())
+								.append(request.getContextPath() )
+								.append( "/").toString();
 					}
 				} else {
 					if (request.getServerPort() != 80) {
-						basePath = request.getScheme() + "://"
-
-						+ request.getServerName() + ":"
-								+ request.getServerPort()
-
-								+ request.getContextPath();
+						basePath = new StringBuilder().append(request.getScheme() )
+								.append( "://")
+								.append( request.getServerName() )
+								.append( ":")
+								.append( request.getServerPort())
+								.append( request.getContextPath()).toString();
 					} else {
-						basePath = request.getScheme() + "://"
-
-						+ request.getServerName() + ":"
-								+ request.getServerPort()
-
-								+ request.getContextPath();
-						basePath80 = request.getScheme() + "://"
-								+ request.getServerName()
-								+ request.getContextPath();
+						basePath = new StringBuilder().append(request.getScheme() )
+								.append(  "://")
+								.append(  request.getServerName() )
+								.append(  ":")
+								.append(  request.getServerPort())
+								.append(  request.getContextPath()).toString();
+						basePath80 = new StringBuilder().append(request.getScheme() )
+								.append( "://")
+								.append(request.getServerName())
+								.append( request.getContextPath()).toString();
 					}
 				}
 				if (basePath80 == null) {
@@ -248,8 +256,9 @@ public class ReferHelper {
 
 				if (value.indexOf(wallfilterrules[i]) >= 0) {
 					values[j] = null;
-					logger.warn("参数" + name + "值" + value + "包含敏感词:"
-							+ wallfilterrules[i] + ",存在安全隐患,系统自动过滤掉参数值!");
+					if(logger.isWarnEnabled())
+					logger.warn(new StringBuilder().append("参数" ).append( name ).append( "值" ).append( value ).append( "包含敏感词:"
+					).append( wallfilterrules[i] ).append( ",存在安全隐患,系统自动过滤掉参数值!").toString());
 					break;
 				}
 			}

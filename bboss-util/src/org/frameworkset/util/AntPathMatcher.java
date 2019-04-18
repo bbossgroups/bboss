@@ -16,16 +16,12 @@
 
 package org.frameworkset.util;
 
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import com.frameworkset.util.SimpleStringUtil;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.frameworkset.util.SimpleStringUtil;
 
 /**
  * PathMatcher implementation for Ant-style path patterns. Examples are provided below.
@@ -624,6 +620,8 @@ public class AntPathMatcher implements PathMatcher {
 	 */
 	public boolean urlContain(String pattern,String url)
 	{
+		if(pattern.equals("*"))
+			return true;
 		int index = pattern.indexOf("*");
 		if(index >=0)
 		{
@@ -653,6 +651,8 @@ public class AntPathMatcher implements PathMatcher {
 	 */
 	public boolean urlMatch(String pattern,String url)
 	{
+		if(pattern.equals("*"))
+			return true;
 		int idx = url.indexOf("?");
 		if(idx > 0)//去除参数部分
 			url = url.substring(0,idx);
