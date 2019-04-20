@@ -605,7 +605,7 @@ public class SQLManager extends PoolManager{
 	
 	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,int fetchsize)
 	{
-		TempConf tempConf = new TempConf();
+		DBConf tempConf = new DBConf();
 		tempConf.setPoolname(poolname);
 		tempConf.setDriver(driver);
 		tempConf.setJdbcurl(jdbcurl);
@@ -728,7 +728,7 @@ public class SQLManager extends PoolManager{
 //		values.put("validationquery", validationQuery);
 //		
 //		PoolManBootstrap.startFromTemplte(values);
-		TempConf tempConf = new TempConf();
+		DBConf tempConf = new DBConf();
 		tempConf.setPoolname(poolname);
 		tempConf.setDriver(driver);
 		tempConf.setJdbcurl(jdbcurl);
@@ -777,8 +777,8 @@ public class SQLManager extends PoolManager{
 //	    		false,
 //	    		null,false,encryptdbinfo
 //	    		);
-		
-		TempConf tempConf = new TempConf();
+
+		DBConf tempConf = new DBConf();
 		tempConf.setPoolname(poolname);
 		tempConf.setDriver(driver);
 		tempConf.setJdbcurl(jdbcurl);
@@ -825,7 +825,7 @@ public class SQLManager extends PoolManager{
 //	    		   external,
 //	    		  externaljndiName ,  showsql ,  encryptdbinfo  ,0    		
 //	    		);
-		TempConf tempConf = new TempConf();
+		DBConf tempConf = new DBConf();
 		tempConf.setPoolname(poolname);
 		tempConf.setDriver(driver);
 		tempConf.setJdbcurl(jdbcurl);
@@ -870,7 +870,7 @@ public class SQLManager extends PoolManager{
 			}
 				
 		}
-		TempConf temConf = new TempConf();
+		DBConf temConf = new DBConf();
 		temConf.setPoolname(poolname);
 		temConf.setDriver(driver);
 		temConf.setJdbcurl(jdbcurl);
@@ -981,7 +981,7 @@ public class SQLManager extends PoolManager{
 	}
 	
 	
-	public static void startPool(TempConf temConf)
+	public static void startPool(DBConf temConf)
 	{
 		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(temConf.getPoolname());
 		if(pool != null)

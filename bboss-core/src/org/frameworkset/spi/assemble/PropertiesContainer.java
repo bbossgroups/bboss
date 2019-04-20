@@ -364,7 +364,7 @@ public class PropertiesContainer implements GetProperties{
     	if(son.getAllProperties() != null)
     		sonAndParentProperties.putAll(son.getAllProperties());
     }
-    public Map<? extends Object, ? extends Object> getAllProperties() {
+    public Map<Object,Object> getAllProperties() {
 		// TODO Auto-generated method stub
 		return this.allProperties;
 	}
