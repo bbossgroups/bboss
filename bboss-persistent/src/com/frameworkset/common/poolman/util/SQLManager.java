@@ -848,6 +848,32 @@ public class SQLManager extends PoolManager{
 		startPool(tempConf); 
 	}
 	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
+								 String readOnly,
+								 String txIsolationLevel,
+								 String validationQuery,
+								 String jndiName,
+								 int initialConnections,
+								 int minimumSize,
+								 int maximumSize,
+								 boolean usepool,
+								 boolean  external,
+								 String externaljndiName ,boolean showsql ,boolean encryptdbinfo  ,int queryfetchsize
+	)
+	{
+		startPool(  poolname,  driver,  jdbcurl,  username,  password,
+				  readOnly,
+				  txIsolationLevel,
+				  validationQuery,
+				  jndiName,
+		  initialConnections,
+		  minimumSize,
+		  maximumSize,
+		  usepool,
+		   external,
+		  externaljndiName ,  showsql ,  encryptdbinfo  ,  queryfetchsize,(String)null,(String)null	);
+	}
+
+	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
     		String readOnly,
     		String txIsolationLevel,
     		String validationQuery,
@@ -857,7 +883,7 @@ public class SQLManager extends PoolManager{
     		int maximumSize,
     		boolean usepool,
     		boolean  external,
-    		String externaljndiName ,boolean showsql ,boolean encryptdbinfo  ,int queryfetchsize    		
+    		String externaljndiName ,boolean showsql ,boolean encryptdbinfo  ,int queryfetchsize  ,String dbtype,String dbAdaptor
     		)
 	{
 		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
@@ -889,95 +915,10 @@ public class SQLManager extends PoolManager{
 		temConf.setShowsql(showsql);
 		temConf.setEncryptdbinfo(encryptdbinfo);
 		temConf.setQueryfetchsize(queryfetchsize);
+		temConf.setDbAdaptor(dbAdaptor);
+		temConf.setDbtype(dbtype);
 		startPool(temConf);
-//		if(readOnly == null)
-//			readOnly = "";
-//		if(txIsolationLevel == null)
-//			txIsolationLevel = "";
-//		Map<String,String> values = new HashMap<String,String>();
-//		values.put("dbname", poolname);
-//		if(jndiName != null && !jndiName.equals(""))
-//		{
-//			values.put("dbname_datasource_jndiname", jndiName);
-//			values.put("enablejta", "true");
-//		}
-//		else
-//		{
-//			values.put("dbname_datasource_jndiname", "");
-//		}
-//		values.put("driver", driver);
-//		values.put("jdbcurl", jdbcurl);
-//		if(username == null) username="";
-//		values.put("username", username);
-//		if(password == null) password="";
-//		values.put("password", password);
-//		boolean cachequerymetadata = true;
-//		values.put("cachequerymetadata", cachequerymetadata+"");
-//		values.put("readOnly", readOnly);
-//		if(txIsolationLevel != null && !txIsolationLevel.equals(""))
-//			values.put("txIsolationLevel", txIsolationLevel);
-//		else
-//			values.put("txIsolationLevel", "");
-//		if(validationQuery != null && !validationQuery.equals(""))
-//			values.put("validationQuery", validationQuery);
-//		else
-//			values.put("validationQuery", "");
-//		
-//		
-//		if(initialConnections >= 0)
-//			values.put("initialConnections", ""+initialConnections);
-//		else
-//			values.put("initialConnections", ""+2);
-//		if(minimumSize >= 0)
-//			values.put("minimumSize", ""+minimumSize);
-//		else
-//			values.put("minimumSize", ""+2);
-//		if(maximumSize > 0)
-//			values.put("maximumSize", ""+maximumSize);
-//		else
-//			values.put("maximumSize", ""+10);
-//		int maxWait = 60;
-//		if(maxWait > 0)
-//		{
-//			maxWait = maxWait * 1000;
-//			values.put("maxWait", ""+maxWait);
-//		}
-//		else
-//			values.put("maxWait", ""+60000);
-//		boolean maximumSoft = false;
-//		values.put("maximumSoft", ""+maximumSoft);
-//		values.put("usepool", usepool+"");
-//		values.put("external", external+"");
-//		values.put("showsql", showsql+"");
-//		values.put("encryptdbinfo", encryptdbinfo+"");
-//		
-//		boolean testWhileidle = true;
-//		values.put("testWhileidle", testWhileidle+"");
-//		int shrinkBy = 5;
-//		values.put("shrinkBy", shrinkBy+"");
-//		
-//		int connectionTimeout = 36000000;
-//		values.put("connectionTimeout", connectionTimeout+"");
-//		int skimmerFrequency = 180000;
-//		values.put("skimmerFrequency", skimmerFrequency+"");
-//		boolean logAbandoned = true;
-//		values.put("logAbandoned", logAbandoned+"");
-//		/**
-//		 * Set max idle Times in seconds ,if exhaust this times the used connection object will be Abandoned removed if removeAbandoned is true.
-//		default value is 300 seconds.
-//		
-//		see removeAbandonedTimeout parameter in commons dbcp. 
-//		单位：秒
-//		 */
-//		int userTimeout = 300;
-//		values.put("userTimeout", userTimeout+"");
-//		boolean removeAbandoned = false;
-//		values.put("removeAbandoned", removeAbandoned+"");
-//		if(externaljndiName != null && !externaljndiName.equals(""))
-//			values.put("externaljndiName", externaljndiName);
-//		if(queryfetchsize > 0)
-//			values.put("queryfetchsize", queryfetchsize+"");
-//		PoolManBootstrap.startFromTemplte(values);
+
 	}
 	
 	
@@ -1089,6 +1030,12 @@ public class SQLManager extends PoolManager{
 			values.put("externaljndiName", temConf.getExternaljndiName());
 
 		values.put("queryfetchsize", temConf.getQueryfetchsize());
+		if(temConf.getDbAdaptor() != null){
+			values.put("dbAdaptor",temConf.getDbAdaptor());
+		}
+		if(temConf.getDbtype() != null){
+			values.put("dbtype",temConf.getDbtype());
+		}
 		PoolManBootstrap.startFromTemplte(values);
 	}
 	

@@ -1690,6 +1690,33 @@ public class SQLUtil{
             		 externaljndiName ,showsql , encryptdbinfo      		,fetchsize
             		);
     	}
+
+	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
+								 String readOnly,
+								 String txIsolationLevel,
+								 String validationQuery,
+								 String jndiName,
+								 int initialConnections,
+								 int minimumSize,
+								 int maximumSize,
+								 boolean usepool,
+								 boolean  external,
+								 String externaljndiName        ,boolean showsql		,boolean encryptdbinfo,int fetchsize,String dbtype,String dbAdaptor
+	)
+	{
+		SQLManager.startPool( poolname, driver, jdbcurl, username, password,
+				readOnly,
+				txIsolationLevel,
+				validationQuery,
+				jndiName,
+				initialConnections,
+				minimumSize,
+				maximumSize,
+				usepool,
+				external,
+				externaljndiName ,showsql , encryptdbinfo      		,fetchsize,  dbtype,  dbAdaptor
+		);
+	}
         
         public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
         		String readOnly,

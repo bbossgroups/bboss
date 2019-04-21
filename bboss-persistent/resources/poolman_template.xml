@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <poolman>
-    #if($dbAdaptor && !dbAdaptor.equals(""))
+    #if($dbAdaptor && !$dbAdaptor.equals(""))
     <adaptor dbtype="${driver}">${dbAdaptor}</adaptor>
-    #if($dbtype && !dbtype.equals(""))
+    #if($dbtype && !$dbtype.equals(""))
     <adaptor dbtype="${dbtype}">${dbAdaptor}</adaptor>
     #end
     #end
