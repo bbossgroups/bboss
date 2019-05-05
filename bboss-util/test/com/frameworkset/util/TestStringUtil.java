@@ -77,6 +77,8 @@ public class TestStringUtil {
 		String json = SimpleStringUtil.object2json(dd);
 		dd =  (List<Integer>) StringUtil.json2ObjectWithType(json,new JsonTypeReference<List<Integer>>(){});
 		System.out.println(dd);
+		dd = SimpleStringUtil.json2ListObject(json,Integer.class);
+		System.out.println(dd);
 	}
 	
 	
