@@ -294,7 +294,7 @@ public class ESIndexWrapper {
 	}
 	private static Map<String,String> parserVarinfo(String var){
 //		int idx = var.indexOf(",");
-		int idx = var.indexOf(",");
+		int idx = var.indexOf("=");
 		Map<String,String> varinfo = new HashMap();
 		if(idx > 0) {
 			String[] arr = var.split(",");
@@ -314,7 +314,15 @@ public class ESIndexWrapper {
 
 		}
 		else{
-			varinfo.put("field",var);
+			idx = var.indexOf(",");
+			if(idx > 0){
+				String[] datas = var.split(",");
+				varinfo.put("field", datas[0].trim());
+				varinfo.put("dateformat", datas[1].trim());
+			}
+			else {
+				varinfo.put("field", var);
+			}
 		}
 		return varinfo;
 
