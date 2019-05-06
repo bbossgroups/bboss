@@ -24,19 +24,49 @@ import java.util.List;
  *
  */
 public class TextGrammarParser {
-	public static class GrammarToken
+	private static final  GrammarTokenBuilder<GrammarToken> defaultGrammarTokenBuilder = new GrammarTokenBuilder<GrammarToken>(){
+		public GrammarToken buildGrammarToken(){
+			return new GrammarToken();
+		}
+	};
+	public static interface GrammarTokenBuilder<T extends GrammarTokenInf> {
+		public T buildGrammarToken();
+	}
+
+	public static interface GrammarTokenInf
+	{
+
+		public int getPosition() ;
+		public void setPosition(int position) ;
+		public String getText() ;
+		public void setText(String text) ;
+		public int getType() ;
+		public void setType(int type) ;
+
+
+		public boolean texttoken();
+
+		public boolean varibletoken();
+		public String getDefaultValue() ;
+		public void setDefaultValue(String defaultValue);
+
+		public void after();
+
+
+	}
+	public static class GrammarToken implements GrammarTokenInf
 	{
 		public static final int TextPlain = 0;
 		public static final int VARIABLE = 1;
-		private int position;
-		private String text;
-		private String defaultValue;
+		protected int position;
+		protected String text;
+		protected String defaultValue;
 		/**
 		 * 0 普通text
 		 * 1 变量
 		 */
-		
-		private int type;
+
+		protected int type;
 		public int getPosition() {
 			return position;
 		}
@@ -81,6 +111,10 @@ public class TextGrammarParser {
 		public void setDefaultValue(String defaultValue) {
 			this.defaultValue = defaultValue;
 		}
+
+		public void after(){
+
+		}
 		
 		
 	}
@@ -118,33 +152,37 @@ public class TextGrammarParser {
 		}
 		return tplstart;
 	}
+	public static  List<GrammarToken> parser(String content,char tokenpre,char tokenend){
+		return parser(  content,new char[]{tokenpre} ,  tokenend,  tokenpre,  defaultGrammarTokenBuilder);
+	}
+	public static <T extends GrammarToken> List<T> parser(String content,char tokenpre,char tokenend,GrammarTokenBuilder<T> grammarTokenBuilder){
+		return parser(  content,new char[]{tokenpre} ,  tokenend,  tokenpre,  grammarTokenBuilder);
+	}
 	/**
-	 * 
+	 *
 	 * 计算模板中引用的include模板文件，并将引用文件的内容合并到当前模板中
-	 * include中对应的文件内容引用的地址都需要用<cms:uri link="path"/>来指定，这样才不会有发布相对路径问题	
+	 * include中对应的文件内容引用的地址都需要用<cms:uri link="path"/>来指定，这样才不会有发布相对路径问题
 	 * #inlcude(head.html)
-	 * 
+	 *
 	 * @param content
-	 * @param tokenpre
 	 * @param tokenend
 	 * @return
 	 */
-	public static List<GrammarToken> parser(String content,String tokenpre,char tokenend)
+	public static <T extends GrammarToken> List<T> parser(String content,char[] pre,char tokenend,Object tokenpre,GrammarTokenBuilder<T> grammarTokenBuilder)
 	{
 		StringBuilder builder = new StringBuilder();
 		StringBuilder tplbuilder = new StringBuilder();
-		List<GrammarToken> tokens = new ArrayList<GrammarToken>();
+		List<T> tokens = new ArrayList<T>();
 		int size = content.length();
-		char[] pre = tokenpre.toCharArray();
 		boolean tplstart = false;
 		for(int i = 0; i < size; i ++)
 		{
 			char c = content.charAt(i);
 			if(c == pre[0])
 			{
-//				if(content.charAt(i+1) == 'i' 
-//						&& content.charAt(i+2) == 'n' 
-//						&& content.charAt(i+3) == 'c' 
+//				if(content.charAt(i+1) == 'i'
+//						&& content.charAt(i+2) == 'n'
+//						&& content.charAt(i+3) == 'c'
 //						&& content.charAt(i+4) == 'l'
 //					&& content.charAt(i+5) == 'u'
 //					&& content.charAt(i+6) == 'd'
@@ -162,8 +200,8 @@ public class TextGrammarParser {
 					{
 						tplstart = true;
 					}
-//					i = i+8;	
-					i = i+pre.length - 1;					
+//					i = i+8;
+					i = i+pre.length - 1;
 				}
 				else
 				{
@@ -186,14 +224,15 @@ public class TextGrammarParser {
 					{
 						if(builder.length() > 0)
 						{
-							GrammarToken stringtoken = new GrammarToken();
+							T stringtoken = grammarTokenBuilder.buildGrammarToken();
 							stringtoken.position = tokens.size() ;
 							stringtoken.text = builder.toString();
 							stringtoken.type = GrammarToken.TextPlain;//宏文件路径
 							builder.setLength(0);
+							stringtoken.after();
 							tokens.add(stringtoken);
 						}
-						GrammarToken stringtoken = new GrammarToken();
+						T stringtoken = grammarTokenBuilder.buildGrammarToken();
 						stringtoken.position = tokens.size() ;
 						String txt = tplbuilder.toString();
 						int pos = txt.indexOf(":");
@@ -202,27 +241,28 @@ public class TextGrammarParser {
 							defaultValue = txt.substring(pos+1);
 							txt = txt.substring(0, pos);
 							stringtoken.setDefaultValue(defaultValue);
-						}						
+						}
 						stringtoken.text = txt;
 						stringtoken.type = GrammarToken.VARIABLE;//宏文件路径
 						tplbuilder.setLength(0);
+						stringtoken.after();
 						tokens.add(stringtoken);
 					}
 					else
 					{
 //						builder.append("#include()");
 						builder.append(tokenpre).append(tokenend);
-						
-						
+
+
 					}
 					tplstart = false;
-					
+
 				}
 				else
-				{					
+				{
 					builder.append(c);
 				}
-				
+
 			}
 			else
 			{
@@ -234,7 +274,7 @@ public class TextGrammarParser {
 				{
 					builder.append(c);
 				}
-			}			
+			}
 		}
 		if(tplbuilder.length() > 0)
 		{
@@ -244,15 +284,159 @@ public class TextGrammarParser {
 		tplbuilder = null;
 		if(builder.length() > 0)
 		{
-			GrammarToken stringtoken = new GrammarToken();
+			T stringtoken = grammarTokenBuilder.buildGrammarToken();
 			stringtoken.position = tokens.size() ;
 			stringtoken.text = builder.toString();
 			stringtoken.type = GrammarToken.TextPlain;//宏文件路径
 			builder.setLength(0);
+			stringtoken.after();
 			tokens.add(stringtoken);
 		}
 		builder = null;
 		return tokens;
+
+
+	}
+
+	public static <T extends GrammarToken> List<T> parser(String content,String tokenpre,char tokenend,GrammarTokenBuilder<T> grammarTokenBuilder) {
+		return parser(content, tokenpre.toCharArray(), tokenend, tokenpre, grammarTokenBuilder);
+	}
+	/**
+	 * 
+	 * 计算模板中引用的include模板文件，并将引用文件的内容合并到当前模板中
+	 * include中对应的文件内容引用的地址都需要用<cms:uri link="path"/>来指定，这样才不会有发布相对路径问题	
+	 * #inlcude(head.html)
+	 * 
+	 * @param content
+	 * @param tokenpre
+	 * @param tokenend
+	 * @return
+	 */
+	public static List<GrammarToken> parser(String content,String tokenpre,char tokenend)
+	{
+		return parser(  content,tokenpre.toCharArray() ,  tokenend,  tokenpre,  defaultGrammarTokenBuilder);
+//		StringBuilder builder = new StringBuilder();
+//		StringBuilder tplbuilder = new StringBuilder();
+//		List<GrammarToken> tokens = new ArrayList<GrammarToken>();
+//		int size = content.length();
+//		char[] pre = tokenpre.toCharArray();
+//		boolean tplstart = false;
+//		for(int i = 0; i < size; i ++)
+//		{
+//			char c = content.charAt(i);
+//			if(c == pre[0])
+//			{
+////				if(content.charAt(i+1) == 'i'
+////						&& content.charAt(i+2) == 'n'
+////						&& content.charAt(i+3) == 'c'
+////						&& content.charAt(i+4) == 'l'
+////					&& content.charAt(i+5) == 'u'
+////					&& content.charAt(i+6) == 'd'
+////					&& content.charAt(i+7) == 'e'
+////					&& content.charAt(i+8) == '(')
+//				if(tplstart(c, pre,content,size,i))
+//				{
+//					if(tplstart)	//如果之前已经开始模板前导
+//					{
+////						builder.append("#include(").append(tplbuilder.toString());
+//						builder.append(tokenpre).append(tplbuilder.toString());
+//						tplbuilder.setLength(0);
+//					}
+//					else
+//					{
+//						tplstart = true;
+//					}
+////					i = i+8;
+//					i = i+pre.length - 1;
+//				}
+//				else
+//				{
+//					if(tplstart)
+//					{
+//						tplbuilder.append(c);
+//					}
+//					else
+//					{
+//						builder.append(c);
+//					}
+//				}
+//			}
+//			else if(c == tokenend)
+//			{
+//				if(tplstart)
+//				{
+////					tplbuilder.append(c);
+//					if(tplbuilder.length() > 0)
+//					{
+//						if(builder.length() > 0)
+//						{
+//							GrammarToken stringtoken = new GrammarToken();
+//							stringtoken.position = tokens.size() ;
+//							stringtoken.text = builder.toString();
+//							stringtoken.type = GrammarToken.TextPlain;//宏文件路径
+//							builder.setLength(0);
+//							tokens.add(stringtoken);
+//						}
+//						GrammarToken stringtoken = new GrammarToken();
+//						stringtoken.position = tokens.size() ;
+//						String txt = tplbuilder.toString();
+//						int pos = txt.indexOf(":");
+//						String defaultValue = null;
+//						if(pos > 0 ){
+//							defaultValue = txt.substring(pos+1);
+//							txt = txt.substring(0, pos);
+//							stringtoken.setDefaultValue(defaultValue);
+//						}
+//						stringtoken.text = txt;
+//						stringtoken.type = GrammarToken.VARIABLE;//宏文件路径
+//						tplbuilder.setLength(0);
+//						tokens.add(stringtoken);
+//					}
+//					else
+//					{
+////						builder.append("#include()");
+//						builder.append(tokenpre).append(tokenend);
+//
+//
+//					}
+//					tplstart = false;
+//
+//				}
+//				else
+//				{
+//					builder.append(c);
+//				}
+//
+//			}
+//			else
+//			{
+//				if(tplstart)
+//				{
+//					tplbuilder.append(c);
+//				}
+//				else
+//				{
+//					builder.append(c);
+//				}
+//			}
+//		}
+//		if(tplbuilder.length() > 0)
+//		{
+////			builder.append("#include(").append(tplbuilder.toString());
+//			builder.append(tokenpre).append(tplbuilder.toString());
+//		}
+//		tplbuilder = null;
+//		if(builder.length() > 0)
+//		{
+//			GrammarToken stringtoken = new GrammarToken();
+//			stringtoken.position = tokens.size() ;
+//			stringtoken.text = builder.toString();
+//			stringtoken.type = GrammarToken.TextPlain;//宏文件路径
+//			builder.setLength(0);
+//			tokens.add(stringtoken);
+//		}
+//		builder = null;
+//		return tokens;
 			
 		
 	}

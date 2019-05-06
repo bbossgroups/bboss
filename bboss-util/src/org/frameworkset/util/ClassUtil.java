@@ -690,7 +690,7 @@ public class ClassUtil
 	}
 	public static class ClassInfo
 	{
-
+		private ESIndexWrapper esIndexWrapper;
 
 		/**
 		 * 持久层主键
@@ -831,6 +831,9 @@ public class ClassUtil
 			}
 	    	return null;
 	    }
+	    public ESIndexWrapper getEsIndexWrapper(){
+	    	return esIndexWrapper;
+		}
 		public PropertieDescription getPkProperty() {
 			return pkProperty;
 		}
@@ -886,6 +889,7 @@ public class ClassUtil
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
 			}
+
 	    	this.init();
 	    }
 
@@ -969,7 +973,10 @@ public class ClassUtil
 
 	    private void init()
 	    {
-
+			ESIndex esIndex = AnnotationUtils.findAnnotation(clazz,ESIndex.class);
+			if(esIndex != null){
+				this.esIndexWrapper = new ESIndexWrapper(esIndex);
+			}
 	    	this.primary = ValueObjectUtil.isPrimaryType(clazz);
 	    	this.map = ValueObjectUtil.isMapType(clazz);
 			this.list = ValueObjectUtil.isListType(clazz);
