@@ -970,7 +970,9 @@ public class ClassUtil
 
 
 		}
-
+		public String toString(){
+	    	return this.clazz.getCanonicalName();
+		}
 	    private void init()
 	    {
 			ESIndex esIndex = AnnotationUtils.findAnnotation(clazz,ESIndex.class);
