@@ -38,6 +38,8 @@ import java.util.Map;
 public class ESIndexWrapper {
 	public static interface GetVariableValue{
 		public Object getValue(String property);
+		public BatchContext getBatchContext();
+		public void setBatchContext(BatchContext batchContext);
 	}
 
 	public NameInfo getNameInfo() {
@@ -80,6 +82,16 @@ public class ESIndexWrapper {
 		 */
 		protected String name;
 
+		public String getName() {
+			return name;
+		}
+
+		public boolean isOnlyCurrentDateTimestamp() {
+			return onlyCurrentDateTimestamp;
+		}
+
+		protected boolean onlyCurrentDateTimestamp;
+
 		private List<NameGrammarToken> tokens;
 		private void buildName(Writer writer,GetVariableValue getVariableValue) throws IOException {
 			if(name != null){
@@ -89,10 +101,21 @@ public class ESIndexWrapper {
 			if(tokens == null || tokens.size() == 0){
 				return;
 			}
+			BatchContext batchContext = getVariableValue.getBatchContext();
+			if(batchContext != null ){
+				if(batchContext.getIndexName() != null){
+					writer.write(batchContext.getIndexName());
+					return;
+				}
+			}
 			NameGrammarToken nameGrammarToken = null;
+			StringBuilder temp = this.onlyCurrentDateTimestamp && batchContext != null && batchContext.getIndexName() == null?new StringBuilder():null;
 			for(int i = 0; i < tokens.size(); i ++){
 				nameGrammarToken = tokens.get(i);
 				if(!nameGrammarToken.varibletoken()) {
+					if(temp != null){
+						temp.append(nameGrammarToken.getText());
+					}
 					writer.write(nameGrammarToken.getText());
 				}
 				else{
@@ -122,10 +145,17 @@ public class ESIndexWrapper {
 					else{ //取当前时间作为索引名称
 						DateFormat dateFormat = DataFormatUtil.getSimpleDateFormat(nameGrammarToken.dateformat);
 						Date date = new Date();
-						writer.write(dateFormat.format(date));
+						String d = dateFormat.format(date);
+						writer.write(d);
+						if(temp != null){
+							temp.append(d);
+						}
 
 					}
 				}
+			}
+			if(temp != null){
+				batchContext.setIndexName(temp.toString());
 			}
 		}
 
@@ -138,10 +168,21 @@ public class ESIndexWrapper {
 			if(tokens == null || tokens.size() == 0){
 				return;
 			}
+			BatchContext batchContext = getVariableValue.getBatchContext();
+			if(batchContext != null ){
+				if(batchContext.getIndexName() != null){
+					builder.append(batchContext.getIndexName());
+					return;
+				}
+			}
 			NameGrammarToken nameGrammarToken = null;
+			StringBuilder temp = this.onlyCurrentDateTimestamp && batchContext != null && batchContext.getIndexName() == null?new StringBuilder():null;
 			for(int i = 0; i < tokens.size(); i ++){
 				nameGrammarToken = tokens.get(i);
 				if(!nameGrammarToken.varibletoken()) {
+					if(temp != null){
+						temp.append(nameGrammarToken.getText());
+					}
 					builder.append(nameGrammarToken.getText());
 				}
 				else{
@@ -171,10 +212,17 @@ public class ESIndexWrapper {
 					else{ //取当前时间作为索引名称
 						DateFormat dateFormat = DataFormatUtil.getSimpleDateFormat(nameGrammarToken.dateformat);
 						Date date = new Date();
-						builder.append(dateFormat.format(date));
+						String d = dateFormat.format(date);
+						builder.append(d);
+						if(temp != null){
+							temp.append(d);
+						}
 
 					}
 				}
+			}
+			if(temp != null){
+				batchContext.setIndexName(temp.toString());
 			}
 		}
 
@@ -190,6 +238,12 @@ public class ESIndexWrapper {
 			}
 			else{
 				return name;
+			}
+			BatchContext batchContext = getVariableValue.getBatchContext();
+			if(batchContext != null ){
+				if(batchContext.getIndexName() != null){
+					return batchContext.getIndexName();
+				}
 			}
 			StringBuilder builder = new StringBuilder();
 			buildName(builder,  getVariableValue);
@@ -217,6 +271,13 @@ public class ESIndexWrapper {
 			}
 			if(tokens == null || tokens.size() == 0){
 				return;
+			}
+			BatchContext batchContext = getVariableValue.getBatchContext();
+			if(batchContext != null ){
+				if(batchContext.getIndexType() != null){
+					writer.write(batchContext.getIndexType());
+					return  ;
+				}
 			}
 			NameGrammarToken nameGrammarToken = null;
 			for(int i = 0; i < tokens.size(); i ++){
@@ -252,6 +313,13 @@ public class ESIndexWrapper {
 			if(tokens == null || tokens.size() == 0){
 				return;
 			}
+			BatchContext batchContext = getVariableValue.getBatchContext();
+			if(batchContext != null ){
+				if(batchContext.getIndexType() != null){
+					builder.append(batchContext.getIndexType());
+					return  ;
+				}
+			}
 			NameGrammarToken nameGrammarToken = null;
 			for(int i = 0; i < tokens.size(); i ++){
 				nameGrammarToken = tokens.get(i);
@@ -285,6 +353,12 @@ public class ESIndexWrapper {
 			}
 			else{
 				return type;
+			}
+			BatchContext batchContext = getVariableValue.getBatchContext();
+			if(batchContext != null ){
+				if(batchContext.getIndexType() != null){
+					return  (batchContext.getIndexType());
+				}
 			}
 			StringBuilder builder = new StringBuilder();
 			buildType(builder,getVariableValue);
@@ -390,29 +464,46 @@ public class ESIndexWrapper {
 //		String name = esIndex.name();
 		List<NameGrammarToken> tokens = TextGrammarParser.parser(index, '{', '}',nameGrammarTokenBuilder);
 		boolean varibled = false;
+		int varcount = 0;
+		NameGrammarToken one = null;
 		for(int i = 0; tokens != null && i < tokens.size(); i ++){
-			TextGrammarParser.GrammarToken token = tokens.get(i);
+			NameGrammarToken token = tokens.get(i);
 			if(token.varibletoken()){
 				varibled = true;
-				break;
+				varcount ++;
+				if(one == null){
+					one = token;
+				}
+
+
 			}
 		}
 		if(varibled){
 			nameInfo.tokens = tokens;
+			if(varcount == 1){
+				if(one.getFieldName() == null ){//only current date timestamp
+					nameInfo.onlyCurrentDateTimestamp = true;
+				}
+			}
 		}
 		else{
 			nameInfo.name = index;
 		}
 		if (type != null) {
+			varcount = 0;
+			one = null;
 			typeInfo = new TypeInfo();
 //			String type = esIndex.type();
 			tokens = TextGrammarParser.parser(type, '{', '}', nameGrammarTokenBuilder);
 			varibled = false;
 			for (int i = 0; tokens != null && i < tokens.size(); i++) {
-				TextGrammarParser.GrammarToken token = tokens.get(i);
+				NameGrammarToken token = tokens.get(i);
 				if (token.varibletoken()) {
 					varibled = true;
-					break;
+					varcount ++;
+					if(one == null){
+						one = token;
+					}
 				}
 			}
 			if (varibled) {
