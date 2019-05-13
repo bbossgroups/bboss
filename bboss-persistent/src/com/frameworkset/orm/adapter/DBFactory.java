@@ -116,7 +116,8 @@ public class DBFactory
         adapters.put("com.ibm.db2.jcc.DB2Driver", DBDerby.class);
         adapters.put("org.apache.derby.jdbc.EmbeddedDriver", DBDerby.class);
         adapters.put("org.apache.derby.jdbc.ClientDriver", DBDerby.class);
-        
+		adapters.put("dm.jdbc.driver.DmDriver", DMAdaptor.class);
+
 
 
         // add some short names to be used when drivers are not used
@@ -149,7 +150,9 @@ public class DBFactory
         
         adapters.put("org.apache.hive.jdbc.HiveDriver", DBHive.class);
     	adapters.put(DBHive, DBHive.class);
-    }
+		adapters.put("dm", DMAdaptor.class);
+
+	}
 
     /**
      * Creates a new instance of the Torque database adapter associated
