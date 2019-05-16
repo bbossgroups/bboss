@@ -5,8 +5,13 @@ sourceSets {
             srcDirs 'src-asm'
             srcDirs 'src-charset'
         }
-        
-       
+        resources{
+            srcDir 'resources'
+            srcDir 'src' exclude '**/*.java'
+            srcDir 'src-asm'  exclude '**/*.java'
+            srcDir 'src-charset'  exclude '**/*.java'
+        }
+
 
     }
    
@@ -15,7 +20,7 @@ sourceSets {
             srcDir 'test'
         }
         resources{
-        	srcDir 'resources'
+        	srcDir 'resources-test'
         }
          
     }
