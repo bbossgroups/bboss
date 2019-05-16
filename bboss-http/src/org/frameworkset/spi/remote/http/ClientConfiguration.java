@@ -127,6 +127,9 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 		// TODO Auto-generated constructor stub
 	}
 
+	public String getBeanName(){
+		return this.beanName;
+	}
 	private static void loadClientConfiguration() {
 		if (context == null) {
 			context = DefaultApplicationContext.getApplicationContext("conf/httpclient.xml");
@@ -209,6 +212,7 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 				clientConfiguration.setTimeoutSocket(40000);
 				clientConfiguration.setConnectionRequestTimeout(40000);
 				clientConfiguration.setRetryTime(-1);
+				clientConfiguration.setRetryInterval(-1);
 				clientConfiguration.setMaxLineLength(Integer.MAX_VALUE);
 				clientConfiguration.setMaxHeaderCount(Integer.MAX_VALUE);
 				clientConfiguration.setMaxTotal(500);
