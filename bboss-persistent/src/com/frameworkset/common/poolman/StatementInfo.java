@@ -255,7 +255,7 @@ public class StatementInfo {
 		if(isquery)
 		{
 			int fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
-			if(fetchsize > 0)
+			if(fetchsize != 0)
 				pstmt.setFetchSize(fetchsize);
 		}
 		this.statements.add(pstmt);
@@ -278,7 +278,7 @@ public class StatementInfo {
 		if(isquery)
 		{
 			int fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
-			if(fetchsize > 0)
+			if(fetchsize != 0)
 				pstmt.setFetchSize(fetchsize);
 		}
 		this.statements.add(pstmt);
