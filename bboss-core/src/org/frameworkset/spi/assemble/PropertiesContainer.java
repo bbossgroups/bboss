@@ -374,7 +374,59 @@ public class PropertiesContainer implements GetProperties{
     		return null;
     	return allProperties.getProperty(property);
     }
-	
+
+	public boolean getBooleanProperty(String property,boolean defaultValue)
+	{
+		if(allProperties == null)
+			return defaultValue;
+		String value = allProperties.getProperty(property);
+		if(value == null)
+			return defaultValue;
+		if(value.equals("true")){
+			return true;
+		}
+		return false;
+	}
+
+
+	public int getIntProperty(String property,int defaultValue) {
+		if(allProperties == null)
+			return defaultValue;
+		String value = allProperties.getProperty(property);
+		if(value == null)
+			return defaultValue;
+		try {
+			return Integer.parseInt(value);
+		}
+		catch (Exception e){
+			throw new java.lang.IllegalArgumentException(new StringBuilder()
+					.append("getIntProperty failed:").append(property)
+					.append("=").append(value).toString());
+		}
+
+	}
+
+
+	public long getLongProperty(String property,int defaultValue) {
+		if(allProperties == null)
+			return defaultValue;
+		String value = allProperties.getProperty(property);
+		if(value == null)
+			return defaultValue;
+		try {
+			return Long.parseLong(value);
+		}
+		catch (Exception e){
+			throw new java.lang.IllegalArgumentException(new StringBuilder()
+					.append("getLongProperty failed:").append(property)
+					.append("=").append(value).toString());
+		}
+
+	}
+
+
+
+
 	public String getPropertyFromSelf2ndSons(String property)
     {
     	String value = null;
