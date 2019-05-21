@@ -127,7 +127,6 @@ configure(allprojects) { project ->
 
 
 	task copyJarFiles(type: Sync,dependsOn:'jar'){
-		from fileTree(dir: 'lib', include: '**/*.jar')
 		from configurations.compile
 		from jar.outputs
 		exclude { details -> details.file.name.startsWith('bboss-rt')  }
@@ -136,10 +135,10 @@ configure(allprojects) { project ->
 	}
 
 	task copyRTJarFiles(type: Copy,dependsOn:'copyJarFiles'){
-		from configurations.runtime - configurations.compile
-		into 'build/dist'
+		from  configurations.compile
 		include { details -> details.file.name.startsWith('bboss-rt')  }
-		rename ("bboss-rt-${bboss_version}.jar", "${project.name}-boot-${bboss_version}.jar")
+		into 'build/dist'
+		rename ("bboss-rt-${bboss_version}.jar", "${project.name}-${bboss_version}.jar")
 	}
 	task copyToolFiles(type: Copy ,dependsOn:'copyRTJarFiles')  {
 		from ('runfiles')
@@ -165,7 +164,8 @@ configure(allprojects) { project ->
 	task releaseVersion(type: Zip,dependsOn:['copyToolFiles','copyResourcesfiles']) {
 
 		//appendix = 'wrapper'
-		classifier = 'released'
+		//classifier = 'released'
+		archiveClassifier = 'released'
 		from 'build/dist/'
 
 	}
