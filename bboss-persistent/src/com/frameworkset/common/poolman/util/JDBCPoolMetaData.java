@@ -17,7 +17,6 @@ package com.frameworkset.common.poolman.util;
 
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.util.SimpleStringUtil;
-import com.frameworkset.util.StringUtil;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -200,7 +199,7 @@ public class JDBCPoolMetaData implements Serializable{
     /* PHYSICAL CONNECTION METHODS */
 	public static final String[] driver_names = new String[]{"driverClass","driverClassName","driver","driver-class","driverName"};
     public String getDriver() {
-    	if(!StringUtil.isEmpty(this.driver))
+    	if(!SimpleStringUtil.isEmpty(this.driver))
     	{
     		return this.driver;
     	}
@@ -210,7 +209,7 @@ public class JDBCPoolMetaData implements Serializable{
     		for(int i = 0; i < driver_names.length; i ++)
     		{
     			dr = (String)this.datasourceParameters.get(driver_names[i]);
-    			if(!StringUtil.isEmpty(dr))
+    			if(!SimpleStringUtil.isEmpty(dr))
     			{
     				this.driver = dr;
     				break;
@@ -964,7 +963,7 @@ public class JDBCPoolMetaData implements Serializable{
 	
 	public void initDatasourceParameters()
 	{
-		if(!StringUtil.isEmpty(this.datasourceFile ))
+		if(!SimpleStringUtil.isEmpty(this.datasourceFile ))
 		{
 			this.datasourceParameters = DatasourceUtil.getDataSourceParameters(this.datasourceFile);
 		}
@@ -1004,7 +1003,67 @@ public class JDBCPoolMetaData implements Serializable{
 
 	public String toString(){
 		try {
-			return SimpleStringUtil.object2json(this);
+			StringBuilder data = new StringBuilder();
+			data .append("{\"url\":\"").append(this.getURL()).append("\",")
+					.append("\"driverName\":").append(driverName)
+					.append(",\"userName\":\"").append(username)
+					.append("\",\"dbname\":\"").append(getDbname()).append("\",")
+					.append("\"usepool\":").append(usepool).append(",\"driver\":\"")
+					.append(driver).append("\",")
+					.append("\"password\":\"").append(password)
+					.append("\",\"jndiname\":\"").append(this.getJNDIName()).append("\",")
+					.append("\"dbtype\":").append(dbtype).append(",\"loadmetadata\":\"")
+					.append(loadmetadata).append("\",\"minimumSize\":")
+					.append(minimumSize).append(",")
+					.append("\"maximumSize\":").append(maximumSize)
+					.append(",\"maximumSoft\":").append(this.isMaximumSoft()) .append(",")
+					.append("\"datasourceFile\":").append(datasourceFile)
+					.append(",\"testWhileidle\":").append(testWhileidle).append(",")
+					.append("\"removeAbandoned\":\"").append(removeAbandoned)
+					.append("\",\"logAbandoned\":").append(logAbandoned)
+					.append(",\"readOnly\":").append(readOnly).append(",")
+					.append("\"enablejta\":").append(enablejta)
+
+
+
+					.append(",\"initialConnections\":").append(this.getInitialConnections())
+
+					.append(",\"seqfunction\":").append(seqfunction).append(",")
+					.append("\"databaseProductName\":").append(databaseProductName)
+				.append(",\"databaseProductVersion\":")
+					.append(databaseProductVersion).append(",")
+					.append("\"driverVersion\":").append(driverVersion)
+					.append(",\"datasourceParameters\":").append(datasourceParameters)
+
+					.append(",\"validationQuery\":\"").append(validationQuery)
+					.append("\",\"queryfetchsize\":").append(queryfetchsize)
+					.append(",\"external\":").append(external).append(",")
+					.append("\"showsql\":").append(showsql)
+					.append(",\"externaljndiName\":").append(externaljndiName)
+					.append(",\"removeOnExceptions\":").append(removeOnExceptions).append(",")
+					.append("\"maxOpenPreparedStatements\":").append(maxOpenPreparedStatements)
+					.append(",\"userTimeout\":").append(userTimeout)
+					.append(",\"connectionTimeout\":").append(this.getConnectionTimeout())
+					.append(",\"maxWait\":\"").append(maxWait).append("\"" )
+					.append(",\"transactionTimeout\":").append(transactionTimeout)
+					.append(",\"skimmerFrequency\":").append(skimmerFrequency).append("," )
+					.append("\"shrinkBy\":").append(shrinkBy).append("," )
+
+					.append("\"interceptor\":\"").append(interceptor).append("\",")
+					.append("\"idGenerator\":").append(idGenerator)
+					.append(",\"jndiclass\":").append(jndiclass)
+					.append(",\"jndiuser\":").append(jndiuser).append(",")
+					.append("\"jndipassword\":").append(jndipassword)
+					.append(",\"encryptdbinfo\":").append(encryptdbinfo).append(",\"jndiurl\":")
+					.append(jndiurl).append(",\"keygenerate\":\"")
+					.append(keygenerate).append("\",\"autoprimarykey\":").append(autoprimarykey)
+
+					.append(",\"robotquery\":").append(robotquery)
+					.append(",\"poolPreparedStatements\":").append(this.isPoolPreparedStatements()).append(",")
+					.append("\"return_GENERATED_KEYS\":").append(this.getRETURN_GENERATED_KEYS())
+					.append(",\"txIsolationLevel\":").append(this.getTxIsolationLevel()).append("}");
+			return data.toString();
+//			return SimpleStringUtil.object2json(this);
 		}catch (Exception e){
 			e.printStackTrace();
 			return "";

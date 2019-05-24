@@ -100,6 +100,7 @@ public class DBFactory
         adapters.put("com.mysql.jdbc.Driver", DBMM.class);
 		adapters.put("com.mysql.cj.jdbc.Driver", DBMM.class);
 		adapters.put("org.elasticsearch.xpack.sql.jdbc.jdbc.JdbcDriver", DBElasticsearch.class);
+		adapters.put("org.elasticsearch.xpack.sql.jdbc.EsDriver", DBElasticsearch.class);
 		adapters.put("elasticsearch", DBElasticsearch.class);
         adapters.put("org.mariadb.jdbc.Driver", DBMariaDB.class);
         adapters.put("oracle.jdbc.driver.OracleDriver", DBOracle.class);
@@ -171,7 +172,13 @@ public class DBFactory
             driver = "";
 
         Class adapterClass =  adapters.get(driver);
+		if(adapterClass == null) {
 
+			adapterClass = adapters.get("");
+			if(log.isWarnEnabled()){
+				log.warn("Unknown JDBC driver: {}: Adapter DBNonewill be used or define one and resitry it to bboss.",driver);
+			}
+		}
         if (adapterClass != null)
         {
             try
