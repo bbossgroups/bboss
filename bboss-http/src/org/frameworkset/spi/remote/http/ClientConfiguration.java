@@ -26,6 +26,7 @@ import org.apache.http.ssl.SSLContexts;
 import org.apache.http.ssl.TrustStrategy;
 import org.frameworkset.spi.*;
 import org.frameworkset.spi.assemble.GetProperties;
+import org.frameworkset.spi.assemble.PropertiesContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -319,11 +320,51 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 		else
 			return org.apache.http.conn.ssl.SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
 	}
+	public static void startHttpPools(String configFile){
+		if(configFile == null || configFile.equals(""))
+		{
+			if(logger.isWarnEnabled()) {
+				StringBuilder message = new StringBuilder();
+				message.append("Ignore start HttpPools from configfile[").append(configFile).append("]: configFile path is empty!");
+				logger.warn(message.toString());
+			}
+			return;
+		}
+		PropertiesContainer propertiesContainer = new PropertiesContainer();
+		propertiesContainer.addConfigPropertiesFile(configFile);
+		//http.poolNames = scedule,elastisearch
+		String poolNames = propertiesContainer.getProperty("http.poolNames");
+		if(poolNames == null){
+			return ;
+		}
+		else{
+			String[] poolNames_ = poolNames.split(",");
+			for(String poolName:poolNames_){
+				poolName = poolName.trim();
+				if(poolName.equals("")){
+					poolName = "default";
+				}
+				try {
+					makeDefualtClientConfiguration(poolName, propertiesContainer);
+				}
+				catch (Exception e){
+					if(logger.isErrorEnabled()) {
+						StringBuilder message = new StringBuilder();
+						message.append("Start HttpPools from configfile[").append(configFile).append("] failed:");
+						logger.error(message.toString(), e);
+					}
+				}
+			}
+		}
+	}
 
-	private static ClientConfiguration makeDefualtClientConfiguration(String name, GetProperties context) throws Exception {
+	static ClientConfiguration makeDefualtClientConfiguration(String name, GetProperties context) throws Exception {
 
 		ClientConfiguration clientConfiguration = clientConfigs.get(name);
 		if (clientConfiguration != null) {
+			if(logger.isInfoEnabled()) {
+				logger.info("Ignore MakeDefualtClientConfiguration and return existed Http Pool[{}].", name);
+			}
 			return clientConfiguration;
 		}
 		synchronized (ClientConfiguration.class) {

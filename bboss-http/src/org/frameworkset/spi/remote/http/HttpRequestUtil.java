@@ -3,6 +3,7 @@
  */
 package org.frameworkset.spi.remote.http;
 
+import com.frameworkset.util.SimpleStringUtil;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -53,7 +54,9 @@ public class HttpRequestUtil {
 //	private final static int TIMEOUT_SOCKET = 20000;
 //	private final static int RETRY_TIME = 3;
     private static long retryInterval = -1;
-
+    public static void startHttpPools(String configFile){
+        ClientConfiguration.startHttpPools(configFile);
+    }
     private static HttpClient getHttpClient() throws Exception {
         return ClientConfiguration.getDefaultHttpclient();
     }
@@ -1440,11 +1443,21 @@ public class HttpRequestUtil {
         return  sendBody(   poolname, requestBody,   url,   null,ContentType.APPLICATION_JSON);
     }
 
+    public static String sendJsonBody(String poolname,Object requestBody, String url) throws Exception {
+
+        return  sendBody(   poolname, SimpleStringUtil.object2json(requestBody),   url,   null,ContentType.APPLICATION_JSON);
+    }
+
     public static String sendStringBody(String poolname,String requestBody, String url) throws Exception {
         return  sendBody(  poolname,  requestBody,   url,   null,ContentType.create(
                 "text/plain", Consts.UTF_8));
     }
 
+
+    public static String sendJsonBody(String poolname, Object requestBody, String url, Map<String, String> headers) throws Exception {
+
+        return  sendBody(  poolname, SimpleStringUtil.object2json(requestBody),   url,   headers,ContentType.APPLICATION_JSON);
+    }
     public static String sendJsonBody(String poolname, String requestBody, String url, Map<String, String> headers) throws Exception {
 
         return  sendBody(  poolname, requestBody,   url,   headers,ContentType.APPLICATION_JSON);
@@ -1457,6 +1470,11 @@ public class HttpRequestUtil {
     public static String sendJsonBody(String requestBody, String url) throws Exception {
 
         return  sendBody( "default", requestBody,   url,   null,ContentType.APPLICATION_JSON);
+    }
+
+    public static String sendJsonBody(Object requestBody, String url) throws Exception {
+
+        return  sendBody( "default", SimpleStringUtil.object2json(requestBody),   url,   null,ContentType.APPLICATION_JSON);
     }
 
     public static String sendStringBody(String requestBody, String url) throws Exception {
