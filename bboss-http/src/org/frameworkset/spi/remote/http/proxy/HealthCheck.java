@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * es节点健康检查
+ * HttpServer节点健康检查
  */
 public class HealthCheck implements Runnable{
 	private List<HttpAddress> esAddresses;
@@ -87,7 +87,7 @@ public class HealthCheck implements Runnable{
 					
 					 } catch (Exception e) {
 						 if(logger.isInfoEnabled())
-							 logger.info(new StringBuilder().append("Http server[").append(address.toString()).append("] is down.").toString());
+							 logger.info(new StringBuilder().append("Down HttpServer health check use [").append(address.getHealthPath()).append("] failed:").append(" Http server[").append(address.toString()).append("] is down.").toString());
 						 address.onlySetStatus(1);
 					 }
 			 		 if(this.stop)

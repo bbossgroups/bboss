@@ -72,7 +72,20 @@ public class SimpleStringUtil  {
 	// 空串常量
 	public static final String BLANK = "";
 	private static JacksonObjectMapperWrapper objectMapper = null;
+	public static String getPath(String contextPath, String path) {
 
+		StringBuilder builder = new StringBuilder();
+
+		builder.append(contextPath);
+		if(contextPath.endsWith("/") || path.startsWith("/")){
+			builder.append(path);
+		}
+		else{
+			builder.append("/").append(path);
+		}
+		return builder.toString();
+
+	}
 	private static void initJacksonObjectMapperWrapper(){
 		if(objectMapper == null) {
 			synchronized (SimpleStringUtil.class) {

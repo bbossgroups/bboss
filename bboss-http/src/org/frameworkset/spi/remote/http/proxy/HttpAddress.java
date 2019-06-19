@@ -32,7 +32,9 @@ public class HttpAddress {
 			address = "http://" + address;
 		}
 		this.address = address;
-		this.healthPath = this.getPath(address,healthPath);
+		if(healthPath != null) {
+			this.healthPath = this.getPath(address, healthPath.trim());
+		}
 	}
 	private String getPath(String host,String path){
 		String url = path.equals("") || path.startsWith("/")?

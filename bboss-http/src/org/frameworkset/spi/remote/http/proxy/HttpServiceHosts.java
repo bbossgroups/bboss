@@ -85,7 +85,7 @@ public class HttpServiceHosts {
 			}
 			String[] hostNames = hosts.split(",");
 			for (String host : hostNames) {
-				HttpAddress esAddress = new HttpAddress(host.trim());
+				HttpAddress esAddress = new HttpAddress(host.trim(),health);
 				addressList.add(esAddress);
 				addressMap.put(esAddress.getAddress(), esAddress);
 			}

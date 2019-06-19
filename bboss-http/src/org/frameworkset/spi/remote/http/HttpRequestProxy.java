@@ -148,8 +148,8 @@ public class HttpRequestProxy {
                     httpAddress = config.getHttpServiceHosts().getHttpAddress();
 
                     url = SimpleStringUtil.getPath(httpAddress.getAddress(), endpoint);
-                    if(logger.isInfoEnabled()){
-                        logger.info("Get call {}",url);
+                    if(logger.isTraceEnabled()){
+                        logger.trace("Get call {}",url);
                     }
                     httpClient = HttpRequestUtil.getHttpClient(config);
                     httpGet = HttpRequestUtil.getHttpGet(config, url, cookie, userAgent, headers);
@@ -246,8 +246,8 @@ public class HttpRequestProxy {
         }
         else{
             try {
-                if(logger.isInfoEnabled()){
-                    logger.info("Get call {}",url);
+                if(logger.isTraceEnabled()){
+                    logger.trace("Get call {}",url);
                 }
                 httpClient = HttpRequestUtil.getHttpClient(config);
                 httpGet = HttpRequestUtil.getHttpGet(config, url, cookie, userAgent, headers);
@@ -344,8 +344,8 @@ public class HttpRequestProxy {
                     httpAddress = config.getHttpServiceHosts().getHttpAddress();
 
                     url = SimpleStringUtil.getPath(httpAddress.getAddress(), endpoint);
-                    if(logger.isInfoEnabled()){
-                        logger.info("Head call {}",url);
+                    if(logger.isTraceEnabled()){
+                        logger.trace("Head call {}",url);
                     }
                     httpClient = HttpRequestUtil.getHttpClient(config);
                     httpHead = HttpRequestUtil.getHttpHead(config, url, cookie, userAgent, headers);
@@ -454,8 +454,8 @@ public class HttpRequestProxy {
         else{
             try {
 
-                if(logger.isInfoEnabled()){
-                    logger.info("Head call {}",url);
+                if(logger.isTraceEnabled()){
+                    logger.trace("Head call {}",url);
                 }
                 httpClient = HttpRequestUtil.getHttpClient(config);
                 httpHead = HttpRequestUtil.getHttpHead(config, url, cookie, userAgent, headers);
@@ -735,8 +735,8 @@ public class HttpRequestProxy {
                     httpAddress = config.getHttpServiceHosts().getHttpAddress();
 
                     url = SimpleStringUtil.getPath(httpAddress.getAddress(), endpoint);
-                    if(logger.isInfoEnabled()){
-                        logger.info("Post call {}",url);
+                    if(logger.isTraceEnabled()){
+                        logger.trace("Post call {}",url);
                     }
                     httpClient = HttpRequestUtil.getHttpClient(config);
                     httpPost = HttpRequestUtil.getHttpPost(config, url, cookie, userAgent, headers);
@@ -845,8 +845,8 @@ public class HttpRequestProxy {
         else{
             try {
 
-                if(logger.isInfoEnabled()){
-                    logger.info("Post call {}",url);
+                if(logger.isTraceEnabled()){
+                    logger.trace("Post call {}",url);
                 }
                 httpClient = HttpRequestUtil.getHttpClient(config);
                 httpPost = HttpRequestUtil.getHttpPost(config, url, cookie, userAgent, headers);
@@ -1080,8 +1080,8 @@ public class HttpRequestProxy {
                     httpAddress = config.getHttpServiceHosts().getHttpAddress();
 
                     url = SimpleStringUtil.getPath(httpAddress.getAddress(), endpoint);
-                    if(logger.isInfoEnabled()){
-                        logger.info("Put call {}",url);
+                    if(logger.isTraceEnabled()){
+                        logger.trace("Put call {}",url);
                     }
                     httpClient = HttpRequestUtil.getHttpClient(config);
                     httpPut = HttpRequestUtil.getHttpPut(config, url, cookie, userAgent, headers);
@@ -1190,8 +1190,8 @@ public class HttpRequestProxy {
         else
         {
             try {
-                if(logger.isInfoEnabled()){
-                    logger.info("Put call {}",url);
+                if(logger.isTraceEnabled()){
+                    logger.trace("Put call {}",url);
                 }
                 httpClient = HttpRequestUtil.getHttpClient(config);
                 httpPut = HttpRequestUtil.getHttpPut(config, url, cookie, userAgent, headers);
@@ -1445,8 +1445,8 @@ public class HttpRequestProxy {
                     httpAddress = config.getHttpServiceHosts().getHttpAddress();
 
                     url = SimpleStringUtil.getPath(httpAddress.getAddress(), endpoint);
-                    if(logger.isInfoEnabled()){
-                        logger.info("Delete call {}",url);
+                    if(logger.isTraceEnabled()){
+                        logger.trace("Delete call {}",url);
                     }
                     httpClient = HttpRequestUtil.getHttpClient(config);
                     HttpParams httpParams = null;
@@ -1567,8 +1567,8 @@ public class HttpRequestProxy {
         }
         else{
             try {
-                if(logger.isInfoEnabled()){
-                    logger.info("Delete call {}",url);
+                if(logger.isTraceEnabled()){
+                    logger.trace("Delete call {}",url);
                 }
                 httpClient = HttpRequestUtil.getHttpClient(config);
                 HttpParams httpParams = null;
@@ -1718,8 +1718,8 @@ public class HttpRequestProxy {
                     httpAddress = config.getHttpServiceHosts().getHttpAddress();
 
                     url = SimpleStringUtil.getPath(httpAddress.getAddress(), endpoint);
-                    if(logger.isInfoEnabled()){
-                        logger.info("sendBody call {}",url);
+                    if(logger.isTraceEnabled()){
+                        logger.trace("sendBody call {}",url);
                     }
                     httpClient = HttpRequestUtil.getHttpClient(config);
                     httpPost = HttpRequestUtil.getHttpPost(config, url, "", "", headers);
@@ -1822,8 +1822,8 @@ public class HttpRequestProxy {
         }
         else{
             try {
-                if(logger.isInfoEnabled()){
-                    logger.info("sendBody call {}",url);
+                if(logger.isTraceEnabled()){
+                    logger.trace("sendBody call {}",url);
                 }
                 httpClient = HttpRequestUtil.getHttpClient(config);
                 httpPost = HttpRequestUtil.getHttpPost(config, url, "", "", headers);
@@ -1939,8 +1939,8 @@ public class HttpRequestProxy {
                     httpAddress = config.getHttpServiceHosts().getHttpAddress();
 
                     url = SimpleStringUtil.getPath(httpAddress.getAddress(),endpoint);
-                    if(logger.isInfoEnabled()){
-                        logger.info("sendBody call {}",url);
+                    if(logger.isTraceEnabled()){
+                        logger.trace("sendBody call {}",url);
                     }
                     httpClient = HttpRequestUtil.getHttpClient(config);
                     httpPost = (HttpEntityEnclosingRequestBase) getHttpEntityEnclosingRequestBase(action, config, url, headers);
@@ -2044,8 +2044,8 @@ public class HttpRequestProxy {
         else{
             try {
 
-                if(logger.isInfoEnabled()){
-                    logger.info("sendBody call {}",url);
+                if(logger.isTraceEnabled()){
+                    logger.trace("sendBody call {}",url);
                 }
                 httpClient = HttpRequestUtil.getHttpClient(config);
                 httpPost = (HttpEntityEnclosingRequestBase) getHttpEntityEnclosingRequestBase(action, config, url, headers);
@@ -2122,8 +2122,8 @@ public class HttpRequestProxy {
                     httpAddress = config.getHttpServiceHosts().getHttpAddress();
 
                     url = SimpleStringUtil.getPath(httpAddress.getAddress(), endpoint);
-                    if(logger.isInfoEnabled()){
-                        logger.info("putBody call {}",url);
+                    if(logger.isTraceEnabled()){
+                        logger.trace("putBody call {}",url);
                     }
                     httpClient = HttpRequestUtil.getHttpClient(config);
                     httpPost = HttpRequestUtil.getHttpPut(config, url, "", "", headers);
@@ -2226,8 +2226,8 @@ public class HttpRequestProxy {
         else{
             try {
 
-                if(logger.isInfoEnabled()){
-                    logger.info("putBody call {}",url);
+                if(logger.isTraceEnabled()){
+                    logger.trace("putBody call {}",url);
                 }
                 httpClient = HttpRequestUtil.getHttpClient(config);
                 httpPost = HttpRequestUtil.getHttpPut(config, url, "", "", headers);

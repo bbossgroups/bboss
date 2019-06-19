@@ -57,7 +57,7 @@ public class HttpRequestProxyTest {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			break;
+//			break;
 		}
 		while(true);
 	}
