@@ -502,6 +502,7 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 			clientConfiguration.setBeanName(name);
 
 			HttpServiceHosts httpServiceHosts = new HttpServiceHosts();
+			httpServiceHosts.setClientConfiguration(clientConfiguration);
 			String authAccount = ClientConfiguration._getStringValue(name, "http.authAccount", context, null);
 
 			httpServiceHosts.setAuthAccount(authAccount);

@@ -18,6 +18,7 @@ package org.frameworkset.spi.remote.http.proxy;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpHost;
 import org.frameworkset.spi.assemble.GetProperties;
+import org.frameworkset.spi.remote.http.ClientConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +48,7 @@ public class HttpServiceHosts {
 	private HealthCheck healthCheck;
 	private Map<String,HttpAddress> addressMap ;
 	private String hosts;
+	private ClientConfiguration clientConfiguration;
 	public HttpServiceHosts(){
 
 	}
@@ -278,5 +280,13 @@ public class HttpServiceHosts {
 
 	public ExceptionWare getExceptionWareBean() {
 		return exceptionWareBean;
+	}
+
+	public ClientConfiguration getClientConfiguration() {
+		return clientConfiguration;
+	}
+
+	public void setClientConfiguration(ClientConfiguration clientConfiguration) {
+		this.clientConfiguration = clientConfiguration;
 	}
 }
