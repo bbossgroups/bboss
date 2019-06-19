@@ -27,6 +27,7 @@ import org.apache.http.ssl.TrustStrategy;
 import org.frameworkset.spi.*;
 import org.frameworkset.spi.assemble.GetProperties;
 import org.frameworkset.spi.assemble.PropertiesContainer;
+import org.frameworkset.spi.remote.http.proxy.HttpServiceHosts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,6 +89,16 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 	private Boolean soKeepAlive = false;
 	private Boolean soReuseAddress = false;
 	private String hostnameVerifierString;
+
+	public HttpServiceHosts getHttpServiceHosts() {
+		return httpServiceHosts;
+	}
+
+	public void setHttpServiceHosts(HttpServiceHosts httpServiceHosts) {
+		this.httpServiceHosts = httpServiceHosts;
+	}
+
+	private HttpServiceHosts httpServiceHosts;
 	/**
 	 * 每隔多少毫秒校验空闲connection，自动释放无效链接
 	 * -1 或者0不检查
@@ -199,32 +210,61 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 
 			}
 			if (clientConfiguration == null) {
-				clientConfiguration = new ClientConfiguration();
-				/**
-				 * f:timeoutConnection = "20000"
-				 f:timeoutSocket = "20000"
-				 f:retryTime = "1"
-				 f:maxLineLength = "2000"
-				 f:maxHeaderCount = "200"
-				 f:maxTotal = "200"
-				 f:defaultMaxPerRoute = "10"
-				 */
-				clientConfiguration.setTimeoutConnection(40000);
-				clientConfiguration.setTimeoutSocket(40000);
-				clientConfiguration.setConnectionRequestTimeout(40000);
-				clientConfiguration.setRetryTime(-1);
-				clientConfiguration.setRetryInterval(-1);
-				clientConfiguration.setMaxLineLength(Integer.MAX_VALUE);
-				clientConfiguration.setMaxHeaderCount(Integer.MAX_VALUE);
-				clientConfiguration.setMaxTotal(500);
-				clientConfiguration.setDefaultMaxPerRoute(100);
-				clientConfiguration.setStaleConnectionCheckEnabled(false);
-				clientConfiguration.setValidateAfterInactivity(2000);
-				clientConfiguration.setCustomHttpRequestRetryHandler(null);
-				clientConfiguration.setBeanName(name);
+				if(!name.startsWith("HealthCheck_")) {//Health check pool
+					clientConfiguration = new ClientConfiguration();
+					/**
+					 * f:timeoutConnection = "20000"
+					 f:timeoutSocket = "20000"
+					 f:retryTime = "1"
+					 f:maxLineLength = "2000"
+					 f:maxHeaderCount = "200"
+					 f:maxTotal = "200"
+					 f:defaultMaxPerRoute = "10"
+					 */
+					clientConfiguration.setTimeoutConnection(50000);
+					clientConfiguration.setTimeoutSocket(50000);
+					clientConfiguration.setConnectionRequestTimeout(50000);
+					clientConfiguration.setRetryTime(-1);
+					clientConfiguration.setRetryInterval(-1);
+					clientConfiguration.setMaxLineLength(Integer.MAX_VALUE);
+					clientConfiguration.setMaxHeaderCount(Integer.MAX_VALUE);
+					clientConfiguration.setMaxTotal(500);
+					clientConfiguration.setDefaultMaxPerRoute(100);
+					clientConfiguration.setStaleConnectionCheckEnabled(false);
+					clientConfiguration.setValidateAfterInactivity(2000);
+					clientConfiguration.setCustomHttpRequestRetryHandler(null);
+					clientConfiguration.setBeanName(name);
 
-				clientConfiguration.afterPropertiesSet();
-				clientConfigs.put(name, clientConfiguration);
+					clientConfiguration.afterPropertiesSet();
+					clientConfigs.put(name, clientConfiguration);
+				}
+				else{
+					clientConfiguration = new ClientConfiguration();
+					/**
+					 * f:timeoutConnection = "20000"
+					 f:timeoutSocket = "20000"
+					 f:retryTime = "1"
+					 f:maxLineLength = "2000"
+					 f:maxHeaderCount = "200"
+					 f:maxTotal = "200"
+					 f:defaultMaxPerRoute = "10"
+					 */
+					clientConfiguration.setTimeoutConnection(5000);
+					clientConfiguration.setTimeoutSocket(5000);
+					clientConfiguration.setConnectionRequestTimeout(5000);
+					clientConfiguration.setRetryTime(-1);
+					clientConfiguration.setRetryInterval(-1);
+					clientConfiguration.setMaxLineLength(Integer.MAX_VALUE);
+					clientConfiguration.setMaxHeaderCount(Integer.MAX_VALUE);
+					clientConfiguration.setMaxTotal(500);
+					clientConfiguration.setDefaultMaxPerRoute(50);
+					clientConfiguration.setStaleConnectionCheckEnabled(false);
+					clientConfiguration.setValidateAfterInactivity(5000);
+					clientConfiguration.setCustomHttpRequestRetryHandler(null);
+					clientConfiguration.setBeanName(name);
+					clientConfiguration.afterPropertiesSet();
+					clientConfigs.put(name, clientConfiguration);
+				}
 			}
 		}
 		return clientConfiguration;
@@ -453,8 +493,10 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 			String keyPassword = ClientConfiguration._getStringValue(name, "http.keyPassword", context, null);
 			log.append(",http.keyPassword=").append(keyPassword);
 			clientConfiguration.setKeyPassword(keyPassword);
+
 			String hostnameVerifier = ClientConfiguration._getStringValue(name, "http.hostnameVerifier", context, null);
 			log.append(",http.hostnameVerifier=").append(hostnameVerifier);
+
 			clientConfiguration.setHostnameVerifierString( hostnameVerifier);
 			clientConfiguration.setHostnameVerifier(_getHostnameVerifier(hostnameVerifier));
 			clientConfiguration.setBeanName(name);
@@ -466,7 +508,43 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 					e.printStackTrace();
 				}
 			}
+			HttpServiceHosts httpServiceHosts = new HttpServiceHosts();
+			String authAccount = ClientConfiguration._getStringValue(name, "http.authAccount", context, null);
+
+			httpServiceHosts.setAuthAccount(authAccount);
+			String authPassword = ClientConfiguration._getStringValue(name, "http.authPassword", context, null);
+
+			httpServiceHosts.setAuthPassword(authPassword);
+			String health = ClientConfiguration._getStringValue(name, "http.health", context, null);
+
+			httpServiceHosts.setHealth(health);
+			String discoverService = ClientConfiguration._getStringValue(name, "http.discoverService", context, null);
+
+			httpServiceHosts.setDiscoverService(discoverService);
+			String hosts = ClientConfiguration._getStringValue(name, "http.hosts", context, null);
+
+			httpServiceHosts.setHosts(hosts);
+
+			String healthCheckInterval_ = ClientConfiguration._getStringValue(name, "http.healthCheckInterval", context, null);
+			if(healthCheckInterval_ == null){
+				httpServiceHosts.setHealthCheckInterval(3000l);
+			}
+			else{
+				try {
+					httpServiceHosts.setHealthCheckInterval(Long.parseLong(healthCheckInterval_));
+				}
+				catch (Exception e){
+					logger.error("Parse Long healthCheckInterval parameter failed:"+healthCheckInterval_,e);
+				}
+			}
+//			httpServiceHosts.after();
+			httpServiceHosts.toString(log);
+
+			clientConfiguration.httpServiceHosts = httpServiceHosts;
 			clientConfiguration.afterPropertiesSet();
+			//初始化http发现服务组件
+			if(httpServiceHosts != null)
+				httpServiceHosts.after(name,context);
 			clientConfigs.put(name, clientConfiguration);
 
 		}

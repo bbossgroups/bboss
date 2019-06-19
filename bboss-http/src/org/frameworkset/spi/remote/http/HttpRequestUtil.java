@@ -57,15 +57,15 @@ public class HttpRequestUtil {
     public static void startHttpPools(String configFile){
         ClientConfiguration.startHttpPools(configFile);
     }
-    private static HttpClient getHttpClient() throws Exception {
+    static HttpClient getHttpClient() throws Exception {
         return ClientConfiguration.getDefaultHttpclient();
     }
 
-    private static CloseableHttpClient getHttpClient(ClientConfiguration config) throws Exception {
+    static CloseableHttpClient getHttpClient(ClientConfiguration config) throws Exception {
         return config.getHttpClient();
     }
 
-    private static String getCookie() {
+    static String getCookie() {
         // if(appCookie == null || appCookie == "") {
         // appCookie = appContext.getProperty("cookie");
         // }
@@ -73,7 +73,7 @@ public class HttpRequestUtil {
         return null;
     }
 
-    private static String getUserAgent() {
+    static String getUserAgent() {
         // if(appUserAgent == null || appUserAgent == "") {
         // StringBuilder ua = new StringBuilder("OSChina.NET");
         // ua.append('/'+appContext.getPackageInfo().versionName+'_'+appContext.getPackageInfo().versionCode);//App版本
@@ -87,11 +87,11 @@ public class HttpRequestUtil {
         return null;
     }
 
-    private static HttpGet getHttpGet(String url, String cookie, String userAgent, Map<String, String> headers) {
+    static HttpGet getHttpGet(String url, String cookie, String userAgent, Map<String, String> headers) {
         return getHttpGet(ClientConfiguration.getDefaultClientConfiguration(), url, cookie, userAgent, headers);
     }
 
-    private static HttpGet getHttpGet(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
+    static HttpGet getHttpGet(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
 
         HttpGet httpget = new HttpGet(url);
         // Request configuration can be overridden at the request level.
@@ -116,7 +116,7 @@ public class HttpRequestUtil {
         }
         return httpget;
     }
-    private static HttpTrace getHttpTrace(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
+    static HttpTrace getHttpTrace(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
 
         HttpTrace httpget = new HttpTrace(url);
         // Request configuration can be overridden at the request level.
@@ -143,7 +143,7 @@ public class HttpRequestUtil {
         return httpget;
     }
 
-    private static HttpOptions getHttpOptions(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
+    static HttpOptions getHttpOptions(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
 
         HttpOptions httpget = new HttpOptions(url);
         // Request configuration can be overridden at the request level.
@@ -169,7 +169,7 @@ public class HttpRequestUtil {
         return httpget;
     }
 
-    private static HttpPatch getHttpPatch(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
+    static HttpPatch getHttpPatch(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
 
         HttpPatch httpget = new HttpPatch(url);
         // Request configuration can be overridden at the request level.
@@ -195,7 +195,7 @@ public class HttpRequestUtil {
         return httpget;
     }
 
-    private static HttpHead getHttpHead(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
+    static HttpHead getHttpHead(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
 
         HttpHead httpHead = new HttpHead(url);
         // Request configuration can be overridden at the request level.
@@ -221,11 +221,11 @@ public class HttpRequestUtil {
         return httpHead;
     }
 
-    private static HttpPost getHttpPost(String url, String cookie, String userAgent) {
+    static HttpPost getHttpPost(String url, String cookie, String userAgent) {
         return getHttpPost(ClientConfiguration.getDefaultClientConfiguration(), url, cookie, userAgent, null);
     }
 
-    private static HttpPost getHttpPost(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
+    static HttpPost getHttpPost(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
         HttpPost httpPost = new HttpPost(url);
         RequestConfig requestConfig =   config.getRequestConfig();
         httpPost.setConfig(requestConfig);
@@ -248,7 +248,7 @@ public class HttpRequestUtil {
         return httpPost;
     }
 
-    private static HttpDelete getHttpDelete(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
+    static HttpDelete getHttpDelete(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
         HttpDelete httpDelete = new HttpDelete(url);
         RequestConfig requestConfig =   config.getRequestConfig();
         httpDelete.setConfig(requestConfig);
@@ -271,7 +271,7 @@ public class HttpRequestUtil {
         return httpDelete;
     }
 
-    private static HttpDeleteWithBody getHttpDeleteWithBody(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
+    static HttpDeleteWithBody getHttpDeleteWithBody(ClientConfiguration config, String url, String cookie, String userAgent, Map<String, String> headers) {
         HttpDeleteWithBody httpDelete = new HttpDeleteWithBody(url);
         RequestConfig requestConfig =   config.getRequestConfig();
         httpDelete.setConfig(requestConfig);
@@ -294,7 +294,7 @@ public class HttpRequestUtil {
         return httpDelete;
     }
     
-    private static HttpPut getHttpPut(ClientConfiguration config , String url, String cookie, String userAgent, Map<String, String> headers) {
+    static HttpPut getHttpPut(ClientConfiguration config , String url, String cookie, String userAgent, Map<String, String> headers) {
     	HttpPut httpPut = new HttpPut(url);
         RequestConfig requestConfig =   config .getRequestConfig();
         httpPut.setConfig(requestConfig);
