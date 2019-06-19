@@ -26,6 +26,7 @@ import org.apache.http.ssl.SSLContexts;
 import org.apache.http.ssl.TrustStrategy;
 import org.frameworkset.spi.*;
 import org.frameworkset.spi.assemble.GetProperties;
+import org.frameworkset.spi.assemble.MapGetProperties;
 import org.frameworkset.spi.assemble.PropertiesContainer;
 import org.frameworkset.spi.remote.http.proxy.HttpServiceHosts;
 import org.slf4j.Logger;
@@ -375,7 +376,17 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 		//http.poolNames = scedule,elastisearch
 		String poolNames = propertiesContainer.getProperty("http.poolNames");
 		if(poolNames == null){
-			return ;
+			//load default http pool config
+			try {
+				makeDefualtClientConfiguration("default", propertiesContainer);
+			}
+			catch (Exception e){
+				if(logger.isErrorEnabled()) {
+					StringBuilder message = new StringBuilder();
+					message.append("Start HttpPools from configfile[").append(configFile).append("] failed:");
+					logger.error(message.toString(), e);
+				}
+			}
 		}
 		else{
 			String[] poolNames_ = poolNames.split(",");
@@ -391,6 +402,52 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 					if(logger.isErrorEnabled()) {
 						StringBuilder message = new StringBuilder();
 						message.append("Start HttpPools from configfile[").append(configFile).append("] failed:");
+						logger.error(message.toString(), e);
+					}
+				}
+			}
+		}
+	}
+
+	public static void startHttpPools(Map configs){
+		if(configs == null || configs.size() == 0)
+		{
+			if(logger.isWarnEnabled()) {
+				StringBuilder message = new StringBuilder();
+				message.append("Ignore start HttpPools from configs: configs is null or empty!");
+				logger.warn(message.toString());
+			}
+			return;
+		}
+		GetProperties propertiesContainer = new MapGetProperties(configs);
+		//http.poolNames = scedule,elastisearch
+		String poolNames = propertiesContainer.getExternalProperty("http.poolNames");
+		if(poolNames == null){
+			try {
+				makeDefualtClientConfiguration("default", propertiesContainer);
+			}
+			catch (Exception e){
+				if(logger.isErrorEnabled()) {
+					StringBuilder message = new StringBuilder();
+					message.append("Start HttpPool[default] from configs failed:");
+					logger.error(message.toString(), e);
+				}
+			} ;
+		}
+		else{
+			String[] poolNames_ = poolNames.split(",");
+			for(String poolName:poolNames_){
+				poolName = poolName.trim();
+				if(poolName.equals("")){
+					poolName = "default";
+				}
+				try {
+					makeDefualtClientConfiguration(poolName, propertiesContainer);
+				}
+				catch (Exception e){
+					if(logger.isErrorEnabled()) {
+						StringBuilder message = new StringBuilder();
+						message.append("Start HttpPool[").append(poolName).append("] from configs failed:");
 						logger.error(message.toString(), e);
 					}
 				}
@@ -532,7 +589,9 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 					httpServiceHosts.setHealthCheckInterval(Long.parseLong(healthCheckInterval_));
 				}
 				catch (Exception e){
-					logger.error("Parse Long healthCheckInterval parameter failed:"+healthCheckInterval_,e);
+					if(logger.isErrorEnabled()) {
+						logger.error("Parse Long healthCheckInterval parameter failed:" + healthCheckInterval_, e);
+					}
 				}
 			}
 //			httpServiceHosts.after();
@@ -540,12 +599,7 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 
 			clientConfiguration.httpServiceHosts = httpServiceHosts;
 			if(logger.isInfoEnabled()){
-				try {
 					logger.info("Http Pool[{}] config:{}", name, log.toString());
-				}
-				catch (Exception e){
-					e.printStackTrace();
-				}
 			}
 			clientConfiguration.afterPropertiesSet();
 			//初始化http发现服务组件

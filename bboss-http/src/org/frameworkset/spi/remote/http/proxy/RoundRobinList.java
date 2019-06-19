@@ -41,6 +41,7 @@ public class RoundRobinList {
 		try{
 			lock.lock();
 			this.elements.addAll(address);
+			message = new StringBuilder().append("All Http Server ").append(elements.toString()).append(" can't been connected.").toString();
 			this.iterator = elements.iterator();
 		}
 		finally {

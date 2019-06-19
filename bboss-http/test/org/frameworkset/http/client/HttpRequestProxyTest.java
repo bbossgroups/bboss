@@ -19,6 +19,9 @@ import org.frameworkset.spi.remote.http.HttpRequestProxy;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <p>Description: </p>
  * <p></p>
@@ -30,7 +33,14 @@ import org.junit.Test;
 public class HttpRequestProxyTest {
 	@Before
 	public void startPool(){
-		HttpRequestProxy.startHttpPools("application.properties");
+//		HttpRequestProxy.startHttpPools("application.properties");
+		Map configs = new HashMap();
+//		configs.put("http.poolNames","report");
+//		configs.put("report.http.health","/health");//health监控检查地址必须配置，否则将不会启动健康检查机制
+//		configs.put("report.http.discoverService","org.frameworkset.http.client.DemoHttpHostDiscover");
+		configs.put("http.health","/health");//health监控检查地址必须配置，否则将不会启动健康检查机制
+		configs.put("http.discoverService","org.frameworkset.http.client.DemoHttpHostDiscover");
+		HttpRequestProxy.startHttpPools(configs);
 	}
 	@Test
 	public void testGet(){

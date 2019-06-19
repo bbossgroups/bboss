@@ -21,14 +21,14 @@ public class HttpAddress {
 	}
 
 	public HttpAddress(String address){
-		if (!address.contains("http://") && !address.contains("https://")) {
+		if (!address.startsWith("http://") && !address.startsWith("https://")) {
 			address = "http://" + address;
 		}
 		this.address = address;
 		this.healthPath = this.getPath(address,"/");
 	}
 	public HttpAddress(String address,String healthPath){
-		if (!address.contains("http://") && !address.contains("https://")) {
+		if (!address.startsWith("http://") && !address.startsWith("https://")) {
 			address = "http://" + address;
 		}
 		this.address = address;
@@ -79,8 +79,7 @@ public class HttpAddress {
 		synchronized (this) {
 			if(status == 0)
 				this.status = status;
-
-			if (this.status != 2)//如果没有移除，则设置故障状态
+			else if (this.status != 2)//如果没有移除，则设置故障状态
 				this.status = status;
 		}
 		

@@ -16,9 +16,9 @@ package org.frameworkset.spi.remote.http.proxy;
  */
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.http.HttpHost;
 import org.frameworkset.spi.assemble.GetProperties;
 import org.frameworkset.spi.remote.http.ClientConfiguration;
+import org.frameworkset.spi.remote.http.HttpHost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,9 +65,19 @@ public class HttpServiceHosts {
 		return "Basic " + new String(encodedAuth);
 	}
 	public void after(String httpPoolName, GetProperties context){
-		if(hosts != null && !hosts.trim().equals("")) {
+//		if(hosts != null && !hosts.trim().equals(""))
+		{
 			addressList = new ArrayList<HttpAddress>();
 			addressMap = new HashMap<String,HttpAddress>();
+			if(hosts != null && !hosts.trim().equals("")) {
+				String[] hostNames = hosts.split(",");
+				for (String host : hostNames) {
+					HttpAddress esAddress = new HttpAddress(host.trim(), health);
+					addressList.add(esAddress);
+					addressMap.put(esAddress.getAddress(), esAddress);
+				}
+			}
+			serversList = new RoundRobinList(addressList);
 			if (authAccount != null && !authAccount.equals("")) {
 				authHeaders = new HashMap<String, String>();
 				authHeaders.put("Authorization", getHeader(getAuthAccount(), getAuthPassword()));
@@ -85,13 +95,7 @@ public class HttpServiceHosts {
 					}
 				}
 			}
-			String[] hostNames = hosts.split(",");
-			for (String host : hostNames) {
-				HttpAddress esAddress = new HttpAddress(host.trim(),health);
-				addressList.add(esAddress);
-				addressMap.put(esAddress.getAddress(), esAddress);
-			}
-			serversList = new RoundRobinList(addressList);
+
 			if(healthCheckInterval > 0 && this.health != null && !this.health.equals("")) {
 				if(logger.isInfoEnabled()) {
 					logger.info("Start HttpProxy server healthCheck thread,you can set http.healthCheckInterval=-1 in config file to disable healthCheck thread.");
@@ -189,7 +193,7 @@ public class HttpServiceHosts {
 		}
 		if(logger.isInfoEnabled()){
 			StringBuilder info = new StringBuilder();
-			info.append("All Live ElasticSearch Server:");
+			info.append("All Live Http Servers:");
 			Iterator<Map.Entry<String, HttpAddress>> iterator = this.addressMap.entrySet().iterator();
 			boolean firsted = true;
 			while(iterator.hasNext()){
@@ -229,14 +233,14 @@ public class HttpServiceHosts {
 				if (!exist) {
 					address.setStatus(2);
 					if(logger.isInfoEnabled()){
-						logger.info("Http Node["+address.toString()+"] is down.");
+						logger.info("Http Node["+address.toString()+"] is down and removed.");
 					}
 				}
 			}
 			else {
 				address.setStatus(2);
 				if(logger.isInfoEnabled()){
-					logger.info("Http Node["+address.toString()+"] is down.");
+					logger.info("Http Node["+address.toString()+"] is down and removed.");
 				}
 			}
 
