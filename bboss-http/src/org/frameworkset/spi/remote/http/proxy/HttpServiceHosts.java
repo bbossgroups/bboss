@@ -39,6 +39,8 @@ public class HttpServiceHosts {
 	private String health;
 	private long healthCheckInterval = -1l;
 	private String discoverService;
+	private String exceptionWare;
+	private ExceptionWare exceptionWareBean;
 	private Map<String, String> authHeaders;
 	protected RoundRobinList serversList;
 	protected List<HttpAddress> addressList;
@@ -68,6 +70,19 @@ public class HttpServiceHosts {
 				authHeaders = new HashMap<String, String>();
 				authHeaders.put("Authorization", getHeader(getAuthAccount(), getAuthPassword()));
 			}
+			if(exceptionWare != null){
+				try {
+					Class<ExceptionWare> exceptionWareClass = (Class<ExceptionWare>) Class.forName(this.exceptionWare.trim());
+					ExceptionWare exceptionWare_ = exceptionWareClass.newInstance();
+					exceptionWare_.setHttpServiceHosts(this);
+					this.exceptionWareBean = exceptionWare_;
+				}
+				catch (Exception e){
+					if(logger.isErrorEnabled()) {
+						logger.error(" ExceptionWare init failed:", e);
+					}
+				}
+			}
 			String[] hostNames = hosts.split(",");
 			for (String host : hostNames) {
 				HttpAddress esAddress = new HttpAddress(host.trim());
@@ -95,6 +110,7 @@ public class HttpServiceHosts {
 				try {
 					Class<HttpHostDiscover> httpHostDiscoverClass = (Class<HttpHostDiscover>) Class.forName(this.discoverService);
 					HttpHostDiscover hostDiscover = httpHostDiscoverClass.newInstance();
+					hostDiscover.setHttpServiceHosts(this);
 					hostDiscover.start();
 				}
 				catch (Exception e){
@@ -250,5 +266,17 @@ public class HttpServiceHosts {
 
 	public void setHealthCheckInterval(long healthCheckInterval) {
 		this.healthCheckInterval = healthCheckInterval;
+	}
+
+	public String getExceptionWare() {
+		return exceptionWare;
+	}
+
+	public void setExceptionWare(String exceptionWare) {
+		this.exceptionWare = exceptionWare;
+	}
+
+	public ExceptionWare getExceptionWareBean() {
+		return exceptionWareBean;
 	}
 }

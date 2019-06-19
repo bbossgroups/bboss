@@ -90,4 +90,7 @@ public abstract class HttpHostDiscover extends Thread{
 
 	}
 
+	public void setHttpServiceHosts(HttpServiceHosts httpServiceHosts) {
+		this.httpServiceHosts = httpServiceHosts;
+	}
 }

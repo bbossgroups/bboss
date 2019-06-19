@@ -500,14 +500,7 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 			clientConfiguration.setHostnameVerifierString( hostnameVerifier);
 			clientConfiguration.setHostnameVerifier(_getHostnameVerifier(hostnameVerifier));
 			clientConfiguration.setBeanName(name);
-			if(logger.isInfoEnabled()){
-				try {
-					logger.info("Http Pool[{}] config:{}", name, log.toString());
-				}
-				catch (Exception e){
-					e.printStackTrace();
-				}
-			}
+
 			HttpServiceHosts httpServiceHosts = new HttpServiceHosts();
 			String authAccount = ClientConfiguration._getStringValue(name, "http.authAccount", context, null);
 
@@ -521,6 +514,10 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 			String discoverService = ClientConfiguration._getStringValue(name, "http.discoverService", context, null);
 
 			httpServiceHosts.setDiscoverService(discoverService);
+
+			String exceptionWare = ClientConfiguration._getStringValue(name, "http.exceptionWare", context, null);
+
+			httpServiceHosts.setExceptionWare(exceptionWare);
 			String hosts = ClientConfiguration._getStringValue(name, "http.hosts", context, null);
 
 			httpServiceHosts.setHosts(hosts);
@@ -541,10 +538,19 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 			httpServiceHosts.toString(log);
 
 			clientConfiguration.httpServiceHosts = httpServiceHosts;
+			if(logger.isInfoEnabled()){
+				try {
+					logger.info("Http Pool[{}] config:{}", name, log.toString());
+				}
+				catch (Exception e){
+					e.printStackTrace();
+				}
+			}
 			clientConfiguration.afterPropertiesSet();
 			//初始化http发现服务组件
 			if(httpServiceHosts != null)
 				httpServiceHosts.after(name,context);
+
 			clientConfigs.put(name, clientConfiguration);
 
 		}
