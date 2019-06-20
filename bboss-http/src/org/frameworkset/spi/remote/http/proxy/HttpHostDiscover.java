@@ -37,11 +37,12 @@ public abstract class HttpHostDiscover extends Thread{
 	 * @param hosts
 	 */
 	public synchronized void handleDiscoverHosts(List<HttpHost> hosts){
+
 		List<HttpAddress> newAddress = new ArrayList<HttpAddress>();
 		//恢复移除节点
 		httpServiceHosts.recoverRemovedNodes(hosts);
 		//识别新增节点
-		for(int i = 0; i < hosts.size();i ++){
+		for(int i = 0; hosts !=null && i < hosts.size();i ++){
 			HttpAddress address = new HttpAddress(hosts.get(i).toString(),httpServiceHosts.getHealth());
 			if(!httpServiceHosts.containAddress(address)){
 				newAddress.add(address);

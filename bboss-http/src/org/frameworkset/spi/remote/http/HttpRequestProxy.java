@@ -22,10 +22,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
-import org.frameworkset.spi.remote.http.proxy.ExceptionWare;
-import org.frameworkset.spi.remote.http.proxy.HttpAddress;
-import org.frameworkset.spi.remote.http.proxy.HttpProxyRequestException;
-import org.frameworkset.spi.remote.http.proxy.NoHttpServerException;
+import org.frameworkset.spi.remote.http.proxy.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +51,6 @@ public class HttpRequestProxy {
     public static void startHttpPools(Map<String,Object> configs){
         HttpRequestUtil.startHttpPools(configs);
     }
-
 
 
 
