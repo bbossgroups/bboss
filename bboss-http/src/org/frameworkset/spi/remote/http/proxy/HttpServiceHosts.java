@@ -95,7 +95,9 @@ public class HttpServiceHosts {
 				}
 				catch (Exception e){
 					if(logger.isErrorEnabled()) {
-						logger.error(" ExceptionWare init failed:", e);
+						logger.error(new StringBuilder().append(" Http pool[")
+								.append(getClientConfiguration().getBeanName()).append("]")
+						.append("  ExceptionWare init failed:").toString(), e);
 					}
 				}
 			}
@@ -105,19 +107,25 @@ public class HttpServiceHosts {
 
 			if(healthCheckInterval > 0 && this.health != null && !this.health.equals("")) {
 				if(logger.isInfoEnabled()) {
-					logger.info("Start HttpProxy server healthCheck thread,you can set http.healthCheckInterval=-1 in config file to disable healthCheck thread.");
+					logger.info(new StringBuilder().append("Start Http pool[")
+								.append(getClientConfiguration().getBeanName()).append("]")
+						.append(" HttpProxy server healthCheck thread,you can set http.healthCheckInterval=-1 in config file to disable healthCheck thread.").toString());
 				}
-				healthCheck = new HealthCheck(addressList, healthCheckInterval,authHeaders);
+				healthCheck = new HealthCheck(httpPoolName,addressList, healthCheckInterval,authHeaders);
 				healthCheck.run();
 			}
 			else {
 				if(logger.isInfoEnabled()) {
-					logger.info("HttpProxy server healthCheck disable,you can set HttpProxy http.healthCheckInterval (>0) and http.health in configfile to enabled healthCheck thread.");
+					logger.info(new StringBuilder().append("HttpProxy server Http pool[")
+								.append(getClientConfiguration().getBeanName()).append("]")
+						.append(" healthCheck disable,you can set HttpProxy http.healthCheckInterval (>0) and http.health in configfile to enabled healthCheck thread.").toString());
 				}
 			}
 
 			if(this.discoverService != null && !this.discoverService.equals("")) {
-				logger.info("Start http server discoverHost thread,to distabled set http.discoverService to null in configfile.");
+				logger.info(new StringBuilder().append("Start Http pool[")
+								.append(getClientConfiguration().getBeanName()).append("]")
+						.append(" discoverHost thread,to distabled set http.discoverService to null in configfile.").toString());
 
 				try {
 					Class<HttpHostDiscover> httpHostDiscoverClass = (Class<HttpHostDiscover>) Class.forName(this.discoverService);
@@ -128,12 +136,14 @@ public class HttpServiceHosts {
 				}
 				catch (Exception e){
 					if(logger.isErrorEnabled()) {
-						logger.error("Start discovery service failed:", e);
+						logger.error(new StringBuilder().append("Start Http pool[")
+								.append(getClientConfiguration().getBeanName()).append("]").append(" discovery service failed:").toString(), e);
 					}
 				}
 			}
 			else if(hostDiscover == null){
-				logger.info("Discover  http server is disabled,to enabled set http.discoverService in configfile.");
+				logger.info(new StringBuilder().append("Discover Http pool[")
+								.append(getClientConfiguration().getBeanName()).append("]").append(" is disabled,to enabled set http.discoverService in configfile.").toString());
 			}
 			else{
 				hostDiscover.setHttpServiceHosts(this);
@@ -204,7 +214,8 @@ public class HttpServiceHosts {
 		}
 		if(logger.isInfoEnabled()){
 			StringBuilder info = new StringBuilder();
-			info.append("All live Http Servers:");
+			info.append("Http pool[")
+								.append(getClientConfiguration().getBeanName()).append("]").append(" All live Http Servers:");
 			Iterator<Map.Entry<String, HttpAddress>> iterator = this.addressMap.entrySet().iterator();
 			boolean firsted = true;
 			while(iterator.hasNext()){
@@ -244,14 +255,16 @@ public class HttpServiceHosts {
 				if (!exist) {
 					address.setStatus(2);
 					if(logger.isInfoEnabled()){
-						logger.info("Http Node["+address.toString()+"] is down and removed.");
+						logger.info(new StringBuilder().append("Http pool[")
+								.append(getClientConfiguration().getBeanName()).append("]").append(" Http Node[").append(address.toString()).append("] is down and removed.").toString());
 					}
 				}
 			}
 			else {
 				address.setStatus(2);
 				if(logger.isInfoEnabled()){
-					logger.info("Http Node["+address.toString()+"] is down and removed.");
+					logger.info(new StringBuilder().append("Http pool[")
+							.append(getClientConfiguration().getBeanName()).append("]").append(" Http Node[").append(address.toString()).append("] is down and removed.").toString());
 				}
 			}
 
@@ -270,7 +283,8 @@ public class HttpServiceHosts {
 				if(address.getStatus() == 2){//节点还原
 					address.onlySetStatus(0);
 					if(logger.isInfoEnabled()){
-						logger.info(new StringBuilder().append("Recover Removed Node [").append(address.toString()).append("] to clusters addresses list.").toString());
+						logger.info(new StringBuilder().append("Recover Removed Node [").append(address.toString()).append("] to Http pool[")
+						.append(getClientConfiguration().getBeanName()).append("] clusters addresses list.").toString());
 					}
 				}
 			}

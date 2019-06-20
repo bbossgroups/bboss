@@ -48,7 +48,8 @@ public class HttpRequestProxyTest {
 //		configs.put("report.http.discoverService","org.frameworkset.http.client.DemoHttpHostDiscover");
 		configs.put("http.health","/health");//health监控检查地址必须配置，否则将不会启动健康检查机制
 //		configs.put("http.hosts","1111:90222,http://1111:90222,https://1111:90222");//health监控检查地址必须配置，否则将不会启动健康检查机制
-		configs.put("http.discoverService","org.frameworkset.http.client.DemoHttpHostDiscover");
+		org.frameworkset.http.client.DemoHttpHostDiscover demoHttpHostDiscover = new org.frameworkset.http.client.DemoHttpHostDiscover();
+		configs.put("http.discoverService",demoHttpHostDiscover);
 
 
 		configs.put("report.http.health","/health");//health监控检查地址必须配置，否则将不会启动健康检查机制

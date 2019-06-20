@@ -51,7 +51,8 @@ public abstract class HttpHostDiscover extends Thread{
 		//处理新增节点
 		if(newAddress.size() > 0) {
 			if (logger.isInfoEnabled()) {
-				logger.info(new StringBuilder().append("Discovery new http servers[").append(newAddress).append("].").toString());
+				logger.info(new StringBuilder().append("Discovery new Http pool[")
+						.append(httpServiceHosts.getClientConfiguration().getBeanName()).append("] servers ").append(newAddress).append(".").toString());
 			}
 			httpServiceHosts.addAddresses(newAddress);
 		}
@@ -92,22 +93,29 @@ public abstract class HttpHostDiscover extends Thread{
 //					}
 //				});
 			if (logger.isDebugEnabled())
-				logger.debug("Discovery http servers.");
+				logger.debug(new StringBuilder().append("Discovery Http pool[")
+						.append(httpServiceHosts.getClientConfiguration().getBeanName()).append("] servers.").toString());
 			List<HttpHost> httpHosts = discover();
 			handleDiscoverHosts( httpHosts);
 		} catch (Exception e) {
 			if (logger.isInfoEnabled())
-				logger.info("Discovery http servers failed:",e);
+				logger.info(new StringBuilder().append("Discovery ")
+						.append(httpServiceHosts.getClientConfiguration().getBeanName()).append(" servers failed:").toString(),e);
 		}
 	}
 
 	public void setHttpServiceHosts(HttpServiceHosts httpServiceHosts) {
 		this.httpServiceHosts = httpServiceHosts;
+		String threadName = "Http pool["+httpServiceHosts.getClientConfiguration().getBeanName()+"] HostDiscover Thread";
+		this.setName(threadName);
+		if(logger.isInfoEnabled())
+			logger.info("HttpServiceHosts dicover thread:"+threadName);
+
 	}
 	public void start(){
 		//do server discover first，then start the thread.
 		if (logger.isInfoEnabled())
-			logger.info("First doDiscovery http servers at start time.");
+			logger.info("First doDiscovery Http pool["+httpServiceHosts.getClientConfiguration().getBeanName()+"] servers at start time.");
 		this.doDiscover();
 		super.start();
 

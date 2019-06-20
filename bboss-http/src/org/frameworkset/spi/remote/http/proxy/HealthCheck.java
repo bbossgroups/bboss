@@ -24,10 +24,12 @@ public class HealthCheck implements Runnable{
 	private long checkInterval = 5000;
 	private List<HCRunable> checkThreads ;
 	private Map<String, String> headers;
-	public HealthCheck(List<HttpAddress> esAddresses, long checkInterval, Map<String, String> headers){
+	private String poolName;
+	public HealthCheck(String poolName,List<HttpAddress> esAddresses, long checkInterval, Map<String, String> headers){
 		this.esAddresses = esAddresses;
 		this.checkInterval = checkInterval;
 		this.headers = headers;
+		this.poolName = poolName;
 
 	}
 	public void stopCheck(){
@@ -52,7 +54,7 @@ public class HealthCheck implements Runnable{
 		HttpAddress address;
 		boolean stop = false;
 		public HCRunable(HttpAddress address){
-			super("Http server["+address.toString()+"] health check");
+			super("Http pool["+poolName+"] server["+address.toString()+"] health check");
 			address.setHealthCheck(this);
 			this.address = address;
 		}
@@ -68,7 +70,7 @@ public class HealthCheck implements Runnable{
 			 	 if(address.failedCheck()){
 			 		 try {		
 			 			 if(logger.isDebugEnabled())
-			 				 logger.debug(new StringBuilder().append("Check downed elasticsearch server[").append(address.toString()).append("] status.").toString());
+			 				 logger.debug(new StringBuilder().append("Check downed Http pool[").append(poolName).append( "] server[").append(address.toString()).append("] status.").toString());
 						 HttpRequestUtil.httpGet(ProxyConstants.healthCheckHttpPool,address.getHealthPath(),headers,new ResponseHandler<Void>(){
 	
 							 @Override
@@ -76,7 +78,7 @@ public class HealthCheck implements Runnable{
 								 int status = response.getStatusLine().getStatusCode();
 								 if (status >= 200 && status < 300) {
 									 if(logger.isInfoEnabled())
-										 logger.info(new StringBuilder().append("Downed Http server[").append(address.toString()).append("] recovered to normal server.").toString());
+										 logger.info(new StringBuilder().append("Downed Http pool[").append(poolName).append( "] server[").append(address.toString()).append("] recovered to normal server.").toString());
 									 address.onlySetStatus(0);
 								 } else {
 									address.onlySetStatus(1);
@@ -87,7 +89,7 @@ public class HealthCheck implements Runnable{
 					
 					 } catch (Exception e) {
 						 if(logger.isInfoEnabled())
-							 logger.info(new StringBuilder().append("Down HttpServer health check use [").append(address.getHealthPath()).append("] failed:").append(" Http server[").append(address.toString()).append("] is down.").toString());
+							 logger.info(new StringBuilder().append("Down Http  pool[").append(poolName).append( "] Server health check use [").append(address.getHealthPath()).append("] failed:").append(" Http server[").append(address.toString()).append("] is down.").toString());
 						 address.onlySetStatus(1);
 					 }
 			 		 if(this.stop)
