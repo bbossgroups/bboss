@@ -2,6 +2,8 @@ package org.frameworkset.spi.remote.http.proxy;
 
 
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.assemble.GetProperties;
+import org.frameworkset.spi.remote.http.ClientConfiguration;
 import org.frameworkset.spi.remote.http.HttpHost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +20,6 @@ public abstract class HttpHostDiscover extends Thread{
 	private HttpServiceHosts httpServiceHosts;
 	public HttpHostDiscover( ){
 		super("Http HostDiscover Thread");
-
 		BaseApplicationContext.addShutdownHook(new Runnable() {
 			@Override
 			public void run() {
@@ -43,7 +44,7 @@ public abstract class HttpHostDiscover extends Thread{
 		httpServiceHosts.recoverRemovedNodes(hosts);
 		//识别新增节点
 		for(int i = 0; hosts !=null && i < hosts.size();i ++){
-			HttpAddress address = new HttpAddress(hosts.get(i).toString(),httpServiceHosts.getHealth());
+			HttpAddress address = new HttpAddress(hosts.get(i).toString(),httpServiceHosts.getHttpServiceHostsConfig().getHealth());
 			if(!httpServiceHosts.containAddress(address)){
 				newAddress.add(address);
 			}
@@ -59,7 +60,7 @@ public abstract class HttpHostDiscover extends Thread{
 		//处理删除节点
 		httpServiceHosts.handleRemoved( hosts);
 	}
-	protected abstract List<HttpHost> discover();
+	protected abstract List<HttpHost> discover(HttpServiceHostsConfig httpServiceHostsConfig, ClientConfiguration configuration, GetProperties context);
 	@Override
 	public void run() {
 		do {
@@ -95,7 +96,7 @@ public abstract class HttpHostDiscover extends Thread{
 			if (logger.isDebugEnabled())
 				logger.debug(new StringBuilder().append("Discovery Http pool[")
 						.append(httpServiceHosts.getClientConfiguration().getBeanName()).append("] servers.").toString());
-			List<HttpHost> httpHosts = discover();
+			List<HttpHost> httpHosts = discover(httpServiceHosts.getHttpServiceHostsConfig(), httpServiceHosts.getClientConfiguration(), httpServiceHosts.getClientConfiguration().getContextProperties());
 			handleDiscoverHosts( httpHosts);
 		} catch (Exception e) {
 			if (logger.isInfoEnabled())

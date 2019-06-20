@@ -109,7 +109,7 @@ public class HttpRequestProxy {
        return httpGet(  poolname,   url,   cookie,   userAgent,   headers, responseHandler);
     }
     private static Exception getException(ResponseHandler responseHandler,ClientConfiguration configuration ){
-        ExceptionWare exceptionWare =configuration.getHttpServiceHosts().getExceptionWareBean();
+        ExceptionWare exceptionWare =configuration.getHttpServiceHosts().getExceptionWare();
         if(exceptionWare != null) {
             return exceptionWare.getExceptionFromResponse(responseHandler);
         }

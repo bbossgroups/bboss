@@ -92,6 +92,7 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 	private Boolean soKeepAlive = false;
 	private Boolean soReuseAddress = false;
 	private String hostnameVerifierString;
+	private GetProperties contextProperties;
 
 	public HttpServiceHosts getHttpServiceHosts() {
 		return httpServiceHosts;
@@ -487,8 +488,8 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 			if (clientConfiguration != null) {
 				return clientConfiguration;
 			}
-
 			clientConfiguration = new ClientConfiguration();
+			clientConfiguration.setContextProperties(context);
 			/**
 			 *http.timeoutConnection = 400000
 			 * http.timeoutSocket = 400000
@@ -1095,5 +1096,15 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 
 	public void setHostnameVerifierString(String hostnameVerifierString) {
 		this.hostnameVerifierString = hostnameVerifierString;
+	}
+
+
+
+	public GetProperties getContextProperties() {
+		return contextProperties;
+	}
+
+	public void setContextProperties(GetProperties contextProperties) {
+		this.contextProperties = contextProperties;
 	}
 }

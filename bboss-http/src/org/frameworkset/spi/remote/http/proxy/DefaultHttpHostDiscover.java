@@ -15,6 +15,8 @@ package org.frameworkset.spi.remote.http.proxy;
  * limitations under the License.
  */
 
+import org.frameworkset.spi.assemble.GetProperties;
+import org.frameworkset.spi.remote.http.ClientConfiguration;
 import org.frameworkset.spi.remote.http.HttpHost;
 
 import java.util.List;
@@ -29,7 +31,9 @@ import java.util.List;
  */
 public class DefaultHttpHostDiscover extends HttpHostDiscover {
 	@Override
-	protected List<HttpHost> discover() {
+	protected List<HttpHost> discover(HttpServiceHostsConfig httpServiceHostsConfig,
+									  ClientConfiguration configuration,
+									  GetProperties context) {
 		return null;
 	}
 }

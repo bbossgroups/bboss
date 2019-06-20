@@ -35,26 +35,24 @@ import java.util.*;
  */
 public class HttpServiceHosts {
 	private static Logger logger = LoggerFactory.getLogger(HttpServiceHosts.class);
-	private String authAccount;
-	private String authPassword;
-	private String health;
-	private long healthCheckInterval = -1l;
-	private String discoverService;
-	private String exceptionWare;
 
 
+	public HttpServiceHostsConfig getHttpServiceHostsConfig() {
+		return httpServiceHostsConfig;
+	}
 
-	private ExceptionWare exceptionWareBean;
+	private HttpServiceHostsConfig httpServiceHostsConfig;
+	private ExceptionWare exceptionWare;
 	private HttpHostDiscover hostDiscover;
 	private Map<String, String> authHeaders;
 	protected RoundRobinList serversList;
 	protected List<HttpAddress> addressList;
 	private HealthCheck healthCheck;
 	private Map<String,HttpAddress> addressMap ;
-	private String hosts;
+
 	private ClientConfiguration clientConfiguration;
 	public HttpServiceHosts(){
-
+		httpServiceHostsConfig = new HttpServiceHostsConfig();
 	}
 	public HttpAddress getHttpAddress(){
 		return serversList.get();
@@ -73,25 +71,25 @@ public class HttpServiceHosts {
 		{
 			addressList = new ArrayList<HttpAddress>();
 			addressMap = new HashMap<String,HttpAddress>();
-			if(hosts != null && !hosts.trim().equals("")) {
-				String[] hostNames = hosts.split(",");
+			if(httpServiceHostsConfig.getHosts() != null && !httpServiceHostsConfig.getHosts().trim().equals("")) {
+				String[] hostNames = httpServiceHostsConfig.getHosts().split(",");
 				for (String host : hostNames) {
-					HttpAddress esAddress = new HttpAddress(host.trim(), health);
+					HttpAddress esAddress = new HttpAddress(host.trim(), httpServiceHostsConfig.getHealth());
 					addressList.add(esAddress);
 					addressMap.put(esAddress.getAddress(), esAddress);
 				}
 			}
 			serversList = new RoundRobinList(addressList);
-			if (authAccount != null && !authAccount.equals("")) {
+			if (httpServiceHostsConfig.getAuthAccount() != null && !httpServiceHostsConfig.getAuthAccount().equals("")) {
 				authHeaders = new HashMap<String, String>();
-				authHeaders.put("Authorization", getHeader(getAuthAccount(), getAuthPassword()));
+				authHeaders.put("Authorization", getHeader(httpServiceHostsConfig.getAuthAccount(), httpServiceHostsConfig.getAuthPassword()));
 			}
-			if(exceptionWare != null){
+			if(httpServiceHostsConfig.getExceptionWare() != null){
 				try {
-					Class<ExceptionWare> exceptionWareClass = (Class<ExceptionWare>) Class.forName(this.exceptionWare.trim());
+					Class<ExceptionWare> exceptionWareClass = (Class<ExceptionWare>) Class.forName(httpServiceHostsConfig.getExceptionWare().trim());
 					ExceptionWare exceptionWare_ = exceptionWareClass.newInstance();
 					exceptionWare_.setHttpServiceHosts(this);
-					this.exceptionWareBean = exceptionWare_;
+					this.exceptionWare = exceptionWare_;
 				}
 				catch (Exception e){
 					if(logger.isErrorEnabled()) {
@@ -101,17 +99,17 @@ public class HttpServiceHosts {
 					}
 				}
 			}
-			else if(this.exceptionWareBean != null){
-				exceptionWareBean.setHttpServiceHosts(this);
+			else if(this.exceptionWare != null){
+				exceptionWare.setHttpServiceHosts(this);
 			}
 
-			if(healthCheckInterval > 0 && this.health != null && !this.health.equals("")) {
+			if(httpServiceHostsConfig.getHealthCheckInterval() > 0 && httpServiceHostsConfig.getHealth() != null && !this.httpServiceHostsConfig.getHealth().equals("")) {
 				if(logger.isInfoEnabled()) {
 					logger.info(new StringBuilder().append("Start Http pool[")
 								.append(getClientConfiguration().getBeanName()).append("]")
 						.append(" HttpProxy server healthCheck thread,you can set http.healthCheckInterval=-1 in config file to disable healthCheck thread.").toString());
 				}
-				healthCheck = new HealthCheck(httpPoolName,addressList, healthCheckInterval,authHeaders);
+				healthCheck = new HealthCheck(httpPoolName,addressList, httpServiceHostsConfig.getHealthCheckInterval(),authHeaders);
 				healthCheck.run();
 			}
 			else {
@@ -122,13 +120,13 @@ public class HttpServiceHosts {
 				}
 			}
 
-			if(this.discoverService != null && !this.discoverService.equals("")) {
+			if(httpServiceHostsConfig.getDiscoverService() != null && !this.httpServiceHostsConfig.getDiscoverService().equals("")) {
 				logger.info(new StringBuilder().append("Start Http pool[")
 								.append(getClientConfiguration().getBeanName()).append("]")
 						.append(" discoverHost thread,to distabled set http.discoverService to null in configfile.").toString());
 
 				try {
-					Class<HttpHostDiscover> httpHostDiscoverClass = (Class<HttpHostDiscover>) Class.forName(this.discoverService);
+					Class<HttpHostDiscover> httpHostDiscoverClass = (Class<HttpHostDiscover>) Class.forName(this.httpServiceHostsConfig.getDiscoverService());
 					HttpHostDiscover hostDiscover = httpHostDiscoverClass.newInstance();
 					hostDiscover.setHttpServiceHosts(this);
 					hostDiscover.start();
@@ -152,56 +150,39 @@ public class HttpServiceHosts {
 		}
 	}
 
-	public String getAuthAccount() {
-		return authAccount;
-	}
+
 
 	public void setAuthAccount(String authAccount) {
-		this.authAccount = authAccount;
+		httpServiceHostsConfig.setAuthAccount(authAccount);
 	}
 
-	public String getAuthPassword() {
-		return authPassword;
-	}
+
 
 	public void setAuthPassword(String authPassword) {
-		this.authPassword = authPassword;
+		httpServiceHostsConfig.setAuthPassword(authPassword);
 	}
 
-	public String getHealth() {
-		return health;
-	}
 
 	public void setHealth(String health) {
-		this.health = health;
+		httpServiceHostsConfig.setHealth(health);
 	}
 
-	public String getDiscoverService() {
-		return discoverService;
-	}
 
 	public void setDiscoverService(String discoverService) {
-		this.discoverService = discoverService;
+		httpServiceHostsConfig.setDiscoverService(discoverService);
 	}
 
 	public Map<String, String> getAuthHeaders() {
 		return authHeaders;
 	}
 	public void toString(StringBuilder log){
-		log.append(",http.authAccount=").append(authAccount);
-		log.append(",http.authPassword=").append(authPassword);
-		log.append(",http.hosts=").append(hosts);
-		log.append(",http.health=").append(health);
-		log.append(",http.healthCheckInterval=").append(healthCheckInterval);
-		log.append(",http.discoverService=").append(discoverService);
+		httpServiceHostsConfig.toString(log,this.exceptionWare,this.hostDiscover);
 	}
 
-	public String getHosts() {
-		return hosts;
-	}
+
 
 	public void setHosts(String hosts) {
-		this.hosts = hosts;
+		httpServiceHostsConfig.setHosts(hosts);
 	}
 
 	public void addAddresses(List<HttpAddress> address){
@@ -294,27 +275,22 @@ public class HttpServiceHosts {
 		return addressMap.containsKey(address.getAddress());
 	}
 
-	public long getHealthCheckInterval() {
-		return healthCheckInterval;
-	}
+
 
 	public void setHealthCheckInterval(long healthCheckInterval) {
-		this.healthCheckInterval = healthCheckInterval;
+		httpServiceHostsConfig.setHealthCheckInterval(  healthCheckInterval);
 	}
 
-	public String getExceptionWare() {
-		return exceptionWare;
-	}
 
 	public void setExceptionWare(String exceptionWare) {
-		this.exceptionWare = exceptionWare;
+		httpServiceHostsConfig.setExceptionWare(  exceptionWare);
 	}
 
-	public ExceptionWare getExceptionWareBean() {
-		return exceptionWareBean;
+	public ExceptionWare getExceptionWare() {
+		return exceptionWare;
 	}
 	public void setExceptionWareBean(ExceptionWare exceptionWareBean) {
-		this.exceptionWareBean = exceptionWareBean;
+		this.exceptionWare = exceptionWareBean;
 	}
 	public ClientConfiguration getClientConfiguration() {
 		return clientConfiguration;

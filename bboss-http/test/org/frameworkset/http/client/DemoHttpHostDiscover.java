@@ -15,8 +15,11 @@ package org.frameworkset.http.client;
  * limitations under the License.
  */
 
+import org.frameworkset.spi.assemble.GetProperties;
+import org.frameworkset.spi.remote.http.ClientConfiguration;
 import org.frameworkset.spi.remote.http.HttpHost;
 import org.frameworkset.spi.remote.http.proxy.HttpHostDiscover;
+import org.frameworkset.spi.remote.http.proxy.HttpServiceHostsConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,9 @@ import java.util.List;
 public class DemoHttpHostDiscover extends HttpHostDiscover {
 	private int count = 0;
 	@Override
-	protected List<HttpHost> discover() {
+	protected List<HttpHost> discover(HttpServiceHostsConfig httpServiceHostsConfig,
+									  ClientConfiguration configuration,
+									  GetProperties context) {
 
 		List<HttpHost> hosts = new ArrayList<HttpHost>();
 		HttpHost host = new HttpHost("192.168.137.1:808");
