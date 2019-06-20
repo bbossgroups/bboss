@@ -34,21 +34,35 @@ public class HttpRequestProxyTest {
 	@Before
 	public void startPool(){
 //		HttpRequestProxy.startHttpPools("application.properties");
-		Map configs = new HashMap();
+		/**
+		 * 1.服务健康检查
+		 * 2.服务负载均衡
+		 * 3.服务容灾故障恢复
+		 * 4.服务自动发现（zk，etcd，consul，eureka，db，其他第三方注册中心）
+		 * 配置了两个连接池：default,report
+		 */
+		Map<String,Object> configs = new HashMap<String,Object>();
+		configs.put("http.poolNames","default,report");
 //		configs.put("http.poolNames","report");
 //		configs.put("report.http.health","/health");//health监控检查地址必须配置，否则将不会启动健康检查机制
 //		configs.put("report.http.discoverService","org.frameworkset.http.client.DemoHttpHostDiscover");
 		configs.put("http.health","/health");//health监控检查地址必须配置，否则将不会启动健康检查机制
+//		configs.put("http.hosts","1111:90222,http://1111:90222,https://1111:90222");//health监控检查地址必须配置，否则将不会启动健康检查机制
 		configs.put("http.discoverService","org.frameworkset.http.client.DemoHttpHostDiscover");
+
+
+		configs.put("report.http.health","/health");//health监控检查地址必须配置，否则将不会启动健康检查机制
+//		configs.put("report.http.hosts","1111:90222,http://1111:90222,https://1111:90222");//health监控检查地址必须配置，否则将不会启动健康检查机制
+		configs.put("report.http.discoverService","org.frameworkset.http.client.DemoHttpHostDiscover");
 		HttpRequestProxy.startHttpPools(configs);
 	}
 	@Test
 	public void testGet(){
-		String data = HttpRequestProxy.httpGetforString("/testBBossIndexCrud");
+		String data = HttpRequestProxy.httpGetforString("report","/testBBossIndexCrud");
 		System.out.println(data);
 		do {
 			try {
-				data = HttpRequestProxy.httpGetforString("/testBBossIndexCrud");
+				data = HttpRequestProxy.httpGetforString("report","/testBBossIndexCrud");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -58,12 +72,12 @@ public class HttpRequestProxyTest {
 				break;
 			}
 			try {
-				data = HttpRequestProxy.httpGetforString("/testBBossIndexCrud");
+				data = HttpRequestProxy.httpGetforString("report","/testBBossIndexCrud");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try {
-				data = HttpRequestProxy.httpGetforString("/testBBossIndexCrud");
+				data = HttpRequestProxy.httpGetforString("report","/testBBossIndexCrud");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

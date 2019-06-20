@@ -41,7 +41,11 @@ public class HttpServiceHosts {
 	private long healthCheckInterval = -1l;
 	private String discoverService;
 	private String exceptionWare;
+
+
+
 	private ExceptionWare exceptionWareBean;
+	private HttpHostDiscover hostDiscover;
 	private Map<String, String> authHeaders;
 	protected RoundRobinList serversList;
 	protected List<HttpAddress> addressList;
@@ -107,7 +111,6 @@ public class HttpServiceHosts {
 				if(logger.isInfoEnabled()) {
 					logger.info("HttpProxy server healthCheck disable,you can set HttpProxy http.healthCheckInterval (>0) and http.health in configfile to enabled healthCheck thread.");
 				}
-
 			}
 
 			if(this.discoverService != null && !this.discoverService.equals("")) {
@@ -118,6 +121,7 @@ public class HttpServiceHosts {
 					HttpHostDiscover hostDiscover = httpHostDiscoverClass.newInstance();
 					hostDiscover.setHttpServiceHosts(this);
 					hostDiscover.start();
+					this.hostDiscover = hostDiscover;
 				}
 				catch (Exception e){
 					if(logger.isErrorEnabled()) {
@@ -125,7 +129,7 @@ public class HttpServiceHosts {
 					}
 				}
 			}
-			else {
+			else if(hostDiscover == null){
 				logger.info("Discover  http server is disabled,to enabled set http.discoverService in configfile.");
 			}
 		}
@@ -193,7 +197,7 @@ public class HttpServiceHosts {
 		}
 		if(logger.isInfoEnabled()){
 			StringBuilder info = new StringBuilder();
-			info.append("All Live Http Servers:");
+			info.append("All live Http Servers:");
 			Iterator<Map.Entry<String, HttpAddress>> iterator = this.addressMap.entrySet().iterator();
 			boolean firsted = true;
 			while(iterator.hasNext()){
@@ -288,12 +292,22 @@ public class HttpServiceHosts {
 	public ExceptionWare getExceptionWareBean() {
 		return exceptionWareBean;
 	}
-
+	public void setExceptionWareBean(ExceptionWare exceptionWareBean) {
+		this.exceptionWareBean = exceptionWareBean;
+	}
 	public ClientConfiguration getClientConfiguration() {
 		return clientConfiguration;
 	}
 
 	public void setClientConfiguration(ClientConfiguration clientConfiguration) {
 		this.clientConfiguration = clientConfiguration;
+	}
+
+	public HttpHostDiscover getHostDiscover() {
+		return hostDiscover;
+	}
+
+	public void setHostDiscover(HttpHostDiscover hostDiscover) {
+		this.hostDiscover = hostDiscover;
 	}
 }

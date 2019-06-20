@@ -17,4 +17,6 @@ package org.frameworkset.spi.assemble;/*
 public interface GetProperties {
 	public String getExternalProperty(String property);
 	public String getExternalProperty(String property,String defaultValue);
+	public Object getExternalObjectProperty(String property);
+	public Object getExternalObjectProperty(String property,Object defaultValue);
 }

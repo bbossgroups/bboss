@@ -17,15 +17,36 @@ package org.frameworkset.spi.assemble;/*
 import java.util.Map;
 
 public class MapGetProperties implements GetProperties{
-	private Map<String,String> values;
-	public MapGetProperties(Map<String,String> values){
+	private Map<String,Object> values;
+	public MapGetProperties(Map<String,Object> values){
 		this.values = values;
 	}
 	public String getExternalProperty(String property){
-		return values.get(property);
+		Object value = values.get(property);
+		if(value == null)
+			return null;
+
+		return value.toString();
 	}
 	public String getExternalProperty(String property, String defaultValue){
-		String value = values.get(property);
+		Object value = values.get(property);
+
+		if(value != null)
+			return value.toString();
+		else
+			return defaultValue;
+	}
+
+	public Object getExternalObjectProperty(String property){
+		Object value = values.get(property);
+		if(value == null)
+			return null;
+
+		return value;
+	}
+	public Object getExternalObjectProperty(String property, Object defaultValue){
+		Object value = values.get(property);
+
 		if(value != null)
 			return value;
 		else

@@ -1158,6 +1158,22 @@ public class ServiceProviderManager {
 			return defaultValue;
 	}
 
+	public Object getExternalObjectProperty(String property,Object defaultValue)
+	{
+		String value = null;
+		for(int i = 0;traceFiles != null &&  i < this.traceFiles.size();i ++)
+		{
+			LinkConfigFile f = traceFiles.get(i);
+			value = f.getConfigPropertiesFile() != null?f.getConfigPropertiesFile().getPropertyFromSelf2ndSons(property):null;
+			if(value != null)
+				break;
+		}
+		if(value != null)
+			return value;
+		else
+			return defaultValue;
+	}
+
  
 	public String getVarpre(){
 		return "${";

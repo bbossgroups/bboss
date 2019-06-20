@@ -72,6 +72,23 @@ public class PropertiesContainer implements GetProperties{
 			return defaultValue;
 	}
 
+	public Object getExternalObjectProperty(String property)
+	{
+
+		return getPropertyFromSelf2ndSons(property);
+	}
+	public Object getExternalObjectProperty(String property,Object defaultValue)
+	{
+		String value = getPropertyFromSelf2ndSons(property);
+
+		if(value != null)
+			return value;
+		else
+			return defaultValue;
+	}
+
+
+
 	public void addConfigPropertiesFromPlugin(String configPropertiesPlugin, LinkConfigFile linkfile, BaseApplicationContext applicationContext)
 	{
 

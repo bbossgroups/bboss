@@ -33,6 +33,7 @@ public class DemoHttpHostDiscover extends HttpHostDiscover {
 	private int count = 0;
 	@Override
 	protected List<HttpHost> discover() {
+
 		List<HttpHost> hosts = new ArrayList<HttpHost>();
 		HttpHost host = new HttpHost("192.168.137.1:808");
 		hosts.add(host);

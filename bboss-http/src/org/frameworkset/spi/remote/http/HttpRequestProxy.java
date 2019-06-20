@@ -51,7 +51,7 @@ public class HttpRequestProxy {
     public static void startHttpPools(String configFile){
         HttpRequestUtil.startHttpPools(configFile);
     }
-    public static void startHttpPools(Map configs){
+    public static void startHttpPools(Map<String,Object> configs){
         HttpRequestUtil.startHttpPools(configs);
     }
 

@@ -2547,7 +2547,18 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	{
 		return providerManager.getExternalProperty(property);
 	}
-
+	/**
+	 * 获取外部属性配置文件中的属性值
+	 * @param property
+	 * @return
+	 */
+	public Object getExternalObjectProperty(String property)
+	{
+		return providerManager.getExternalProperty(property);
+	}
+	public Object getExternalObjectProperty(String property,Object defaultValue){
+		return providerManager.getExternalObjectProperty(property,defaultValue);
+	}
 	/**
 	 * 获取外部属性配置文件中的属性值,如果属性值为空，则返回defaultValue
 	 * @param property

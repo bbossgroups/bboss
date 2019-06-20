@@ -57,7 +57,7 @@ public class HttpRequestUtil {
     public static void startHttpPools(String configFile){
         ClientConfiguration.startHttpPools(configFile);
     }
-    public static void startHttpPools(Map configs){
+    public static void startHttpPools(Map<String,Object>  configs){
         ClientConfiguration.startHttpPools(  configs);
     }
     static HttpClient getHttpClient() throws Exception {

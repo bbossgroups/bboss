@@ -28,6 +28,8 @@ import org.frameworkset.spi.*;
 import org.frameworkset.spi.assemble.GetProperties;
 import org.frameworkset.spi.assemble.MapGetProperties;
 import org.frameworkset.spi.assemble.PropertiesContainer;
+import org.frameworkset.spi.remote.http.proxy.ExceptionWare;
+import org.frameworkset.spi.remote.http.proxy.HttpHostDiscover;
 import org.frameworkset.spi.remote.http.proxy.HttpServiceHosts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -351,6 +353,22 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 		return _value;
 	}
 
+	private static Object _getObjectValue(String poolName, String propertyName, GetProperties context, Object defaultValue) throws Exception {
+		Object _value = null;
+		if (poolName.equals("default")) {
+			_value =  context.getExternalObjectProperty(propertyName);
+			if (_value == null)
+				_value = context.getExternalObjectProperty(poolName + "." + propertyName);
+
+		} else {
+			_value = context.getExternalProperty(poolName + "." + propertyName);
+		}
+		if (_value == null) {
+			return defaultValue;
+		}
+		return _value;
+	}
+
 	private static HostnameVerifier _getHostnameVerifier(String hostnameVerifier) throws Exception {
 
 		if (hostnameVerifier == null) {
@@ -409,7 +427,7 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 		}
 	}
 
-	public static void startHttpPools(Map configs){
+	public static void startHttpPools(Map<String,Object>  configs){
 		if(configs == null || configs.size() == 0)
 		{
 			if(logger.isWarnEnabled()) {
@@ -569,13 +587,24 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 			String health = ClientConfiguration._getStringValue(name, "http.health", context, null);
 
 			httpServiceHosts.setHealth(health);
-			String discoverService = ClientConfiguration._getStringValue(name, "http.discoverService", context, null);
+			Object discoverService = ClientConfiguration._getObjectValue(name, "http.discoverService", context, null);
+			if(discoverService != null) {
+				if(discoverService instanceof String)
+					httpServiceHosts.setDiscoverService((String)discoverService);
+				else if(discoverService instanceof HttpHostDiscover){
+					httpServiceHosts.setHostDiscover((HttpHostDiscover)discoverService);
+				}
+			}
 
-			httpServiceHosts.setDiscoverService(discoverService);
+			Object exceptionWare = ClientConfiguration._getObjectValue(name, "http.exceptionWare", context, null);
+			if(exceptionWare != null) {
+				if(exceptionWare instanceof String)
+					httpServiceHosts.setExceptionWare((String)exceptionWare);
+				else if(exceptionWare instanceof ExceptionWare){
+					httpServiceHosts.setExceptionWareBean((ExceptionWare)exceptionWare);
+				}
 
-			String exceptionWare = ClientConfiguration._getStringValue(name, "http.exceptionWare", context, null);
-
-			httpServiceHosts.setExceptionWare(exceptionWare);
+			}
 			String hosts = ClientConfiguration._getStringValue(name, "http.hosts", context, null);
 
 			httpServiceHosts.setHosts(hosts);
