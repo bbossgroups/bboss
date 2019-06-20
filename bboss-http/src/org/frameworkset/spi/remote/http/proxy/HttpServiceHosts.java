@@ -99,6 +99,9 @@ public class HttpServiceHosts {
 					}
 				}
 			}
+			else if(this.exceptionWareBean != null){
+				exceptionWareBean.setHttpServiceHosts(this);
+			}
 
 			if(healthCheckInterval > 0 && this.health != null && !this.health.equals("")) {
 				if(logger.isInfoEnabled()) {
@@ -131,6 +134,10 @@ public class HttpServiceHosts {
 			}
 			else if(hostDiscover == null){
 				logger.info("Discover  http server is disabled,to enabled set http.discoverService in configfile.");
+			}
+			else{
+				hostDiscover.setHttpServiceHosts(this);
+				hostDiscover.start();
 			}
 		}
 	}
