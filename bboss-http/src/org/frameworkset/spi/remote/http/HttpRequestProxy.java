@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.frameworkset.spi.remote.http;
 
 import com.frameworkset.util.SimpleStringUtil;
