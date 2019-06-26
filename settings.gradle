@@ -13,5 +13,5 @@ include 'bboss-event'
 include 'bboss-websocket'
 include 'bboss-htmlparser'
 include 'bboss-tabpane'
-include 'bboss-http'
+
 
