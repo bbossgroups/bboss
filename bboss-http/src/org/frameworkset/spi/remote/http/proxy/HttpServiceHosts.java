@@ -49,6 +49,7 @@ public class HttpServiceHosts {
 	protected List<HttpAddress> addressList;
 	private HealthCheck healthCheck;
 	private Map<String,HttpAddress> addressMap ;
+	private String routing;
 
 	private ClientConfiguration clientConfiguration;
 	public HttpServiceHosts(){
@@ -68,86 +69,86 @@ public class HttpServiceHosts {
 	}
 	public void after(String httpPoolName, GetProperties context){
 //		if(hosts != null && !hosts.trim().equals(""))
-		{
-			addressList = new ArrayList<HttpAddress>();
-			addressMap = new HashMap<String,HttpAddress>();
-			if(httpServiceHostsConfig.getHosts() != null && !httpServiceHostsConfig.getHosts().trim().equals("")) {
-				String[] hostNames = httpServiceHostsConfig.getHosts().split(",");
-				for (String host : hostNames) {
-					HttpAddress esAddress = new HttpAddress(host.trim(), httpServiceHostsConfig.getHealth());
-					addressList.add(esAddress);
-					addressMap.put(esAddress.getAddress(), esAddress);
-				}
-			}
-			serversList = new RoundRobinList(addressList);
-			if (httpServiceHostsConfig.getAuthAccount() != null && !httpServiceHostsConfig.getAuthAccount().equals("")) {
-				authHeaders = new HashMap<String, String>();
-				authHeaders.put("Authorization", getHeader(httpServiceHostsConfig.getAuthAccount(), httpServiceHostsConfig.getAuthPassword()));
-			}
-			if(httpServiceHostsConfig.getExceptionWare() != null){
-				try {
-					Class<ExceptionWare> exceptionWareClass = (Class<ExceptionWare>) Class.forName(httpServiceHostsConfig.getExceptionWare().trim());
-					ExceptionWare exceptionWare_ = exceptionWareClass.newInstance();
-					exceptionWare_.setHttpServiceHosts(this);
-					this.exceptionWare = exceptionWare_;
-				}
-				catch (Exception e){
-					if(logger.isErrorEnabled()) {
-						logger.error(new StringBuilder().append(" Http pool[")
-								.append(getClientConfiguration().getBeanName()).append("]")
-						.append("  ExceptionWare init failed:").toString(), e);
-					}
-				}
-			}
-			else if(this.exceptionWare != null){
-				exceptionWare.setHttpServiceHosts(this);
-			}
 
-			if(httpServiceHostsConfig.getHealthCheckInterval() > 0 && httpServiceHostsConfig.getHealth() != null && !this.httpServiceHostsConfig.getHealth().equals("")) {
-				if(logger.isInfoEnabled()) {
-					logger.info(new StringBuilder().append("Start Http pool[")
-								.append(getClientConfiguration().getBeanName()).append("]")
-						.append(" HttpProxy server healthCheck thread,you can set http.healthCheckInterval=-1 in config file to disable healthCheck thread.").toString());
-				}
-				healthCheck = new HealthCheck(httpPoolName,addressList, httpServiceHostsConfig.getHealthCheckInterval(),authHeaders);
-				healthCheck.run();
-			}
-			else {
-				if(logger.isInfoEnabled()) {
-					logger.info(new StringBuilder().append("HttpProxy server Http pool[")
-								.append(getClientConfiguration().getBeanName()).append("]")
-						.append(" healthCheck disable,you can set HttpProxy http.healthCheckInterval (>0) and http.health in configfile to enabled healthCheck thread.").toString());
-				}
-			}
-
-			if(httpServiceHostsConfig.getDiscoverService() != null && !this.httpServiceHostsConfig.getDiscoverService().equals("")) {
-				logger.info(new StringBuilder().append("Start Http pool[")
-								.append(getClientConfiguration().getBeanName()).append("]")
-						.append(" discoverHost thread,to distabled set http.discoverService to null in configfile.").toString());
-
-				try {
-					Class<HttpHostDiscover> httpHostDiscoverClass = (Class<HttpHostDiscover>) Class.forName(this.httpServiceHostsConfig.getDiscoverService());
-					HttpHostDiscover hostDiscover = httpHostDiscoverClass.newInstance();
-					hostDiscover.setHttpServiceHosts(this);
-					hostDiscover.start();
-					this.hostDiscover = hostDiscover;
-				}
-				catch (Exception e){
-					if(logger.isErrorEnabled()) {
-						logger.error(new StringBuilder().append("Start Http pool[")
-								.append(getClientConfiguration().getBeanName()).append("]").append(" discovery service failed:").toString(), e);
-					}
-				}
-			}
-			else if(hostDiscover == null){
-				logger.info(new StringBuilder().append("Discover Http pool[")
-								.append(getClientConfiguration().getBeanName()).append("]").append(" is disabled,to enabled set http.discoverService in configfile.").toString());
-			}
-			else{
-				hostDiscover.setHttpServiceHosts(this);
-				hostDiscover.start();
+		addressList = new ArrayList<HttpAddress>();
+		addressMap = new HashMap<String,HttpAddress>();
+		if(httpServiceHostsConfig.getHosts() != null && !httpServiceHostsConfig.getHosts().trim().equals("")) {
+			String[] hostNames = httpServiceHostsConfig.getHosts().split(",");
+			for (String host : hostNames) {
+				HttpAddress esAddress = new HttpAddress(host.trim(), httpServiceHostsConfig.getHealth());
+				addressList.add(esAddress);
+				addressMap.put(esAddress.getAddress(), esAddress);
 			}
 		}
+		serversList = new RoundRobinList(addressList);
+		if (httpServiceHostsConfig.getAuthAccount() != null && !httpServiceHostsConfig.getAuthAccount().equals("")) {
+			authHeaders = new HashMap<String, String>();
+			authHeaders.put("Authorization", getHeader(httpServiceHostsConfig.getAuthAccount(), httpServiceHostsConfig.getAuthPassword()));
+		}
+		if(httpServiceHostsConfig.getExceptionWare() != null){
+			try {
+				Class<ExceptionWare> exceptionWareClass = (Class<ExceptionWare>) Class.forName(httpServiceHostsConfig.getExceptionWare().trim());
+				ExceptionWare exceptionWare_ = exceptionWareClass.newInstance();
+				exceptionWare_.setHttpServiceHosts(this);
+				this.exceptionWare = exceptionWare_;
+			}
+			catch (Exception e){
+				if(logger.isErrorEnabled()) {
+					logger.error(new StringBuilder().append(" Http pool[")
+							.append(getClientConfiguration().getBeanName()).append("]")
+					.append("  ExceptionWare init failed:").toString(), e);
+				}
+			}
+		}
+		else if(this.exceptionWare != null){
+			exceptionWare.setHttpServiceHosts(this);
+		}
+
+		if(httpServiceHostsConfig.getHealthCheckInterval() > 0 && httpServiceHostsConfig.getHealth() != null && !this.httpServiceHostsConfig.getHealth().equals("")) {
+			if(logger.isInfoEnabled()) {
+				logger.info(new StringBuilder().append("Start Http pool[")
+							.append(getClientConfiguration().getBeanName()).append("]")
+					.append(" HttpProxy server healthCheck thread,you can set http.healthCheckInterval=-1 in config file to disable healthCheck thread.").toString());
+			}
+			healthCheck = new HealthCheck(httpPoolName,addressList, httpServiceHostsConfig.getHealthCheckInterval(),authHeaders);
+			healthCheck.run();
+		}
+		else {
+			if(logger.isInfoEnabled()) {
+				logger.info(new StringBuilder().append("HttpProxy server Http pool[")
+							.append(getClientConfiguration().getBeanName()).append("]")
+					.append(" healthCheck disable,you can set HttpProxy http.healthCheckInterval (>0) and http.health in configfile to enabled healthCheck thread.").toString());
+			}
+		}
+
+		if(httpServiceHostsConfig.getDiscoverService() != null && !this.httpServiceHostsConfig.getDiscoverService().equals("")) {
+			logger.info(new StringBuilder().append("Start Http pool[")
+							.append(getClientConfiguration().getBeanName()).append("]")
+					.append(" discoverHost thread,to distabled set http.discoverService to null in configfile.").toString());
+
+			try {
+				Class<HttpHostDiscover> httpHostDiscoverClass = (Class<HttpHostDiscover>) Class.forName(this.httpServiceHostsConfig.getDiscoverService());
+				HttpHostDiscover hostDiscover = httpHostDiscoverClass.newInstance();
+				hostDiscover.setHttpServiceHosts(this);
+				hostDiscover.start();
+				this.hostDiscover = hostDiscover;
+			}
+			catch (Exception e){
+				if(logger.isErrorEnabled()) {
+					logger.error(new StringBuilder().append("Start Http pool[")
+							.append(getClientConfiguration().getBeanName()).append("]").append(" discovery service failed:").toString(), e);
+				}
+			}
+		}
+		else if(hostDiscover == null){
+			logger.info(new StringBuilder().append("Discover Http pool[")
+							.append(getClientConfiguration().getBeanName()).append("]").append(" is disabled,to enabled set http.discoverService in configfile.").toString());
+		}
+		else{
+			hostDiscover.setHttpServiceHosts(this);
+			hostDiscover.start();
+		}
+
 	}
 
 
@@ -306,5 +307,13 @@ public class HttpServiceHosts {
 
 	public void setHostDiscover(HttpHostDiscover hostDiscover) {
 		this.hostDiscover = hostDiscover;
+	}
+
+	public String getRouting() {
+		return routing;
+	}
+
+	public void setRouting(String routing) {
+		this.routing = routing;
 	}
 }

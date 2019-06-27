@@ -585,6 +585,11 @@ public class ClientConfiguration implements InitializingBean, BeanNameAware {
 			String authPassword = ClientConfiguration._getStringValue(name, "http.authPassword", context, null);
 
 			httpServiceHosts.setAuthPassword(authPassword);
+
+			String routing = ClientConfiguration._getStringValue(name, "http.routing", context, null);
+
+			httpServiceHosts.setRouting(routing);
+
 			String health = ClientConfiguration._getStringValue(name, "http.health", context, null);
 
 			httpServiceHosts.setHealth(health);

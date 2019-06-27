@@ -2725,6 +2725,28 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 
 
 	}
+
+	public static <T> List<T> json2ListObject(InputStream jsonString,Class<T> beanType) {
+		JsonTypeReference<List<T>> ref = new JsonTypeReference<List<T>>() {
+		};
+		return json2ObjectWithType(jsonString,ref,true);
+
+
+	}
+	public static <T> Set<T> json2LSetObject(InputStream jsonString,Class<T> beanType) {
+		JsonTypeReference<Set<T>> ref = new JsonTypeReference<Set<T>>() {
+		};
+		return json2ObjectWithType(jsonString,ref,true);
+
+
+	}
+	public static <K,T> Map<K,T> json2LHashObject(InputStream jsonString,Class<K> keyType,Class<T> beanType) {
+		JsonTypeReference<Map<K,T>> ref = new JsonTypeReference<Map<K,T>>() {
+		};
+		return json2ObjectWithType(jsonString,ref,true);
+
+
+	}
     
     public static <T> T json2ObjectWithType(InputStream json,JsonTypeReference<T> ref) {
 		return json2ObjectWithType(json,ref,true);

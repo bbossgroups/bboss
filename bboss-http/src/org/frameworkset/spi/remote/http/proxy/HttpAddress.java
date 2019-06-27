@@ -4,6 +4,7 @@ public class HttpAddress {
 	private String address;
 	private String healthPath;
 	private transient Thread healthCheck;
+	private String routing;
 	/**
 	 * 服务器状态：0 正常 1 异常 2 removed
 	 */
@@ -25,13 +26,32 @@ public class HttpAddress {
 			address = "http://" + address;
 		}
 		this.address = address;
+		String[] infos = address.split("|");
+
+		if(infos.length == 2){
+			this.address = infos[0];
+			this.routing = infos[1];
+		}
+		else{
+			this.address = infos[0];
+		}
 		this.healthPath = this.getPath(address,"/");
 	}
+
 	public HttpAddress(String address,String healthPath){
 		if (!address.startsWith("http://") && !address.startsWith("https://")) {
 			address = "http://" + address;
 		}
-		this.address = address;
+		String[] infos = address.split("|");
+
+		if(infos.length == 2){
+			this.address = infos[0];
+			this.routing = infos[1];
+		}
+		else{
+			this.address = infos[0];
+		}
+//		this.address = address;
 		if(healthPath != null) {
 			this.healthPath = this.getPath(address, healthPath.trim());
 		}

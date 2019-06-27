@@ -30,8 +30,8 @@ import org.apache.http.util.Args;
 import org.apache.http.util.LangUtils;
 
 import java.io.Serializable;
-import java.net.InetAddress;
-import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Holds all of the variables needed to describe an HTTP connection to a host.
@@ -44,86 +44,13 @@ public final class HttpHost implements Cloneable, Serializable {
 
 	private static final long serialVersionUID = -7529410654042457626L;
 
-	/** The default scheme is "http". */
-	public static final String DEFAULT_SCHEME_NAME = "http";
 
-	/** The host to use. */
-	protected final String hostname;
-
-	/** The lowercase host, for {@link #equals} and {@link #hashCode}. */
-	protected final String lcHostname;
-
-
-	/** The port to use, defaults to -1 if not set. */
-	protected final int port;
-
-	/** The scheme (lowercased) */
-	protected final String schemeName;
-
-	protected final InetAddress address;
 
 	protected String hostAddress;
+	protected Map<String,Object> attributes;
+	protected String routing;
 
-	/**
-	 * Creates {@code HttpHost} instance with the given scheme, hostname and port.
-	 *
-	 * @param hostname  the hostname (IP or DNS name)
-	 * @param port      the port number.
-	 *                  {@code -1} indicates the scheme default port.
-	 * @param scheme    the name of the scheme.
-	 *                  {@code null} indicates the
-	 *                  {@link #DEFAULT_SCHEME_NAME default scheme}
-	 */
-	public HttpHost(final String hostname, final int port, final String scheme) {
-		super();
-		this.hostname   = Args.containsNoBlanks(hostname, "Host name");
-		this.lcHostname = hostname.toLowerCase(Locale.ROOT);
-		if (scheme != null) {
-			this.schemeName = scheme.toLowerCase(Locale.ROOT);
-		} else {
-			this.schemeName = DEFAULT_SCHEME_NAME;
-		}
-		this.port = port;
-		this.address = null;
-	}
 
-	/**
-	 * Creates {@code HttpHost} instance with the default scheme and the given hostname and port.
-	 *
-	 * @param hostname  the hostname (IP or DNS name)
-	 * @param port      the port number.
-	 *                  {@code -1} indicates the scheme default port.
-	 */
-	public HttpHost(final String hostname, final int port) {
-		this(hostname, port, null);
-	}
-
-	/**
-	 * Creates {@code HttpHost} instance from string. Text may not contain any blanks.
-	 *
-	 * @since 4.4
-	 */
-	public static HttpHost create(final String s) {
-		Args.containsNoBlanks(s, "HTTP Host");
-		String text = s;
-		String scheme = null;
-		final int schemeIdx = text.indexOf("://");
-		if (schemeIdx > 0) {
-			scheme = text.substring(0, schemeIdx);
-			text = text.substring(schemeIdx + 3);
-		}
-		int port = -1;
-		final int portIdx = text.lastIndexOf(":");
-		if (portIdx > 0) {
-			try {
-				port = Integer.parseInt(text.substring(portIdx + 1));
-			} catch (final NumberFormatException ex) {
-				throw new IllegalArgumentException("Invalid HTTP host: " + text);
-			}
-			text = text.substring(0, portIdx);
-		}
-		return new HttpHost(text, port, scheme);
-	}
 
 	/**
 	 * Creates {@code HttpHost} instance with the default scheme and port and the given hostname.
@@ -131,7 +58,6 @@ public final class HttpHost implements Cloneable, Serializable {
 	 * @param hostname  the hostname (IP or DNS name)
 	 */
 	public HttpHost(final String hostname) {
-		this(hostname, -1, null);
 		if (!hostname.startsWith("http://") && !hostname.startsWith("https://")) {
 			this.hostAddress = "http://" + hostname;
 		}
@@ -140,73 +66,9 @@ public final class HttpHost implements Cloneable, Serializable {
 		}
 	}
 
-	/**
-	 * Creates {@code HttpHost} instance with the given scheme, inet address and port.
-	 *
-	 * @param address   the inet address.
-	 * @param port      the port number.
-	 *                  {@code -1} indicates the scheme default port.
-	 * @param scheme    the name of the scheme.
-	 *                  {@code null} indicates the
-	 *                  {@link #DEFAULT_SCHEME_NAME default scheme}
-	 *
-	 * @since 4.3
-	 */
-	public HttpHost(final InetAddress address, final int port, final String scheme) {
-		this(Args.notNull(address,"Inet address"), address.getHostName(), port, scheme);
-	}
-	/**
-	 * Creates a new {@link HttpHost HttpHost}, specifying all values.
-	 * Constructor for HttpHost.
-	 *
-	 * @param address   the inet address.
-	 * @param hostname   the hostname (IP or DNS name)
-	 * @param port      the port number.
-	 *                  {@code -1} indicates the scheme default port.
-	 * @param scheme    the name of the scheme.
-	 *                  {@code null} indicates the
-	 *                  {@link #DEFAULT_SCHEME_NAME default scheme}
-	 *
-	 * @since 4.4
-	 */
-	public HttpHost(final InetAddress address, final String hostname, final int port, final String scheme) {
-		super();
-		this.address = Args.notNull(address, "Inet address");
-		this.hostname = Args.notNull(hostname, "Hostname");
-		this.lcHostname = this.hostname.toLowerCase(Locale.ROOT);
-		if (scheme != null) {
-			this.schemeName = scheme.toLowerCase(Locale.ROOT);
-		} else {
-			this.schemeName = DEFAULT_SCHEME_NAME;
-		}
-		this.port = port;
-	}
 
-	/**
-	 * Creates {@code HttpHost} instance with the default scheme and the given inet address
-	 * and port.
-	 *
-	 * @param address   the inet address.
-	 * @param port      the port number.
-	 *                  {@code -1} indicates the scheme default port.
-	 *
-	 * @since 4.3
-	 */
-	public HttpHost(final InetAddress address, final int port) {
-		this(address, port, null);
-	}
 
-	/**
-	 * Creates {@code HttpHost} instance with the default scheme and port and the given inet
-	 * address.
-	 *
-	 * @param address   the inet address.
-	 *
-	 * @since 4.3
-	 */
-	public HttpHost(final InetAddress address) {
-		this(address, -1, null);
-	}
+
 
 	/**
 	 * Copy constructor for {@link HttpHost HttpHost}.
@@ -216,92 +78,20 @@ public final class HttpHost implements Cloneable, Serializable {
 	public HttpHost (final HttpHost httphost) {
 		super();
 		Args.notNull(httphost, "HTTP host");
-		this.hostname   = httphost.hostname;
-		this.lcHostname = httphost.lcHostname;
-		this.schemeName = httphost.schemeName;
-		this.port = httphost.port;
-		this.address = httphost.address;
-	}
 
-	/**
-	 * Returns the host name.
-	 *
-	 * @return the host name (IP or DNS name)
-	 */
-	public String getHostName() {
-		return this.hostname;
-	}
-
-	/**
-	 * Returns the port.
-	 *
-	 * @return the host port, or {@code -1} if not set
-	 */
-	public int getPort() {
-		return this.port;
-	}
-
-	/**
-	 * Returns the scheme name.
-	 *
-	 * @return the scheme name
-	 */
-	public String getSchemeName() {
-		return this.schemeName;
-	}
-
-	/**
-	 * Returns the inet address if explicitly set by a constructor,
-	 *   {@code null} otherwise.
-	 * @return the inet address
-	 *
-	 * @since 4.3
-	 */
-	public InetAddress getAddress() {
-		return this.address;
-	}
-
-	/**
-	 * Return the host URI, as a string.
-	 *
-	 * @return the host URI
-	 */
-	public String toURI() {
-		final StringBuilder buffer = new StringBuilder();
-		buffer.append(this.schemeName);
-		buffer.append("://");
-		buffer.append(this.hostname);
-		if (this.port != -1) {
-			buffer.append(':');
-			buffer.append(Integer.toString(this.port));
-		}
-		return buffer.toString();
+		this.hostAddress = httphost.hostAddress;
+		this.attributes = httphost.attributes;
+		this.routing = httphost.routing;
 	}
 
 
-	/**
-	 * Obtains the host string, without scheme prefix.
-	 *
-	 * @return  the host string, for example {@code localhost:8080}
-	 */
-	public String toHostString() {
-		if (this.port != -1) {
-			//the highest port number is 65535, which is length 6 with the addition of the colon
-			final StringBuilder buffer = new StringBuilder(this.hostname.length() + 6);
-			buffer.append(this.hostname);
-			buffer.append(":");
-			buffer.append(Integer.toString(this.port));
-			return buffer.toString();
-		}
-		return this.hostname;
-	}
 
 
 	@Override
 	public String toString() {
-		if(this.hostAddress != null)
+
 			return hostAddress;
-		return toURI();
+
 	}
 
 
@@ -312,10 +102,7 @@ public final class HttpHost implements Cloneable, Serializable {
 		}
 		if (obj instanceof HttpHost) {
 			final HttpHost that = (HttpHost) obj;
-			return this.lcHostname.equals(that.lcHostname)
-					&& this.port == that.port
-					&& this.schemeName.equals(that.schemeName)
-					&& (this.address==null ? that.address== null : this.address.equals(that.address));
+			return this.hostAddress.equals(that.hostAddress);
 		}
 		return false;
 	}
@@ -326,17 +113,33 @@ public final class HttpHost implements Cloneable, Serializable {
 	@Override
 	public int hashCode() {
 		int hash = LangUtils.HASH_SEED;
-		hash = LangUtils.hashCode(hash, this.lcHostname);
-		hash = LangUtils.hashCode(hash, this.port);
-		hash = LangUtils.hashCode(hash, this.schemeName);
-		if (address!=null) {
-			hash = LangUtils.hashCode(hash, address);
-		}
+		hash = LangUtils.hashCode(hash, this.hostAddress);
+
 		return hash;
 	}
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
+	}
+	public void addAttribute(String key,Object value){
+		if(attributes == null){
+			attributes = new HashMap<String, Object>();
+		}
+		attributes.put(key,value);
+	}
+	public Object getAttribute(String key){
+		if(attributes != null) {
+			return attributes.get(key);
+		}
+		else{
+			return null;
+		}
+	}
+	public String getRouting(){
+		return this.routing;
+	}
+	public void setRouting(String routing){
+		this.routing = routing;
 	}
 }
