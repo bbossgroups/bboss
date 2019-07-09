@@ -355,6 +355,14 @@ public class TestVaribleHandler
     	URLStruction ss = VariableHandler.parserTempateStruction(sql);
     	System.out.println();
     }
+
+	@org.junit.Test
+	public void testListBeanField3()
+	{
+		String sql = "#[orders],#[orders2]";
+		URLStruction ss = VariableHandler.parserTempateStruction(sql);
+		System.out.println();
+	}
     	
     
 }

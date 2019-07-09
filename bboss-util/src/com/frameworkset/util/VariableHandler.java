@@ -520,6 +520,8 @@ public class VariableHandler
 	public static URLStruction parserTempateStruction(String sql){
 		return VariableHandler._parserStruction(sql,urlStructionBuiler);
 	}
+
+
 	/**
 	 * 将包含变量的sql语句解析成常量字符串列表和变量名称两个列表
 	 * 变量的分界符为#[和],如果url中没有包含变量那么返回null值
