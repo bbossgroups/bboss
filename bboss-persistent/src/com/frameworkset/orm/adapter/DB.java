@@ -1146,6 +1146,10 @@ public abstract class DB implements IDMethod, Platform {
 		}
 	}
 
+	public  boolean isOracleTimestamp(int sqlType){
+		return false;
+	}
+
 	public static class PagineSql {
 		private long offset;
 		private int maxsize;

@@ -1,9 +1,9 @@
 package org.frameworkset.spi.assemble;
 
 import com.frameworkset.util.SimpleStringUtil;
-import com.frameworkset.util.VariableHandler;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.plugin.PropertiesFilePlugin;
+import org.frameworkset.spi.support.EnvUtil;
 import org.frameworkset.util.io.ClassPathResource;
 import org.frameworkset.util.tokenizer.TextGrammarParser;
 import org.frameworkset.util.tokenizer.TextGrammarParser.GrammarToken;
@@ -11,7 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 public class PropertiesContainer implements GetProperties{
     protected List<String> configPropertiesFiles;
@@ -35,6 +38,11 @@ public class PropertiesContainer implements GetProperties{
 		for(String file_:configPropertiesFiles) {
 			this.configPropertiesFiles.add(file_);
 			evalfile(file_, linkfile);
+		}
+		//解析属性值中的环境变量
+		Map evaledProperties = EnvUtil.evalEnvVariable(allProperties);
+		if(evaledProperties != null){
+			allProperties.putAll(evaledProperties);
 		}
     	if(linkfile != null)
     		loopback(linkfile);
@@ -85,71 +93,6 @@ public class PropertiesContainer implements GetProperties{
 			return defaultValue;
 	}
 
-	private void evalStruction(StringBuilder builder,VariableHandler.URLStruction templateStruction,Properties properties,String parentName){
-		List<String> tokens = templateStruction.getTokens();
-		List<VariableHandler.Variable> variables = templateStruction.getVariables();
-		for(int i = 0; i < tokens.size(); i ++){
-			builder.append(tokens.get(i));
-			if(i < variables.size()) {
-				VariableHandler.Variable variable = variables.get(i);
-				if(parentName.equals(variable.getVariableName())){
-					throw new IllegalArgumentException("Eval property " + variable.getVariableName() + " for " + parentName + " value failed:loop reference ocour." );
-				}
-				getSystemEnv(builder,variable.getVariableName(), parentName, properties);
-
-
-			}
-
-		}
-
-	}
-	/**
-	 * 首先从配置文件中查找属性值，然后从jvm系统熟悉和系统环境变量中查找属性值
-	 * @param property
-	 * @return
-	 */
-	private void getSystemEnv(StringBuilder propertiesValue,String property,String parentName,Properties properties)
-	{
-		Object value = properties.get( property);
-
-		if(value != null){
-			String value_ = String.valueOf(value);
-			VariableHandler.URLStruction urlStruction = VariableHandler.parserTempateStruction(value_);
-			if(urlStruction == null){
-				propertiesValue.append( value_);
-			}
-			else {
-				if (!urlStruction.hasVars()) {
-					propertiesValue.append(value_);
-				} else {
-					evalStruction(propertiesValue, urlStruction, properties, property);
-				}
-			}
-
-		}
-		else{ //Get value from jvm system propeties,just like -Dproperty=value
-//			Properties pros = System.getProperties();
-			String value_ =System.getProperty(property);
-			if(value_ == null) {
-				//Get value from os env ,just like property=value in user profile
-				value_ = System.getenv(property);
-
-			}
-			if(value_ != null){
-				propertiesValue.append(value_);
-			}
-			else {
-				if (parentName == null) {
-					throw new IllegalArgumentException("Eval property " + property + " value failed:not set variable value in config file or system environment.");
-				}
-				else {
-					if(log.isWarnEnabled())
-						log.warn("Eval property " + property + " for " + parentName + " value failed:not set variable value in config file or system environment.");
-					propertiesValue.append("#[").append(property).append("]");
-				}
-			}
-		}
-	}
 
 
 	public void addConfigPropertiesFromPlugin(String configPropertiesPlugin, LinkConfigFile linkfile, BaseApplicationContext applicationContext)
@@ -178,6 +121,10 @@ public class PropertiesContainer implements GetProperties{
 						if (configProperties != null && configProperties.size() > 0) {
 							allProperties.putAll(configProperties);
 						}
+					}
+					Map evaledProperties = EnvUtil.evalEnvVariable(allProperties);
+					if(evaledProperties != null){
+						allProperties.putAll(evaledProperties);
 					}
 				} finally {
 					propertiesFilePlugin.restore();
@@ -403,23 +350,24 @@ public class PropertiesContainer implements GetProperties{
 				properties.load(read);
 			}
 			if(!properties.isEmpty()) {
-				Iterator<Map.Entry<Object, Object>> temp = properties.entrySet().iterator();
-				StringBuilder builder = new StringBuilder();
-				while(temp.hasNext()) {
-					Map.Entry<Object, Object> entry = temp.next();
-					String key = (String)entry.getKey();
-					try {
-						this.getSystemEnv(builder, key, null, properties);
-						allProperties.put(key, builder.toString());
-						builder.setLength(0);
-					}
-					catch (Throwable e){
-						if(log.isWarnEnabled()){
-							log.warn("",e);
-						}
-					}
-
-				}
+				allProperties.putAll(properties);
+//				Iterator<Map.Entry<Object, Object>> temp = properties.entrySet().iterator();
+//				StringBuilder builder = new StringBuilder();
+//				while(temp.hasNext()) {
+//					Map.Entry<Object, Object> entry = temp.next();
+//					String key = (String)entry.getKey();
+//					try {
+//						EnvUtil.getSystemEnv(builder, key, null, properties);
+//						allProperties.put(key, builder.toString());
+//						builder.setLength(0);
+//					}
+//					catch (Throwable e){
+//						if(log.isWarnEnabled()){
+//							log.warn("",e);
+//						}
+//					}
+//
+//				}
 			}
 	    
     	}

@@ -31,24 +31,6 @@ package com.frameworkset.orm.adapter;
  * limitations under the License.
  */
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
@@ -58,10 +40,15 @@ import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.engine.model.Domain;
 import com.frameworkset.orm.engine.model.SchemaType;
 import com.frameworkset.orm.platform.PlatformOracleImpl;
-
 import oracle.jdbc.driver.OracleResultSet;
+import oracle.jdbc.driver.OracleTypes;
 import oracle.sql.BLOB;
 import oracle.sql.CLOB;
+
+import java.io.*;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * This code should be used for an Oracle database pool.
@@ -1870,10 +1857,8 @@ public class DBOracle extends DB
 	/**
 	 * Returns the bytes from a result set
 	 * 
-	 * @param res
-	 *            The ResultSet to read from
-	 * @param columnName
-	 *            The name of the column to read from
+	 * @param clob_
+	 *
 	 * 
 	 * @return The byte value from the column
 	 */
@@ -1886,6 +1871,14 @@ public class DBOracle extends DB
 
 		String ret = new String(content);
 		return ret;
+	}
+
+	public  boolean isOracleTimestamp(int sqlType){
+		if(sqlType ==  OracleTypes.TIMESTAMPLTZ
+				|| sqlType ==  OracleTypes.TIMESTAMPNS
+				|| sqlType ==  OracleTypes.TIMESTAMPTZ)
+			return true;
+		return false;
 	}
 
 }

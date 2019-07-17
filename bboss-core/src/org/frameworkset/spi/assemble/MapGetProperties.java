@@ -14,12 +14,15 @@ package org.frameworkset.spi.assemble;/*
  *  limitations under the License.
  */
 
+import org.frameworkset.spi.support.EnvUtil;
+
 import java.util.Map;
 
 public class MapGetProperties implements GetProperties{
 	private Map<String,Object> values;
 	public MapGetProperties(Map<String,Object> values){
-		this.values = values;
+		//解析环境变量
+		this.values = EnvUtil.evalEnvVariableForObjectContainer(values);
 	}
 	public String getExternalProperty(String property){
 		Object value = values.get(property);

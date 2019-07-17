@@ -15,17 +15,21 @@ package org.frameworkset.persitent.util;/*
  */
 
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
+import com.frameworkset.orm.adapter.DB;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class JDBCResultSet {
 	protected ResultSet resultSet;
 	protected PoolManResultSetMetaData metaData;
-
+	protected DB dbadapter;
 	public ResultSet getResultSet() {
 		return resultSet;
 	}
-
+	public DB getDbadapter(){
+		return dbadapter;
+	}
 	public void setResultSet(ResultSet resultSet) {
 		this.resultSet = resultSet;
 	}
@@ -36,5 +40,63 @@ public class JDBCResultSet {
 
 	public void setMetaData(PoolManResultSetMetaData metaData) {
 		this.metaData = metaData;
+	}
+	public boolean isOracleTimestamp(int sqlType){
+		return dbadapter.isOracleTimestamp( sqlType);
+	}
+
+	public void setDbadapter(DB dbadapter) {
+		this.dbadapter = dbadapter;
+	}
+
+	public Object getValue(  int i, String colName,int sqlType) throws Exception
+	{
+		if(!this.isOracleTimestamp(sqlType)) {
+			return this.resultSet.getObject(i + 1);
+		}
+		else{
+			return this.resultSet.getTimestamp(i + 1);
+		}
+	}
+
+	public Object getValue( String colName) throws Exception
+	{
+		if(colName == null)
+			return null;
+		Object value = this.resultSet.getObject(colName);
+		return value;
+	}
+
+
+	public Object getValue( String colName,int sqlType) throws Exception
+	{
+		if(colName == null)
+			return null;
+		if(!this.isOracleTimestamp(sqlType)) {
+			return this.resultSet.getObject(colName);
+		}
+		else{
+			return this.resultSet.getTimestamp(colName);
+		}
+
+	}
+
+	public Object getDateTimeValue( String colName) throws Exception
+	{
+		if(colName == null)
+			return null;
+		try {
+			Object value = this.resultSet.getTimestamp(colName);
+			return value;
+		}
+		catch (Exception e){
+			Object value = this.resultSet.getDate(colName);
+			return value;
+		}
+	}
+
+
+	public boolean next() throws SQLException {
+		return resultSet.next();
 	}
 }
