@@ -12,6 +12,7 @@ sourceSets {
 }
 project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.install)
 dependencies {
+    compile project(":bboss-core-entity")
     compile (
            	[group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25', transitive: true],
             [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],

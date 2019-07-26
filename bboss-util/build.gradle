@@ -31,7 +31,7 @@ project.tasks.compileJava.dependsOn(project(':bboss-rt').tasks.install)
 project.tasks.compileJava.dependsOn(project(':bboss-velocity').tasks.install)
 
 dependencies {
-
+    compile project(":bboss-core-entity")
     compile(
     				
             [group: 'com.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],

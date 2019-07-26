@@ -24,7 +24,7 @@ sourceSets {
 }
 project.tasks.compileJava.dependsOn(project(':bboss-util').tasks.install)
 dependencies {
-	
+    compile project(":bboss-core-entity")
     compile (
             [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
             [group: 'com.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],

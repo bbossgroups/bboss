@@ -1,5 +1,6 @@
 include 'bboss-soa'
 include 'bboss-velocity'
+include 'bboss-core-entity'
 include 'bboss-util'
 include 'bboss-rt'
 include 'bboss-core'
