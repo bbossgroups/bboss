@@ -48,7 +48,7 @@ dependencies {
             //[group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],
            
             [group: 'com.uwyn', name: 'jhighlight', version: '1.0', transitive: false],
-            [group: 'bsh', name: 'bsh', version: '2.0b1', transitive: false],
+            //[group: 'bsh', name: 'bsh', version: '2.0b1', transitive: false],
     )
 
    compileOnly(
