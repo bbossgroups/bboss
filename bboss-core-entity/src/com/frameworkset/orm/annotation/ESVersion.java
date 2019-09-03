@@ -20,7 +20,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 用于指定更新操作指定版本信息
+ * 用于指定更新操作指定版本信息存放检索文档对应的index version信息
+ *  long类型
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -30,4 +31,5 @@ public @interface ESVersion {
 	 * @return
 	 */
 	boolean persistent() default false;
+
 }

@@ -20,23 +20,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 用于routing shard
- * Updateedit
- * When using update action retry_on_conflict can be used as field in the action itself (not in the extra payload line), to specify how many times an update should be retried in the case of a version conflict.
- *
- * The update action payload, supports the following options: doc (partial document), upsert, doc_as_upsert, script, params (for script), lang (for script) and _source. See update documentation for details on the options. Example with update actions:
+ * 用于指定更新操作指定版本信息存放检索文档对应的index version信息
+ *  long类型
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ESRouting {
-	String name() default "routing";
+public @interface ESMetaVersion {
+	String name() default "version";
+
 	/**
-	 * 标识是否保存注解对应的字段的值
-	 * @return
-	 */
-	boolean persistent() default false;
-	/**
-	 * 查询/检索文档时，是否将文档route设置给对应被注解的属性
+	 * 查询/检索文档时，是否将文档index设置给对应被注解的属性
 	 * @return
 	 */
 	boolean readSet() default true;

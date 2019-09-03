@@ -1390,11 +1390,14 @@ public abstract class HandlerUtils {
 			}
 			contentType = MediaType.TEXT_PLAIN;
 			inputMessage.getHeaders().setContentType(contentType);
-			logger.warn(
+			if(logger.isDebugEnabled())
+				logger.debug(
 					"Cannot extract parameter (" + builder.toString()
 							+ "): no Content-Type found");
 		}
-		logger.debug("Read http request body with contenttype:" + contentType);
+		if(logger.isDebugEnabled()) {
+			logger.debug("Read http request body with contenttype:" + contentType);
+		}
 
 //		List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
 		HttpMessageConverter defaultmessageConverter = null;

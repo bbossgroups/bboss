@@ -22,11 +22,12 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface  ESId {
+
 	/**
 	 * 主键名称-对于tableinfo表中的主键信息配置
 	 * @return
 	 */
-	String name() default "";
+	String name() default "id";
 	String pkname() default "";
 
 	boolean auto() default true;
@@ -66,5 +67,5 @@ public @interface  ESId {
 	 * 查询/检索文档时，是否将文档id设置给对应被注解的属性
 	 * @return
 	 */
-	boolean readSet() default false;
+	boolean readSet() default true;
 }

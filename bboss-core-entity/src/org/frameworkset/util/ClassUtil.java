@@ -158,17 +158,11 @@ public class ClassUtil
 		private IgnoreORMapping ignoreORMapping;
 		private MapKey mapkey;
 
+
+
 		/**es相关属性*/
-		private boolean persistentESId;
-		private boolean esIdReadSet;
-		private boolean persistentESParentId;
-		private boolean esParentIdReadSet;
-		private boolean persistentESVersion;
-		private boolean persistentESVersionType;
-		private boolean persistentESRetryOnConflict;
-		private boolean persistentESRouting;
-		private boolean persistentESDocAsUpsert;
-		private boolean persistentESSource;
+		private ESAnnoInfo esAnnoInfo;
+
 
 
 
@@ -332,6 +326,7 @@ public class ClassUtil
 		{
 			if(annotations == null || annotations.length == 0)
 				return;
+			esAnnoInfo = new ESAnnoInfo();
 			for(int i = 0; i < annotations.length; i ++)
 			{
 				Annotation a = annotations[i];
@@ -369,47 +364,137 @@ public class ClassUtil
 				}
 				else if(a instanceof ESId)
 				{
+					esAnnoInfo.setPersistent(((ESId)a).persistent());
+					esAnnoInfo.setReadSet(((ESId)a).readSet());
 					classInfo.setEsIdProperty(this);
-					this.persistentESId = ((ESId)a).persistent();
-					this.esIdReadSet = ((ESId)a).readSet();
+
+				}
+				else if(a instanceof ESMetaId)
+				{
+					esAnnoInfo.setReadSet(((ESMetaId)a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaIdProperty(this);
+
 				}
 				else if(a instanceof ESParentId)
 				{
+					esAnnoInfo.setReadSet(((ESParentId)a).readSet());
+					esAnnoInfo.setPersistent(((ESParentId)a).persistent());
 					classInfo.setEsParentProperty(this);
-					this.persistentESParentId = ((ESParentId)a).persistent();
-					this.esParentIdReadSet = ((ESParentId)a).readSet();
+
+				}
+				else if(a instanceof ESMetaParentId)
+				{
+					esAnnoInfo.setReadSet(((ESMetaParentId)a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaParentIdProperty(this);
+
 				}
 				else if(a instanceof ESVersion)
 				{
+					esAnnoInfo.setPersistent(((ESVersion)a).persistent());
 					classInfo.setEsVersionProperty(this);
-					this.persistentESVersion = ((ESVersion)a).persistent();
+
+				}
+				else if(a instanceof ESMetaVersion)
+				{
+					esAnnoInfo.setReadSet(((ESMetaVersion)a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaVersionProperty(this);
+
 				}
 				else if(a instanceof ESVersionType)
 				{
+					esAnnoInfo.setPersistent(((ESVersionType)a).persistent());
 					classInfo.setEsVersionTypeProperty(this);
-					this.persistentESVersionType = ((ESVersionType)a).persistent();
 				}
 				else if(a instanceof ESRetryOnConflict)
 				{
+					esAnnoInfo.setPersistent(((ESRetryOnConflict)a).persistent());
 					classInfo.setEsRetryOnConflictProperty(this);
-					this.persistentESRetryOnConflict = ((ESRetryOnConflict)a).persistent();
 				}
 				else if(a instanceof ESRouting)
 				{
+					esAnnoInfo.setPersistent(((ESRouting)a).persistent());
+					esAnnoInfo.setReadSet(((ESRouting)a).readSet());
 					classInfo.setEsRoutingProperty(this);
-					this.persistentESRouting = ((ESRouting)a).persistent();
 				}
 				else if(a instanceof ESDocAsUpsert)
 				{
+					esAnnoInfo.setPersistent(((ESDocAsUpsert)a).persistent());
 					classInfo.setEsDocAsUpsertProperty(this);
-					this.persistentESDocAsUpsert = ((ESDocAsUpsert)a).persistent();
 				}
 				else if(a instanceof ESSource)
 				{
+					esAnnoInfo.setPersistent(((ESSource)a).persistent());
 					classInfo.setEsReturnSourceProperty(this);
-					this.persistentESSource = ((ESSource)a).persistent();
+				}
+				//Elasticsearch元数据注解解析开始
+				else if(a instanceof ESMetaExplanation)
+				{
+					esAnnoInfo.setReadSet(((ESMetaExplanation) a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaExplanationProperty(this);
 				}
 
+				else if(a instanceof ESMetaFields)
+				{
+					esAnnoInfo.setReadSet(((ESMetaFields) a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaFieldsProperty(this);
+				}
+				else if(a instanceof ESMetaFound)
+				{
+					classInfo.esPropertyDescripts.setEsMetaFoundProperty(this);
+					esAnnoInfo.setReadSet(((ESMetaFound) a).readSet());
+
+				}
+
+				else if(a instanceof ESMetaHighlight)
+				{
+					esAnnoInfo.setReadSet(((ESMetaHighlight) a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaHighlightProperty(this);
+				}
+				else if(a instanceof ESMetaIndex)
+				{
+					esAnnoInfo.setReadSet(((ESMetaIndex) a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaIndexProperty(this);
+				}
+
+				else if(a instanceof ESMetaInnerHits)
+				{
+					esAnnoInfo.setReadSet(((ESMetaInnerHits) a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaInnerHitsProperty(this);
+				}
+				else if(a instanceof ESMetaNested)
+				{
+					esAnnoInfo.setReadSet(((ESMetaNested) a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaNestedProperty(this);
+				}
+
+				else if(a instanceof ESMetaNode)
+				{
+					esAnnoInfo.setReadSet(((ESMetaNode) a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaNodeProperty(this);
+				}
+				else if(a instanceof ESMetaScore)
+				{
+					esAnnoInfo.setReadSet(((ESMetaScore) a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaScoreProperty(this);
+				}
+
+				else if(a instanceof ESMetaShard)
+				{
+					esAnnoInfo.setReadSet(((ESMetaShard) a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaShardProperty(this);
+				}
+				else if(a instanceof ESMetaSort)
+				{
+					esAnnoInfo.setReadSet(((ESMetaSort) a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaSortProperty(this);
+				}
+
+				else if(a instanceof ESMetaType)
+				{
+					esAnnoInfo.setReadSet(((ESMetaType) a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaTypeProperty(this);
+				}
+				//Elasticsearch meta注解结束
 				else if(a instanceof Column )
 				{
 					column = new ColumnWraper((Column )a);
@@ -643,46 +728,54 @@ public class ClassUtil
 			return ignoreORMapping;
 		}
 
-		public boolean isPersistentESId() {
-			return persistentESId;
+//		public boolean isPersistentESId() {
+//			return esAnnoInfo.isPersistentESId();
+//		}
+//
+//		public boolean isPersistentESParentId() {
+//			return esAnnoInfo.isPersistentESParentId();
+//		}
+//
+//		public boolean isPersistentESVersion() {
+//			return esAnnoInfo.isPersistentESVersion();
+//		}
+//
+//		public boolean isPersistentESVersionType() {
+//			return esAnnoInfo.isPersistentESVersionType();
+//		}
+//
+//		public boolean isPersistentESRetryOnConflict() {
+//			return esAnnoInfo.isPersistentESRetryOnConflict();
+//		}
+//
+//		public boolean isPersistentESRouting() {
+//			return esAnnoInfo.isPersistentESRouting();
+//		}
+//
+//		public boolean isPersistentESDocAsUpsert() {
+//			return esAnnoInfo.isPersistentESDocAsUpsert() ;
+//		}
+//
+//		public boolean isPersistentESSource() {
+//			return esAnnoInfo.isPersistentESSource();
+//		}
+//
+//
+//
+//		public boolean isEsParentIdReadSet() {
+//			return esAnnoInfo.isEsParentIdReadSet();
+//		}
+//
+//		public boolean isEsIdReadSet() {
+//			return esAnnoInfo.isEsIdReadSet();
+//		}
+
+		public boolean isESReadSet(){
+			return esAnnoInfo.isReadSet();
 		}
 
-		public boolean isPersistentESParentId() {
-			return persistentESParentId;
-		}
-
-		public boolean isPersistentESVersion() {
-			return persistentESVersion;
-		}
-
-		public boolean isPersistentESVersionType() {
-			return persistentESVersionType;
-		}
-
-		public boolean isPersistentESRetryOnConflict() {
-			return persistentESRetryOnConflict;
-		}
-
-		public boolean isPersistentESRouting() {
-			return persistentESRouting;
-		}
-
-		public boolean isPersistentESDocAsUpsert() {
-			return persistentESDocAsUpsert;
-		}
-
-		public boolean isPersistentESSource() {
-			return persistentESSource;
-		}
-
-
-
-		public boolean isEsParentIdReadSet() {
-			return esParentIdReadSet;
-		}
-
-		public boolean isEsIdReadSet() {
-			return esIdReadSet;
+		public boolean isESPersistent(){
+			return esAnnoInfo.isPersistent();
 		}
 
 		public boolean isNumeric() {
@@ -691,65 +784,16 @@ public class ClassUtil
 	}
 	public static class ClassInfo
 	{
-		private ESIndexWrapper esIndexWrapper;
-
 		/**
 		 * 持久层主键
 		 */
 		private volatile transient  PropertieDescription pkProperty;
-		private volatile transient List<PropertieDescription> esAnnonationProperties = new ArrayList<PropertieDescription>(10);
 
-		/**
-		 * es父id属性标识
-		 */
-		private volatile transient  PropertieDescription esParentProperty;
+		public ESPropertyDescripts getEsPropertyDescripts() {
+			return esPropertyDescripts;
+		}
 
-		/**
-		 * esid属性
-		 */
-		private volatile transient  PropertieDescription esIdProperty;
-
-		/**
-		@ESVersion
-		protected int version;
-		@ESVersionType
-		protected String versionType;
-		@ESRetryOnConflict
-		protected int retryOnConflict;
-		@ESRouting
-		protected String routing;
-		@ESDocAsUpsert
-		protected boolean docAsUpsert;
-		@ESSource
-		protected boolean returnSource;
-		*/
-		/**
-		 * es父id属性标识
-		 */
-		private volatile transient  PropertieDescription esVersionProperty;
-
-		/**
-		 * esid属性
-		 */
-		private volatile transient  PropertieDescription esVersionTypeProperty;
-		/**
-		 * es父id属性标识
-		 */
-		private volatile transient  PropertieDescription esRetryOnConflictProperty;
-
-		/**
-		 * esid属性
-		 */
-		private volatile transient  PropertieDescription esRoutingProperty;
-		/**
-		 * es父id属性标识
-		 */
-		private volatile transient  PropertieDescription esDocAsUpsertProperty;
-
-		/**
-		 * esid属性
-		 */
-		private volatile transient  PropertieDescription esReturnSourceProperty;
+		private transient ESPropertyDescripts esPropertyDescripts;
 		/**
 		 * declaredFields保存了类clazz以及父类中的所有属性字段定义，如果子类中和父类变量
 		 * 重名，则安顺包含在数组中，这种情况是不允许的必须过滤掉，也就是说子类中有了和父类中相同签名的方法，则自动过滤掉
@@ -833,7 +877,7 @@ public class ClassUtil
 	    	return null;
 	    }
 	    public ESIndexWrapper getEsIndexWrapper(){
-	    	return esIndexWrapper;
+	    	return esPropertyDescripts.getEsIndexWrapper();
 		}
 		public PropertieDescription getPkProperty() {
 			return pkProperty;
@@ -849,6 +893,7 @@ public class ClassUtil
 	    private boolean cglib = false;
 	    @SuppressWarnings("unchecked")
 		private  ClassInfo(Class clazz){
+			esPropertyDescripts = new ESPropertyDescripts();
 	    	//处理cglib代理类，还原原始类型信息
 	    	String name = clazz.getName();
 	    	int idx = name.indexOf("$$EnhancerByCGLIB$$") ;
@@ -978,7 +1023,7 @@ public class ClassUtil
 	    {
 			ESIndex esIndex = AnnotationUtils.findAnnotation(clazz,ESIndex.class);
 			if(esIndex != null){
-				this.esIndexWrapper = new ESIndexWrapper(esIndex);
+				this.esPropertyDescripts.setEsIndexWrapper(new ESIndexWrapper(esIndex));
 			}
 	    	this.primary = ValueObjectUtil.isPrimaryType(clazz);
 	    	this.map = ValueObjectUtil.isMapType(clazz);
@@ -1563,79 +1608,79 @@ public class ClassUtil
 
 
 		public PropertieDescription getEsIdProperty() {
-			return esIdProperty;
+			return this.esPropertyDescripts.getEsIdProperty();
 		}
 
 		public void setEsIdProperty(PropertieDescription esIdProperty) {
-			this.esIdProperty = esIdProperty;
-			this.esAnnonationProperties.add(this.esIdProperty);
+			esPropertyDescripts.setEsIdProperty(esIdProperty);
+
 		}
 
 		public PropertieDescription getEsParentProperty() {
-			return esParentProperty;
+			return esPropertyDescripts.getEsParentProperty();
 		}
 
 		public void setEsParentProperty(PropertieDescription esParentProperty) {
-			this.esParentProperty = esParentProperty;
-			this.esAnnonationProperties.add(this.esParentProperty);
+			esPropertyDescripts.setEsParentProperty(esParentProperty);
+
 		}
 
 		public PropertieDescription getEsReturnSourceProperty() {
-			return esReturnSourceProperty;
+			return esPropertyDescripts.getEsReturnSourceProperty();
 		}
 
 		public PropertieDescription getEsDocAsUpsertProperty() {
-			return esDocAsUpsertProperty;
+			return esPropertyDescripts.getEsDocAsUpsertProperty();
 		}
 
 		public PropertieDescription getEsRoutingProperty() {
-			return esRoutingProperty;
+			return esPropertyDescripts.getEsRoutingProperty();
 		}
 
 		public PropertieDescription getEsRetryOnConflictProperty() {
-			return esRetryOnConflictProperty;
+			return esPropertyDescripts.getEsRetryOnConflictProperty();
 		}
 
 		public PropertieDescription getEsVersionTypeProperty() {
-			return esVersionTypeProperty;
+			return esPropertyDescripts.getEsVersionTypeProperty();
 		}
 
 		public PropertieDescription getEsVersionProperty() {
-			return esVersionProperty;
+			return esPropertyDescripts.getEsVersionProperty();
 		}
 
 		public void setEsVersionProperty(PropertieDescription esVersionProperty) {
-			this.esVersionProperty = esVersionProperty;
-			this.esAnnonationProperties.add(this.esVersionProperty);
+			esPropertyDescripts.setEsVersionProperty(esVersionProperty);
+
 		}
 
 		public void setEsVersionTypeProperty(PropertieDescription esVersionTypeProperty) {
-			this.esVersionTypeProperty = esVersionTypeProperty;
-			this.esAnnonationProperties.add(this.esVersionTypeProperty);
+			esPropertyDescripts.setEsVersionTypeProperty(esVersionTypeProperty);
+
 		}
 
 		public void setEsRetryOnConflictProperty(PropertieDescription esRetryOnConflictProperty) {
-			this.esRetryOnConflictProperty = esRetryOnConflictProperty;
-			this.esAnnonationProperties.add(this.esRetryOnConflictProperty);
+			esPropertyDescripts.setEsRetryOnConflictProperty(esRetryOnConflictProperty);
+
 		}
 
 		public void setEsRoutingProperty(PropertieDescription esRoutingProperty) {
-			this.esRoutingProperty = esRoutingProperty;
-			this.esAnnonationProperties.add(this.esRoutingProperty);
+			esPropertyDescripts.setEsRoutingProperty(esRoutingProperty);
+
 		}
 
 		public void setEsDocAsUpsertProperty(PropertieDescription esDocAsUpsertProperty) {
-			this.esDocAsUpsertProperty = esDocAsUpsertProperty;
-			this.esAnnonationProperties.add(this.esDocAsUpsertProperty);
+			esPropertyDescripts.setEsDocAsUpsertProperty(esDocAsUpsertProperty);
+
 		}
 
 		public void setEsReturnSourceProperty(PropertieDescription esReturnSourceProperty) {
-			this.esReturnSourceProperty = esReturnSourceProperty;
-			this.esAnnonationProperties.add(this.esReturnSourceProperty);
+			esPropertyDescripts.setEsReturnSourceProperty(esReturnSourceProperty);
+
 		}
 
 		public List<PropertieDescription> getEsAnnonationProperties() {
-			return esAnnonationProperties;
+			return esPropertyDescripts.getEsAnnonationProperties();
 		}
 
 		public boolean isNumeric() {
