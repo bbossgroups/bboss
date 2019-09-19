@@ -27,7 +27,7 @@
 			after jedis 2.9.0 set false,before jedis 2.9.0 set true
 		-->
 		<property name="needAuthPerJedis" value="false"/>
-
+		<property name="auth" value="Df!4rfv3edc" />
 
 		 
 	</property>

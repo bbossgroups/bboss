@@ -3,6 +3,8 @@ package org.frameworkset.nosql.redis;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.frameworkset.spi.BeanInfoAware;
 import org.frameworkset.spi.InitializingBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.*;
 import redis.clients.jedis.exceptions.JedisException;
 
@@ -17,6 +19,7 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	private Map<String,String> properties;
 	private List<NodeInfo> nodes;
 	private String servers;
+	private static Logger logger = LoggerFactory.getLogger(RedisDB.class);
 	/**
 	 * 等待超时重试次数
 	 */
@@ -119,9 +122,9 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		    	 
 		    	jedisClusterNode.add(hostAndPort);
 		    }
-		  
-		    
+
 //		    jc = new JedisCluster(jedisClusterNode,this.timeout,this.maxRedirections, config);
+
 		    jc = new JedisCluster(jedisClusterNode, timeout, soTimeout,
 		    		this.maxRedirections, auth,config);
 //		    jc.set("52", "poolTestValue2");
@@ -251,6 +254,11 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	}
 	@Override
 	public void afterPropertiesSet() throws Exception {
+		if(logger.isInfoEnabled()) {
+			logger.info("servers:{},auth:{},mode:{},needAuthPerJedis:{},poolMaxTotal:{},poolMaxWaitMillis:{},poolTimeoutRetry:{},poolTimeoutRetryInterval:{},timeout:{},soTimeout:{},maxIdle:{},maxRedirections:{},testOnBorrow:{},testOnReturn:{},testWhileIdle:{}",
+					servers, auth, mode, needAuthPerJedis,poolMaxTotal,poolMaxWaitMillis,poolTimeoutRetry,
+					poolTimeoutRetryInterval,this.timeout,this.soTimeout,this.maxIdle,this.maxRedirections,this.testOnBorrow,this.testOnReturn,this.testWhileIdle);
+		}
 		if(this.nodes == null){
 			buildNodes();
 		}
