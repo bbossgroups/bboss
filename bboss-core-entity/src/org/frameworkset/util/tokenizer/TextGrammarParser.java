@@ -90,7 +90,7 @@ public class TextGrammarParser {
 			StringBuilder builder = new StringBuilder();
 			builder.append("text=").append(text).append("|");
 			builder.append("position=").append(position).append("|");
-			builder.append("type=").append(type == TextPlain?"普通文本":"结构变量").append("\r\n");
+			builder.append("type=").append(type == TextPlain?"TextPlain":"VARIABLE").append("\r\n");
 			
 			return builder.toString();
 			

@@ -15,14 +15,9 @@ package com.frameworkset.orm.annotation;
  * limitations under the License.
  */
 
-import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.util.annotations.DateFormateMeta;
 import org.frameworkset.util.tokenizer.TextGrammarParser;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +69,17 @@ public class ESIndexWrapper {
 	public void setType(String type) {
 		this.type = type;
 	}
+	public String getName(){
+		return this.getNameInfo().getName();
+	}
+
+	public List<NameGrammarToken>  getNameTokens(){
+		return this.getNameInfo().getTokens();
+	}
+
+	public boolean isOnlyCurrentDateTimestamp(){
+		return this.getNameInfo().isOnlyCurrentDateTimestamp();
+	}
 
 	public static class NameInfo{
 		/**
@@ -93,162 +99,17 @@ public class ESIndexWrapper {
 		protected boolean onlyCurrentDateTimestamp;
 
 		private List<NameGrammarToken> tokens;
-		private void buildName(Writer writer,GetVariableValue getVariableValue) throws IOException {
-			if(name != null){
-				writer.write(name);
-				return;
-			}
-			if(tokens == null || tokens.size() == 0){
-				return;
-			}
-			BatchContext batchContext = getVariableValue.getBatchContext();
-			if(batchContext != null ){
-				if(batchContext.getIndexName() != null){
-					writer.write(batchContext.getIndexName());
-					return;
-				}
-			}
-			NameGrammarToken nameGrammarToken = null;
-			StringBuilder temp = this.onlyCurrentDateTimestamp && batchContext != null && batchContext.getIndexName() == null?new StringBuilder():null;
-			for(int i = 0; i < tokens.size(); i ++){
-				nameGrammarToken = tokens.get(i);
-				if(!nameGrammarToken.varibletoken()) {
-					if(temp != null){
-						temp.append(nameGrammarToken.getText());
-					}
-					writer.write(nameGrammarToken.getText());
-				}
-				else{
-					if(nameGrammarToken.getFieldName() != null) {
-
-//						Object va = classInfo.getPropertyValue(bean, nameGrammarToken.getFieldName());
-						Object va = getVariableValue.getValue(nameGrammarToken.getFieldName());
-						if (va == null)
-							throw new NameParserException(new StringBuilder()
-									.append(this.toString())
-									.append(",property[")
-									.append(nameGrammarToken.getFieldName()).append("] is null.").toString());
-						if (nameGrammarToken.dateformat != null) {
-							DateFormat dateFormat = DataFormatUtil.getSimpleDateFormat(nameGrammarToken.dateformat);
-							if (va instanceof Date) {
-								writer.write(dateFormat.format((Date) va));
-							} else if (va instanceof Long) {
-								writer.write(dateFormat.format(new Date((Long) va)));
-
-							} else {
-								writer.write(String.valueOf(va));
-							}
-						} else {
-							writer.write(String.valueOf(va));
-						}
-					}
-					else{ //取当前时间作为索引名称
-						DateFormat dateFormat = DataFormatUtil.getSimpleDateFormat(nameGrammarToken.dateformat);
-						Date date = new Date();
-						String d = dateFormat.format(date);
-						writer.write(d);
-						if(temp != null){
-							temp.append(d);
-						}
-
-					}
-				}
-			}
-			if(temp != null){
-				batchContext.setIndexName(temp.toString());
-			}
+		public List<NameGrammarToken> getTokens(){
+			return tokens;
 		}
-
-
-		private void buildName(StringBuilder builder,GetVariableValue getVariableValue){
-			if(name != null){
-				builder.append(name);
-				return;
-			}
-			if(tokens == null || tokens.size() == 0){
-				return;
-			}
-			BatchContext batchContext = getVariableValue.getBatchContext();
-			if(batchContext != null ){
-				if(batchContext.getIndexName() != null){
-					builder.append(batchContext.getIndexName());
-					return;
-				}
-			}
-			NameGrammarToken nameGrammarToken = null;
-			StringBuilder temp = this.onlyCurrentDateTimestamp && batchContext != null && batchContext.getIndexName() == null?new StringBuilder():null;
-			for(int i = 0; i < tokens.size(); i ++){
-				nameGrammarToken = tokens.get(i);
-				if(!nameGrammarToken.varibletoken()) {
-					if(temp != null){
-						temp.append(nameGrammarToken.getText());
-					}
-					builder.append(nameGrammarToken.getText());
-				}
-				else{
-					if(nameGrammarToken.getFieldName() != null) {
-
-//						Object va = classInfo.getPropertyValue(bean, nameGrammarToken.getFieldName());
-						Object va = getVariableValue.getValue(nameGrammarToken.getFieldName());
-						if (va == null)
-							throw new NameParserException(new StringBuilder()
-									.append(this.toString())
-									.append(",property[")
-									.append(nameGrammarToken.getFieldName()).append("] is null.").toString());
-						if (nameGrammarToken.dateformat != null) {
-							DateFormat dateFormat = DataFormatUtil.getSimpleDateFormat(nameGrammarToken.dateformat);
-							if (va instanceof Date) {
-								builder.append(dateFormat.format((Date) va));
-							} else if (va instanceof Long) {
-								builder.append(dateFormat.format(new Date((Long) va)));
-
-							} else {
-								builder.append(va);
-							}
-						} else {
-							builder.append(va);
-						}
-					}
-					else{ //取当前时间作为索引名称
-						DateFormat dateFormat = DataFormatUtil.getSimpleDateFormat(nameGrammarToken.dateformat);
-						Date date = new Date();
-						String d = dateFormat.format(date);
-						builder.append(d);
-						if(temp != null){
-							temp.append(d);
-						}
-
-					}
-				}
-			}
-			if(temp != null){
-				batchContext.setIndexName(temp.toString());
-			}
-		}
-
-		/**
-		 * ClassUtil.ClassInfo classInfo, Object bean
-
-		 * @return
-		 */
-		public String buildName(GetVariableValue getVariableValue){
-			if(name == null || name.equals("")){
-				if(tokens == null  || tokens.size() == 0 )
-					return null;
-			}
-			else{
-				return name;
-			}
-			BatchContext batchContext = getVariableValue.getBatchContext();
-			if(batchContext != null ){
-				if(batchContext.getIndexName() != null){
-					return batchContext.getIndexName();
-				}
-			}
+		public String toString(){
 			StringBuilder builder = new StringBuilder();
-			buildName(builder,  getVariableValue);
+			builder.append("name:").append(name).append(",onlyCurrentDateTimestamp:").append(onlyCurrentDateTimestamp);
+			if(tokens != null )
+				builder.append(",tokens:").append(tokens.toString());
 			return builder.toString();
 		}
+
 
 	}
 
@@ -259,111 +120,26 @@ public class ESIndexWrapper {
 		 */
 		private String type;
 		private List<NameGrammarToken> tokens;
-		/**
-		 * ClassUtil.ClassInfo classInfo, Object bean
-		 * @param writer
-		 * @param getVariableValue
-		 */
-		private void buildType(Writer writer,GetVariableValue getVariableValue) throws IOException {
-			if(type != null){
-				writer.write(type);
-				return;
-			}
-			if(tokens == null || tokens.size() == 0){
-				return;
-			}
-			BatchContext batchContext = getVariableValue.getBatchContext();
-			if(batchContext != null ){
-				if(batchContext.getIndexType() != null){
-					writer.write(batchContext.getIndexType());
-					return  ;
-				}
-			}
-			NameGrammarToken nameGrammarToken = null;
-			for(int i = 0; i < tokens.size(); i ++){
-				nameGrammarToken = tokens.get(i);
-				if(!nameGrammarToken.varibletoken()) {
-					writer.write(nameGrammarToken.getText());
-				}
-				else{
-//					Object va = classInfo.getPropertyValue(bean,nameGrammarToken.getFieldName());
-					Object va = getVariableValue.getValue(nameGrammarToken.getFieldName());
-					if(va == null)
-						throw new NameParserException(new StringBuilder()
-								.append(this.toString())
-								.append(",property[")
-								.append(nameGrammarToken.getFieldName()).append("] is null.").toString());
-					writer.write(String.valueOf(va));
-				}
-			}
 
 
+		public String getType() {
+			return type;
 		}
 
-		/**
-		 * ClassUtil.ClassInfo classInfo, Object bean
-		 * @param builder
-		 * @param getVariableValue
-		 */
-		private void buildType(StringBuilder builder,GetVariableValue getVariableValue){
-			if(type != null){
-				builder.append(type);
-				return;
-			}
-			if(tokens == null || tokens.size() == 0){
-				return;
-			}
-			BatchContext batchContext = getVariableValue.getBatchContext();
-			if(batchContext != null ){
-				if(batchContext.getIndexType() != null){
-					builder.append(batchContext.getIndexType());
-					return  ;
-				}
-			}
-			NameGrammarToken nameGrammarToken = null;
-			for(int i = 0; i < tokens.size(); i ++){
-				nameGrammarToken = tokens.get(i);
-				if(!nameGrammarToken.varibletoken()) {
-					builder.append(nameGrammarToken.getText());
-				}
-				else{
-//					Object va = classInfo.getPropertyValue(bean,nameGrammarToken.getFieldName());
-					Object va = getVariableValue.getValue(nameGrammarToken.getFieldName());
-					if(va == null)
-						throw new NameParserException(new StringBuilder()
-								.append(this.toString())
-								.append(",property[")
-								.append(nameGrammarToken.getFieldName()).append("] is null.").toString());
-					builder.append(va);
-				}
-			}
 
 
+		public List<NameGrammarToken> getTokens() {
+			return tokens;
 		}
-
-		/**
-		 * ClassUtil.ClassInfo classInfo, Object bean
-		 * @param getVariableValue
-		 * @return
-		 */
-		public String buildType(GetVariableValue getVariableValue){
-			if(type == null || type.equals("")){
-				if(tokens == null  || tokens.size() == 0 )
-					return null;
-			}
-			else{
-				return type;
-			}
-			BatchContext batchContext = getVariableValue.getBatchContext();
-			if(batchContext != null ){
-				if(batchContext.getIndexType() != null){
-					return  (batchContext.getIndexType());
-				}
-			}
+		public String toString(){
 			StringBuilder builder = new StringBuilder();
-			buildType(builder,getVariableValue);
+			builder.append("type:").append(type);
+			if(tokens != null )
+				builder.append(",tokens:").append(tokens.toString());
 			return builder.toString();
 		}
+
+
 
 	}
 	private static Map<String,String> parserVarinfo(String var){
@@ -430,6 +206,18 @@ public class ESIndexWrapper {
 		public DateFormateMeta getDateFormateMeta(){
 			return this.dateFormateMeta;
 		}
+		public String getDateformat(){
+			return this.dateformat;
+		}
+		public String toString()
+		{
+			StringBuilder builder = new StringBuilder();
+			builder.append("fieldName=").append(fieldName).append("|");
+			builder.append("dateformat=").append(dateformat).append("|");
+			builder.append(super.toString());
+			return builder.toString();
+
+		}
 
 	}
 	private static TextGrammarParser.GrammarTokenBuilder<NameGrammarToken> nameGrammarTokenBuilder = new NameGrammarTokenBuilder();
@@ -460,6 +248,8 @@ public class ESIndexWrapper {
 	private void initInfo(String name,String type){
 		this.index = name;
 		this.type = type;
+		if(type.equals(""))
+			type = null;
 		nameInfo = new NameInfo();
 //		String name = esIndex.name();
 		List<NameGrammarToken> tokens = TextGrammarParser.parser(index, '{', '}',nameGrammarTokenBuilder);
@@ -513,26 +303,7 @@ public class ESIndexWrapper {
 			}
 		}
 	}
-	public void buildIndexName(Writer writer, GetVariableValue getVariableValue) throws IOException {
-		nameInfo.buildName(writer,  getVariableValue);
-	}
-	public void buildIndexName(StringBuilder builder,GetVariableValue getVariableValue){
-		  nameInfo.buildName(builder,  getVariableValue);
-	}
 
-	public String buildIndexName(GetVariableValue getVariableValue){
-		return nameInfo.buildName(  getVariableValue);
-	}
-	public void buildIndexType(Writer writer,GetVariableValue getVariableValue) throws IOException {
-		typeInfo.buildType(  writer,  getVariableValue);
-	}
-	public void buildIndexType(StringBuilder builder,GetVariableValue getVariableValue){
-		typeInfo.buildType(builder,  getVariableValue);
-	}
-
-	public String buildIndexType(GetVariableValue getVariableValue){
-		return typeInfo.buildType(  getVariableValue);
-	}
 
 	public TypeInfo getTypeInfo(){
 		return typeInfo;
