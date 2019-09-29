@@ -870,7 +870,8 @@ public class ServiceProviderManager {
     {
         Pro pro = this.properties.get(name);
         if(pro == null){
-            log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
+        	if(log.isDebugEnabled())
+            	log.debug(new StringBuilder().append("配置文件[").append(applicationContext.getConfigfile() ).append("]中没有指定属性[" ).append( name ).append( "]！").toString());
             return null;
         }
         return pro;

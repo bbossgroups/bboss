@@ -24,6 +24,7 @@ import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.spi.assemble.*;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
 import org.frameworkset.spi.cglib.*;
+import org.frameworkset.spi.runtime.Starter;
 import org.frameworkset.spi.support.*;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.ClassUtil;
@@ -2588,6 +2589,38 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 	public void restoreCacheContext(){
 		applicationContexts.put(this.getConfigfile(),this);
+	}
+
+	public void start(Starter starter){
+		Set<String> beanNames = getPropertyKeys();
+		if(beanNames == null || beanNames.size() == 0)
+			return ;
+		// Take any bean name that we can determine URLs for.
+		Iterator<String> beanNamesItr = beanNames.iterator();
+		Pro pro = null;
+		while(beanNamesItr.hasNext()) {
+			String beanName = beanNamesItr.next();
+			pro = getProBean(beanName);
+			if(pro == null)
+				continue;
+			try
+			{
+				starter.start(pro,this);
+			}
+			catch(Throwable e)
+			{
+				starter.failed(pro,this,e);
+//				if (log.isErrorEnabled())
+//				{
+//					log.error(new StringBuilder().append("Start [name:").append(pro.getName())
+//									.append(",class:").append(pro.getClazz())
+//									.append("] failed:").toString(),
+//							e);
+//
+//				}
+			}
+
+		}
 	}
 }
 

@@ -15,18 +15,17 @@
  */
 package org.frameworkset.spi.remote.hession;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
+import com.caucho.hessian.io.SerializerFactory;
+import com.caucho.services.server.GenericService;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.caucho.hessian.io.SerializerFactory;
-import com.caucho.services.server.GenericService;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p> HessianHanderContainer.java</p>
@@ -91,7 +90,7 @@ public class HessianHanderContainer {
 				}
 				catch(Exception e)
 				{
-//					if (logger.) 
+					if (log.isDebugEnabled())
 					{
 						log.debug("Detect Hession servicePort Handler from '" + beanName + "' failed: " + e.getMessage(),e);
 					}
