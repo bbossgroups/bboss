@@ -57,7 +57,7 @@ import java.util.Map.Entry;
  * </p>
  * 
  * @Date Aug 13, 2008 9:27:36 AM
- * @author biaoping.yin,尹标平
+ * @author biaoping.yin
  * @version 1.0
  */
 public class ServiceProviderManager {
@@ -221,7 +221,7 @@ public class ServiceProviderManager {
          catch (Exception e) {
 
 			 if(log.isErrorEnabled())
-				 log.error(new StringBuilder().append("Load [" ).append( defaultConfigFile ).append( "]失败").toString(), e);
+				 log.error(new StringBuilder().append("Load [" ).append( configfile ).append( "] failed").toString(), e);
          }
     }
     
@@ -387,7 +387,7 @@ public class ServiceProviderManager {
             		else
             		{
             			if(log.isDebugEnabled())
-            			 log.debug(new StringBuilder().append("IOC配置文件[" ).append( url).append( "]不存在，忽略加载").toString());
+            			 log.debug(new StringBuilder().append("Ignore load IOC xml file[" ).append( url).append( "]:file do not exist.").toString());
             		}
             	}
             }
@@ -399,7 +399,7 @@ public class ServiceProviderManager {
         		else
         		{
         			if(log.isDebugEnabled())
-        				log.debug(new StringBuilder().append("IOC配置文件[" ).append( url).append( "]不存在，忽略加载").toString());
+        				log.debug(new StringBuilder().append("Ignore load IOC xml file[" ).append( url).append( "]:file do not exist.").toString());
         		}
             }
 

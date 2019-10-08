@@ -42,8 +42,7 @@ import org.frameworkset.util.DataFormatUtil;
 import org.frameworkset.util.MethodParameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+
 
 import java.io.*;
 import java.lang.reflect.Array;
@@ -980,7 +979,7 @@ public class ValueObjectUtil {
 				out.write(buf,0,i);
 
 			}
-			BASE64Encoder en = new BASE64Encoder();
+			Base64 en = new Base64();
 			return en.encode(out.toByteArray());
 		}
 		catch(SQLException e)
@@ -5246,7 +5245,7 @@ public class ValueObjectUtil {
 
 	public static String byteArrayEncoder(byte[] contents)
 	{
-		BASE64Encoder en = new BASE64Encoder();
+		Base64 en = new Base64();
 		return en.encode(contents);
 	}
 
@@ -5254,12 +5253,9 @@ public class ValueObjectUtil {
 	{
 		if(contents == null)
 			return null;
-		BASE64Decoder en = new BASE64Decoder();
-		try {
-			return en.decodeBuffer(contents);
-		} catch (IOException e) {
-			throw e;
-		}
+		Base64 en = new Base64();
+		return en.decode(contents);
+
 
 	}
 

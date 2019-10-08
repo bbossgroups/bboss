@@ -42,7 +42,7 @@ dependencies {
             [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonversion}",transitive: false],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksondatabaindversion}",transitive: false],
             
-           	[group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25', transitive: true],
+           	[group: 'org.slf4j', name: 'slf4j-log4j12', version: "${slf4jlog4j12}", transitive: true],
             [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
             //[group: 'servletapi', name: 'servletapi', version: '2.4', transitive: false],
             //[group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],

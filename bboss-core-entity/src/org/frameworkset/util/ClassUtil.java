@@ -388,6 +388,18 @@ public class ClassUtil
 					classInfo.esPropertyDescripts.setEsMetaParentIdProperty(this);
 
 				}
+				else if(a instanceof ESMetaSeqNo)
+				{
+					esAnnoInfo.setReadSet(((ESMetaSeqNo)a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaSeqNoProperty(this);
+
+				}
+				else if(a instanceof ESMetaPrimaryTerm)
+				{
+					esAnnoInfo.setReadSet(((ESMetaPrimaryTerm)a).readSet());
+					classInfo.esPropertyDescripts.setEsMetaPrimaryTermProperty(this);
+
+				}
 				else if(a instanceof ESVersion)
 				{
 					esAnnoInfo.setPersistent(((ESVersion)a).persistent());

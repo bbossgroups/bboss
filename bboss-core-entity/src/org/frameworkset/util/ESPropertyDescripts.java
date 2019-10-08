@@ -150,6 +150,10 @@ public class ESPropertyDescripts {
 	 * es meta explanation属性
 	 */
 	private volatile transient ClassUtil.PropertieDescription esMetaExplanationProperty;
+
+	private volatile transient ClassUtil.PropertieDescription esMetaSeqNoProperty;
+
+	private volatile transient ClassUtil.PropertieDescription esMetaPrimaryTermProperty;
 	private boolean containReadSetProperty;
 
 	public ESIndexWrapper getEsIndexWrapper() {
@@ -420,5 +424,27 @@ public class ESPropertyDescripts {
 		if(!containReadSetProperty)
 			containReadSetProperty = esMetaParentIdProperty.isESReadSet();
 		this.esAnnonationProperties.add(esMetaParentIdProperty);
+	}
+
+	public ClassUtil.PropertieDescription getEsMetaSeqNoProperty() {
+		return esMetaSeqNoProperty;
+	}
+
+	public void setEsMetaSeqNoProperty(ClassUtil.PropertieDescription esMetaSeqNoProperty) {
+		this.esMetaSeqNoProperty = esMetaSeqNoProperty;
+		if(!containReadSetProperty)
+			containReadSetProperty = esMetaSeqNoProperty.isESReadSet();
+		this.esAnnonationProperties.add(esMetaSeqNoProperty);
+	}
+
+	public ClassUtil.PropertieDescription getEsMetaPrimaryTermProperty() {
+		return esMetaPrimaryTermProperty;
+	}
+
+	public void setEsMetaPrimaryTermProperty(ClassUtil.PropertieDescription esMetaPrimaryTermProperty) {
+		this.esMetaPrimaryTermProperty = esMetaPrimaryTermProperty;
+		if(!containReadSetProperty)
+			containReadSetProperty = esMetaPrimaryTermProperty.isESReadSet();
+		this.esAnnonationProperties.add(esMetaPrimaryTermProperty);
 	}
 }
