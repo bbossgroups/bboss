@@ -248,7 +248,7 @@ public class ESIndexWrapper {
 	private void initInfo(String name,String type){
 		this.index = name;
 		this.type = type;
-		if(type.equals(""))
+		if(type != null && type.equals(""))
 			type = null;
 		nameInfo = new NameInfo();
 //		String name = esIndex.name();
