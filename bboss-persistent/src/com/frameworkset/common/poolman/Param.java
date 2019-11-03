@@ -148,9 +148,18 @@ public class Param
         return newparam;
     }
     int index;
-	Object data;	
+	Object data;
 	String dataformat;
 	String name;
+
+	public Variable getVariable() {
+		return variable;
+	}
+
+	public void setVariable(Variable variable) {
+		this.variable = variable;
+	}
+
 	/**
 	 * 引用变量，适用于变量引用，list，set，map，数组以及多级
 	 * 变量引用
@@ -264,11 +273,11 @@ public class Param
 		this.name = name;
 	}
 
-	protected String getType() {
+	public String getType() {
 		return type;
 	}
 
-	protected void setType(String type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 

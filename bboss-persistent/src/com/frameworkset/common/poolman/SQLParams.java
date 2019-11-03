@@ -148,7 +148,7 @@ public class SQLParams
     
 
     
-    public  VelocityContext buildVelocityContext()
+    public  VelocityContext buildVelocityContext(Map<String,Param> sqlparams)
     {
     	
     	
@@ -355,7 +355,7 @@ public class SQLParams
     		sqlinfo.getSqltpl().process();
     		if(sqlinfo.istpl())
     		{
-	    		vcontext = buildVelocityContext();
+	    		vcontext = buildVelocityContext(sqlparams);
 	    		BBossStringWriter sw = new BBossStringWriter();
 	    		sqlinfo.getSqltpl().merge(vcontext, sw);
 	    		sql = sw.toString();
@@ -394,7 +394,7 @@ public class SQLParams
         		if(totalsizesqlinfo.istpl())
         		{
 	        		if(vcontext == null)
-	        			vcontext = buildVelocityContext();
+	        			vcontext = buildVelocityContext(sqlparams);
 	        		BBossStringWriter sw = new BBossStringWriter();
 	        		totalsizesqlinfo.getSqltpl().merge(vcontext, sw);
 	        		totalsizesql = sw.toString();
@@ -474,7 +474,7 @@ public class SQLParams
 	    		sqlinfo.getSqltpl().process();//识别sql语句是不是真正的velocity sql模板
 	    		if(sqlinfo.istpl())
 	    		{
-	    			vcontext = buildVelocityContext();//一个context是否可以被同时用于多次运算呢？
+	    			vcontext = buildVelocityContext(sqlparams);//一个context是否可以被同时用于多次运算呢？
 			    	
 	    			BBossStringWriter sw = new BBossStringWriter();
 			       sqlinfo.getSqltpl().merge(vcontext,sw);
@@ -510,7 +510,7 @@ public class SQLParams
 	        		if(totalsizesqlinfo.istpl())
 	        		{
 		        		if(vcontext == null)
-		        			vcontext = buildVelocityContext();
+		        			vcontext = buildVelocityContext(sqlparams);
 		        		BBossStringWriter sw = new BBossStringWriter();
 		        		totalsizesqlinfo.getSqltpl().merge(vcontext,sw);
 		        		totalsizesql = sw.toString();
@@ -556,10 +556,10 @@ public class SQLParams
 	        	Variable var = vars.get(i);
 	            temp = this.sqlparams.get(var.getVariableName());
 	            if(temp == null)
-	                throw new SetSQLParamException("未指定绑定变量的值：" 
-	                                                + var.getVariableName() 
-	                                                + "\r\n" 
-	                                                + this.toString());
+	                throw new SetSQLParamException(new StringBuilder().append("未指定绑定变量的值：" )
+													.append( var.getVariableName() )
+												    .append( "\r\n" )
+													.append( this.toString()).toString());
 	            Param newparam = temp.clone(var);
 	            //绑定变量索引从1开始
 	            newparam.index = i + 1;
@@ -594,7 +594,7 @@ public class SQLParams
 		    		if(conditionsqlinfo.istpl())
 		    		{
 		    			if(vcontext == null)
-		        			vcontext = buildVelocityContext();
+		        			vcontext = buildVelocityContext(sqlparams);
 
 						BBossStringWriter sw = new BBossStringWriter();
 				    	conditionsqlinfo.getSqltpl().merge(vcontext,sw);

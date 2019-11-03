@@ -20,11 +20,10 @@ sourceSets {
     }
     
 }
-project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.install)
-dependencies {
 
+dependencies {
+    compile project(":bboss-core")
     compile (
-            [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: true],
             [group: 'org.apache.commons', name: 'commons-pool2', version: '2.4.2', transitive: false],
             [group: 'redis.clients', name: 'jedis', version: "${jedisversion}", transitive: false],
             [group: 'org.mongodb', name: 'mongo-java-driver', version: "${mongodbversion}", transitive: false],

@@ -1,32 +1,21 @@
 package org.frameworkset.nosql.mongodb;
 
+import com.frameworkset.util.StringUtil;
+import com.mongodb.*;
+import com.mongodb.MongoClientOptions.Builder;
+import org.frameworkset.spi.BeanNameAware;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.frameworkset.util.StringUtil;
-import com.mongodb.Bytes;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoClientOptions.Builder;
-import com.mongodb.MongoCredential;
-import com.mongodb.ReadPreference;
-import com.mongodb.ServerAddress;
-import com.mongodb.WriteConcern;
-import com.mongodb.WriteConcernException;
-import com.mongodb.WriteResult;
-
-public class MongoDB {
+public class MongoDB implements BeanNameAware {
 	private static Method autoConnectRetryMethod;
+	private String name;
 	static {
 		try {
 			autoConnectRetryMethod = Builder.class.getMethod("autoConnectRetry", boolean.class);
@@ -38,20 +27,21 @@ public class MongoDB {
 			// e.printStackTrace();
 		}
 	}
+	private MongoDBConfig config;
 	private static Logger log = LoggerFactory.getLogger(MongoDB.class);
-	private String serverAddresses;
-	private String option;
-	private String writeConcern;
-	private String readPreference;
+//	private String serverAddresses;
+//	private String option;
+//	private String writeConcern;
+//	private String readPreference;
 	private Mongo mongoclient;
-	private String mode = null;
-	private boolean autoConnectRetry = true;
-	private int connectionsPerHost = 500;
-	private int maxWaitTime = 120000;
-	private int socketTimeout = 0;
-	private int connectTimeout = 15000;
-	private int threadsAllowedToBlockForConnectionMultiplier = 50;
-	private boolean socketKeepAlive = true;
+//	private String mode = null;
+//	private boolean autoConnectRetry = true;
+//	private int connectionsPerHost = 500;
+//	private int maxWaitTime = 120000;
+//	private int socketTimeout = 0;
+//	private int connectTimeout = 15000;
+//	private int threadsAllowedToBlockForConnectionMultiplier = 50;
+//	private boolean socketKeepAlive = true;
 	private List<ClientMongoCredential> credentials;
 	private List<MongoCredential> mongoCredentials;
 
@@ -98,11 +88,13 @@ public class MongoDB {
 	}
 
 	private List<ServerAddress> parserAddress() throws NumberFormatException, UnknownHostException {
+		String serverAddresses = this.getServerAddresses();
 		if (StringUtil.isEmpty(serverAddresses))
 			return null;
 
 		serverAddresses = serverAddresses.trim();
 		List<ServerAddress> trueaddresses = new ArrayList<ServerAddress>();
+		String mode = this.getMode();
 		if (mode != null && mode.equals("simple")) {
 			String info[] = serverAddresses.split(":");
 			ServerAddress ad = new ServerAddress(info[0].trim(), Integer.parseInt(info[1].trim()));
@@ -110,7 +102,7 @@ public class MongoDB {
 			return trueaddresses;
 		}
 
-		String[] addresses = this.serverAddresses.split("\n");
+		String[] addresses = serverAddresses.split("\n");
 		for (String address : addresses) {
 			address = address.trim();
 			String info[] = address.split(":");
@@ -121,10 +113,11 @@ public class MongoDB {
 	}
 
 	private int[] parserOption() throws NumberFormatException, UnknownHostException {
-		if (StringUtil.isEmpty(this.option))
+		String option = this.getOption();
+		if (StringUtil.isEmpty(option))
 			return null;
 		option = option.trim();
-		String[] options = this.option.split("\r\n");
+		String[] options = option.split("\r\n");
 		int[] ret = new int[options.length];
 		int i = 0;
 		for (String op : options) {
@@ -175,29 +168,30 @@ public class MongoDB {
 	}
 
 	private WriteConcern _getWriteConcern() {
-		if (StringUtil.isEmpty(this.writeConcern))
+		String writeConcern = this.getWriteConcern();
+		if (StringUtil.isEmpty(writeConcern))
 			return null;
 		writeConcern = writeConcern.trim();
-		if (this.writeConcern.equals("NONE"))
+		if (writeConcern.equals("NONE"))
 			return WriteConcern.UNACKNOWLEDGED;
-		else if (this.writeConcern.equals("NORMAL"))
+		else if (writeConcern.equals("NORMAL"))
 			return WriteConcern.NORMAL;
-		else if (this.writeConcern.equals("SAFE"))
+		else if (writeConcern.equals("SAFE"))
 			return WriteConcern.SAFE;
-		else if (this.writeConcern.equals("MAJORITY"))
+		else if (writeConcern.equals("MAJORITY"))
 			return WriteConcern.MAJORITY;
-		else if (this.writeConcern.equals("FSYNC_SAFE"))
+		else if (writeConcern.equals("FSYNC_SAFE"))
 			return WriteConcern.FSYNC_SAFE;
-		else if (this.writeConcern.equals("JOURNAL_SAFE"))
+		else if (writeConcern.equals("JOURNAL_SAFE"))
 			return WriteConcern.JOURNAL_SAFE;
-		else if (this.writeConcern.equals("REPLICAS_SAFE"))
+		else if (writeConcern.equals("REPLICAS_SAFE"))
 			return WriteConcern.REPLICAS_SAFE;
-		else if (this.writeConcern.startsWith("REPLICA_ACKNOWLEDGED")) {
+		else if (writeConcern.startsWith("REPLICA_ACKNOWLEDGED")) {
 			int idx = writeConcern.indexOf("(");
 			if (idx < 0) {
 				return WriteConcern.REPLICA_ACKNOWLEDGED;
 			} else {
-				String n = this.writeConcern.substring(idx + 1, writeConcern.length() - 1);
+				String n = writeConcern.substring(idx + 1, writeConcern.length() - 1);
 				try {
 					if (n.indexOf(",") < 0) {
 						int N = Integer.parseInt(n);
@@ -214,22 +208,23 @@ public class MongoDB {
 					return WriteConcern.REPLICA_ACKNOWLEDGED;
 				}
 			}
-		} else if (this.writeConcern.equals("ACKNOWLEDGED"))
+		} else if (writeConcern.equals("ACKNOWLEDGED"))
 			return WriteConcern.ACKNOWLEDGED;
-		else if (this.writeConcern.equals("UNACKNOWLEDGED"))
+		else if (writeConcern.equals("UNACKNOWLEDGED"))
 			return WriteConcern.UNACKNOWLEDGED;
-		else if (this.writeConcern.equals("FSYNCED"))
+		else if (writeConcern.equals("FSYNCED"))
 			return WriteConcern.FSYNCED;
-		else if (this.writeConcern.equals("JOURNALED"))
+		else if (writeConcern.equals("JOURNALED"))
 			return WriteConcern.JOURNALED;
-		else if (this.writeConcern.equals("ERRORS_IGNORED"))
+		else if (writeConcern.equals("ERRORS_IGNORED"))
 			return WriteConcern.UNACKNOWLEDGED;
 
 		throw new RuntimeException("未知的WriteConcern:" + writeConcern);
 	}
 
 	private ReadPreference _getReadPreference() {
-		if (StringUtil.isEmpty(this.readPreference))
+		String readPreference = this.getReadPreference();
+		if (StringUtil.isEmpty(readPreference))
 			return null;
 		if (readPreference.equals("PRIMARY"))
 			return ReadPreference.primary();
@@ -276,9 +271,147 @@ public class MongoDB {
 		}
 	}
 
+	public void init(MongoDBConfig config){
+		this.config = config;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+		check();
+		this.config.setName(name);
+	}
+
+	public String getServerAddresses() {
+		return this.config.getServerAddresses();
+	}
+
+	private void check(){
+		if(config == null){
+			config = new MongoDBConfig();
+		}
+	}
+	public void setServerAddresses(String serverAddresses) {
+		check();
+		this.config.setServerAddresses(serverAddresses);
+	}
+	public String getMode() {
+		check();
+		return this.config.getMode();
+	}
+
+	public void setMode(String mode) {
+		check();
+		this.config.setMode(mode);
+	}
+	public String getOption() {
+		check();
+		return this.config.getOption();
+	}
+
+	public void setOption(String option) {
+		check();
+		this.config.setOption(option);
+	}
+
+	public String getWriteConcern() {
+		check();
+		return config.getWriteConcern();
+	}
+
+	public void setWriteConcern(String writeConcern) {
+		check();
+		this.config.setWriteConcern(writeConcern);
+	}
+
+	public String getReadPreference() {
+		check();
+		return config.getReadPreference();
+	}
+
+	public void setReadPreference(String readPreference) {
+		check();
+		this.config.setReadPreference(readPreference);
+	}
+
+	public Boolean getAutoConnectRetry() {
+		check();
+		return config.getAutoConnectRetry();
+	}
+
+	public void setAutoConnectRetry(Boolean autoConnectRetry) {
+		check();
+		this.config.setAutoConnectRetry(autoConnectRetry);
+	}
+
+	public int getConnectionsPerHost() {
+		check();
+		return config.getConnectionsPerHost();
+	}
+
+	public void setConnectionsPerHost(int connectionsPerHost) {
+		check();
+		this.config.setConnectionsPerHost(connectionsPerHost);
+	}
+
+	public int getMaxWaitTime() {
+		check();
+		return config.getMaxWaitTime();
+	}
+
+	public void setMaxWaitTime(int maxWaitTime) {
+		check();
+		this.config.setMaxWaitTime(maxWaitTime);
+	}
+
+	public int getSocketTimeout() {
+		check();
+		return config.getSocketTimeout();
+	}
+
+	public void setSocketTimeout(int socketTimeout) {
+		check();
+		this.config.setSocketTimeout(socketTimeout);
+	}
+
+	public int getConnectTimeout() {
+		check();
+		return config.getConnectTimeout();
+	}
+
+	public void setConnectTimeout(int connectTimeout) {
+		check();
+		this.config.setConnectTimeout(connectTimeout);
+	}
+
+	public int getThreadsAllowedToBlockForConnectionMultiplier() {
+		check();
+		return config.getThreadsAllowedToBlockForConnectionMultiplier();
+	}
+
+	public void setThreadsAllowedToBlockForConnectionMultiplier(int threadsAllowedToBlockForConnectionMultiplier) {
+		check();
+		this.config.setThreadsAllowedToBlockForConnectionMultiplier(threadsAllowedToBlockForConnectionMultiplier);
+	}
+
+	public Boolean getSocketKeepAlive() {
+		check();
+		return config.getSocketKeepAlive();
+	}
+
+	public void setSocketKeepAlive(Boolean socketKeepAlive) {
+		check();
+		this.config.setSocketKeepAlive(socketKeepAlive);
+	}
+
 	public void init() {
 		try {
 			buildCredentials();
+			String mode = this.getMode();
 			if (mode != null && mode.equals("simple")) {
 				this.initsimple();
 			} else {
@@ -293,13 +426,13 @@ public class MongoDB {
 				// options.socketKeepAlive=socketKeepAlive;
 				Builder builder = MongoClientOptions.builder();
 				// builder.autoConnectRetry( autoConnectRetry);
-				_autoConnectRetry(builder, autoConnectRetry);
-				builder.connectionsPerHost(connectionsPerHost);
-				builder.maxWaitTime(maxWaitTime);
-				builder.socketTimeout(socketTimeout);
-				builder.connectTimeout(connectTimeout);
-				builder.threadsAllowedToBlockForConnectionMultiplier(threadsAllowedToBlockForConnectionMultiplier);
-				builder.socketKeepAlive(socketKeepAlive);
+				_autoConnectRetry(builder, this.getAutoConnectRetry());
+				builder.connectionsPerHost(this.getConnectionsPerHost());
+				builder.maxWaitTime(this.getMaxWaitTime());
+				builder.socketTimeout(this.getSocketTimeout());
+				builder.connectTimeout(this.getConnectTimeout());
+				builder.threadsAllowedToBlockForConnectionMultiplier(this.getThreadsAllowedToBlockForConnectionMultiplier());
+				builder.socketKeepAlive(this.getSocketKeepAlive());
 				MongoClientOptions options = builder.build();// new
 																// MongoClientOptions();
 				MongoClient mongoClient = null;
@@ -372,13 +505,13 @@ public class MongoDB {
 			// Mongo mongoClient = new Mongo(parserAddress().get(0),options);
 			Builder builder = MongoClientOptions.builder();
 			// builder.autoConnectRetry( autoConnectRetry);
-			_autoConnectRetry(builder, autoConnectRetry);
-			builder.connectionsPerHost(connectionsPerHost);
-			builder.maxWaitTime(maxWaitTime);
-			builder.socketTimeout(socketTimeout);
-			builder.connectTimeout(connectTimeout);
-			builder.threadsAllowedToBlockForConnectionMultiplier(threadsAllowedToBlockForConnectionMultiplier);
-			builder.socketKeepAlive(socketKeepAlive);
+			_autoConnectRetry(builder, this.getAutoConnectRetry());
+			builder.connectionsPerHost(this.getConnectionsPerHost());
+			builder.maxWaitTime(this.getMaxWaitTime());
+			builder.socketTimeout(this.getSocketTimeout());
+			builder.connectTimeout(this.getConnectTimeout());
+			builder.threadsAllowedToBlockForConnectionMultiplier(this.getThreadsAllowedToBlockForConnectionMultiplier());
+			builder.socketKeepAlive(this.getSocketKeepAlive());
 			MongoClientOptions options = builder.build();// new
 															// MongoClientOptions();
 			MongoClient mongoClient = null;
@@ -507,4 +640,10 @@ public class MongoDB {
 		
 	}
 
+	@Override
+	public void setBeanName(String name) {
+		this.name = name;
+		this.check();
+		this.config.setName(name);
+	}
 }

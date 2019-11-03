@@ -1518,10 +1518,14 @@ public class SQLUtil{
 	}
 	public static void debugStatus(String DBName)
 	{
-		System.out.println(new StringBuilder("[").append(DBName).append("] idle connenctions:").append(SQLUtil.getNumIdle(DBName)));
-		System.out.println(new StringBuilder("[").append(DBName).append("] active connenctions:").append(SQLUtil.getNumActive(DBName)));
-		System.out.println(new StringBuilder("[").append(DBName).append("] max active connenctions:").append(SQLUtil.getMaxNumActive(DBName)));		
-		System.out.println(new StringBuilder("[").append(DBName).append("] max active connenctions time:").append(SQLUtil.getMaxActiveNumFormatTime(DBName)));
+		if(log.isInfoEnabled()) {
+			StringBuilder builder = new StringBuilder();
+			builder.append("[").append(DBName).append("] idle connenctions:").append(SQLUtil.getNumIdle(DBName)).append("--------------------------\r\n")
+			.append("[").append(DBName).append("] active connenctions:").append(SQLUtil.getNumActive(DBName)).append("--------------------------\r\n")
+			.append("[").append(DBName).append("] max active connenctions:").append(SQLUtil.getMaxNumActive(DBName)).append("--------------------------\r\n")
+			.append("[").append(DBName).append("] max active connenctions time:").append(SQLUtil.getMaxActiveNumFormatTime(DBName)).append("--------------------------\r\n");
+			log.info(builder.toString());
+		}
 		
 	}
 	
