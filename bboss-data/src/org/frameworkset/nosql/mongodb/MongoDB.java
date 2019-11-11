@@ -15,7 +15,6 @@ import java.util.List;
 
 public class MongoDB implements BeanNameAware {
 	private static Method autoConnectRetryMethod;
-	private String name;
 	static {
 		try {
 			autoConnectRetryMethod = Builder.class.getMethod("autoConnectRetry", boolean.class);
@@ -273,15 +272,16 @@ public class MongoDB implements BeanNameAware {
 
 	public void init(MongoDBConfig config){
 		this.config = config;
+		this.init();
 	}
 
 
 	public String getName() {
-		return name;
+		check();
+		return config.getName();
 	}
 
 	public void setName(String name) {
-		this.name = name;
 		check();
 		this.config.setName(name);
 	}
@@ -642,7 +642,6 @@ public class MongoDB implements BeanNameAware {
 
 	@Override
 	public void setBeanName(String name) {
-		this.name = name;
 		this.check();
 		this.config.setName(name);
 	}

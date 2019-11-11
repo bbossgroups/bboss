@@ -1,6 +1,7 @@
 package org.frameworkset.spi.assemble;
 
 import com.frameworkset.util.SimpleStringUtil;
+import com.frameworkset.util.ValueCastUtil;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.plugin.PropertiesFilePlugin;
 import org.frameworkset.spi.support.EnvUtil;
@@ -18,8 +19,8 @@ import java.util.Properties;
 
 public class PropertiesContainer implements GetProperties{
     protected List<String> configPropertiesFiles;
-    protected Properties allProperties ;
-    protected Properties sonAndParentProperties ;
+    protected Map<Object,Object> allProperties ;
+    protected Map<Object,Object> sonAndParentProperties ;
     private static Logger log = LoggerFactory.getLogger(PropertiesContainer.class);
     public PropertiesContainer(){
 
@@ -81,16 +82,19 @@ public class PropertiesContainer implements GetProperties{
 	public Object getExternalObjectProperty(String property)
 	{
 
-		return getPropertyFromSelf2ndSons(property);
+		return getExternalObjectProperty(  property,null);
 	}
 	public Object getExternalObjectProperty(String property,Object defaultValue)
 	{
-		String value = getPropertyFromSelf2ndSons(property);
-
-		if(value != null)
-			return value;
-		else
-			return defaultValue;
+		Object value = null;
+		if(sonAndParentProperties == null)
+			value = null;
+		else {
+			value = sonAndParentProperties.get(property);
+		}
+		if(value == null)
+			value = getObjectProperty( property);
+		return value;
 	}
 
 
@@ -418,9 +422,21 @@ public class PropertiesContainer implements GetProperties{
     {
     	if(allProperties == null)
     		return null;
-    	return allProperties.getProperty(property);
+    	Object value = allProperties.get(property);
+    	if(value == null)
+    		return null;
+    	return value instanceof String?(String)value:String.valueOf(value);
 
     }
+
+	public Object getObjectProperty(String property)
+	{
+		if(allProperties == null)
+			return null;
+		Object value = allProperties.get(property);
+		return value;
+
+	}
 
 	/**
 	 * 首先从配置文件中查找属性值，然后从jvm系统熟悉和系统环境变量中查找属性值
@@ -490,13 +506,8 @@ public class PropertiesContainer implements GetProperties{
 	{
 		if(allProperties == null)
 			return defaultValue;
-		String value = allProperties.getProperty(property);
-		if(value == null)
-			return defaultValue;
-		if(value.equals("true")){
-			return true;
-		}
-		return false;
+		Object value = allProperties.get(property);
+		return ValueCastUtil.toBoolean(value,defaultValue);
 	}
 
 
@@ -533,11 +544,11 @@ public class PropertiesContainer implements GetProperties{
 	public int getIntProperty(String property,int defaultValue) {
 		if(allProperties == null)
 			return defaultValue;
-		String value = allProperties.getProperty(property);
-		if(value == null)
-			return defaultValue;
+		Object value = allProperties.get(property);
+
 		try {
-			return Integer.parseInt(value);
+			return ValueCastUtil.toInt(value,defaultValue);
+
 		}
 		catch (Exception e){
 			throw new java.lang.IllegalArgumentException(new StringBuilder()
@@ -581,11 +592,10 @@ public class PropertiesContainer implements GetProperties{
 	public long getLongProperty(String property,long defaultValue) {
 		if(allProperties == null)
 			return defaultValue;
-		String value = allProperties.getProperty(property);
-		if(value == null)
-			return defaultValue;
+		Object value = allProperties.get(property);
+
 		try {
-			return Long.parseLong(value);
+			return ValueCastUtil.toLong(value,defaultValue);
 		}
 		catch (Exception e){
 			throw new java.lang.IllegalArgumentException(new StringBuilder()
@@ -600,14 +610,15 @@ public class PropertiesContainer implements GetProperties{
 
 	public String getPropertyFromSelf2ndSons(String property)
     {
-    	String value = null;
+    	Object value = null;
     	if(sonAndParentProperties == null)
 			value = null;
-    	else
-			value = sonAndParentProperties.getProperty(property);
+    	else {
+			value = sonAndParentProperties.get(property);
+		}
 		if(value == null)
-			value = getProperty( property);
-		return value;
+			value = getObjectProperty( property);
+		return ValueCastUtil.toString(value,null);
     }
     
     public int size()

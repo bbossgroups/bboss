@@ -1,43 +1,68 @@
 package org.frameworkset.nosql.mongodb;
 
-import org.frameworkset.spi.BaseApplicationContext;
-import org.frameworkset.spi.DefaultApplicationContext;
-
 import com.frameworkset.util.StringUtil;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.DefaultApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MongoDBHelper {
 	public static final String defaultMongoDB = "default";
+	private static Logger logger = LoggerFactory.getLogger(MongoDBHelper.class);
+	private static BaseApplicationContext context = null;
+	private static Map<String,MongoDB> mongoDBContainer = new HashMap<String,MongoDB>();
 
-	private static BaseApplicationContext context = DefaultApplicationContext.getApplicationContext("mongodb.xml");
-
-
+	private static void check(){
+		if(context == null){
+			try {
+				context = DefaultApplicationContext.getApplicationContext("mongodb.xml");
+			}
+			catch (Exception e){
+				logger.warn("Init context with mongodb.xml failed",e);
+			}
+		}
+	}
+	public static void init(MongoDBConfig mongoDBConfig){
+		MongoDB mongoDB = new MongoDB();
+		mongoDB.init(mongoDBConfig);
+		mongoDB = mongoDB.getMongoClient();
+		mongoDBContainer.put(mongoDB.getName(),mongoDB);
+	}
 	public static MongoDB getMongoClient(String name)
 	{
 		if(StringUtil.isEmpty(name))
 		{
-			return context.getTBeanObject(defaultMongoDB, MongoDB.class);
+			name = defaultMongoDB;
 		}
-		else
-			return context.getTBeanObject(name, MongoDB.class);
+		MongoDB mongoDB = mongoDBContainer.get(defaultMongoDB);
+		if(mongoDB != null)
+			return mongoDB;
+		synchronized (MongoDBHelper.class) {
+			mongoDB = mongoDBContainer.get(name);
+			if(mongoDB != null)
+				return mongoDB;
+			check();
+			mongoDB = context.getTBeanObject(name, MongoDB.class);
+			if (mongoDB != null) {
+				mongoDBContainer.put(name, mongoDB);
+			}
+		}
+		return mongoDB;
 	}
 	
 	public static MongoDB getMongoDB(String name)
 	{
-		if(StringUtil.isEmpty(name))
-		{
-			return context.getTBeanObject(defaultMongoDB, MongoDB.class);
-		}
-		else
-			return context.getTBeanObject(name, MongoDB.class);
+		return getMongoClient(name);
 	}
 	
 	public static MongoDB getMongoDB()
 	{
-		 
-			return context.getTBeanObject(defaultMongoDB, MongoDB.class);
-		 
+		 return getMongoDB(defaultMongoDB);
 	}
 	
 	public static MongoDB getMongoClient()
@@ -45,27 +70,7 @@ public class MongoDBHelper {
 		return getMongoDB();
 	}
 	
-//	public static void destory()
-//	{
-//		if(closeDB)
-//			return;
-//		try
-//		{
-//			if(mongoClient != null)
-//			{
-//				try {
-//					mongoClient.close();
-//				} catch (Exception e) {
-//					log.error("", e);
-//				}
-//			}
-//		}
-//		finally
-//		{
-//			closeDB = true;
-//		}
-//		
-//	}
+
 	private static final String dianhaochar = "____";
 	private static final String moneychar = "_____";
 	private static final int msize = moneychar.length();

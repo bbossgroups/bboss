@@ -24,7 +24,7 @@ dependencies {
 		[group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: true],
 		[group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
 
-		[group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.0', transitive: true], [group: 'org.quartz-scheduler', name: 'quartz-backward-compat', version: '2.1.7', transitive: true],
+		[group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2', transitive: true], [group: 'org.quartz-scheduler', name: 'quartz-backward-compat', version: '2.1.7', transitive: true],
  
 	)
 }
