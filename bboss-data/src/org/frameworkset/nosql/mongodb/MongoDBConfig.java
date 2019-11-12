@@ -40,7 +40,7 @@ public class MongoDBConfig {
 
 
 	/**是否启用sql日志，true启用，false 不启用，*/
-	private int threadsAllowedToBlockForConnectionMultiplier;
+	private int threadsAllowedToBlockForConnectionMultiplier = 5;
 	private Boolean socketKeepAlive = false;
 
 	private String mode;

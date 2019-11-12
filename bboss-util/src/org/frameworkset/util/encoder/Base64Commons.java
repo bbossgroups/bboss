@@ -3,16 +3,14 @@
  */
 package org.frameworkset.util.encoder;
 
-import java.math.BigInteger;
-
 import com.frameworkset.util.SimpleStringUtil;
+
+import java.math.BigInteger;
 
 
 
 /**
  * @author yinbp
- *
- * @Date:2016-11-18 12:09:24
  */
 public class Base64Commons   extends BaseNCodec {
 

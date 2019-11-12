@@ -29,7 +29,7 @@ public class MongoDBHelper {
 	}
 	public static void init(MongoDBConfig mongoDBConfig){
 		MongoDB mongoDB = new MongoDB();
-		mongoDB.init(mongoDBConfig);
+		mongoDB.initWithConfig(mongoDBConfig);
 		mongoDB = mongoDB.getMongoClient();
 		mongoDBContainer.put(mongoDB.getName(),mongoDB);
 	}

@@ -5282,11 +5282,11 @@ public class ValueObjectUtil {
     private static ClassLoader getTCL() throws IllegalAccessException, InvocationTargetException {
         Method method = null;
         try {
-            method = (Thread.class).getMethod("getContextClassLoader", null);
+            method = (Thread.class).getMethod("getContextClassLoader");
         } catch (NoSuchMethodException e) {
             return null;
         }
-        return (ClassLoader)method.invoke(Thread.currentThread(), null);
+        return (ClassLoader)method.invoke(Thread.currentThread());
     }
     /**
      * InputStream reader = null;

@@ -270,7 +270,7 @@ public class MongoDB implements BeanNameAware {
 		}
 	}
 
-	public void init(MongoDBConfig config){
+	public void initWithConfig(MongoDBConfig config){
 		this.config = config;
 		this.init();
 	}
