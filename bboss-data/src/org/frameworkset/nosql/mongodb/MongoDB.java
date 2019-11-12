@@ -41,7 +41,7 @@ public class MongoDB implements BeanNameAware {
 //	private int connectTimeout = 15000;
 //	private int threadsAllowedToBlockForConnectionMultiplier = 50;
 //	private boolean socketKeepAlive = true;
-	private List<ClientMongoCredential> credentials;
+
 	private List<MongoCredential> mongoCredentials;
 
 	public MongoDB getMongoClient() {
@@ -239,9 +239,10 @@ public class MongoDB implements BeanNameAware {
 	}
 
 	private void buildCredentials() {
-		if (this.credentials != null && this.credentials.size() > 0) {
+
+		if (config.getCredentials() != null && config.getCredentials().size() > 0) {
 			this.mongoCredentials = new ArrayList<MongoCredential>();
-			for (ClientMongoCredential clientMongoCredential : this.credentials) {
+			for (ClientMongoCredential clientMongoCredential : config.getCredentials()) {
 				if (StringUtil.isEmpty(clientMongoCredential.getMechanism())) {
 					mongoCredentials.add(MongoCredential.createCredential(clientMongoCredential.getUserName(),
 							clientMongoCredential.getDatabase(),
@@ -639,7 +640,10 @@ public class MongoDB implements BeanNameAware {
 		return db.getCollection(table);
 		
 	}
-
+	public void setCredentials(List<ClientMongoCredential> credentials) {
+		this.check();
+		this.config.setCredentials( credentials);
+	}
 	@Override
 	public void setBeanName(String name) {
 		this.check();

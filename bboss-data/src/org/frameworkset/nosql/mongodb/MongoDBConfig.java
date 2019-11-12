@@ -15,6 +15,8 @@ package org.frameworkset.nosql.mongodb;
  * limitations under the License.
  */
 
+import java.util.List;
+
 /**
  * <p>Description: </p>
  * <p></p>
@@ -38,6 +40,15 @@ public class MongoDBConfig {
 	private int socketTimeout = 0;
 	private int connectTimeout = 15000;
 
+	public List<ClientMongoCredential> getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(List<ClientMongoCredential> credentials) {
+		this.credentials = credentials;
+	}
+
+	private List<ClientMongoCredential> credentials;
 
 	/**是否启用sql日志，true启用，false 不启用，*/
 	private int threadsAllowedToBlockForConnectionMultiplier = 5;
