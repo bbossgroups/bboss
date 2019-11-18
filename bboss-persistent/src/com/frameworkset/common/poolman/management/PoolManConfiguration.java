@@ -288,11 +288,11 @@ public class PoolManConfiguration   {
 		Method method = null;
 		try {
 			method = (java.lang.Thread.class).getMethod(
-					"getContextClassLoader", null);
+					"getContextClassLoader");
 		} catch (NoSuchMethodException e) {
 			return null;
 		}
-		return (ClassLoader) method.invoke(Thread.currentThread(), null);
+		return (ClassLoader) method.invoke(Thread.currentThread());
 	}
 
 	private ArrayList parseProperties(String propsfilename) throws Exception {

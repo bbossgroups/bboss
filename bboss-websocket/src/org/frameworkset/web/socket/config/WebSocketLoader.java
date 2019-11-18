@@ -1,11 +1,6 @@
 package org.frameworkset.web.socket.config;
 
-import java.lang.reflect.Method;
-import java.util.Iterator;
-import java.util.Set;
-
-import javax.servlet.ServletConfig;
-
+import com.frameworkset.util.StringUtil;
 import org.frameworkset.schedule.ThreadPoolTaskScheduler;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
@@ -15,7 +10,10 @@ import org.frameworkset.web.socket.inf.WebSocketHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.util.StringUtil;
+import javax.servlet.ServletConfig;
+import java.lang.reflect.Method;
+import java.util.Iterator;
+import java.util.Set;
 
 public class WebSocketLoader {
 	private static Logger logger = LoggerFactory.getLogger(WebSocketLoader.class);
@@ -37,8 +35,8 @@ public class WebSocketLoader {
 //			org.frameworkset.spi.BaseApplicationContext context = org.frameworkset.spi.DefaultApplicationContext
 //					.getApplicationContext("org/frameworkset/spi/ws/webserivce-modules.xml");
 			Class clas = Class.forName("org.frameworkset.web.servlet.support.WebApplicationContextUtils");
-			Method m = clas.getMethod("getWebApplicationContext", null);
-			org.frameworkset.spi.BaseApplicationContext context = (BaseApplicationContext)m.invoke(null, null);
+			Method m = clas.getMethod("getWebApplicationContext");
+			org.frameworkset.spi.BaseApplicationContext context = (BaseApplicationContext)m.invoke(null);
 			 
 			loadWebSocketService(context,classLoader, mapping);
 		} catch (Exception e) {

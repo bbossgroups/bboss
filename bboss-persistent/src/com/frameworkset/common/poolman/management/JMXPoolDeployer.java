@@ -15,28 +15,14 @@
  */
 package com.frameworkset.common.poolman.management;
 
+import com.frameworkset.common.poolman.PoolManConstants;
+import com.frameworkset.common.poolman.util.SQLManager;
+
+import javax.management.*;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
-import javax.management.Attribute;
-import javax.management.MBeanAttributeInfo;
-import javax.management.MBeanException;
-import javax.management.MBeanInfo;
-import javax.management.MBeanServer;
-import javax.management.MBeanServerFactory;
-import javax.management.ObjectInstance;
-import javax.management.ObjectName;
-import javax.management.RuntimeMBeanException;
-import javax.management.RuntimeOperationsException;
-
-import com.frameworkset.common.poolman.PoolManConstants;
-import com.frameworkset.common.poolman.util.SQLManager;
+import java.util.*;
 
 public class JMXPoolDeployer extends BaseTableManager implements PoolManDeployer, Runnable,Serializable {
 
@@ -161,8 +147,8 @@ public class JMXPoolDeployer extends BaseTableManager implements PoolManDeployer
                     String compositeName = new String(adminProps.getProperty("name", "Adaptor:name=html") + ",port=" + adminProps.getProperty("port", "8082"));
                     ObjectName agentName = new ObjectName(compositeName);
                     server.registerMBean(agentInstance, agentName);
-                    java.lang.reflect.Method startMethod = agentType.getMethod("start", null);
-                    startMethod.invoke(agentInstance, null);
+                    java.lang.reflect.Method startMethod = agentType.getMethod("start");
+                    startMethod.invoke(agentInstance);
                 } catch (Exception e) {
                     System.err.println("ERROR: Could not create the Admin Agent: " + e);
                     e.printStackTrace();
