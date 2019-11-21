@@ -31,24 +31,19 @@
  *****************************************************************************/
 
 package com.frameworkset.util;
-import java.beans.PropertyChangeEvent;
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.beans.PropertyAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.beans.PropertyChangeEvent;
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
 
 
 /**
@@ -581,7 +576,7 @@ public class TransferObjectFactory
 			{
 				try {
 					cMethod = cClazz.getMethod(ValueObjectUtil
-							.getMethodName(wfield), null);
+							.getMethodName(wfield));
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -589,7 +584,7 @@ public class TransferObjectFactory
 				{
 					try {
 						cMethod = cClazz.getMethod(ValueObjectUtil
-								.getBooleanMethodName(wfield), null);
+								.getBooleanMethodName(wfield));
 						if(cMethod == null)
 						{
 							log.info(

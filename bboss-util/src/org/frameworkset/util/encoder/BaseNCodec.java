@@ -3,14 +3,14 @@
  */
 package org.frameworkset.util.encoder;
 
-import java.util.Arrays;
-
 import com.frameworkset.util.SimpleStringUtil;
+
+import java.util.Arrays;
 
 /**
  * @author yinbp
  *
- * @Date:2016-11-18 12:10:08
+ * @date:2016-11-18 12:10:08
  */
 public abstract class BaseNCodec {
 

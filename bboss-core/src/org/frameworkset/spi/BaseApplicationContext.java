@@ -756,9 +756,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 							WrapperRunnable destroyVMHook = shutdownHooks.get(i);
 							destroyVMHook.run();
 							Thread.sleep(1000);
-						} catch (Throwable e) {
-							//log.warn("execute shutdown hook error:", e);
-							e.printStackTrace();
+						} catch (InterruptedException e) {
+
+						}
+						catch (Exception e) {
+							if(log.isWarnEnabled()){
+								log.warn("",e);
+							}
 						}
 					}
 					shutdownHooks.clear();

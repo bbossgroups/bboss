@@ -16,19 +16,14 @@
 
 package org.frameworkset.spi.support;
 
+import com.frameworkset.util.SimpleStringUtil;
+import org.frameworkset.spi.assemble.ServiceProviderManager;
+import org.frameworkset.util.Assert;
+import org.frameworkset.util.io.*;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
-
-import org.frameworkset.spi.assemble.ServiceProviderManager;
-import org.frameworkset.util.Assert;
-import org.frameworkset.util.io.ClassPathResource;
-import org.frameworkset.util.io.ContextResource;
-import org.frameworkset.util.io.Resource;
-import org.frameworkset.util.io.ResourceLoader;
-import org.frameworkset.util.io.UrlResource;
-
-import com.frameworkset.util.SimpleStringUtil;
 
 
 
@@ -91,11 +86,11 @@ public class HotResourceLoader implements ResourceLoader {
 	private static ClassLoader getTCL() throws IllegalAccessException, InvocationTargetException {
         Method method = null;
         try {
-            method = (java.lang.Thread.class).getMethod("getContextClassLoader", null);
+            method = (java.lang.Thread.class).getMethod("getContextClassLoader");
         } catch (NoSuchMethodException e) {
             return null;
         }
-        return (ClassLoader)method.invoke(Thread.currentThread(), null);
+        return (ClassLoader)method.invoke(Thread.currentThread());
     }
 	public Resource getResource(String location) {
 		Assert.notNull(location, "Location must not be null");

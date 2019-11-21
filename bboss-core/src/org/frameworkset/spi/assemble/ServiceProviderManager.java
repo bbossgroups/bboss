@@ -620,7 +620,7 @@ public class ServiceProviderManager {
         } catch (NoSuchMethodException e) {
             return null;
         }
-        return (ClassLoader)method.invoke(Thread.currentThread(), null);
+        return (ClassLoader)method.invoke(Thread.currentThread());
     }
 
     public ProviderManagerInfo getProviderManagerInfo(String providerManagerType) {

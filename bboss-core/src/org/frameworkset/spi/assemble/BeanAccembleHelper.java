@@ -489,7 +489,7 @@ public class BeanAccembleHelper {
 			if (providerManagerInfo.getConstruction() == null
 					|| providerManagerInfo.getConstructorParams() == null
 					|| providerManagerInfo.getConstructorParams().size() == 0) {
-				Method method_ = cls.getMethod(method, null);
+				Method method_ = cls.getMethod(method);
 				if (method == null) {
 					throw new CurrentlyInCreationException(new StringBuilder().append(providerManagerInfo.getName())
 							.append("@"
@@ -570,7 +570,7 @@ public class BeanAccembleHelper {
 			if (providerManagerInfo.getConstruction() == null
 					|| providerManagerInfo.getConstructorParams() == null
 					|| providerManagerInfo.getConstructorParams().size() == 0) {
-				Method method_ = cls.getMethod(method, null);
+				Method method_ = cls.getMethod(method);
 //				method.
 				if (method == null) {
 					throw new CurrentlyInCreationException(new StringBuilder().append(providerManagerInfo.getName())
@@ -1312,7 +1312,7 @@ public class BeanAccembleHelper {
 			if (providerManagerInfo.getConstruction() == null
 					|| providerManagerInfo.getConstructorParams() == null
 					|| providerManagerInfo.getConstructorParams().size() == 0) {
-				Method method = cls.getMethod(factoryMethod, null);
+				Method method = cls.getMethod(factoryMethod);
 				if (method == null) {
 					throw new CurrentlyInCreationException(new StringBuilder().append(providerManagerInfo.getName())
 							.append("@")
@@ -1429,7 +1429,7 @@ public class BeanAccembleHelper {
 			if (providerManagerInfo.getConstruction() == null
 					|| providerManagerInfo.getConstructorParams() == null
 					|| providerManagerInfo.getConstructorParams().size() == 0) {
-				Method method = cls.getMethod(factoryMethod, null);
+				Method method = cls.getMethod(factoryMethod);
 //				method.
 				if (method == null) {
 					throw new CurrentlyInCreationException(new StringBuilder().append(providerManagerInfo.getName())
