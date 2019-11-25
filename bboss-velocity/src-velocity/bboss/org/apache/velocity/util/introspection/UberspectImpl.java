@@ -19,29 +19,21 @@ package bboss.org.apache.velocity.util.introspection;
  * under the License.    
  */
 
+import bboss.org.apache.velocity.exception.VelocityException;
+import bboss.org.apache.velocity.runtime.RuntimeLogger;
+import bboss.org.apache.velocity.runtime.log.Log;
+import bboss.org.apache.velocity.runtime.log.RuntimeLoggerLog;
+import bboss.org.apache.velocity.runtime.parser.node.*;
+import bboss.org.apache.velocity.util.ArrayIterator;
+import bboss.org.apache.velocity.util.ArrayListWrapper;
+import bboss.org.apache.velocity.util.EnumerationIterator;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
-
-import bboss.org.apache.velocity.exception.VelocityException;
-import bboss.org.apache.velocity.runtime.RuntimeLogger;
-import bboss.org.apache.velocity.runtime.log.Log;
-import bboss.org.apache.velocity.runtime.log.RuntimeLoggerLog;
-import bboss.org.apache.velocity.runtime.parser.node.AbstractExecutor;
-import bboss.org.apache.velocity.runtime.parser.node.BooleanPropertyExecutor;
-import bboss.org.apache.velocity.runtime.parser.node.GetExecutor;
-import bboss.org.apache.velocity.runtime.parser.node.MapGetExecutor;
-import bboss.org.apache.velocity.runtime.parser.node.MapSetExecutor;
-import bboss.org.apache.velocity.runtime.parser.node.PropertyExecutor;
-import bboss.org.apache.velocity.runtime.parser.node.PutExecutor;
-import bboss.org.apache.velocity.runtime.parser.node.SetExecutor;
-import bboss.org.apache.velocity.runtime.parser.node.SetPropertyExecutor;
-import bboss.org.apache.velocity.util.ArrayIterator;
-import bboss.org.apache.velocity.util.ArrayListWrapper;
-import bboss.org.apache.velocity.util.EnumerationIterator;
 
 /**
  *  Implementation of Uberspect to provide the default introspective
@@ -149,13 +141,13 @@ public class UberspectImpl implements Uberspect, UberspectLoggable
             Class type = obj.getClass();
             try
             {
-                Method iter = type.getMethod("iterator", null);
+                Method iter = type.getMethod("iterator");
                 Class returns = iter.getReturnType();
                 if (Iterator.class.isAssignableFrom(returns))
                 {
                     try
                     {
-                        return (Iterator)iter.invoke(obj, null);
+                        return (Iterator)iter.invoke(obj);
                     } 
                     catch (Exception e)
                     {

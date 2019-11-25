@@ -15,6 +15,8 @@
  */
 package org.frameworkset.util;
 
+import com.frameworkset.util.SimpleStringUtil;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
@@ -23,8 +25,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-
-import com.frameworkset.util.SimpleStringUtil;
 
 /**
  * <p>
@@ -212,7 +212,7 @@ public class ResourceUtils
 		try
 		{
 			method = (java.lang.Thread.class)
-					.getMethod("getContextClassLoader", null);
+					.getMethod("getContextClassLoader");
 		}
 		catch (NoSuchMethodException e)
 		{
@@ -220,7 +220,7 @@ public class ResourceUtils
 		}
 		try
 		{
-			return (ClassLoader) method.invoke(Thread.currentThread(), null);
+			return (ClassLoader) method.invoke(Thread.currentThread());
 		}
 		catch (IllegalArgumentException e)
 		{

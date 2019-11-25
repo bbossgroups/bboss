@@ -167,7 +167,7 @@ public abstract class ReflectionUtils {
 	 * @see #invokeMethod(Method, Object, Object[])
 	 */
 	public static Object invokeMethod(Method method, Object target) {
-		return invokeMethod(method, target, null);
+		return invokeMethod(method, target);
 	}
 
 	/**
@@ -200,7 +200,7 @@ public abstract class ReflectionUtils {
 	 * @see #invokeJdbcMethod(Method, Object, Object[])
 	 */
 	public static Object invokeJdbcMethod(Method method, Object target) throws SQLException {
-		return invokeJdbcMethod(method, target, null);
+		return invokeJdbcMethod(method, target);
 	}
 
 	/**

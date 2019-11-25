@@ -92,7 +92,7 @@ public class BeanWrapper{
 
 	public Object getPropertyValue(String field) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		PropertyDescriptor pd = getPropertyDescriptor(field);
-		return pd == null?null:pd.getReadMethod().invoke(wrappedInstance, null);
+		return pd == null?null:pd.getReadMethod().invoke(wrappedInstance);
 	}
 
 
