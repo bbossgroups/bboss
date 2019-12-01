@@ -179,10 +179,18 @@ public class MongoDB implements BeanNameAware {
 			return WriteConcern.SAFE;
 		else if (writeConcern.equals("MAJORITY"))
 			return WriteConcern.MAJORITY;
+		else if (writeConcern.equals("W1"))
+			return WriteConcern.W1;
+		else if (writeConcern.equals("W2"))
+			return WriteConcern.W2;
+		else if (writeConcern.equals("W3"))
+			return WriteConcern.W3;
 		else if (writeConcern.equals("FSYNC_SAFE"))
 			return WriteConcern.FSYNC_SAFE;
 		else if (writeConcern.equals("JOURNAL_SAFE"))
 			return WriteConcern.JOURNAL_SAFE;
+		else if (writeConcern.equals("JOURNALED"))
+			return WriteConcern.JOURNALED;
 		else if (writeConcern.equals("REPLICAS_SAFE"))
 			return WriteConcern.REPLICAS_SAFE;
 		else if (writeConcern.startsWith("REPLICA_ACKNOWLEDGED")) {
