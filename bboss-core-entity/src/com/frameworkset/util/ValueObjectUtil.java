@@ -5598,7 +5598,30 @@ public class ValueObjectUtil {
     		  return new FileInputStream(configFile);
     	}
     }
+	/**
+	 * 判断类type是否是基础数据类型或者基础数据类型数组
+	 * @param type
+	 * @return
+	 */
+	public static boolean isSamplePrimaryType(Class type)
+	{
+		if(!type.isArray())
+		{
+			if(type.isEnum())
+				return true;
+			for(Class primaryType:ValueObjectUtil.baseTypes)
+			{
+				if(primaryType == type)
+					return true;
+			}
+			return false;
+		}
+		else
+		{
+			return isPrimaryType(type.getComponentType());
+		}
 
+	}
     /**
      * 判断类type是否是基础数据类型或者基础数据类型数组
      * @param type

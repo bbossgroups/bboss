@@ -834,6 +834,7 @@ public class ClassUtil
 	     * 识别class是否是基本数据类型或者基本数据类型数组
 	     */
 	    private boolean primary;
+	    private boolean samplePrimaryType;
 	    private boolean numeric;
 		/**
 		 * 标识class是否map类型
@@ -1033,15 +1034,21 @@ public class ClassUtil
 		}
 	    private void init()
 	    {
-			ESIndex esIndex = AnnotationUtils.findAnnotation(clazz,ESIndex.class);
-			if(esIndex != null){
-				this.esPropertyDescripts.setEsIndexWrapper(new ESIndexWrapper(esIndex));
+			this.primary = ValueObjectUtil.isPrimaryType(clazz);
+			this.samplePrimaryType = ValueObjectUtil.isSamplePrimaryType(clazz);
+			if(!primary) {
+				ESIndex esIndex = AnnotationUtils.findAnnotation(clazz,ESIndex.class);
+				if(esIndex != null){
+					this.esPropertyDescripts.setEsIndexWrapper(new ESIndexWrapper(esIndex));
+				}
+
+				this.map = ValueObjectUtil.isMapType(clazz);
+				this.list = ValueObjectUtil.isListType(clazz);
+
+
 			}
-	    	this.primary = ValueObjectUtil.isPrimaryType(clazz);
-	    	this.map = ValueObjectUtil.isMapType(clazz);
-			this.list = ValueObjectUtil.isListType(clazz);
-			this.array = ValueObjectUtil.isArrayType(clazz);
 			this.enums = ValueObjectUtil.isEnumType(clazz);
+			this.array = ValueObjectUtil.isArrayType(clazz);
 	    	this.baseprimary = ValueObjectUtil.isBasePrimaryType(clazz);
 	    	this.numeric = ValueObjectUtil.isNumeric(clazz);
 	    	this.componentType = ValueObjectUtil.getComponentType(clazz);
@@ -1058,40 +1065,39 @@ public class ClassUtil
 		    		superclass = superclass.getSuperclass();
 		    	}
 	    	}
+			if(!samplePrimaryType)
+			{
+				if (declaredFields == null) {
+					Field[] retfs = null;
+					try {
+						retfs = getRecursiveDeclaredFileds();
 
-			if(declaredFields == null)
-    		{
-				Field[] retfs = null;
-    			try
-    			{
-    				retfs = getRecursiveDeclaredFileds();
-
-    			}
-    			catch(Exception e)
-    			{
-    				log.error(e.getMessage(),e);
+					} catch (Exception e) {
+						log.error(e.getMessage(), e);
 //		    				declaredFields =NULL;
-    			}
-    			List<PropertieDescription> retpropertyDescriptors = null;
-    			try
-    			{
-    				retpropertyDescriptors = initBeaninfo(retfs);
+					}
+					List<PropertieDescription> retpropertyDescriptors = null;
+					try {
+						retpropertyDescriptors = initBeaninfo(retfs);
 
-    			}
-    			catch(Exception e)
-    			{
-    				log.error(e.getMessage(),e);
-    				retpropertyDescriptors = NULL_P;
-    			}
+					} catch (Exception e) {
+						log.error(e.getMessage(), e);
+						retpropertyDescriptors = NULL_P;
+					}
 
-    			this.propertyDescriptors = retpropertyDescriptors;
+					this.propertyDescriptors = retpropertyDescriptors;
 
-    			if(retfs == null)
-					declaredFields = NULL;
-				else
-					declaredFields = retfs;
+					if (retfs == null)
+						declaredFields = NULL;
+					else
+						declaredFields = retfs;
 
-    		}
+				}
+			}
+			else{
+				declaredFields = NULL;
+				this.propertyDescriptors = NULL_P;
+			}
 
 
 
@@ -1701,6 +1707,10 @@ public class ClassUtil
 
 		public Class<?> getComponentType() {
 			return componentType;
+		}
+
+		public boolean isSamplePrimaryType() {
+			return samplePrimaryType;
 		}
 	}
 
