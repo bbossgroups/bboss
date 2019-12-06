@@ -43,8 +43,16 @@ public class SQLManager extends PoolManager{
      * Singleton is instantiated here in order to bypass the
      * double-check locking problem in many VM's.
      */
-    private static SQLManager myself = new SQLManager();
-
+    private static SQLManager myself ;
+	static void initMyself(){
+		if(myself == null) {
+			synchronized (SQLManager.class) {
+				if(myself == null) {
+					myself = new SQLManager();
+				}
+			}
+		}
+	}
     private String configFile = PoolManConstants.XML_CONFIG_FILE;
 
     public static void destroy()
@@ -61,6 +69,7 @@ public class SQLManager extends PoolManager{
      * @return SQLManager
      */
     public static SQLManager getInstance() {
+		initMyself();
         return myself;
     }
 
@@ -76,6 +85,7 @@ public class SQLManager extends PoolManager{
      * @param  confFile The name of the file to use for configuration.
      */
     public static SQLManager getInstance(String confFile) {
+    	initMyself();
         if (!confFile.equals(myself.getConfigFile())) {
             synchronized (SQLManager.class) {
                 if (!confFile.equals(myself.getConfigFile())) {
