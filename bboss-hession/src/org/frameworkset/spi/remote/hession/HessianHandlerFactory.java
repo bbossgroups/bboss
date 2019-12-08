@@ -15,19 +15,18 @@
  */
 package org.frameworkset.spi.remote.hession;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.frameworkset.spi.ApplicationContext;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -71,7 +70,7 @@ public class HessianHandlerFactory {
 	{
 		try {
 			if(getWebApplicationContext != null)
-				return (BaseApplicationContext)getWebApplicationContext.invoke(null, null);
+				return (BaseApplicationContext)getWebApplicationContext.invoke(null);
 		} catch (SecurityException e) {
 			log.debug("init mvc hessian container with SecurityException in class  org.frameworkset.web.servlet.support.WebApplicationContextUtils .",e);
 		} catch (IllegalAccessException e) {

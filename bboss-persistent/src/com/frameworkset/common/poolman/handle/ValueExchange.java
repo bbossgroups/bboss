@@ -6,7 +6,7 @@ import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.util.*;
 import oracle.jdbc.OracleTypes;
 import org.frameworkset.util.annotations.wraper.ColumnWraper;
-import sun.misc.BASE64Encoder;
+import org.frameworkset.util.encoder.BASE64Encoder;
 
 import java.io.*;
 import java.math.BigDecimal;

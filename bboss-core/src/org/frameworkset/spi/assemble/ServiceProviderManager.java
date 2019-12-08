@@ -616,7 +616,7 @@ public class ServiceProviderManager {
     private static ClassLoader getTCL() throws IllegalAccessException, InvocationTargetException {
         Method method = null;
         try {
-            method = (java.lang.Thread.class).getMethod("getContextClassLoader", null);
+            method = (java.lang.Thread.class).getMethod("getContextClassLoader");
         } catch (NoSuchMethodException e) {
             return null;
         }
