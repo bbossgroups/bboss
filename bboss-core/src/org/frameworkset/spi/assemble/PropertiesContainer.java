@@ -165,22 +165,84 @@ public class PropertiesContainer implements GetProperties{
 		
 		if(SimpleStringUtil.isEmpty(value))
 			return value;
-		String varpre = null;
-		String varend = null;
-		boolean findVariableFromSelf = false;//持久层sql配置会设置为true
+//		String varpre = null;
+//		String varend = null;
+//		boolean findVariableFromSelf = false;//持久层sql配置会设置为true
+		AOPValueHandler valueHandler = null;
+		ValueContainer valueContainer = providerParser;
 		if(providerParser != null){
 			BaseApplicationContext context = providerParser.getApplicationContext();	
 			if(context != null){
-				varpre = context.getServiceProviderManager().getVarpre();
-				varend = context.getServiceProviderManager().getVarend();
-				findVariableFromSelf = context.getServiceProviderManager().findVariableFromSelf();
+//				varpre = context.getServiceProviderManager().getVarpre();
+//				varend = context.getServiceProviderManager().getVarend();
+//				findVariableFromSelf = context.getServiceProviderManager().findVariableFromSelf();
+				valueHandler = context.getServiceProviderManager();
 			}
+		}
+		return evalValue( value,  valueHandler, valueContainer);
+//		if(varpre == null)
+//			varpre = "${";
+//		if(varend == null)
+//			varend = "}";
+//
+//		List<GrammarToken> tokens = TextGrammarParser.parser(value, varpre, varend.charAt(0));
+//		StringBuilder re = new StringBuilder();
+//		for(int i = 0; tokens != null && i < tokens.size(); i ++)
+//		{
+//			GrammarToken token = tokens.get(i);
+//			if(token.texttoken())
+//				re.append(token.getText());
+//			else
+//			{
+//
+//				String varvalue = this.getProperty(token.getText());
+//				if(varvalue == null){
+//					Pro p = providerParser._getRealProperty(token.getText());
+//					if(p != null){
+//						varvalue = (String)providerParser.getRealPropertyValue(p);
+//					}
+//				}
+//				if(varvalue != null){
+//					re.append(varvalue);
+//				}
+//				else
+//				{
+//
+//					if(token.getDefaultValue() != null)
+//						re.append(token.getDefaultValue());
+//					else
+//						re.append(varpre).append(token.getText()).append(varend);
+//				}
+//			}
+//		}
+//		return re.toString();
+		
+	}
+	/**
+	 * 计算值中存在的变量的值，首先从外部属性文件中获取变量值，如果没有对应的值，再从ioc对于配置文件中获取，如果都没有获取到，看看有没有默认值，如果
+	 * 有默认值，则采用默认值
+	 * @param value
+	 * @param valueHandler
+	 * @return
+	 */
+	public String evalValue(String value, AOPValueHandler valueHandler,ValueContainer valueContainer)
+	{
+
+		if(SimpleStringUtil.isEmpty(value))
+			return value;
+		String varpre = null;
+		String varend = null;
+		boolean findVariableFromSelf = false;//持久层sql配置会设置为true
+		if(valueHandler != null){
+			varpre = valueHandler.getVarpre();
+			varend = valueHandler.getVarend();
+			findVariableFromSelf = valueHandler.findVariableFromSelf();
 		}
 		if(varpre == null)
 			varpre = "${";
 		if(varend == null)
 			varend = "}";
-			
+
 		List<GrammarToken> tokens = TextGrammarParser.parser(value, varpre, varend.charAt(0));
 		StringBuilder re = new StringBuilder();
 		for(int i = 0; tokens != null && i < tokens.size(); i ++)
@@ -190,20 +252,23 @@ public class PropertiesContainer implements GetProperties{
 				re.append(token.getText());
 			else
 			{
-				
+
 				String varvalue = this.getProperty(token.getText());
 				if(varvalue == null){
-					Pro p = providerParser._getRealProperty(token.getText());
+					/**
+					Pro p = valueHandler._getRealProperty(token.getText());
 					if(p != null){
-						varvalue = (String)providerParser.getRealPropertyValue(p);
+						varvalue = (String)valueHandler.getRealPropertyValue(p);
 					}
+					 */
+					varvalue = valueContainer.getMacroVariableValue(token.getText());
 				}
 				if(varvalue != null){
 					re.append(varvalue);
 				}
 				else
 				{
-					
+
 					if(token.getDefaultValue() != null)
 						re.append(token.getDefaultValue());
 					else
@@ -212,9 +277,66 @@ public class PropertiesContainer implements GetProperties{
 			}
 		}
 		return re.toString();
-		
+
 	}
 	public String escapeValue(String value, ProviderParser providerParser) {
+		if(SimpleStringUtil.isEmpty(value))
+			return value;
+//		String escapePre = null;
+//		String escapeEnd = null;
+//
+//		String escapeRNPre = null;
+//		String escapeRNEnd = null;
+		AOPValueHandler serviceProviderManager = null;
+		if(providerParser != null){
+			BaseApplicationContext context = providerParser.getApplicationContext();
+			if(context != null){
+				serviceProviderManager = context.getServiceProviderManager();
+//				escapePre = serviceProviderManager.getEscapePre();
+//				escapeEnd = serviceProviderManager.getEscapeEnd();
+//				escapeRNPre = serviceProviderManager.getEscapeRNPre();
+//				escapeRNEnd = serviceProviderManager.getEscapeRNEnd();
+			}
+		}
+		return escapeValue( value, serviceProviderManager);
+//		boolean escape = !SimpleStringUtil.isEmpty(escapeEnd ) || SimpleStringUtil.isEmpty(escapePre ));
+//		boolean escapeRN = !(SimpleStringUtil.isEmpty(escapeRNPre ) || SimpleStringUtil.isEmpty(escapeRNEnd ));
+//
+//		if(escapeRN){
+//			List<GrammarToken> tokens = TextGrammarParser.parser(value, escapeRNPre, escapeRNEnd);
+//			StringBuilder re = new StringBuilder();
+//			for (int i = 0; tokens != null && i < tokens.size(); i++) {
+//				GrammarToken token = tokens.get(i);
+//				if (token.texttoken())
+//					re.append(token.getText());
+//				else {
+//					re.append("\"");
+//					serviceProviderManager.escapeRN(token.getText(), re);
+//					re.append("\"");
+//				}
+//			}
+//			value = re.toString();
+//		}
+//		if(escape) {
+//			List<GrammarToken> tokens = TextGrammarParser.parser(value, escapePre, escapeEnd);
+//			StringBuilder re = new StringBuilder();
+//			for (int i = 0; tokens != null && i < tokens.size(); i++) {
+//				GrammarToken token = tokens.get(i);
+//				if (token.texttoken())
+//					re.append(token.getText());
+//				else {
+//					re.append("\"");
+//					serviceProviderManager.escapeValue(token.getText(), re);
+//					re.append("\"");
+//				}
+//			}
+//			value = re.toString();
+//		}
+//		return value;
+
+	}
+
+	public String escapeValue(String value, AOPValueHandler valueHandler) {
 		if(SimpleStringUtil.isEmpty(value))
 			return value;
 		String escapePre = null;
@@ -222,16 +344,11 @@ public class PropertiesContainer implements GetProperties{
 
 		String escapeRNPre = null;
 		String escapeRNEnd = null;
-		ServiceProviderManager serviceProviderManager = null;
-		if(providerParser != null){
-			BaseApplicationContext context = providerParser.getApplicationContext();
-			if(context != null){
-				serviceProviderManager = context.getServiceProviderManager();
-				escapePre = serviceProviderManager.getEscapePre();
-				escapeEnd = serviceProviderManager.getEscapeEnd();
-				escapeRNPre = serviceProviderManager.getEscapeRNPre();
-				escapeRNEnd = serviceProviderManager.getEscapeRNEnd();
-			}
+		if(valueHandler != null){
+			escapePre = valueHandler.getEscapePre();
+			escapeEnd = valueHandler.getEscapeEnd();
+			escapeRNPre = valueHandler.getEscapeRNPre();
+			escapeRNEnd = valueHandler.getEscapeRNEnd();
 		}
 		boolean escape = !(SimpleStringUtil.isEmpty(escapeEnd ) || SimpleStringUtil.isEmpty(escapePre ));
 		boolean escapeRN = !(SimpleStringUtil.isEmpty(escapeRNPre ) || SimpleStringUtil.isEmpty(escapeRNEnd ));
@@ -245,7 +362,7 @@ public class PropertiesContainer implements GetProperties{
 					re.append(token.getText());
 				else {
 					re.append("\"");
-					serviceProviderManager.escapeRN(token.getText(), re);
+					valueHandler.escapeRN(token.getText(), re);
 					re.append("\"");
 				}
 			}
@@ -260,7 +377,7 @@ public class PropertiesContainer implements GetProperties{
 					re.append(token.getText());
 				else {
 					re.append("\"");
-					serviceProviderManager.escapeValue(token.getText(), re);
+					valueHandler.escapeValue(token.getText(), re);
 					re.append("\"");
 				}
 			}

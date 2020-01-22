@@ -27,7 +27,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @version 1.0
  */
 public class ThreadPoolFactory {
-	public static ExecutorService buildThreadPool(final String threadName,String rejectMessage ,int threadCount,int threadQueue,long blockedWaitTimeout,int warnMultsRejects){
+	public static ExecutorService buildThreadPool(final String threadName,String rejectMessage ,int threadCount,int threadQueue,
+												  long blockedWaitTimeout,int warnMultsRejects){
 //		ExecutorService executor = Executors.newFixedThreadPool(this.getThreadCount(), new ThreadFactory() {
 //			@Override
 //			public Thread newThread(Runnable r) {
@@ -35,8 +36,27 @@ public class ThreadPoolFactory {
 //			}
 //		});
 
-		ExecutorService blockedExecutor = new ThreadPoolExecutor(threadCount, threadCount,
-				0L, TimeUnit.MILLISECONDS,
+		return buildThreadPool( threadName,  rejectMessage ,  threadCount,  threadQueue,  blockedWaitTimeout,  warnMultsRejects,false,null);
+	}
+
+	public static ExecutorService buildThreadPool(final String threadName,String rejectMessage ,int threadCount,int threadQueue,
+												  long blockedWaitTimeout,int warnMultsRejects,boolean preStartAllCoreThreads,final Boolean daemon){
+
+		return buildThreadPool( threadName,  rejectMessage ,  threadCount,  threadQueue,  0L,
+		  blockedWaitTimeout,  warnMultsRejects,  preStartAllCoreThreads, daemon);
+	}
+
+	public static ExecutorService buildThreadPool(final String threadName,String rejectMessage ,int threadCount,int threadQueue,long keepAliveTime,
+												  long blockedWaitTimeout,int warnMultsRejects,boolean preStartAllCoreThreads,final Boolean daemon){
+//		ExecutorService executor = Executors.newFixedThreadPool(this.getThreadCount(), new ThreadFactory() {
+//			@Override
+//			public Thread newThread(Runnable r) {
+//				return new DBESThread(r);
+//			}
+//		});
+
+		ThreadPoolExecutor blockedExecutor = new ThreadPoolExecutor(threadCount, threadCount,
+				keepAliveTime, TimeUnit.MILLISECONDS,
 				new ArrayBlockingQueue<Runnable>(threadQueue),
 				new ThreadFactory() {
 					private AtomicInteger threadCount = new AtomicInteger(0);
@@ -44,13 +64,21 @@ public class ThreadPoolFactory {
 					@Override
 					public Thread newThread(Runnable r) {
 						int num = threadCount.incrementAndGet();
-						return new WorkThread(r,threadName,num);
+						return new WorkThread(r,threadName,num,daemon);
 					}
 				},new BlockedRejectedExecutionHandler(rejectMessage,  blockedWaitTimeout,warnMultsRejects));
+		if(preStartAllCoreThreads)
+			blockedExecutor.prestartAllCoreThreads();
 		return blockedExecutor;
 	}
 
-	public static ExecutorService buildThreadPool(final String threadName,String rejectMessage ,int threadCount,int threadQueue,long blockedWaitTimeout){
+	public static ExecutorService buildThreadPool(final String threadName,String rejectMessage ,int threadCount,int threadQueue,
+												  long blockedWaitTimeout,int warnMultsRejects,boolean preStartAllCoreThreads){
+		return buildThreadPool( threadName,  rejectMessage ,  threadCount,  threadQueue,  blockedWaitTimeout,  warnMultsRejects,preStartAllCoreThreads,null);
+	}
+
+	public static ExecutorService buildThreadPool(final String threadName,String rejectMessage ,int threadCount,
+												  int threadQueue,long blockedWaitTimeout){
 
 
 		return buildThreadPool(threadName,rejectMessage , threadCount,threadQueue,blockedWaitTimeout,1000);

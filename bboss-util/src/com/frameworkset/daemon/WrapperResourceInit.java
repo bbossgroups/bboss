@@ -1,4 +1,4 @@
-package org.frameworkset.util.concurrent;
+package com.frameworkset.daemon;
 /**
  * Copyright 2008 biaoping.yin
  * <p>
@@ -15,20 +15,35 @@ package org.frameworkset.util.concurrent;
  * limitations under the License.
  */
 
+import com.frameworkset.util.ResourceInitial;
+import com.frameworkset.util.UUIDResource;
+
 /**
  * <p>Description: </p>
  * <p></p>
  * <p>Copyright (c) 2018</p>
- * @Date 2019/12/7 10:24
+ * @Date 2020/1/22 10:39
  * @author biaoping.yin
  * @version 1.0
  */
-public class WorkThread  extends Thread {
-	public WorkThread(Runnable run,String name,int num,Boolean daemon){
-		super(run);
-		if(daemon != null && daemon){
-			this.setDaemon(true);
-		}
-		this.setName(name+"-"+num);
+public class WrapperResourceInit  implements ResourceInitial, UUIDResource {
+	private ResourceInitial resourceInitial;
+	private String fileName;
+	public WrapperResourceInit(ResourceInitial resourceInitial,String fileName){
+		this.resourceInitial = resourceInitial;
+		this.fileName = fileName;
 	}
+
+	@Override
+	public void reinit() {
+		resourceInitial.reinit();
+	}
+
+	@Override
+	public String getUUID() {
+		if(resourceInitial instanceof UUIDResource)
+			return ((UUIDResource)resourceInitial).getUUID();
+		return this.fileName;
+	}
+
 }

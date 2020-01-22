@@ -60,7 +60,7 @@ import java.util.Map.Entry;
  * @author biaoping.yin
  * @version 1.0
  */
-public class ServiceProviderManager {
+public class ServiceProviderManager implements AOPValueHandler{
     private static Logger log = LoggerFactory.getLogger(ServiceProviderManager.class);
     /**
      * 属性引用的反向索引集合

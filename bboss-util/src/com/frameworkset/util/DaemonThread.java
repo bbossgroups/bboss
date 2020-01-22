@@ -1,5 +1,8 @@
 package com.frameworkset.util;
 
+import com.frameworkset.daemon.FileBean;
+import com.frameworkset.daemon.ResourceNameSpace;
+import com.frameworkset.daemon.WrapperResourceInit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,188 +25,17 @@ import java.util.Map.Entry;
  */
 public class DaemonThread extends java.lang.Thread 
 {
-	static class WrapperResourceInit implements ResourceInitial,UUIDResource{
-		private ResourceInitial resourceInitial;
-		private String fileName;
-		public WrapperResourceInit(ResourceInitial resourceInitial,String fileName){
-			this.resourceInitial = resourceInitial;
-			this.fileName = fileName;
-		}
-
-		@Override
-		public void reinit() {
-			resourceInitial.reinit();
-		}
-
-		@Override
-		public String getUUID() {
-			if(resourceInitial instanceof UUIDResource)
-				return ((UUIDResource)resourceInitial).getUUID();
-			return this.fileName;
-		}
-	}
-	static class FileBean
-	{
-		 public FileBean(File file,
-						 WrapperResourceInit init) {
-			super();
-			this.file = file;
-			this.inits = new ArrayList<WrapperResourceInit>();
-			inits.add(init);
-			this.oldModifiedTime =  file.lastModified();
-			
-		}
-		 private boolean removeflag = false;
-		 private File file;
-//		 private long lastModifiedTime;
-		 private long oldModifiedTime; 
-		 private List<WrapperResourceInit> inits;
-		/**
-		 * @return the file
-		 */
-		public File getFile() {
-			return file;
-		}
-		/**
-		 * @param file the file to set
-		 */
-		public void setFile(File file) {
-			this.file = file;
-		}
-
-		/**
-		 * @return the oldModifiedTime
-		 */
-		public long getOldModifiedTime() {
-			return oldModifiedTime;
-		}
-		/**
-		 * @param oldModifiedTime the oldModifiedTime to set
-		 */
-		public void setOldModifiedTime(long oldModifiedTime) {
-			this.oldModifiedTime = oldModifiedTime;
-		}
-		
-		
-		public  boolean checkChanged()
-		{
-			if(file == null)
-				return false;
-			 boolean exist = file.exists(); 
-	         if(!exist)
-	         {
-	         	//init.destroy();
-	         	return false;
-	         }
-	         long lastModifiedTime = file.lastModified();
-	         if(this.oldModifiedTime != lastModifiedTime)
-	         {
-
-	             return true;
-	         }
-	         else
-	         {
-	        	 return false;
-	         }
-		}
-		
-		/**
-		 * 1 resolved java.util.ConcurrentModificationException by biaoping.yin on 2015.03.09
-		 */
-		public synchronized void reinit()
-		{
-			 //System.out.println("Reload changed file：" + file.getAbsolutePath());
-			if(log.isInfoEnabled()) {
-				log.info("Reload resources in changed file：" + file.getAbsolutePath());
-			}
-			long lastModifiedTime = file.lastModified();
-			if(lastModifiedTime == this.oldModifiedTime)
-				return;
-			else {
-				//检查文件是否已经读写完毕，通过文件长度来判断（不一定准确）
-				long length = file.length();
-				long last = length;
-				do {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						break;
-					}
-					length = file.length();
-					if (last == length) {
-						lastModifiedTime = file.lastModified();
-						break;
-
-					} else {
-						last = length;
-					}
-				}
-				while(true);
-			}
-			this.oldModifiedTime = lastModifiedTime;
-
-			for(int i = 0; inits != null && i < this.inits.size(); i++)
-			{
-				WrapperResourceInit init = inits.get(i);
-				try {
-					init.reinit();
-					if(log.isInfoEnabled()) {
-						log.info("Reload changed resource file " + init.getUUID()+"@"+ file.getAbsolutePath() + " sucessed.");
-					}
-				} catch (Exception e) {
-					if(log.isErrorEnabled())
-						log.error("Reload changed resource  file " + init.getUUID()+"@"+ file.getAbsolutePath() + " failed:" ,e);
-				}
-			}
 
 
-		}
-		//end 1 resolved java.util.ConcurrentModificationException by biaoping.yin on 2015.03.09 
-		public boolean isRemoveflag() {
-			return removeflag;
-		}
-		public void setRemoveflag(boolean removeflag) {
-			this.removeflag = removeflag;
-		}
-		public void addResourceInit(WrapperResourceInit init) {
-			if(!this.contain(init))
-				this.inits.add(init);
-			
-		}
-		
-		private boolean contain(ResourceInitial init)
-		{
-			
-			if(init instanceof UUIDResource)
-			{
-				String uuid = ((UUIDResource)init).getUUID();
-				for(int i = 0; i < this.inits.size(); i ++)
-				{
-					ResourceInitial initOld = this.inits.get(i);
-					if(initOld instanceof UUIDResource)
-					{
-						if(((UUIDResource)initOld).getUUID().equals(uuid))
-							return true;
-					}
-				}
-				return false;
-			}
-			else {
-
-					return true;//兼容旧版本,没有实现UUIDResource接口的初始化资源初始化接口只允许存在一个ResourceInitial
-
-			}
-		}
-
-
-	}
     private static Logger log = LoggerFactory.getLogger(DaemonThread.class);
 
 //    private long lastModifiedTime;
 //    private long oldModifiedTime;
     private long refresh_interval = 5000;
-    private Map<String,FileBean> files = new HashMap<String,FileBean>();
-//    private ResourceInitial init;
+    private Map<String, FileBean> files = new HashMap<String,FileBean>();
+	private Map<String, ResourceNameSpace> triggers = new HashMap<String,ResourceNameSpace>();
+
+	//    private ResourceInitial init;
     private boolean started = false;
     private boolean stopped = false;
     public DaemonThread(String fileName,ResourceInitial init)
@@ -324,7 +156,8 @@ public class DaemonThread extends java.lang.Thread
 		String fileName = file.getAbsolutePath();
 		addFile(  file, fileName, init);
 	}
-	public  void addFile(URL fileURL,String fileName,ResourceInitial init)
+
+	public void addFile(URL fileURL,String fileName,ResourceInitial init)
 	{
 		if(this.stopped )
 			return;
@@ -367,6 +200,39 @@ public class DaemonThread extends java.lang.Thread
 			if (log.isErrorEnabled())
 				log.error("addFile file to monitor Thread failed,fileName:"+fileName + ",fileURL:"+fileURL ,e);
 		}
+	}
+
+
+	public void addResource(ResourceNameSpace resourceNameSpace,ResourceInitial init)
+	{
+		if(this.stopped )
+			return;
+		if(resourceNameSpace == null){
+			log.info("Ignore addResource Null ResourceNameSpace to  monitor change Thread.");
+			return;
+		}
+
+		try {
+			synchronized (lock) {
+				ResourceNameSpace f = this.triggers.get(resourceNameSpace.getNameSpace());
+
+				if (f == null) {
+					this.triggers.put(resourceNameSpace.getNameSpace(), resourceNameSpace);
+
+				}
+
+				f.addResourceInit(new WrapperResourceInit(init, resourceNameSpace.getNameSpace()));
+
+				if (log.isInfoEnabled())
+					log.info("Add ResourceInitial[" + resourceNameSpace.getNameSpace() + "] to thread that moniting file change .");
+
+			}
+		}
+		catch (Exception e){
+			if (log.isErrorEnabled())
+				log.error("Add ResourceInitial[" + resourceNameSpace.getNameSpace() + "] to thread that moniting file change failed:",e);
+		}
+
 	}
     public  void removeFile(String filepath)
     {   
@@ -454,12 +320,174 @@ public class DaemonThread extends java.lang.Thread
     {
         return started;
     }
-    public void run()
+    private void triggerFiles(){
+		List<FileBean> changedFiles = new ArrayList<FileBean>();
+
+		synchronized(lock)
+		{
+			//modified by biaoping.yin on 2015.03.09:忽略扫描异常，如果出现异常继续扫描
+			try
+			{
+				Iterator<Entry<String, FileBean>> entries = files.entrySet().iterator();
+				while(entries.hasNext())
+				{
+					if(stopped)
+						break;
+					Entry<String, FileBean> entry = entries.next();
+					FileBean f = entry.getValue();
+
+					if(f.isRemoveflag())
+						continue;
+					try
+					{
+
+
+						if(log.isTraceEnabled()){
+							String filePath = f.getFile() != null?f.getFile().getAbsolutePath():"";
+
+							log.trace("Thread["+this.getName()+"] Check file["+filePath+"] .");
+						}
+						if(f.checkChanged()){
+							if(log.isInfoEnabled()){
+								String filePath = f.getFile() != null?f.getFile().getAbsolutePath():"";
+
+								log.info("Thread["+this.getName()+"] Monitor file["+filePath+"] changed.");
+							}
+							changedFiles.add(f);
+						}
+					}
+					catch(Exception e)
+					{
+						if(log.isInfoEnabled()) {
+							String filePath = f.getFile() != null ? f.getFile().getAbsolutePath() : "null";
+
+							String tname = this.getName() != null ? this.getName() : "null";
+							log.info("Thread[" + tname + "] Monitor changed file[" + filePath + "] exception:", e);
+						}
+					}
+				}
+
+
+			}
+			catch(Exception e)
+			{
+				if(log.isInfoEnabled())
+					log.info("Thread["+this.getName()+"] Monitor changed files exception:",e);
+			}
+		}
+
+		if(changedFiles.size() > 0)
+		{
+			for(FileBean f:changedFiles)
+			{
+				if(stopped)
+					break;
+				try
+				{
+					f.reinit();
+				}
+				catch(Exception e)
+				{
+					if(log.isInfoEnabled()) {
+						String filePath = f.getFile() != null ? f.getFile().getAbsolutePath() : "null";
+
+
+						String tname = this.getName() != null ? this.getName() : "null";
+						log.info("Thread[" + tname + "] Reinit Monitor changed file[" + filePath + "] exception:", e);
+					}
+				}
+			}
+		}
+	}
+    private void triggerResources(){
+		List<ResourceNameSpace> changedFiles = new ArrayList<ResourceNameSpace>();
+
+		synchronized(lock)
+		{
+			//modified by biaoping.yin on 2015.03.09:忽略扫描异常，如果出现异常继续扫描
+			try
+			{
+				Iterator<Entry<String, ResourceNameSpace>> entries = triggers.entrySet().iterator();
+				while(entries.hasNext())
+				{
+					if(stopped)
+						break;
+					Entry<String, ResourceNameSpace> entry = entries.next();
+					ResourceNameSpace f = entry.getValue();
+					String filePath = f.getNameSpace();
+
+					try
+					{
+
+
+						if(log.isTraceEnabled()){
+
+
+							log.trace("Thread["+this.getName()+"] Check resource["+filePath+"] .");
+						}
+						if(f.checkChanged()){
+							if(log.isInfoEnabled()){
+
+								log.info("Thread["+this.getName()+"] resource["+filePath+"] changed.");
+							}
+							changedFiles.add(f);
+						}
+					}
+					catch(Exception e)
+					{
+						if(log.isInfoEnabled()) {
+
+							String tname = this.getName() != null ? this.getName() : "null";
+							log.info("Thread[" + tname + "] Monitor changed resource[" + filePath + "] exception:", e);
+						}
+					}
+				}
+
+
+			}
+			catch(Exception e)
+			{
+				if(log.isInfoEnabled())
+					log.info("Thread["+this.getName()+"] Monitor changed files exception:",e);
+			}
+		}
+
+		if(changedFiles.size() > 0)
+		{
+			for(ResourceNameSpace f:changedFiles)
+			{
+				if(stopped)
+					break;
+				String filePath = f.getNameSpace();
+				try
+				{
+					f.reinit();
+				}
+				catch(Exception e)
+				{
+					if(log.isInfoEnabled()) {
+
+
+						String tname = this.getName() != null ? this.getName() : "null";
+						log.info("Thread[" + tname + "] Reinit Monitor changed resource[" + filePath + "] exception:", e);
+					}
+				}
+			}
+		}
+	}
+	private boolean hasFiles(){
+    	return files != null && files.size() > 0;
+	}
+	private boolean hasTriggers(){
+		return triggers != null && triggers.size() > 0;
+	}
+
+	public void run()
     {
 		if(log.isInfoEnabled())
 			log.info("Start check files is changed or not.if some files is changed,the resources of these files will be refreshed use ResourceInit interface.");
         started = true;
-        for(;;)
+        while(true)
         {
         	if(stopped)
         		break;
@@ -470,90 +498,18 @@ public class DaemonThread extends java.lang.Thread
 //                notifyAll();
             	break;
             }
-            if(files == null || files.size() == 0){
+            if(!hasFiles() && !hasTriggers()){
             	if(log.isTraceEnabled()) {
 					String tname = this.getName() != null ? this.getName() : "null";
-					log.trace("Thread[" + tname + "] Ignore Monitor change Files : No file to be monitor.");
+					log.trace("Thread[" + tname + "] Ignore Monitor change resources : No resources to monitor.");
 				}
             	continue;
             }
-            List<FileBean> changedFiles = new ArrayList<FileBean>();
-
-            synchronized(lock)
-            {
-            	//modified by biaoping.yin on 2015.03.09:忽略扫描异常，如果出现异常继续扫描
-            	try
-            	{
-            		Iterator<Entry<String, FileBean>> entries = files.entrySet().iterator();
-            		while(entries.hasNext())
-            		{
-            			if(stopped)
-		            		break;
-            			Entry<String, FileBean> entry = entries.next();
-            			FileBean f = entry.getValue();
-
-            			if(f.isRemoveflag())
-		            		continue;
-            			try
-		            	{
-
-
-            				if(log.isTraceEnabled()){
-	            				String filePath = f.getFile() != null?f.getFile().getAbsolutePath():"";
-
-	            				log.trace("Thread["+this.getName()+"] Check file["+filePath+"] .");
-            				}
-		            		if(f.checkChanged()){
-		            			if(log.isInfoEnabled()){
-		            				String filePath = f.getFile() != null?f.getFile().getAbsolutePath():"";
-
-										log.info("Thread["+this.getName()+"] Monitor file["+filePath+"] changed.");
-		            			}
-		            			changedFiles.add(f);
-		            		}
-		            	}
-		            	catch(Exception e)
-		            	{
-							if(log.isInfoEnabled()) {
-								String filePath = f.getFile() != null ? f.getFile().getAbsolutePath() : "null";
-
-								String tname = this.getName() != null ? this.getName() : "null";
-								log.info("Thread[" + tname + "] Monitor changed file[" + filePath + "] exception:", e);
-							}
-		            	}
-            		}
-		            
-		            
-            	}
-            	catch(Exception e)
-            	{
-					if(log.isInfoEnabled())
-						log.info("Thread["+this.getName()+"] Monitor changed files exception:",e);
-            	}
-            }
-            
-            if(changedFiles.size() > 0)
-            {
-            	for(FileBean f:changedFiles)
-            	{
-            		if(stopped)
-	            		break;
-            		try
-	            	{
-	            		f.reinit();
-	            	}
-	            	catch(Exception e)
-	            	{
-	            		if(log.isInfoEnabled()) {
-							String filePath = f.getFile() != null ? f.getFile().getAbsolutePath() : "null";
-
-
-							String tname = this.getName() != null ? this.getName() : "null";
-							log.info("Thread[" + tname + "] Reinit Monitor changed file[" + filePath + "] exception:", e);
-						}
-	            	}
-            	}
-            }
+            if(hasFiles())
+				triggerFiles();
+            if(hasTriggers()){
+				triggerResources();
+			}
             
 
         }
@@ -570,6 +526,9 @@ public class DaemonThread extends java.lang.Thread
 	       		 files.clear();
 //	       		 files = null;
 	       	 }
+    		if(triggers != null){
+    			triggers.clear();
+			}
     		lock.notifyAll();
     	}
 //    	synchronized(this)

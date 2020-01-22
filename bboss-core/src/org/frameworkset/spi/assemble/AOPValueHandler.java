@@ -1,4 +1,4 @@
-package org.frameworkset.util.concurrent;
+package org.frameworkset.spi.assemble;
 /**
  * Copyright 2008 biaoping.yin
  * <p>
@@ -19,16 +19,28 @@ package org.frameworkset.util.concurrent;
  * <p>Description: </p>
  * <p></p>
  * <p>Copyright (c) 2018</p>
- * @Date 2019/12/7 10:24
+ * @Date 2020/1/22 21:47
  * @author biaoping.yin
  * @version 1.0
  */
-public class WorkThread  extends Thread {
-	public WorkThread(Runnable run,String name,int num,Boolean daemon){
-		super(run);
-		if(daemon != null && daemon){
-			this.setDaemon(true);
-		}
-		this.setName(name+"-"+num);
-	}
+public interface AOPValueHandler {
+	String getEscapePre();
+
+	String getEscapeEnd();
+
+	String getEscapeRNPre();
+
+	String getEscapeRNEnd();
+
+	void escapeRN(String text, StringBuilder builder);
+
+	void escapeValue(String text, StringBuilder builder);
+
+	String getVarpre();
+
+	String getVarend();
+
+	boolean findVariableFromSelf();
+
+
 }

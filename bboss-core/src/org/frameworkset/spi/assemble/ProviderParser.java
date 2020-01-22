@@ -59,10 +59,10 @@ componentType转换为cmt
  * </p>
  * 
  * @Date Sep 8, 2008 10:02:46 AM
- * @author biaoping.yin,尹标平
+ * @author biaoping.yin
  * @version 1.0
  */
-public class ProviderParser extends DefaultHandler
+public class ProviderParser extends DefaultHandler implements ValueContainer
 {
     private Stack traceStack;
 
@@ -1259,4 +1259,13 @@ public class ProviderParser extends DefaultHandler
 		return configPropertiesFile;
 	}
 
+	@Override
+	public String getMacroVariableValue(String macroVariable) {
+    	String varvalue = null;
+		Pro p = _getRealProperty(macroVariable);
+		if(p != null){
+			varvalue = (String)getRealPropertyValue(p);
+		}
+		return varvalue;
+	}
 }
