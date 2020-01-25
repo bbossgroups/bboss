@@ -15,20 +15,15 @@
  */
 package com.frameworkset.common.poolman.management;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
+import com.frameworkset.common.poolman.PoolManConstants;
+import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.spi.assemble.PropertiesContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.frameworkset.common.poolman.PoolManConstants;
-import com.frameworkset.util.SimpleStringUtil;
+import java.util.*;
 
 /**
  * SAXParser used by Configurator to parse the
@@ -224,7 +219,7 @@ public class ConfigParser extends DefaultHandler{
             {
             	String value = null;
             	if(configPropertiesFile != null)
-            		value = this.configPropertiesFile.evalValue(currentValue.toString().trim(),null);
+            		value = this.configPropertiesFile.evalValue((List)null,currentValue.toString().trim(),null);
             	else
             	{
             		value = currentValue.toString().trim();

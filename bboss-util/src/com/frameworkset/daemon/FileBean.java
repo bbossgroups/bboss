@@ -110,22 +110,22 @@ public class FileBean {
 		if(lastModifiedTime == this.oldModifiedTime)
 			return;
 		else {
-			//检查文件是否已经读写完毕，通过文件长度来判断（不一定准确）
-			long length = file.length();
-			long last = length;
+			//检查文件是否已经读写完毕，通过文件间隔1秒检测lastModified时间搓来判断（不一定准确）
+//			long length = file.length();
+			long last = lastModifiedTime;
 			do {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					break;
 				}
-				length = file.length();
-				if (last == length) {
-					lastModifiedTime = file.lastModified();
+				lastModifiedTime = file.lastModified();
+				if (last == lastModifiedTime) {
+//					lastModifiedTime = file.lastModified();
 					break;
 
 				} else {
-					last = length;
+					last = lastModifiedTime;
 				}
 			}
 			while(true);

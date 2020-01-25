@@ -684,7 +684,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 			value = configPropertiesFile.escapeValue(value, providerParser);
 		}
 		//再进行片段解析
-		String resultValue = configPropertiesFile.evalValue(value, providerParser);
+		String resultValue = configPropertiesFile.evalValue((List<String>) null,value, providerParser);
 
 		return resultValue;
 	}

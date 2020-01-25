@@ -1260,7 +1260,7 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
 	}
 
 	@Override
-	public String getMacroVariableValue(String macroVariable) {
+	public String getMacroVariableValue(List<String> links,String macroVariable) {
     	String varvalue = null;
 		Pro p = _getRealProperty(macroVariable);
 		if(p != null){

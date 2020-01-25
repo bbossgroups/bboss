@@ -15,16 +15,28 @@ package org.frameworkset.spi.assemble;
  * limitations under the License.
  */
 
-import java.util.List;
-
 /**
  * <p>Description: </p>
  * <p></p>
  * <p>Copyright (c) 2018</p>
- * @Date 2020/1/22 22:09
+ *
  * @author biaoping.yin
  * @version 1.0
+ * @Date 2020/1/25 21:02
  */
-public interface ValueContainer {
-	String getMacroVariableValue(List<String> parentLinks,String text);
+public class MacroParserException extends BeanInstanceException {
+	public MacroParserException() {
+	}
+
+	public MacroParserException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public MacroParserException(String message) {
+		super(message);
+	}
+
+	public MacroParserException(Throwable cause) {
+		super(cause);
+	}
 }

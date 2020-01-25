@@ -160,7 +160,7 @@ public class PropertiesContainer implements GetProperties{
 	 * @param providerParser
 	 * @return
 	 */
-	public String evalValue(String value,ProviderParser providerParser)
+	public String evalValue(List<String> parentLinks,String value,ProviderParser providerParser)
 	{
 		
 		if(SimpleStringUtil.isEmpty(value))
@@ -179,7 +179,8 @@ public class PropertiesContainer implements GetProperties{
 				valueHandler = context.getServiceProviderManager();
 			}
 		}
-		return evalValue( value,  valueHandler, valueContainer);
+
+		return evalValue( parentLinks,value,  valueHandler, valueContainer);
 //		if(varpre == null)
 //			varpre = "${";
 //		if(varend == null)
@@ -218,6 +219,30 @@ public class PropertiesContainer implements GetProperties{
 //		return re.toString();
 		
 	}
+	public void checkLoopNode(String name,List<String> parentLinks){
+		if(parentLinks == null){
+			return;
+		}
+		boolean looped = false;
+		for(int i = 0;  i < parentLinks.size(); i ++){
+			String node = parentLinks.get(i);
+			if(node.equals(name)){
+				looped = true;
+				break;
+			}
+		}
+		if(looped){
+			StringBuilder msg = new StringBuilder();
+			msg.append("Loop macro reference: ");
+			for(int i = 0;  parentLinks != null && i < parentLinks.size(); i ++){
+				String node = parentLinks.get(i);
+				msg.append(node).append("->");
+			}
+			msg.append(name);
+			throw new MacroParserException(msg.toString());
+		}
+		parentLinks.add(name);
+	}
 	/**
 	 * 计算值中存在的变量的值，首先从外部属性文件中获取变量值，如果没有对应的值，再从ioc对于配置文件中获取，如果都没有获取到，看看有没有默认值，如果
 	 * 有默认值，则采用默认值
@@ -225,7 +250,7 @@ public class PropertiesContainer implements GetProperties{
 	 * @param valueHandler
 	 * @return
 	 */
-	public String evalValue(String value, AOPValueHandler valueHandler,ValueContainer valueContainer)
+	public String evalValue(List<String> parentLinks,String value, AOPValueHandler valueHandler,ValueContainer valueContainer)
 	{
 
 		if(SimpleStringUtil.isEmpty(value))
@@ -261,7 +286,8 @@ public class PropertiesContainer implements GetProperties{
 						varvalue = (String)valueHandler.getRealPropertyValue(p);
 					}
 					 */
-					varvalue = valueContainer.getMacroVariableValue(token.getText());
+					checkLoopNode(token.getText(), parentLinks);
+					varvalue = valueContainer.getMacroVariableValue( parentLinks,token.getText());
 				}
 				if(varvalue != null){
 					re.append(varvalue);
