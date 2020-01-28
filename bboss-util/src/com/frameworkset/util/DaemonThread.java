@@ -218,7 +218,7 @@ public class DaemonThread extends java.lang.Thread
 
 				if (f == null) {
 					this.triggers.put(resourceNameSpace.getNameSpace(), resourceNameSpace);
-
+					f = resourceNameSpace;
 				}
 
 				f.addResourceInit(new WrapperResourceInit(init, resourceNameSpace.getNameSpace()));
