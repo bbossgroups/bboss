@@ -69,6 +69,9 @@ public class SQLUtil {
 	protected Map<String,SQLRef> sqlrefs;
 	protected boolean hasrefs;
 	protected boolean alwaysCache = defaultAlwaysCache;
+	protected String sqlFile;
+	protected int resultMetaCacheSize;
+	protected int perKeySqlStructionCacheSize;
 	public static class SQLRef
 	{
 		public SQLRef(String sqlname, String sqlfile, String name) {
@@ -155,11 +158,12 @@ public class SQLUtil {
 	{
 		if(sqlcontext == null)
 			return;
-		sqls = null;
-		sqlrefs = null;
-		sqls = new HashMap<String,SQLInfo>();
-		sqlrefs = new HashMap<String,SQLRef> ();
+//		sqls = null;
+//		sqlrefs = null;
+		Map<String,SQLInfo> sqls = new HashMap<String,SQLInfo>();
+		Map<String,SQLRef>  sqlrefs = new HashMap<String,SQLRef> ();
 		Set keys = this.sqlcontext.getPropertyKeys();
+		boolean hasrefs =  false;
 		if(keys != null && keys.size() > 0)
 		{
 			Iterator<String> keys_it = keys.iterator();
@@ -215,6 +219,21 @@ public class SQLUtil {
 				}
 			}
 		}
+
+		int resultMetaCacheSize = sqlcontext.getIntProperty("resultMetaCacheSize",SQLUtil.defaultResultMetaCacheSize);
+		int perKeySqlStructionCacheSize = sqlcontext.getIntProperty("perKeySqlStructionCacheSize",SQLUtil.defaultPerKeySqlStructionCacheSize);
+		this.sqlrefs = sqlrefs;
+		this.sqls = sqls;
+
+		alwaysCache = sqlcontext.getBooleanProperty("alwaysCache",SQLUtil.defaultAlwaysCache);
+		if(alwaysCache) {
+			cache = new SQLCache(sqlFile, resultMetaCacheSize, perKeySqlStructionCacheSize);
+		}
+		else{
+			cache = new SQLMissingCache(sqlFile, resultMetaCacheSize, perKeySqlStructionCacheSize);
+		}
+		this.hasrefs = hasrefs;
+
 	}
 	
 	public boolean hasrefs()
@@ -250,16 +269,16 @@ public class SQLUtil {
 			sqlcontext.removeCacheContext();
 			SQLSOAFileApplicationContext _sqlcontext = new SQLSOAFileApplicationContext(file);
 			if(_sqlcontext.getParserError() == null) {
-				if (sqls != null) {
-					this.sqls.clear();
-					sqls = null;
-				}
-				if (sqlrefs != null) {
-					this.sqlrefs.clear();
-					sqlrefs = null;
-				}
-				if (this.cache != null)
-					this.cache.clear();
+//				if (sqls != null) {
+//					this.sqls.clear();
+//					sqls = null;
+//				}
+//				if (sqlrefs != null) {
+//					this.sqlrefs.clear();
+//					sqlrefs = null;
+//				}
+//				if (this.cache != null)
+//					this.cache.clear();
 				sqlcontext.destroy(false);
 				sqlcontext = _sqlcontext;
 				defaultDBName = sqlcontext.getProperty("default.dbname");
@@ -358,16 +377,17 @@ public class SQLUtil {
 
 
 	private SQLUtil(String sqlfile) {
+		this.sqlFile = sqlfile;
 		sqlcontext = new SQLSOAFileApplicationContext(sqlfile);
-		int resultMetaCacheSize = sqlcontext.getIntProperty("resultMetaCacheSize",SQLUtil.defaultResultMetaCacheSize);
-		int perKeySqlStructionCacheSize = sqlcontext.getIntProperty("perKeySqlStructionCacheSize",SQLUtil.defaultPerKeySqlStructionCacheSize);
-		alwaysCache = sqlcontext.getBooleanProperty("alwaysCache",SQLUtil.defaultAlwaysCache);
-		if(alwaysCache) {
-			cache = new SQLCache(sqlfile, resultMetaCacheSize, perKeySqlStructionCacheSize);
-		}
-		else{
-			cache = new SQLMissingCache(sqlfile, resultMetaCacheSize, perKeySqlStructionCacheSize);
-		}
+//		int resultMetaCacheSize = sqlcontext.getIntProperty("resultMetaCacheSize",SQLUtil.defaultResultMetaCacheSize);
+//		int perKeySqlStructionCacheSize = sqlcontext.getIntProperty("perKeySqlStructionCacheSize",SQLUtil.defaultPerKeySqlStructionCacheSize);
+//		alwaysCache = sqlcontext.getBooleanProperty("alwaysCache",SQLUtil.defaultAlwaysCache);
+//		if(alwaysCache) {
+//			cache = new SQLCache(sqlfile, resultMetaCacheSize, perKeySqlStructionCacheSize);
+//		}
+//		else{
+//			cache = new SQLMissingCache(sqlfile, resultMetaCacheSize, perKeySqlStructionCacheSize);
+//		}
 		this.trimValues();
 		defaultDBName = sqlcontext.getProperty("default.dbname");
 //		refresh_interval = ApplicationContext.getApplicationContext().getLongProperty("sqlfile.refresh_interval", -1);
@@ -387,6 +407,8 @@ public class SQLUtil {
 
 	public SQLUtil(int resultMetaCacheSize,int perKeySqlStructionCacheSize,boolean alwaysCache) {
 		this.alwaysCache = alwaysCache;
+		this.resultMetaCacheSize = resultMetaCacheSize;
+		this.perKeySqlStructionCacheSize =  perKeySqlStructionCacheSize;
 		if(alwaysCache) {
 			cache = new SQLCache(null, resultMetaCacheSize, perKeySqlStructionCacheSize);
 		}

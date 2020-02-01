@@ -36,12 +36,13 @@ public class GloableSQLUtil extends SQLUtil {
 	private static final Logger logger = LoggerFactory.getLogger(GloableSQLUtil.class);
 	protected EdenConcurrentCache<String,SQLInfo> tplEdenConcurrentCache;
 	protected MissingStaticCache<String,SQLInfo> tplMissingStaticCache;
-
+	protected int maxGloableTemplateCacheSize;
 	private Lock tplCacheLock = new ReentrantLock();
 
 	GloableSQLUtil(int gloableResultMetaCacheSize,int maxGloableTemplateCacheSize,int globalKeySqlStructionCacheSize,boolean alwaysCache)
 	{
 		super(gloableResultMetaCacheSize,globalKeySqlStructionCacheSize,alwaysCache);
+		this.maxGloableTemplateCacheSize = maxGloableTemplateCacheSize;
 		if(alwaysCache) {
 			tplEdenConcurrentCache = new EdenConcurrentCache<String, SQLInfo>(maxGloableTemplateCacheSize);
 		}
@@ -278,16 +279,21 @@ public class GloableSQLUtil extends SQLUtil {
 //		this.edenConcurrentCache.clear();
 	}
 	protected void reinit(){
-		if(this.alwaysCache) {
-			this.tplEdenConcurrentCache.clear();
-		}
-		else
-		{
-			this.tplMissingStaticCache.clear();
-		}
+//		if(this.alwaysCache) {
+//			this.tplEdenConcurrentCache.clear();
+//		}
+//		else
+//		{
+//			this.tplMissingStaticCache.clear();
+//		}
 
 		super.reinit();
-
+		if(alwaysCache) {
+			tplEdenConcurrentCache = new EdenConcurrentCache<String, SQLInfo>(maxGloableTemplateCacheSize);
+		}
+		else{
+			tplMissingStaticCache = new MissingStaticCache<String, SQLInfo>(maxGloableTemplateCacheSize);
+		}
 //		this.edenConcurrentCache.clear();
 	}
 
