@@ -15,25 +15,25 @@
  */
 package com.frameworkset.common.poolman.management;
 
+import com.frameworkset.common.poolman.DBUtil;
+import com.frameworkset.common.poolman.sql.ColumnMetaData;
+import com.frameworkset.common.poolman.sql.PrimaryKey;
+import com.frameworkset.common.poolman.sql.PrimaryKeyCache;
+import com.frameworkset.common.poolman.sql.PrimaryKeyCacheManager;
+import com.frameworkset.common.poolman.util.JDBCPool;
+import com.frameworkset.common.poolman.util.SQLManager;
+import com.frameworkset.orm.adapter.DB;
+import com.frameworkset.orm.transaction.JDBCTransaction;
+import com.frameworkset.orm.transaction.TransactionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.frameworkset.common.poolman.DBUtil;
-import com.frameworkset.common.poolman.sql.ColumnMetaData;
-import com.frameworkset.common.poolman.sql.PrimaryKey;
-import com.frameworkset.common.poolman.sql.PrimaryKeyCache;
-import com.frameworkset.common.poolman.sql.PrimaryKeyCacheManager;
-import com.frameworkset.common.poolman.util.SQLManager;
-import com.frameworkset.orm.adapter.DB;
-import com.frameworkset.orm.transaction.JDBCTransaction;
-import com.frameworkset.orm.transaction.TransactionManager;
 
 /**
  * @author biaoping.yin created on 2005-3-30 TODO To change the template for
@@ -70,8 +70,10 @@ public abstract class BaseTableManager {
 		try {
 			PrimaryKeyCache keyCache = new PrimaryKeyCache(poolName);
 			con = SQLManager.getInstance().requestConnection(poolName);
+			DB dbAdaptor = SQLManager.getInstance().getDBAdapter(poolName);
+			JDBCPool pool = SQLManager.getInstance().getPool(poolName);
 			log.info("load pool[" + poolName + "] tables information.......");
-			stmt = con.createStatement();
+			stmt = con.createStatement(dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
 			try {
 				rs = stmt.executeQuery(queryTableInfoSql);
 			} catch (Exception e1) {
@@ -80,9 +82,9 @@ public abstract class BaseTableManager {
 			}
 			DB dbAdapter = SQLManager.getInstance().getDBAdapter(poolName);
 			
-			q_pstmt = con.createStatement();
+			q_pstmt = con.createStatement(dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
 			
-			u_pstmt = con.prepareStatement(updateTableInfoSql);
+			u_pstmt = con.prepareStatement(updateTableInfoSql,dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
 			
 			// 创建数据库链接池的主键缓冲池
 			
@@ -266,7 +268,7 @@ public abstract class BaseTableManager {
 	 * 如果表的主键信息不存在时通过本方法从数据库中实时加载表的主键信息
 	 * 
 	 * @param poolName
-	 * @param Connection con 外部传入的系统链接
+	 * @param con 外部传入的系统链接
 	 * @param tableName
 	 * @return
 	 * @throws Exception
@@ -300,10 +302,11 @@ public abstract class BaseTableManager {
 				}
 				outcon = false;
 			}
-
-			q_pstmt = con.createStatement();
-			u_pstmt = con.prepareStatement(updateTableInfoSql);
-			stmt = con.prepareStatement(queryTableInfoSqlBytableName);
+			DB dbAdaptor = SQLManager.getInstance().getDBAdapter(poolName);
+			JDBCPool pool = SQLManager.getInstance().getPool(poolName);
+			q_pstmt = con.createStatement(dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
+			u_pstmt = con.prepareStatement(updateTableInfoSql,dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
+			stmt = con.prepareStatement(queryTableInfoSqlBytableName,dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
 			stmt.setString(1, tableName);
 			rs = stmt.executeQuery();
 			DB dbAdapter = SQLManager.getInstance().getDBAdapter(poolName);

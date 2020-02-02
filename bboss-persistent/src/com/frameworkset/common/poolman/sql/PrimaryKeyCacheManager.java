@@ -31,17 +31,16 @@
  *****************************************************************************/
 package com.frameworkset.common.poolman.sql;
 
+import com.frameworkset.common.poolman.util.SQLManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.frameworkset.common.poolman.util.SQLManager;
 
 /**
  * 管理全部数据库链接池的所有主键信息
@@ -133,17 +132,18 @@ public class PrimaryKeyCacheManager {
 
        if(keyCache != null)
            return keyCache;
-//       if(keyCache == null)
-//        try {
-//            keyCache = BaseTableManager.getPoolTableInfos(dbname);
-//            if(keyCache != null)
-//            {
-//                addPrimaryKeyCache(keyCache);
-//            }
-//        } catch (Exception ex) {
-//            log.error(ex);
-//        }
-       return  keyCache;
+      /** if(keyCache == null)
+        try {
+            keyCache = BaseTableManager.getPoolTableInfos(dbname);
+            if(keyCache != null)
+            {
+                addPrimaryKeyCache(keyCache);
+            }
+        } catch (Exception ex) {
+            log.error("",ex);
+        }
+       return  keyCache;*/
+      return null;
     }
     
     

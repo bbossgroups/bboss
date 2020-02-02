@@ -15,30 +15,6 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.net.URLEncoder;
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.Ref;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.ValueExchange;
@@ -50,6 +26,17 @@ import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.common.poolman.util.StatementParser;
 import com.frameworkset.orm.transaction.JDBCTransaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.net.URLEncoder;
+import java.sql.*;
+import java.util.Date;
+import java.util.*;
 
 /**
  * @author biaoping.yin 2005-3-24 version 1.0
@@ -3467,11 +3454,9 @@ public class DBUtil extends SQLUtil implements Serializable {
 			//primaryKey.updateTableinfo(con);
 			return ret;
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new NestedSQLException("Get Next long PrimaryKey error for dbName="
 					+ dbName + ",tableName=" + tableName + ":" + e.getMessage(),e);	
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new NestedSQLException("Get Next long PrimaryKey error for dbName="
 					+ dbName + ",tableName=" + tableName + ":" + e.getMessage(),e);
 		}

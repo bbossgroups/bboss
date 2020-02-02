@@ -2,12 +2,12 @@ sourceSets {
 	main {
 		java {
 			srcDir 'src'
-			srcDir 'src-jdk7'
+			srcDir 'src-jdk8'
 			srcDir 'listener'
 		}
 		resources {
 			srcDir 'src' 
-			srcDir 'src-jdk7' 
+			srcDir 'src-jdk8'
 			srcDir 'resources'
 			include 'poolman_template.xml','com/frameworkset/**/*.properties','com/frameworkset/**/*.xml','org/frameworkset/**/*.properties','org/frameworkset/**/*.xml' 
 		}
