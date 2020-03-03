@@ -899,9 +899,10 @@ public class ClassUtil
 		public void setPkProperty(PropertieDescription pkProperty) {
 			this.pkProperty = pkProperty;
 		}
+		private String name;
 	    public String getName()
 	    {
-	    	return this.clazz.getName();
+	    	return name;
 	    }
 	    private boolean cglib = false;
 	    @SuppressWarnings("unchecked")
@@ -909,6 +910,7 @@ public class ClassUtil
 			esPropertyDescripts = new ESPropertyDescripts();
 	    	//处理cglib代理类，还原原始类型信息
 	    	String name = clazz.getName();
+			this.name= name;
 	    	int idx = name.indexOf("$$EnhancerByCGLIB$$") ;
 	    	if(idx < 0)
 	    	{
@@ -955,7 +957,19 @@ public class ClassUtil
 	    public void setPropertyValue(Object obj,String property, Object value)
 	    {
 	    	try {
-				this.getPropertyDescriptor(property).setValue(obj, value);
+				PropertieDescription propertieDescription = this.getPropertyDescriptor(property);
+				if(propertieDescription != null) {
+					propertieDescription.setValue(obj, value);
+				}
+				else{
+					StringBuilder builder = new StringBuilder();
+					builder.append("Set property value failed:Class[").append(name).append("] property[").append(property).append("] do not exist.");
+					String err = builder.toString();
+					if(log.isWarnEnabled()) {
+						log.warn(err);
+					}
+					throw new FieldNotFountException(err);
+				}
 			} catch (IllegalArgumentException e) {
 				throw new RuntimeException(e);
 			} catch (IllegalAccessException e) {
@@ -963,7 +977,13 @@ public class ClassUtil
 			} catch (InvocationTargetException e) {
 				throw new RuntimeException(e.getTargetException());
 			}
-		    catch (Exception e) {
+			catch (FieldNotFountException e) {
+				throw e;
+			}
+			catch (RuntimeException e) {
+				throw e;
+			}
+			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 	    }
@@ -971,13 +991,31 @@ public class ClassUtil
 	    public Object getPropertyValue(Object obj,String property)
 	    {
 	    	try {
-				return this.getPropertyDescriptor(property).getValue(obj);
+				PropertieDescription propertieDescription = this.getPropertyDescriptor(property);
+				if(propertieDescription != null) {
+					return propertieDescription.getValue(obj);
+				}
+				else{
+					StringBuilder builder = new StringBuilder();
+					builder.append("Get property value failed:Class[").append(name).append("] property[").append(property).append("] do not exist.");
+					String err = builder.toString();
+					if(log.isWarnEnabled()) {
+						log.warn(err);
+					}
+					throw new FieldNotFountException(err);
+				}
 	    	} catch (IllegalArgumentException e) {
 				throw new RuntimeException(e);
 			} catch (IllegalAccessException e) {
 				throw new RuntimeException(e);
 			} catch (InvocationTargetException e) {
 				throw new RuntimeException(e.getTargetException());
+			}
+			catch (FieldNotFountException e) {
+				throw e;
+			}
+			catch (RuntimeException e) {
+				throw e;
 			}
 		    catch (Exception e) {
 				throw new RuntimeException(e);
@@ -1809,6 +1847,27 @@ public class ClassUtil
 
 		}
 		return ret.toString();
+	}
+
+	public static class FieldNotFountException extends RuntimeException{
+		public FieldNotFountException() {
+		}
+
+		public FieldNotFountException(String message) {
+			super(message);
+		}
+
+		public FieldNotFountException(String message, Throwable cause) {
+			super(message, cause);
+		}
+
+		public FieldNotFountException(Throwable cause) {
+			super(cause);
+		}
+
+		public FieldNotFountException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+			super(message, cause, enableSuppression, writableStackTrace);
+		}
 	}
 
 }
