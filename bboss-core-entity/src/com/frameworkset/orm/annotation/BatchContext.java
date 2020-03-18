@@ -16,6 +16,8 @@ package com.frameworkset.orm.annotation;
  */
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>Description: eval onlyone time indexname and avoid multibuilding indexname and indextype</p>
@@ -26,15 +28,17 @@ import java.io.Serializable;
  * @version 1.0
  */
 public class BatchContext implements Serializable {
-	private String indexName;
+//	private String indexName;
 	private String indexType;
+	private Map<String,String> realNames = new HashMap<String, String>();
 
-	public String getIndexName() {
-		return indexName;
+	public String getIndexName(String originName) {
+		return realNames.get(originName);
 	}
 
-	public void setIndexName(String indexName) {
-		this.indexName = indexName;
+	public void setIndexName(String originName,String indexName) {
+		realNames.put(originName,indexName);
+//		this.indexName = indexName;
 	}
 
 	public String getIndexType() {
