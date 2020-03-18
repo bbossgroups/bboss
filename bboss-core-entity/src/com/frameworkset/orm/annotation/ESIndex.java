@@ -33,4 +33,6 @@ import java.lang.annotation.Target;
 public @interface ESIndex {
 	String name() ;
 	String type() default "";
+	boolean useBatchContextIndexName() default false;
+	boolean useBatchContextIndexType() default false;
 }

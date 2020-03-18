@@ -31,6 +31,22 @@ import java.util.Map;
  * @version 1.0
  */
 public class ESIndexWrapper {
+	public boolean isUseBatchContextIndexName() {
+		return useBatchContextIndexName;
+	}
+
+	public void setUseBatchContextIndexName(boolean useBatchContextIndexName) {
+		this.useBatchContextIndexName = useBatchContextIndexName;
+	}
+
+	public boolean isUseBatchContextIndexType() {
+		return useBatchContextIndexType;
+	}
+
+	public void setUseBatchContextIndexType(boolean useBatchContextIndexType) {
+		this.useBatchContextIndexType = useBatchContextIndexType;
+	}
+
 	public static interface GetVariableValue{
 		public Object getValue(String property);
 		public BatchContext getBatchContext();
@@ -233,8 +249,12 @@ public class ESIndexWrapper {
 	private String index;
 	private String type;
 	private ESIndex esIndex;
+	private boolean useBatchContextIndexName;
+	private boolean useBatchContextIndexType;
 	public ESIndexWrapper(ESIndex esIndex){
 		this.esIndex = esIndex;
+		this.useBatchContextIndexName = esIndex.useBatchContextIndexName();
+		this.useBatchContextIndexType = esIndex.useBatchContextIndexType();
 		initInfo(esIndex.name(),esIndex.type());
 
 
