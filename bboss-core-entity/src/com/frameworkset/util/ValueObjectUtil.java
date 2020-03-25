@@ -2112,6 +2112,9 @@ public class ValueObjectUtil {
 			{
 				return new Date((Long)obj);
 			}
+			else if(obj.getClass() == int.class || obj.getClass() == Integer.class){
+				return new Date(((Integer)obj).longValue());
+			}
 			String data_str = obj.toString();
 
 
