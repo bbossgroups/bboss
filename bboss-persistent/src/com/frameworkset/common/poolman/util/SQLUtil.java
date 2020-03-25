@@ -1588,12 +1588,13 @@ public class SQLUtil{
         		return null;
         	}
         }
-        
+		public static void stopPool(String dbname,boolean remove) throws Exception
+		{
+			SQLUtil.getSQLManager().stopPool(dbname,remove);
+		}
         public static void stopPool(String dbname) throws Exception
         {
             SQLUtil.getSQLManager().stopPool(dbname);
-//            if(pool != null)
-//                pool.stopPool();
         }
         public static void startPool(String dbname) throws Exception
         {

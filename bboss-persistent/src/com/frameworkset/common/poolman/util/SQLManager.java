@@ -256,15 +256,22 @@ public class SQLManager extends PoolManager{
         	assertLoaded();
         return super.getPool(name);
     }
-    
-    
-    /**
+
+	/**
+	 * Overridden implementation ensures the config is loaded.
+	 */
+	public JDBCPool getPoolIfExist(String name,boolean remove) {
+		if(name == null)
+			name = this.getDefaultDBNameIfExist();
+		return super.getPoolIfExist(name,remove);
+	}
+
+
+	/**
      * Overridden implementation ensures the config is loaded.
      */
     public JDBCPool getPoolIfExist(String name) {
-       if(name == null)
-    	   name = this.getDefaultDBNameIfExist();
-        return super.getPoolIfExist(name);
+		return getPoolIfExist( name,false);
     }
     
     
@@ -429,6 +436,8 @@ public class SQLManager extends PoolManager{
     }
 
 
+
+
 	/**
 	 * 获取数据库适配器
 	 * @return DB
@@ -502,8 +511,8 @@ public class SQLManager extends PoolManager{
 	}
 
 	
-	public void stopPool(String dbname) throws Exception {
-		JDBCPool pool = this.getPoolIfExist(dbname);
+	public void stopPool(String dbname,boolean remove) throws Exception {
+		JDBCPool pool = this.getPoolIfExist(dbname,remove);
         if(pool != null)
         {
         	if(!pool.isExternal() ||  pool.getExternalDBName() == null)
@@ -516,6 +525,10 @@ public class SQLManager extends PoolManager{
         
         BaseTableManager.removePrimaryKeyCache(dbname);
 		
+	}
+	public void stopPool(String dbname) throws Exception {
+		stopPool( dbname,false);
+
 	}
 
 	public String statusCheck(String dbname) {

@@ -18,6 +18,7 @@ package org.frameworkset.cache;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 public final class MissingStaticCache<K,V> {
 
@@ -25,7 +26,10 @@ public final class MissingStaticCache<K,V> {
     public final int DEFAULT_SIZE = 1000;
 
     private final Map<K,V> eden;
-    private int misses;
+
+
+
+    private AtomicLong misses;
     private int missesMax;
     private boolean stopCache;
 
@@ -34,11 +38,13 @@ public final class MissingStaticCache<K,V> {
         this.size = DEFAULT_SIZE;
         missesMax = size * 2;
         this.eden = new ConcurrentHashMap<K,V>();
+        misses = new AtomicLong();
     }
     public MissingStaticCache(int size) {
         this.size = size;
         this.missesMax = size * 2;
         this.eden = new ConcurrentHashMap<K,V>();
+        misses = new AtomicLong();
     }
     public int getMissesMax(){
         return this.missesMax;
@@ -48,11 +54,14 @@ public final class MissingStaticCache<K,V> {
 	 * 用于判断缓存命中失败次数是否超过最大允许次数
      * @return
 	 */
-    private void shouldCache(){
+    private void shouldCache(long misses){
         if( misses >= missesMax) {
             stopCache = true;
             this.clear();
         }
+    }
+    public boolean needLogWarn(long misses,long warnInterval){
+        return misses >= missesMax && misses % warnInterval == 0;
     }
 
     /**
@@ -67,10 +76,10 @@ public final class MissingStaticCache<K,V> {
         this.eden.clear();
     }
 
-    public int increamentMissing(){
-        misses++;
-        shouldCache();
-        return misses;
+    public long increamentMissing(){
+        long _m = misses.incrementAndGet();
+        shouldCache(_m);
+        return _m;
     }
 
     public V get(K k) {

@@ -182,11 +182,13 @@ public class SQLUtil {
 						
 						if(value != null)
 						{
+							boolean cacheSql = pro.getBooleanExtendAttribute("cacheSql",true);//标识sql语句是否为velocity模板
+
 							boolean istpl = pro.getBooleanExtendAttribute("istpl",true);//标识sql语句是否为velocity模板
 							boolean multiparser = pro.getBooleanExtendAttribute("multiparser",istpl);//如果sql语句为velocity模板，则在批处理时是否需要每条记录都需要分析sql语句
 							SQLTemplate sqltpl = null;
 							value = value.trim();
-							SQLInfo sqlinfo = new SQLInfo(key, value, istpl,multiparser);
+							SQLInfo sqlinfo = new SQLInfo(key, value, istpl,multiparser,cacheSql);
 							sqlinfo.setSqlutil(this);
 							if(istpl)
 							{
@@ -710,7 +712,7 @@ public class SQLUtil {
 	 */
 	public PoolManResultSetMetaData getPoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
 	{
-		return this.cache.getPoolManResultSetMetaData(db,dbname, sqlkey, rsmetadata);
+		return this.cache.getPoolManResultSetMetaData(true,db,dbname, sqlkey, rsmetadata);
 	}
 
 	public List getListSQLs(String sqlname) {

@@ -65,49 +65,52 @@ public class SQLCache extends SQLBaseCache{
 	}
 
 
-	public PoolManResultSetMetaData getPoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
+	public PoolManResultSetMetaData getPoolManResultSetMetaData(boolean cacheSql,com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
 	{
 		PoolManResultSetMetaData meta = null;
-		EdenConcurrentCache<String, PoolManResultSetMetaData> dbmetas = metas.get(dbname);
-		if(dbmetas == null)
-		{
-			synchronized(metas)
-			{
-				dbmetas = metas.get(dbname);
-				if(dbmetas == null)
-				{
-					dbmetas = new EdenConcurrentCache<String,  PoolManResultSetMetaData>(resultMetaCacheSize);
-					metas.put(dbname, dbmetas);
+		if(cacheSql) {
+			EdenConcurrentCache<String, PoolManResultSetMetaData> dbmetas = metas.get(dbname);
+			if (dbmetas == null) {
+				synchronized (metas) {
+					dbmetas = metas.get(dbname);
+					if (dbmetas == null) {
+						dbmetas = new EdenConcurrentCache<String, PoolManResultSetMetaData>(resultMetaCacheSize);
+						metas.put(dbname, dbmetas);
+					}
 				}
 			}
-		}
 
-		meta =  dbmetas.get(sqlkey);
-		boolean outOfSize = false;
-		boolean newMeta = false;
-		if(meta == null) {
-			try {
-				metaLock.lock();
-				meta = dbmetas.get(sqlkey);
-				if (meta == null) {
-					newMeta = true;
-					meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
-					outOfSize = dbmetas.put(sqlkey, meta);
+			meta = dbmetas.get(sqlkey);
+			boolean outOfSize = false;
+			boolean newMeta = false;
+			long missing = 0l;
+			if (meta == null) {
+				try {
+					metaLock.lock();
+					meta = dbmetas.get(sqlkey);
+					if (meta == null) {
+						newMeta = true;
+						missing = dbmetas.increamentMissing();
+						meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
+						outOfSize = dbmetas.put(sqlkey, meta);
+					}
+				} finally {
+					metaLock.unlock();
 				}
-			} finally {
-				metaLock.unlock();
+			}
+
+			//检测从缓冲中获取的数据是否发生变化
+			if (!newMeta && needRefreshMeta(meta, rsmetadata)) {
+				meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
+				outOfSize = dbmetas.put(sqlkey, meta);
+
+			}
+			if (outOfSize && logger.isWarnEnabled() && dbmetas.needLogWarn(missing,warnInterval)) {
+				logMetaWarn(logger, sqlkey, dbmetas.getMaxSize());
 			}
 		}
-
-		//检测从缓冲中获取的数据是否发生变化
-		if(!newMeta && needRefreshMeta(meta,rsmetadata))
-		{
+		else{
 			meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
-			outOfSize = dbmetas.put(sqlkey, meta);
-
-		}
-		if(outOfSize && logger.isWarnEnabled()) {
-			logMetaWarn(logger,sqlkey, dbmetas.getMaxSize());
 		}
 		return meta;
 	}
@@ -124,43 +127,45 @@ public class SQLCache extends SQLBaseCache{
 	protected VariableHandler.SQLStruction _getVTPLSQLStruction(boolean isTotalSize,
 															  SQLInfo sqlinfo, String newsql, String okey,int cacheSize)
 	{
-		Map<String, EdenConcurrentCache<String, SQLStruction>> _parserTPLSQLStructions = !isTotalSize ? parserTPLSQLStructions:parserTPLTotalsizeSQLStructions;
-		String ikey = newsql;
-		EdenConcurrentCache<String,VariableHandler.SQLStruction> sqlstructionMap =  _parserTPLSQLStructions.get(okey);
-		if(sqlstructionMap == null)
-		{
-			try
-			{
-				this.vtplLock.lock();
-				sqlstructionMap =  _parserTPLSQLStructions.get(okey);
-				if(sqlstructionMap == null)
-				{
-					sqlstructionMap = new   EdenConcurrentCache<String,VariableHandler.SQLStruction>(cacheSize);
-					_parserTPLSQLStructions.put(okey,sqlstructionMap);
+		VariableHandler.SQLStruction urlStruction = null;
+		if(sqlinfo.isCacheSql()) {
+			Map<String, EdenConcurrentCache<String, SQLStruction>> _parserTPLSQLStructions = !isTotalSize ? parserTPLSQLStructions : parserTPLTotalsizeSQLStructions;
+			String ikey = newsql;
+			EdenConcurrentCache<String, VariableHandler.SQLStruction> sqlstructionMap = _parserTPLSQLStructions.get(okey);
+			if (sqlstructionMap == null) {
+				try {
+					this.vtplLock.lock();
+					sqlstructionMap = _parserTPLSQLStructions.get(okey);
+					if (sqlstructionMap == null) {
+						sqlstructionMap = new EdenConcurrentCache<String, VariableHandler.SQLStruction>(cacheSize);
+						_parserTPLSQLStructions.put(okey, sqlstructionMap);
+					}
+				} finally {
+					vtplLock.unlock();
 				}
 			}
-			finally {
-				vtplLock.unlock();
+			urlStruction = sqlstructionMap.get(ikey);
+			boolean outOfSize = false;
+			long missing = 0l;
+			if (urlStruction == null) {
+				try {
+					this.vtplLock.lock();
+					urlStruction = sqlstructionMap.get(ikey);
+					if (urlStruction == null) {
+						missing = sqlstructionMap.increamentMissing();
+						urlStruction = VariableHandler.parserSQLStruction(newsql);
+						outOfSize = sqlstructionMap.put(ikey, urlStruction);
+					}
+				} finally {
+					this.vtplLock.unlock();
+				}
+				if (outOfSize && logger.isWarnEnabled() && sqlstructionMap.needLogWarn(missing,warnInterval)) {
+					this.logSqlStructionWarn(logger, ikey, sqlstructionMap.getMaxSize(), okey);
+				}
 			}
 		}
-		VariableHandler.SQLStruction urlStruction = sqlstructionMap.get(ikey);
-		boolean outOfSize = false;
-		if(urlStruction == null){
-			try
-			{
-				this.vtplLock.lock();
-				urlStruction = sqlstructionMap.get(ikey);
-				if(urlStruction == null){
-					urlStruction = VariableHandler.parserSQLStruction(newsql);
-					outOfSize = sqlstructionMap.put(ikey,urlStruction);
-				}
-			}
-			finally {
-				this.vtplLock.unlock();
-			}
-			if(outOfSize && logger.isWarnEnabled()) {
-				this.logSqlStructionWarn(logger, ikey, sqlstructionMap.getMaxSize(),okey);
-			}
+		else{
+			urlStruction = VariableHandler.parserSQLStruction(newsql);
 		}
 		return urlStruction;
 	}

@@ -99,7 +99,7 @@ public class GloableSQLUtil extends SQLUtil {
 		
 				
 			if(!istpl){
-				SQLInfo sqlinfo = new SQLInfo(sql, sql, istpl, multiparser);
+				SQLInfo sqlinfo = new SQLInfo(sql, sql, istpl, multiparser,true);
 				sqlinfo.setSqlutil(this);
 				return sqlinfo;
 			}
@@ -135,7 +135,7 @@ public class GloableSQLUtil extends SQLUtil {
 		return sqlinfo;
 	}
 	private SQLInfo buildSQLInfo(String sql,boolean istpl,boolean multiparser){
-		SQLInfo sqlinfo = new SQLInfo(sql, sql, istpl, multiparser);
+		SQLInfo sqlinfo = new SQLInfo(sql, sql, istpl, multiparser,true);
 		sqlinfo.setSqlutil(this);
 
 		SQLTemplate sqltpl = new SQLTemplate(sqlinfo);

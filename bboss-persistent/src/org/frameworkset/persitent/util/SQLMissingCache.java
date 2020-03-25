@@ -62,62 +62,62 @@ public class SQLMissingCache extends SQLBaseCache{
 	}
 
 
-	public PoolManResultSetMetaData getPoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
+	public PoolManResultSetMetaData getPoolManResultSetMetaData(boolean cacheSql,com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
 	{
 		PoolManResultSetMetaData meta = null;
-		MissingStaticCache<String, PoolManResultSetMetaData> dbmetas = missingCacheMetas.get(dbname);
-		if(dbmetas == null)
-		{
-			synchronized(missingCacheMetas)
-			{
-				dbmetas = missingCacheMetas.get(dbname);
-				if(dbmetas == null)
-				{
-					dbmetas = new MissingStaticCache<String, PoolManResultSetMetaData>(resultMetaCacheSize);
-					missingCacheMetas.put(dbname, dbmetas);
-				}
-			}
-		}
-
-		if(dbmetas.stopCache()){
-			meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
-			if(logger.isWarnEnabled()) {
-				logMetaWarn(logger,sqlkey, dbmetas.getMissesMax());
-			}
-			return meta;
-		}
-		else {
-			boolean newMeta = false;
-			meta = dbmetas.get(sqlkey);
-			if (meta == null) {
-				try {
-					metaLock.lock();
-					meta = dbmetas.get(sqlkey);
-					if (meta == null) {
-						dbmetas.increamentMissing();
-						newMeta = true;
-						meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
-						if(!dbmetas.stopCache()) {
-							dbmetas.put(sqlkey, meta);
-						}
+		if(cacheSql) {
+			MissingStaticCache<String, PoolManResultSetMetaData> dbmetas = missingCacheMetas.get(dbname);
+			if (dbmetas == null) {
+				synchronized (missingCacheMetas) {
+					dbmetas = missingCacheMetas.get(dbname);
+					if (dbmetas == null) {
+						dbmetas = new MissingStaticCache<String, PoolManResultSetMetaData>(resultMetaCacheSize);
+						missingCacheMetas.put(dbname, dbmetas);
 					}
 				}
-				finally {
-					metaLock.unlock();
+			}
+			long missing = 0l;
+			if (dbmetas.stopCache()) {
+				missing = dbmetas.increamentMissing();
+				meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
+				if (logger.isWarnEnabled() && dbmetas.needLogWarn(missing,warnInterval)) {
+					logMetaWarn(logger, sqlkey, dbmetas.getMissesMax());
+				}
+			} else {
+				boolean newMeta = false;
+				meta = dbmetas.get(sqlkey);
+				if (meta == null) {
+					try {
+						metaLock.lock();
+						meta = dbmetas.get(sqlkey);
+						if (meta == null) {
+							missing = dbmetas.increamentMissing();
+							newMeta = true;
+							meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
+							if (!dbmetas.stopCache()) {
+								dbmetas.put(sqlkey, meta);
+							}
+						}
+					} finally {
+						metaLock.unlock();
+					}
+				}
+				//检测从缓冲中获取的数据是否发生变化
+				if (!newMeta && needRefreshMeta(meta, rsmetadata)) {
+					meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
+					dbmetas.put(sqlkey, meta);
+
+				}
+				if (dbmetas.stopCache() && logger.isWarnEnabled() && dbmetas.needLogWarn(missing,warnInterval)) {
+					logMetaWarn(logger, sqlkey, dbmetas.getMissesMax());
 				}
 			}
-			//检测从缓冲中获取的数据是否发生变化
-			if(!newMeta && needRefreshMeta(meta,rsmetadata))
-			{
-				meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
-				dbmetas.put(sqlkey, meta);
-
-			}
-			if(dbmetas.stopCache() && logger.isWarnEnabled()) {
-				logMetaWarn(logger,sqlkey, dbmetas.getMissesMax());
-			}
-			return meta;
 		}
+		else
+		{
+			meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
+		}
+		return meta;
 
 	}
 
@@ -131,55 +131,58 @@ public class SQLMissingCache extends SQLBaseCache{
 	protected SQLStruction _getVTPLSQLStruction(boolean isTotalSize,
 															  SQLInfo sqlinfo, String newsql, String okey,int cacheSize)
 	{
-		Map<String, MissingStaticCache<String, SQLStruction>> _parserTPLSQLStructions = !isTotalSize ? parserTPLSQLStructions:parserTPLTotalsizeSQLStructions;
-		String ikey = newsql;
-		MissingStaticCache<String, SQLStruction> sqlstructionMap =  _parserTPLSQLStructions.get(okey);
-		if(sqlstructionMap == null)
-		{
-			try
-			{
-				this.vtplLock.lock();
-				sqlstructionMap =  _parserTPLSQLStructions.get(okey);
-				if(sqlstructionMap == null)
-				{
-					sqlstructionMap = new   MissingStaticCache<String, SQLStruction>(cacheSize);
-					_parserTPLSQLStructions.put(okey,sqlstructionMap);
-				}
-			}
-			finally {
-				vtplLock.unlock();
-			}
-		}
-
-		if(sqlstructionMap.stopCache()){
-			if( logger.isWarnEnabled()) {
-				this.logSqlStructionWarn(logger, ikey, sqlstructionMap.getMissesMax(),okey);
-			}
-			return VariableHandler.parserSQLStruction(newsql);
-		}
-		else {
-			SQLStruction urlStruction = sqlstructionMap.get(ikey);
-			if (urlStruction == null) {
+		if(sqlinfo.isCacheSql()) {
+			Map<String, MissingStaticCache<String, SQLStruction>> _parserTPLSQLStructions = !isTotalSize ? parserTPLSQLStructions : parserTPLTotalsizeSQLStructions;
+			String ikey = newsql;
+			MissingStaticCache<String, SQLStruction> sqlstructionMap = _parserTPLSQLStructions.get(okey);
+			if (sqlstructionMap == null) {
 				try {
 					this.vtplLock.lock();
-					urlStruction = sqlstructionMap.get(ikey);
-					if (urlStruction == null) {
-						sqlstructionMap.increamentMissing();
-						urlStruction = VariableHandler.parserSQLStruction(newsql);
-						if (!sqlstructionMap.stopCache()) {
-							sqlstructionMap.put(ikey, urlStruction);
-						}
+					sqlstructionMap = _parserTPLSQLStructions.get(okey);
+					if (sqlstructionMap == null) {
+						sqlstructionMap = new MissingStaticCache<String, SQLStruction>(cacheSize);
+						_parserTPLSQLStructions.put(okey, sqlstructionMap);
 					}
 				} finally {
-					this.vtplLock.unlock();
-				}
-				if (sqlstructionMap.stopCache() && logger.isWarnEnabled()) {
-					this.logSqlStructionWarn(logger,ikey, sqlstructionMap.getMissesMax(), okey);
+					vtplLock.unlock();
 				}
 			}
-			return urlStruction;
+			long missing = 0l;
+			if (sqlstructionMap.stopCache()) {
+				missing = sqlstructionMap.increamentMissing();
+				if (logger.isWarnEnabled() && sqlstructionMap.needLogWarn(missing,warnInterval)) {
+					this.logSqlStructionWarn(logger, ikey, sqlstructionMap.getMissesMax(), okey);
+				}
+				return VariableHandler.parserSQLStruction(newsql);
+			} else {
+				SQLStruction urlStruction = sqlstructionMap.get(ikey);
+				if (urlStruction == null) {
+					try {
+						this.vtplLock.lock();
+						urlStruction = sqlstructionMap.get(ikey);
+						if (urlStruction == null) {
+							missing = sqlstructionMap.increamentMissing();
+							urlStruction = VariableHandler.parserSQLStruction(newsql);
+							if (!sqlstructionMap.stopCache()) {
+								sqlstructionMap.put(ikey, urlStruction);
+							}
+						}
+					} finally {
+						this.vtplLock.unlock();
+					}
+					if (sqlstructionMap.stopCache() && logger.isWarnEnabled() && sqlstructionMap.needLogWarn(missing,warnInterval)) {
+						this.logSqlStructionWarn(logger, ikey, sqlstructionMap.getMissesMax(), okey);
+					}
+				}
+				return urlStruction;
+			}
 		}
+		else{
+			return  VariableHandler.parserSQLStruction(newsql);
+		}
+
 	}
+
 	
 
 

@@ -32,6 +32,8 @@ public class SQLInfo {
 	private SQLTemplate sqltpl;
 	private boolean istpl;
 	private boolean multiparser;
+
+	private boolean cacheSql;
 	/**
 	 * @param multiparser the multiparser to set
 	 */
@@ -40,22 +42,23 @@ public class SQLInfo {
 	}
 
 	private SQLUtil sqlutil;
-	public SQLInfo(String sqlname, String sql,boolean istpl,boolean multiparser) {
+	public SQLInfo(String sqlname, String sql,boolean istpl,boolean multiparser, boolean cacheSql) {
 		super();		
 		this.sqlname = sqlname;
 		this.sql = sql;
-//		this.sqltpl = sqltpl;
 		this.istpl = istpl;
 		this.multiparser = multiparser;
+		this.cacheSql = cacheSql;
 	}
 	
 	
-	public SQLInfo(String sql,boolean istpl,boolean multiparser) {
+	public SQLInfo(String sql, boolean istpl, boolean multiparser, boolean cacheSql) {
 		super();		
 		this.sql = sql;
 		this.istpl = istpl;
 		this.multiparser = multiparser;
 //		
+		this.cacheSql = cacheSql;
 	}
 //	public SQLInfo(String sql) {
 //				
@@ -141,5 +144,9 @@ public class SQLInfo {
 		return this.sqlutil.getPlainSQL(dbname, sqlname);
 	}
 
+
+	public boolean isCacheSql() {
+		return cacheSql;
+	}
 
 }

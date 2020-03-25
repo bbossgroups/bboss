@@ -45,7 +45,7 @@ public abstract class SQLBaseCache {
 	protected Lock vtplLock = new ReentrantLock();
 	protected Map<String,SQLStruction> parserSQLStructions = new HashMap<String,SQLStruction>();
 	protected Map<String,SQLStruction> parsertotalsizeSQLStructions = new HashMap<String,SQLStruction>();
-
+	protected long warnInterval = 500;
 	protected int resultMetaCacheSize;
 	protected int perKeySqlStructionCacheSize;
 	protected String sqlfile;
@@ -83,7 +83,7 @@ public abstract class SQLBaseCache {
 		}
 		return false;
 	}
-	public abstract PoolManResultSetMetaData getPoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException;
+	public abstract PoolManResultSetMetaData getPoolManResultSetMetaData(boolean cacheSql,com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException;
 
 	protected void logMetaWarn(Logger logger,String sql,int maxSize ){
 

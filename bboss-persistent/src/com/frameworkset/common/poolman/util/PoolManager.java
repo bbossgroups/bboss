@@ -15,17 +15,13 @@
  */
 package com.frameworkset.common.poolman.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
+import com.frameworkset.common.poolman.PoolManConstants;
+import com.frameworkset.common.poolman.management.BaseTableManager;
+import com.frameworkset.common.poolman.sql.PrimaryKeyCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.common.poolman.PoolManConstants;
-import com.frameworkset.common.poolman.sql.PrimaryKeyCacheManager;
+import java.util.*;
 
 
 /**
@@ -81,23 +77,33 @@ public class PoolManager  {
     }
     public JDBCPool getPoolIfExist(String name) {
 
+        return getPoolIfExist(name,false);
+    }
+    public JDBCPool getPoolIfExist(String name,boolean remove) {
+
         if (name == null)
             return this.defaultpool;
-
-        if (pools.containsKey(name)) {
+        if(!remove) {
             try {
-                return (JDBCPool) pools.get(name);
+                if (pools.containsKey(name)) {
+                    return (JDBCPool) pools.get(name);
+                }
             } catch (Exception e) {
-            	log.error(e.getMessage(),e);
+                log.error(e.getMessage(), e);
+            }
+        }
+        else{
+            try {
+                BaseTableManager.removePrimaryKeyCache(name);
+                if(defaultpool != null && name.equals(defaultpool.getDBName())){
+                    defaultpool = null;
+                }
+                return (JDBCPool) pools.remove(name);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
             }
         }
         return null;
-//        throw new NullPointerException("ERROR: Could not locate " + name +
-//                                       ". This usually means that the " +
-//                                       PoolManConstants.XML_CONFIG_FILE +
-//                                       " file could not be found, or that it " +
-//                       "does not contain configuration data for a " +
-//                       "pool with a name equal to " + name);
     }
     
     public boolean exist(String name)

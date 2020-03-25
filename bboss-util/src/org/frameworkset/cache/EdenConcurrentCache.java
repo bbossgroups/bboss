@@ -19,6 +19,7 @@ package org.frameworkset.cache;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -28,6 +29,7 @@ public final class EdenConcurrentCache<K,V> {
     public final int DEFAULT_SIZE = 1000;
 
     private final Map<K,V> eden;
+    private AtomicLong missing;
 
 
     private Lock cacheLock = new ReentrantLock();
@@ -37,6 +39,7 @@ public final class EdenConcurrentCache<K,V> {
         this.size = DEFAULT_SIZE;
         this.eden = new ConcurrentHashMap<K,V>();
         this.longterm = new WeakHashMap<K,V>();
+        missing = new AtomicLong();
     }
     public EdenConcurrentCache(int size) {
         this.size = size;
@@ -108,5 +111,12 @@ public final class EdenConcurrentCache<K,V> {
         finally {
             cacheLock.unlock();
         }
+    }
+
+    public long increamentMissing() {
+        return missing.incrementAndGet();
+    }
+    public boolean needLogWarn(long misses,long warnInterval){
+        return misses >= size && misses % warnInterval == 0;
     }
 }
