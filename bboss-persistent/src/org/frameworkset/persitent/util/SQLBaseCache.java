@@ -99,6 +99,7 @@ public abstract class SQLBaseCache {
 					.append("\r\n本条sql或者本配置文件中其他sql语句可能存在不断变化的值参数;")
 					.append("\r\n本条sql或者本配置文件中其他sql语句可能存在的$var模式的变量并且$var的值不断变化;")
 					.append("\r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，以提升系统性能!")
+					.append("\r\n或者通过在").append(this.sqlfile).append("中对应sql配置的property元素增加cacheSql=\"false\"属性来关闭sql语法缓存机制.")
 					.append("\n\r**********************************************************************")
 					.append("\n\r**********************************************************************");
 		}
@@ -112,6 +113,7 @@ public abstract class SQLBaseCache {
 					.append("\r\n导致告警原因分析:\r\n本条sql或者其他sql语句直接硬编码在代码中;")
 					.append("\r\n本条sql或者本文件中其他sql语句可能存在不断变化的值参数;")
 					.append("\r\n本条sql或者本文件中其他sql语句可能存在的$var模式的变量并且$var的值不断变化;")
+					.append("\r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!")
 					.append("\r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，并采用配置文件来管理sql语句，以提升系统性能!")
 					.append("\n\r**********************************************************************")
 					.append("\n\r**********************************************************************");
@@ -133,6 +135,7 @@ public abstract class SQLBaseCache {
 					.append("\r\n本条sql可能存在不断变化的值参数;")
 					.append("\r\n本条sql可能存在的$var模式的变量并且$var的值不断变化;")
 					.append("\r\n优化建议：\r\n将sql中可能存在不断变化的值参数转化为绑定变量或者#[variable]变量，或将sql中可能存在的$var模式的变量转换为#[varibale]模式的变量，以提升系统性能!")
+					.append("\r\n或者通过在").append(okey).append("@file[").append(this.sqlfile).append("]的property元素增加cacheSql=\"false\"属性来关闭sql语法缓存机制.")
 					.append("\n\r**********************************************************************")
 					.append("\n\r**********************************************************************");
 		}
