@@ -106,7 +106,7 @@ public class SQLCache extends SQLBaseCache{
 
 			}
 			if (outOfSize && logger.isWarnEnabled() && dbmetas.needLogWarn(missing,warnInterval)) {
-				logMetaWarn(logger, sqlkey, dbmetas.getMaxSize());
+				logMetaWarn(logger, sqlkey, dbmetas.getMaxSize(),missing);
 			}
 		}
 		else{
@@ -160,7 +160,7 @@ public class SQLCache extends SQLBaseCache{
 					this.vtplLock.unlock();
 				}
 				if (outOfSize && logger.isWarnEnabled() && sqlstructionMap.needLogWarn(missing,warnInterval)) {
-					this.logSqlStructionWarn(logger, ikey, sqlstructionMap.getMaxSize(), okey);
+					this.logSqlStructionWarn(logger, ikey, sqlstructionMap.getMaxSize(), okey,missing);
 				}
 			}
 		}

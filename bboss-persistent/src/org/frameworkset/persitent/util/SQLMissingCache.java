@@ -81,7 +81,7 @@ public class SQLMissingCache extends SQLBaseCache{
 				missing = dbmetas.increamentMissing();
 				meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
 				if (logger.isWarnEnabled() && dbmetas.needLogWarn(missing,warnInterval)) {
-					logMetaWarn(logger, sqlkey, dbmetas.getMissesMax());
+					logMetaWarn(logger, sqlkey, dbmetas.getMissesMax(),missing);
 				}
 			} else {
 				boolean newMeta = false;
@@ -109,7 +109,7 @@ public class SQLMissingCache extends SQLBaseCache{
 
 				}
 				if (dbmetas.stopCache() && logger.isWarnEnabled() && dbmetas.needLogWarn(missing,warnInterval)) {
-					logMetaWarn(logger, sqlkey, dbmetas.getMissesMax());
+					logMetaWarn(logger, sqlkey, dbmetas.getMissesMax(),missing);
 				}
 			}
 		}
@@ -151,7 +151,7 @@ public class SQLMissingCache extends SQLBaseCache{
 			if (sqlstructionMap.stopCache()) {
 				missing = sqlstructionMap.increamentMissing();
 				if (logger.isWarnEnabled() && sqlstructionMap.needLogWarn(missing,warnInterval)) {
-					this.logSqlStructionWarn(logger, ikey, sqlstructionMap.getMissesMax(), okey);
+					this.logSqlStructionWarn(logger, ikey, sqlstructionMap.getMissesMax(), okey,missing);
 				}
 				return VariableHandler.parserSQLStruction(newsql);
 			} else {
@@ -171,7 +171,7 @@ public class SQLMissingCache extends SQLBaseCache{
 						this.vtplLock.unlock();
 					}
 					if (sqlstructionMap.stopCache() && logger.isWarnEnabled() && sqlstructionMap.needLogWarn(missing,warnInterval)) {
-						this.logSqlStructionWarn(logger, ikey, sqlstructionMap.getMissesMax(), okey);
+						this.logSqlStructionWarn(logger, ikey, sqlstructionMap.getMissesMax(), okey,missing);
 					}
 				}
 				return urlStruction;

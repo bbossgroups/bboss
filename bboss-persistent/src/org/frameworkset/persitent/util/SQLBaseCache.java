@@ -85,12 +85,12 @@ public abstract class SQLBaseCache {
 	}
 	public abstract PoolManResultSetMetaData getPoolManResultSetMetaData(boolean cacheSql,com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException;
 
-	protected void logMetaWarn(Logger logger,String sql,int maxSize ){
+	protected void logMetaWarn(Logger logger,String sql,int maxSize,long missing ){
 
 		StringBuilder info = new StringBuilder();
 		if(sqlfile != null) {
 			info.append("\n\r**********************************************************************\r\n")
-					.append("*********************************警告:sql file[").append(this.sqlfile).append("]*********************************\r\n")
+					.append("*********************************警告:Missing cache ").append(missing).append(" times of sql file[").append(this.sqlfile).append("]*********************************\r\n")
 					.append("**********************************************************************\r\n")
 					.append("调用方法getPoolManResultSetMetaData从sqlmetacache 中获取sql[")
 					.append(sql).append("]查询元数据信息时，检测到缓冲区信息记录数超出meta cache区允许的最大cache size:")
@@ -105,7 +105,7 @@ public abstract class SQLBaseCache {
 		}
 		else{
 			info.append("\n\r**********************************************************************\r\n")
-					.append("*********************************警告:*********************************\r\n")
+					.append("*********************************警告:Missing cache ").append(missing).append(" times *********************************\r\n")
 					.append("**********************************************************************\r\n")
 					.append("调用方法getPoolManResultSetMetaData从sqlmetacache 中获取代码中硬编码sql[")
 					.append(sql).append("]查询元数据信息时，检测到缓冲区信息记录数超出meta cache区允许的最大cache size:")
@@ -122,11 +122,11 @@ public abstract class SQLBaseCache {
 
 	}
 
-	protected void logSqlStructionWarn(Logger logger,String sql,int maxSize ,String okey){
+	protected void logSqlStructionWarn(Logger logger,String sql,int maxSize ,String okey,long missing){
 		StringBuilder info = new StringBuilder();
 		if(sqlfile != null) {
 			info.append("\n\r**********************************************************************\r\n")
-					.append("*********************************警告:sql ").append(okey).append("@file[").append(this.sqlfile).append("]*********************************\r\n")
+					.append("*********************************警告:Missing cache ").append(missing).append(" times of sql ").append(okey).append("@file[").append(this.sqlfile).append("]*********************************\r\n")
 					.append("**********************************************************************\r\n")
 					.append("调用方法_getVTPLSQLStruction从sql struction cache获取[")
 					.append(sql).append("]sql struction 信息时,检测到缓冲区信息记录数超出SqlStructionCache允许的最大cache size:")
@@ -141,7 +141,7 @@ public abstract class SQLBaseCache {
 		}
 		else{
 			info.append("\n\r**********************************************************************\r\n")
-					.append("*********************************警告*********************************\r\n")
+					.append("*********************************警告 Missing cache ").append(missing).append(" times *********************************\r\n")
 					.append("**********************************************************************\r\n")
 					.append("调用方法_getVTPLSQLStruction从sql struction cache获取代码中硬编码[")
 					.append(sql).append("]sql struction 信息时,检测到缓冲区信息记录数超出SqlStructionCache允许的最大cache size:")
