@@ -96,6 +96,12 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	protected boolean default_singable = true;
 	protected boolean needRecordFile = true;
 	protected boolean isfile = true;
+
+	public String getBaseDir() {
+		return baseDir;
+	}
+
+	protected  String baseDir;
 	/**
 	 * Name of the MessageSource bean in the factory. If none is supplied,
 	 * message resolution is delegated to the parent.
@@ -427,8 +433,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			throw new NullPointerException(
 					"build ApplicationContext failed:instream is null.");
 		this.isfile = isfile;
-		
-		
+
+
 		if(isfile)
 		{
 			
@@ -445,12 +451,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		providerManager.init(docbaseType, "", configfile,instream);
 	}
 	
-	public BaseApplicationContext(URL file, String path)
+	public BaseApplicationContext(String baseDir,URL file, String path)
 	{
 		if (file == null )
 			throw new NullPointerException(
 					"build ApplicationContext failed:configfile is "
 							+ null);
+		this.baseDir = baseDir;
 		this.isfile = false;
 		this.configfile = path;
 		this.configFileURL = file;

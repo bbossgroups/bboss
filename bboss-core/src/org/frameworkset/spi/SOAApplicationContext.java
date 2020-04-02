@@ -15,14 +15,14 @@
  */
 package org.frameworkset.spi;
 
-import java.io.InputStream;
-import java.net.URL;
-
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 import org.frameworkset.spi.assemble.soa.SOAServiceProviderManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.InputStream;
+import java.net.URL;
 
 /**
  * <p>Title: SOAApplicationContext.java</p> 
@@ -59,9 +59,9 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 	
 	
 	
-	public SOAApplicationContext(URL file, String path)
+	public SOAApplicationContext(String baseDir,URL file, String path)
 	{
-		super((URL)file,  path);
+		super(baseDir,(URL)file,  path);
 		
 	}
 	
@@ -161,7 +161,6 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 	 * @param context
 	 * @param providerManagerInfo
 	 * @param defaultValue
-	 * @param serviceID
 	 * @return
 	 */
 	public Object getBeanObject(CallContext context, Pro providerManagerInfo,

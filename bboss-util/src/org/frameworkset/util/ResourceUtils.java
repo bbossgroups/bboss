@@ -244,28 +244,74 @@ public class ResourceUtils
 
 	public static URL getFileURL(String file)
 	{
+		URL confURL = null;
+		if(!file.startsWith(FILE_URL_PREFIX)) {
+			confURL = ResourceUtils.class.getClassLoader().getResource(file);
+			if (confURL == null)
+				confURL = ResourceUtils.class.getClassLoader()
+						.getResource("/" + file);
 
-		URL confURL = ResourceUtils.class.getClassLoader().getResource(file);
-		if (confURL == null)
-			confURL = ResourceUtils.class.getClassLoader()
-					.getResource("/" + file);
+			if (confURL == null)
+				confURL = getTCL().getResource(file);
+			if (confURL == null)
+				confURL = getTCL().getResource("/" + file);
+			if (confURL == null)
+				confURL = ClassLoader.getSystemResource(file);
+			if (confURL == null)
+				confURL = ClassLoader.getSystemResource("/" + file);
 
-		if (confURL == null)
-			confURL = getTCL().getResource(file);
-		if (confURL == null)
-			confURL = getTCL().getResource("/" + file);
-		if (confURL == null)
-			confURL = ClassLoader.getSystemResource(file);
-		if (confURL == null)
-			confURL = ClassLoader.getSystemResource("/" + file);
-
-		if (confURL == null)
-		{
-			throw new java.lang.NullPointerException(file + " do not exist.");
+			if (confURL == null) {
+				throw new java.lang.NullPointerException(file + " do not exist.");
+			} else {
+				return confURL;
+			}
 		}
-		else
-		{
-			return confURL;
+		else{
+			File file_ = new File(file.substring(FILE_URL_PREFIX.length()));
+			if(file_.exists()){
+				try {
+					return file_.toURI().toURL();
+				} catch (MalformedURLException e) {
+					throw new java.lang.IllegalArgumentException(file.substring(FILE_URL_PREFIX.length()),e);
+				}
+			}
+			else{
+				throw new java.lang.IllegalArgumentException(file.substring(FILE_URL_PREFIX.length()) + " do not exist.");
+			}
+		}
+
+	}
+	public static String getRealPath(String contextPath, String path) {
+
+
+		contextPath = contextPath.replace('\\', '/');
+		path = path.replace('\\', '/');
+		if (path.startsWith("/") ) {
+
+			if (!contextPath.endsWith("/"))
+				return new StringBuilder().append(contextPath).append( path).toString();
+			else {
+				return new StringBuilder().append(contextPath.substring(0,contextPath.length() - 1)).append( path).toString();
+			}
+
+		} else {
+			if (!contextPath.endsWith("/"))
+				return new StringBuilder().append(contextPath).append("/" ).append(path).toString();
+			else {
+				return new StringBuilder().append(contextPath).append( path).toString();
+			}
+		}
+
+	}
+	public static URL getFileURL(String baseDir,String file)
+	{
+		if(baseDir == null) {
+			return getFileURL(file);
+
+		}
+		else{
+			file = getRealPath("file:" + baseDir, file);
+			return getFileURL(file);
 		}
 
 	}

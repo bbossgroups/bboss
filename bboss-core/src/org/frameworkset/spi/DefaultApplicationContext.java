@@ -165,10 +165,10 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 		super( docbaseType,  docbase,
 				 configfile, isfile,true);
 	}
-	public DefaultApplicationContext(URL file, String path)
+	public DefaultApplicationContext(String baseDir,URL file, String path)
 	{
 
-		super((URL)file,  path);
+		super(baseDir,(URL)file,  path);
 	}
 
 	public DefaultApplicationContext(InputStream instream, boolean isfile,boolean init) {

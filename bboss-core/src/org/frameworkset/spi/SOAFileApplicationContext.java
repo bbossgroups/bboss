@@ -15,9 +15,9 @@
  */
 package org.frameworkset.spi;
 
-import java.net.URL;
-
 import org.frameworkset.util.ResourceUtils;
+
+import java.net.URL;
 
 /**
  * <p>Title: SOAFileApplicationContext.java</p> 
@@ -30,21 +30,24 @@ import org.frameworkset.util.ResourceUtils;
  */
 public class SOAFileApplicationContext extends SOAApplicationContext{
 	public static final String default_charset = "UTF-8"; 
-	public SOAFileApplicationContext(String file) {
-		this(file,default_charset);
+	public SOAFileApplicationContext(String baseDir,String file) {
+		this(baseDir,file,default_charset);
 		
 		
 	}
-	
-	
-	
-	
+
+
 	public SOAFileApplicationContext(URL file, String path)
 	{
-		super( file,  path);
+		this( (String)null,file,  path);
 	}
-	public SOAFileApplicationContext(String file,String charset) {
-		this( ResourceUtils.getFileURL(file),file);
+	
+	public SOAFileApplicationContext(String baseDir,URL file, String path)
+	{
+		super( baseDir,file,  path);
+	}
+	public SOAFileApplicationContext(String baseDir,String file,String charset) {
+		this(baseDir, ResourceUtils.getFileURL(baseDir,file),file);
 //		try {
 //			File file_ = ValueObjectUtil.getClassPathFile(file);
 //			if(file_ != null)
