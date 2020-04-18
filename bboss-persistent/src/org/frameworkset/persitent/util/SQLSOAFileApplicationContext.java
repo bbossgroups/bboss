@@ -22,18 +22,18 @@ import java.net.URL;
 
 public class SQLSOAFileApplicationContext extends SOAFileApplicationContext {
 
-	public SQLSOAFileApplicationContext(String file) {
-		super((String)null,file);
+	public SQLSOAFileApplicationContext(String basedir,String file) {
+		super((String)basedir,file);
 		// TODO Auto-generated constructor stub
 	}
 
-	public SQLSOAFileApplicationContext(URL file, String path) {
-		super((String)null,file, path);
+	public SQLSOAFileApplicationContext(String basedir,URL file, String path) {
+		super((String)basedir,file, path);
 		// TODO Auto-generated constructor stub
 	}
 
-	public SQLSOAFileApplicationContext(String file, String charset) {
-		super((String)null,file, charset);
+	public SQLSOAFileApplicationContext(String basedir,String file, String charset) {
+		super((String)basedir,file, charset);
 		// TODO Auto-generated constructor stub
 	}
 	

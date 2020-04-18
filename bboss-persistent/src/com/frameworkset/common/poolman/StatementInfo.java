@@ -254,8 +254,8 @@ public class StatementInfo {
 		PreparedStatement pstmt = this.con.prepareStatement(this.sql,this.getScrollType(dbname),this.getCursorType(dbname));
 		if(isquery)
 		{
-			int fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
-			if(fetchsize != 0)
+			Integer fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
+			if(fetchsize != null && fetchsize != 0)
 				pstmt.setFetchSize(fetchsize);
 		}
 		this.statements.add(pstmt);
@@ -277,8 +277,8 @@ public class StatementInfo {
 		PreparedStatement pstmt = this.con.prepareStatement(sql,this.getScrollType(dbname),this.getCursorType(dbname));
 		if(isquery)
 		{
-			int fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
-			if(fetchsize != 0)
+			Integer fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
+			if(fetchsize != null && fetchsize != 0)
 				pstmt.setFetchSize(fetchsize);
 		}
 		this.statements.add(pstmt);

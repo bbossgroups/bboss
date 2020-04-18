@@ -306,7 +306,8 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	}
 
 	public void setAuth(String auth) {
-		this.auth = auth;
+		if(auth != null && !auth.equals(""))
+			this.auth = auth;
 	}
 
 	@Override

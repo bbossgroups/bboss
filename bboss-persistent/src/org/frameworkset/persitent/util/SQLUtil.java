@@ -17,6 +17,7 @@
 package org.frameworkset.persitent.util;
 
 import bboss.org.apache.velocity.VelocityContext;
+import com.frameworkset.common.poolman.management.PoolManConfiguration;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.util.DaemonThread;
@@ -269,7 +270,7 @@ public class SQLUtil {
 		if(sqlcontext != null) {
 			String file = sqlcontext.getConfigfile();
 			sqlcontext.removeCacheContext();
-			SQLSOAFileApplicationContext _sqlcontext = new SQLSOAFileApplicationContext(file);
+			SQLSOAFileApplicationContext _sqlcontext = new SQLSOAFileApplicationContext(PoolManConfiguration.getSqlMappingDir(),file);
 			if(_sqlcontext.getParserError() == null) {
 //				if (sqls != null) {
 //					this.sqls.clear();
@@ -380,7 +381,7 @@ public class SQLUtil {
 
 	private SQLUtil(String sqlfile) {
 		this.sqlFile = sqlfile;
-		sqlcontext = new SQLSOAFileApplicationContext(sqlfile);
+		sqlcontext = new SQLSOAFileApplicationContext(PoolManConfiguration.getSqlMappingDir(),sqlfile);
 //		int resultMetaCacheSize = sqlcontext.getIntProperty("resultMetaCacheSize",SQLUtil.defaultResultMetaCacheSize);
 //		int perKeySqlStructionCacheSize = sqlcontext.getIntProperty("perKeySqlStructionCacheSize",SQLUtil.defaultPerKeySqlStructionCacheSize);
 //		alwaysCache = sqlcontext.getBooleanProperty("alwaysCache",SQLUtil.defaultAlwaysCache);

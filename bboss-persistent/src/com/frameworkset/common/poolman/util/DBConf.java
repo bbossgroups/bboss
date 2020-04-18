@@ -48,7 +48,7 @@ public class DBConf implements Serializable {
 	private String externaljndiName ;
 	private boolean showsql ;
 	private boolean encryptdbinfo  ;
-	private int queryfetchsize;  
+	private Integer queryfetchsize;
 	public DBConf() {
 		// TODO Auto-generated constructor stub
 	}
@@ -154,10 +154,10 @@ public class DBConf implements Serializable {
 	public void setEncryptdbinfo(boolean encryptdbinfo) {
 		this.encryptdbinfo = encryptdbinfo;
 	}
-	public int getQueryfetchsize() {
+	public Integer getQueryfetchsize() {
 		return queryfetchsize;
 	}
-	public void setQueryfetchsize(int queryfetchsize) {
+	public void setQueryfetchsize(Integer queryfetchsize) {
 		this.queryfetchsize = queryfetchsize;
 	}
 

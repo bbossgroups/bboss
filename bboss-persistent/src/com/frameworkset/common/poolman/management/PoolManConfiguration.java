@@ -52,6 +52,15 @@ public class PoolManConfiguration   {
 	private ArrayList datasources;
 	private ArrayList genericObjects;
 
+	public static String getSqlMappingDir() {
+		return sqlMappingDir;
+	}
+
+	public static void setSqlMappingDir(String sqlMappingDir) {
+		PoolManConfiguration.sqlMappingDir = sqlMappingDir;
+	}
+
+	private static  String sqlMappingDir;
 	private boolean useJMX = PoolManConstants.DEFAULT_USE_JMX;
 	public static boolean needtableinfo = false;
 	public static String jndi_principal = null;
@@ -239,6 +248,8 @@ public class PoolManConfiguration   {
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(url, handler);
 			this.adaptors = handler.getAdaptors();
+			if(handler.getSqlMappingDir() != null)
+				this.sqlMappingDir = handler.getSqlMappingDir();
 			this.datasources = handler.getDataSourceProperties();
 			this.genericObjects = handler.getGenericProperties();
 		} else {
@@ -261,6 +272,8 @@ public class PoolManConfiguration   {
 				in = new java.io.BufferedInputStream(sr);
 				parser.parse(in, handler);
 				this.adaptors = handler.getAdaptors();
+				if(handler.getSqlMappingDir() != null)
+					this.sqlMappingDir = handler.getSqlMappingDir();
 				this.datasources = handler.getDataSourceProperties();
 				this.genericObjects = handler.getGenericProperties();
 			} finally {

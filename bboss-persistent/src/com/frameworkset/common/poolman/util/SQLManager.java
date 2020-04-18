@@ -626,7 +626,7 @@ public class SQLManager extends PoolManager{
 		startPool( poolname, driver, jdbcurl, username, password, readOnly, validationQuery,false);
 	}
 	
-	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,int fetchsize)
+	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,Integer fetchsize)
 	{
 		DBConf tempConf = new DBConf();
 		tempConf.setPoolname(poolname);
@@ -726,7 +726,7 @@ public class SQLManager extends PoolManager{
 	{
 		startNoPool(poolname,driver,jdbcurl,username,password,validationQuery,0);
 	}
-	public static void startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,int fetchsize)
+	public static void startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,Integer fetchsize)
 	{
 //		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
 //		if(pool != null)
@@ -820,7 +820,7 @@ public class SQLManager extends PoolManager{
 		tempConf.setExternaljndiName(null);
 		tempConf.setShowsql(false);
 		tempConf.setEncryptdbinfo(encryptdbinfo);
-		tempConf.setQueryfetchsize(0);
+		tempConf.setQueryfetchsize(null);
 		startPool(tempConf); 
 	}
 	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
@@ -867,7 +867,7 @@ public class SQLManager extends PoolManager{
 		tempConf.setExternaljndiName(externaljndiName);
 		tempConf.setShowsql(showsql);
 		tempConf.setEncryptdbinfo(encryptdbinfo);
-		tempConf.setQueryfetchsize(0);
+		tempConf.setQueryfetchsize(null);
 		startPool(tempConf); 
 	}
 	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
@@ -906,7 +906,7 @@ public class SQLManager extends PoolManager{
     		int maximumSize,
     		boolean usepool,
     		boolean  external,
-    		String externaljndiName ,boolean showsql ,boolean encryptdbinfo  ,int queryfetchsize  ,String dbtype,String dbAdaptor
+    		String externaljndiName ,boolean showsql ,boolean encryptdbinfo  ,Integer queryfetchsize  ,String dbtype,String dbAdaptor
     		)
 	{
 		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
@@ -1051,8 +1051,8 @@ public class SQLManager extends PoolManager{
 		values.put("removeAbandoned", removeAbandoned+"");
 		if(temConf.getExternaljndiName() != null && !temConf.getExternaljndiName().equals(""))
 			values.put("externaljndiName", temConf.getExternaljndiName());
-
-		values.put("queryfetchsize", temConf.getQueryfetchsize());
+		if(temConf.getQueryfetchsize() != null)
+			values.put("queryfetchsize", temConf.getQueryfetchsize());
 		if(temConf.getDbAdaptor() != null){
 			values.put("dbAdaptor",temConf.getDbAdaptor());
 		}

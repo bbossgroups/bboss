@@ -104,7 +104,7 @@ public class JDBCPoolMetaData implements Serializable{
      * 口令信息
      */
     private boolean encryptdbinfo = false;
-    private int queryfetchsize = 0;
+    private Integer queryfetchsize ;
     public String getJndiclass() {
 		return jndiclass;
 	}
@@ -993,11 +993,11 @@ public class JDBCPoolMetaData implements Serializable{
 		this.RETURN_GENERATED_KEYS = rETURN_GENERATED_KEYS;
 	}
 
-	public int getQueryfetchsize() {
+	public Integer getQueryfetchsize() {
 		return queryfetchsize;
 	}
 
-	public void setQueryfetchsize(int queryfetchsize) {
+	public void setQueryfetchsize(Integer queryfetchsize) {
 		this.queryfetchsize = queryfetchsize;
 	}
 

@@ -46,7 +46,9 @@ public class ConfigParser extends DefaultHandler{
     private String currentdbtype ;
     private String dbnamespace;
 
+
     protected PropertiesContainer configPropertiesFile;
+    protected String sqlMappingDir;
     /**
      * 用户自定义的适配器
      */
@@ -58,10 +60,12 @@ public class ConfigParser extends DefaultHandler{
         this.filterdbname = filterdbname;
         this.dbnamespace = dbnamespace;
     }
-    
-    
 
-    public ArrayList getDataSourceProperties() {
+	public String getSqlMappingDir() {
+		return sqlMappingDir;
+	}
+
+	public ArrayList getDataSourceProperties() {
     	if(this.filterdbname != null && filterdbname.length > 0)
     	{
     		this.dbProps.clear();
@@ -104,6 +108,12 @@ public class ConfigParser extends DefaultHandler{
         	if(file != null)
         		this.configPropertiesFile.addConfigPropertiesFile(file);
         }
+		else if(name.equals("sqlMappingDir"))
+		{
+			String file = attributes.getValue("file");
+			if(file != null)
+				this.sqlMappingDir = file;
+		}
         else if (name.toLowerCase().equals("objectpool")) {
             this.currentSet = "generic";
             genericProps.add(new Properties());

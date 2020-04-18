@@ -26,7 +26,7 @@ public class TestVartemplateSql {
 	
 	@Test
 	public void test(){
-		SQLSOAFileApplicationContext sqlcontext = new SQLSOAFileApplicationContext("com/frameworkset/sqlexecutor/template.xml");	
+		SQLSOAFileApplicationContext sqlcontext = new SQLSOAFileApplicationContext(null,"com/frameworkset/sqlexecutor/template.xml");
 		System.out.println(sqlcontext.getProperty("mainsql"));
 	}
 
