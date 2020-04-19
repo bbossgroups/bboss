@@ -1,7 +1,7 @@
 package com.frameworkset.common.poolman.sql;
 
 import com.frameworkset.common.poolman.handle.RowHandlerException;
-import com.frameworkset.common.poolman.util.JDBCPool;
+import com.frameworkset.common.poolman.management.PoolManConfiguration;
 import org.frameworkset.util.ClassUtil;
 
 import java.sql.SQLException;
@@ -173,7 +173,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         _caseSensitive = new boolean[_columnCount];
         samecols = new HashMap();
         
-        if(JDBCPool.nameMapping)
+        if(PoolManConfiguration.isColumnNameMapping())
         {
         	columnJavaName = new String[_columnCount];
         }
@@ -210,7 +210,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
             _columnLabel[c] = columnLabel;
             _columnLabel_upper[c] =  columnLabel.toUpperCase();
             _columnLabel_lower[c] = columnLabel.toLowerCase();
-           if(JDBCPool.nameMapping)
+           if(PoolManConfiguration.isColumnNameMapping())
            {
         	   this.columnJavaName[c] = ClassUtil.genJavaName(columnLabel);
            }

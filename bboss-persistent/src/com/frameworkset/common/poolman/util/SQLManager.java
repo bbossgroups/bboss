@@ -19,6 +19,7 @@ package com.frameworkset.common.poolman.util;
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.management.BaseTableManager;
 import com.frameworkset.common.poolman.management.PoolManBootstrap;
+import com.frameworkset.common.poolman.management.PoolManConfiguration;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.transaction.TXDataSource;
 import org.slf4j.Logger;
@@ -52,6 +53,15 @@ public class SQLManager extends PoolManager{
 				}
 			}
 		}
+	}
+	public static void setSQLMappingdir(String sqlMappingdir){
+		PoolManConfiguration.setSqlMappingDir(sqlMappingdir);
+	}
+	public static void setRefresh_interval(Long refresh_interval) {
+		PoolManConfiguration.setRefresh_interval( refresh_interval);
+	}
+	public static void setDbInfoEncryptclass(String dbInfoEncryptclass){
+		PoolManConfiguration.setDbInfoEncryptclass(dbInfoEncryptclass);
 	}
     private String configFile = PoolManConstants.XML_CONFIG_FILE;
 

@@ -61,7 +61,29 @@ public class PoolManConfiguration   {
 	}
 
 	private static  String sqlMappingDir;
+
+	public static long getRefresh_interval() {
+		return refresh_interval;
+	}
+
+	public static void setRefresh_interval(Long refresh_interval) {
+		if(refresh_interval != null)
+			PoolManConfiguration.refresh_interval = refresh_interval;
+	}
+
+	private static long refresh_interval = 5000l;
+
+	public static boolean isColumnNameMapping() {
+		return columnNameMapping;
+	}
+
+	public static void setColumnNameMapping(boolean columnNameMapping) {
+		PoolManConfiguration.columnNameMapping = columnNameMapping;
+	}
+
+	private static boolean columnNameMapping = true;
 	private boolean useJMX = PoolManConstants.DEFAULT_USE_JMX;
+	private static String dbInfoEncryptclass ;//= "com.frameworkset.common.poolman.security.DESDBPasswordEncrypt";
 	public static boolean needtableinfo = false;
 	public static String jndi_principal = null;
 	public static String jndi_credentials = null;
@@ -98,6 +120,14 @@ public class PoolManConfiguration   {
 	public PoolManConfiguration(String configFile) {
 
 		this(configFile, null);
+	}
+
+	public static String getDbInfoEncryptclass() {
+		return dbInfoEncryptclass;
+	}
+
+	public static void setDbInfoEncryptclass(String dbInfoEncryptclass) {
+		PoolManConfiguration.dbInfoEncryptclass = dbInfoEncryptclass;
 	}
 
 	public boolean isUsingJMX() {

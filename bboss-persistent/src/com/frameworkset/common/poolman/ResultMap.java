@@ -16,9 +16,9 @@
 package com.frameworkset.common.poolman;
 
 import com.frameworkset.common.poolman.handle.*;
+import com.frameworkset.common.poolman.management.PoolManConfiguration;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData.WrapInteger;
-import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.annotation.PrimaryKey;
@@ -35,7 +35,9 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -290,7 +292,7 @@ public class ResultMap {
 		
 						if (!upname.equals(columnName))
 						{
-							if(!userAnnotation && JDBCPool.nameMapping)
+							if(!userAnnotation && PoolManConfiguration.isColumnNameMapping())
 							{
 								String javaName = meta.getColumnJavaNameByIndex(i);
 								if(javaName != null )

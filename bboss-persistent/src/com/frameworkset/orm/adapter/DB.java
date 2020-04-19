@@ -35,6 +35,7 @@ import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.ValueExchange;
+import com.frameworkset.common.poolman.management.PoolManConfiguration;
 import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.common.poolman.security.DESDBPasswordEncrypt;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
@@ -43,7 +44,6 @@ import com.frameworkset.orm.engine.model.SchemaType;
 import com.frameworkset.orm.platform.Platform;
 import com.frameworkset.orm.platform.PlatformDefaultImpl;
 import com.frameworkset.util.SimpleStringUtil;
-import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.util.annotations.DateFormateMeta;
 
 import java.io.File;
@@ -54,7 +54,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Properties;
 
 /**
  * <code>DB</code> defines the interface for a Torque database
@@ -152,18 +151,12 @@ public abstract class DB implements IDMethod, Platform {
 
 	public static DBInfoEncrypt getDBInfoEncrypt() {
 		try {
-			Properties p = BaseApplicationContext.fillProperties();
-			if (p != null) {
-				String DBInfoEncryptclass = p.getProperty("DBInfoEncryptclass");
+				String DBInfoEncryptclass = PoolManConfiguration.getDbInfoEncryptclass();
 				if (DBInfoEncryptclass != null && !DBInfoEncryptclass.trim().equals("")) {
 					DBInfoEncryptclass = DBInfoEncryptclass.trim();
 					return (DBInfoEncrypt) Class.forName(DBInfoEncryptclass).newInstance();
 				}
 
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

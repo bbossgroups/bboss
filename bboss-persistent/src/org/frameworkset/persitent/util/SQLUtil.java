@@ -358,7 +358,7 @@ public class SQLUtil {
 	private static Object lock = new Object();
 	private static void checkSQLUtil(URL sqlfileURL,String sqlfile, SQLUtil sqlutil){
 		
-		refresh_interval = BaseApplicationContext.getSQLFileRefreshInterval();
+		refresh_interval = PoolManConfiguration.getRefresh_interval();
 		if(refresh_interval > 0)
 		{
 			if(damon == null)

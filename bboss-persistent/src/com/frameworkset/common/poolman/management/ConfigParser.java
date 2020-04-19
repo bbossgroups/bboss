@@ -46,6 +46,12 @@ public class ConfigParser extends DefaultHandler{
     private String currentdbtype ;
     private String dbnamespace;
 
+	public String getRefreshinterval() {
+		return refreshinterval;
+	}
+
+	private String refreshinterval;
+
 
     protected PropertiesContainer configPropertiesFile;
     protected String sqlMappingDir;
@@ -170,7 +176,8 @@ public class ConfigParser extends DefaultHandler{
         		!name.equals("enablejta") &&
         		!name.equals("usepool") &&
         		!name.equals("encryptdbinfo") &&
-        		!name.equals("datasourceFile") && !name.equals("queryfetchsize")&&!name.equals("config") && !name.equals("needtableinfo"))
+        		!name.equals("datasourceFile") && !name.equals("queryfetchsize")&&!name.equals("config")
+				&& !name.equals("needtableinfo") && !name.equals("refreshinterval") && !name.equals("dbInfoEncryptclass")  && !name.equals("columnNameMapping"))
             
         {
         	if(log.isDebugEnabled())
@@ -267,7 +274,8 @@ public class ConfigParser extends DefaultHandler{
         	{
         		if(currentdbtype == null || currentdbtype.equals(""))
         		{
-        			System.out.println("ignoe adaptor["+currentValue+"],没有指定dbtype。");
+        			if(log.isInfoEnabled())
+						log.info("ignoe adaptor["+currentValue+"],没有指定dbtype。");
         		}
         		else
         		{
@@ -280,6 +288,37 @@ public class ConfigParser extends DefaultHandler{
         else if(name.equals("needtableinfo")){
         	PoolManConfiguration.needtableinfo = currentValue.toString().trim().equals("true");
         }
+        else if(name.equals("refreshinterval")){
+        	String refresh = currentValue.toString().trim();
+        	try {
+				long temp = Long.parseLong(refresh);
+				PoolManConfiguration.setRefresh_interval(temp);
+			}
+        	catch (Exception e){
+				if(log.isInfoEnabled())
+					log.info("refreshinterval:"+refreshinterval + "必须是long值",e);
+			}
+		}
+		else if(name.equals("dbInfoEncryptclass")){
+			String dbInfoEncryptclass = currentValue.toString().trim();
+			 if(!dbInfoEncryptclass.equals(""))
+				PoolManConfiguration.setDbInfoEncryptclass(dbInfoEncryptclass);
+
+		}
+		else if(name.equals("columnNameMapping")){
+			String columnNameMapping = currentValue.toString().trim();
+			try {
+			if(!columnNameMapping.equals("") ) {
+				boolean c = Boolean.parseBoolean(columnNameMapping);
+				PoolManConfiguration.setColumnNameMapping(c);
+			}
+			}
+			catch (Exception e){
+				if(log.isInfoEnabled())
+					log.info("columnNameMapping:"+columnNameMapping + "必须是boolean值",e);
+			}
+		}
+
         
         this.currentValue.delete(0, this.currentValue.length());
     }

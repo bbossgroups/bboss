@@ -15,30 +15,6 @@
  */
 package com.frameworkset.common.poolman.util;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.naming.Context;
-import javax.naming.Name;
-import javax.naming.NameNotFoundException;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
-import org.frameworkset.spi.BaseApplicationContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.frameworkset.common.poolman.DBUtil;
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.PoolManConstants;
@@ -47,12 +23,7 @@ import com.frameworkset.common.poolman.jndi.ContextUtil;
 import com.frameworkset.common.poolman.jndi.DummyContextFactory;
 import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
 import com.frameworkset.common.poolman.security.DBInfoEncrypt;
-import com.frameworkset.common.poolman.sql.ColumnMetaData;
-import com.frameworkset.common.poolman.sql.ForeignKeyMetaData;
-import com.frameworkset.common.poolman.sql.IdGenerator;
-import com.frameworkset.common.poolman.sql.PoolManDataSource;
-import com.frameworkset.common.poolman.sql.PrimaryKeyMetaData;
-import com.frameworkset.common.poolman.sql.TableMetaData;
+import com.frameworkset.common.poolman.sql.*;
 import com.frameworkset.commons.dbcp.BasicDataSourceFactory;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.adapter.DBFactory;
@@ -60,6 +31,16 @@ import com.frameworkset.orm.transaction.JDBCTransaction;
 import com.frameworkset.orm.transaction.TXDataSource;
 import com.frameworkset.orm.transaction.TransactionManager;
 import com.frameworkset.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.naming.Context;
+import javax.naming.Name;
+import javax.naming.NameNotFoundException;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.*;
 
 /**
  * JDBCPool is an ObjectPool of JDBC connection objects. It is also a
@@ -73,23 +54,7 @@ public class JDBCPool {
 	public static String TABLE_TYPE_ALL = "ALL";
 	private DataSource datasource;
 	
-	public static final boolean nameMapping ;
-	static {
-		boolean namemp = false;
-		try {
-			Properties  p = BaseApplicationContext.fillProperties();
-			String aaa = p.getProperty("column.nameMapping","false");
-			if(aaa.trim().equals("true"))
-			{
-				namemp = true;
-			}
-			
-		} catch (Exception e) {
-			
-		}
-		nameMapping = namemp;
-	}
-	
+
 	
 
 //	protected JDBCPoolMetaData metadata;
