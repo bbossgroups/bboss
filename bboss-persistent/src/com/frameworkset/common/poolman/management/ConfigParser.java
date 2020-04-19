@@ -114,12 +114,7 @@ public class ConfigParser extends DefaultHandler{
         	if(file != null)
         		this.configPropertiesFile.addConfigPropertiesFile(file);
         }
-		else if(name.equals("sqlMappingDir"))
-		{
-			String file = attributes.getValue("file");
-			if(file != null)
-				this.sqlMappingDir = file;
-		}
+
         else if (name.toLowerCase().equals("objectpool")) {
             this.currentSet = "generic";
             genericProps.add(new Properties());
@@ -177,7 +172,7 @@ public class ConfigParser extends DefaultHandler{
         		!name.equals("usepool") &&
         		!name.equals("encryptdbinfo") &&
         		!name.equals("datasourceFile") && !name.equals("queryfetchsize")&&!name.equals("config")
-				&& !name.equals("needtableinfo") && !name.equals("refreshinterval") && !name.equals("dbInfoEncryptclass")  && !name.equals("columnNameMapping"))
+				&& !name.equals("needtableinfo") && !name.equals("refreshinterval") && !name.equals("dbInfoEncryptclass")  && !name.equals("columnNameMapping") && !name.equals("sqlMappingDir"))
             
         {
         	if(log.isDebugEnabled())
@@ -305,6 +300,13 @@ public class ConfigParser extends DefaultHandler{
 				PoolManConfiguration.setDbInfoEncryptclass(dbInfoEncryptclass);
 
 		}
+		else if(name.equals("sqlMappingDir")){
+			String sqlMappingDir = currentValue.toString().trim();
+			if(!sqlMappingDir.equals(""))
+				PoolManConfiguration.setSqlMappingDir(sqlMappingDir);
+
+		}
+
 		else if(name.equals("columnNameMapping")){
 			String columnNameMapping = currentValue.toString().trim();
 			try {
