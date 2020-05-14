@@ -135,7 +135,25 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 	private static Method getApplicationContextMethod = null;
 	private static final Object lock_getApplicationContextMethod = new Object();
-	
+	@Override
+	public String getExternalPropertyWithNS(String namespace, String property) {
+		return getExternalProperty(  property);
+	}
+
+	@Override
+	public String getExternalPropertyWithNS(String namespace, String property, String defaultValue) {
+		return getExternalProperty(  property,   defaultValue);
+	}
+
+	@Override
+	public Object getExternalObjectPropertyWithNS(String namespace, String property) {
+		return getExternalObjectProperty(   property);
+	}
+
+	@Override
+	public Object getExternalObjectPropertyWithNS(String namespace, String property, Object defaultValue) {
+		return getExternalObjectProperty(   property,   defaultValue);
+	}
 	private static Method initGetApplicationContextMethod() throws SecurityException, NoSuchMethodException, ClassNotFoundException
 	{
 		if(getApplicationContextMethod != null)

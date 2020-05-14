@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public class PropertiesContainer implements GetProperties{
+public class PropertiesContainer extends AbstractGetProperties{
     protected List<String> configPropertiesFiles;
     protected Map<Object,Object> allProperties ;
     protected Map<Object,Object> sonAndParentProperties ;

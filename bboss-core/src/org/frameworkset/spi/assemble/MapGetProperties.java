@@ -18,7 +18,7 @@ import org.frameworkset.spi.support.EnvUtil;
 
 import java.util.Map;
 
-public class MapGetProperties implements GetProperties{
+public class MapGetProperties extends AbstractGetProperties{
 	private Map<String,Object> values;
 	public MapGetProperties(Map<String,Object> values){
 		//解析环境变量

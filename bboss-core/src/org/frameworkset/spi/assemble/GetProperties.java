@@ -19,4 +19,9 @@ public interface GetProperties {
 	public String getExternalProperty(String property,String defaultValue);
 	public Object getExternalObjectProperty(String property);
 	public Object getExternalObjectProperty(String property,Object defaultValue);
+
+	public String getExternalPropertyWithNS(String namespace,String property);
+	public String getExternalPropertyWithNS(String namespace,String property,String defaultValue);
+	public Object getExternalObjectPropertyWithNS(String namespace,String property);
+	public Object getExternalObjectPropertyWithNS(String namespace,String property,Object defaultValue);
 }
