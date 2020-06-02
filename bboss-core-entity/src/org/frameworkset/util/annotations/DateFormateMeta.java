@@ -39,14 +39,19 @@ public class DateFormateMeta {
 	 */
 	private DateFormat toDateFormat(boolean clone){
 		if(simpleDateFormat == null) {
-			SimpleDateFormat f = null;
-			if (getLocale() == null)
-				f = new SimpleDateFormat(dateformat);
-			else
-				f = new SimpleDateFormat(dateformat, getLocale());
-			if (getTimeZone() != null)
-				f.setTimeZone(getTimeZone());
-			this.simpleDateFormat = f;
+
+			synchronized (this) {
+				if(simpleDateFormat == null) {
+					SimpleDateFormat f = null;
+					if (getLocale() == null)
+						f = new SimpleDateFormat(dateformat);
+					else
+						f = new SimpleDateFormat(dateformat, getLocale());
+					if (getTimeZone() != null)
+						f.setTimeZone(getTimeZone());
+					this.simpleDateFormat = f;
+				}
+			}
 		}
 		if(clone) {
 			return (DateFormat) simpleDateFormat.clone();

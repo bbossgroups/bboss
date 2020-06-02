@@ -301,7 +301,10 @@ public class SQLUtil{
 	public static Set getTableMetaDatas(String dbName) {
 		return getPool(dbName).getTableMetaDatas();
 	}
-	
+
+	public static Set getTableMetaDatas(String dbName,int limit) {
+		return getPool(dbName).getTableMetaDatas(limit);
+	}
 
 
 	public static TableMetaData getTableMetaData(String dbName, String tableName) {
@@ -1505,12 +1508,16 @@ public class SQLUtil{
 	
 	public static void refreshDatabaseMetaData()
 	{
+		refreshDatabaseMetaData(-1);
+	}
+	public static void refreshDatabaseMetaData(int limit)
+	{
 		List<String> pools = getAllPoolNames();
 		for(int i =0 ; pools != null && i < pools.size(); i++)
 		{
 			String name = pools.get(i);
 			try {
-				getPool(name).refreshDatabaseMetaData();
+				getPool(name).refreshDatabaseMetaData(limit);
 			} catch (Exception e) {
 				log.error("刷新数据库连接池"+name+"对应的db元数据失败:", e);
 			}
@@ -1854,15 +1861,25 @@ public class SQLUtil{
     			pool.increamentMaxTotalConnections( nums);
     	}
     	
-    	public static void refreshDatabaseMetaData(String dbname)
+    	public static void refreshDatabaseMetaData(String dbname,int limit)
     	{
     		 
     			try {
-    				getPool(dbname).refreshDatabaseMetaData();
+    				getPool(dbname).refreshDatabaseMetaData(limit);
     			} catch (Exception e) {
     				log.error("刷新数据库连接池"+dbname+"对应的db元数据失败:", e);
     			}
     		 
     	}
+	public static void refreshDatabaseMetaData(String dbname)
+	{
+
+		try {
+			getPool(dbname).refreshDatabaseMetaData(-1);
+		} catch (Exception e) {
+			log.error("刷新数据库连接池"+dbname+"对应的db元数据失败:", e);
+		}
+
+	}
 
 }

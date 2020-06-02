@@ -1138,8 +1138,10 @@ public class JDBCPool {
 	{
 		return getSchemaName_( databaseMetaData,this.getDbAdapter().getSchema(info));
 	}
-	
-	public void refreshDatabaseMetaData()
+	public void refreshDatabaseMetaData(){
+		refreshDatabaseMetaData(-1);
+	}
+	public void refreshDatabaseMetaData(int limit)
 	{
 		ResultSet rs = null;
 		
@@ -1161,7 +1163,11 @@ public class JDBCPool {
 			// String[] {"TABLE"});
 			rs = metaData.getTables(this.getDbAdapter().getDBCatalog(con), schemaName, "%",
 					new String[] { "TABLE", "VIEW" });
+			int count = 0;
 			while (rs.next()) {
+				if(limit > 0 && count > limit){
+					break;
+				}
 				String tableName = rs.getString("TABLE_NAME");
 				if (tableName.startsWith("BIN$"))
 					continue;
@@ -1185,6 +1191,7 @@ public class JDBCPool {
 				this.tableMetaDatasindexByTablename.put(
 						tableName.toLowerCase(), tableMetaData);
 				tableMetaDatas.add(tableMetaData);
+				count ++;
 			}
 			rs.close();
 
@@ -1214,11 +1221,14 @@ public class JDBCPool {
 
 		}
 	}
+	private void initDatabaseMetaData(Connection con){
+		initDatabaseMetaData( con,-1);
+	}
 	/**
 	 * 初始化数据库元数据
 	 * 
 	 */
-	private void initDatabaseMetaData(Connection con) {
+	private void initDatabaseMetaData(Connection con,int limit) {
 		
 
 		ResultSet rs = null;
@@ -1240,7 +1250,12 @@ public class JDBCPool {
 			// String[] {"TABLE"});
 			rs = metaData.getTables(this.getDbAdapter().getDBCatalog(con), schemaName, "%",
 					new String[] { "TABLE", "VIEW" });
+			int count = 0;
 			while (rs.next()) {
+				if(limit > 0 && count > limit)
+				{
+					break;
+				}
 				String tableName = rs.getString("TABLE_NAME");
 				if (tableName.startsWith("BIN$"))
 					continue;
@@ -1264,6 +1279,7 @@ public class JDBCPool {
 				this.tableMetaDatasindexByTablename.put(
 						tableName.toLowerCase(), tableMetaData);
 				tableMetaDatas.add(tableMetaData);
+				count ++;
 			}
 			rs.close();
 
@@ -1355,7 +1371,6 @@ public class JDBCPool {
 	/**
 	 * 获取表集合信息
 	 * @param con
-	 * @param tableName
 	 * @return
 	 */
 	public List<TableMetaData> getTablesFromDatabase(Connection con,String tableNamePattern,String tableTypes[]) {
@@ -1411,7 +1426,6 @@ public class JDBCPool {
 	/**
 	 * 获取表集合信息
 	 * @param con
-	 * @param tableName
 	 * @return
 	 */
 	public List<TableMetaData> getTablesFromDatabase(Connection con,String tableNamePattern,String tableTypes[],boolean loadColumns) {
@@ -2409,24 +2423,29 @@ public class JDBCPool {
 
 	public Set getTableMetaDatas() {
 
+		return getTableMetaDatas(-1);
+	}
+
+	public Set getTableMetaDatas(int limit) {
+
 		if(this.externalDBName == null)
 		{
 			String load = this.info.getLoadmetadata();
 			if (load.equalsIgnoreCase("false") && !inited) {
 				synchronized (tableMetaDatas) {
 					if (!inited) {
-	
+
 						try {
-							this.initDatabaseMetaData(null);
+							this.initDatabaseMetaData(null,limit);
 							inited = true;
-	
+
 						} catch (Exception e) {
 							inited = true;
-	
+
 						}
-	
+
 						// return tableMetaDatas;
-	
+
 					}
 				}
 				// return tableMetaDatas;
@@ -2435,7 +2454,7 @@ public class JDBCPool {
 		}
 		else
 		{
-			return SQLManager.getInstance().getPool(externalDBName).getTableMetaDatas();
+			return SQLManager.getInstance().getPool(externalDBName).getTableMetaDatas(limit);
 		}
 	}
 
