@@ -26,7 +26,17 @@ public class Jackson1ObjectMapper implements JacksonObjectMapper {
 	public String getDateFormat() {
 		return dateFormat;
 	}
+	public com.fasterxml.jackson.databind.JavaType getJavaType(Class containerType, Class ... beanClass){
+		return null;
+	}
+	public com.fasterxml.jackson.databind.ObjectMapper getObjectMapper(){
+		return null;
+	}
 
+
+	public com.fasterxml.jackson.databind.JavaType getJavaMapType(Class containerType, Class keyClass, Class valueClass){
+		return null;
+	}
 	@Override
 	public void setDateFormat(String dateFormat) {
 		this.dateFormat = dateFormat;

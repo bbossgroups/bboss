@@ -1,5 +1,7 @@
 package org.frameworkset.json;
 
+import com.fasterxml.jackson.databind.JavaType;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -101,7 +103,7 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 			}
 		}
 	}
-	
+
 	private JacksonObjectMapper jacksonObjectMapper;
 	 /* (non-Javadoc)
 	 * @see org.frameworkset.json.JacksonObjectMapper#json2Object(java.lang.String, java.lang.Class)
@@ -124,6 +126,16 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 			
 		
 		}
+	public JavaType getJavaType(Class containerType, Class ... beanClass){
+		return jacksonObjectMapper.getJavaType(containerType, beanClass);
+	}
+	public JavaType getJavaMapType(Class containerType, Class keyClass,Class valueClass){
+		JavaType javaType = jacksonObjectMapper.getJavaType(containerType, keyClass,valueClass);
+		return javaType;
+	}
+	public com.fasterxml.jackson.databind.ObjectMapper getObjectMapper(){
+		return jacksonObjectMapper.getObjectMapper();
+	}
 	/* (non-Javadoc)
 	 * @see org.frameworkset.json.JacksonObjectMapper#json2Object(java.lang.String, java.lang.Class, boolean)
 	 */

@@ -32,26 +32,19 @@
  *****************************************************************************/
 package com.frameworkset.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.oro.text.regex.*;
+import org.frameworkset.json.DefaultJsonTypeReference;
 import org.frameworkset.json.JacksonObjectMapperWrapper;
 import org.frameworkset.json.JsonTypeReference;
 import org.frameworkset.soa.BBossStringWriter;
-import org.frameworkset.util.CollectionUtils;
-import org.frameworkset.util.DataFormatUtil;
-import org.frameworkset.util.ObjectUtils;
-import org.frameworkset.util.encoder.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.lang.reflect.Array;
-import java.net.InetAddress;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Writer;
 import java.util.*;
 
 /**
@@ -525,50 +518,60 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		
 	
 	}
-	public static <T> List<T> json2ListObject(String jsonString,Class<T> beanType) {
-		JsonTypeReference<List<T>> ref = new JsonTypeReference<List<T>>() {
-		};
-		return json2ObjectWithType(jsonString,ref,true);
+	public static <T> List<T> json2ListObject(String jsonString,final Class<T> beanType) {
+		JsonTypeReference ref = new DefaultJsonTypeReference(getJacksonObjectMapper().getJavaType(List.class,beanType));
+		return (List<T>)json2ObjectWithType(jsonString,ref,true);
 
 
 	}
-	public static <T> Set<T> json2LSetObject(String jsonString,Class<T> beanType) {
-		JsonTypeReference<Set<T>> ref = new JsonTypeReference<Set<T>>() {
-		};
-		return json2ObjectWithType(jsonString,ref,true);
-
-
-	}
-	public static <K,T> Map<K,T> json2LHashObject(String jsonString,Class<K> keyType,Class<T> beanType) {
-		JsonTypeReference<Map<K,T>> ref = new JsonTypeReference<Map<K,T>>() {
-		};
-		return json2ObjectWithType(jsonString,ref,true);
+	public static <T> Set<T> json2LSetObject(String jsonString,final Class<T> beanType) {
+		JsonTypeReference ref = new DefaultJsonTypeReference(getJacksonObjectMapper().getJavaType(Set.class,beanType));
+		return (Set<T>)json2ObjectWithType(jsonString,ref,true);
 
 
 	}
 
-	public static <T> List<T> json2ListObject(InputStream jsonString,Class<T> beanType) {
-		JsonTypeReference<List<T>> ref = new JsonTypeReference<List<T>>() {
-		};
-		return json2ObjectWithType(jsonString,ref,true);
+	public static <T> T[] json2LArrayObject(String jsonString, final Class<T> beanType) {
+		JsonTypeReference ref = new DefaultJsonTypeReference(getJacksonObjectMapper().getObjectMapper().getTypeFactory().constructArrayType(beanType));
+		return (T[])json2ObjectWithType(jsonString,ref,true);
 
 
 	}
-	public static <T> Set<T> json2LSetObject(InputStream jsonString,Class<T> beanType) {
-		JsonTypeReference<Set<T>> ref = new JsonTypeReference<Set<T>>() {
-		};
-		return json2ObjectWithType(jsonString,ref,true);
+	public static ObjectMapper getObjectMapper(){
+		return getJacksonObjectMapper().getObjectMapper();
+	}
+	public static <K,T> Map<K,T> json2LHashObject(String jsonString,final Class<K> keyType,final Class<T> beanType) {
+		JsonTypeReference ref = new DefaultJsonTypeReference(getJacksonObjectMapper().getJavaMapType(Map.class,keyType,beanType));
+		return (Map<K,T>)json2ObjectWithType(jsonString,ref,true);
 
 
 	}
-	public static <K,T> Map<K,T> json2LHashObject(InputStream jsonString,Class<K> keyType,Class<T> beanType) {
-		JsonTypeReference<Map<K,T>> ref = new JsonTypeReference<Map<K,T>>() {
-		};
-		return json2ObjectWithType(jsonString,ref,true);
+
+	public static <T> List<T> json2ListObject(InputStream jsonString,final Class<T> beanType) {
+		JsonTypeReference ref = new DefaultJsonTypeReference(getJacksonObjectMapper().getJavaType(List.class,beanType)) ;
+		return (List<T>)json2ObjectWithType(jsonString,ref,true);
 
 
 	}
-    
+	public static <T> Set<T> json2LSetObject(InputStream jsonString,final Class<T> beanType) {
+		JsonTypeReference ref = new DefaultJsonTypeReference(getJacksonObjectMapper().getJavaType(Set.class,beanType)) ;
+		return (Set<T>)json2ObjectWithType(jsonString,ref,true);
+
+
+	}
+	public static <K,T> Map<K,T> json2LHashObject(InputStream jsonString, final Class<K> keyType, final Class<T> beanType) {
+		JsonTypeReference ref = new DefaultJsonTypeReference(getJacksonObjectMapper().getJavaMapType(Map.class,keyType,beanType)) ;
+
+		return (Map<K,T>)json2ObjectWithType(jsonString,ref,true);
+
+
+	}
+	public static <T> T[] json2LArrayObject(InputStream jsonString, final Class<T> beanType) {
+		JsonTypeReference ref = new DefaultJsonTypeReference(getJacksonObjectMapper().getObjectMapper().getTypeFactory().constructArrayType(beanType));
+		return (T[])json2ObjectWithType(jsonString,ref,true);
+
+
+	}
     public static <T> T json2ObjectWithType(InputStream json,JsonTypeReference<T> ref) {
 		return json2ObjectWithType(json,ref,true);
 		

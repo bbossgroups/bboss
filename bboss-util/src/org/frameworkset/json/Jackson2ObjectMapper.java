@@ -2,6 +2,7 @@ package org.frameworkset.json;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.frameworkset.util.annotations.DateFormateMeta;
@@ -89,7 +90,22 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			
 		
 		}
-	
+
+
+	public JavaType getJavaType(Class containerType,Class ... beanClass){
+		JavaType javaType = mapper.getTypeFactory().constructParametricType(containerType, beanClass);
+		return javaType;
+	}
+
+	public JavaType getJavaMapType(Class containerType, Class keyClass,Class valueClass){
+		JavaType javaType = mapper.getTypeFactory().constructMapType(containerType, keyClass,valueClass);
+		return javaType;
+	}
+
+	public ObjectMapper getObjectMapper(){
+
+		return mapper;
+	}
 	
  
 	    

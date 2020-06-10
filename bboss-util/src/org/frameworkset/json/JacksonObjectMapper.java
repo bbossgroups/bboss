@@ -1,5 +1,8 @@
 package org.frameworkset.json;
 
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -7,6 +10,9 @@ import java.io.Writer;
 
 public interface JacksonObjectMapper {
 
+	public ObjectMapper getObjectMapper();
+	public JavaType getJavaType(Class containerType, Class ... beanClass);
+	public JavaType getJavaMapType(Class containerType, Class keyClass,Class valueClass);
 	<T> T json2Object(String jsonString, Class<T> toclass);
 
 	<T> T json2Object(String jsonString, Class<T> toclass, boolean ALLOW_SINGLE_QUOTES);

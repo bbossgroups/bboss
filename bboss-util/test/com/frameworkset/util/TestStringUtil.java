@@ -2,6 +2,7 @@ package com.frameworkset.util;
 
 import org.frameworkset.json.JsonTypeReference;
 
+import java.lang.reflect.Type;
 import java.util.*;
 
 public class TestStringUtil {
@@ -80,6 +81,38 @@ public class TestStringUtil {
 		dd = SimpleStringUtil.json2ListObject(json,Integer.class);
 		System.out.println(dd);
 	}
-	
-	
+
+
+	@org.junit.Test
+	public void testListPObjectSerial()
+	{
+		List<Po> dd = new ArrayList<Po>();
+		Po p = new Po();
+		p.setId("id");
+		p.setName("name");
+		dd.add(p);
+		p = new Po();
+		p.setId("id1");
+		p.setName("name1");
+		dd.add(p);;
+		String json = SimpleStringUtil.object2json(dd);
+		dd =  (List<Po>) StringUtil.json2ObjectWithType(json,new JsonTypeReference<List<Po>>(){});
+		System.out.println(dd);
+		dd = SimpleStringUtil.json2ListObject(json,Po.class);
+		System.out.println(dd);
+		Set<Po> se = SimpleStringUtil.json2LSetObject(json,Po.class);
+		Po[] a = SimpleStringUtil.json2LArrayObject(json,Po.class);
+		json2ListObject("",Po.class);
+	}
+
+	public static <T> void json2ListObject(String jsonString,Class<T> beanType) {
+
+		JsonTypeReference<List<T>> ref = new JsonTypeReference<List<T>>() {
+		};
+
+		Type type = ref.getType();
+		System.out.println(type);
+
+	}
+
 }
