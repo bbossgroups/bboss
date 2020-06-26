@@ -38,6 +38,8 @@ import org.frameworkset.json.DefaultJsonTypeReference;
 import org.frameworkset.json.JacksonObjectMapperWrapper;
 import org.frameworkset.json.JsonTypeReference;
 import org.frameworkset.soa.BBossStringWriter;
+import org.frameworkset.util.ObjectUtils;
+import org.frameworkset.util.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +63,60 @@ public class SimpleStringUtil  extends BaseSimpleStringUtil{
 	protected static final Logger logger = LoggerFactory.getLogger(SimpleStringUtil.class);
 	
 	private static JacksonObjectMapperWrapper objectMapper = null;
+	/**
+	 * Capitalize a {@code String}, changing the first letter to
+	 * upper case as per {@link Character#toUpperCase(char)}.
+	 * No other letters are changed.
+	 * @param str the {@code String} to capitalize
+	 * @return the capitalized {@code String}
+	 */
+	public static String capitalize(String str) {
+		return changeFirstCharacterCase(str, true);
+	}
+	/**
+	 * Concatenate the given {@code String} arrays into one,
+	 * with overlapping array elements included twice.
+	 * <p>The order of elements in the original arrays is preserved.
+	 * @param array1 the first array (can be {@code null})
+	 * @param array2 the second array (can be {@code null})
+	 * @return the new array ({@code null} if both given arrays were {@code null})
+	 */
+	@Nullable
+	public static String[] concatenateStringArrays(@Nullable String[] array1, @Nullable String[] array2) {
+		if (ObjectUtils.isEmpty(array1)) {
+			return array2;
+		}
+		if (ObjectUtils.isEmpty(array2)) {
+			return array1;
+		}
 
+		String[] newArr = new String[array1.length + array2.length];
+		System.arraycopy(array1, 0, newArr, 0, array1.length);
+		System.arraycopy(array2, 0, newArr, array1.length, array2.length);
+		return newArr;
+	}
+
+	private static String changeFirstCharacterCase(String str, boolean capitalize) {
+		if (!hasLength(str)) {
+			return str;
+		}
+
+		char baseChar = str.charAt(0);
+		char updatedChar;
+		if (capitalize) {
+			updatedChar = Character.toUpperCase(baseChar);
+		}
+		else {
+			updatedChar = Character.toLowerCase(baseChar);
+		}
+		if (baseChar == updatedChar) {
+			return str;
+		}
+
+		char[] chars = str.toCharArray();
+		chars[0] = updatedChar;
+		return new String(chars, 0, chars.length);
+	}
 	private static void initJacksonObjectMapperWrapper(){
 		if(objectMapper == null) {
 			synchronized (SimpleStringUtil.class) {

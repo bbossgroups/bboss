@@ -21,10 +21,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.net.*;
 
 /**
  * <p>
@@ -58,10 +55,12 @@ public class ResourceUtils
 
 	/** URL protocol for an entry from a jar file: "jar" */
 	public static final String	URL_PROTOCOL_JAR			= "jar";
-
+	/** URL prefix for loading from a jar file: "jar:". */
+	public static final String JAR_URL_PREFIX = "jar:";
 	/** URL protocol for an entry from a zip file: "zip" */
 	public static final String	URL_PROTOCOL_ZIP			= "zip";
-
+	/** URL protocol for a general JBoss VFS resource: "vfs". */
+	public static final String URL_PROTOCOL_VFS = "vfs";
 	/** URL protocol for an entry from a JBoss jar file: "vfszip" */
 	public static final String	URL_PROTOCOL_VFSZIP			= "vfszip";
 
@@ -73,7 +72,8 @@ public class ResourceUtils
 
 	/** Separator between JAR URL and file path within the JAR */
 	public static final String	JAR_URL_SEPARATOR			= "!/";
-
+	/** Special separator between WAR URL and jar part on Tomcat. */
+	public static final String WAR_URL_SEPARATOR = "*/";
 	/**
 	 * Return whether the given resource location is a URL: either a special
 	 * "classpath" pseudo URL or a standard URL.
@@ -513,6 +513,15 @@ public class ResourceUtils
 	{
 
 		return new URI(SimpleStringUtil.replace(location, " ", "%20"));
+	}
+	/**
+	 * Set the {@link URLConnection#setUseCaches "useCaches"} flag on the
+	 * given connection, preferring {@code false} but leaving the
+	 * flag at {@code true} for JNLP based resources.
+	 * @param con the URLConnection to set the flag on
+	 */
+	public static void useCachesIfNecessary(URLConnection con) {
+		con.setUseCaches(con.getClass().getSimpleName().startsWith("JNLP"));
 	}
 
 }
