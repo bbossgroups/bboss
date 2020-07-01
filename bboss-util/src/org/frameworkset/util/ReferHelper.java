@@ -60,6 +60,7 @@ public class ReferHelper {
 		Boolean checked = (Boolean) request.getAttribute(ReferHelper.REQUEST_HEADER_REFER_CHECKED);
 		if(checked != null )
 			return checked;
+		checked = false;
 		if (refererDefender) {
 
 			/**

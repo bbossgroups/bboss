@@ -2797,16 +2797,16 @@ public abstract class HandlerUtils {
 				return determineUrlsForHandlerMethods(handlerType);
 			}
 		} catch (NoClassDefFoundError e) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("determineUrlsForHandler failed:", e);
+			if (logger.isErrorEnabled()) {
+				logger.error("determineUrlsForHandler failed:", e);
 			}
 		} catch (Exception e) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("determineUrlsForHandler failed:", e);
+			if (logger.isErrorEnabled()) {
+				logger.error("determineUrlsForHandler failed:", e);
 			}
 		} catch (Throwable e) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("determineUrlsForHandler failed:", e);
+			if (logger.isErrorEnabled()) {
+				logger.error("determineUrlsForHandler failed:", e);
 			}
 		}
 		return null;

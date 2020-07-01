@@ -53,7 +53,7 @@ configure(allprojects) { project ->
 
 	dependencies {
 		testCompile 'junit:junit:4.13'
-		implementation 'org.assertj:assertj-core:3.16.1'
+		testCompile 'org.assertj:assertj-core:3.16.1'
 	}
 
 	repositories {
