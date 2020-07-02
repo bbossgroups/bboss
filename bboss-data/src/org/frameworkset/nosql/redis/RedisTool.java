@@ -19,9 +19,12 @@ import redis.clients.jedis.*;
 import redis.clients.jedis.params.sortedset.ZAddParams;
 import redis.clients.jedis.params.sortedset.ZIncrByParams;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static org.frameworkset.nosql.redis.RedisFactory.DEFAULT_REDIS_POOL;
 
 /**
  * <p>Description: </p>
@@ -33,17 +36,32 @@ import java.util.Set;
  */
 public class RedisTool {
 	private String redisPoolName;
+	private static RedisTool defaultRedisTool;
+	private static Map<String,RedisTool> redisToolMap = new HashMap<String, RedisTool>();
 	private RedisTool(){
-
+		redisPoolName = DEFAULT_REDIS_POOL;
 	}
 	private RedisTool(String redisPoolName){
 		this.redisPoolName = redisPoolName;
 	}
 	public static RedisTool getInstance(){
-		return new RedisTool() ;
+		if(defaultRedisTool != null)
+			return defaultRedisTool;
+		synchronized (RedisTool.class) {
+			if(defaultRedisTool != null)
+				return defaultRedisTool;
+			return defaultRedisTool = new RedisTool();
+		}
 	}
 	public static RedisTool getInstance(String redisPoolName){
-		return new RedisTool(  redisPoolName) ;
+		RedisTool redisTool = redisToolMap.get(redisPoolName);
+		if(redisTool != null)
+			return redisTool;
+		synchronized (RedisTool.class) {
+			redisTool = new RedisTool(redisPoolName);
+			redisToolMap.put(redisPoolName,redisTool);
+		}
+		return redisTool;
 	}
 	/**
 	 * Set the string value as value of the key. The string can't be longer than 1073741824 bytes (1

@@ -2,6 +2,7 @@ package org.frameworkset.nosql;
 
 import org.frameworkset.nosql.redis.RedisFactory;
 import org.frameworkset.nosql.redis.RedisHelper;
+import org.frameworkset.nosql.redis.RedisTool;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.util.Slowlog;
@@ -12,6 +13,11 @@ public class RedisTest {
 
 	public RedisTest() {
 		// TODO Auto-generated constructor stub
+	}
+	@Test
+	public void getByTool(){
+		RedisTool.getInstance().set("aaa","ddd");
+		RedisTool.getInstance().get("aaa");
 	}
 	@Test
 	public void get()

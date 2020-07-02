@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class RedisFactory {
-
+	public static final String DEFAULT_REDIS_POOL = "default";
 	private static Map<String,RedisDB> dbs = new HashMap<String,RedisDB>();
 	private static ThreadLocal<RedisHelperHolder> currentDB = new ThreadLocal<RedisHelperHolder>();
  
@@ -58,7 +58,7 @@ public class RedisFactory {
 		
 		public RedisHelper getRedisHelper()
 		{
-			return getRedisHelper("default");
+			return getRedisHelper(DEFAULT_REDIS_POOL);
 		}
 		public RedisHelper getRedisHelper(String dbname)
 		{
@@ -112,13 +112,13 @@ public class RedisFactory {
 	
 	public static RedisHelper getTXRedisHelper()
 	{
-		return getTXRedisHelper("default");
+		return getTXRedisHelper(DEFAULT_REDIS_POOL);
 	}
 	
 	public static RedisHelper getTXRedisHelper(String dbname)
 	{
 		if(dbname == null)
-			dbname = "default";
+			dbname = DEFAULT_REDIS_POOL;
 		RedisHelperHolder holder = currentDB.get();
 		if(holder == null)
 		{
@@ -134,7 +134,7 @@ public class RedisFactory {
 	
 	public static RedisHelper getRedisHelper()
 	{
-		return getRedisHelper("default");
+		return getRedisHelper(DEFAULT_REDIS_POOL);
 	}
 	
 	public static RedisHelper getRedisHelper(String dbname)
