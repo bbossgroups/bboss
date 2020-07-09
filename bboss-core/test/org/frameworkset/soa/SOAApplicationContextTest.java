@@ -17,16 +17,15 @@ package org.frameworkset.soa;
 
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.frameworkset.util.ValueObjectUtil;
 import org.frameworkset.spi.SOAApplicationContext;
 import org.frameworkset.spi.SOAFileApplicationContext;
 import org.junit.Test;
 
-import com.frameworkset.util.ValueObjectUtil;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -121,7 +120,7 @@ public class SOAApplicationContextTest {
 	@Test
 	public void commonToxml()
 	{
-		SOAFileApplicationContext context = new SOAFileApplicationContext("org/frameworkset/soa/datasource-sql.xml");
+		SOAFileApplicationContext context = new SOAFileApplicationContext("","org/frameworkset/soa/datasource-sql.xml");
 		System.out.println(context);
 	}
 	@Test

@@ -9,6 +9,7 @@ import bboss.org.apache.velocity.runtime.resource.Resource;
 import com.frameworkset.util.VelocityUtil;
 
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -78,6 +79,23 @@ public class BBossVelocityUtil {
 	{
 		initElasticEngine();
 		elasticEngine.initTemplate(template,encoding);
+	}
+	private static Map<String,VelocityEngine> velocityEngineMap = new HashMap<String, VelocityEngine>();
+	public static VelocityEngine getVelocityEngine(String configFile){
+		VelocityEngine velocityEngine = velocityEngineMap.get(configFile);
+		if(velocityEngine != null){
+			return velocityEngine;
+		}
+		else{
+			synchronized (velocityEngineMap) {
+				velocityEngine = velocityEngineMap.get(configFile);
+				if (velocityEngine == null) {
+					velocityEngine = VelocityUtil.initVelocityEngine(configFile);
+					velocityEngineMap.put(configFile,velocityEngine);
+				}
+			}
+			return velocityEngine;
+		}
 	}
 
 	private static void initElasticEngine(){
