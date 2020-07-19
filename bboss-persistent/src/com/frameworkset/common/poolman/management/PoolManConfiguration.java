@@ -83,7 +83,6 @@ public class PoolManConfiguration   {
 
 	private static boolean columnNameMapping = true;
 	private boolean useJMX = PoolManConstants.DEFAULT_USE_JMX;
-	private static String dbInfoEncryptclass ;//= "com.frameworkset.common.poolman.security.DESDBPasswordEncrypt";
 	public static boolean needtableinfo = false;
 	public static String jndi_principal = null;
 	public static String jndi_credentials = null;
@@ -122,13 +121,7 @@ public class PoolManConfiguration   {
 		this(configFile, null);
 	}
 
-	public static String getDbInfoEncryptclass() {
-		return dbInfoEncryptclass;
-	}
 
-	public static void setDbInfoEncryptclass(String dbInfoEncryptclass) {
-		PoolManConfiguration.dbInfoEncryptclass = dbInfoEncryptclass;
-	}
 
 	public boolean isUsingJMX() {
 		return handler.isManagementJMX();

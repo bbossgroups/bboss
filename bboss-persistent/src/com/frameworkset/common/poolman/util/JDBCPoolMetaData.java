@@ -16,6 +16,7 @@
 package com.frameworkset.common.poolman.util;
 
 import com.frameworkset.common.poolman.PoolManConstants;
+import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.util.SimpleStringUtil;
 
 import java.io.Serializable;
@@ -48,7 +49,28 @@ public class JDBCPoolMetaData implements Serializable{
     private String databaseProductVersion;
     private String driverVersion;
     private Map<String,Object> datasourceParameters ; 
-    
+    private DBInfoEncrypt dbInfoEncrypt;
+
+	public String getDbInfoEncryptClass() {
+		return dbInfoEncryptClass;
+	}
+
+	public void setDbInfoEncryptClass(String dbInfoEncryptClass) {
+		this.dbInfoEncryptClass = dbInfoEncryptClass;
+		if(this.dbInfoEncryptClass != null && !this.dbInfoEncryptClass.equals("")){
+			try {
+				dbInfoEncrypt = (DBInfoEncrypt) Class.forName(dbInfoEncryptClass).newInstance();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private String dbInfoEncryptClass;
 //    addDbMetaDataEntry(dbMetaData, "probe.jsp.dataSourceTest.dbMetaData.dbProdName", md.getDatabaseProductName());
 //    addDbMetaDataEntry(dbMetaData, "probe.jsp.dataSourceTest.dbMetaData.dbProdVersion", md.getDatabaseProductVersion());
 //    addDbMetaDataEntry(dbMetaData, "probe.jsp.dataSourceTest.dbMetaData.jdbcDriverName", md.getDriverName());
@@ -103,7 +125,7 @@ public class JDBCPoolMetaData implements Serializable{
      * url信息
      * 口令信息
      */
-    private boolean encryptdbinfo = false;
+//    private boolean encryptdbinfo = false;
     private Integer queryfetchsize ;
     public String getJndiclass() {
 		return jndiclass;
@@ -824,7 +846,9 @@ public class JDBCPoolMetaData implements Serializable{
 			this.setJndiuser(extenalInfo.getJndiuser());
 			this.setJndipassword(extenalInfo.getJndipassword());
 			this.setUsepool(extenalInfo.isUsepool());
-			this.setEncryptdbinfo(extenalInfo.isEncryptdbinfo());
+//			this.setEncryptdbinfo(extenalInfo.isEncryptdbinfo());
+			this.dbInfoEncrypt = (extenalInfo.getDbInfoEncrypt());
+			this.dbInfoEncryptClass = extenalInfo.getDbInfoEncryptClass();
 			this.setEnablejta(extenalInfo.isEnablejta());
 			this.setDatasourceFile(extenalInfo.getDatasourceFile());
 			this.setDatasourceParameters(getDatasourceParameters());
@@ -928,14 +952,14 @@ public class JDBCPoolMetaData implements Serializable{
 	public void setJndipassword(String jndipassword) {
 		this.jndipassword = jndipassword;
 	}
-
-	public boolean isEncryptdbinfo() {
-		return encryptdbinfo;
-	}
-
-	public void setEncryptdbinfo(boolean encryptdbinfo) {
-		this.encryptdbinfo = encryptdbinfo;
-	}
+//
+//	public boolean isEncryptdbinfo() {
+//		return encryptdbinfo;
+//	}
+//
+//	public void setEncryptdbinfo(boolean encryptdbinfo) {
+//		this.encryptdbinfo = encryptdbinfo;
+//	}
 
 	public boolean isEnablejta() {
 		return enablejta;
@@ -1053,8 +1077,13 @@ public class JDBCPoolMetaData implements Serializable{
 					.append("\"idGenerator\":").append(idGenerator)
 					.append(",\"jndiclass\":").append(jndiclass)
 					.append(",\"jndiuser\":").append(jndiuser).append(",")
-					.append("\"jndipassword\":").append(jndipassword)
-					.append(",\"encryptdbinfo\":").append(encryptdbinfo).append(",\"jndiurl\":")
+					.append("\"jndipassword\":").append(jndipassword);
+			if(this.getDbInfoEncrypt() != null)
+					data.append(",\"DbInfoEncrypt\":").append(this.getDbInfoEncrypt().getClass().getCanonicalName());
+			else{
+				data.append(",\"DbInfoEncrypt\":");
+			}
+					data.append(",\"jndiurl\":")
 					.append(jndiurl).append(",\"keygenerate\":\"")
 					.append(keygenerate).append("\",\"autoprimarykey\":").append(autoprimarykey)
 
@@ -1069,6 +1098,12 @@ public class JDBCPoolMetaData implements Serializable{
 			return "";
 		}
 	}
+
+	public DBInfoEncrypt getDbInfoEncrypt() {
+		return dbInfoEncrypt;
+	}
+
+
 
 //	public boolean isNeadGetGenerateKeys() {
 //		return neadGetGenerateKeys;

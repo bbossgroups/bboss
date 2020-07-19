@@ -30,16 +30,16 @@ package com.frameworkset.common.poolman.security;
  */
 public abstract class BaseDBInfoEncrypt implements DBInfoEncrypt{
 
-	public String encrypt(String data) {
-		
-		try {
-			return new DESCipher().encrypt(data);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return data;
-	}
+//	public String encrypt(String data) {
+//
+//		try {
+//			return new DESCipher().encrypt(data);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return data;
+//	}
 
 	public String decrypt(String data){
 		
@@ -51,30 +51,30 @@ public abstract class BaseDBInfoEncrypt implements DBInfoEncrypt{
 		}
 		return data;
 	}
-	public String encryptDBUrl(String url) {
-		// TODO Auto-generated method stub
-		return url;
-	}
+//	public String encryptDBUrl(String url) {
+//		// TODO Auto-generated method stub
+//		return url;
+//	}
 
 	public String decryptDBUrl(String url) {
 		// TODO Auto-generated method stub
 		return url;
 	}
 
-	public String encryptDBPassword(String password) {
-		// TODO Auto-generated method stub
-		return password;
-	}
+//	public String encryptDBPassword(String password) {
+//		// TODO Auto-generated method stub
+//		return password;
+//	}
 
 	public String decryptDBPassword(String password) {
 		// TODO Auto-generated method stub
 		return password;
 	}
 
-	public String encryptDBUser(String user) {
-		// TODO Auto-generated method stub
-		return user;
-	}
+//	public String encryptDBUser(String user) {
+//		// TODO Auto-generated method stub
+//		return user;
+//	}
 
 	public String decryptDBUser(String user) {
 		// TODO Auto-generated method stub

@@ -33,7 +33,7 @@ public interface DBInfoEncrypt {
 	 * @param data
 	 * @return
 	 */
-	public abstract String encrypt(String data);
+//	public abstract String encrypt(String data);
 	/**
 	 * 解密数据接口
 	 * @param data
@@ -46,10 +46,10 @@ public interface DBInfoEncrypt {
 	 * @param data
 	 * @return
 	 */
-	public abstract String encryptDBUrl(String url);
+//	public abstract String encryptDBUrl(String url);
 	/**
 	 * 解密数据接口
-	 * @param data
+	 * @param url
 	 * @return
 	 */
 	public abstract String decryptDBUrl(String url);
@@ -59,10 +59,10 @@ public interface DBInfoEncrypt {
 	 * @param data
 	 * @return
 	 */
-	public abstract String encryptDBPassword(String password);
+//	public abstract String encryptDBPassword(String password);
 	/**
 	 * 解密数据接口
-	 * @param data
+	 * @param password
 	 * @return
 	 */
 	public abstract String decryptDBPassword(String password);
@@ -72,10 +72,10 @@ public interface DBInfoEncrypt {
 	 * @param data
 	 * @return
 	 */
-	public abstract String encryptDBUser(String user);
+//	public abstract String encryptDBUser(String user);
 	/**
 	 * 解密数据接口
-	 * @param data
+	 * @param user
 	 * @return
 	 */
 	public abstract String decryptDBUser(String user);

@@ -30,11 +30,11 @@ public class DESDBInfoEncrypt extends BaseDBInfoEncrypt{
 
 	
 
-	@Override
-	public String encryptDBPassword(String password){
-		// TODO Auto-generated method stub
-		return encrypt(password);
-	}
+//	@Override
+//	public String encryptDBPassword(String password){
+//		// TODO Auto-generated method stub
+//		return encrypt(password);
+//	}
 
 	@Override
 	public String decryptDBPassword(String password){
@@ -42,11 +42,11 @@ public class DESDBInfoEncrypt extends BaseDBInfoEncrypt{
 		return decrypt(password);
 	}
 
-	@Override
-	public String encryptDBUrl(String url) {
-		// TODO Auto-generated method stub
-		return encrypt(url);
-	}
+//	@Override
+//	public String encryptDBUrl(String url) {
+//		// TODO Auto-generated method stub
+//		return encrypt(url);
+//	}
 
 	@Override
 	public String decryptDBUrl(String url) {
@@ -54,11 +54,11 @@ public class DESDBInfoEncrypt extends BaseDBInfoEncrypt{
 		return decrypt(url);
 	}
 
-	@Override
-	public String encryptDBUser(String user) {
-		// TODO Auto-generated method stub
-		return encrypt(user);
-	}
+//	@Override
+//	public String encryptDBUser(String user) {
+//		// TODO Auto-generated method stub
+//		return encrypt(user);
+//	}
 
 	@Override
 	public String decryptDBUser(String user) {

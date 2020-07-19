@@ -34,7 +34,6 @@ package com.frameworkset.orm.adapter;
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
-import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.engine.model.Domain;
@@ -385,12 +384,12 @@ public class DBOracle extends DB
     	{
     		return null;
     	}
-		if(!info.isEncryptdbinfo())
+		if(info.getDbInfoEncrypt() == null)
 			return info.getUserName().toUpperCase();
 		else
 		{
-			DBInfoEncrypt dbInfoEncrypt = getDBInfoEncrypt();
-			return dbInfoEncrypt.decryptDBUser(info.getUserName()).toUpperCase();
+
+			return info.getDbInfoEncrypt().decryptDBUser(info.getUserName()).toUpperCase();
 		}
     }
 

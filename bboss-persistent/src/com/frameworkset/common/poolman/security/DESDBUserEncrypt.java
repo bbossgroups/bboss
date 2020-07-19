@@ -30,11 +30,11 @@ public class DESDBUserEncrypt extends BaseDBInfoEncrypt{
 
 	
 	
-	@Override
-	public String encryptDBUser(String user) {
-		// TODO Auto-generated method stub
-		return encrypt(user);
-	}
+//	@Override
+//	public String encryptDBUser(String user) {
+//		// TODO Auto-generated method stub
+//		return encrypt(user);
+//	}
 
 	@Override
 	public String decryptDBUser(String user) {

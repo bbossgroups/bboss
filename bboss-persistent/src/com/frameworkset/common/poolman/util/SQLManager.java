@@ -60,9 +60,7 @@ public class SQLManager extends PoolManager{
 	public static void setRefresh_interval(Long refresh_interval) {
 		PoolManConfiguration.setRefresh_interval( refresh_interval);
 	}
-	public static void setDbInfoEncryptclass(String dbInfoEncryptclass){
-		PoolManConfiguration.setDbInfoEncryptclass(dbInfoEncryptclass);
-	}
+
     private String configFile = PoolManConstants.XML_CONFIG_FILE;
 
     public static void destroy()
@@ -1068,6 +1066,9 @@ public class SQLManager extends PoolManager{
 		}
 		if(temConf.getDbtype() != null){
 			values.put("dbtype",temConf.getDbtype());
+		}
+		if(temConf.getDbInfoEncryptClass() != null && !temConf.getDbInfoEncryptClass().equals("")){
+			values.put("dbInfoEncryptClass",temConf.getDbInfoEncryptClass());
 		}
 		PoolManBootstrap.startFromTemplte(values);
 	}

@@ -326,8 +326,8 @@ public class JDBCPool {
 		Properties p = new Properties();
 		p.setProperty(PoolManConstants.PROP_DRIVERCLASSNAME, info
 				.getDriver());
-		DBInfoEncrypt dbInfoEncrypt = DB.getDBInfoEncrypt();
-		if(this.info.isEncryptdbinfo())
+		DBInfoEncrypt dbInfoEncrypt = info.getDbInfoEncrypt();
+		if(dbInfoEncrypt != null)
 		{
 //			dbInfoEncrypt.decrypt(data)
 			p.setProperty(PoolManConstants.PROP_URL, dbInfoEncrypt.decryptDBUrl(info.getURL()));
@@ -339,7 +339,7 @@ public class JDBCPool {
 		
 		if (info.getPassword() != null)
 		{
-			if(this.info.isEncryptdbinfo())
+			if(dbInfoEncrypt != null)
 			{
 //				dbInfoEncrypt.decrypt(data)
 				p.setProperty(PoolManConstants.PROP_PASSWORD, dbInfoEncrypt.decryptDBPassword(info
@@ -355,7 +355,7 @@ public class JDBCPool {
 		}
 		if (info.getUserName() != null)
 		{
-			if(this.info.isEncryptdbinfo())
+			if(dbInfoEncrypt != null)
 			{
 				p.setProperty(PoolManConstants.PROP_USERNAME, dbInfoEncrypt.decryptDBUser(info
 						.getUserName()));

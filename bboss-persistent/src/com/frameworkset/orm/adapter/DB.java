@@ -35,9 +35,6 @@ import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.ValueExchange;
-import com.frameworkset.common.poolman.management.PoolManConfiguration;
-import com.frameworkset.common.poolman.security.DBInfoEncrypt;
-import com.frameworkset.common.poolman.security.DESDBPasswordEncrypt;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.orm.engine.model.Domain;
 import com.frameworkset.orm.engine.model.SchemaType;
@@ -130,6 +127,7 @@ public abstract class DB implements IDMethod, Platform {
 	protected String dbtype = null;
 
 
+
 	/**
 	 * Empty constructor.
 	 */
@@ -148,30 +146,30 @@ public abstract class DB implements IDMethod, Platform {
 		}
 		return count / 3;
 	}
-
-	public static DBInfoEncrypt getDBInfoEncrypt() {
-		try {
-				String DBInfoEncryptclass = PoolManConfiguration.getDbInfoEncryptclass();
-				if (DBInfoEncryptclass != null && !DBInfoEncryptclass.trim().equals("")) {
-					DBInfoEncryptclass = DBInfoEncryptclass.trim();
-					return (DBInfoEncrypt) Class.forName(DBInfoEncryptclass).newInstance();
-				}
-
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new DESDBPasswordEncrypt();
-	}
+//
+//	public static DBInfoEncrypt getDBInfoEncrypt() {
+//		try {
+//				String DBInfoEncryptclass = PoolManConfiguration.getDbInfoEncryptclass();
+//				if (DBInfoEncryptclass != null && !DBInfoEncryptclass.trim().equals("")) {
+//					DBInfoEncryptclass = DBInfoEncryptclass.trim();
+//					return (DBInfoEncrypt) Class.forName(DBInfoEncryptclass).newInstance();
+//				}
+//
+//		} catch (InstantiationException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IllegalAccessException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (Throwable e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return new DESDBPasswordEncrypt();
+//	}
 
 	public boolean columnLableUpperCase() {
 		return true;
@@ -523,11 +521,10 @@ public abstract class DB implements IDMethod, Platform {
 		if (info.getUserName() == null || info.getUserName().equals("")) {
 			return null;
 		}
-		if (!info.isEncryptdbinfo())
+		if (info.getDbInfoEncrypt()  == null)
 			return info.getUserName().toUpperCase();
 		else {
-			DBInfoEncrypt dbInfoEncrypt = getDBInfoEncrypt();
-			return dbInfoEncrypt.decryptDBUser(info.getUserName()).toUpperCase();
+			return info.getDbInfoEncrypt() .decryptDBUser(info.getUserName()).toUpperCase();
 		}
 	}
 

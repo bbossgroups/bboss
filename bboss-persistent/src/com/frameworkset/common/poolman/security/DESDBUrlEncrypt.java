@@ -32,11 +32,11 @@ public class DESDBUrlEncrypt extends BaseDBInfoEncrypt{
 
 	
 
-	@Override
-	public String encryptDBUrl(String url) {
-		// TODO Auto-generated method stub
-		return encrypt(url);
-	}
+//	@Override
+//	public String encryptDBUrl(String url) {
+//		// TODO Auto-generated method stub
+//		return encrypt(url);
+//	}
 
 	@Override
 	public String decryptDBUrl(String url) {

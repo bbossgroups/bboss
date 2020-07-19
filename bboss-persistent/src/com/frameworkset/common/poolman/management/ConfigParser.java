@@ -172,7 +172,7 @@ public class ConfigParser extends DefaultHandler{
         		!name.equals("usepool") &&
         		!name.equals("encryptdbinfo") &&
         		!name.equals("datasourceFile") && !name.equals("queryfetchsize")&&!name.equals("config")
-				&& !name.equals("needtableinfo") && !name.equals("refreshinterval") && !name.equals("dbInfoEncryptclass")  && !name.equals("columnNameMapping") && !name.equals("sqlMappingDir"))
+				&& !name.equals("needtableinfo") && !name.equals("refreshinterval") && !name.equals("dbInfoEncryptClass")  && !name.equals("columnNameMapping") && !name.equals("sqlMappingDir"))
             
         {
         	if(log.isDebugEnabled())
@@ -294,12 +294,12 @@ public class ConfigParser extends DefaultHandler{
 					log.info("refreshinterval:"+refreshinterval + "必须是long值",e);
 			}
 		}
-		else if(name.equals("dbInfoEncryptclass")){
-			String dbInfoEncryptclass = currentValue.toString().trim();
-			 if(!dbInfoEncryptclass.equals(""))
-				PoolManConfiguration.setDbInfoEncryptclass(dbInfoEncryptclass);
-
-		}
+//		else if(name.equals("dbInfoEncryptClass")){
+//			String dbInfoEncryptclass = currentValue.toString().trim();
+//			 if(!dbInfoEncryptclass.equals(""))
+//				PoolManConfiguration.setDbInfoEncryptclass(dbInfoEncryptclass);
+//
+//		}
 		else if(name.equals("sqlMappingDir")){
 			String sqlMappingDir = currentValue.toString().trim();
 			if(!sqlMappingDir.equals(""))

@@ -30,11 +30,11 @@ public class DESDBPasswordEncrypt extends BaseDBInfoEncrypt{
 
 	
 
-	@Override
-	public String encryptDBPassword(String password){
-		// TODO Auto-generated method stub
-		return encrypt(password);
-	}
+//	@Override
+//	public String encryptDBPassword(String password){
+//		// TODO Auto-generated method stub
+//		return encrypt(password);
+//	}
 
 	@Override
 	public String decryptDBPassword(String password){

@@ -16,11 +16,11 @@
 package com.frameworkset.common.poolman.security;
 
 public class DESDBUserAndPasswordEncrypt extends BaseDBInfoEncrypt{
-	@Override
-	public String encryptDBPassword(String password){
-		// TODO Auto-generated method stub
-		return encrypt(password);
-	}
+//	@Override
+//	public String encryptDBPassword(String password){
+//		// TODO Auto-generated method stub
+//		return encrypt(password);
+//	}
 
 	@Override
 	public String decryptDBPassword(String password){
@@ -28,11 +28,11 @@ public class DESDBUserAndPasswordEncrypt extends BaseDBInfoEncrypt{
 		return decrypt(password);
 	}
 
-	@Override
-	public String encryptDBUser(String user) {
-		// TODO Auto-generated method stub
-		return encrypt(user);
-	}
+//	@Override
+//	public String encryptDBUser(String user) {
+//		// TODO Auto-generated method stub
+//		return encrypt(user);
+//	}
 
 	@Override
 	public String decryptDBUser(String user) {

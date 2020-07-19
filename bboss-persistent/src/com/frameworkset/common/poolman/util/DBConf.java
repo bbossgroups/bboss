@@ -32,6 +32,11 @@ public class DBConf implements Serializable {
 	private String poolname;
 	private String driver;
 	private String dbtype;
+	/**
+	 * https://doc.bbossgroups.com/#/persistent/encrypt
+	 * 同时如果想对账号、口令、url之间的任意两个组合加密的话，用户可以自己继承 com.frameworkset.common.poolman.security.BaseDBInfoEncrypt类，参考默认插件，实现相应的信息加密方法并配置到aop.properties中即可。
+	 */
+	private String dbInfoEncryptClass;
 	private String dbAdaptor;
 	private String jdbcurl;
 	private String username;
@@ -175,5 +180,17 @@ public class DBConf implements Serializable {
 
 	public void setDbAdaptor(String dbAdaptor) {
 		this.dbAdaptor = dbAdaptor;
+	}
+
+	public String getDbInfoEncryptClass() {
+		return dbInfoEncryptClass;
+	}
+
+	/**
+	 * https://doc.bbossgroups.com/#/persistent/encrypt
+	 * 同时如果想对账号、口令、url之间的任意两个组合加密的话，用户可以自己继承 com.frameworkset.common.poolman.security.BaseDBInfoEncrypt类，参考默认插件，实现相应的信息加密方法并配置到aop.properties中即可。
+	 */
+	public void setDbInfoEncryptClass(String dbInfoEncryptClass) {
+		this.dbInfoEncryptClass = dbInfoEncryptClass;
 	}
 }

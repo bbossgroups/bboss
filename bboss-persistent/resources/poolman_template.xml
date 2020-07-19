@@ -67,6 +67,9 @@
 	#if($queryfetchsize && $queryfetchsize != 0)
 	<queryfetchsize>${queryfetchsize}</queryfetchsize>
 	#end
+    #if($dbInfoEncryptClass && !$dbInfoEncryptClass.equals(""))
+    <dbInfoEncryptClass><![CDATA[${dbInfoEncryptClass}]]></dbInfoEncryptClass>
+    #end
   </datasource>  
  
 </poolman>
