@@ -422,7 +422,8 @@ public abstract class HandlerUtils {
 				}
 			}
 		} else {
-			logger.debug("Evaluate Multipart File failed: request is not a MultipartHttpServletRequest.");
+			if(logger.isDebugEnabled())
+				logger.debug("Evaluate Multipart File failed: request is not a MultipartHttpServletRequest.");
 		}
 
 		return paramValue;
@@ -475,7 +476,8 @@ public abstract class HandlerUtils {
 			// }
 			// }
 		} else {
-			logger.debug("Evaluate Multipart File failed: request is not a MultipartHttpServletRequest.");
+			if(logger.isDebugEnabled())
+				logger.debug("Evaluate Multipart File failed: request is not a MultipartHttpServletRequest.");
 		}
 
 		return paramValue;
@@ -1055,176 +1057,6 @@ public abstract class HandlerUtils {
 	}
 
 
-	// public static Object[] buildMethodCallArgs(HttpServletRequest request,
-	// HttpServletResponse response, PageContext pageContext,
-	// MethodData handlerMethod, ModelMap model, Validator[] validators,
-	// HttpMessageConverter[] messageConverters) throws Exception {
-	// MethodInfo methodInfo = handlerMethod.getMethodInfo();
-	// Method method = methodInfo.getMethod();
-	// Class[] methodParamTypes = method.getParameterTypes();
-	// Map pathVarDatas = handlerMethod.getPathVariableDatas();
-	// if (methodParamTypes.length == 0) {
-	// return new Object[0];
-	// }
-	// Object params[] = new Object[methodParamTypes.length];
-	// for (int i = 0; i < params.length; i++) {
-	// Class type = methodParamTypes[i];
-	// Object paramValue = null;
-	// MethodParameter methodParameter = methodInfo.getMethodParameter(i);
-	// String paramName = methodParameter != null
-	// ?methodParameter.getRequestParameterName():"";
-	// boolean userEditor = true;
-	// if (HttpSession.class.isAssignableFrom(type)) {
-	// HttpSession session = request.getSession(false);
-	// if (session == null) {
-	// throw new HttpSessionRequiredException(
-	// "Pre-existing session required for handler method '"
-	// + method.getName() + "'");
-	// }
-	// paramValue = session;
-	// // userEditor = false;
-	//
-	// } else if (HttpServletRequest.class.isAssignableFrom(type))
-	//
-	// {
-	// paramValue = request;
-	// // userEditor = false;
-	// } else if (javax.servlet.http.HttpServletResponse.class
-	// .isAssignableFrom(type))
-	//
-	// {
-	// paramValue = response;
-	// // userEditor = false;
-	// } else if (PageContext.class.isAssignableFrom(type)) {
-	// paramValue = pageContext;
-	// // userEditor = false;
-	// } else if (ModelMap.class.isAssignableFrom(type)) {
-	// paramValue = model;
-	// // userEditor = false;
-	// } else if (methodParameter != null) {
-	// String requestParamName = methodParameter
-	// .getRequestParameterName();
-	//
-	// if (methodParameter.getDataBindScope() == Scope.REQUEST_PARAM) {
-	// String[] values = request
-	// .getParameterValues(requestParamName);
-	// if (values != null) {
-	// if (values.length == 1)
-	// paramValue = values[0];
-	// else
-	// paramValue = values;
-	// }
-	// } else if (methodParameter.getDataBindScope() == Scope.REQUEST_ATTRIBUTE)
-	// {
-	// paramValue = request.getAttribute(requestParamName);
-	// } else if (methodParameter.getDataBindScope() == Scope.SESSION_ATTRIBUTE)
-	// {
-	// HttpSession session = request.getSession(false);
-	// if (session != null)
-	// paramValue = session.getAttribute(requestParamName);
-	// } else if (methodParameter.getDataBindScope() == Scope.PATHVARIABLE) {
-	// if (pathVarDatas != null)
-	// paramValue = pathVarDatas.get(requestParamName);
-	// } else if (methodParameter.getDataBindScope() ==
-	// Scope.PAGECONTEXT_APPLICATION_SCOPE) {
-	//
-	// paramValue = pageContext.getAttribute(requestParamName,
-	// PageContext.APPLICATION_SCOPE);
-	// } else if (methodParameter.getDataBindScope() ==
-	// Scope.PAGECONTEXT_PAGE_SCOPE) {
-	//
-	// paramValue = pageContext.getAttribute(requestParamName,
-	// PageContext.PAGE_SCOPE);
-	// } else if (methodParameter.getDataBindScope() ==
-	// Scope.PAGECONTEXT_REQUEST_SCOPE) {
-	//
-	// paramValue = pageContext.getAttribute(requestParamName,
-	// PageContext.REQUEST_SCOPE);
-	// } else if (methodParameter.getDataBindScope() ==
-	// Scope.PAGECONTEXT_SESSION_SCOPE) {
-	//
-	// paramValue = pageContext.getAttribute(requestParamName,
-	// PageContext.SESSION_SCOPE);
-	// } else if (methodParameter.getDataBindScope() == Scope.COOKIE) {
-	//
-	// paramValue = resolveCookieValue(methodParameter, request);
-	// userEditor = false;
-	// } else if (methodParameter.getDataBindScope() == Scope.REQUEST_HEADER) {
-	//
-	// paramValue = resolveRequestHeader(methodParameter, request);
-	// } else if (methodParameter.getDataBindScope() == Scope.REQUEST_BODY) {
-	// paramValue = resolveRequestBody(methodParameter, request,
-	// messageConverters);
-	// userEditor = false;
-	// } else if (methodParameter.isDataBeanBind()) {
-	// Object command = newCommandObject(type);
-	// bind(request, response, pageContext, handlerMethod, model,
-	// command, validators, messageConverters);
-	// paramValue = command;
-	// userEditor = false;
-	// } else {
-	// Object command = newCommandObject(type);
-	// bind(request, response, pageContext, handlerMethod, model,
-	// command, validators, messageConverters);
-	// paramValue = command;
-	// userEditor = false;
-	// }
-	// if (userEditor) {
-	// EditorInf editor = methodInfo.getEditor(i);
-	//
-	// try {
-	// if (editor == null)
-	// paramValue = ValueObjectUtil.typeCast(paramValue,
-	// type);
-	// else
-	// paramValue = ValueObjectUtil.typeCast(paramValue,
-	// editor);
-	// } catch (Exception e) {
-	// throw raiseMissingParameterException(paramName, type,paramValue, e);
-	// }
-	// }
-	//
-	// } else {
-	// Object command = newCommandObject(type);
-	// bind(request, response, pageContext, handlerMethod, model,
-	// command, validators, messageConverters);
-	// paramValue = command;
-	// }
-	//
-	// if (paramValue == null) {
-	//
-	// if (methodParameter.getDefaultValue() == null) {
-	// if (methodParameter.isRequired())
-	// throw raiseMissingParameterException(paramName, type);
-	// else {
-	// paramValue = ValueObjectUtil.getDefaultValue(type);
-	// }
-	// } else {
-	// if (userEditor) {
-	// EditorInf editor = methodInfo.getEditor(i);
-	//
-	// try {
-	// if (editor == null)
-	// paramValue = ValueObjectUtil
-	// .typeCast(methodParameter
-	// .getDefaultValue(), type);
-	// else
-	// paramValue = ValueObjectUtil.typeCast(
-	// methodParameter.getDefaultValue(),
-	// editor);
-	// } catch (Exception e) {
-	// throw raiseMissingParameterException(paramName,
-	// type, paramValue,e);
-	// }
-	// }
-	// }
-	//
-	// }
-	// params[i] = paramValue;
-	// }
-	// return params;
-	//
-	// }
 
 	public static Map buildParameterMaps(HttpServletRequest request) {
 		Map map = new HashMap(request.getParameterMap().size());
@@ -1289,59 +1121,7 @@ public abstract class HandlerUtils {
 		// .getParameterType(), messageConverters);
 	}
 
-	// private HttpEntity resolveHttpEntityRequest(MethodParameter methodParam,
-	// NativeWebRequest webRequest)
-	// throws Exception {
-	//
-	// HttpInputMessage inputMessage = createHttpInputMessage(webRequest);
-	// Class<?> paramType = getHttpEntityType(methodParam);
-	// Object body = readWithMessageConverters(methodParam, inputMessage,
-	// paramType);
-	// return new HttpEntity<Object>(body, inputMessage.getHeaders());
-	// }
 
-	// private static Object readWithMessageConverters(
-	// MethodParameter methodParam, HttpInputMessage inputMessage,
-	// Class paramType, HttpMessageConverter[] messageConverters)
-	// throws Exception {
-	//
-	// // MediaType contentType = inputMessage.getHeaders().getContentType();
-	// // if (contentType == null) {
-	// // StringBuilder builder = new StringBuilder(ClassUtils
-	// // .getShortName(methodParam.getParameterType()));
-	// // String paramName = methodParam.getRequestParameterName();
-	// // if (paramName != null) {
-	// // builder.append(' ');
-	// // builder.append(paramName);
-	// // }
-	// // throw new HttpMediaTypeNotSupportedException(
-	// // "Cannot extract parameter (" + builder.toString()
-	// // + "): no Content-Type found");
-	// // }
-	// //
-	// // List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
-	// // if (messageConverters != null) {
-	// // for (HttpMessageConverter<?> messageConverter : messageConverters) {
-	// // allSupportedMediaTypes.addAll(messageConverter
-	// // .getSupportedMediaTypes());
-	// // if (messageConverter.canRead(paramType, contentType)) {
-	// // if (logger.isDebugEnabled()) {
-	// // logger.debug("Reading [" + paramType.getName()
-	// // + "] as \"" + contentType + "\" using ["
-	// // + messageConverter + "]");
-	// // }
-	// // return messageConverter.read(paramType, inputMessage);
-	// // }
-	// // }
-	// // }
-	// // throw new HttpMediaTypeNotSupportedException(contentType,
-	// // allSupportedMediaTypes);
-	//
-	// return
-	// readWithMessageConverters(methodParam.getParameterType(),methodParam.getRequestParameterName(),
-	// inputMessage,
-	// messageConverters);
-	// }
 
 	/**
 	 * Template method for creating a new HttpInputMessage instance.
@@ -1430,57 +1210,7 @@ public abstract class HandlerUtils {
 											 HttpServletRequest webRequest) throws Exception {
 		return resolveCookieValue(methodParam.getParameterType(),
 				methodParam.getRequestParameterName(), webRequest);
-		// Class<?> paramType = methodParam.getParameterType();
-		//
-		// Cookie cookieValue = WebUtils.getCookie(webRequest,
-		// methodParam.getRequestParameterName());
-		// if (Cookie.class.isAssignableFrom(paramType)) {
-		// return cookieValue;
-		// }
-		// else if (cookieValue != null) {
-		// // return UrlPathHelper.decodeRequestString(webRequest,
-		// cookieValue.getValue());
-		// Object ret = cookieValue.getValue();
-		//
-		// EditorInf editor = methodParam.getEditor();
-		//
-		// if (editor == null)
-		// ret = ValueObjectUtil.typeCast(ret, paramType);
-		// else
-		// ret = ValueObjectUtil.typeCast(ret,
-		// editor);
-		// return ret;
-		//
-		// }
-		// else {
-		// if (methodParam.getDefaultValue() != null) {
-		// return methodParam.getDefaultValue();
-		// }
-		// else if (methodParam.isRequired()) {
-		// throw
-		// raiseMissingCookieException(methodParam.getRequestParameterName(),
-		// paramType);
-		// }
-		// else
-		// {
-		// return null;
-		// }
-		// }
-		// // if (cookieValue == null) {
-		// // if (methodParam.getDefaultValue() != null) {
-		// // return methodParam.getDefaultValue();
-		// // }
-		// // else if (methodParam.isRequired()) {
-		// // raiseMissingCookieException(methodParam.getRequestParameterName(),
-		// paramType);
-		// // }
-		// //
-		// // }
-		// // WebDataBinder binder = createBinder(webRequest, null, cookieName);
-		// // initBinder(handlerForInitBinderCall, cookieName, binder,
-		// webRequest);
-		// // return binder.convertIfNecessary(cookieValue, paramType,
-		// methodParam);
+
 	}
 
 	private static Object resolveCookieValue(Class<?> paramType,

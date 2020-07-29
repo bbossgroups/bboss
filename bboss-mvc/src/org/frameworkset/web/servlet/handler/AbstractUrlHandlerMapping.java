@@ -15,11 +15,6 @@
  */
 package org.frameworkset.web.servlet.handler;
 
-import java.util.Iterator;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.frameworkset.util.AntPathMatcher;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.PathMatcher;
@@ -29,6 +24,10 @@ import org.frameworkset.web.servlet.HandlerMapping;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Iterator;
 
 /**
  * <p>Title: AbstractUrlHandlerMapping.java</p> 
@@ -108,7 +107,6 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 	/**
 	 * Set the PathMatcher implementation to use for matching URL paths
 	 * against registered URL patterns. Default is AntPathMatcher.
-	 * @see org.frameworkset.web.util.AntPathMatcher
 	 */
 	public void setPathMatcher(PathMatcher pathMatcher) {
 		Assert.notNull(pathMatcher, "PathMatcher must not be null");
@@ -179,10 +177,12 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 			}
 		}
 		if (handler != null ) {
-			logger.debug("Mapping [" + lookupPath + "] to handler '" + handler.getHandler().getHandlerName() + "'");
+			if(logger.isDebugEnabled())
+				logger.debug("Mapping [" + lookupPath + "] to handler '" + handler.getHandler().getHandlerName() + "'");
 		}
 		else if (handler == null) {
-			logger.debug("No handler mapping found for [" + lookupPath + "]");
+			if(logger.isInfoEnabled())
+				logger.info("No handler mapping found for [" + lookupPath + "]");
 		}
 		return handler;
 	}
@@ -198,7 +198,6 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 	 * @param request current HTTP request (to expose the path within the mapping to)
 	 * @return the associated handler instance, or <code>null</code> if not found
 	 * @see #exposePathWithinMapping
-	 * @see org.frameworkset.web.util.AntPathMatcher
 	 */
 	protected HandlerExecutionChain lookupHandler(String urlPath, HttpServletRequest request) throws Exception {
 		// Direct match?
@@ -283,7 +282,6 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 	
 	/**
 	 * Expose the path  the current mapping as request attribute.
-	 * @param mappingPath the path within the current mapping
 	 * @param request the request to expose the path to
 	 * @see #HANDLER_MAPPING_PATH_ATTRIBUTE
 	 */
@@ -293,7 +291,6 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 	
 	/**
 	 * Expose the path  the current mapping as request attribute.
-	 * @param mappingPath the path within the current mapping
 	 * @param request the request to expose the path to
 	 * @see #HANDLER_MAPPING_PATH_ATTRIBUTE
 	 */
@@ -306,7 +303,6 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 	/**
 	 * Register the specified handler for the given URL paths.
 	 * @param urlPaths the URLs that the bean should be mapped to
-	 * @param beanName the name of the handler bean
 	 * @throws BeansException if the handler couldn't be registered
 	 * @throws IllegalStateException if there is a conflicting handler registered
 	 */
