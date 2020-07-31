@@ -30,20 +30,25 @@ public interface PropertiesFilePlugin {
 	 * @return
 	 * @param applicationContext
 	 */
-	public String getFiles(BaseApplicationContext applicationContext);
+	public String getFiles(BaseApplicationContext applicationContext,Map<String,String> extendsAttributes);
 
 	/**
 	 * 直接获取配置属性集合
 	 * @param applicationContext
 	 * @return
 	 */
-	public Map getConfigProperties(BaseApplicationContext applicationContext);
+	public Map getConfigProperties(BaseApplicationContext applicationContext,Map<String,String> extendsAttributes);
 	/**
 	 * 0: 外部自定义配置文件
 	 * 1：外部自定义属性
 	 * -1:采用默认配置文件
 	 */
-	public int getInitType();
+	public int getInitType(BaseApplicationContext applicationContext,Map<String,String> extendsAttributes);
 
-	public void restore();
+	public void restore(BaseApplicationContext applicationContext,Map<String,String> extendsAttributes);
+	public static final int INIT_TYPE_OUTCONFIGFILE = 0;
+	public static final int INIT_TYPE_OUTMAP = 1;
+	public static final int INIT_TYPE_DEFAULT = -1;
+
+
 }

@@ -12,10 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class PropertiesContainer extends AbstractGetProperties{
     protected List<String> configPropertiesFiles;
@@ -99,7 +96,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 
 
 
-	public void addConfigPropertiesFromPlugin(String configPropertiesPlugin, LinkConfigFile linkfile, BaseApplicationContext applicationContext)
+	public void addConfigPropertiesFromPlugin(String configPropertiesPlugin, LinkConfigFile linkfile, BaseApplicationContext applicationContext,Map<String,String> extendsAttributes )
 	{
 
 		if(configPropertiesFiles == null)
@@ -115,13 +112,13 @@ public class PropertiesContainer extends AbstractGetProperties{
 			synchronized (PropertiesFilePlugin.class) {
 				PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin) clazz.newInstance();
 				try {
-					if (propertiesFilePlugin.getInitType() != 1) {
-						String configPropertiesFile = propertiesFilePlugin.getFiles(applicationContext);
+					if (propertiesFilePlugin.getInitType(applicationContext,extendsAttributes) != 1) {
+						String configPropertiesFile = propertiesFilePlugin.getFiles(applicationContext,extendsAttributes);
 						if (SimpleStringUtil.isNotEmpty(configPropertiesFile)) {
 							loadPropertiesFromFiles(configPropertiesFile, linkfile);
 						}
 					} else {
-						Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext);
+						Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext,extendsAttributes);
 						if (configProperties != null && configProperties.size() > 0) {
 							allProperties.putAll(configProperties);
 						}
@@ -131,13 +128,74 @@ public class PropertiesContainer extends AbstractGetProperties{
 						allProperties.putAll(evaledProperties);
 					}
 				} finally {
-					propertiesFilePlugin.restore();
+					propertiesFilePlugin.restore(applicationContext,extendsAttributes);
 				}
 			}
 			if(linkfile != null)
 				loopback(linkfile);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if(log.isErrorEnabled()) {
+				log.error("Add Config Properties for[" + applicationContext.getConfigfile() + "] From plugin failed: " + SimpleStringUtil.object2json(extendsAttributes), e);
+			}
+		}
+
+
+	}
+	public void addConfigPropertiesFromApollo(String namespace,String configChangeListener)
+	{
+		Map<String,String> pros = new HashMap<String,String>();
+		pros.put("apolloNamespace",namespace);
+		if(configChangeListener != null)
+			pros.put("configChangeListener",configChangeListener);
+
+		addConfigPropertiesFromApollo(  namespace,   (LinkConfigFile)null, (BaseApplicationContext)null,pros );
+
+	}
+	public void addConfigPropertiesFromApollo(String namespace)
+	{
+		Map<String,String> pros = new HashMap<String,String>();
+		pros.put("apolloNamespace",namespace);
+
+		addConfigPropertiesFromApollo(  namespace,   (LinkConfigFile)null, (BaseApplicationContext)null,pros );
+
+	}
+	public void addConfigPropertiesFromApollo(String namespace, LinkConfigFile linkfile, BaseApplicationContext applicationContext,Map<String,String> extendsAttributes )
+	{
+
+		if(configPropertiesFiles == null)
+		{
+			configPropertiesFiles = new ArrayList<String>();
+
+		}
+		if(allProperties  == null)
+			allProperties = new Properties();
+		String configPropertiesPlugin = "org.frameworkset.apollo.ApolloPropertiesFilePlugin";
+		try {
+
+			Class clazz = Class.forName(configPropertiesPlugin);
+			synchronized (clazz) {
+				PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin) clazz.newInstance();
+
+				Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext,extendsAttributes);
+				if (configProperties != null && configProperties.size() > 0) {
+					allProperties.putAll(configProperties);
+				}
+
+				Map evaledProperties = EnvUtil.evalEnvVariable(allProperties);
+				if(evaledProperties != null){
+					allProperties.putAll(evaledProperties);
+				}
+			}
+			if(linkfile != null)
+				loopback(linkfile);
+		} catch (Exception e) {
+			if(log.isErrorEnabled()) {
+				if(applicationContext != null)
+					log.error("Add Config Properties for[" + applicationContext.getConfigfile() + "] From Apollo failed: " + SimpleStringUtil.object2json(extendsAttributes), e);
+				else{
+					log.error("Add Config Properties From Apollo failed: " + SimpleStringUtil.object2json(extendsAttributes), e);
+				}
+			}
 		}
 
 
@@ -165,58 +223,17 @@ public class PropertiesContainer extends AbstractGetProperties{
 		
 		if(SimpleStringUtil.isEmpty(value))
 			return value;
-//		String varpre = null;
-//		String varend = null;
-//		boolean findVariableFromSelf = false;//持久层sql配置会设置为true
 		AOPValueHandler valueHandler = null;
 		ValueContainer valueContainer = providerParser;
 		if(providerParser != null){
 			BaseApplicationContext context = providerParser.getApplicationContext();	
 			if(context != null){
-//				varpre = context.getServiceProviderManager().getVarpre();
-//				varend = context.getServiceProviderManager().getVarend();
-//				findVariableFromSelf = context.getServiceProviderManager().findVariableFromSelf();
 				valueHandler = context.getServiceProviderManager();
 			}
 		}
 
 		return evalValue( parentLinks,value,  valueHandler, valueContainer);
-//		if(varpre == null)
-//			varpre = "${";
-//		if(varend == null)
-//			varend = "}";
-//
-//		List<GrammarToken> tokens = TextGrammarParser.parser(value, varpre, varend.charAt(0));
-//		StringBuilder re = new StringBuilder();
-//		for(int i = 0; tokens != null && i < tokens.size(); i ++)
-//		{
-//			GrammarToken token = tokens.get(i);
-//			if(token.texttoken())
-//				re.append(token.getText());
-//			else
-//			{
-//
-//				String varvalue = this.getProperty(token.getText());
-//				if(varvalue == null){
-//					Pro p = providerParser._getRealProperty(token.getText());
-//					if(p != null){
-//						varvalue = (String)providerParser.getRealPropertyValue(p);
-//					}
-//				}
-//				if(varvalue != null){
-//					re.append(varvalue);
-//				}
-//				else
-//				{
-//
-//					if(token.getDefaultValue() != null)
-//						re.append(token.getDefaultValue());
-//					else
-//						re.append(varpre).append(token.getText()).append(varend);
-//				}
-//			}
-//		}
-//		return re.toString();
+
 		
 	}
 	public void checkLoopNode(String name,List<String> parentLinks){

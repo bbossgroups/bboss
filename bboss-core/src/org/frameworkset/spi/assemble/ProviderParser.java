@@ -645,6 +645,23 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
     	property.setExtendsAttributes(extendsAttributes);
 //    	return null;
     }
+    private Map<String,String> converAttributes(Attributes attributes){
+		if(attributes == null || attributes.getLength() == 0)
+			return new HashMap<String, String>();
+		int length = attributes.getLength();
+
+		Map<String,String> extendsAttributes = new HashMap<String,String>();
+		for(int i = 0; i < length; i ++)
+		{
+			String name = attributes.getQName(i);
+
+
+			extendsAttributes.put(name, attributes.getValue(i));
+
+
+		}
+		return extendsAttributes;
+	}
     
     /**
      * 构建元素的xpath值
@@ -1210,8 +1227,15 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
 				this.configPropertiesFile.addConfigPropertiesFile(file, this.linkfile);
 			}
         	else{
-				file = attributes.getValue("plugin");
-				this.configPropertiesFile.addConfigPropertiesFromPlugin(file, this.linkfile,this.applicationContext);
+				Map<String,String> extendsAttributes = converAttributes(attributes);
+        		file = attributes.getValue("plugin");
+				if(file != null ) {
+					this.configPropertiesFile.addConfigPropertiesFromPlugin(file, this.linkfile, this.applicationContext, extendsAttributes);
+				}
+				else{
+					file = attributes.getValue("apolloNamespace");
+					this.configPropertiesFile.addConfigPropertiesFromApollo(file,this.linkfile, this.applicationContext, extendsAttributes);
+				}
 			}
         }
         else
