@@ -213,4 +213,11 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 //
 //	}
 
+	public  synchronized void reset(){
+		if(this.isfile){
+			this.destroy(true);
+			reinit();
+		}
+	}
+
 }

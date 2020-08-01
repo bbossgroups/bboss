@@ -55,6 +55,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	protected ParserError parserError;
 	/** Reference to the JVM shutdown hook, if registered */
 	private static Thread shutdownHook;
+
 	static
 	{
 		try {
@@ -239,6 +240,12 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		if (servicProviders != null)
 			this.servicProviders.clear();
 		// this.rootFiles.clear();
+		try{
+			destroySingleBeans();
+		}
+		catch (Exception e){
+			log.error("Destroy Single Beans",e);
+		}
 		if (singleDestorys != null)
 			this.singleDestorys.clear();
 		if (destroyServiceMethods != null)
@@ -348,6 +355,30 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			this.configfile = configfile;
 		}
 		
+	}
+
+	protected void reinit(){
+		if (configfile == null || configfile.equals(""))
+			throw new NullPointerException(
+					"build ApplicationContext failed:configfile is "
+							+ configfile);
+		this.isfile = isfile;
+
+
+		if(isfile)
+		{
+			this.configfile = configfile;
+			rootFiles.add(configfile);
+		}
+		else
+		{
+			this.needRecordFile = false;
+		}
+
+
+		providerManager = _getServiceProviderManager();
+		providerManager.init(docbaseType, docbase, configfile);
+
 	}
 	protected String docbaseType;
 	protected String docbase;
@@ -899,7 +930,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		addShutdownHook(destroyVMHook,-1);
 	}
 
-	public void destroySingleBeans() {
+	public synchronized void destroySingleBeans() {
 		if (singleDestorys != null && singleDestorys.size() > 0) {
 			//			
 			Iterator<DisposableBean> ite = singleDestorys.iterator();
@@ -2586,6 +2617,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	{
 		return providerManager.getExternalProperty(property);
 	}
+	public Map getAllExternalProperties(){
+		return providerManager.getAllExternalProperties();
+	}
+
+	public String getSystemEnvProperty(String property){
+		return providerManager.getSystemEnvProperty( property);
+	}
 	public Object getExternalObjectProperty(String property,Object defaultValue){
 		return providerManager.getExternalObjectProperty(property,defaultValue);
 	}
@@ -2649,6 +2687,25 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 //				}
 			}
 
+		}
+	}
+	public  synchronized void reset(){
+
+	}
+
+	public boolean getExternalBooleanProperty(String property, boolean defaultValue) {
+		Object value = getExternalObjectProperty(  property,null);
+		if(value == null)
+			return defaultValue;
+		if(value instanceof Boolean ){
+			return ((Boolean)value).booleanValue();
+		}
+		else if(value instanceof String){
+			return ((String)value).equals("true");
+
+		}
+		else{
+			return true;
 		}
 	}
 }

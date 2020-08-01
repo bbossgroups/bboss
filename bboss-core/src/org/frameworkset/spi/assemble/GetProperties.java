@@ -14,14 +14,21 @@ package org.frameworkset.spi.assemble;/*
  *  limitations under the License.
  */
 
+import java.util.Map;
+
 public interface GetProperties {
 	public String getExternalProperty(String property);
+	public String getSystemEnvProperty(String property);
 	public String getExternalProperty(String property,String defaultValue);
 	public Object getExternalObjectProperty(String property);
 	public Object getExternalObjectProperty(String property,Object defaultValue);
-
+	public boolean getExternalBooleanProperty(String property,boolean defaultValue);
+//	public String getProperty(String property);
 	public String getExternalPropertyWithNS(String namespace,String property);
 	public String getExternalPropertyWithNS(String namespace,String property,String defaultValue);
 	public Object getExternalObjectPropertyWithNS(String namespace,String property);
 	public Object getExternalObjectPropertyWithNS(String namespace,String property,Object defaultValue);
+//	public boolean getBooleanProperty(String property,boolean defaultValue);
+//	public Map getAllProperties();
+    public Map getAllExternalProperties();
 }

@@ -1,13 +1,13 @@
 package org.frameworkset.web.socket.inf;
 
+import org.frameworkset.http.HttpHeaders;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
-
-import org.frameworkset.http.HttpHeaders;
 
 public interface WebSocketSession {
 	/**
@@ -29,9 +29,9 @@ public interface WebSocketSession {
 	 * Return the map with attributes associated with the WebSocket session.
 	 *
 	 * <p>When the WebSocketSession is created, on the server side, the map can be
-	 * through a {@link org.frameworkset.web.socket.server.HandshakeInterceptor}.
+	 * through a {org.frameworkset.web.socket.server.HandshakeInterceptor}.
 	 * On the client side, the map can be populated by passing attributes to the
-	 * {@link org.frameworkset.web.socket.client.WebSocketClient} handshake
+	 * {org.frameworkset.web.socket.client.WebSocketClient} handshake
 	 * methods.
 	 */
 	Map<String, Object> getAttributes();

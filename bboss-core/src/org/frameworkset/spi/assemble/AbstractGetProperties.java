@@ -25,7 +25,40 @@ package org.frameworkset.spi.assemble;
  */
 public  abstract class AbstractGetProperties implements GetProperties{
 
+	public boolean getExternalBooleanProperty(String property, boolean defaultValue) {
+		Object value = getExternalObjectProperty(  property,null);
+		if(value == null)
+			return defaultValue;
+		if(value instanceof Boolean ){
+			return ((Boolean)value).booleanValue();
+		}
+		else if(value instanceof String){
+			return ((String)value).equals("true");
 
+		}
+		else{
+			return true;
+		}
+	}
+	/**
+	 * 首先从配置文件中查找属性值，然后从jvm系统熟悉和系统环境变量中查找属性值
+	 * @param property
+	 * @return
+	 */
+	public String getSystemEnvProperty(String property)
+	{
+		String value = getExternalProperty(  property);
+
+		if(value == null){ //Get value from jvm system propeties,just like -Dproperty=value
+//			Properties pros = System.getProperties();
+			value =System.getProperty(property);
+			if(value == null) {
+				//Get value from os env ,just like property=value in user profile
+				value = System.getenv(property);
+			}
+		}
+		return value;
+	}
 	@Override
 	public String getExternalPropertyWithNS(String namespace, String property) {
 		return getExternalProperty(  property);

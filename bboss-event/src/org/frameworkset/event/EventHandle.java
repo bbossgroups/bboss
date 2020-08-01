@@ -15,7 +15,10 @@
  */
 package org.frameworkset.event;
 
-import static java.util.concurrent.TimeUnit.NANOSECONDS;
+import org.frameworkset.remote.EventUtils;
+import org.jgroups.Address;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import org.frameworkset.remote.EventUtils;
-import org.jgroups.Address;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 /**
  * 事件处理抽象类
@@ -202,9 +202,7 @@ public class EventHandle  implements Notifiable {
 	 * Description:注册监听器，被注册的监听器只对eventtypes中包含的事件类型的远程事件和本地事件感兴趣
 	 * 
 	 * @param listener
-	 * @param List
 	 *            <ResourceChangeEventType> 监听器需要监听的消息类型
-	 * @see .authorization.ACLNotifiable#addListener(.authorization.ACLListener)
 	 */
 	public void addListener(Listener listener, List eventtypes) {
 

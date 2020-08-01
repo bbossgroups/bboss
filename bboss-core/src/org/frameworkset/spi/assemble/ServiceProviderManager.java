@@ -1105,6 +1105,7 @@ public class ServiceProviderManager implements AOPValueHandler{
 			this.reverseServiceRefids.clear();
 		if(traceFiles != null)
 			this.traceFiles.clear();
+
 		this.serial = false;
 		
 	}
@@ -1158,7 +1159,30 @@ public class ServiceProviderManager implements AOPValueHandler{
 		else
 			return defaultValue;
 	}
+	public Map getAllExternalProperties(){
+		Map all = new HashMap();
+		for(int i = 0;traceFiles != null &&  i < this.traceFiles.size();i ++)
+		{
+			LinkConfigFile f = traceFiles.get(i);
+			Map value = f.getConfigPropertiesFile() != null?f.getConfigPropertiesFile().getAllExternalProperties():null;
+			if(value != null)
+				all.putAll(value);
+		}
+		return all;
+	}
+	public String getSystemEnvProperty(String property){
+		String value = getExternalProperty(  property);
 
+		if(value == null){ //Get value from jvm system propeties,just like -Dproperty=value
+//			Properties pros = System.getProperties();
+			value =System.getProperty(property);
+			if(value == null) {
+				//Get value from os env ,just like property=value in user profile
+				value = System.getenv(property);
+			}
+		}
+		return value;
+	}
 	public Object getExternalObjectProperty(String property,Object defaultValue)
 	{
 		String value = null;

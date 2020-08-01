@@ -15,6 +15,7 @@ package org.frameworkset.spi.assemble.plugin;/*
  */
 
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.assemble.PropertiesContainer;
 
 import java.util.Map;
 
@@ -30,22 +31,22 @@ public interface PropertiesFilePlugin {
 	 * @return
 	 * @param applicationContext
 	 */
-	public String getFiles(BaseApplicationContext applicationContext,Map<String,String> extendsAttributes);
+	public String getFiles(BaseApplicationContext applicationContext,Map<String,String> extendsAttributes, PropertiesContainer propertiesContainer);
 
 	/**
 	 * 直接获取配置属性集合
 	 * @param applicationContext
 	 * @return
 	 */
-	public Map getConfigProperties(BaseApplicationContext applicationContext,Map<String,String> extendsAttributes);
+	public Map getConfigProperties(BaseApplicationContext applicationContext,Map<String,String> extendsAttributes, PropertiesContainer propertiesContainer);
 	/**
 	 * 0: 外部自定义配置文件
 	 * 1：外部自定义属性
 	 * -1:采用默认配置文件
 	 */
-	public int getInitType(BaseApplicationContext applicationContext,Map<String,String> extendsAttributes);
+	public int getInitType(BaseApplicationContext applicationContext,Map<String,String> extendsAttributes, PropertiesContainer propertiesContainer);
 
-	public void restore(BaseApplicationContext applicationContext,Map<String,String> extendsAttributes);
+	public void restore(BaseApplicationContext applicationContext,Map<String,String> extendsAttributes, PropertiesContainer propertiesContainer);
 	public static final int INIT_TYPE_OUTCONFIGFILE = 0;
 	public static final int INIT_TYPE_OUTMAP = 1;
 	public static final int INIT_TYPE_DEFAULT = -1;

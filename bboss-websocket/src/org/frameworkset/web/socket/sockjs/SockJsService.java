@@ -23,7 +23,6 @@ public interface SockJsService {
 	 * exceptions from the WebSocketHandler can be handled internally or through
 	 * {@link ExceptionWebSocketHandlerDecorator} or some alternative decorator.
 	 * The former is automatically added when using
-	 * {@link org.frameworkset.web.socket.sockjs.support.SockJsHttpRequestHandler}.
 	 */
 	void handleRequest(ServerHttpRequest request, ServerHttpResponse response, String sockJsPath,
 			WebSocketHandler handler) throws SockJsException;

@@ -112,13 +112,13 @@ public class PropertiesContainer extends AbstractGetProperties{
 			synchronized (PropertiesFilePlugin.class) {
 				PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin) clazz.newInstance();
 				try {
-					if (propertiesFilePlugin.getInitType(applicationContext,extendsAttributes) != 1) {
-						String configPropertiesFile = propertiesFilePlugin.getFiles(applicationContext,extendsAttributes);
+					if (propertiesFilePlugin.getInitType(applicationContext,extendsAttributes,this) != 1) {
+						String configPropertiesFile = propertiesFilePlugin.getFiles(applicationContext,extendsAttributes,this);
 						if (SimpleStringUtil.isNotEmpty(configPropertiesFile)) {
 							loadPropertiesFromFiles(configPropertiesFile, linkfile);
 						}
 					} else {
-						Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext,extendsAttributes);
+						Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext,extendsAttributes,this);
 						if (configProperties != null && configProperties.size() > 0) {
 							allProperties.putAll(configProperties);
 						}
@@ -128,7 +128,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 						allProperties.putAll(evaledProperties);
 					}
 				} finally {
-					propertiesFilePlugin.restore(applicationContext,extendsAttributes);
+					propertiesFilePlugin.restore(applicationContext,extendsAttributes,this);
 				}
 			}
 			if(linkfile != null)
@@ -141,13 +141,41 @@ public class PropertiesContainer extends AbstractGetProperties{
 
 
 	}
+	protected String namespace;
+    protected String configChangeListener;
+    protected boolean changeReload;
 	public void addConfigPropertiesFromApollo(String namespace,String configChangeListener)
 	{
+		this.namespace = namespace;
+		this.configChangeListener = configChangeListener;
 		Map<String,String> pros = new HashMap<String,String>();
 		pros.put("apolloNamespace",namespace);
 		if(configChangeListener != null)
 			pros.put("configChangeListener",configChangeListener);
 
+		addConfigPropertiesFromApollo(  namespace,   (LinkConfigFile)null, (BaseApplicationContext)null,pros );
+
+	}
+
+	/**
+	 * 热加载属性配置文件
+	 */
+	public synchronized void reset(){
+		configPropertiesFiles = null;
+		allProperties = null;
+		addConfigPropertiesFromApollo(namespace, changeReload);
+	}
+
+	public void addConfigPropertiesFromApollo(String namespace,boolean changeReload)
+	{
+		this.namespace = namespace;
+		this.changeReload = changeReload;
+		Map<String,String> pros = new HashMap<String,String>();
+		pros.put("apolloNamespace",namespace);
+		pros.put("changeReload",changeReload?"true":"false");
+		if(changeReload) {
+			pros.put("configChangeListener","org.frameworkset.apollo.PropertiesContainerChangeListener");
+		}
 		addConfigPropertiesFromApollo(  namespace,   (LinkConfigFile)null, (BaseApplicationContext)null,pros );
 
 	}
@@ -167,8 +195,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 			configPropertiesFiles = new ArrayList<String>();
 
 		}
-		if(allProperties  == null)
-			allProperties = new Properties();
+		Properties allProperties = new Properties();
 		String configPropertiesPlugin = "org.frameworkset.apollo.ApolloPropertiesFilePlugin";
 		try {
 
@@ -176,7 +203,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 			synchronized (clazz) {
 				PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin) clazz.newInstance();
 
-				Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext,extendsAttributes);
+				Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext,extendsAttributes,this);
 				if (configProperties != null && configProperties.size() > 0) {
 					allProperties.putAll(configProperties);
 				}
@@ -196,6 +223,14 @@ public class PropertiesContainer extends AbstractGetProperties{
 					log.error("Add Config Properties From Apollo failed: " + SimpleStringUtil.object2json(extendsAttributes), e);
 				}
 			}
+		}
+
+
+		if(this.allProperties  == null)
+			this.allProperties = allProperties;
+		else{
+			if(allProperties.size() > 0)
+				this.allProperties.putAll(allProperties);
 		}
 
 
@@ -574,7 +609,13 @@ public class PropertiesContainer extends AbstractGetProperties{
     	if(son.getAllProperties() != null)
     		sonAndParentProperties.putAll(son.getAllProperties());
     }
-    public Map<Object,Object> getAllProperties() {
+
+	/**
+	 * use getAllExternalProperties
+	 * @return
+	 */
+	@Deprecated
+    public Map getAllProperties() {
 		// TODO Auto-generated method stub
 		return this.allProperties;
 	}
@@ -618,26 +659,26 @@ public class PropertiesContainer extends AbstractGetProperties{
 		return value;
 	}
 
-	/**
-	 * 首先从配置文件中查找属性值，然后从jvm系统熟悉和系统环境变量中查找属性值
-	 * @param property
-	 * @return
-	 */
-	public String getSystemEnvProperty(String property,String defaultValue)
-	{
-		String value = getProperty(  property);
-
-		if(value == null){ //Get value from jvm system propeties,just like -Dproperty=value
-//			Properties pros = System.getProperties();
-			value =System.getProperty(property);
-			if(value == null) {
-				//Get value from os env ,just like property=value in user profile
-				value = System.getenv(property);
-
-			}
-		}
-		return value != null? value:defaultValue;
-	}
+//	/**
+//	 * 首先从配置文件中查找属性值，然后从jvm系统熟悉和系统环境变量中查找属性值
+//	 * @param property
+//	 * @return
+//	 */
+//	public String getSystemEnvProperty(String property,String defaultValue)
+//	{
+//		String value = getProperty(  property);
+//
+//		if(value == null){ //Get value from jvm system propeties,just like -Dproperty=value
+////			Properties pros = System.getProperties();
+//			value =System.getProperty(property);
+//			if(value == null) {
+//				//Get value from os env ,just like property=value in user profile
+//				value = System.getenv(property);
+//
+//			}
+//		}
+//		return value != null? value:defaultValue;
+//	}
 	public Boolean getBooleanSystemEnvProperty(String property)
 	{
 
@@ -718,7 +759,9 @@ public class PropertiesContainer extends AbstractGetProperties{
 
 	}
 
-
+	public Map getAllExternalProperties(){
+		return getAllProperties();
+	}
 	public long getLongSystemEnvProperty(String property,long defaultValue) {
 		String value = getSystemEnvProperty(  property);
 		if(value == null)

@@ -1,13 +1,13 @@
 package org.frameworkset.web.socket.config;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.frameworkset.spi.Lifecycle;
 import org.frameworkset.spi.SmartLifecycle;
 import org.frameworkset.util.beans.BeansException;
 import org.frameworkset.web.servlet.handler.AbstractUrlHandlerMapping;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class WebSocketHandlerMapping  extends AbstractUrlHandlerMapping  implements SmartLifecycle {
 	private volatile boolean running = false;
@@ -79,9 +79,8 @@ public class WebSocketHandlerMapping  extends AbstractUrlHandlerMapping  impleme
 	 * Set a Map with URL paths as keys and handler beans (or handler bean names)
 	 * as values. Convenient for population with bean references.
 	 * <p>Supports direct URL matches and Ant-style pattern matches. For syntax
-	 * details, see the {@linkAntPathMatcher} javadoc.
+	 * details, see the {AntPathMatcher} javadoc.
 	 * @param urlMap map with URLs as keys and beans as values
-	 * @see #setMappings
 	 */
 	public void setUrlMap(Map<String, HandlerMeta> urlMap) {
 		this.urlMap.putAll(urlMap);

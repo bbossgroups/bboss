@@ -14,15 +14,27 @@ package org.frameworkset.spi.assemble;/*
  *  limitations under the License.
  */
 
+import com.frameworkset.util.ValueCastUtil;
 import org.frameworkset.spi.support.EnvUtil;
 
 import java.util.Map;
 
 public class MapGetProperties extends AbstractGetProperties{
+
 	private Map<String,Object> values;
 	public MapGetProperties(Map<String,Object> values){
 		//解析环境变量
 		this.values = EnvUtil.evalEnvVariableForObjectContainer(values);
+	}
+	public String getProperty(String property){
+		return getExternalProperty(property);
+	}
+	public boolean getBooleanProperty(String property,boolean defaultValue){
+
+		Object value = values.get(property);
+		if(value == null)
+			return defaultValue;
+		return ValueCastUtil.toBoolean(value,defaultValue);
 	}
 	public String getExternalProperty(String property){
 		Object value = values.get(property);
@@ -54,5 +66,10 @@ public class MapGetProperties extends AbstractGetProperties{
 			return value;
 		else
 			return defaultValue;
+	}
+
+	@Override
+	public Map getAllExternalProperties() {
+		return values;
 	}
 }
