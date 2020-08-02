@@ -215,7 +215,31 @@ public class PropertiesContainer extends AbstractGetProperties{
 			}
 			if(linkfile != null)
 				loopback(linkfile);
-		} catch (Exception e) {
+		}
+		catch (ClassNotFoundException e){
+			if(log.isErrorEnabled()) {
+				StringBuilder msg = new StringBuilder();
+
+				if(applicationContext != null) {
+					msg.append("Add Config Properties for[" )
+							.append( applicationContext.getConfigfile() )
+							.append( "] From Apollo failed: " )
+							.append( SimpleStringUtil.object2json(extendsAttributes));
+				}else{
+					msg.append("Add Config Properties From Apollo failed: " )
+							.append( SimpleStringUtil.object2json(extendsAttributes) );
+				}
+				msg.append(", Add compile dependency to build.gradle in gralde project: \r\ncompile \"com.bbossgroups.plugins:bboss-plugin-apollo:5.7.6\"")
+				.append(" \r\nor Add compile dependency to pom.xml in maven project: \r\n    " )
+							.append( "    <dependency>\n"  )
+						.append("            <groupId>com.bbossgroups.plugins</groupId>\n"  )
+						.append("            <artifactId>bboss-plugin-apollo</artifactId>\n"  )
+						.append("            <version>5.7.6</version>\n"  )
+						.append("        </dependency>");
+				log.error(msg.toString(),e);
+			}
+		}
+		catch (Exception e) {
 			if(log.isErrorEnabled()) {
 				if(applicationContext != null)
 					log.error("Add Config Properties for[" + applicationContext.getConfigfile() + "] From Apollo failed: " + SimpleStringUtil.object2json(extendsAttributes), e);
