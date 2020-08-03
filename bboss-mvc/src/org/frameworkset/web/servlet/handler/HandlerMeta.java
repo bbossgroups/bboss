@@ -15,14 +15,13 @@
  */
 package org.frameworkset.web.servlet.handler;
 
+import org.frameworkset.util.ClassUtil;
+import org.frameworkset.web.servlet.view.UrlBasedViewResolver;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.frameworkset.util.ClassUtil;
-import org.frameworkset.web.servlet.view.UrlBasedViewResolver;
 
 /**
  * <p>Title: HandlerMeta.java</p> 
@@ -54,6 +53,7 @@ public  class HandlerMeta
 	private Object handler;
 	private Map<String,String> pathNames ;
 	private static final Object trace = new Object();
+	private String toStringMessage = null;
 	public HandlerMeta()
 	{
 		
@@ -107,8 +107,14 @@ public  class HandlerMeta
 	}
 	
 	public String toString()
-	{		
-		return this.getHandlerName();
+	{
+		if(toStringMessage != null)
+			return toStringMessage;
+		else{
+			String temp = this.beanName + "@" +this.getHandlerName();
+			toStringMessage = temp;
+			return toStringMessage;
+		}
 	}
 	
 	/**

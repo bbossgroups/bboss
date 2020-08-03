@@ -15,10 +15,10 @@
  */
 package org.frameworkset.web.servlet;
 
+import org.frameworkset.web.servlet.handler.HandlerMeta;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.frameworkset.web.servlet.handler.HandlerMeta;
 
 /**
  * <p>Title: HandlerInterceptor.java</p> 
@@ -39,7 +39,6 @@ public interface HandlerInterceptor {
 	 * typically sending a HTTP error or writing a custom response.
 	 * @param request current HTTP request
 	 * @param response current HTTP response
-	 * @param handler chosen handler to execute, for type and/or instance evaluation
 	 * @return <code>true</code> if the execution chain should proceed with the
 	 * next interceptor or the handler itself. Else, DispatcherServlet assumes
 	 * that this interceptor has already dealt with the response itself.
