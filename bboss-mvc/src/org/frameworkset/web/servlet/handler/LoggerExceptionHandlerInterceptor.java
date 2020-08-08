@@ -47,7 +47,7 @@ public class LoggerExceptionHandlerInterceptor implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, HandlerMeta handlerMeta, Exception ex) throws Exception {
 		if(ex != null && logger.isErrorEnabled()){
 			StringBuilder builder = new StringBuilder();
-			builder.append("Request[").append(request.getRequestURI()).append("] handler[").append(handlerMeta.toString()).append("] failed!");
+			builder.append("Request[").append(request.getRequestURI()).append("@").append(handlerMeta.toString()).append("] failed!");
 			logger.error(builder.toString(),ex);
 		}
 	}
