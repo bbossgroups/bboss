@@ -17,6 +17,7 @@ package org.frameworkset.spi.assemble;/*
 import java.util.Map;
 
 public interface GetProperties {
+	public void reset();
 	public String getExternalProperty(String property);
 	public String getSystemEnvProperty(String property);
 	public String getExternalProperty(String property,String defaultValue);

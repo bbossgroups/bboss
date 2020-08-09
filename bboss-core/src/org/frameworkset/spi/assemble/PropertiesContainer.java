@@ -19,8 +19,14 @@ public class PropertiesContainer extends AbstractGetProperties{
     protected Map<Object,Object> allProperties ;
     protected Map<Object,Object> sonAndParentProperties ;
     private static Logger log = LoggerFactory.getLogger(PropertiesContainer.class);
-    public PropertiesContainer(){
+    protected PropertiesFilePlugin propertiesFilePlugin ;
+	public PropertiesContainer(){
 
+	}
+	public void afterLoaded(GetProperties getProperties){
+    	if(propertiesFilePlugin != null){
+			propertiesFilePlugin.afterLoaded(getProperties,this);
+		}
 	}
     public void addConfigPropertiesFile(String configPropertiesFile,LinkConfigFile linkfile)
     {
@@ -129,6 +135,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 					}
 				} finally {
 					propertiesFilePlugin.restore(applicationContext,extendsAttributes,this);
+					this.propertiesFilePlugin = propertiesFilePlugin;
 				}
 			}
 			if(linkfile != null)
@@ -164,6 +171,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 		configPropertiesFiles = null;
 		allProperties = null;
 		addConfigPropertiesFromApollo(namespace, changeReload);
+		this.afterLoaded(this);
 	}
 
 	public void addConfigPropertiesFromApollo(String namespace,boolean changeReload)
@@ -212,6 +220,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 				if(evaledProperties != null){
 					allProperties.putAll(evaledProperties);
 				}
+				this.propertiesFilePlugin = propertiesFilePlugin;
 			}
 			if(linkfile != null)
 				loopback(linkfile);
@@ -229,12 +238,12 @@ public class PropertiesContainer extends AbstractGetProperties{
 					msg.append("Add Config Properties From Apollo failed: " )
 							.append( SimpleStringUtil.object2json(extendsAttributes) );
 				}
-				msg.append(", Add compile dependency to build.gradle in gralde project: \r\ncompile \"com.bbossgroups.plugins:bboss-plugin-apollo:5.7.6\"")
+				msg.append(", Add compile dependency to build.gradle in gralde project: \r\ncompile \"com.bbossgroups.plugins:bboss-plugin-apollo:5.7.7\"")
 				.append(" \r\nor Add compile dependency to pom.xml in maven project: \r\n    " )
 							.append( "    <dependency>\n"  )
 						.append("            <groupId>com.bbossgroups.plugins</groupId>\n"  )
 						.append("            <artifactId>bboss-plugin-apollo</artifactId>\n"  )
-						.append("            <version>5.7.6</version>\n"  )
+						.append("            <version>5.7.7</version>\n"  )
 						.append("        </dependency>");
 				log.error(msg.toString(),e);
 			}

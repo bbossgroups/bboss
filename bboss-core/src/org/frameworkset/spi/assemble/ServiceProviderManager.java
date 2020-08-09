@@ -332,7 +332,8 @@ public class ServiceProviderManager implements AOPValueHandler{
 
         String url = configFile;
         boolean isfile = false;
-        try {
+		PropertiesContainer propertiesContainer = null;
+		try {
         	if(managerImport.isClasspathBase())
         	{
 	            URL confURL = ServiceProviderManager.class.getClassLoader().getResource(configFile);
@@ -377,8 +378,10 @@ public class ServiceProviderManager implements AOPValueHandler{
             SAXParser parser = factory.newSAXParser();
             if(managerImport.isClasspathBase())
             {
-            	if(!isfile)
-            		parser.parse(url, handler);
+            	if(!isfile) {
+					parser.parse(url, handler);
+
+				}
             	else
             	{
             		File f = new File(url);
@@ -394,15 +397,17 @@ public class ServiceProviderManager implements AOPValueHandler{
             else
             {
             	File f = new File(url);
-        		if(f.exists())
-        			parser.parse(new File(url), handler);
+        		if(f.exists()) {
+					parser.parse(new File(url), handler);
+
+				}
         		else
         		{
         			if(log.isDebugEnabled())
         				log.debug(new StringBuilder().append("Ignore load IOC xml file[" ).append( url).append( "]:file do not exist.").toString());
         		}
             }
-
+			propertiesContainer  = handler.getConfigPropertiesFile();
             this.addMangers(handler.getManagers());
             this.addProperties(handler.getProperties());
             if (parentFile == null || parentFile.isMultiRoot())
@@ -411,7 +416,8 @@ public class ServiceProviderManager implements AOPValueHandler{
                 parentFile.addLinkConfigFile(linkconfigFile);
             linkconfigFile.setMgrServices(handler.getManagers());
             linkconfigFile.setProperties(handler.getProperties());
-            linkconfigFile.setConfigPropertiesFile(handler.getConfigPropertiesFile());
+
+            linkconfigFile.setConfigPropertiesFile(propertiesContainer);
             this.managerimports.put(linkconfigFile.getIdentity(), linkconfigFile);
             if(handler.getMangerimports() != null && handler.getMangerimports().size() > 0)
             	this.batchLoad(handler.getMangerimports(), linkconfigFile);
@@ -456,6 +462,11 @@ public class ServiceProviderManager implements AOPValueHandler{
             }
             
         }
+		finally {
+			if(propertiesContainer != null){
+				propertiesContainer.afterLoaded(applicationContext);
+			}
+		}
 
     }
     

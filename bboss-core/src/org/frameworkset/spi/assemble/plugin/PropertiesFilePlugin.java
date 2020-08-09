@@ -15,6 +15,7 @@ package org.frameworkset.spi.assemble.plugin;/*
  */
 
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.assemble.GetProperties;
 import org.frameworkset.spi.assemble.PropertiesContainer;
 
 import java.util.Map;
@@ -52,4 +53,5 @@ public interface PropertiesFilePlugin {
 	public static final int INIT_TYPE_DEFAULT = -1;
 
 
+	void afterLoaded(GetProperties applicationContext, PropertiesContainer propertiesContainer);
 }

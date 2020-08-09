@@ -36,6 +36,12 @@ public class MapGetProperties extends AbstractGetProperties{
 			return defaultValue;
 		return ValueCastUtil.toBoolean(value,defaultValue);
 	}
+
+	@Override
+	public void reset() {
+
+	}
+
 	public String getExternalProperty(String property){
 		Object value = values.get(property);
 		if(value == null)
