@@ -621,7 +621,7 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
 				if(configPropertiesFile != null)//有可能文件不存在，并且变量都有默认值，必须强制计算变量这种的值
 				{
 
-					value = Pro.evalValue(  value,  configPropertiesFile,this);
+					value = Pro.evalValue(  value,  configPropertiesFile,this,property.isEscapeQuoted());
 				}
     			
     		    extendsAttributes.put(name, value);
@@ -784,6 +784,10 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
         String name_ = null;
         String value = null;
         String clazz = null;
+        String escapeQuoted = attributes.getValue("escapeQuoted");
+        if(escapeQuoted != null && escapeQuoted.equals("false")){
+        	p.setEscapeQuoted(false);
+		}
         if(this.serial)
         {
         	 name_ = attributes.getValue("n");

@@ -45,7 +45,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 			"factory-bean", "factory-class", "factory-method","iocplugin" };
 	
 	public static final String REF_TOKEN = "->";
-	
+	private boolean escapeQuoted = true;
 	/**
 	 * 内置的属性前缀标识
 	 */
@@ -79,6 +79,14 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	public static final String COMPONENT_STRING = "java.lang.String";
 	public static final String COMPONENT_STRING_SHORTNAME = "String";
 	public static final String COMPONENT_CLASS = "Class";
+
+	public boolean isEscapeQuoted() {
+		return escapeQuoted;
+	}
+
+	public void setEscapeQuoted(boolean escapeQuoted) {
+		this.escapeQuoted = escapeQuoted;
+	}
 
 	// public final static String id_mask = "#~#";
 	//    
@@ -677,11 +685,11 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	public Object getValue() {
 		return value;
 	}
-	public static String evalValue(String value,PropertiesContainer configPropertiesFile,ProviderParser providerParser)
+	public static String evalValue(String value,PropertiesContainer configPropertiesFile,ProviderParser providerParser,boolean escapeQuoted)
 	{
 		//先进行特殊字符转换
 		if(value != null && !value.equals("")){
-			value = configPropertiesFile.escapeValue(value, providerParser);
+			value = configPropertiesFile.escapeValue(value, providerParser,escapeQuoted);
 		}
 		//再进行片段解析
 		String resultValue = configPropertiesFile.evalValue((List<String>) null,value, providerParser);
@@ -704,7 +712,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 			else {
 				this.value = value;
 			}*/
-			this.value = evalValue(  value,  configPropertiesFile,providerParser);
+			this.value = evalValue(  value,  configPropertiesFile,providerParser,this.isEscapeQuoted());
 		}
 		else
 		{

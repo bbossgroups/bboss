@@ -390,7 +390,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 		return re.toString();
 
 	}
-	public String escapeValue(String value, ProviderParser providerParser) {
+	public String escapeValue(String value, ProviderParser providerParser,boolean escapeQuoted) {
 		if(SimpleStringUtil.isEmpty(value))
 			return value;
 //		String escapePre = null;
@@ -409,7 +409,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 //				escapeRNEnd = serviceProviderManager.getEscapeRNEnd();
 			}
 		}
-		return escapeValue( value, serviceProviderManager);
+		return escapeValue( value, serviceProviderManager,escapeQuoted);
 //		boolean escape = !SimpleStringUtil.isEmpty(escapeEnd ) || SimpleStringUtil.isEmpty(escapePre ));
 //		boolean escapeRN = !(SimpleStringUtil.isEmpty(escapeRNPre ) || SimpleStringUtil.isEmpty(escapeRNEnd ));
 //
@@ -447,7 +447,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 
 	}
 
-	public String escapeValue(String value, AOPValueHandler valueHandler) {
+	public String escapeValue(String value, AOPValueHandler valueHandler,boolean escapeQuoted) {
 		if(SimpleStringUtil.isEmpty(value))
 			return value;
 		String escapePre = null;
@@ -472,9 +472,10 @@ public class PropertiesContainer extends AbstractGetProperties{
 				if (token.texttoken())
 					re.append(token.getText());
 				else {
-					re.append("\"");
+
+					if(escapeQuoted) re.append("\"");
 					valueHandler.escapeRN(token.getText(), re);
-					re.append("\"");
+					if(escapeQuoted) re.append("\"");
 				}
 			}
 			value = re.toString();
@@ -487,9 +488,9 @@ public class PropertiesContainer extends AbstractGetProperties{
 				if (token.texttoken())
 					re.append(token.getText());
 				else {
-					re.append("\"");
+					if(escapeQuoted) re.append("\"");
 					valueHandler.escapeValue(token.getText(), re);
-					re.append("\"");
+					if(escapeQuoted) re.append("\"");
 				}
 			}
 			value = re.toString();
