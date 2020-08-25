@@ -1,29 +1,44 @@
 package com.frameworkset.util;
 
+import org.frameworkset.util.MoreListInfo;
+
 import java.io.Serializable;
 import java.util.List;
 
-import org.frameworkset.util.MoreListInfo;
-
-public class RListInfo  implements Serializable{
+public class RListInfo<T>  implements Serializable{
 
 	public RListInfo() {
 		
 	}
-	
+
+	public RListInfo(long totalSize,long offset,int resultSize,List<T> datas){
+		this.totalSize = totalSize;
+		this.resultSize = resultSize;
+		this.datas = datas;
+		this.offset = offset;
+	}
 	public RListInfo(ListInfo listInfo) {
 		if(listInfo != null)
 		{
 			this.totalSize = listInfo.getTotalSize();
 			this.more = listInfo.isMore();
 			this.maxPageItems = listInfo.getMaxPageItems();
-			this.resultSize = listInfo.getResultSize();
+			if(more)
+				this.resultSize = listInfo.getResultSize();
+			else
+				this.resultSize = listInfo.getSize();
 			this.datas = listInfo.getDatas();
 		}
-		
 	}
-	
+	public RListInfo(ListInfo listInfo,long offset) {
+		this(listInfo);
+		this.offset = offset;
+	}
 
+	/**
+	 * 分页起始位置
+	 */
+	private long offset;
     /*
     * 显示的数据字段名称
 	 */
@@ -48,7 +63,7 @@ public class RListInfo  implements Serializable{
    /**
     * 分批取出当前页的记录集合
     */
-    private List datas;
+    private List<T> datas;
   
     /**
 	 * more分页查询，不会计算总记录数，如果没有记录那么返回的ListInfo的datas的size为0,
@@ -77,7 +92,7 @@ public class RListInfo  implements Serializable{
     *
     * @return   the current value of the datas property
     */
-   public List getDatas()
+   public List<T> getDatas()
    {
        return datas;
    }
@@ -87,7 +102,7 @@ public class RListInfo  implements Serializable{
     *
     * @param aDatas the new value of the datas property
     */
-   public void setDatas(List aDatas)
+   public void setDatas(List<T> aDatas)
    {
        datas = aDatas;
    }
@@ -111,10 +126,10 @@ public class RListInfo  implements Serializable{
     public int size()
     {
     	
-    	{
-    		return this.datas != null ?this.datas.size():0;
+
+    	return this.datas != null ?this.datas.size():0;
     		
-    	}
+
     	
     }
     
@@ -158,11 +173,18 @@ public class RListInfo  implements Serializable{
 		MoreListInfo moreList = new MoreListInfo(listInfo.getResultSize() == listInfo.getMaxPageItems(),listInfo.getResultSize(),listInfo.getDatas());
 		return moreList;
 	}
-	
+	/**
 	public MoreListInfo getMoreListInfo()
 	{
 //		MoreListInfo moreList = new MoreListInfo(listInfo.getResultSize() < listInfo.getMaxPageItems(),listInfo.getResultSize(),listInfo.getDatas());
 		return buildMoreListInfo(this);
+	}*/
+
+	public long getOffset() {
+		return offset;
 	}
 
+	public void setOffset(long offset) {
+		this.offset = offset;
+	}
 }
