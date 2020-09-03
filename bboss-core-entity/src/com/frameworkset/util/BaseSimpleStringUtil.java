@@ -172,24 +172,29 @@ public class BaseSimpleStringUtil {
 
 		return dontNeedEncoding;
 	}
+	private static String ipHost;
 	private static String ip;
-	private static String getIp()
+	private static void init(){
+		if(ip == null) {
+			try {
+				InetAddress addr = InetAddress.getLocalHost();
+				String ip_ = addr.getHostAddress();//获得本机IP
+				String address = addr.getHostName();//获得本机名称
+				ipHost = ipHost + "-" + address;
+				ip = ip_;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+			}
+		}
+	}
+	public static String getIp()
 	{
 		if(ip != null)
 			return ip;
 		synchronized (BaseSimpleStringUtil.class) {
-			if(ip == null) {
-				try {
-					InetAddress addr = InetAddress.getLocalHost();
-					String ip_ = addr.getHostAddress();//获得本机IP
-					String address = addr.getHostName();//获得本机名称
-					ip = ip_ + "-" + address;
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					ip = "";
-				}
-			}
+			init();
 		}
 		return ip;
 	}
@@ -199,7 +204,12 @@ public class BaseSimpleStringUtil {
 	 */
 	public static String getHostIP()
 	  {
-		return getIp();
+		  if(ipHost != null)
+			  return ipHost;
+		  synchronized (BaseSimpleStringUtil.class) {
+			  init();
+		  }
+		  return ipHost;
 	  }
 
 

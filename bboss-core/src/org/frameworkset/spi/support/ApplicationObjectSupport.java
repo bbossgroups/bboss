@@ -39,7 +39,7 @@ import com.frameworkset.spi.assemble.BeanInstanceException;
  */
 public class ApplicationObjectSupport {
 	/** Logger that is available to subclasses */
-	protected static final Logger logger = LoggerFactory.getLogger(ApplicationObjectSupport.class);
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	/** ApplicationContext this object runs in */
 	private BaseApplicationContext applicationContext;
@@ -114,7 +114,7 @@ public class ApplicationObjectSupport {
 	/**
 	 * Subclasses can override this for custom initialization behavior.
 	 * <p>The default implementation is empty. Called by
-	 * {@link #initApplicationContext(org.frameworkset.spi.ApplicationContext)}.
+	 * {@link #initApplicationContext()}.
 	 * @throws ApplicationContextException in case of initialization errors
 	 * @throws Exception if thrown by ApplicationContext methods
 	 * @see #setApplicationContext
