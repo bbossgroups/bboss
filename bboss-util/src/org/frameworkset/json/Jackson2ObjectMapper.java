@@ -180,7 +180,6 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	@Override
 	public <T> T json2ObjectWithType(InputStream jsonString, final JsonTypeReference<T> ref, boolean ALLOW_SINGLE_QUOTES) {
 		// TODO Auto-generated method stub
-		ObjectMapper mapper = new ObjectMapper();
 		TypeReference<T> ref_ = new TypeReference<T>(){
 			@Override
 			public Type getType() {
@@ -203,7 +202,6 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 		// TODO Auto-generated method stub
 
 //		String jsonString = "[{'from_date':'2001-09-21','to_date':'2011-04-02','company':'人寿保险','department':'xxx','position':'主管' },{'from_date':'0002-12-01','to_date':'2011-04-02', 'company':'人寿保险','department':'xxx','position':'主管' }]";
-		ObjectMapper mapper = new ObjectMapper();
 		TypeReference<T> ref_ = new TypeReference<T>(){
 			@Override
 			public Type getType() {
