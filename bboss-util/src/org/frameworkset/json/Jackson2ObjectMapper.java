@@ -12,8 +12,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.lang.reflect.Type;
+
+import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_SINGLE_QUOTES;
+
 public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	protected ObjectMapper mapper = null;
+	protected ObjectMapper ALLOW_SINGLE_QUOTES_mapper = null;
+	protected ObjectMapper NOT_ALLOW_SINGLE_QUOTES_mapper = null;
+
 	private String dateFormat;
 
 	private String locale;
@@ -75,6 +81,16 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 		mapper = new ObjectMapper();
 		//反序列化时，属性不存在时忽略属性
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+		ALLOW_SINGLE_QUOTES_mapper = new ObjectMapper();
+		//反序列化时，属性不存在时忽略属性
+		ALLOW_SINGLE_QUOTES_mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+		ALLOW_SINGLE_QUOTES_mapper.configure(ALLOW_SINGLE_QUOTES, true);
+
+		NOT_ALLOW_SINGLE_QUOTES_mapper = new ObjectMapper();
+		//反序列化时，属性不存在时忽略属性
+		NOT_ALLOW_SINGLE_QUOTES_mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+		ALLOW_SINGLE_QUOTES_mapper.configure(ALLOW_SINGLE_QUOTES, false);
+
 	}
 
 
@@ -86,7 +102,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	@Override
 	public  <T> T json2Object(String jsonString,Class<T> toclass) {
 			// TODO Auto-generated method stub
-			return json2Object(jsonString,toclass,true);
+			return json2Object(jsonString,toclass,false);
 			
 		
 		}
@@ -120,8 +136,14 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			
 //			mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
 			try {
-				T value = mapper.readValue(jsonString, toclass);
-				return value;
+				if(ALLOW_SINGLE_QUOTES) {
+					T value = ALLOW_SINGLE_QUOTES_mapper.readValue(jsonString, toclass);
+					return value;
+				}
+				else{
+					T value = NOT_ALLOW_SINGLE_QUOTES_mapper.readValue(jsonString, toclass);
+					return value;
+				}
 				
 				
 			} catch (Exception e) {
@@ -143,9 +165,15 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			
 //			mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
 			try {
-				T value = mapper.readValue(jsonString, toclass);
-				return value;
-				
+
+				if(ALLOW_SINGLE_QUOTES) {
+					T value = ALLOW_SINGLE_QUOTES_mapper.readValue(jsonString, toclass);
+					return value;
+				}
+				else{
+					T value = NOT_ALLOW_SINGLE_QUOTES_mapper.readValue(jsonString, toclass);
+					return value;
+				}
 				
 			} catch (Exception e) {
 				throw new IllegalArgumentException("",e);
@@ -190,8 +218,16 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			 
 		};  
 		try {
-			T value = mapper.readValue(jsonString, ref_);
-			return value;
+
+
+			if(ALLOW_SINGLE_QUOTES) {
+				T value = ALLOW_SINGLE_QUOTES_mapper.readValue(jsonString, ref_);
+				return value;
+			}
+			else{
+				T value = NOT_ALLOW_SINGLE_QUOTES_mapper.readValue(jsonString, ref_);
+				return value;
+			}
 			
 			
 		} catch (Exception e) {
@@ -212,8 +248,15 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			 
 		};  
 		try {
-			T value = mapper.readValue(jsonString, ref_);
-			return value;
+
+			if(ALLOW_SINGLE_QUOTES) {
+				T value = ALLOW_SINGLE_QUOTES_mapper.readValue(jsonString, ref_);
+				return value;
+			}
+			else{
+				T value = NOT_ALLOW_SINGLE_QUOTES_mapper.readValue(jsonString, ref_);
+				return value;
+			}
 			
 			
 		} catch (Exception e) {
@@ -229,7 +272,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	 */
 	@Override
 	public   String object2json(Object object) {
-	    	return object2json(object,true) ;
+	    	return object2json(object,false) ;
 			
 			
 		
@@ -244,10 +287,17 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 //			mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
 			
 			try {
-				String value = mapper.writeValueAsString(object);
-				
-				return value;
-				
+
+				if(ALLOW_SINGLE_QUOTES) {
+					String value = ALLOW_SINGLE_QUOTES_mapper.writeValueAsString(object);
+
+					return value;
+				}
+				else{
+					String value = NOT_ALLOW_SINGLE_QUOTES_mapper.writeValueAsString(object);
+
+					return value;
+				}
 				
 			} catch (Exception e) {
 				throw new IllegalArgumentException("错误的json序列化操作",e);
@@ -262,7 +312,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	 */
 	@Override
 	public   void object2json(Object object,File writer) {
-	    	object2json(object,writer,true) ;
+	    	object2json(object,writer,false) ;
 		}
 	  
 	  /* (non-Javadoc)
@@ -273,9 +323,14 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 //	    	ObjectMapper mapper = new ObjectMapper();
 //			mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
 			try {
-				mapper.writeValue(writer,object);
-				
-				
+
+
+				if(ALLOW_SINGLE_QUOTES) {
+					ALLOW_SINGLE_QUOTES_mapper.writeValue(writer,object);
+				}
+				else{
+					NOT_ALLOW_SINGLE_QUOTES_mapper.writeValue(writer,object);
+				}
 				
 				
 			} catch (Exception e) {
@@ -291,7 +346,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	 */
 	@Override
 	public  void object2json(Object object,OutputStream writer) {
-	    	object2json(object,writer,true) ;
+	    	object2json(object,writer,false) ;
 		}
 	  
 	  /* (non-Javadoc)
@@ -302,8 +357,12 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 //	    	ObjectMapper mapper = new ObjectMapper();
 //			mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
 			try {
-				mapper.writeValue(writer,object);
-				
+				if(ALLOW_SINGLE_QUOTES) {
+					ALLOW_SINGLE_QUOTES_mapper.writeValue(writer,object);
+				}
+				else{
+					NOT_ALLOW_SINGLE_QUOTES_mapper.writeValue(writer,object);
+				}
 				
 				
 				
@@ -320,7 +379,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	 */
 	@Override
 	public   void object2json(Object object,Writer writer) {
-	    	object2json(object,writer,true) ;
+	    	object2json(object,writer,false) ;
 		}
 	  
 	  /* (non-Javadoc)
@@ -331,9 +390,13 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 //	    	ObjectMapper mapper = new ObjectMapper();
 //			mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
 			try {
-				mapper.writeValue(writer,object);
-				
-				
+
+				if(ALLOW_SINGLE_QUOTES) {
+					ALLOW_SINGLE_QUOTES_mapper.writeValue(writer,object);
+				}
+				else{
+					NOT_ALLOW_SINGLE_QUOTES_mapper.writeValue(writer,object);
+				}
 				
 				
 			} catch (Exception e) {
@@ -349,7 +412,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	 */
 	@Override
 	public   byte[] object2jsonAsbyte(Object object) {
-	    	return object2jsonAsbyte(object,true) ;
+	    	return object2jsonAsbyte(object,false) ;
 		}
 	  
 	  
@@ -361,7 +424,10 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 //	    	ObjectMapper mapper = new ObjectMapper();
 //			mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
 			try {
-				return mapper.writeValueAsBytes(object);
+				if(ALLOW_SINGLE_QUOTES)
+					return ALLOW_SINGLE_QUOTES_mapper.writeValueAsBytes(object);
+				else
+					return NOT_ALLOW_SINGLE_QUOTES_mapper.writeValueAsBytes(object);
 				
 				
 				
@@ -378,13 +444,17 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 		if(dateFormat != null && !dateFormat.equals("")) {
 			DateFormateMeta dateFormateMeta = DateFormateMeta.buildDateFormateMeta(this.dateFormat, this.locale, this.timeZone);
 			this.mapper.setDateFormat(dateFormateMeta.toDateFormat());
-
-
+			this.ALLOW_SINGLE_QUOTES_mapper.setDateFormat(dateFormateMeta.toDateFormat());
+			this.NOT_ALLOW_SINGLE_QUOTES_mapper.setDateFormat(dateFormateMeta.toDateFormat());
 		}
 		if(this.disableTimestamp){
 			mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+			ALLOW_SINGLE_QUOTES_mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+			NOT_ALLOW_SINGLE_QUOTES_mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		}
 		this.mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,failedOnUnknownProperties);
+		ALLOW_SINGLE_QUOTES_mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,failedOnUnknownProperties);
+		NOT_ALLOW_SINGLE_QUOTES_mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,failedOnUnknownProperties);
 	}
 
 
