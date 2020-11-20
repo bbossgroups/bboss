@@ -29,10 +29,10 @@ public final class EdenConcurrentCache<K,V> {
     public final int DEFAULT_SIZE = 1000;
 
     private final Map<K,V> eden;
-    private AtomicLong missing;
+    private final AtomicLong missing;
 
 
-    private Lock cacheLock = new ReentrantLock();
+    private final Lock cacheLock = new ReentrantLock();
 
     private final Map<K,V> longterm;
     public EdenConcurrentCache() {
@@ -45,6 +45,7 @@ public final class EdenConcurrentCache<K,V> {
         this.size = size;
         this.eden = new ConcurrentHashMap<K,V>();
         this.longterm = new WeakHashMap<K,V>();
+        missing = new AtomicLong();
     }
 
 

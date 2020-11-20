@@ -61,7 +61,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		try {
 			Class r = Runtime.getRuntime().getClass();
 			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
-					new Class[] { Thread.class });
+					Thread.class);
 			shutdownHook  = new Thread(
 					new Runnable(){
 
@@ -71,7 +71,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 						}
 						
 					});
-			m.invoke(Runtime.getRuntime(), new Object[] { shutdownHook });
+			m.invoke(Runtime.getRuntime(), shutdownHook);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -304,7 +304,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		// providerManager = new ServiceProviderManager(this);
 		// providerManager.init(this.configfile);
 		
-		this(AssembleCallback.classpathprex, "", (String)content,isfile,init);
+		this(AssembleCallback.classpathprex, "", content,isfile,init);
 	}
 	
 	protected BaseApplicationContext(String content,boolean isfile,String charset,boolean init) {
@@ -317,7 +317,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		// providerManager = new ServiceProviderManager(this);
 		// providerManager.init(this.configfile);
 		
-		this(AssembleCallback.classpathprex, "", (String)content,isfile,charset, init);
+		this(AssembleCallback.classpathprex, "", content,isfile,charset, init);
 	}
 	protected BaseApplicationContext(String docbaseType, String docbase,
 			String configfile)
@@ -506,7 +506,10 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			throw new NullPointerException(
 					"build ApplicationContext failed:configfile is "
 							+ null);
+
 		this.baseDir = baseDir;
+		if(log.isDebugEnabled())
+			log.debug("ioc config file base dir is {}",baseDir);
 		this.isfile = false;
 		this.configfile = path;
 		this.configFileURL = file;
@@ -515,7 +518,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		providerManager.init(AssembleCallback.classpathprex, "", configfile,file);
 	}
 	public BaseApplicationContext(InputStream instream, boolean isfile,boolean init) {
-		this(AssembleCallback.classpathprex, "", (InputStream)instream,isfile, init);
+		this(AssembleCallback.classpathprex, "", instream,isfile, init);
 	}
 	
 	protected ServiceProviderManager _getServiceProviderManager()
@@ -875,7 +878,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 	static class WrapperRunnable implements Runnable
 	{
-		private Runnable executor;
+		private final Runnable executor;
 		private int proir;
 		WrapperRunnable(Runnable executor,int proir)
 		{
@@ -977,9 +980,9 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	private static class DestroyMethod
 	{
 		
-		private String destroyMethod;
+		private final String destroyMethod;
 		
-		private  Object instance;
+		private final Object instance;
 		public DestroyMethod(String destroyMethod, Object instance) {
 			super();
 			
@@ -1006,7 +1009,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		destroyServiceMethods.add(destoryMethod);
 	}
 
-	private static Logger log = LoggerFactory.getLogger(BaseApplicationContext.class);
+	private static final Logger log = LoggerFactory.getLogger(BaseApplicationContext.class);
 
 	/**
 	 * 缺省接口key
@@ -1282,7 +1285,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 */
 	public Object getProvider(String providerManagerType, String sourceType)
 			throws SPIException {
-		return getProvider((CallContext) null, providerManagerType, sourceType,
+		return getProvider(null, providerManagerType, sourceType,
 				false);
 	}
 
@@ -1494,7 +1497,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 
 	public Object getBeanObject(String name) {
-		return getBeanObject(name, (Object)null);
+		return getBeanObject(name, null);
 		// return this.providerManager.getObjectProperty(name);
 		// if(value == null)
 		// throw new AssembleException("配置文件没有指定属性[" + name + "]！");
@@ -1502,7 +1505,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 	
 	public <T> T getTBeanObject(String name,Class<T> clazz) {
-		return (T)getBeanObject(name, (Object)null);
+		return (T)getBeanObject(name, null);
 		// return this.providerManager.getObjectProperty(name);
 		// if(value == null)
 		// throw new AssembleException("配置文件没有指定属性[" + name + "]！");
@@ -1519,7 +1522,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	}
 	
 	public <T> T getTBeanObject(String name, T defaultValue,Class<T> clazz) {
-		return getTBeanObject((CallContext)null,name,defaultValue,clazz);
+		return getTBeanObject(null,name,defaultValue,clazz);
 		// return this.providerManager.getObjectProperty(name,
 		// defaultValue);
 		// if(value == null)
@@ -2045,8 +2048,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	// Implementation of MessageSource interface
 	// ---------------------------------------------------------------------
 
-	public String getMessage(String code, Object args[], String defaultMessage,
-			Locale locale) {
+	public String getMessage(String code, Object[] args, String defaultMessage,
+							 Locale locale) {
 		return getMessageSource()
 				.getMessage(code, args, defaultMessage, locale);
 	}
@@ -2067,7 +2070,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		return getMessageSource().getMessage(code, null, null, null);
 	}
 
-	public String getMessage(String code, Object args[], Locale locale)
+	public String getMessage(String code, Object[] args, Locale locale)
 			throws NoSuchMessageException {
 		return getMessageSource().getMessage(code, args, locale);
 	}
@@ -2701,7 +2704,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			return ((Boolean)value).booleanValue();
 		}
 		else if(value instanceof String){
-			return ((String)value).equals("true");
+			return value.equals("true");
 
 		}
 		else{
