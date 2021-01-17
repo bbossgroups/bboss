@@ -21,12 +21,12 @@ import java.lang.annotation.*;
  * <p>Description: </p>
  * <p></p>
  * <p>Copyright (c) 2020</p>
- * @Date 2020/6/26 10:29
+ * @Date 2020/6/26 10:28
  * @author biaoping.yin
  * @version 1.0
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Service {
+public @interface BComponent {
 }

@@ -28,7 +28,7 @@ import java.lang.annotation.*;
 @Target({ElementType.PARAMETER,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Autowired {
+public @interface BAutowired {
 	/**
 	 * 组件名称，不指定直接采用field或者参数名称
 	 * @return

@@ -24,6 +24,12 @@ import junit.framework.TestCase;
  */
 public class PathMatcherTests extends TestCase {
 
+	public void testMath(){
+		PathMatcher pathMatcher = new AntPathMatcher();
+		assertTrue(pathMatcher.match("https://wap.hn.10086.cn/h5web/static/newPersonal/personal_index_home.html?moduleId=wechat_hnydwt&positionId=wechat_XBGRZX_WTCDL&chanId=E008&WT.place=HN_WT&WT.mc_id=2006_Wx_1_WTCDL_XBGRZX**", "https://wap.hn.10086.cn/h5web/static/newPersonal/personal_index_home.html?moduleId=wechat_hnydwt&positionId=wechat_XBGRZX_WTCDL&chanId=E008&WT.place=HN_WT&WT.mc_id=2006_Wx_1_WTCDL_XBGRZX"));
+		assertTrue(pathMatcher.match("https://wap.hn.10086.cn/h5web/static/newPersonal/personal_index_home.html?moduleId=wechat_hnydwt&positionId=wechat_XBGRZX_WTCDL&chanId=*&WT.place=HN_WT&WT.mc_id=2006_Wx_1_WTCDL_XBGRZX", "https://wap.hn.10086.cn/h5web/static/newPersonal/personal_index_home.html?moduleId=wechat_hnydwt&positionId=wechat_XBGRZX_WTCDL&chanId=E008&WT.place=HN_WT&WT.mc_id=2006_Wx_1_WTCDL_XBGRZX"));
+		assertTrue(pathMatcher.match("https://wap.hn.10086.cn/h5web/static/newPersonal/personal_index_home.html?moduleId=wechat_hnydwt*", "https://wap.hn.10086.cn/h5web/static/newPersonal/personal_index_home.html?moduleId=wechat_hnydwt&positionId=wechat_XBGRZX_WTCDL&chanId=E008&WT.place=HN_WT&WT.mc_id=2006_Wx_1_WTCDL_XBGRZX"));
+	}
 	public void testAntPathMatcher() {
 		PathMatcher pathMatcher = new AntPathMatcher();
 
