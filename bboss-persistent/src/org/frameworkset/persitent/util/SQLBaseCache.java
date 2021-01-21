@@ -17,6 +17,7 @@
 package org.frameworkset.persitent.util;
 
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
+import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import org.slf4j.Logger;
@@ -83,7 +84,7 @@ public abstract class SQLBaseCache {
 		}
 		return false;
 	}
-	public abstract PoolManResultSetMetaData getPoolManResultSetMetaData(boolean cacheSql,com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException;
+	public abstract PoolManResultSetMetaData getPoolManResultSetMetaData(boolean cacheSql, JDBCPool db, String dbname, String sqlkey, ResultSetMetaData rsmetadata) throws SQLException;
 
 	protected void logMetaWarn(Logger logger,String sql,int maxSize,long missing ){
 

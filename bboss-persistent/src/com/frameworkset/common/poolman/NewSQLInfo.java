@@ -15,14 +15,14 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-
+import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
+import com.frameworkset.common.poolman.util.JDBCPool;
+import com.frameworkset.util.VariableHandler.SQLStruction;
 import org.frameworkset.persitent.util.SQLInfo;
 import org.frameworkset.persitent.util.SQLUtil;
 
-import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
-import com.frameworkset.util.VariableHandler.SQLStruction;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 
 public class NewSQLInfo
 {
@@ -98,7 +98,7 @@ public class NewSQLInfo
 		this.sqlstruction = sqlstruction;
 	}
 	
-	public PoolManResultSetMetaData getPoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
+	public PoolManResultSetMetaData getPoolManResultSetMetaData(JDBCPool db, String dbname, String sqlkey, ResultSetMetaData rsmetadata) throws SQLException
 	{
 		if(this.oldsql != null && this.oldsql.getSqlutil() != null)
 		{

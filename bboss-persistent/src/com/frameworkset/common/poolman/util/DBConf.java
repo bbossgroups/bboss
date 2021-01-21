@@ -50,6 +50,16 @@ public class DBConf implements Serializable {
 	private int maximumSize;
 	private boolean usepool;
 	private boolean  external;
+
+	public boolean isColumnLableUpperCase() {
+		return columnLableUpperCase;
+	}
+
+	public void setColumnLableUpperCase(boolean columnLableUpperCase) {
+		this.columnLableUpperCase = columnLableUpperCase;
+	}
+
+	private boolean columnLableUpperCase = true;
 	private String externaljndiName ;
 	private boolean showsql ;
 	private boolean encryptdbinfo  ;

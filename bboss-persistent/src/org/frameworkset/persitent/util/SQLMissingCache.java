@@ -17,6 +17,7 @@
 package org.frameworkset.persitent.util;
 
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
+import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import org.frameworkset.cache.MissingStaticCache;
@@ -62,7 +63,7 @@ public class SQLMissingCache extends SQLBaseCache{
 	}
 
 
-	public PoolManResultSetMetaData getPoolManResultSetMetaData(boolean cacheSql,com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
+	public PoolManResultSetMetaData getPoolManResultSetMetaData(boolean cacheSql, JDBCPool db, String dbname, String sqlkey, ResultSetMetaData rsmetadata) throws SQLException
 	{
 		PoolManResultSetMetaData meta = null;
 		if(cacheSql) {

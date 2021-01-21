@@ -913,8 +913,12 @@ public class StatementInfo {
 		return results.toString();
 	}
 
+	public JDBCPool getPool() {
+		return pool;
+	}
+
 	public Record[] buildResult(ResultSet res, int containersize,
-			boolean ispagine) throws SQLException {
+								boolean ispagine) throws SQLException {
 		int rowcount = 0;
 		if (meta == null)
 			this.cacheResultSetMetaData(res,ispagine);
@@ -938,7 +942,7 @@ public class StatementInfo {
 				results = temp;
 			}
 
-			Record record = ResultMap.buildMap(res, this,this.dbadapter);
+			Record record = ResultMap.buildMap(res, this,pool);
 
 			results[rowcount] = record;
 			rowcount++;
@@ -1156,11 +1160,11 @@ public class StatementInfo {
 	
 		if(pool.getJDBCPoolMetadata().cachequerymetadata())
 		{
-			meta = this.newsqlinfo.getPoolManResultSetMetaData(pool.getDbAdapter(),dbname, key, rs.getMetaData());			
+			meta = this.newsqlinfo.getPoolManResultSetMetaData(pool,dbname, key, rs.getMetaData());
 		}
 		else
 		{
-			meta = PoolManResultSetMetaData.getCopy(pool.getDbAdapter(),rs.getMetaData());
+			meta = PoolManResultSetMetaData.getCopy(pool,rs.getMetaData());
 		}
 		
 	}
@@ -1278,6 +1282,9 @@ public class StatementInfo {
 
 	public DB getDbadapter() {
 		return dbadapter;
+	}
+	public boolean columnLableUpperCase(){
+		return this.pool.getJDBCPoolMetadata().isColumnLableUpperCase();
 	}
 
 }

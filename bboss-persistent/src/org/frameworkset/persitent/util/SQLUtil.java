@@ -19,6 +19,7 @@ package org.frameworkset.persitent.util;
 import bboss.org.apache.velocity.VelocityContext;
 import com.frameworkset.common.poolman.management.PoolManConfiguration;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
+import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.util.DaemonThread;
 import com.frameworkset.util.ResourceInitial;
@@ -711,7 +712,7 @@ public class SQLUtil {
 	 * @return
 	 * @throws SQLException
 	 */
-	public PoolManResultSetMetaData getPoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,String dbname,String sqlkey,ResultSetMetaData rsmetadata) throws SQLException
+	public PoolManResultSetMetaData getPoolManResultSetMetaData(JDBCPool db, String dbname, String sqlkey, ResultSetMetaData rsmetadata) throws SQLException
 	{
 		return this.cache.getPoolManResultSetMetaData(true,db,dbname, sqlkey, rsmetadata);
 	}

@@ -70,6 +70,8 @@
     #if($dbInfoEncryptClass && !$dbInfoEncryptClass.equals(""))
     <dbInfoEncryptClass><![CDATA[${dbInfoEncryptClass}]]></dbInfoEncryptClass>
     #end
+    <columnLableUpperCase><![CDATA[${columnLableUpperCase}]]></columnLableUpperCase>
+
   </datasource>  
  
 </poolman>

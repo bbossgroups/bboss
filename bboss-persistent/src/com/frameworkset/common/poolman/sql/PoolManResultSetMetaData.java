@@ -2,6 +2,8 @@ package com.frameworkset.common.poolman.sql;
 
 import com.frameworkset.common.poolman.handle.RowHandlerException;
 import com.frameworkset.common.poolman.management.PoolManConfiguration;
+import com.frameworkset.common.poolman.util.JDBCPool;
+import com.frameworkset.orm.adapter.DB;
 import org.frameworkset.util.ClassUtil;
 
 import java.sql.SQLException;
@@ -84,11 +86,11 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     private String _sqlState;
     private int _sqlVendorCode;
 
-    public static PoolManResultSetMetaData getCopy(com.frameworkset.orm.adapter.DB db,java.sql.ResultSetMetaData original) throws java.sql.SQLException {
+    public static PoolManResultSetMetaData getCopy(JDBCPool pool, java.sql.ResultSetMetaData original) throws java.sql.SQLException {
         if (original instanceof PoolManResultSetMetaData)
             return (PoolManResultSetMetaData)original;
         else
-            return new PoolManResultSetMetaData(db,original);
+            return new PoolManResultSetMetaData(pool,original);
     }
     
     public static PoolManResultSetMetaData getCopy(java.sql.ResultSetMetaData original) throws java.sql.SQLException {
@@ -145,8 +147,8 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     {
         return new StringBuilder(name).append(col_uuid_split ).append(id).toString();
     }
-    private PoolManResultSetMetaData(com.frameworkset.orm.adapter.DB db,java.sql.ResultSetMetaData other) throws java.sql.SQLException {
-
+    private PoolManResultSetMetaData(JDBCPool pool,java.sql.ResultSetMetaData other) throws java.sql.SQLException {
+        DB db = pool.getDbAdapter();
         _columnCount = other.getColumnCount();
 
         _columnTypeName = new String[_columnCount];
@@ -215,7 +217,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         	   this.columnJavaName[c] = ClassUtil.genJavaName(columnLabel);
            }
 //            Integer idx = new Integer(c);
-            String label = db.columnLableUpperCase()?_columnLabel_upper[c]:columnLabel;
+            String label = pool.getDbAdapter().columnLableUpperCase(pool.getJDBCPoolMetadata())?_columnLabel_upper[c]:columnLabel;
             WrapInteger wi = (WrapInteger)testM.get(label);
             if(wi == null)
             {
@@ -307,7 +309,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         
         for (int c = 0; c < _columnCount; c++) {
 //            Integer idx = new Integer(c);
-            String name =  db.columnLableUpperCase()?_columnLabel_upper[c]:_columnLabel[c];
+            String name =  db.columnLableUpperCase(pool.getJDBCPoolMetadata())?_columnLabel_upper[c]:_columnLabel[c];
             WrapInteger wi = (WrapInteger)testM.get(name);
             if(wi.containsamecol() && !samecols.containsKey(name))
             {

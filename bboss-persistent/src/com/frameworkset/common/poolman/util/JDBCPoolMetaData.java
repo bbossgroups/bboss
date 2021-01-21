@@ -38,6 +38,16 @@ public class JDBCPoolMetaData implements Serializable{
     private int skimmerFrequency = PoolManConstants.DEFAULT_SKIMMER_SLEEP;
     private int shrinkBy = PoolManConstants.DEFAULT_SHRINKBY;
     private boolean emergencyCreates = PoolManConstants.DEFAULT_EMERGENCY_CREATES;
+
+	public boolean isColumnLableUpperCase() {
+		return columnLableUpperCase;
+	}
+
+	public void setColumnLableUpperCase(boolean columnLableUpperCase) {
+		this.columnLableUpperCase = columnLableUpperCase;
+	}
+
+	private boolean columnLableUpperCase = true;
     private String maxWait = "30";//30秒  
     private String datasourceFile ;
     /**自定义自增序列函数名称，和tableinfo中的sequence表主键配置结合使用*/

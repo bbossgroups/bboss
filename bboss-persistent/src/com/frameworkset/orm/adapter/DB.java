@@ -171,8 +171,8 @@ public abstract class DB implements IDMethod, Platform {
 //		return new DESDBPasswordEncrypt();
 //	}
 
-	public boolean columnLableUpperCase() {
-		return true;
+	public boolean columnLableUpperCase(JDBCPoolMetaData jdbcPoolMetaData) {
+		return jdbcPoolMetaData.isColumnLableUpperCase();
 	}
 
 	/**

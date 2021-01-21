@@ -980,6 +980,7 @@ public class SQLManager extends PoolManager{
 		{
 			values.put("dbname_datasource_jndiname", "");
 		}
+		values.put("columnLableUpperCase",temConf.isColumnLableUpperCase());
 		values.put("driver", temConf.getDriver());
 		values.put("jdbcurl", temConf.getJdbcurl());
 		if(temConf.getUsername() == null) 

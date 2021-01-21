@@ -19,6 +19,7 @@ import com.frameworkset.common.poolman.handle.*;
 import com.frameworkset.common.poolman.management.PoolManConfiguration;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData.WrapInteger;
+import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.orm.annotation.PrimaryKey;
@@ -182,7 +183,7 @@ public class ResultMap {
 			} catch (IllegalAccessException e1) {
 				throw new NestedSQLException(e1);
 			}
-			Record data = buildMap(rs,  stmtInfo,stmtInfo.getDbadapter());
+			Record data = buildMap(rs,  stmtInfo,stmtInfo.getPool());
 			try
             {
 				if(!isfieldRowHandler)
@@ -392,7 +393,7 @@ public class ResultMap {
 
         	if(!(rowHander instanceof ResultSetNullRowHandler))
         	{
-	            Record data = buildMap(rs,  stmtInfo,db);
+	            Record data = buildMap(rs,  stmtInfo,stmtInfo.getPool());
 	            try
 	            {
 	                rowHander.handleRow(null, data);
@@ -736,9 +737,10 @@ public class ResultMap {
 	}
 	
 	
-	public static Record buildMap(ResultSet rs,StatementInfo stmtInfo,DB db)
+	public static Record buildMap(ResultSet rs, StatementInfo stmtInfo, JDBCPool jdbcPool)
 			throws SQLException {
 		Record record = null;
+		DB db = jdbcPool.getDbAdapter();
 		PoolManResultSetMetaData meta = stmtInfo.getMeta();
 		if (rs != null && stmtInfo != null) {
 		        int cols = meta.getColumnCounts();
@@ -757,7 +759,7 @@ public class ResultMap {
 				    
 				    if(wi == null || i == 1)
 				    {
-				    	if(db.columnLableUpperCase()) {
+				    	if(db.columnLableUpperCase(jdbcPool.getJDBCPoolMetadata())) {
 							record.put(meta
 											.getColumnLabelUpper(i),
 									value);
@@ -858,7 +860,7 @@ public class ResultMap {
 				    
 				    if(wi == null || i == 1)
 				    {
-						if(stmtInfo.getDbadapter().columnLableUpperCase()) {
+						if(stmtInfo.columnLableUpperCase()) {
 							valueObject.put(meta
 											.getColumnLabelUpper(i),
 									value);
@@ -900,7 +902,7 @@ public class ResultMap {
 		StringBuilder record = new StringBuilder();
 //		if (rowHander != null)
 //		{		        
-			Record data = buildMap(rs, stmtInfo,db);
+			Record data = buildMap(rs, stmtInfo,stmtInfo.getPool());
 			try
             {
                 rowHander.handleRow(record, data);
