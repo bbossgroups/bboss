@@ -1472,7 +1472,7 @@ public class SQLUtil{
  * @author biaoping.yin
  * @version 1.0
  */
-	public static class DBHashtable extends HashMap
+	public static class DBHashtable extends LinkedHashMap
 	{
 
 		public DBHashtable(int i) {
@@ -1756,8 +1756,11 @@ public class SQLUtil{
             		 externaljndiName ,showsql       		
             		);
     	}
-        
-        
+
+	public static void startPoolWithDBConf(DBConf dbConf	)
+	{
+		SQLManager.startPool( dbConf);
+	}
     	
     	
     	
