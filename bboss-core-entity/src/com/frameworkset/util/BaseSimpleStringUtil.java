@@ -174,6 +174,7 @@ public class BaseSimpleStringUtil {
 	}
 	private static String ipHost;
 	private static String ip;
+	private static String hostName;
 	private static void init(){
 		if(ip == null) {
 			try {
@@ -181,6 +182,7 @@ public class BaseSimpleStringUtil {
 				String ip_ = addr.getHostAddress();//获得本机IP
 				String address = addr.getHostName();//获得本机名称
 				ipHost = ipHost + "-" + address;
+				hostName = address;
 				ip = ip_;
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -210,6 +212,15 @@ public class BaseSimpleStringUtil {
 			  init();
 		  }
 		  return ipHost;
+	  }
+
+	  public static String getHostName(){
+		  if(hostName != null)
+			  return hostName;
+		  synchronized (BaseSimpleStringUtil.class) {
+			  init();
+		  }
+		  return hostName;
 	  }
 
 
