@@ -693,26 +693,17 @@ public class PropertiesContainer extends AbstractGetProperties{
 		return value;
 	}
 
-//	/**
-//	 * 首先从配置文件中查找属性值，然后从jvm系统熟悉和系统环境变量中查找属性值
-//	 * @param property
-//	 * @return
-//	 */
-//	public String getSystemEnvProperty(String property,String defaultValue)
-//	{
-//		String value = getProperty(  property);
-//
-//		if(value == null){ //Get value from jvm system propeties,just like -Dproperty=value
-////			Properties pros = System.getProperties();
-//			value =System.getProperty(property);
-//			if(value == null) {
-//				//Get value from os env ,just like property=value in user profile
-//				value = System.getenv(property);
-//
-//			}
-//		}
-//		return value != null? value:defaultValue;
-//	}
+	/**
+	 * 首先从配置文件中查找属性值，然后从jvm系统熟悉和系统环境变量中查找属性值
+	 * @param property
+	 * @return
+	 */
+	public String getSystemEnvProperty(String property,String defaultValue)
+	{
+		String value = getSystemEnvProperty( property);
+
+		return value != null? value:defaultValue;
+	}
 	public Boolean getBooleanSystemEnvProperty(String property)
 	{
 
