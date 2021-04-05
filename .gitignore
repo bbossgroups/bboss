@@ -39,3 +39,4 @@ bboss-taglib/.project
 
 *.class
 /gradle/
+bboss-core-entity/.project
