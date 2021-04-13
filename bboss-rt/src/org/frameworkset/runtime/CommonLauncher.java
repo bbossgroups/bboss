@@ -308,7 +308,7 @@ public class CommonLauncher {
 			IllegalAccessException, InvocationTargetException, InstantiationException, IOException {
 		CommonLauncher.args = args;
 		URL location = (CommonLauncher.class).getProtectionDomain().getCodeSource().getLocation();
-		System.out.println("os info:" + getOS());
+		System.out.println("os info:" + OSInfo.getOS());
 		appDir = computeApplicationDir(location, new File("."));
 		loadConfig(appDir);
 		if (!shutdown && !restart) {
@@ -394,7 +394,7 @@ public class CommonLauncher {
 	}
 	private static void killproc(List<String> pids) throws IOException, InterruptedException{
 		Process proc = null;
-		if (CommonLauncher.isWindows()) {
+		if (OSInfo.isWindows()) {
 			StringBuilder builder = new StringBuilder();
 			builder.append("TASKKILL /F");
 			for(int i = 0; i < pids.size(); i ++){
@@ -669,7 +669,7 @@ public class CommonLauncher {
 									// File(URLDecoder.decode(location.toExternalForm().substring(6),
 									// "UTF-8")).getParentFile();
 				// if(!CommonLauncher.isLinux() && !CommonLauncher.isOSX())
-				if (isWindows()) {
+				if (OSInfo.isWindows()) {
 					path = new File(URLDecoder.decode(location.toExternalForm().substring(6), "UTF-8")).getParentFile();
 				} else {
 					path = new File(URLDecoder.decode(location.toExternalForm().substring(5), "UTF-8")).getParentFile();
@@ -693,39 +693,9 @@ public class CommonLauncher {
 		return new File(location.getFile());
 	}
 
-	/**
-	 * determine the OS name
-	 * 
-	 * @return The name of the OS
-	 */
-	public static final String getOS() {
-		String osname = System.getProperty("os.name");
-		return osname;
-	}
 
 	/**
-	 * @return True if the OS is a Windows derivate.
-	 */
-	public static final boolean isWindows() {
-		return getOS().startsWith("Windows");
-	}
-
-	/**
-	 * @return True if the OS is a Linux derivate.
-	 */
-	public static final boolean isLinux() {
-		return getOS().startsWith("Linux");
-	}
-
-	/**
-	 * @return True if the OS is an OSX derivate.
-	 */
-	public static final boolean isOSX() {
-		return getOS().toUpperCase().contains("OS X");
-	}
-
-	/**
-	 * Determine the hostname of the machine Kettle is running on
+	 * Determine the hostname of the machine  is running on
 	 * 
 	 * @return The hostname
 	 */
@@ -759,7 +729,7 @@ public class CommonLauncher {
 	}
 
 	/**
-	 * Determins the IP address of the machine Kettle is running on.
+	 * Determins the IP address of the machine is running on.
 	 * 
 	 * @return The IP address
 	 */
@@ -803,21 +773,19 @@ public class CommonLauncher {
 	}
 
 	/**
-	 * Tries to determine the MAC address of the machine Kettle is running on.
+	 * Tries to determine the MAC address of the machine  is running on.
 	 * 
 	 * @return The MAC address.
 	 */
 	public static final String getMACAddress() throws Exception {
 		String ip = getIPAddress();
 		String mac = "none";
-		String os = getOS();
+		String os = OSInfo.getOS();
 		String s = "";
 
 		// System.out.println("os = "+os+", ip="+ip);
 
-		if (os.equalsIgnoreCase("Windows NT") || os.equalsIgnoreCase("Windows 2000")
-				|| os.equalsIgnoreCase("Windows XP") || os.equalsIgnoreCase("Windows 95")
-				|| os.equalsIgnoreCase("Windows 98") || os.equalsIgnoreCase("Windows Me") || os.startsWith("Windows")) {
+		if (OSInfo.isWindows()) {
 			try {
 				// System.out.println("EXEC> nbtstat -a "+ip);
 
@@ -839,7 +807,7 @@ public class CommonLauncher {
 			} catch (Exception e) {
 
 			}
-		} else if (os.equalsIgnoreCase("Linux")) {
+		} else if (OSInfo.isLinux()) {
 			try {
 				Process p = Runtime.getRuntime().exec("/sbin/ifconfig -a");
 
@@ -858,7 +826,7 @@ public class CommonLauncher {
 			} catch (Exception e) {
 
 			}
-		} else if (os.equalsIgnoreCase("Solaris")) {
+		} else if (OSInfo.isSolaris()) {
 			try {
 				Process p = Runtime.getRuntime().exec("/usr/sbin/ifconfig -a");
 
@@ -877,7 +845,7 @@ public class CommonLauncher {
 			} catch (Exception e) {
 
 			}
-		} else if (os.equalsIgnoreCase("HP-UX")) {
+		} else if (OSInfo.isHPUX()) {
 			try {
 				Process p = Runtime.getRuntime().exec("/usr/sbin/lanscan -a");
 
@@ -912,7 +880,7 @@ public class CommonLauncher {
 
 	/**
 	 * Determines whether or not a character is considered a space. A character
-	 * is considered a space in Kettle if it is a space, a tab, a newline or a
+	 * is considered a space in  if it is a space, a tab, a newline or a
 	 * cariage return.
 	 * 
 	 * @param c
