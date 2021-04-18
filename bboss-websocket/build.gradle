@@ -22,13 +22,13 @@ jar {
     classifier = "all"
 }*/
 
-project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.install)
+project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.build)
 ext.undertowVersion      = "1.3.18.Final"
 dependencies {
-	compile project(":bboss-core-entity")
+	api project(":bboss-core-entity")
 
    
-    compile  (
+    api  (
 			
 			  [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonversion}",transitive: false],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonversion}",transitive: false],

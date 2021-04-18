@@ -16,9 +16,9 @@ sourceSets {
         }
     }
 }
-project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.install)
+project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.publishToMavenLocal)
 dependencies {
-	compile (
+	api (
 		[group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: true],
 		[group: 'bsh', name: 'bsh', version: '2.0b1', transitive: false],
 		[group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: true],

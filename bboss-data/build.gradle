@@ -22,8 +22,8 @@ sourceSets {
 }
 
 dependencies {
-    compile project(":bboss-core")
-    compile (
+    api project(":bboss-core")
+    api (
             [group: 'org.apache.commons', name: 'commons-pool2', version: '2.4.2', transitive: false],
             [group: 'redis.clients', name: 'jedis', version: "${jedisversion}", transitive: false],
             [group: 'org.mongodb', name: 'mongo-java-driver', version: "${mongodbversion}", transitive: false],

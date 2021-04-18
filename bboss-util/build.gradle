@@ -27,12 +27,12 @@ sourceSets {
 }
 
  
-project.tasks.compileJava.dependsOn(project(':bboss-rt').tasks.install)
-project.tasks.compileJava.dependsOn(project(':bboss-velocity').tasks.install)
+project.tasks.compileJava.dependsOn(project(':bboss-rt').tasks.publishToMavenLocal)
+project.tasks.compileJava.dependsOn(project(':bboss-velocity').tasks.publishToMavenLocal)
 
 dependencies {
-    compile project(":bboss-core-entity")
-    compile(
+    api project(":bboss-core-entity")
+    api(
     				
             [group: 'com.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],
            // [group: 'org.apache.ant', name: 'ant', version: '1.9.7', transitive: false],

@@ -11,11 +11,11 @@ sourceSets {
        
     }
 }
- project.tasks.compileJava.dependsOn(project(':bboss-soa').tasks.install)
+ project.tasks.compileJava.dependsOn(project(':bboss-soa').tasks.publishToMavenLocal)
 dependencies {
      
     
-    compile (
+    api (
 	 //  [group: 'avalon-logkit', name: 'avalon-logkit', version: '2.1', transitive: false],
 	    [group: 'commons-collections', name: 'commons-collections', version: '3.2.1', transitive: false],
 	    [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],

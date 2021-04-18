@@ -25,10 +25,10 @@ sourceSets {
 		}
 	}
 }
-project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.install)
+project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.publishToMavenLocal)
 dependencies {
-	compile project(":bboss-core-entity")
-    compile (
+	api project(":bboss-core-entity")
+    api (
             
             [group: 'com.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],
             [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],             
@@ -41,7 +41,7 @@ dependencies {
             [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],
            
     )
-    compile(
+    api(
     		fileTree(dir: 'lib', include: '**/*.jar'),
             
              
@@ -54,7 +54,7 @@ dependencies {
            
            
     )
-    testCompile (
+    testImplementation (
             
             [group: 'org.apache.derby', name: 'derby', version: '10.9.1.0', transitive: false],
             [group: 'org.apache.derby', name: 'derbyclient', version: '10.12.1.1', transitive: false],

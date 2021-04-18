@@ -13,9 +13,9 @@ sourceSets {
          
     }
 }
-project.tasks.compileJava.dependsOn(project(':bboss-taglib').tasks.install)
+project.tasks.compileJava.dependsOn(project(':bboss-taglib').tasks.publishToMavenLocal)
 dependencies {
-    compile(
+    api(
     	 
             [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
             [group: 'com.bbossgroups', name: 'bboss-taglib', version: "${version}", transitive: false],
