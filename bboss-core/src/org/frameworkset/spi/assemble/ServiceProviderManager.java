@@ -66,12 +66,12 @@ public class ServiceProviderManager implements AOPValueHandler{
      * 属性引用的反向索引集合
      */
     
-    public Map<String,Set> reverseAttrRefids = new HashMap<String,Set>();
+    public Map<String,Set> reverseAttrRefids = new LinkedHashMap<String,Set>();
     
     /**
      * 服务引用的反向索引集合
      */
-    public Map<String,Set> reverseServiceRefids = new HashMap<String,Set>();
+    public Map<String,Set> reverseServiceRefids = new LinkedHashMap<String,Set>();
     /**
      * 属性引用标识的前缀
      */
@@ -86,7 +86,7 @@ public class ServiceProviderManager implements AOPValueHandler{
     
     public static String seriralConfigFile = "org/frameworkset/soa/serialconf.xml";
 
-    private Map<String,Pro> properties = new HashMap<String,Pro>();
+    private Map<String,Pro> properties = new LinkedHashMap<String,Pro>();
 
     /**
      * 对已经分析过的配置文件进行记录，避免重复分析配置文件
@@ -252,9 +252,9 @@ public class ServiceProviderManager implements AOPValueHandler{
     }
 
     public ServiceProviderManager(BaseApplicationContext applicationContext) {
-        parsedList = new HashMap();
-        managers = new HashMap();
-        managerimports = new HashMap();
+        parsedList = new LinkedHashMap();
+        managers = new LinkedHashMap();
+        managerimports = new LinkedHashMap();
         traceFiles = new ArrayList();
         this.applicationContext = applicationContext;
     }
@@ -268,9 +268,9 @@ public class ServiceProviderManager implements AOPValueHandler{
 	}
     private String charset = "UTF-8";
     public ServiceProviderManager(BaseApplicationContext applicationContext,String charset) {
-        parsedList = new HashMap();
-        managers = new HashMap();
-        managerimports = new HashMap();
+        parsedList = new LinkedHashMap();
+        managers = new LinkedHashMap();
+        managerimports = new LinkedHashMap();
         traceFiles = new ArrayList();
         this.applicationContext = applicationContext;
         this.charset = charset;
