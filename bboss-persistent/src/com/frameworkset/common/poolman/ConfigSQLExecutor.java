@@ -21,6 +21,7 @@ import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.util.ListInfo;
 import org.frameworkset.persitent.util.SQLInfo;
 import org.frameworkset.persitent.util.SQLUtil;
+import org.frameworkset.spi.BaseApplicationContext;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -44,8 +45,10 @@ public class ConfigSQLExecutor  {
 	{
 		context = SQLUtil.getInstance(sqlfile);
 	}
-	
-	
+
+	public BaseApplicationContext getSQLContext() {
+		return context.getSqlcontext();
+	}
 
 	public SQLInfo getSqlInfo(String sqlname) throws SQLException
 	{
