@@ -3,9 +3,9 @@ package org.frameworkset.spi;
 import java.util.Date;
 
 public class Version {
-	public static final String description="1.0.7";
+	public static final String description="5.8.0";
     public static final short version=100;
-    public static final Date releaseDate = new Date("2009/05/07");
+    public static final Date releaseDate = new Date("2021/07/01");
     
 
     /**
@@ -39,5 +39,9 @@ public class Version {
      */
     public static boolean compareTo(short v) {
         return version == v;
+    }
+
+    public static void get580(){
+
     }
 }

@@ -26,6 +26,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.*;
 
+
 /**
  * 
  * 
@@ -78,7 +79,7 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
 		this.serial = serial;
 	}
 
-	protected Map<String,Pro> properties = new HashMap<String,Pro>();
+	protected Map<String,Pro> properties = new LinkedHashMap<String, Pro>();
     
     protected BaseApplicationContext applicationContext;  
     
@@ -126,7 +127,7 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
     public ProviderParser(BaseApplicationContext applicationContext,String file, LinkConfigFile linkfile)
     {
         traceStack = new Stack();
-        managers = new HashMap();
+        managers = new LinkedHashMap();
         mangerimports = new ArrayList();
         currentValue = new StringBuilder();
         this.file = file;
@@ -153,7 +154,7 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
         
         if(applicationContext.isfile())
         {
-	        managers = new HashMap();
+	        managers = new LinkedHashMap();
 	        mangerimports = new ArrayList();
 //	        this.file = applicationContext.getConfigfile();
 //	        this.parent = applicationContext.getp;
