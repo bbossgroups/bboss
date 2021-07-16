@@ -15,6 +15,8 @@
  */
 package org.frameworkset.http;
 
+import org.frameworkset.util.io.Resource;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,6 +63,19 @@ public class FileBlob
 		super();
 		this.fileName = fileName;
 		this.data = data;
+		dataType = 1;
+	}
+
+	public FileBlob(String fileName, Resource data)
+	{
+
+		super();
+		this.fileName = fileName;
+		try {
+			this.data = data.getInputStream();
+		} catch (IOException e) {
+			throw new RuntimeException("FileBlob fileName["+fileName+"] build failed:",e);
+		}
 		dataType = 1;
 	}
 	
