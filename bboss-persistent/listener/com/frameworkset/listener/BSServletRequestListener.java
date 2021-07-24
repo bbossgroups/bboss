@@ -14,13 +14,12 @@ package com.frameworkset.listener;
  *  See the License for the specific language governing permissions and
  *  limitations under the License.  
  */
-import javax.servlet.ServletRequestEvent;
-import javax.servlet.http.HttpServletRequest;
-
+import com.frameworkset.orm.transaction.TransactionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.orm.transaction.TransactionManager;
+import javax.servlet.ServletRequestEvent;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 
@@ -39,6 +38,7 @@ import com.frameworkset.orm.transaction.TransactionManager;
 public class BSServletRequestListener implements javax.servlet.ServletRequestListener
 {
 	private static final Logger log = LoggerFactory.getLogger(BSServletRequestListener.class);
+	private static final ThreadLocal<HttpServletRequest> requestThreadLocal = new ThreadLocal<HttpServletRequest>();
 	
 //	private static String[] interceptorURIs ;
 //	private static final String[] defaultinterceptorURIs = new String[]{".jsp",".do",".page"};
@@ -82,25 +82,25 @@ public class BSServletRequestListener implements javax.servlet.ServletRequestLis
 	
 		if(requestEvent.getServletRequest() instanceof HttpServletRequest )
 		{
+			requestThreadLocal.set(null);
 			HttpServletRequest request = (HttpServletRequest)requestEvent.getServletRequest();
-			String uri = request.getRequestURI();
-
-			
-			
-//			if(isInterceptResource(uri))
-			{
-		
-				boolean state = TransactionManager.destroyTransaction();
-				if(state){
-					log.warn("A DB transaction leaked in Page ["+ uri +"] has been forcibly destoried. ");					
+			boolean state = TransactionManager.destroyTransaction();
+			if(state){
+				if(log.isWarnEnabled()) {
+					String uri = request.getRequestURI();
+					log.warn("A DB transaction leaked in Page [{}] has been forcibly destoried. ",uri);
 				}
-				
-
 			}
-			
-				
 		}		
 
+	}
+
+	/**
+	 * 从请求上下文中获取request对象
+	 * @return
+	 */
+	public static HttpServletRequest getHttpServletRequest(){
+		return requestThreadLocal.get();
 	}
 
 	public void requestInitialized(ServletRequestEvent requestEvent) {
@@ -108,18 +108,14 @@ public class BSServletRequestListener implements javax.servlet.ServletRequestLis
 		if(requestEvent.getServletRequest() instanceof HttpServletRequest )
 		{
 			HttpServletRequest request = (HttpServletRequest)requestEvent.getServletRequest();
-			String uri = request.getRequestURI();
-
-			
-			
-//			if(isInterceptResource(uri))
-			{	
-				boolean state = TransactionManager.destroyTransaction();
-				if(state){
-					log.warn("A DB transaction leaked before Page ["+ uri +"] has been forcibly destoried. ");					
+			requestThreadLocal.set(request);
+			boolean state = TransactionManager.destroyTransaction();
+			if(state){
+				if(log.isWarnEnabled()) {
+					String uri = request.getRequestURI();
+					log.warn("A DB transaction leaked before Page [{}] has been forcibly destoried. ",uri);
 				}
 			}
-				
 		}	
 		
 	}
