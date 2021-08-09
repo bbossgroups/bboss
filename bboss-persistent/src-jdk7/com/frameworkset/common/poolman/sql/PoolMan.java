@@ -157,7 +157,8 @@ public class PoolMan implements Driver {
 
         // if it didn't exist under either name, throw a SQLException
         if (jpool == null) {
-            throw new SQLException("No such datasource: " + dbname + ". Check your poolman.xml config, and be sure you " + "are using a valid dbname parameter (use dbname, not jndiName)");
+            throw new SQLException("No such datasource: " + dbname +
+                    ". Check your datasource is started and config is right,  and be sure you are using a valid dbname parameter (use dbname, not jndiName)");
         }
 
         // if it did exist, return its DataSource

@@ -19,21 +19,15 @@ package com.frameworkset.common.poolman.sql;
 
 // Codestudio PoolMan Library
 
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.DriverPropertyInfo;
-import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
+import com.frameworkset.common.poolman.util.JDBCPool;
+import com.frameworkset.common.poolman.util.SQLManager;
+
+import javax.sql.DataSource;
+import java.sql.*;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.logging.Logger;
-
-import javax.sql.DataSource;
-
-import com.frameworkset.common.poolman.util.JDBCPool;
-import com.frameworkset.common.poolman.util.SQLManager;
 
 /**
  * The PoolMan class is the core Driver implementation.
@@ -56,7 +50,7 @@ public class PoolMan implements Driver {
 
     public static void main(String args[]) {
         if ((null == args) || (args.length < 1)) {
-            System.out.println("\nUSAGE: java com.frameworkset.common.poolman.sql.PoolMan \"[db_name]\"\n" + "Where the [db_name] parameter corresponds to a dbname " + "specified in your poolman.xml file.\n");
+            System.out.println("\nUSAGE: java com.frameworkset.common.poolman.sql.PoolMan \"[db_name]\"\n" + "Where the [db_name] parameter corresponds to a dbname " + "specified in your datasource config file.\n");
             System.exit(1);
         }
 
@@ -157,7 +151,8 @@ public class PoolMan implements Driver {
 
         // if it didn't exist under either name, throw a SQLException
         if (jpool == null) {
-            throw new SQLException("No such datasource: " + dbname + ". Check your poolman.xml config, and be sure you " + "are using a valid dbname parameter (use dbname, not jndiName)");
+            throw new SQLException("No such datasource: " + dbname
+                    + ". Check your datasource is started and config is right, and be sure you are using a valid dbname parameter (use dbname, not jndiName)");
         }
 
         // if it did exist, return its DataSource

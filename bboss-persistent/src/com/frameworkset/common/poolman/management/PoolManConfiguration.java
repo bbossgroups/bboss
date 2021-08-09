@@ -356,13 +356,12 @@ public class PoolManConfiguration   {
 					p.load(is);
 				} catch (Exception e2) {
 					throw new Exception(
-							"Unable to find and read a valid poolman.xml config file. "
+							"Unable to find and read a valid datasource config file. "
 									+ "Please ensure that '"
 									+ PoolManConstants.XML_CONFIG_FILE
 									+ "' is in a directory that is in your CLASSPATH.\n");
 				}
-				System.out
-						.println("\nPLEASE NOTE: You should replace the pool.props file with a valid poolman.xml file\n");
+				log.warn("\nPLEASE NOTE: You should replace the pool.props file with a valid config file\n");
 			} else {
 				throw new Exception(
 						"ERROR: Unable to find and read a valid PoolMan properties file.\n"

@@ -174,7 +174,7 @@ public class SQLManager extends PoolManager{
     	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
     	if(pool != null)
     		return pool.getDataSource();
-    	throw new IllegalArgumentException("获取数据源失败："+dbname +"不存在，请检查配置文件poolman.xml中是否配置了相应的数据源。");
+    	throw new IllegalArgumentException("获取数据源失败："+dbname +"不存在，Check your datasource is started and config is right.");
     }
     
     /**
@@ -187,7 +187,7 @@ public class SQLManager extends PoolManager{
     	JDBCPool pool = SQLManager.getInstance().getPool(null);
     	if(pool != null)
     		return pool.getDataSource();
-    	throw new IllegalArgumentException("获取数据源失败：请检查配置文件poolman.xml中是否配置了相应的数据源。");
+    	throw new IllegalArgumentException("获取数据源失败：Check your datasource is started and config is right.");
     }
     
     
@@ -207,7 +207,7 @@ public class SQLManager extends PoolManager{
     		else
     			return datasource;
     	}
-    	throw new IllegalArgumentException("获取数据源失败："+dbname +"不存在，请检查配置文件poolman.xml中是否配置了相应的数据源。");
+    	throw new IllegalArgumentException("获取数据源失败："+dbname +"不存在，Check your datasource is started and config is right.");
     }
     
     /**
@@ -226,7 +226,7 @@ public class SQLManager extends PoolManager{
     		else
     			return datasource;
     	}
-    	throw new IllegalArgumentException("获取数据源失败：请检查配置文件poolman.xml中是否配置了相应的数据源。");
+    	throw new IllegalArgumentException("获取数据源失败：Check your datasource is started and config is right!");
     }
     
     
@@ -329,7 +329,7 @@ public class SQLManager extends PoolManager{
             JDBCPool pool = (JDBCPool) this.defaultpool;
             return pool.requestConnection();
         } catch (NullPointerException ne) {
-            throw new SQLException("No default pool! Check your poolman.xml");
+            throw new SQLException("No default pool! Check your datasource is started and config is right!");
         }
     }
 
@@ -356,7 +356,7 @@ public class SQLManager extends PoolManager{
             JDBCPool pool = (JDBCPool) this.pools.get(dbname);
             return pool.requestConnection();
         } catch (NullPointerException ne) {
-            throw new SQLException("No pool named " + dbname + "! Check your poolman.xml" +
+            throw new SQLException("No pool named " + dbname + "! Check your datasource is started and config is right" +
                                    "\n** DEBUG: If the StackTrace contains an " +
                                    "InstanceAlreadyExistsException, then you have " +
                                    " encountered a ClassLoader linkage problem. " +
