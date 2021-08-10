@@ -134,18 +134,18 @@ public class PoolManConfiguration   {
 		try {
 			parseXML(context);
 		} catch (NullPointerException ne) {
-			ne.printStackTrace();
+//			ne.printStackTrace();
 			// then try deprecated properties
-			System.out.println("\n** ERROR: Unable to find XML file "
-					+ configFile + ": " + ne);
+			log.warn("Load datasource Configuration failed from "
+					+ configFile ,ne);
 			// don't try the props files anymore, it's been over a year
 			// System.out.println("** WARNING: Attempting to use deprecated properties files\n");
 			// this.datasources =
 			// parseProperties(PoolManConstants.PROPS_CONFIG_FILE);
 
 		} catch (Exception e) {
-			System.out.println("\n** ERROR: Unable to parse XML file "
-					+ configFile + ": " + e);
+			log.warn("Load datasource Configuration failed from "
+					+ configFile ,e);
 		}
 
 	}
@@ -260,8 +260,9 @@ public class PoolManConfiguration   {
 				url += "/" + configFile;
 				log.debug("Pool Config file:" + System.getProperty("user.dir")
 						+ "/" + configFile);
-			} else
+			} else {
 				url = confURL.toString();
+			}
 			this.handler = new ConfigParser(url, this.dbnamespace,
 					this.filterdbname);
 
