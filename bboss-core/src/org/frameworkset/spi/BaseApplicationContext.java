@@ -55,6 +55,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	protected ParserError parserError;
 	/** Reference to the JVM shutdown hook, if registered */
 	private static Thread shutdownHook;
+	private static final Logger log = LoggerFactory.getLogger(BaseApplicationContext.class);
 
 	static
 	{
@@ -73,8 +74,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 					});
 			m.invoke(Runtime.getRuntime(), shutdownHook);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 	}
 	private static Long resourcefileRefreshInterval;
@@ -1009,7 +1009,6 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		destroyServiceMethods.add(destoryMethod);
 	}
 
-	private static final Logger log = LoggerFactory.getLogger(BaseApplicationContext.class);
 
 	/**
 	 * 缺省接口key

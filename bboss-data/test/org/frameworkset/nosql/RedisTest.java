@@ -17,6 +17,7 @@ public class RedisTest {
 	@Test
 	public void getByTool(){
 		RedisTool.getInstance().set("aaa","ddd");
+		RedisTool.getInstance().hset("ddd","aaa","xxxx");
 		RedisTool.getInstance().get("aaa");
 		RedisTool.getInstance().set("vops_biz_count_history_max","{sss}");
 		System.out.println(RedisTool.getInstance().get("vops_biz_count_history_max"));
