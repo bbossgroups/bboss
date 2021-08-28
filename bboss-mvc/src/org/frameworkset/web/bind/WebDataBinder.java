@@ -28,6 +28,8 @@ import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
 import org.frameworkset.web.servlet.ModelMap;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,6 +50,7 @@ import java.util.*;
  */
 public class WebDataBinder  {//extends DataBinder {
 	private Object target;
+	private static Logger logger = LoggerFactory.getLogger(WebDataBinder.class);
 
 	private  String objectName;
 	private Class objectType;
@@ -357,7 +360,7 @@ public class WebDataBinder  {//extends DataBinder {
 				}
 				catch(Exception e)
 				{
-					e.printStackTrace();
+					logger.warn("",e);
 				}
 				Object defaultValue = this.defaultValues.get(name);
 				if(HandlerUtils.useDefaultValue(value,numeric) && defaultValue != null)
@@ -637,7 +640,7 @@ public class WebDataBinder  {//extends DataBinder {
 //						model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error",e.getMessage());
 					model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error", String.valueOf(value),property.getPropertyType(),null);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.warn("",e);
 //						// TODO Auto-generated catch block
 //						e.printStackTrace();
 //						model.getErrors().rejectValue(property.getName(), "buildPropertyValue.error",e.getMessage());

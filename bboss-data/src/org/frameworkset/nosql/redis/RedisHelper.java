@@ -1,5 +1,7 @@
 package org.frameworkset.nosql.redis;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.BinaryClient.LIST_POSITION;
 import redis.clients.jedis.*;
 import redis.clients.jedis.params.sortedset.ZAddParams;
@@ -12,6 +14,7 @@ import java.util.Set;
 //import redis.clients.jedis.params.set.SetParams;
 
 public class RedisHelper {
+	private static Logger logger = LoggerFactory.getLogger(RedisHelper.class);
 
 	public Jedis getJedis() {
 		init();
@@ -56,15 +59,13 @@ public class RedisHelper {
 			try {
 				db.releaseSharedRedis(shardedJedis);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			}
 		if(this.jedis != null)
 			try {
 				db.releaseRedis(jedis);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			}
 	}
 	/**
@@ -1728,7 +1729,6 @@ public class RedisHelper {
 	   * <b>Time complexity:</b>
 	   * <p>
 	   * O(log(N))
-	   * @see #zrevrank(String, String)
 	   * @param key
 	   * @param member
 	   * @return Integer reply or a nil bulk reply, specifically: the rank of the element as an integer
@@ -2147,7 +2147,6 @@ public class RedisHelper {
 	   * it like if inside MULTI/EXEC the time will flow at infinite speed :)
 	   * <p>
 	   * Time complexity: O(1)
-	   * @see #blpop(int, String...)
 	   * @param timeout
 	   * @param keys
 	   * @return BLPOP returns a two-elements array via a multi bulk reply in order to return both the

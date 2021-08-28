@@ -3,13 +3,11 @@
  */
 package org.frameworkset.spi;
 
-import java.util.Properties;
+import org.frameworkset.spi.assemble.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import org.frameworkset.spi.assemble.Pro;
-import org.frameworkset.spi.assemble.ProList;
-import org.frameworkset.spi.assemble.ProMap;
-import org.frameworkset.spi.assemble.ProSet;
-import org.frameworkset.spi.assemble.ServiceProviderManager;
+import java.util.Properties;
 
 /**
  * @author yinbp
@@ -17,8 +15,9 @@ import org.frameworkset.spi.assemble.ServiceProviderManager;
  * @Date:2017-01-07 19:29:58
  */
 public abstract class BaseSPIManager2 {
+    private static Logger logger = LoggerFactory.getLogger(BaseSPIManager2.class);
 
-	public static BaseApplicationContext defaultContext; 
+    public static BaseApplicationContext defaultContext;
     static
     {
         // try {
@@ -47,7 +46,7 @@ public abstract class BaseSPIManager2 {
         catch(Exception e)
         {
 //            defaultContext = ApplicationContext.getApplicationContext(ServiceProviderManager.defaultConfigFile);
-            e.printStackTrace();
+            logger.warn("",e);
         }
         finally
         {

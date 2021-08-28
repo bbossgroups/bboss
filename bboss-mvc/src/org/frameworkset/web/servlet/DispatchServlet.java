@@ -1502,14 +1502,12 @@ public class DispatchServlet extends BaseServlet {
 						l.init(params);
 					iocLifeCycleEventListenerList.add(l);
 				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
+					logger.warn("",e);
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn("",e);
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn("",e);
 				}
 				
 			}
@@ -1654,8 +1652,7 @@ public class DispatchServlet extends BaseServlet {
 				this.viewNameTranslator =
 						(RequestToViewNameTranslator) getDefaultStrategy(context, RequestToViewNameTranslator.class);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			}
 			if (logger.isDebugEnabled()) {
 				logger.debug("Unable to locate RequestToViewNameTranslator with name '" +
@@ -1877,8 +1874,7 @@ public class DispatchServlet extends BaseServlet {
 			try {
 				this.themeResolver = (ThemeResolver) getDefaultStrategy(context, ThemeResolver.class);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			}
 			if (logger.isDebugEnabled()) {
 				logger.debug("Unable to locate ThemeResolver with name '" + THEME_RESOLVER_BEAN_NAME +
@@ -1934,7 +1930,7 @@ public class DispatchServlet extends BaseServlet {
 					localeResolver = (LocaleResolver) getDefaultStrategy(context, LocaleResolver.class);
 				} catch (Exception e) {
 					localeResolver = new DefaultLocaleResolver();
-					e.printStackTrace();
+					logger.warn("",e);
 				}
 				if (logger.isDebugEnabled()) {
 					logger.debug("Unable to locate LocaleResolver with name '" + LOCALE_RESOLVER_BEAN_NAME +

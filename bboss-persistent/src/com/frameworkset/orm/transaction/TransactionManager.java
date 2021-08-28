@@ -15,17 +15,11 @@
  */
 package com.frameworkset.orm.transaction;
 
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.InvalidTransactionException;
-import javax.transaction.RollbackException;
-import javax.transaction.Status;
-import javax.transaction.SystemException;
-
+import com.frameworkset.orm.annotation.TransactionType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.orm.annotation.TransactionType;
+import javax.transaction.*;
 
 /**
  * 
@@ -236,8 +230,8 @@ public class TransactionManager implements java.io.Serializable {
 				try {
 					suspend_tx = suspendAll();
 				} catch (SystemException e) {
+					log.warn("",e);
 					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 	
 				break;
@@ -520,15 +514,13 @@ public class TransactionManager implements java.io.Serializable {
 		try {
 			tx.rollback();
 		} catch (IllegalStateException e) {
-			
-			e.printStackTrace();
+
+			log.warn("",e);
 		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("",e);
 		
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("",e);
 		} finally {
 			this.rollbacked = true;
 			if(tx != null && tx.wasRolledBack() )
@@ -700,11 +692,9 @@ public class TransactionManager implements java.io.Serializable {
 			try {
 				tx.rollback();
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
+				log.warn("",e);
 			} catch (SystemException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
+				log.warn("",e);
 			}
 			thread_local.set(null);
 			return true;

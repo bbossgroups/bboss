@@ -15,11 +15,13 @@
  */
 package org.frameworkset.web.servlet.launcher;
 
+import org.frameworkset.web.listener.JarUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-
-import org.frameworkset.web.listener.JarUtil;
 
 /**
  * <p>Title: BaseAppServerClassLoader.java</p> 
@@ -32,12 +34,13 @@ import org.frameworkset.web.listener.JarUtil;
  */
 public abstract class BaseAppServerClassLoader implements CustomClassLoader {
 	private ClassLoader classLoader;
-	
-	
-	
 
-	
-	
+	private static Logger logger = LoggerFactory.getLogger(BaseAppServerClassLoader.class);
+
+
+
+
+
 	public void initClassLoader(ClassLoader classLoader) {
 		
 		this.classLoader = classLoader;
@@ -66,11 +69,9 @@ public abstract class BaseAppServerClassLoader implements CustomClassLoader {
 				addRepository( classLoader,"file:///" + jar.getCanonicalPath());
 				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			}
 		else {
 			File[] jarfiles = jar.listFiles(new FileFilter() {
@@ -98,18 +99,15 @@ public abstract class BaseAppServerClassLoader implements CustomClassLoader {
 						addRepository( classLoader,"file:///" + jarfile.getCanonicalPath());
 						
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logger.warn("",e);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logger.warn("",e);
 					}
 				} else {
 					try {
 						loadJars( jarfile.getCanonicalPath());
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logger.warn("",e);
 					}
 				}
 			}

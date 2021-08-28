@@ -110,14 +110,11 @@ public class SerialFactory {
 				try {
 					serailObject = (Serial)Class.forName(serial).newInstance();
 				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.warn("",e);
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.warn("",e);
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.warn("",e);
 				}
 			}
 			return serailObject;
@@ -154,14 +151,11 @@ public class SerialFactory {
 				try {
 					preserialObject = (PreSerial)Class.forName(preserial).newInstance();
 				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.warn("",e);
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.warn("",e);
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.warn("",e);
 				}
 			}
 			return preserialObject;

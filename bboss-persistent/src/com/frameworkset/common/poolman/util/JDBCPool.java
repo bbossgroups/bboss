@@ -561,9 +561,8 @@ public class JDBCPool {
 					
 				}
 			} catch (NamingException e) {
-				log.info("通过JNDI名称[" + info.getExternaljndiName()
-						+ "]获取外部数据源失败:"+e.getMessage());
-				// e.printStackTrace();
+				log.warn("通过JNDI名称[" + info.getExternaljndiName()
+						+ "]获取外部数据源失败:"+e.getMessage(),e);
 			}
 
 		}
@@ -605,9 +604,8 @@ public class JDBCPool {
 						if(_datasource != null)
 							return _datasource;
 					} catch (NamingException e) {
-	
+						log.warn("",e);
 						continue;
-						// e.printStackTrace();
 					}
 				}
 				return null;
@@ -619,9 +617,8 @@ public class JDBCPool {
 					DataSource _datasource = (DataSource) ctx.lookup(ContextUtil.handleJndiName(jndiName));
 					return _datasource;
 				} catch (NamingException e) {
-
+					log.warn("",e);
 					throw e;
-					// e.printStackTrace();
 				}
 			}
 		
@@ -650,9 +647,8 @@ public class JDBCPool {
 					if(_datasource != null)
 						return _datasource;
 				} catch (NamingException e) {
-
+					log.warn("",e);
 					continue;
-					// e.printStackTrace();
 				}
 			}
 			return null;
@@ -666,7 +662,6 @@ public class JDBCPool {
 			} catch (NamingException e) {
 
 				throw e;
-				// e.printStackTrace();
 			}
 		}
 	
@@ -706,14 +701,11 @@ public class JDBCPool {
 			try {
 				this.interceptor = (InterceptorInf)Class.forName(this.info.getInterceptor()).newInstance();
 			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.warn(this.info.getInterceptor(),e);
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.warn(this.info.getInterceptor(),e);
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.warn(this.info.getInterceptor(),e);
 			}
 		}
 		
@@ -819,7 +811,7 @@ public class JDBCPool {
 					try {
 						conn.close();
 					} catch (SQLException e) {
-						e.printStackTrace();
+						log.warn("con close failed:",e);
 					}
             }
 	}
@@ -1089,10 +1081,10 @@ public class JDBCPool {
 				rs.close();
 				// metaData.
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				log.warn("",e);
 	
 			} catch (Exception e) {
-				// e.printStackTrace();
+				log.warn("",e);
 			}
 	
 			finally {
@@ -1197,11 +1189,11 @@ public class JDBCPool {
 
 			// metaData.
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.warn("",e);
 			// TODO Auto-generated catch block
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn("",e);
 		}
 
 		finally {
@@ -1285,11 +1277,11 @@ public class JDBCPool {
 
 			// metaData.
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.warn("",e);
 			// TODO Auto-generated catch block
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn("",e);
 		}
 
 		finally {
@@ -1475,11 +1467,11 @@ public class JDBCPool {
 
 			// metaData.
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.warn("",e);
 			// TODO Auto-generated catch block
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn("",e);
 		}
 
 		finally {
@@ -1638,7 +1630,7 @@ public class JDBCPool {
 			} catch (Exception e) {
 				columnrs.close();
 				columnrs = null;
-				e.printStackTrace();
+				log.warn("",e);
 			}
 	
 			/**
@@ -1687,7 +1679,7 @@ public class JDBCPool {
 			} catch (Exception e) {
 				primaryKeysrs.close();
 				primaryKeysrs = null;
-				e.printStackTrace();
+				log.warn("",e);
 			}
 	
 			try {
@@ -1776,7 +1768,7 @@ public class JDBCPool {
 	
 				foreignrs.close();
 				foreignrs = null;
-				e.printStackTrace();
+				log.warn("",e);
 			}
 		}
 		return tableMetaData;
@@ -1848,11 +1840,11 @@ public class JDBCPool {
 	
 				// metaData.
 			} catch (SQLException e) {
-				e.printStackTrace();
+				log.warn("",e);
 				// TODO Auto-generated catch block
 	
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.warn("",e);
 			}
 	
 			finally {
@@ -2002,7 +1994,7 @@ public class JDBCPool {
 				return true;
 			}
 		} catch (Exception e) {
-			// e.printStackTrace();
+			log.warn("",e);
 			return false;
 		}
 	}
@@ -2311,7 +2303,7 @@ public class JDBCPool {
 					tableMetaDatas.clear();
 					tableMetaDatas = new TreeSet();
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.warn("",e);
 				}
 			}
 			if(tableMetaDatasindexByTablename != null)

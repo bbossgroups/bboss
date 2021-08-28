@@ -16,12 +16,14 @@
 
 package org.frameworkset.soa.plugin;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.frameworkset.soa.PreSerial;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * <p>Title: UnmodifyListPreSerial.java</p> 
@@ -35,13 +37,15 @@ import org.frameworkset.util.ClassUtil.ClassInfo;
 public class UnmodifiableSetPreSerial implements PreSerial<Set> {
 	private static final String clazz = "java.util.Collections$UnmodifiableSet";
 	private static  ClassInfo unmodify;
+	private static Logger logger = LoggerFactory.getLogger(UnmodifiableSetPreSerial.class);
+
 	static {
 		
 		try {
 			unmodify = ClassUtil.getClassInfo(Class.forName(clazz));
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn("",e);
 			unmodify = null;
 		}
 	}

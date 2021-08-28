@@ -16,12 +16,14 @@
 
 package org.frameworkset.soa.plugin;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.frameworkset.soa.PreSerial;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>Title: UnmodifyListPreSerial.java</p> 
@@ -33,6 +35,7 @@ import org.frameworkset.util.ClassUtil.ClassInfo;
  * @version 1.0
  */
 public class SublistPreSerial implements PreSerial<List> {
+	private static Logger logger = LoggerFactory.getLogger(SublistPreSerial.class);
 	private static final String clazz = "java.util.ArrayList$SubList";
 	private static  ClassInfo unmodify;
 	static {
@@ -44,8 +47,7 @@ public class SublistPreSerial implements PreSerial<List> {
 			list.subList(0, 2).getClass();
 			unmodify = ClassUtil.getClassInfo(list.subList(0, 2).getClass());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn("",e);
 			unmodify = null;
 		}
 	}

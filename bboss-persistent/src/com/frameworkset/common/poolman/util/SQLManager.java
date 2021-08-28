@@ -134,7 +134,7 @@ public class SQLManager extends PoolManager{
 			if(pool != null)
 				pool.stopPool();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn("stop pool failed:",e);
 		}
         JDBCPool jpool = new JDBCPool(metad);
         addPool(metad.getName(), jpool);

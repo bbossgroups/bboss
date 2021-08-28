@@ -15,6 +15,9 @@
  */
 package org.frameworkset.spi.assemble;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 
  * 
@@ -32,7 +35,7 @@ package org.frameworkset.spi.assemble;
 public class RollbackException {
 	public static final int TYPE_IMPLEMENTS = 0;
 	public static final int TYPE_INSTANCEOF = 1;
-	
+	private Logger logger = LoggerFactory.getLogger(RollbackException.class);
 	private String exceptionName;
 	private Class exceptionClass;
 	
@@ -50,7 +53,7 @@ public class RollbackException {
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			logger.warn("",e);
 		}
 	}
 

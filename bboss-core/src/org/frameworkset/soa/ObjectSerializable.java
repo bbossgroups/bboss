@@ -15,31 +15,23 @@
  */
 package org.frameworkset.soa;
 
-import java.beans.IntrospectionException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Writer;
-import java.lang.reflect.Array;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.UUID;
-
+import com.frameworkset.util.ValueObjectUtil;
 import org.frameworkset.soa.SerialFactory.MagicClass;
 import org.frameworkset.spi.SOAApplicationContext;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.frameworkset.util.ValueObjectUtil;
+import java.beans.IntrospectionException;
+import java.io.*;
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.*;
 
 /**
  * <p>
@@ -64,6 +56,7 @@ public class ObjectSerializable {
 	public static final String content_header_utf_8 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 	public static final String call_header = "<esb><call>";
 	public static final String call_tailer = "</call></esb>";
+	private static Logger logger = LoggerFactory.getLogger(ObjectSerializable.class);
 
 	public static final String CHARSET_UTF_8 = "UTF-8";
 	public static final String CHARSET_GBK = "GBK";
@@ -952,11 +945,9 @@ public class ObjectSerializable {
 							ValueObjectUtil.byteArrayEncoder(fileOut
 									.toByteArray())).append("]]></p>");
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			} finally {
 				try {
 					if (byteIn != null)
@@ -1050,11 +1041,9 @@ public class ObjectSerializable {
 														.toByteArray()))
 								.append("]]></p>");
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn("",e);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn("",e);
 				} finally {
 					try {
 						if (byteIn != null)
@@ -1077,7 +1066,6 @@ public class ObjectSerializable {
 	 * 根据对象值，对象类型查找到对应的方法，这个玩意儿，比较麻烦
 	 * 需要判读currentAddress为空的情况，biaoping.yin
 	 * @param obj
-	 * @param type
 	 * @param dateformat
 	 * @param ret
 	 * @throws Exception 

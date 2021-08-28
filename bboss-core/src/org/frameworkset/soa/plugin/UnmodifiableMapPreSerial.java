@@ -16,12 +16,14 @@
 
 package org.frameworkset.soa.plugin;
 
-import java.util.Collections;
-import java.util.Map;
-
 import org.frameworkset.soa.PreSerial;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * <p>Title: UnmodifyListPreSerial.java</p> 
@@ -34,14 +36,14 @@ import org.frameworkset.util.ClassUtil.ClassInfo;
  */
 public class UnmodifiableMapPreSerial implements PreSerial<Map> {
 	private static final String clazz = "java.util.Collections$UnmodifiableMap";
+	private static Logger logger = LoggerFactory.getLogger(UnmodifiableMapPreSerial.class);
 	private static  ClassInfo unmodify;
 	static {
 		
 		try {
 			unmodify = ClassUtil.getClassInfo(Class.forName(clazz));
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn("",e);
 			unmodify = null;
 		}
 	}

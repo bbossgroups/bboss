@@ -505,8 +505,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 								new StringBuilder().append("Could not parse properties file [").append(
 										resource.getFile().getCanonicalPath() ).append( "]").toString(), ex);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						log.warn("",e);
 					}
 				}
 				// Empty holder representing "not valid".
