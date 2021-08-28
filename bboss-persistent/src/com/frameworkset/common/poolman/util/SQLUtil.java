@@ -437,6 +437,11 @@ public class SQLUtil{
 		SQLManager datab = getSQLManager();
 		return (JDBCPool) datab.getPool(dbname);
 	}
+
+	public static JDBCPool getPool(String dbname,boolean needcheckStart) {
+		SQLManager datab = getSQLManager();
+		return (JDBCPool) datab.getPool(dbname,needcheckStart);
+	}
 	
 	  public static boolean exist(String dbname)
 	    {
