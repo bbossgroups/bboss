@@ -360,7 +360,7 @@ public class SQLManager extends PoolManager{
                                    "\n** DEBUG: If the StackTrace contains an " +
                                    "InstanceAlreadyExistsException, then you have " +
                                    " encountered a ClassLoader linkage problem. " +
-                                   " Please email yin-bp@163.com **");
+                                   " Please submit issue to https://gitee.com/bboss/bboss/issues or https://github.com/bbossgroups/bboss/issues**");
         }
     }
     
