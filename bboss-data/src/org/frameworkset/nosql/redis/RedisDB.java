@@ -255,8 +255,8 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		if(logger.isInfoEnabled()) {
-			logger.info("servers:{},auth:{},mode:{},needAuthPerJedis:{},poolMaxTotal:{},poolMaxWaitMillis:{},poolTimeoutRetry:{},poolTimeoutRetryInterval:{},timeout:{},soTimeout:{},maxIdle:{},maxRedirections:{},testOnBorrow:{},testOnReturn:{},testWhileIdle:{}",
-					servers, auth, mode, needAuthPerJedis,poolMaxTotal,poolMaxWaitMillis,poolTimeoutRetry,
+			logger.info("Redis datasourceName:{},servers:{},auth:{},mode:{},needAuthPerJedis:{},poolMaxTotal:{},poolMaxWaitMillis:{},poolTimeoutRetry:{},poolTimeoutRetryInterval:{},timeout:{},soTimeout:{},maxIdle:{},maxRedirections:{},testOnBorrow:{},testOnReturn:{},testWhileIdle:{}",
+					this.getBeaninfo().getName(),servers, auth, mode, needAuthPerJedis,poolMaxTotal,poolMaxWaitMillis,poolTimeoutRetry,
 					poolTimeoutRetryInterval,this.timeout,this.soTimeout,this.maxIdle,this.maxRedirections,this.testOnBorrow,this.testOnReturn,this.testWhileIdle);
 		}
 		if(this.nodes == null){

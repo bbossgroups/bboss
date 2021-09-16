@@ -58,6 +58,9 @@ public class RedisTool {
 		if(redisTool != null)
 			return redisTool;
 		synchronized (RedisTool.class) {
+			redisTool = redisToolMap.get(redisPoolName);
+			if(redisTool != null)
+				return redisTool;
 			redisTool = new RedisTool(redisPoolName);
 			redisToolMap.put(redisPoolName,redisTool);
 		}
