@@ -1165,7 +1165,7 @@ public class JDBCPool {
 					continue;
 				if (tableMetaDatasindexByTablename.containsKey(tableName
 						.toLowerCase())) {
-					System.out.println("table [" + tableName + "] 已经加载，忽略！");
+					log.info("table [" + tableName + "] 已经加载，忽略！");
 					continue;
 				}
 				log.debug("load table[" + tableName + "]'s metadata.");
@@ -1253,7 +1253,7 @@ public class JDBCPool {
 					continue;
 				if (tableMetaDatasindexByTablename.containsKey(tableName
 						.toLowerCase())) {
-					System.out.println("table [" + tableName + "] 已经加载，忽略！");
+					log.info("table [" + tableName + "] 已经加载，忽略！");
 					continue;
 				}
 				log.debug("load table[" + tableName + "]'s metadata.");
@@ -1989,12 +1989,11 @@ public class JDBCPool {
 
 				return false;
 			} else {
-				System.out.println("DataSource bound to JNDI under name["
-						+ jndiName + "]");
+				log.info("DataSource bound to JNDI under name[{}]",jndiName);
 				return true;
 			}
 		} catch (Exception e) {
-			log.warn("",e);
+//			log.warn("",e);
 			return false;
 		}
 	}
