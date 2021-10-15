@@ -3,9 +3,9 @@ package org.frameworkset.spi;
 import java.util.Date;
 
 public class Version {
-	public static final String description="5.8.0";
+	public static final String description="5.8.2";
     public static final short version=100;
-    public static final Date releaseDate = new Date("2021/07/01");
+    public static final Date releaseDate = new Date("2021/10/13");
     
 
     /**
@@ -21,7 +21,7 @@ public class Version {
      * @return String with description
      */
     public static String printDescription() {
-        return "bboss aop " + description ;
+        return "bboss " + " Version: \t" + description + "\nDate:\t" + releaseDate ;
     }
 
     /**
@@ -41,7 +41,7 @@ public class Version {
         return version == v;
     }
 
-    public static void get5802(){
+    public static void get582(){
 
     }
 }
