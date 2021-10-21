@@ -1162,7 +1162,7 @@ public class GenericKeyedObjectPool extends BaseKeyedObjectPool implements Keyed
                                         break;
                                     }
                                 }
-                                throw new NoSuchElementException("Timeout waiting for idle object");
+                                throw new NoSuchElementException("Timeout waiting " + maxWait + "MILLISECONDS for idle object");
                             } else {
                                 continue; // keep looping
                             }

@@ -1131,7 +1131,7 @@ public class GenericObjectPool extends BaseObjectPool implements ObjectPool {
                                         break;
                                     }
                                 }
-                                throw new NoSuchElementException("Timeout waiting for idle object");
+                                throw new NoSuchElementException("Timeout waiting " + maxWait + "MILLISECONDS for idle object");
                             } else {
                                 continue; // keep looping
                             }

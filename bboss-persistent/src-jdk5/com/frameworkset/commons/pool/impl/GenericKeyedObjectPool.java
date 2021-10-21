@@ -824,7 +824,7 @@ public class GenericKeyedObjectPool extends BaseKeyedObjectPool implements Keyed
                                 // ignored
                             }
                             if(_maxWait > 0 && ((System.currentTimeMillis() - starttime) >= _maxWait)) {
-                                throw new NoSuchElementException("Timeout waiting for idle object");
+                                throw new NoSuchElementException("Timeout waiting " + _maxWait + "MILLISECONDS for idle object");
                             } else {
                                 continue; // keep looping
                             }

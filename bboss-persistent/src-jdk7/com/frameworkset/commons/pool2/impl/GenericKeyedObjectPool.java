@@ -368,7 +368,7 @@ public class GenericKeyedObjectPool<K,T> extends BaseGenericObjectPool<T>
                     }
                     if (p == null) {
                         throw new NoSuchElementException(
-                                "Timeout waiting for idle object");
+                                "Timeout waiting " + borrowMaxWaitMillis + "MILLISECONDS for idle object");
                     }
                     if (!p.allocate()) {
                         p = null;
