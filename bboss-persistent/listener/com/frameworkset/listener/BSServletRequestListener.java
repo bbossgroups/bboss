@@ -120,4 +120,16 @@ public class BSServletRequestListener implements javax.servlet.ServletRequestLis
 		
 	}
 
+	public static void requestReset(HttpServletRequest request) {
+
+		if(request != null && getHttpServletRequest() != null)
+		{
+			requestThreadLocal.set(request);
+			if(log.isDebugEnabled()){
+				log.debug("reset request[{}] completed.",request.getClass().getCanonicalName());
+			}
+		}
+
+	}
+
 }
