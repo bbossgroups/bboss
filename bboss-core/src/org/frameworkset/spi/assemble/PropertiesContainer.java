@@ -15,6 +15,10 @@ import java.io.*;
 import java.util.*;
 
 public class PropertiesContainer extends AbstractGetProperties{
+	/**
+	 * 可以通过控制改变量控制是否在日志中显示db口令、http proxy口令、elasticsearch口令，mongodb口令
+	 */
+	public static boolean showPassword = false;
     protected List<String> configPropertiesFiles;
     protected Map<Object,Object> allProperties ;
     protected Map<Object,Object> sonAndParentProperties ;
@@ -663,6 +667,17 @@ public class PropertiesContainer extends AbstractGetProperties{
     	return value instanceof String?(String)value:String.valueOf(value);
 
     }
+
+	public String getProperty(String property,String defaultValue)
+	{
+		if(allProperties == null)
+			return defaultValue;
+		Object value = allProperties.get(property);
+		if(value == null)
+			return defaultValue;
+		return value instanceof String?(String)value:String.valueOf(value);
+
+	}
 
 	public Object getObjectProperty(String property)
 	{
