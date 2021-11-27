@@ -1,27 +1,10 @@
 package org.frameworkset.runtime;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.net.URLDecoder;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -57,7 +40,7 @@ public class CommonLauncher {
 	private static String weblib = "/WebRoot/WEB-INF/lib";
 
 	private static String propertfile = "/config.properties";
-
+	public static String commonBootstrapClass = "org.frameworkset.runtime.CommonBootstrap";
 	public static String mainclass = "org.frameworkset.persistent.db.DBInit";
 	private static Properties properts;
 	private static String[] args;
@@ -317,21 +300,38 @@ public class CommonLauncher {
 			shutdown();
 		}
 		else if(restart){
-			shutdown();
-			try {
-				//关闭服务后，停顿2秒
-				if(shutdownLevel != 9)
-					Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				return;
-			}
-			startup();
+			restart();
+//			shutdown();
+//			try {
+//				//关闭服务后，停顿2秒
+//				if(shutdownLevel != 9)
+//					Thread.sleep(2000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//				return;
+//			}
+//			startup();
 		}
 
 	}
+	private static void restart() throws NoSuchMethodException, IllegalAccessException, InstantiationException, ClassNotFoundException, InvocationTargetException, MalformedURLException {
+		loadEnvironment();
+		URL classpathEntries[] = (URL[]) alljars.toArray(new URL[alljars.size()]);
+		ClassLoader cl = new URLClassLoader(classpathEntries);
+		Thread.currentThread().setContextClassLoader(cl);
+		CommonBootstrapInf commonBootstrapInf = getCommonBootstrap(cl);
+		commonBootstrapInf.restart(  propertfile,cl,mainclass,appDir,shutdownLevel,classpathEntries,args);
+	}
 
-	private static void shutdown() {
+	private static void shutdown() throws IllegalAccessException, InstantiationException, ClassNotFoundException,
+			NoSuchMethodException, MalformedURLException, InvocationTargetException {
+		loadEnvironment();
+		URL classpathEntries[] = (URL[]) alljars.toArray(new URL[alljars.size()]);
+		ClassLoader cl = new URLClassLoader(classpathEntries);
+		Thread.currentThread().setContextClassLoader(cl);
+		CommonBootstrapInf commonBootstrapInf = getCommonBootstrap(cl);
+		commonBootstrapInf.shutdown(  propertfile,appDir,shutdownLevel,classpathEntries);
+		/**
 		System.out.println("shutdown start ....");
 		String pidname = getProperty("pidfile", "pid");
 		File pid = pidname.startsWith("/")?new File(pidname):new File(appDir, pidname);
@@ -390,52 +390,12 @@ public class CommonLauncher {
 		pid.delete();
 		
 		System.out.println("shutdown end.");
+		 */
 
 	}
-	private static void killproc(List<String> pids) throws IOException, InterruptedException{
-		Process proc = null;
-		if (OSInfo.isWindows()) {
-			StringBuilder builder = new StringBuilder();
-			builder.append("TASKKILL /F");
-			for(int i = 0; i < pids.size(); i ++){
-				builder.append(" /PID ").append(pids.get(i));
-			}
-			builder.append(" /T");
-			String cmd = builder.toString();
-			System.out.println(cmd);
-			proc = Runtime.getRuntime().exec(cmd);
-//			${dbinitpath}
-			
-		} 
-		else
-		{
-			 
-			StringBuilder builder = new StringBuilder();
-			if(shutdownLevel == -1)
-				builder.append("kill ");
-			else 
-				builder.append("kill -").append(shutdownLevel);
-			for(int i = 0; i < pids.size(); i ++){
-				builder.append(" ").append(pids.get(i));
-			}
-			String cmd = builder.toString();
-			System.out.println(cmd);
-			proc = Runtime.getRuntime().exec(cmd);
-		}
-		StreamGobbler error = new StreamGobbler( proc.getErrorStream(),"INFO");
-		
-		StreamGobbler normal = new StreamGobbler( proc.getInputStream(),"NORMAL");
-		error.start();
-		normal.start();
 
-		int exitVal = proc.waitFor();
-	}
 
-	private static void startup()
-			throws MalformedURLException, ClassNotFoundException, SecurityException, NoSuchMethodException,
-			IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException {
-		System.out.println("starting ....");
-		genPIDFile();
+	private static void loadEnvironment() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException, MalformedURLException, ClassNotFoundException {
 		File lib = new File(appDir, publiclibdir);
 
 		File resourcesFile = new File(appDir, resourcesdir);
@@ -445,17 +405,34 @@ public class CommonLauncher {
 		File webclassesFile = new File(appDir, webclasses);
 
 		File weblibFile = new File(appDir, weblib);
+
 		loadPlugins(lib, resourcesFile, classesFile, webclassesFile, weblibFile);
+	}
+	private static CommonBootstrapInf getCommonBootstrap(ClassLoader cl) throws ClassNotFoundException,
+			IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+		Class commonBootstrapclass = cl.loadClass(commonBootstrapClass);
+		CommonBootstrapInf commonBootstrapInf = (CommonBootstrapInf) commonBootstrapclass.newInstance();
+		return commonBootstrapInf;
+	}
+	private static void startup()
+			throws MalformedURLException, ClassNotFoundException, SecurityException, NoSuchMethodException,
+			IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException {
+		genPIDFile();
+		loadEnvironment();
 
 		URL classpathEntries[] = (URL[]) alljars.toArray(new URL[alljars.size()]);
 		ClassLoader cl = new URLClassLoader(classpathEntries);
 		Thread.currentThread().setContextClassLoader(cl);
-
+		CommonBootstrapInf commonBootstrapInf = getCommonBootstrap(cl);
+		commonBootstrapInf.startup(propertfile,cl,mainclass,appDir,args,classpathEntries);
+		/**
 		if (mainclass == null) {
 			System.out.println("Invalid main-class entry, cannot proceed.");
 			System.exit(1);
 		}
-		Class mainClass = cl.loadClass(mainclass);
+
+
+
 
 		// Object instance = mainClass.newInstance();
 		// startup(String[] serverinfo,String plugins[])
@@ -464,7 +441,9 @@ public class CommonLauncher {
 			URL url = classpathEntries[i];
 			System.out.println("ClassPath[" + i + "] = " + url);
 		}
+		Class mainClass = cl.loadClass(mainclass);
 		try {
+
 			Method setAppdir = mainClass.getMethod("setAppdir", new Class[] { File.class });
 			if (setAppdir != null) {
 				setAppdir.invoke(null, new Object[] { appDir });
@@ -475,6 +454,7 @@ public class CommonLauncher {
 		Method method = mainClass.getMethod("main", new Class[] { String[].class });
 		method.invoke(null, new Object[] { args });
 		System.out.println("started success.");
+		 */
 	}
 
 	private static void genPIDFile() {

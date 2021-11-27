@@ -1,14 +1,12 @@
 package org.frameworkset.runtime;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
 
 public class StreamGobbler extends Thread {
-	 
+	private static Logger logger = LoggerFactory.getLogger(StreamGobbler.class);
     InputStream is;
     String      type;
     OutputStream os;
@@ -34,12 +32,12 @@ public class StreamGobbler extends Thread {
             while ((line = br.readLine()) != null) {
                 if (pw != null)
                     pw.println(line);
-                System.out.println( line);
+                logger.info( line);
             }
             if (pw != null)
                 pw.flush();
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+			logger.warn("",ioe);
         }
         finally{
         	try {
@@ -47,35 +45,31 @@ public class StreamGobbler extends Thread {
 					pw.close();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			}
         	try {
 				if(os != null)
 					os.close();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			}
         	try {
 				if(is != null)
 					is.close();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			}
         	try {
 				if(isr != null)
 					isr.close();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			}
         	try {
 				if(br != null)
 					br.close();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("",e);
 			}
         }
     }
