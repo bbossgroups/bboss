@@ -18,10 +18,7 @@ package org.frameworkset.runtime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
@@ -132,7 +129,7 @@ public class CommonBootstrap implements CommonBootstrapInf{
 		if(pids.size() > 0){
 			try {
 				killproc(pids,  shutdownLevel);
-
+				checkProccessesStopped(pids);
 			} catch (IOException e) {
 				logger.warn("",e);
 			} catch (InterruptedException e) {
@@ -148,8 +145,87 @@ public class CommonBootstrap implements CommonBootstrapInf{
 
 	}
 
+	private boolean checkProcessorExist(String processId){
+
+			boolean flag = false;
+			Process process = null;
+			String command = "";
+			ByteArrayOutputStream baos = null;
+			InputStream os = null;
+			try {
+				if (OSInfo.isWindows()) {
+					command ="cmd /c tasklist  /FI \"PID eq " + processId + "\"";
+				} else  {
+					command = "ps aux | awk '{print $2}'| grep -w  " + processId;
+				}
+				process = Runtime.getRuntime().exec(command);
+				baos = new ByteArrayOutputStream();
+				os = process.getInputStream();
+				byte[] b = new byte[256];
+				while (os.read(b) > 0) {
+					baos.write(b);
+				}
+				String s = baos.toString();
+				return s.contains(processId);
+
+
+
+			} catch (IOException e) {
+				logger.error(processId, e);
+			} finally {
+				if(os != null){
+					try {
+						os.close();
+					} catch (IOException e) {
+
+					}
+				}
+				if(baos != null){
+					try {
+						baos.close();
+					} catch (IOException e) {
+
+					}
+				}
+				if (process != null) {
+					process.destroy();
+				}
+			}
+			return flag;
+
+	}
+	/**
+	 * 检查进程是否已经关闭
+	 * @param pids
+	 */
+	private void checkProccessesStopped(final List<String> pids){
+		Thread check = new Thread( new Runnable() {
+			@Override
+			public void run() {
+				for(String processId: pids) {
+
+					boolean exist = true;
+					do {
+						exist = checkProcessorExist(processId);
+						logger.info("Process {} shutdowning ....",processId);
+					}while(exist);
+					logger.info("Process {} shutdown completed.",processId);
+				}
+			}
+		},"checkProccessesStopped");
+		check.start();
+		try {
+			check.join();
+		}
+		catch (InterruptedException e){
+
+		}
+
+	}
+
 	public void killproc(List<String> pids,int shutdownLevel) throws IOException, InterruptedException{
 		Process proc = null;
+
 		if (OSInfo.isWindows()) {
 			StringBuilder builder = new StringBuilder();
 			builder.append("TASKKILL /F");
@@ -192,14 +268,14 @@ public class CommonBootstrap implements CommonBootstrapInf{
 
 		logger.info("Restart use config file:{}", propertfile);
 		shutdown(  propertfile,  appDir,  shutdownLevel,  classpathEntries);
-		try {
-			//关闭服务后，停顿2秒
-			if(shutdownLevel != 9)
-				Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			logger.warn("",e);
-			return;
-		}
+//		try {
+//			//关闭服务后，停顿2秒
+//			if(shutdownLevel != 9)
+//				Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			logger.warn("",e);
+//			return;
+//		}
 		startup(  propertfile,cl,  mainclass,  appDir,  args,  classpathEntries);
 	}
 
