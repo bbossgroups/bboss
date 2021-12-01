@@ -11,6 +11,10 @@ import java.io.IOException;
 public class ReferHelper {
 	private static Logger logger = LoggerFactory.getLogger(ReferHelper.class);
 	private String[] refererwallwhilelist;
+	/**
+	 * 请求参数不编码url白名单
+	 */
+	private String[] encodeParameterWhileList;
 	public static final String REQUEST_HEADER_REFER_CHECKED = "REQUEST_HEADER_REFER_CHECKED";
 	// -------------------------------------------------- CORS Request Headers
 	/**
@@ -174,6 +178,17 @@ public class ReferHelper {
 		}
 		request.setAttribute(ReferHelper.REQUEST_HEADER_REFER_CHECKED,checked);
 		return checked;
+	}
+	public boolean ignoreEncodeParameters(String uri){
+		if(this.encodeParameterWhileList == null || this.encodeParameterWhileList.length == 0){
+			return false;
+		}
+		for(String p : encodeParameterWhileList) {
+			if (pathMatcher.urlMatch(p,uri)){
+				return true;
+			}
+		}
+		return false;
 	}
 	public void sendInvalidCORS(HttpServletRequest request,
 								HttpServletResponse response)   {
@@ -348,4 +363,11 @@ public class ReferHelper {
 		}
 	}
 
+	public String[] getEncodeParameterWhileList() {
+		return encodeParameterWhileList;
+	}
+
+	public void setEncodeParameterWhileList(String[] encodeParameterWhileList) {
+		this.encodeParameterWhileList = encodeParameterWhileList;
+	}
 }

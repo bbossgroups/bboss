@@ -24,6 +24,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 /**
  * <p>Description: </p>
  * <p></p>
@@ -145,6 +147,45 @@ public class CommonBootstrap implements CommonBootstrapInf{
 
 	}
 
+	private void getError(Process process,String processId){
+		ByteArrayOutputStream baos = null;
+		InputStream os = null;
+		try {
+
+			baos = new ByteArrayOutputStream();
+			os = process.getErrorStream();
+			byte[] b = new byte[256];
+			while (os.read(b) > 0) {
+				baos.write(b);
+				logger.info("b:"+b);
+			}
+			baos.flush();
+			String s = baos.toString();
+
+			logger.info("Check Processor {} Exist result string:{},flag {} ",processId,s);
+
+
+		} catch (IOException e) {
+			logger.error(processId, e);
+		} finally {
+			if(os != null){
+				try {
+					os.close();
+				} catch (IOException e) {
+
+				}
+			}
+			if(baos != null){
+				try {
+					baos.close();
+				} catch (IOException e) {
+
+				}
+			}
+
+		}
+	}
+
 	private boolean checkProcessorExist(String processId){
 
 			boolean flag = false;
@@ -155,19 +196,30 @@ public class CommonBootstrap implements CommonBootstrapInf{
 			try {
 				if (OSInfo.isWindows()) {
 					command ="cmd /c tasklist  /FI \"PID eq " + processId + "\"";
+					logger.info("Check Processor {} exist command {} ",processId,command);
+					process = Runtime.getRuntime().exec(command);
 				} else  {
-					command = "ps aux | awk '{print $2}'| grep -w  " + processId;
+					command = "ps -ef | awk '{print $2}'| grep -w " + processId;
+					logger.info("Check Processor {} exist command {} ",processId,command);
+					String[] cmd = {"/bin/sh", "-c", command};
+
+					process = Runtime.getRuntime().exec(cmd);
 				}
-				process = Runtime.getRuntime().exec(command);
+
+
+//				getError(process,processId);
 				baos = new ByteArrayOutputStream();
 				os = process.getInputStream();
 				byte[] b = new byte[256];
 				while (os.read(b) > 0) {
 					baos.write(b);
-				}
-				String s = baos.toString();
-				return s.contains(processId);
 
+				}
+				baos.flush();
+				String s = baos.toString();
+
+				flag = s.trim().equals(processId);
+				logger.info("Check Processor {} Exist result string:{},flag {} ",processId,s,flag);
 
 
 			} catch (IOException e) {
@@ -206,8 +258,15 @@ public class CommonBootstrap implements CommonBootstrapInf{
 
 					boolean exist = true;
 					do {
+
 						exist = checkProcessorExist(processId);
-						logger.info("Process {} shutdowning ....",processId);
+						logger.info("Process {} shutdowning ....exist {}",processId,exist);
+						try {
+							sleep(1000);
+						} catch (InterruptedException e) {
+							exist = false;
+							break;
+						}
 					}while(exist);
 					logger.info("Process {} shutdown completed.",processId);
 				}
