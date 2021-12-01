@@ -27,8 +27,9 @@ public class ReferHelper {
 
 	private boolean refererDefender = false;
 	private PathMatcher pathMatcher;
-	private String[] wallfilterrules;
-	private String[] wallwhilelist;
+//	private String[] wallfilterrules;
+//	private String[] wallwhilelist;
+	private AttackFielterPolicy attackFielterPolicy;
 	public final static String[] wallfilterrules_default = new String[] {
 			"<script", "%3Cscript", "script", "<img", "%3Cimg", "alert(",
 			"alert%28", "eval(", "eval%28", "style=", "style%3D", "javascript",
@@ -39,6 +40,11 @@ public class ReferHelper {
 		pathMatcher = new AntPathMatcher();
 	}
 
+	public void initAttackFielterPolicy(){
+		if(attackFielterPolicy != null){
+			attackFielterPolicy.init();
+		}
+	}
 	private boolean iswhilerefer(String referer) {
 		if (this.refererwallwhilelist == null
 				|| this.refererwallwhilelist.length == 0)
@@ -51,12 +57,20 @@ public class ReferHelper {
 		return false;
 	}
 
+	public void setAttackFielterPolicy(AttackFielterPolicy attackFielterPolicy) {
+		this.attackFielterPolicy = attackFielterPolicy;
+	}
+
+	public AttackFielterPolicy getAttackFielterPolicy() {
+		return attackFielterPolicy;
+	}
+
 	public void recordNoCros(HttpServletRequest request,
 							 HttpServletResponse response){
 		request.setAttribute(ReferHelper.REQUEST_HEADER_REFER_CHECKED,false);
 	}
 	public boolean dorefer(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+						   HttpServletResponse response) throws IOException {
 		Boolean checked = (Boolean) request.getAttribute(ReferHelper.REQUEST_HEADER_REFER_CHECKED);
 		if(checked != null )
 			return checked;
@@ -216,33 +230,62 @@ public class ReferHelper {
 	}
 
 	public String[] getWallfilterrules() {
-		return wallfilterrules;
+		if(attackFielterPolicy != null)
+			return attackFielterPolicy.getXSSWallfilterrules();
+		return null;
 	}
 
-	public void setWallfilterrules(String[] wallfilterrules) {
-		this.wallfilterrules = wallfilterrules;
+	public String[] getSensitiveFilterrules() {
+		if(attackFielterPolicy != null)
+			return attackFielterPolicy.getSensitiveWallfilterrules();
+		return null;
 	}
+
 
 	public String[] getWallwhilelist() {
-		return wallwhilelist;
+		if(attackFielterPolicy != null)
+			return attackFielterPolicy.getXSSWallwhilelist();
+		return null;
 	}
 
-	public void setWallwhilelist(String[] wallwhilelist) {
-		this.wallwhilelist = wallwhilelist;
+	public String[] getSensitiveWallwhilelist() {
+		if(attackFielterPolicy != null)
+			return attackFielterPolicy.getSensitiveWallwhilelist();
+		return null;
 	}
-
-	public boolean iswhilename(String name) {
-		if (this.wallwhilelist == null || this.wallwhilelist.length == 0)
-			return true;
-		for (String whilename : this.wallwhilelist) {
+	public boolean isSensitiveWhilename(String name) {
+		String[] wallwhilelist = this.getSensitiveWallwhilelist();
+		if (wallwhilelist == null || wallwhilelist.length == 0)
+			return false;
+		for (String whilename : wallwhilelist) {
 			if (whilename.equals(name))
 				return true;
 		}
 		return false;
 	}
 
-	public void wallfilter(String name, String[] values) {
-		if (this.wallfilterrules == null || this.wallfilterrules.length == 0
+	public boolean iswhilename(String name) {
+		String[] wallwhilelist = this.getWallwhilelist();
+		if (wallwhilelist == null || wallwhilelist.length == 0)
+			return false;
+		for (String whilename : wallwhilelist) {
+			if (whilename.equals(name))
+				return true;
+		}
+		return false;
+	}
+
+
+	/**
+	 * xss攻击扫描
+	 * @param name
+	 * @param values
+	 * @param attackContext
+	 */
+	public void wallfilter(String name, String[] values,AttackContext attackContext) {
+		String[] wallfilterrules = this.getWallfilterrules();
+
+		if (wallfilterrules == null || wallfilterrules.length == 0
 				|| values == null || values.length == 0 || iswhilename(name))
 			return;
 
@@ -256,10 +299,47 @@ public class ReferHelper {
 			for (int i = 0; i < wallfilterrules.length; i++) {
 
 				if (value.indexOf(wallfilterrules[i]) >= 0) {
-					values[j] = null;
-					if(logger.isWarnEnabled())
-					logger.warn(new StringBuilder().append("参数" ).append( name ).append( "值" ).append( value ).append( "包含敏感词:"
-					).append( wallfilterrules[i] ).append( ",存在安全隐患,系统自动过滤掉参数值!").toString());
+					attackContext.setParamName(name);
+					attackContext.setValues(values);
+					attackContext.setPosition(j);
+					attackContext.setAttackRule(wallfilterrules[i]);
+					attackFielterPolicy.attackHandle(attackContext);
+					break;
+				}
+			}
+			j++;
+
+		}
+	}
+
+	/**
+	 * 敏感词扫描
+	 * @param name
+	 * @param values
+	 * @param attackContext
+	 */
+	public void sensitiveWallfilter(String name, String[] values,AttackContext attackContext) {
+		String[] wallfilterrules = this.getSensitiveFilterrules();
+
+		if (wallfilterrules == null || wallfilterrules.length == 0
+				|| values == null || values.length == 0 || isSensitiveWhilename(name))
+			return;
+
+		int j = 0;
+		for (String value : values) {
+			if (value == null || value.equals("")) {
+				j++;
+				continue;
+			}
+
+			for (int i = 0; i < wallfilterrules.length; i++) {
+
+				if (value.indexOf(wallfilterrules[i]) >= 0) {
+					attackContext.setParamName(name);
+					attackContext.setValues(values);
+					attackContext.setPosition(j);
+					attackContext.setAttackRule(wallfilterrules[i]);
+					attackFielterPolicy.attackHandle(attackContext);
 					break;
 				}
 			}
