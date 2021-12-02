@@ -36,7 +36,11 @@ import static java.lang.Thread.sleep;
  */
 public class CommonBootstrap implements CommonBootstrapInf{
 	private static Logger logger = LoggerFactory.getLogger(CommonBootstrap.class);
-
+	public static final String lineSeparator;
+	static{
+		lineSeparator = java.security.AccessController.doPrivileged(
+				new sun.security.action.GetPropertyAction("line.separator"));
+	}
 	@Override
 	public void startup(String propertfile,ClassLoader cl,String mainclass,File appDir,String args[],URL classpathEntries[]){
 		try {
@@ -162,7 +166,8 @@ public class CommonBootstrap implements CommonBootstrapInf{
 			baos.flush();
 			String s = baos.toString();
 
-			logger.info("Check Processor {} Exist result string:{},flag {} ",processId,s);
+			if(s.trim().length() > 0)
+				logger.info("Check Processor {} error:{}",processId,s);
 
 
 		} catch (IOException e) {
@@ -185,7 +190,26 @@ public class CommonBootstrap implements CommonBootstrapInf{
 
 		}
 	}
+    private boolean check(String commandResult,String proccessId){
+		if (OSInfo.isWindows()) {
+			if (commandResult.contains(proccessId))
+				return true;
+			else{
+				return false;
+			}
+		}
+		else {
+			if (commandResult.equals(proccessId))
+				return true;
+			String[] rs = commandResult.split(lineSeparator);
+			for (String r : rs) {
+				if (r.trim().equals(proccessId))
+					return true;
+			}
+			return false;
+		}
 
+	}
 	private boolean checkProcessorExist(String processId){
 
 			boolean flag = false;
@@ -196,18 +220,18 @@ public class CommonBootstrap implements CommonBootstrapInf{
 			try {
 				if (OSInfo.isWindows()) {
 					command ="cmd /c tasklist  /FI \"PID eq " + processId + "\"";
-					logger.info("Check Processor {} exist command {} ",processId,command);
+					logger.info("Check Processor {} command {} ",processId,command);
 					process = Runtime.getRuntime().exec(command);
 				} else  {
-					command = "ps -ef | awk '{print $2}'| grep -w " + processId;
-					logger.info("Check Processor {} exist command {} ",processId,command);
+					command = "ps aux | awk '{print $2}'| grep -w " + processId;
+					logger.info("Check Processor {} command {} ",processId,command);
 					String[] cmd = {"/bin/sh", "-c", command};
 
 					process = Runtime.getRuntime().exec(cmd);
 				}
 
 
-//				getError(process,processId);
+				getError(process,processId);
 				baos = new ByteArrayOutputStream();
 				os = process.getInputStream();
 				byte[] b = new byte[256];
@@ -218,8 +242,8 @@ public class CommonBootstrap implements CommonBootstrapInf{
 				baos.flush();
 				String s = baos.toString();
 
-				flag = s.trim().equals(processId);
-				logger.info("Check Processor {} Exist result string:{},flag {} ",processId,s,flag);
+				flag = check(s.trim(), processId);//s.trim().equals(processId);
+				logger.info("Check Processor {} result:{},exist: {} ",processId,s,flag);
 
 
 			} catch (IOException e) {
@@ -257,17 +281,25 @@ public class CommonBootstrap implements CommonBootstrapInf{
 				for(String processId: pids) {
 
 					boolean exist = true;
+					int times = 0;
 					do {
 
 						exist = checkProcessorExist(processId);
-						logger.info("Process {} shutdowning ....exist {}",processId,exist);
+						times ++;
+						logger.info("Process {} shutdowning ....exist {},check counts:{}",processId,exist,times);
+						if(!exist)
+							break;
+//						if(times == 200){//最多检查200次
+//							exist = false;
+//							break;
+//						}
 						try {
 							sleep(1000);
 						} catch (InterruptedException e) {
 							exist = false;
 							break;
 						}
-					}while(exist);
+					}while(true);
 					logger.info("Process {} shutdown completed.",processId);
 				}
 			}

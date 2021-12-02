@@ -37,6 +37,19 @@ public class AttackContext {
 	private String attackRule;
 	private int position;
 
+	public static final int XSS_ATTACK = 0;
+	public static final int SENSITIVE_ATTACK = 1;
+
+	public int getAttackType() {
+		return attackType;
+	}
+
+	public void setAttackType(int attackType) {
+		this.attackType = attackType;
+	}
+
+	private int attackType ;
+
 	public ServletRequest getRequest() {
 		return request;
 	}

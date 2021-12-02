@@ -26,6 +26,13 @@ package org.frameworkset.util;
 public interface AttackFielterPolicy {
 	public void init();
 	public void load();
+	public boolean isDisable();
+
+	/**
+	 * 单位：秒
+	 * @return
+	 */
+	public Long getAttackRuleCacheRefreshInterval();
 	public String[] getXSSWallwhilelist();
 	public String[] getXSSWallfilterrules();
 	public String[] getSensitiveWallwhilelist();

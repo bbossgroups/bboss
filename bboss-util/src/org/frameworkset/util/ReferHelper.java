@@ -298,7 +298,11 @@ public class ReferHelper {
 	 * @param attackContext
 	 */
 	public void wallfilter(String name, String[] values,AttackContext attackContext) {
+		if(attackFielterPolicy.isDisable()){
+			return;
+		}
 		String[] wallfilterrules = this.getWallfilterrules();
+
 
 		if (wallfilterrules == null || wallfilterrules.length == 0
 				|| values == null || values.length == 0 || iswhilename(name))
@@ -318,6 +322,7 @@ public class ReferHelper {
 					attackContext.setValues(values);
 					attackContext.setPosition(j);
 					attackContext.setAttackRule(wallfilterrules[i]);
+					attackContext.setAttackType(AttackContext.XSS_ATTACK);
 					attackFielterPolicy.attackHandle(attackContext);
 					break;
 				}
@@ -325,6 +330,9 @@ public class ReferHelper {
 			j++;
 
 		}
+	}
+	public boolean isDisableAttackDefender(){
+		return attackFielterPolicy.isDisable();
 	}
 
 	/**
@@ -334,6 +342,9 @@ public class ReferHelper {
 	 * @param attackContext
 	 */
 	public void sensitiveWallfilter(String name, String[] values,AttackContext attackContext) {
+		if(attackFielterPolicy.isDisable()){
+			return;
+		}
 		String[] wallfilterrules = this.getSensitiveFilterrules();
 
 		if (wallfilterrules == null || wallfilterrules.length == 0
@@ -354,6 +365,7 @@ public class ReferHelper {
 					attackContext.setValues(values);
 					attackContext.setPosition(j);
 					attackContext.setAttackRule(wallfilterrules[i]);
+					attackContext.setAttackType(AttackContext.SENSITIVE_ATTACK);
 					attackFielterPolicy.attackHandle(attackContext);
 					break;
 				}
