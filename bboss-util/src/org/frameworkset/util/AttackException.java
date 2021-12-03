@@ -24,22 +24,31 @@ package org.frameworkset.util;
  * @version 1.0
  */
 public class AttackException extends RuntimeException{
+	private AttackContext attackContext;
 	public AttackException() {
 	}
 
-	public AttackException(String message) {
+	public AttackException(String message,AttackContext attackContext) {
 		super(message);
+		this.attackContext = attackContext;
 	}
 
-	public AttackException(String message, Throwable cause) {
+	public AttackException(String message, Throwable cause,AttackContext attackContext) {
 		super(message, cause);
+		this.attackContext = attackContext;
 	}
 
-	public AttackException(Throwable cause) {
+	public AttackException(Throwable cause,AttackContext attackContext) {
 		super(cause);
+		this.attackContext = attackContext;
 	}
 
-	public AttackException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+	public AttackException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace,AttackContext attackContext) {
 		super(message, cause, enableSuppression, writableStackTrace);
+		this.attackContext = attackContext;
+	}
+
+	public AttackContext getAttackContext() {
+		return attackContext;
 	}
 }

@@ -27,7 +27,6 @@ public interface AttackFielterPolicy {
 	public void init();
 	public void load();
 	public boolean isDisable();
-
 	/**
 	 * 单位：秒
 	 * @return
@@ -37,6 +36,24 @@ public interface AttackFielterPolicy {
 	public String[] getXSSWallfilterrules();
 	public String[] getSensitiveWallwhilelist();
 	public String[] getSensitiveWallfilterrules();
+
+	/**
+	 * attack白名单url，对应的url不会做xss、敏感词扫描
+	 * @return
+	 */
+	public String[] getWhiteUrls();
+	/**
+	 * xss检测
+	 * @return
+	 */
+	public boolean xssCheck(String paramValue,String xssWallRule);
+
+	/**
+	 * 敏感词检测
+	 * @return
+	 */
+	public boolean sensitiveCheck(String paramValue,String sensitiveWallRule);
+
 
 	/**
 	 * 攻击处理

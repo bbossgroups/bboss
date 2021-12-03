@@ -16,8 +16,8 @@ package org.frameworkset.util;
  */
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <p>Description: </p>
@@ -28,15 +28,15 @@ import javax.servlet.ServletResponse;
  * @version 1.0
  */
 public class AttackContext {
-	private ServletRequest request;
-	private ServletResponse response;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
 	private FilterChain chain;
 	private ReferHelper referHelper;
 	private String[] values;
 	private String paramName;
 	private String attackRule;
 	private int position;
-
+	private boolean redirected;
 	public static final int XSS_ATTACK = 0;
 	public static final int SENSITIVE_ATTACK = 1;
 
@@ -50,19 +50,19 @@ public class AttackContext {
 
 	private int attackType ;
 
-	public ServletRequest getRequest() {
+	public HttpServletRequest getRequest() {
 		return request;
 	}
 
-	public void setRequest(ServletRequest request) {
+	public void setRequest(HttpServletRequest request) {
 		this.request = request;
 	}
 
-	public ServletResponse getResponse() {
+	public HttpServletResponse getResponse() {
 		return response;
 	}
 
-	public void setResponse(ServletResponse response) {
+	public void setResponse(HttpServletResponse response) {
 		this.response = response;
 	}
 
@@ -112,5 +112,13 @@ public class AttackContext {
 
 	public void setAttackRule(String attackRule) {
 		this.attackRule = attackRule;
+	}
+
+	public boolean isRedirected() {
+		return redirected;
+	}
+
+	public void setRedirected(boolean redirected) {
+		this.redirected = redirected;
 	}
 }

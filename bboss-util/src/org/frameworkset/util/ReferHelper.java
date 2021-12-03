@@ -290,6 +290,17 @@ public class ReferHelper {
 		return false;
 	}
 
+	public boolean isWhiteUrl(String uri) {
+		String[] whiteUrls = this.getWhiteUrls();
+		if (whiteUrls == null || whiteUrls.length == 0)
+			return false;
+		for (String whiteUrl : whiteUrls) {
+			if (pathMatcher.urlMatch(whiteUrl,uri))
+				return true;
+		}
+		return false;
+	}
+
 
 	/**
 	 * xss攻击扫描
@@ -317,7 +328,7 @@ public class ReferHelper {
 
 			for (int i = 0; i < wallfilterrules.length; i++) {
 
-				if (value.indexOf(wallfilterrules[i]) >= 0) {
+				if (attackFielterPolicy.xssCheck(value,wallfilterrules[i])) {
 					attackContext.setParamName(name);
 					attackContext.setValues(values);
 					attackContext.setPosition(j);
@@ -331,8 +342,32 @@ public class ReferHelper {
 
 		}
 	}
+	/**
+	 * attack白名单url，对应的url不会做xss、敏感词扫描
+	 * @return
+	 */
+	public String[] getWhiteUrls(){
+		return attackFielterPolicy != null? attackFielterPolicy.getWhiteUrls():null;
+	}
 	public boolean isDisableAttackDefender(){
-		return attackFielterPolicy.isDisable();
+		if(attackFielterPolicy == null){
+			return true;
+		}
+		boolean disable = attackFielterPolicy.isDisable();
+//		if(disable)
+//			return disable;
+//		else{
+//			String[] whiteList = attackFielterPolicy.getWhiteUrls();
+//			if(whiteList != null && whiteList.length > 0){
+//				for(String whiteUrl:whiteList){
+//					disable = pathMatcher.urlMatch(whiteUrl,uri);
+//					if(disable){
+//						break;
+//					}
+//				}
+//			}
+//		}
+		return disable;
 	}
 
 	/**
@@ -360,7 +395,7 @@ public class ReferHelper {
 
 			for (int i = 0; i < wallfilterrules.length; i++) {
 
-				if (value.indexOf(wallfilterrules[i]) >= 0) {
+				if (attackFielterPolicy.sensitiveCheck(value,wallfilterrules[i])) {
 					attackContext.setParamName(name);
 					attackContext.setValues(values);
 					attackContext.setPosition(j);
