@@ -1,3 +1,3 @@
 %~d0
 cd %~dp0
-java -jar ${project}-boot-${bboss_version}.jar  stop
+java -jar ${project}-${bboss_version}.jar --conf=resources/application.properties  stop

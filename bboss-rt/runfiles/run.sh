@@ -13,14 +13,14 @@ RT_JAVA_OPTS="`parse_jvm_options "\$JVM_OPTIONS_FILE"` \$RT_JAVA_OPTS"
 echo \$RT_JAVA_OPTS
 case \$1 in
    start)
-    nohup java \$RT_JAVA_OPTS -jar ${project}-boot-${bboss_version}.jar > ${project}.log &
+    nohup java \$RT_JAVA_OPTS -jar ${project}-${bboss_version}.jar --conf=resources/application.properties > ${project}.log &
     tail -f ${project}.log
      ;;
    stop)
-    java -jar ${project}-boot-${bboss_version}.jar  stop --shutdownLevel=9
+    java -jar ${project}-${bboss_version}.jar  stop --shutdownLevel=9 --conf=resources/application.properties
      ;;
    restart)
-    nohup java \$RT_JAVA_OPTS -jar ${project}-boot-${bboss_version}.jar restart --shutdownLevel=9 > ${project}.log &
+    nohup java \$RT_JAVA_OPTS -jar ${project}-${bboss_version}.jar restart --shutdownLevel=9 --conf=resources/application.properties > ${project}.log &
     tail -f ${project}.log
     ;;
    *)
