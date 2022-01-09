@@ -2,14 +2,22 @@ package org.frameworkset.nosql.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.BinaryClient.LIST_POSITION;
-import redis.clients.jedis.*;
-import redis.clients.jedis.params.sortedset.ZAddParams;
-import redis.clients.jedis.params.sortedset.ZIncrByParams;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.JedisPubSub;
+import redis.clients.jedis.Pipeline;
+import redis.clients.jedis.args.ListPosition;
+import redis.clients.jedis.params.SortingParams;
+import redis.clients.jedis.params.ZAddParams;
+import redis.clients.jedis.params.ZIncrByParams;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+//import redis.clients.jedis.BinaryClient.LIST_POSITION;
+//import redis.clients.jedis.params.sortedset.ZAddParams;
+//import redis.clients.jedis.params.sortedset.ZIncrByParams;
 
 //import redis.clients.jedis.params.set.SetParams;
 
@@ -24,7 +32,7 @@ public class RedisHelper {
 
 
 	private Jedis jedis;
-	private ShardedJedis shardedJedis; 
+//	private ShardedJedis shardedJedis;
 	private JedisCluster jc; 
 	private RedisDB db;
 	private boolean inited;
@@ -37,11 +45,12 @@ public class RedisHelper {
 	{
 		if(inited)
 			return;
-		if(db.getMode().equals(db.mode_shared))
-		{
-			this.shardedJedis = db.getSharedRedis();
-		}
-		else if(db.getMode().equals(db.mode_cluster))
+//		if(db.getMode().equals(db.mode_shared))
+//		{
+//			this.shardedJedis = db.getSharedRedis();
+//		}
+//		else
+		if(db.getMode().equals(db.mode_cluster))
 		{
 			this.jc = db.geJedisCluster();
 		}
@@ -55,12 +64,12 @@ public class RedisHelper {
 	 
 	public void release()
 	{
-		if(shardedJedis != null)
-			try {
-				db.releaseSharedRedis(shardedJedis);
-			} catch (Exception e) {
-				logger.warn("",e);
-			}
+//		if(shardedJedis != null)
+//			try {
+//				db.releaseSharedRedis(shardedJedis);
+//			} catch (Exception e) {
+//				logger.warn("",e);
+//			}
 		if(this.jedis != null)
 			try {
 				db.releaseRedis(jedis);
@@ -80,9 +89,10 @@ public class RedisHelper {
 	   
 	  public String set(final String key, String value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.set(key, value);
-		  else if(this.jedis != null)
+//		  if(shardedJedis != null)
+//				return shardedJedis.set(key, value);
+//		  else
+		  	if(this.jedis != null)
 				return jedis.set(key, value);
 		  else
 			return jc.set(key, value);
@@ -118,9 +128,10 @@ public class RedisHelper {
 	 
 	  public String get(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.get(  key);
-		  else if(this.jedis != null)
+//		  if(shardedJedis != null)
+//				return shardedJedis.get(  key);
+//		  else
+		  	if(this.jedis != null)
 				return jedis.get(  key);
 		  else
 			  	return jc.get(  key);
@@ -135,9 +146,7 @@ public class RedisHelper {
 	   */
 	  public Long exists(final String... keys) {
 		  init();
-		  if(shardedJedis != null)
-				throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport exists multi keys mehtod.");
-		  else if(this.jedis != null)
+		 if(this.jedis != null)
 				return jedis.exists(  keys);
 		  else
 			  	return jc.exists(  keys);
@@ -153,9 +162,7 @@ public class RedisHelper {
 	  
 	  public Boolean exists(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.exists(  key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.exists(  key);
 		  else
 			  	return jc.exists(  key);
@@ -171,9 +178,7 @@ public class RedisHelper {
 	 
 	  public Long del(final String... keys) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport del multi keys mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.del(  keys);
 		  else
 			  	return jc.del(  keys);
@@ -182,9 +187,7 @@ public class RedisHelper {
 	 
 	  public Long del(String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.del(  key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.del(  key);
 		  else
 			  	return jc.del(  key);
@@ -202,9 +205,7 @@ public class RedisHelper {
 	 
 	  public String type(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.type(  key) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.type(  key) ;
 		  else
 			  	return jc.type(  key) ;
@@ -241,9 +242,7 @@ public class RedisHelper {
 	  
 	  public Set<String> keys(final String pattern) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport   keys pattern mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.keys(  pattern) ;
 		  else
 			  throw new java.lang.UnsupportedOperationException("Jedis cluster Unsupport   keys pattern mehtod.");
@@ -259,9 +258,7 @@ public class RedisHelper {
 	  
 	  public String randomKey() {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport   randomKey mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.randomKey();
 		  else
 			  throw new java.lang.UnsupportedOperationException("Jedis cluster Unsupport   randomKey mehtod.");
@@ -328,9 +325,7 @@ public class RedisHelper {
 	 
 	  public Long expire(final String key, final int seconds) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.expire(  key,   seconds);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.expire(  key,   seconds);
 		  else
 			  	return jc.expire(  key,   seconds);
@@ -362,9 +357,7 @@ public class RedisHelper {
 	 
 	  public Long expireAt(final String key, final long unixTime) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.expireAt(  key,  unixTime);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.expireAt(  key,  unixTime);
 		  else
 			  	return jc.expireAt(  key,  unixTime);
@@ -383,9 +376,7 @@ public class RedisHelper {
 	 
 	  public Long ttl(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.ttl(  key) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.ttl(  key) ;
 		  else
 			  	return jc.ttl(  key) ;
@@ -406,9 +397,7 @@ public class RedisHelper {
 	 
 	  public String getSet(final String key, final String value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.getSet(  key,  value);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.getSet(  key,  value);
 		  else
 			  	return jc.getSet(  key,  value);
@@ -426,9 +415,7 @@ public class RedisHelper {
 	  
 	  public List<String> mget(final String... keys) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport   mget mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.mget( keys) ;
 		  else
 			  	return jc.mget( keys) ;
@@ -446,9 +433,7 @@ public class RedisHelper {
 	  
 	  public Long setnx(final String key, final String value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.setnx( key,   value);
-		  else if(this.jedis != null)
+		 if(this.jedis != null)
 				return jedis.setnx( key,   value);
 		  else
 			  	return jc.setnx( key,   value);
@@ -468,9 +453,7 @@ public class RedisHelper {
 	 
 	  public String setex(final String key, final int seconds, final String value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.setex( key,  seconds,   value);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.setex( key,  seconds,   value);
 		  else
 			  	return jc.setex( key,  seconds,   value);
@@ -495,9 +478,7 @@ public class RedisHelper {
 	 
 	  public String mset(final String... keysvalues) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport   mset mehtod.");
-		  else if(this.jedis != null)
+		 if(this.jedis != null)
 				return jedis.mset(  keysvalues);
 		  else
 			  	return jc.mset(  keysvalues);
@@ -523,9 +504,7 @@ public class RedisHelper {
 	  
 	  public Long msetnx(final String... keysvalues) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport   msetnx mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.msetnx( keysvalues) ;
 		  else
 			  	return jc.msetnx(  keysvalues);
@@ -552,9 +531,7 @@ public class RedisHelper {
 	 
 	  public Long decrBy(final String key, final long integer) {
 		  init();
-		  if(shardedJedis != null)
-			  return shardedJedis.decrBy(  key,   integer) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.decrBy(  key,   integer) ;
 		  else
 			  	return jc.decrBy(  key,   integer) ;
@@ -580,9 +557,7 @@ public class RedisHelper {
 	 
 	  public Long decr(final String key) {
 		  init();
-		  if(shardedJedis != null)
-			  return shardedJedis.decr(  key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.decr(  key);
 		  else
 			  	return jc.decr(  key);
@@ -608,9 +583,7 @@ public class RedisHelper {
 	   */
 	  public Long incrBy(final String key, final long integer) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.incrBy(  key,  integer);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.incrBy(  key,  integer);
 		  else
 			  	return jc.incrBy(  key,  integer);
@@ -634,9 +607,7 @@ public class RedisHelper {
 	  
 	  public Double incrByFloat(final String key, final double value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.incrByFloat(  key,   value);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.incrByFloat(  key,   value);
 		  else
 			  	return jc.incrByFloat(  key,   value);
@@ -662,9 +633,7 @@ public class RedisHelper {
 	 
 	  public Long incr(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.incr(  key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.incr(  key);
 		  else
 			  	return jc.incr(  key);
@@ -684,9 +653,7 @@ public class RedisHelper {
 	   */
 	  public Long append(final String key, final String value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.append( key,   value);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.append( key,   value);
 		  else
 			  	return jc.append( key,   value);
@@ -710,9 +677,7 @@ public class RedisHelper {
 	   */
 	  public String substr(final String key, final int start, final int end) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.substr(  key,  start,   end);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.substr(  key,  start,   end);
 		  else
 			  	return jc.substr(  key,  start,   end);
@@ -732,9 +697,7 @@ public class RedisHelper {
 	   */
 	  public Long hset(final String key, final String field, final String value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.hset(  key,   field,   value) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.hset(  key,   field,   value) ;
 		  else
 			  	return jc.hset(  key,   field,   value) ;
@@ -752,9 +715,7 @@ public class RedisHelper {
 	   */
 	  public String hget(final String key, final String field) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.hget(  key,   field);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.hget(  key,   field);
 		  else
 			  	return jc.hget(  key,   field);
@@ -771,9 +732,7 @@ public class RedisHelper {
 	   */
 	  public Long hsetnx(final String key, final String field, final String value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.hsetnx(  key,   field,   value) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.hsetnx(  key,   field,   value) ;
 		  else
 			  	return jc.hsetnx(  key,   field,   value) ;
@@ -792,9 +751,7 @@ public class RedisHelper {
 	 
 	  public String hmset(final String key, final Map<String, String> hash) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis. hmset( key,  hash)  ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis. hmset( key,  hash)  ;
 		  else
 			  	return jc. hmset( key,  hash)  ;
@@ -814,9 +771,7 @@ public class RedisHelper {
 	   */
 	  public List<String> hmget(final String key, final String... fields) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.hmget(  key,  fields) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.hmget(  key,  fields) ;
 		  else
 			  	return jc.hmget(  key,  fields) ;
@@ -838,9 +793,7 @@ public class RedisHelper {
 	   */
 	  public Long hincrBy(final String key, final String field, final long value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.hincrBy(  key,   field,   value);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.hincrBy(  key,   field,   value);
 		  else
 			  	return jc.hincrBy(  key,   field,   value);
@@ -864,9 +817,7 @@ public class RedisHelper {
 	   */
 	  public Double hincrByFloat(final String key, final String field, final double value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis. hincrByFloat(  key,   field,   value);
-		  else if(this.jedis != null)
+		 if(this.jedis != null)
 				return jedis. hincrByFloat(  key,   field,   value);
 		  else
 			  	return jc. hincrByFloat(  key.getBytes(),   field.getBytes(),   value);
@@ -881,9 +832,7 @@ public class RedisHelper {
 	   */
 	  public Boolean hexists(final String key, final String field) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis. hexists( key,  field) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis. hexists( key,  field) ;
 		  else
 			  	return jc. hexists( key,  field) ;
@@ -900,9 +849,7 @@ public class RedisHelper {
 	   */
 	  public Long hdel(final String key, final String... fields) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.hdel(  key,  fields);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.hdel(  key,  fields);
 		  else
 			  	return jc.hdel(  key,  fields);
@@ -918,9 +865,7 @@ public class RedisHelper {
 	   */
 	  public Long hlen(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.hlen( key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.hlen( key);
 		  else
 			  	return jc.hlen( key);
@@ -935,9 +880,7 @@ public class RedisHelper {
 	   */
 	  public Set<String> hkeys(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.hkeys(   key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.hkeys(   key);
 		  else
 			  	return jc.hkeys(   key);
@@ -952,9 +895,7 @@ public class RedisHelper {
 	   */
 	  public List<String> hvals(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.hvals(  key) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.hvals(  key) ;
 		  else
 			  	return jc.hvals(  key) ;
@@ -969,9 +910,7 @@ public class RedisHelper {
 	   */
 	  public Map<String, String> hgetAll(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis. hgetAll(  key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.hgetAll(  key);
 		  else
 			  	return jc.hgetAll(  key);
@@ -991,9 +930,7 @@ public class RedisHelper {
 	 
 	  public Long rpush(final String key, final String... strings) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.rpush(  key,  strings) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.rpush(  key,  strings) ;
 		  else
 			  	return jc.rpush(  key,  strings) ;
@@ -1012,9 +949,7 @@ public class RedisHelper {
 	   */
 	  public Long lpush(final String key, final String... strings) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.lpush(  key,   strings) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.lpush(  key,   strings) ;
 		  else
 			  	return jc.lpush(  key,   strings) ;
@@ -1031,9 +966,7 @@ public class RedisHelper {
 	   */
 	  public Long llen(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.llen(  key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.llen(  key);
 		  else
 			  	return jc.llen(  key);
@@ -1073,9 +1006,7 @@ public class RedisHelper {
 	   */
 	  public List<String> lrange(final String key, final long start, final long end) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.lrange(  key,  start,   end);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.lrange(  key,  start,   end);
 		  else
 			  	return jc.lrange(  key,  start,   end);
@@ -1113,9 +1044,7 @@ public class RedisHelper {
 	   */
 	  public String ltrim(final String key, final long start, final long end) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.ltrim( key,  start,   end);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.ltrim( key,  start,   end);
 		  else
 			  	return jc.ltrim( key,  start,   end);
@@ -1139,9 +1068,7 @@ public class RedisHelper {
 	   */
 	  public String lindex(final String key, final long index) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.lindex(  key,   index);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.lindex(  key,   index);
 		  else
 			  	return jc.lindex(  key,   index);
@@ -1168,9 +1095,7 @@ public class RedisHelper {
 	   */
 	  public String lset(final String key, final long index, final String value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.lset(  key,   index,   value);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.lset(  key,   index,   value);
 		  else
 			  	return jc.lset(  key,   index,   value);
@@ -1193,9 +1118,7 @@ public class RedisHelper {
 	   */
 	  public Long lrem(final String key, final long count, final String value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.lrem( key,   count,   value);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.lrem( key,   count,   value);
 		  else
 			  	return jc.lrem( key,   count,   value);
@@ -1213,9 +1136,7 @@ public class RedisHelper {
 	   */
 	  public String lpop(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.lpop(  key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.lpop(  key);
 		  else
 			  	return jc.lpop(  key);
@@ -1233,9 +1154,7 @@ public class RedisHelper {
 	   */
 	  public String rpop(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.rpop(  key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.rpop(  key);
 		  else
 			  	return jc.rpop(  key);
@@ -1258,9 +1177,7 @@ public class RedisHelper {
 	   */
 	  public String rpoplpush(final String srckey, final String dstkey) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport   rpoplpush mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.rpoplpush(  srckey,   dstkey);
 		  else
 			  	return jc.rpoplpush(  srckey,   dstkey);
@@ -1279,9 +1196,7 @@ public class RedisHelper {
 	   */
 	  public Long sadd(final String key, final String... members) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.sadd(  key,   members);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.sadd(  key,   members);
 		  else
 			  	return jc.sadd(  key,   members);
@@ -1297,9 +1212,7 @@ public class RedisHelper {
 	   */
 	  public Set<String> smembers(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.smembers(  key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.smembers(  key);
 		  else
 			  	return jc.smembers(  key);
@@ -1317,9 +1230,7 @@ public class RedisHelper {
 	   */
 	  public Long srem(final String key, final String... members) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.srem(  key,   members) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.srem(  key,   members) ;
 		  else
 			  	return jc.srem(  key,   members) ;
@@ -1338,9 +1249,7 @@ public class RedisHelper {
 	   */
 	  public String spop(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.spop(  key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.spop(  key);
 		  else
 			  	return jc.spop(  key);
@@ -1348,9 +1257,7 @@ public class RedisHelper {
 
 	  public Set<String> spop(final String key, final long count) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.spop(  key,   count);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.spop(  key,   count);
 		  else
 			  	return jc.spop(  key,   count);
@@ -1377,9 +1284,7 @@ public class RedisHelper {
 	   */
 	  public Long smove(final String srckey, final String dstkey, final String member) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport   smove mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.smove(  srckey,   dstkey,   member);
 		  else
 			  	return jc.smove(  srckey,   dstkey,   member);
@@ -1394,9 +1299,7 @@ public class RedisHelper {
 	   */
 	  public Long scard(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.scard(  key) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.scard(  key) ;
 		  else
 			  	return jc.scard(  key) ;
@@ -1413,9 +1316,7 @@ public class RedisHelper {
 	   */
 	  public Boolean sismember(final String key, final String member) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.sismember(  key,   member);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.sismember(  key,   member);
 		  else
 			  	return jc.sismember(  key,   member);
@@ -1438,9 +1339,7 @@ public class RedisHelper {
 	   */
 	  public Set<String> sinter(final String... keys) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport sinter mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.sinter(  keys);
 		  else
 			  	return jc.sinter(  keys);
@@ -1458,9 +1357,7 @@ public class RedisHelper {
 	   */
 	  public Long sinterstore(final String dstkey, final String... keys) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport sinterstore mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.sinterstore( dstkey,   keys);
 		  else
 			  	return jc.sinterstore( dstkey,   keys);
@@ -1481,9 +1378,7 @@ public class RedisHelper {
 	 
 	  public Set<String> sunion(final String... keys) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport sunion mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.sunion(  keys);
 		  else
 			  	return jc.sunion(  keys);
@@ -1501,9 +1396,7 @@ public class RedisHelper {
 	  
 	  public Long sunionstore(final String dstkey, final String... keys) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport sunionstore mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.sunionstore( dstkey,   keys);
 		  else
 			  	return jc.sunionstore(  dstkey,   keys);
@@ -1533,9 +1426,7 @@ public class RedisHelper {
 	  
 	  public Set<String> sdiff(final String... keys) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport sdiff mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.sdiff(  keys) ;
 		  else
 			  	return jc.sdiff(  keys) ;
@@ -1551,9 +1442,7 @@ public class RedisHelper {
 	  
 	  public Long sdiffstore(final String dstkey, final String... keys) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport sdiffstore mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.sdiffstore( dstkey,   keys);
 		  else
 			  	return jc.sdiffstore( dstkey,  keys);
@@ -1571,9 +1460,7 @@ public class RedisHelper {
 	   */
 	  public String srandmember(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.srandmember(  key) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.srandmember(  key) ;
 		  else
 			  	return jc.srandmember(  key) ;
@@ -1581,9 +1468,7 @@ public class RedisHelper {
 
 	  public List<String> srandmember(final String key, final int count) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.srandmember(  key,   count);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.srandmember(  key,   count);
 		  else
 			  	return jc.srandmember(  key,   count);
@@ -1607,9 +1492,7 @@ public class RedisHelper {
 	   */
 	  public Long zadd(final String key, final double score, final String member) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zadd(  key,   score,  member);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zadd(  key,   score,  member);
 		  else
 			  	return jc.zadd(  key,   score,  member);
@@ -1619,10 +1502,7 @@ public class RedisHelper {
 	  public Long zadd(final String key, final double score, final String member,
 	      final ZAddParams params) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zadd(  key,  score,  member,
-					        params);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zadd(  key,  score,  member,
 				        params);
 		  else
@@ -1632,9 +1512,7 @@ public class RedisHelper {
 
 	  public Long zadd(final String key, final Map<String, Double> scoreMembers) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zadd( key,  scoreMembers) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zadd( key,  scoreMembers) ;
 		  else
 			  	return jc.zadd( key,  scoreMembers) ;
@@ -1642,19 +1520,15 @@ public class RedisHelper {
 
 	  public Long zadd(String key, Map<String, Double> scoreMembers, ZAddParams params) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zadd(  key,   scoreMembers,   params);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zadd(  key,   scoreMembers,   params);
 		  else
 			  	return jc.zadd(  key,   scoreMembers,   params);
 	  }
 
-	  public Set<String> zrange(final String key, final long start, final long end) {
+	  public List<String> zrange(final String key, final long start, final long end) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zrange(  key,   start,   end);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zrange(  key,   start,   end);
 		  else
 			  	return jc.zrange(  key,   start,   end);
@@ -1673,9 +1547,7 @@ public class RedisHelper {
 	   */
 	  public Long zrem(final String key, final String... members) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zrem(  key,   members);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zrem(  key,   members);
 		  else
 			  	return jc.zrem(  key,   members);
@@ -1701,9 +1573,7 @@ public class RedisHelper {
 	   */
 	  public Double zincrby(final String key, final double score, final String member) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zincrby(  key,   score,  member);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zincrby(  key,   score,  member);
 		  else
 			  	return jc.zincrby(  key,   score,  member);
@@ -1711,9 +1581,7 @@ public class RedisHelper {
 
 	  public Double zincrby(String key, double score, String member, ZIncrByParams params) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zincrby(  key,   score,   member,   params);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zincrby(  key,   score,   member,   params);
 		  else
 			  	return jc.zincrby(  key,   score,   member,   params);
@@ -1736,9 +1604,7 @@ public class RedisHelper {
 	   */
 	  public Long zrank(final String key, final String member) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zrank(  key,   member);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zrank(  key,   member);
 		  else
 			  	return jc.zrank(  key,   member);
@@ -1811,9 +1677,7 @@ public class RedisHelper {
 	  
 	  public Long zcard(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zcard(  key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zcard(  key);
 		  else
 			  	return jc.zcard(  key);
@@ -1831,9 +1695,7 @@ public class RedisHelper {
 	   */
 	  public Double zscore(final String key, final String member) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zscore(  key,   member);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zscore(  key,   member);
 		  else
 			  	return jc.zscore(  key,   member);
@@ -1842,11 +1704,7 @@ public class RedisHelper {
 //	  @Override
 	  public String watch(final String... keys) {
 		  init();
-		  if(shardedJedis != null)
-		  {
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport watch mehtod.");
-		  }
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.watch(  keys) ;
 		  else
 			  throw new java.lang.UnsupportedOperationException("Cluster Jedis Unsupport watch mehtod.");
@@ -1859,8 +1717,6 @@ public class RedisHelper {
 	   * numeric with elements being compared as double precision floating point numbers. This is the
 	   * simplest form of SORT.
 	   * @see #sort(String, String)
-	   * @see #sort(String, SortingParams)
-	   * @see #sort(String, SortingParams, String)
 	   * @param key
 	   * @return Assuming the Set/List at key contains a list of numbers, the return value will be the
 	   *         list of numbers ordered from the smallest to the biggest number.
@@ -1868,9 +1724,7 @@ public class RedisHelper {
 	   
 	  public List<String> sort(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis. sort(  key) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.sort(  key) ;
 		  else
 			  	return jc.sort(  key) ;
@@ -1953,9 +1807,7 @@ public class RedisHelper {
 	 
 	  public List<String> sort(final String key, final SortingParams sortingParameters) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.sort(  key,   sortingParameters);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.sort(  key,   sortingParameters);
 		  else
 			  	return jc.sort(  key,   sortingParameters);
@@ -2063,9 +1915,7 @@ public class RedisHelper {
 	  
 	  public Long sort(final String key, final SortingParams sortingParameters, final String dstkey) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport sort(final String key, final SortingParams sortingParameters, final String dstkey) mehtod.");
-		  else if(this.jedis != null)
+		   if(this.jedis != null)
 				return jedis.sort(  key,   sortingParameters,  dstkey);
 		  else
 			  	return jc.sort(  key,   sortingParameters,  dstkey);
@@ -2087,9 +1937,7 @@ public class RedisHelper {
 	 
 	  public Long sort(final String key, final String dstkey) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport sort(final String key, final String dstkey)  mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.sort(  key,   dstkey) ;
 		  else
 			  	return jc.sort(  key,   dstkey) ;
@@ -2159,9 +2007,7 @@ public class RedisHelper {
 	 
 	  public List<String> brpop(final int timeout, final String... keys) {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("sharded Jedis Unsupport brpop(final int timeout, final String... keys)  mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.brpop( timeout,   keys) ;
 		  else
 			  	return jc.brpop( timeout,   keys) ;
@@ -2169,9 +2015,7 @@ public class RedisHelper {
 
 	  public Long zcount(final String key, final double min, final double max) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zcount( key,   min,   max);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zcount( key,   min,   max);
 		  else
 			  	return jc.zcount( key,   min,   max);
@@ -2179,9 +2023,7 @@ public class RedisHelper {
 
 	  public Long zcount(final String key, final String min, final String max) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.zcount(  key,   min,   max);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.zcount(  key,   min,   max);
 		  else
 			  	return jc.zcount(  key,   min,   max);
@@ -2794,9 +2636,7 @@ public class RedisHelper {
 
 	  public Long strlen(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.strlen(  key) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.strlen(  key)  ;
 		  else
 			  	return jc.strlen(  key)  ;
@@ -2804,9 +2644,7 @@ public class RedisHelper {
 
 	  public Long lpushx(final String key, final String... string) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.lpushx(  key,   string)  ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.lpushx(  key,   string)  ;
 		  else
 			  	return jc.lpushx(  key,   string)  ;
@@ -2822,9 +2660,7 @@ public class RedisHelper {
 	   */
 	  public Long persist(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.persist(  key) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.persist(  key) ;
 		  else
 			  	return jc.persist(  key) ;
@@ -2832,9 +2668,7 @@ public class RedisHelper {
 
 	  public Long rpushx(final String key, final String... string) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.rpushx( key,   string)  ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.rpushx( key,   string)  ;
 		  else
 			  	return jc.rpushx( key,   string)  ;
@@ -2843,22 +2677,19 @@ public class RedisHelper {
 	   
 	  public String echo(final String string) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.echo( string)  ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.echo( string)  ;
-		  else
-			  	return jc.echo( string)  ;
+		  else {
+		  	 throw new IllegalArgumentException("jedis cluster not support echo command.");
+//			  return jc.echo(string);
+		  }
 	  }
 
 	   
-	  public Long linsert(final String key, final LIST_POSITION where, final String pivot,
-	      final String value) {
+	  public Long linsert(final String key, final ListPosition where, final String pivot,
+						  final String value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.linsert(  key,   where,  pivot,
-					       value)   ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.linsert(  key,   where,  pivot,
 					       value)   ;
 		  else
@@ -2975,13 +2806,7 @@ public class RedisHelper {
 	  
 	  public List<String> configGet(final String pattern) {
 		  init();
-		  if(shardedJedis != null)
-		  {
-			  Jedis d = this.shardedJedis.getAllShards().iterator().next();
-			  
-			  return d.configGet(pattern);
-		  }
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.configGet( pattern) ;
 		  else
 			  throw new java.lang.UnsupportedOperationException("  Jedis Cluster Unsupport   configGet mehtod.");
@@ -3021,12 +2846,7 @@ public class RedisHelper {
 	 
 	  public Object eval(String script, int keyCount, String... params) {
 		  init();
-		  if(shardedJedis != null)
-		  {
-			  throw new java.lang.UnsupportedOperationException("  shared Jedis  Unsupport   eval(String script, int keyCount, String... params)  mehtod.");
-			  
-		  }
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.eval(  script,   keyCount,  params) ;
 		  else
 			  return jc.eval(  script,   keyCount,  params) ;
@@ -3034,27 +2854,18 @@ public class RedisHelper {
 
 	  public void subscribe(final JedisPubSub jedisPubSub, final String... channels) {
 		  init();
-		  if(shardedJedis != null)
-		  {
-			  throw new java.lang.UnsupportedOperationException("  shared Jedis  Unsupport   subscribe  mehtod.");
-			  
-		  }
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				  jedis.subscribe(  jedisPubSub,   channels) ;
-		  else
-			    jc.subscribe(  jedisPubSub,   channels) ;
+		  else{
+			  throw new java.lang.UnsupportedOperationException("  Jedis Cluster Unsupport   subscribe mehtod.");
+		  }
+//			    jc.subscribe(  jedisPubSub,   channels) ;
 	  }
 
 	   
 	  public Long publish(final String channel, final String message) {
 		  init();
-		  if(shardedJedis != null)
-		  {
-			  
-			  throw new java.lang.UnsupportedOperationException("  shared Jedis  Unsupport   publish  mehtod.");
-			  
-		  }
-		  else if(this.jedis != null)
+		 if(this.jedis != null)
 				return   jedis.publish(  channel,   message) ;
 		  else
 			  return   jc.publish(  channel,   message) ;
@@ -3062,16 +2873,12 @@ public class RedisHelper {
 
 	  public void psubscribe(final JedisPubSub jedisPubSub, final String... patterns) {
 		  init();
-		  if(shardedJedis != null)
-		  {
-			   
-			  throw new java.lang.UnsupportedOperationException("  shared Jedis  Unsupport   psubscribe  mehtod.");
-			  
-		  }
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				    jedis.psubscribe( jedisPubSub, patterns) ;
-		  else
-			      jc.psubscribe( jedisPubSub, patterns) ;
+		  else{
+			  throw new java.lang.UnsupportedOperationException("  Jedis Cluster Unsupport   psubscribe mehtod.");
+		  }
+//			    jc.psubscribe( jedisPubSub, patterns) ;
 	  }
 
 	 
@@ -3357,9 +3164,7 @@ public class RedisHelper {
 
 	  public Long pexpire(final String key, final long milliseconds) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.pexpire( key,   milliseconds)   ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.pexpire( key,   milliseconds)   ;
 		  else
 			  	return jc.pexpire( key,   milliseconds)   ;
@@ -3367,9 +3172,7 @@ public class RedisHelper {
 
 	  public Long pexpireAt(final String key, final long millisecondsTimestamp) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.pexpireAt(  key,   millisecondsTimestamp);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.pexpireAt(  key,   millisecondsTimestamp);
 		  else
 			  	return jc.pexpireAt(  key,   millisecondsTimestamp);
@@ -3377,9 +3180,7 @@ public class RedisHelper {
 
 	  public Long pttl(final String key) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.pttl(  key);
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.pttl(  key);
 		  else
 			  throw new java.lang.UnsupportedOperationException("  Cluster Jedis  Unsupport   pttl  mehtod.");
@@ -3396,9 +3197,7 @@ public class RedisHelper {
 
 	  public String psetex(final String key, final long milliseconds, final String value) {
 		  init();
-		  if(shardedJedis != null)
-				return shardedJedis.psetex(  key,   milliseconds,   value) ;
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.psetex(  key,   milliseconds,   value) ;
 		  else
 			  throw new java.lang.UnsupportedOperationException("  Cluster Jedis  Unsupport   psetex  mehtod.");
@@ -3809,11 +3608,10 @@ public class RedisHelper {
 //	  }
 	  public Pipeline pipelined() {
 		  init();
-		  if(shardedJedis != null)
-			  throw new java.lang.UnsupportedOperationException("  sharded Jedis  Unsupport   pipelined  mehtod.");
-		  else if(this.jedis != null)
+		  if(this.jedis != null)
 				return jedis.pipelined();
-		  else
+		  else {
 			  throw new java.lang.UnsupportedOperationException("  Cluster Jedis  Unsupport   pipelined  mehtod.");
+		  }
 	  }
 }

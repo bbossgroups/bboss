@@ -7,7 +7,7 @@
 		<property name="servers">
 			127.0.0.1
 		</property>
-		<!-- single|cluster|shared -->
+		<!-- single|cluster -->
 		<property name="mode" value="single" />
 		<!--<property name="auth" value="123456" />-->
 		<property name="poolMaxTotal" value="10"/>

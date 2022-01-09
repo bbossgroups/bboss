@@ -5,7 +5,7 @@ import org.frameworkset.nosql.redis.RedisHelper;
 import org.frameworkset.nosql.redis.RedisTool;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
-import redis.clients.util.Slowlog;
+import redis.clients.jedis.resps.Slowlog;
 
 import java.util.List;
 

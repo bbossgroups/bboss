@@ -15,9 +15,12 @@ package org.frameworkset.nosql.redis;
  * limitations under the License.
  */
 
-import redis.clients.jedis.*;
-import redis.clients.jedis.params.sortedset.ZAddParams;
-import redis.clients.jedis.params.sortedset.ZIncrByParams;
+import redis.clients.jedis.JedisPubSub;
+import redis.clients.jedis.Pipeline;
+import redis.clients.jedis.args.ListPosition;
+import redis.clients.jedis.params.SortingParams;
+import redis.clients.jedis.params.ZAddParams;
+import redis.clients.jedis.params.ZIncrByParams;
 
 import java.util.HashMap;
 import java.util.List;
@@ -1869,7 +1872,7 @@ public class RedisTool {
 		}
 	}
 
-	public Set<String> zrange(final String key, final long start, final long end) {
+	public List<String> zrange(final String key, final long start, final long end) {
 		RedisHelper redisHelper = null;
 		try
 		{
@@ -2108,8 +2111,6 @@ public class RedisTool {
 	 * numeric with elements being compared as double precision floating point numbers. This is the
 	 * simplest form of SORT.
 	 * @see #sort(String, String)
-	 * @see #sort(String, SortingParams)
-	 * @see #sort(String, SortingParams, String)
 	 * @param key
 	 * @return Assuming the Set/List at key contains a list of numbers, the return value will be the
 	 *         list of numbers ordered from the smallest to the biggest number.
@@ -2457,7 +2458,7 @@ public class RedisTool {
 	}
 
 
-	public Long linsert(final String key, final BinaryClient.LIST_POSITION where, final String pivot,
+	public Long linsert(final String key, final ListPosition where, final String pivot,
 						final String value) {
 		RedisHelper redisHelper = null;
 		try

@@ -14,7 +14,7 @@ import java.util.*;
 import static java.lang.Thread.sleep;
 
 public class RedisDB extends BeanInfoAware implements InitializingBean,org.frameworkset.spi.DisposableBean{
-	private ShardedJedisPool shardedJedispool;
+	//	private ShardedJedisPool shardedJedispool;
 	private JedisPool jedisPool;
 	private Map<String,String> properties;
 	private List<NodeInfo> nodes;
@@ -55,35 +55,36 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	 * single|cluster|shared
 	 */
 	private String mode = mode_single;
-	
-	private JedisCluster jc; 
 
-	 
+	private JedisCluster jc;
+
+
 	public RedisDB() {
 		// TODO Auto-generated constructor stub
 	}
 
 
+	/**
 
-	public void startSharedPool() {
-		  GenericObjectPoolConfig config = new GenericObjectPoolConfig();
-		    config.setMaxTotal(poolMaxTotal);
-		    config.setMaxWaitMillis(poolMaxWaitMillis);
-		    List<JedisShardInfo> jedisClusterNode = new ArrayList<JedisShardInfo>();
-		    for(int i = 0; i < nodes.size(); i ++)
-		    {
-		    	NodeInfo node = nodes.get(i);
-		    	JedisShardInfo jedisShardInfo = new JedisShardInfo(node.getHost(), node.getPort());
-		    	if(this.auth != null)
-		    		jedisShardInfo.setPassword(auth);
-		    	jedisClusterNode.add(jedisShardInfo);
-		    }
-		    
-		    shardedJedispool = new ShardedJedisPool(config, jedisClusterNode);
-	  
-	   
-	  }
-	
+	 public void startSharedPool() {
+	 GenericObjectPoolConfig config = new GenericObjectPoolConfig();
+	 config.setMaxTotal(poolMaxTotal);
+	 config.setMaxWaitMillis(poolMaxWaitMillis);
+	 List<JedisShardInfo> jedisClusterNode = new ArrayList<JedisShardInfo>();
+	 for(int i = 0; i < nodes.size(); i ++)
+	 {
+	 NodeInfo node = nodes.get(i);
+	 JedisShardInfo jedisShardInfo = new JedisShardInfo(node.getHost(), node.getPort());
+	 if(this.auth != null)
+	 jedisShardInfo.setPassword(auth);
+	 jedisClusterNode.add(jedisShardInfo);
+	 }
+
+	 shardedJedispool = new ShardedJedisPool(config, jedisClusterNode);
+
+
+	 }
+	 */
 	public void startSingleNode()
 	{
 		JedisPoolConfig config = new JedisPoolConfig();
@@ -96,46 +97,46 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		config.setTestWhileIdle(testWhileIdle);
 		NodeInfo node = nodes.get(0);
 		jedisPool = new JedisPool(config,node.getHost(), node.getPort(), timeout,this.auth);
-		 
+
 //		    Jedis jedis = pool.getResource();
 //		    jedis.auth(this.auth);
-//		   
+//
 //		    jedis.close();
 //		    pool.destroy();
 	}
-	 public void startPoolClusterPools() {
-		    GenericObjectPoolConfig config = new GenericObjectPoolConfig();
-		    config.setMaxTotal(poolMaxTotal);
-			config.setMaxWaitMillis(poolMaxWaitMillis);
-			if(maxIdle > 0)
-				config.setMaxIdle(maxIdle);
-			
-			 
-			config.setTestOnBorrow(testOnBorrow);
-			config.setTestOnReturn(testOnReturn);
-			config.setTestWhileIdle(testWhileIdle);
-		    Set<HostAndPort> jedisClusterNode = new HashSet<HostAndPort>();
-		    for(int i = 0; i < nodes.size(); i ++)
-		    {
-		    	NodeInfo node = nodes.get(i);
-		    	HostAndPort hostAndPort = new HostAndPort(node.getHost(), node.getPort());
-		    	 
-		    	jedisClusterNode.add(hostAndPort);
-		    }
+	public void startPoolClusterPools() {
+		GenericObjectPoolConfig<Connection> config = new GenericObjectPoolConfig<Connection>();
+		config.setMaxTotal(poolMaxTotal);
+		config.setMaxWaitMillis(poolMaxWaitMillis);
+		if(maxIdle > 0)
+			config.setMaxIdle(maxIdle);
+
+
+		config.setTestOnBorrow(testOnBorrow);
+		config.setTestOnReturn(testOnReturn);
+		config.setTestWhileIdle(testWhileIdle);
+		Set<HostAndPort> jedisClusterNode = new HashSet<HostAndPort>();
+		for(int i = 0; i < nodes.size(); i ++)
+		{
+			NodeInfo node = nodes.get(i);
+			HostAndPort hostAndPort = new HostAndPort(node.getHost(), node.getPort());
+
+			jedisClusterNode.add(hostAndPort);
+		}
 
 //		    jc = new JedisCluster(jedisClusterNode,this.timeout,this.maxRedirections, config);
 
-		    jc = new JedisCluster(jedisClusterNode, timeout, soTimeout,
-		    		this.maxRedirections, auth,config);
+		jc = new JedisCluster(jedisClusterNode, timeout, soTimeout,
+				this.maxRedirections, auth,config);
 //		    jc.set("52", "poolTestValue2");
 //		    jc.set("53", "poolTestValue2");
-//		    System.out.println(jc.get("52")); 
-//		    System.out.println(jc.get("53")); 
+//		    System.out.println(jc.get("52"));
+//		    System.out.println(jc.get("53"));
 //		    jc.close();
-		 
-		  }
-		  
-	
+
+	}
+
+
 	public Jedis getRedis()
 	{
 		int count = 0;
@@ -187,33 +188,38 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		}while(true);
 		return jedis;
 	}
-	public ShardedJedis getSharedRedis()
-	{
-		 ShardedJedis jedis = shardedJedispool.getResource();
-		 return jedis;
-	}
+	/**
+	 public ShardedJedis getSharedRedis()
+	 {
+	 ShardedJedis jedis = shardedJedispool.getResource();
+	 return jedis;
+	 }
+	 */
 	public JedisCluster geJedisCluster()
 	{
 		return jc;
 	}
-	public void releaseSharedRedis(ShardedJedis redis) throws IOException
-	{
-		redis.close();
-	}
-	
+	/**
+	 public void releaseSharedRedis(ShardedJedis redis) throws IOException
+	 {
+	 redis.close();
+	 }*/
+
 	public void releaseRedis(Jedis redis) throws IOException
 	{
 		redis.close();
 	}
-	
+
 	public void close()
 	{
-		if(shardedJedispool != null)
-			this.shardedJedispool.destroy();
+		/**
+		 if(shardedJedispool != null)
+		 this.shardedJedispool.destroy();
+		 */
 		if(jc != null)
 			try {
 				jc.close();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -235,8 +241,8 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 					NodeInfo n = new NodeInfo();
 					n.setHost(node[0].trim());
 					if(node.length == 1){
-						
-						
+
+
 						n.setPort(6379);
 					}
 					else
@@ -262,11 +268,12 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		if(this.nodes == null){
 			buildNodes();
 		}
-		if(getMode().equals(mode_shared))
-		{
-			this.startSharedPool();
-		}
-		else if(getMode().equals(mode_cluster))
+		/**
+		 if(getMode().equals(mode_shared))
+		 {
+		 this.startSharedPool();
+		 }*/
+		if(getMode().equals(mode_cluster))
 		{
 			this.startPoolClusterPools();
 		}
@@ -274,7 +281,7 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		{
 			this.startSingleNode();
 		}
-		
+
 	}
 
 	public int getPoolMaxTotal() {

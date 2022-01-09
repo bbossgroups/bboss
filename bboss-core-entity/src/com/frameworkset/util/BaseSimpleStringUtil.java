@@ -69,6 +69,11 @@ public class BaseSimpleStringUtil {
 	public static final String BLANK = "";
 	public static String getPath(String contextPath, String path) {
 
+		if(contextPath.equals("") )
+			return path;
+		if(path.equals("")){
+			return contextPath;
+		}
 		StringBuilder builder = new StringBuilder();
 
 		builder.append(contextPath);
