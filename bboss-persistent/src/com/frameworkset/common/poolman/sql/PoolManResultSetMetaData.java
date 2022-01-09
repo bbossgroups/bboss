@@ -183,6 +183,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         
         String columnLabel = null;
         String columnName = null;
+        boolean columnLableUpperCase = pool.getDbAdapter().columnLableUpperCase(pool.getJDBCPoolMetadata());
         for (int c = 0; c < _columnCount; c++) {
         	int rc = c + 1;
             _columnTypeName[c] = other.getColumnTypeName(rc);
@@ -217,7 +218,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         	   this.columnJavaName[c] = ClassUtil.genJavaName(columnLabel);
            }
 //            Integer idx = new Integer(c);
-            String label = pool.getDbAdapter().columnLableUpperCase(pool.getJDBCPoolMetadata())?_columnLabel_upper[c]:columnLabel;
+            String label = columnLableUpperCase?_columnLabel_upper[c]:columnLabel;
             WrapInteger wi = (WrapInteger)testM.get(label);
             if(wi == null)
             {
@@ -306,10 +307,10 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 
             _caseSensitive[c] = false;//other.isCaseSensitive(rc);,fixed mysql 每次都会向mysql后台发送SHOW FULL COLUMNS FROM 指令
         }
-        
+
         for (int c = 0; c < _columnCount; c++) {
 //            Integer idx = new Integer(c);
-            String name =  db.columnLableUpperCase(pool.getJDBCPoolMetadata())?_columnLabel_upper[c]:_columnLabel[c];
+            String name =  columnLableUpperCase?_columnLabel_upper[c]:_columnLabel[c];
             WrapInteger wi = (WrapInteger)testM.get(name);
             if(wi.containsamecol() && !samecols.containsKey(name))
             {

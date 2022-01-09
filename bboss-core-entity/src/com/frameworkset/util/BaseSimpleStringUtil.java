@@ -69,16 +69,21 @@ public class BaseSimpleStringUtil {
 	public static final String BLANK = "";
 	public static String getPath(String contextPath, String path) {
 
-		if(contextPath.equals("") )
+		if(contextPath == null || contextPath.equals("") )
 			return path;
-		if(path.equals("")){
+		if(path == null || path.equals("")){
 			return contextPath;
 		}
 		StringBuilder builder = new StringBuilder();
 
 		builder.append(contextPath);
 		if(contextPath.endsWith("/") || path.startsWith("/")){
-			builder.append(path);
+			if(contextPath.endsWith("/") && path.startsWith("/")){
+				builder.append(path.substring(1));
+			}
+			else {
+				builder.append(path);
+			}
 		}
 		else{
 			builder.append("/").append(path);
@@ -404,16 +409,21 @@ public class BaseSimpleStringUtil {
 	
 	public static String getNormalPath(String parent,String file)
 	{
-		if(parent.endsWith("/") && !file.startsWith("/"))
-			return parent + file;
-		else if(!parent.endsWith("/") && file.startsWith("/"))
-			return parent + file;
-		else if(!parent.endsWith("/") && !file.startsWith("/"))
-			return parent + "/"+file;
-		else //if(parent.endsWith("/") && file.startsWith("/"))
-			return parent + file.substring(1);
-		
-			
+//		if(parent.equals("") )
+//			return file;
+//		if(file.equals("")){
+//			return parent;
+//		}
+//		if(parent.endsWith("/") && !file.startsWith("/"))
+//			return parent + file;
+//		else if(!parent.endsWith("/") && file.startsWith("/"))
+//			return parent + file;
+//		else if(!parent.endsWith("/") && !file.startsWith("/"))
+//			return parent + "/"+file;
+//		else //if(parent.endsWith("/") && file.startsWith("/"))
+//			return parent + file.substring(1);
+		return getPath(parent, file);
+
 	}
 
 	public static String getFormatDate(Date date, String formate) {

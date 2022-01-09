@@ -15,28 +15,18 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.Ref;
-import java.sql.SQLException;
-import java.sql.Types;
-import java.util.Calendar;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.frameworkset.common.poolman.handle.ValueExchange;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData.WrapInteger;
 import com.frameworkset.common.poolman.util.SQLUtil.DBHashtable;
 import com.frameworkset.util.ValueObjectUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.math.BigDecimal;
+import java.sql.*;
+import java.util.Calendar;
+import java.util.Map;
 /**
  * 
  * 
@@ -54,13 +44,15 @@ import com.frameworkset.util.ValueObjectUtil;
 public class Record extends DBHashtable{
 	private String[] fields;
 	private Map sameCols = null;
+	private boolean columnLableUpperCase = true;
 	public Record(int i) {
 		super(i);
 	}
 	
-	public Record(int i,String[] fields,Map sameCols) {
+	public Record(boolean columnLableUpperCase,int i,String[] fields,Map sameCols) {
 		super(i);
 		this.fields = fields;
+		this.columnLableUpperCase = columnLableUpperCase;
 		if(sameCols != null && sameCols.size() > 0)
 		    this.sameCols = sameCols;
 		
@@ -1543,18 +1535,18 @@ public class Record extends DBHashtable{
      * @return A <code>java.lang.Object</code> holding the OUT parameter value.
      * @exception SQLException if a database access error occurs
      * @see Types
-     * @see #setObject
      * @since 1.4
      */
     public Object getObject(String parameterName) throws SQLException
     {
-//    	if(data != null)
-//    	{
-//    		return data.get(parameterName.toLowerCase());
-//    		
-//    	}
-//    	return null;
-    	return get(parameterName.toUpperCase());
+
+		if(columnLableUpperCase) {
+			return get(parameterName.toUpperCase());
+		}
+		else
+		{
+			return get(parameterName);
+		}
     }
 
     /**
@@ -1565,7 +1557,6 @@ public class Record extends DBHashtable{
      * @return the parameter value in full precision.  If the value is 
      * SQL <code>NULL</code>, the result is <code>null</code>. 
      * @exception SQLException if a database access error occurs
-     * @see #setBigDecimal
      * @since 1.4
      */
     public BigDecimal getBigDecimal(String parameterName) throws SQLException

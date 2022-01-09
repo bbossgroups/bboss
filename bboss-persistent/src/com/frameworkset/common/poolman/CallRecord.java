@@ -26,7 +26,7 @@ public class CallRecord extends Record {
 	}
 
 	public CallRecord(int i, String[] fields, Map sameCols) {
-		super(i, fields, sameCols);
+		super(false,i, fields, sameCols);
 		// TODO Auto-generated constructor stub
 	}
 

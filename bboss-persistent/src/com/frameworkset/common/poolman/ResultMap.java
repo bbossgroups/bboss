@@ -742,10 +742,21 @@ public class ResultMap {
 		Record record = null;
 		DB db = jdbcPool.getDbAdapter();
 		PoolManResultSetMetaData meta = stmtInfo.getMeta();
+		boolean columnLableUpperCase = db.columnLableUpperCase(jdbcPool.getJDBCPoolMetadata());
 		if (rs != null && stmtInfo != null) {
-		        int cols = meta.getColumnCounts();
-			record = new Record(cols,meta.get_columnLabel_upper(),meta.getSamecols());
-			record.setRowid(rs.getRow());	
+			int cols = meta.getColumnCounts();
+		    if(columnLableUpperCase) {
+				record = new Record(columnLableUpperCase,cols, meta.get_columnLabel_upper(), meta.getSamecols());
+			}
+		    else{
+				record = new Record(columnLableUpperCase,cols, meta.get_columnLabel(), meta.getSamecols());
+			}
+		    try {
+				record.setRowid(rs.getRow());
+			}
+		    catch (Exception e){
+		    	log.warn("rs.getRow() failed:",e);
+			}
 			for (int i = 1; i <= cols; i++) {
 				Object value = ValueExchange.getValueFromRS(rs,  i, meta
 						.getColumnType(i), db);
@@ -759,7 +770,7 @@ public class ResultMap {
 				    
 				    if(wi == null || i == 1)
 				    {
-				    	if(db.columnLableUpperCase(jdbcPool.getJDBCPoolMetadata())) {
+				    	if(columnLableUpperCase) {
 							record.put(meta
 											.getColumnLabelUpper(i),
 									value);
