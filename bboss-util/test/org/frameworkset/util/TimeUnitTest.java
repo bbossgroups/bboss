@@ -1,4 +1,4 @@
-package org.frameworkset.util.concurrent;
+package org.frameworkset.util;
 /**
  * Copyright 2020 bboss
  * <p>
@@ -15,25 +15,31 @@ package org.frameworkset.util.concurrent;
  * limitations under the License.
  */
 
+import org.junit.Test;
+
+import java.util.Date;
+
 /**
- * <p>Description: 多线程安全计数器</p>
+ * <p>Description: </p>
  * <p></p>
  * <p>Copyright (c) 2020</p>
- * @Date 2022/1/10 10:17
+ * @Date 2022/1/12 9:54
  * @author biaoping.yin
  * @version 1.0
  */
-public class Count {
-	private volatile int count;
-	public synchronized int increament(){
-		count ++;
-		return count;
-	}
-	public synchronized int getCount(){
-		return count;
-	}
-	public int getCountUnSynchronized(){
-		return count;
-	}
+public class TimeUnitTest {
+	@Test
+	public void addMonths(){
+		Date newDate = TimeUtil.addDateMonths(new Date(),-2);
+		System.out.println();
 
+		newDate = TimeUtil.addDateMinitues(new Date(),-60);
+		System.out.println();
+
+		newDate = TimeUtil.addDateHours(new Date(),-2);
+		System.out.println();
+
+		newDate = TimeUtil.addDateYears(new Date(),-2);
+		System.out.println();
+	}
 }

@@ -108,4 +108,40 @@ public class TimeUtil {
 		
 	}
 
+	public static Date addDateMonths(Date date,int months)
+	{
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.MONTH, months);
+		return c.getTime();
+
+	}
+
+	public static Date addDateHours(Date date,int hours)
+	{
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.HOUR, hours);
+		return c.getTime();
+
+	}
+
+	public static Date addDateMinitues(Date date,int Minitues)
+	{
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.MINUTE, Minitues);
+		return c.getTime();
+
+	}
+
+	public static Date addDateYears(Date date,int years)
+	{
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.YEAR, years);
+		return c.getTime();
+
+	}
+
 }

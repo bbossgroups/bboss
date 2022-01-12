@@ -31,6 +31,7 @@ import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.wraper.ColumnWraper;
+import org.frameworkset.util.concurrent.Count;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -736,7 +737,7 @@ public class ResultMap {
 
 	}
 	
-	
+	private static final Count rsRowErrorCount = new Count();
 	public static Record buildMap(ResultSet rs, StatementInfo stmtInfo, JDBCPool jdbcPool)
 			throws SQLException {
 		Record record = null;
@@ -755,7 +756,13 @@ public class ResultMap {
 				record.setRowid(rs.getRow());
 			}
 		    catch (Exception e){
-		    	log.warn("rs.getRow() failed:",e);
+		    	if(rsRowErrorCount.getCountUnSynchronized() < 10) {
+					rsRowErrorCount.increament();
+					if (log.isWarnEnabled()) {
+						log.warn("rs.getRow() failed:", e);
+					}
+				}
+
 			}
 			for (int i = 1; i <= cols; i++) {
 				Object value = ValueExchange.getValueFromRS(rs,  i, meta
