@@ -227,6 +227,7 @@ public class CommonLauncher {
 		}
 		return false;
 	}
+
 	private static void loadConfig(File appDir) throws IOException {
 		System.out.println("appDir:" + appDir);
 		InputStream in = null;
@@ -235,9 +236,16 @@ public class CommonLauncher {
 			File propertiesFile = new File(appDir, propertfile);
 			in = new FileInputStream(propertiesFile);
 			read = new InputStreamReader(in, "UTF-8");
+			System.out.println("Load properties from file:" + propertiesFile);
 			properts = new Properties();
 			properts.load(read);
 			mainclass = properts.getProperty("mainclass");
+			System.out.println("Configed main class:" + mainclass);
+			//如果mainclass是变量定义格式，则从系统属性和系统环境变量中解析mainclass
+			mainclass = EnvirmentUtil.parserMainClass(mainclass);
+			if (mainclass == null || mainclass.trim().length() == 0)
+				throw new java.lang.IllegalArgumentException("配置文件config.properties 中没有正确设置mainclass属性.");
+			System.out.println("Use mainclass:" + mainclass);
 			String extlib = properts.getProperty("extlibs");
 
 			if (extlib != null) {
@@ -263,12 +271,7 @@ public class CommonLauncher {
 				}
 			}
 
-			if (mainclass == null || mainclass.trim().length() == 0) {
-				throw new java.lang.IllegalArgumentException("配置文件config.properties 中没有正确设置mainclass属性.");
-			} else {
-				mainclass = mainclass.trim();
-				System.out.println("use mainclass:" + mainclass);
-			}
+
 		} finally {
 			if (in != null)
 				try {

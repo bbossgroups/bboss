@@ -16,6 +16,7 @@
 
 package com.frameworkset.util;
 
+import com.frameworkset.util.variable.DefaultvalueVariableStructionBuiler;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 
@@ -284,6 +285,8 @@ public class VariableHandler
 	}
 
 	public static class Variable {
+		protected String defaultValue ;
+		protected String originVariableName;
 		protected String variableName;
 		protected int position;
 		protected List<Index> indexs;
@@ -295,6 +298,14 @@ public class VariableHandler
 			return variableName;
 		}
 
+		public String getDefaultValue() {
+			return defaultValue;
+		}
+
+		public String getOriginVariableName() {
+			return originVariableName;
+		}
+
 		public void setAttributes(String attributes){
 			this.attributes = attributes;
 		}
@@ -304,6 +315,7 @@ public class VariableHandler
 
 		public void setVariableName(String variableName) {
 			this.variableName = variableName;
+
 		}
 
 		public int getPosition() {
@@ -362,7 +374,7 @@ public class VariableHandler
 		 * 变量解析完毕后，对变量定义信息进行额外处理
 		 */
 		public void after(){
-
+			this.originVariableName = variableName;
 		}
 		
 
@@ -509,6 +521,7 @@ public class VariableHandler
 	}
 	static SQLStructionBuiler  sqlStructionBuiler = new SQLStructionBuiler ();
 	static URLStructionBuiler urlStructionBuiler = new URLStructionBuiler();
+	static DefaultvalueVariableStructionBuiler defaultvalueVariableStructionBuiler = new DefaultvalueVariableStructionBuiler();
 	/**
 	 * 将包含变量的sql语句解析成常量字符串列表和变量名称两个列表
 	 * 变量的分界符为#[和],如果url中没有包含变量那么返回null值
@@ -521,6 +534,14 @@ public class VariableHandler
 		return VariableHandler._parserStruction(sql,urlStructionBuiler);
 	}
 
+	/**
+	 * asdfasdf#[aaaaa:0]fasdfaasdf
+	 * @param sql
+	 * @return
+	 */
+	public static URLStruction parserDefaultValueVariableStruction(String sql){
+		return VariableHandler._parserStruction(sql,defaultvalueVariableStructionBuiler);
+	}
 
 	/**
 	 * 将包含变量的sql语句解析成常量字符串列表和变量名称两个列表

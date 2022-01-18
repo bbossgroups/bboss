@@ -19,7 +19,10 @@ import com.frameworkset.util.VariableHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>Description: 解析属性值中的环境变量工具类</p>
@@ -47,7 +50,7 @@ public abstract class EnvUtil {
 				Map.Entry<Object, Object> entry = temp.next();
 				String key = (String)entry.getKey();
 				try {
-					EnvUtil.getSystemEnv(builder, key, null, properties);
+					EnvUtil.getSystemEnv(builder, null,key, null, properties);
 					allProperties.put(key, builder.toString());
 					builder.setLength(0);
 				}
@@ -80,7 +83,7 @@ public abstract class EnvUtil {
 				Object value = entry.getValue();
 				if(value instanceof String) {
 					try {
-						EnvUtil.getSystemEnv(builder, key, null, properties);
+						EnvUtil.getSystemEnv(builder, null,key, null, properties);
 						allProperties.put(key, builder.toString());
 						builder.setLength(0);
 					} catch (Throwable e) {
@@ -102,13 +105,13 @@ public abstract class EnvUtil {
 	 * @param property
 	 * @return
 	 */
-	public static void getSystemEnv(StringBuilder propertiesValue, String property, String parentName, Map properties)
+	public static void getSystemEnv(StringBuilder propertiesValue, VariableHandler.Variable variable ,String property, String parentName, Map properties)
 	{
 		Object value = properties.get( property);
 
 		if(value != null){
 			String value_ = String.valueOf(value);
-			VariableHandler.URLStruction urlStruction = VariableHandler.parserTempateStruction(value_);
+			VariableHandler.URLStruction urlStruction = VariableHandler.parserDefaultValueVariableStruction(value_);
 			if(urlStruction == null){
 				propertiesValue.append( value_);
 			}
@@ -129,16 +132,36 @@ public abstract class EnvUtil {
 				value_ = System.getenv(property);
 
 			}
+			if(value_ == null) {
+				if( variable != null ){
+					value_ = variable.getDefaultValue();
+				}
+
+			}
+
 			if(value_ != null){
 				propertiesValue.append(value_);
 			}
 			else {
+
 				if (parentName == null) {
-					throw new IllegalArgumentException("Eval property " + property + " value failed:not set variable value in config file or system environment.");
+					if(variable == null) {
+						throw new IllegalArgumentException("Eval property " + property + " value failed:not set variable value in config file or system environment.");
+					}
+					else{
+						throw new IllegalArgumentException("Eval property " + property + " value failed:not set variable value in config file or system environment. variable is "+variable.getOriginVariableName());
+					}
 				}
 				else {
-					if(log.isWarnEnabled())
-						log.warn("Eval property " + property + " for " + parentName + " value failed:not set variable value in config file or system environment.");
+					if(log.isWarnEnabled()) {
+						if(variable == null) {
+							log.warn("Eval property " + property + " for " + parentName + " value failed:not set variable value in config file or system environment.");
+						}
+						else{
+							log.warn("Eval property " + property + " for " + parentName + " value failed:not set variable value in config file or system environment. variable is "+variable.getOriginVariableName());
+						}
+
+					}
 					propertiesValue.append("#[").append(property).append("]");
 				}
 			}
@@ -153,9 +176,9 @@ public abstract class EnvUtil {
 			if(i < variables.size()) {
 				VariableHandler.Variable variable = variables.get(i);
 				if(parentName.equals(variable.getVariableName())){
-					throw new IllegalArgumentException("Eval property " + variable.getVariableName() + " for " + parentName + " value failed:loop reference ocour." );
+					throw new IllegalArgumentException("Eval property " + variable.getOriginVariableName() + " for " + parentName + " value failed:loop reference ocour." );
 				}
-				getSystemEnv(builder,variable.getVariableName(), parentName, properties);
+				getSystemEnv(builder,variable, variable.getVariableName(), parentName, properties);
 
 
 			}
