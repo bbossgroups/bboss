@@ -15,6 +15,9 @@ package org.frameworkset.bulk;
  * limitations under the License.
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * <p>Description: </p>
  * <p></p>
@@ -24,6 +27,7 @@ package org.frameworkset.bulk;
  * @version 1.0
  */
 public class CommonBulkProcessorBuilder {
+	private static Logger logger = LoggerFactory.getLogger(CommonBulkProcessor.class);
 	private CommonBulkConfig bulkConfig;
 	public CommonBulkProcessorBuilder(){
 		bulkConfig = new CommonBulkConfig();
@@ -98,11 +102,20 @@ public class CommonBulkProcessorBuilder {
 		return this;
 	}
 	public CommonBulkProcessor build(){
-		if(bulkConfig == null || bulkConfig.getBulkAction() == null){
-			throw new CommonBulkProcessorException("build BulkProcessor failed:bulkConfig is null or BulkAction is not setted.");
+		if(bulkConfig == null ){
+			throw new CommonBulkProcessorException("Build BulkProcessor failed:bulkConfig is null.");
+		}
+		if( bulkConfig.getBulkAction() == null){
+			throw new CommonBulkProcessorException("Build BulkProcessor["+this.bulkConfig.getBulkProcessorName()+"] failed: BulkAction is not setted.");
+		}
+		if(logger.isInfoEnabled()){
+			logger.info("Build BulkProcessor["+this.bulkConfig.getBulkProcessorName()+"] start.....");
 		}
 		CommonBulkProcessor bulkProcessor = new CommonBulkProcessor(this.bulkConfig);
 		bulkProcessor.init();
+		if(logger.isInfoEnabled()){
+			logger.info("Build BulkProcessor["+this.bulkConfig.getBulkProcessorName()+"] completed.");
+		}
 		return bulkProcessor;
 	}
 
