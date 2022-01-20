@@ -623,10 +623,10 @@ public class SQLParams
         if(sqlstruction.hasVars() )
         {
         	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
-        	if(pool != null && pool.showsql())
+        	if(pool != null && pool.showsqlParams())
         	{
-        		if(log.isDebugEnabled())
-        			log.debug("SQL INFO:" + this.toString() );
+        		if(log.isInfoEnabled())
+        			log.info("SQL INFO:" + this.toString() );
         	}
         }
         

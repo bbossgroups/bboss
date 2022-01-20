@@ -271,8 +271,8 @@ public class SQLInfoExecutor {
 			boolean showsql = pool.getJDBCPoolMetadata().isShowsql();
 			if(showsql)
 			{
-				if(log.isDebugEnabled())
-        			log.debug("Execute JDBC prepared batch statement:"+sql.getSql());
+				if(log.isInfoEnabled())
+        			log.info("Execute JDBC prepared batch statement:"+sql.getSql());
 			}
 
 			statement = stmtInfo

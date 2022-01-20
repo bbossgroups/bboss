@@ -183,6 +183,7 @@ public class JDBCPoolMetaData implements Serializable{
      */
     private boolean autoprimarykey = false;
     private boolean showsql = false;
+	private boolean showsqlParams = false;
     /**
      * 是否缓冲查询列表元数据
      */
@@ -865,6 +866,8 @@ public class JDBCPoolMetaData implements Serializable{
 			this.setSeqfunction(extenalInfo.getSeqfunction());
 			this.setRETURN_GENERATED_KEYS(extenalInfo.getRETURN_GENERATED_KEYS());
 			this.setQueryfetchsize(extenalInfo.getQueryfetchsize());
+			this.setShowsql(extenalInfo.isShowsql());
+			this.setShowsqlParams(extenalInfo.isShowsqlParams());
 //			this.setNeadGetGenerateKeys(extenalInfo.isNeadGetGenerateKeys());
 		}
 	}
@@ -1073,6 +1076,7 @@ public class JDBCPoolMetaData implements Serializable{
 					.append("\",\"queryfetchsize\":").append(queryfetchsize)
 					.append(",\"external\":").append(external).append(",")
 					.append("\"showsql\":").append(showsql)
+					.append("\"showsqlParams\":").append(showsqlParams)
 					.append(",\"externaljndiName\":").append(externaljndiName)
 					.append(",\"removeOnExceptions\":").append(removeOnExceptions).append(",")
 					.append("\"maxOpenPreparedStatements\":").append(maxOpenPreparedStatements)
@@ -1113,6 +1117,13 @@ public class JDBCPoolMetaData implements Serializable{
 		return dbInfoEncrypt;
 	}
 
+	public boolean isShowsqlParams() {
+		return showsqlParams;
+	}
+
+	public void setShowsqlParams(boolean showsqlParams) {
+		this.showsqlParams = showsqlParams;
+	}
 
 
 //	public boolean isNeadGetGenerateKeys() {

@@ -2004,25 +2004,23 @@ public class JDBCPool {
 				|| this.info.getJNDIName().equals(""))
 			return;
 
+
 		try {
-			try {
 
-				DatasourceUtil.closeDS(datasource);
-			} catch (Exception e) {
-				throw e;
-			}
-			try {
-				
-				if(ctx != null)
-					ctx.unbind(this.info.getJNDIName());
-			} catch (Exception e) {
-
-			}
-			this.deployedDataSource = false;
-			
+			DatasourceUtil.closeDS(datasource);
 		} catch (Exception e) {
-			throw e;
+
 		}
+		try {
+
+			if(ctx != null)
+				ctx.unbind(this.info.getJNDIName());
+		} catch (Exception e) {
+
+		}
+		this.deployedDataSource = false;
+			
+
 	}
 
 	public boolean isDataSourceDeployed() {
@@ -2528,7 +2526,9 @@ public class JDBCPool {
 	{
 		return this.info.isShowsql();
 	}
-
+	public  boolean showsqlParams(){
+		return info.isShowsqlParams();
+	}
 	public IdGenerator getIdGenerator() {
 		if(this.externalDBName == null)
 		{

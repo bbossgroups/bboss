@@ -90,11 +90,13 @@ public class CommonBulkProcessor {
 			return;
 		this.inited = true;
 //		clientInterface = ElasticSearchHelper.getRestClientUtil(bulkConfig.getElasticsearch());
-		this.bulkCommand = buildBulkCommand();
+		this.bulkAction = bulkConfig.getBulkAction();
 		executor = ThreadPoolFactory.buildThreadPool(bulkConfig.getBulkProcessorName(),bulkConfig.getBulkRejectMessage(),
-													this.bulkConfig.getWorkThreads(),this.bulkConfig.getWorkThreadQueue(),
-													this.bulkConfig.getBlockedWaitTimeout()
-													,this.bulkConfig.getWarnMultsRejects());
+				this.bulkConfig.getWorkThreads(),this.bulkConfig.getWorkThreadQueue(),
+				this.bulkConfig.getBlockedWaitTimeout()
+				,this.bulkConfig.getWarnMultsRejects());
+		this.bulkCommand = buildBulkCommand();
+
 //		dataQueue =  new ArrayBlockingQueue<BulkData>(bulkConfig.getBulkQueue());
 		if(bulkConfig.getFlushInterval() > 0) {
 			flush = new Flush(bulkConfig.getBulkProcessorName() + "-flush-thread");

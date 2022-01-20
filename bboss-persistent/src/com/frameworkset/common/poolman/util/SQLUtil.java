@@ -552,6 +552,17 @@ public class SQLUtil{
 			return false;
 		}
 	}
+	public static boolean showsqlParams(String dbname)
+	{
+		try
+		{
+			return DBUtil.getSQLManager().getPool(dbname).getJDBCPoolMetadata().isShowsqlParams();
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+	}
 	protected ResultMap innerExecuteJDBC(StatementInfo stmtInfo,
 			Class objectType,RowHandler rowhandler,int result_type) throws SQLException
 	{
