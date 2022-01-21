@@ -16,6 +16,7 @@
 package com.frameworkset.common.poolman.management;
 
 import com.frameworkset.common.poolman.PoolManConstants;
+import com.frameworkset.common.poolman.sql.ParserException;
 import com.frameworkset.util.SimpleStringUtil;
 import com.frameworkset.util.ValueObjectUtil;
 import com.frameworkset.velocity.BBossVelocityUtil;
@@ -136,16 +137,20 @@ public class PoolManConfiguration   {
 		} catch (NullPointerException ne) {
 //			ne.printStackTrace();
 			// then try deprecated properties
-			log.warn("Load datasource Configuration failed from "
-					+ configFile ,ne);
+			Exception e = new ParserException("Load datasource Configuration from default bboss persistent config file,please config and start datasource follow document：https://doc.bbossgroups.com/#/persistent/PersistenceLayer1");
+			log.error("",e);
 			// don't try the props files anymore, it's been over a year
 			// System.out.println("** WARNING: Attempting to use deprecated properties files\n");
 			// this.datasources =
 			// parseProperties(PoolManConstants.PROPS_CONFIG_FILE);
 
 		} catch (Exception e) {
-			log.warn("Load datasource Configuration failed from "
-					+ configFile ,e);
+//			log.warn("Load datasource Configuration from default bboss persistent config file： "
+//					+ configFile );
+//			log.warn("Load datasource Configuration failed from "
+//					+ configFile ,e);
+			Exception ex = new ParserException("Load datasource Configuration from default bboss persistent config file, please config and start datasource follow document：https://doc.bbossgroups.com/#/persistent/PersistenceLayer1");
+			log.error("",ex);
 		}
 
 	}
