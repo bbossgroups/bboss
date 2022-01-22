@@ -20,7 +20,7 @@ package com.frameworkset.common.poolman.management;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.common.poolman.util.SQLManager;
-import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.util.shutdown.ShutdownUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +42,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
         try {
         	 
             // use reflection and catch the Exception to allow PoolMan to work with 1.2 VM's
-            BaseApplicationContext.addShutdownHook(new Runnable(){
+            ShutdownUtil.addShutdownHook(new Runnable(){
 
 				public void run() {
 					 try {
@@ -55,7 +55,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 					
 				}
             	
-            },1000);
+            },Integer.MAX_VALUE - 9);
             addShutdownHook = true;
         } catch (Exception e) {
         	addShutdownHook = true;

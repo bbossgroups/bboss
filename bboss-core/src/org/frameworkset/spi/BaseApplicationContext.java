@@ -61,9 +61,9 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	static
 	{
 		try {
-			Class r = Runtime.getRuntime().getClass();
-			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
-					Thread.class);
+//			Class r = Runtime.getRuntime().getClass();
+//			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
+//					Thread.class);
 //			shutdownHook  = new Thread(
 //					new Runnable(){
 //
@@ -80,7 +80,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 						}
 
-					},Integer.MAX_VALUE);
+					},Integer.MAX_VALUE - 10);
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
 		}

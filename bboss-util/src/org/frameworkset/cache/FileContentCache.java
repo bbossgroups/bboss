@@ -1,42 +1,37 @@
 package org.frameworkset.cache;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.frameworkset.util.*;
+import org.frameworkset.util.shutdown.ShutdownUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.util.DaemonThread;
-import com.frameworkset.util.FileUtil;
-import com.frameworkset.util.ResourceInitial;
-import com.frameworkset.util.SimpleStringUtil;
-import com.frameworkset.util.UUIDResource;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FileContentCache  
 {
-	private static Method shutdownMethod ;
-	static 
-	{
-		try
-		{
-			Class clazz = Class.forName("org.frameworkset.spi.BaseApplicationContext");
-			shutdownMethod = clazz.getMethod("addShutdownHook",Runnable.class);
-		}
-		catch(RuntimeException e)
-		{
-			
-		}
-		catch(Exception e)
-		{
-			
-		}
-		catch(Throwable e)
-		{
-			
-		}
-	}
+//	private static Method shutdownMethod ;
+//	static
+//	{
+//		try
+//		{
+//			Class clazz = Class.forName("org.frameworkset.spi.BaseApplicationContext");
+//			shutdownMethod = clazz.getMethod("addShutdownHook",Runnable.class);
+//		}
+//		catch(RuntimeException e)
+//		{
+//
+//		}
+//		catch(Exception e)
+//		{
+//
+//		}
+//		catch(Throwable e)
+//		{
+//
+//		}
+//	}
 	private static Logger log = LoggerFactory.getLogger(FileContentCache.class);
 	private Map<String,String> democontentCache = new HashMap<String,String>();	
 	public static final int HTMLNoBREncode  = 0;
@@ -134,31 +129,54 @@ public class FileContentCache
 	{
 		damon = new DaemonThread(refreshInterval,"FileContentCache Refresh Monitor Worker for "+ name); 
 		damon.start();
-		if(shutdownMethod != null)
-		{
-			shutdownMethod.invoke(null, new Runnable(){
+//		if(shutdownMethod != null)
+//		{
+//			shutdownMethod.invoke(null, new Runnable(){
+//
+//				@Override
+//				public void run() {
+//					try {
+//						destroy();
+//					} catch(RuntimeException e)
+//					{
+//						log.warn("",e);
+//					}
+//					catch(Exception e)
+//					{
+//						log.warn("",e);
+//					}
+//					catch(Throwable e)
+//					{
+//						log.warn("",e);
+//					}
+//
+//				}
+//
+//			});
+//
+//		}
+		ShutdownUtil.addShutdownHook(new Runnable(){
 
-				@Override
-				public void run() {
-					try {
-						destroy();
-					} catch(RuntimeException e)
-					{
-						log.warn("",e);
-					}
-					catch(Exception e)
-					{
-						log.warn("",e);
-					}
-					catch(Throwable e)
-					{
-						log.warn("",e);
-					}
-					
+			@Override
+			public void run() {
+				try {
+					destroy();
+				} catch(RuntimeException e)
+				{
+					log.warn("",e);
 				}
-				
-			});
-		}
+				catch(Exception e)
+				{
+					log.warn("",e);
+				}
+				catch(Throwable e)
+				{
+					log.warn("",e);
+				}
+
+			}
+
+		},Integer.MAX_VALUE - 9);
 		
 	}
 	public void start() throws Exception
