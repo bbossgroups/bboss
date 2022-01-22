@@ -15,17 +15,16 @@
  */
 package com.frameworkset;
 
+import com.frameworkset.common.poolman.SQLExecutor;
+import com.frameworkset.common.poolman.util.SQLUtil;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.frameworkset.common.poolman.SQLExecutor;
-import com.frameworkset.common.poolman.util.SQLUtil;
 
 public class TestDate {
 
@@ -67,7 +66,7 @@ public class TestDate {
 		}
 		
 		//mysql
-		SQLUtil.startPool("testmysql","com.mysql.jdbc.Driver","jdbc:mysql://10.0.15.134:3306/bbosstest","root","123456",
+		SQLUtil.startPool("testmysql","com.mysql.cj.jdbc.Driver","jdbc:mysql://10.0.15.134:3306/bbosstest","root","123456",
 				 null,
 				 null,//"READ_COMMITTED",
 				"select 1",
