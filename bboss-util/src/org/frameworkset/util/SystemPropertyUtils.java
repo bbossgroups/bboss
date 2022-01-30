@@ -78,4 +78,22 @@ public abstract class SystemPropertyUtils {
 		return buf.toString();
 	}
 
+	/**
+	 * 从环境变量中获取变量名称
+	 * @param variable
+	 * @return
+	 */
+	public static String getEnvironmentVariableValue(String variable){
+		//Get mainClass from jvm system propeties,just like -Dproperty=value
+//			Properties pros = System.getProperties();
+		String mainClass =System.getProperty(variable);
+		if(mainClass == null) {
+			//Get mainClass from os env ,just like property=value in user profile
+			mainClass = System.getenv(variable);
+
+		}
+		return mainClass;
+	}
+
+
 }

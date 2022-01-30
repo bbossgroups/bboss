@@ -37,7 +37,7 @@ public class EnvirmentUtil {
 		value = parserMainClass(mainclalss);
 		System.out.println(value);
 	}
-	private static String parserMainClassVariable(String mainClassVariable){
+	public static String getMainClassVariableValue(String mainClassVariable){
 		//Get mainClass from jvm system propeties,just like -Dproperty=value
 //			Properties pros = System.getProperties();
 		String mainClass =System.getProperty(mainClassVariable);
@@ -65,7 +65,7 @@ public class EnvirmentUtil {
 				String defaultMainClass = mainclass.substring(idx+1).trim();
 				String mainClassVariable = mainclass.substring(0, idx).trim();
 				if(!mainClassVariable.equals("")){
-					String varValue = parserMainClassVariable(mainClassVariable);
+					String varValue = getMainClassVariableValue(mainClassVariable);
 					if(varValue == null || varValue.equals("")){
 						return defaultMainClass;
 					}
@@ -80,7 +80,7 @@ public class EnvirmentUtil {
 
 			}
 			else{
-				String varValue = parserMainClassVariable(mainclass.trim());
+				String varValue = getMainClassVariableValue(mainclass.trim());
 				if(varValue == null || varValue.equals("")){
 					return null;
 				}

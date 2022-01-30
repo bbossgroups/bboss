@@ -15,6 +15,7 @@
  */
 package org.frameworkset.util;
 
+import java.time.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +30,15 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  */
 public class TimeUtil {
-	
+	public static boolean enablePersistentLocalDate = false;
+	static{
+		String _enablePersistentLocalDate = SystemPropertyUtils.getEnvironmentVariableValue("enablePersistentLocalDate");
+		if(_enablePersistentLocalDate != null &&
+				_enablePersistentLocalDate.equalsIgnoreCase("true")){
+			enablePersistentLocalDate = true;
+		}
+	}
+
 	public static TimeUnit getTimeUnitByName(String timeUnit,TimeUnit defaultTimeUnit)
 	{
 		TimeUnit timeUnit_ = TimeUnit.SECONDS;
@@ -74,6 +83,48 @@ public class TimeUtil {
 		}
 		return timeUnit_;
 	}
+
+	public static Object convertLocalDatetime(LocalDateTime localDateTime){
+		if (null == localDateTime) {
+			return null;
+		}
+		if(enablePersistentLocalDate){
+			return localDateTime;
+		}
+		ZoneId zoneId = ZoneId.systemDefault();
+		ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
+		Instant instant = zonedDateTime.toInstant();
+		Date date = Date.from(instant);
+		return date;
+	}
+
+	public static Object convertLocalDate(LocalDate localDate){
+
+		if (null == localDate) {
+			return null;
+		}
+		if(enablePersistentLocalDate){
+			return localDate;
+		}
+		ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
+		return Date.from(zonedDateTime.toInstant());
+	}
+	public static Object convertLocalDate(Object localDate){
+
+		if (null == localDate) {
+			return null;
+		}
+		if(localDate instanceof LocalDateTime){
+			return convertLocalDatetime((LocalDateTime)localDate);
+
+		}
+		else if(localDate instanceof LocalDate){
+			return convertLocalDate((LocalDate)localDate);
+
+		}
+		return localDate;
+	}
+
 	public static TimeUnit getTimeUnit(String timeUnit,TimeUnit defaultUnit)
 	{
 		TimeUnit timeUnit_ = TimeUnit.SECONDS;

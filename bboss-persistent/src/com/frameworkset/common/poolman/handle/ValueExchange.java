@@ -5,6 +5,7 @@ import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.util.*;
 import oracle.jdbc.OracleTypes;
+import org.frameworkset.util.TimeUtil;
 import org.frameworkset.util.annotations.wraper.ColumnWraper;
 import org.frameworkset.util.encoder.BASE64Encoder;
 
@@ -715,6 +716,7 @@ public class ValueExchange {
 				// 读取零字节异常，造成数据读取失败
 				try {
 					value = cstmt.getObject(i);
+					value = TimeUtil.convertLocalDate(value);
 				} catch (Exception e) {
 					value = null;
 				}
@@ -823,6 +825,7 @@ public class ValueExchange {
 				// 读取零字节异常，造成数据读取失败
 				try {
 					value = cstmt.getObject(paramName);
+					value = TimeUtil.convertLocalDate(value);
 				} catch (Exception e) {
 					value = null;
 				}
@@ -1280,7 +1283,7 @@ public class ValueExchange {
 				// 读取零字节异常，造成数据读取失败
 				
 				value = res.getObject(i);
-				
+				value = TimeUtil.convertLocalDate(value);
 				// value = res.getObject(i);
 				break;
 			}
@@ -1412,7 +1415,7 @@ public class ValueExchange {
 				// 读取零字节异常，造成数据读取失败
 				
 				value = res.getObject(i);
-				
+				value = TimeUtil.convertLocalDate(value);
 				// value = res.getObject(i);
 				break;
 			}
