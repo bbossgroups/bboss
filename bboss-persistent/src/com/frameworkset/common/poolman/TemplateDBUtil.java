@@ -15,11 +15,11 @@
  */
 package com.frameworkset.common.poolman;
 
-import java.sql.SQLException;
+import com.frameworkset.common.poolman.util.DBOptions;
+import com.frameworkset.orm.transaction.TransactionManager;
 
 import javax.transaction.RollbackException;
-
-import com.frameworkset.orm.transaction.TransactionManager;
+import java.sql.SQLException;
 
 /**
  * 
@@ -118,6 +118,81 @@ public class TemplateDBUtil extends PreparedDBUtil{
 			throw e;
 		}
 	}
-	
-	
+	/**
+	 * 执行JDBCTemplate的execute方法，整个方法的执行过程被包含在
+	 * 一个事务中，如果有异常发生则事务将被回滚，如果整个事务被正常结束，则被提交
+	 * 如果模板方法在执行的过程当中抛出异常，则该异常将被继续抛出给业务层
+	 * @param template
+	 * @throws Throwable
+	 */
+	public static void executeTemplate(DBOptions dbOptions,JDBCTemplate template) throws Throwable
+	{
+		TransactionManager tm = new TransactionManager();
+		try
+		{
+			tm.begin();
+			template.execute(  dbOptions);
+			tm.commit();
+		}
+		catch(SQLException e)
+		{
+			try {
+				tm.rollback();
+			} catch (RollbackException e1) {
+			}
+			throw e;
+		}
+		catch(Throwable e)
+		{
+			try {
+				tm.rollback();
+			} catch (RollbackException e1) {
+
+			}
+			throw e;
+		}
+
+	}
+
+	/**
+	 * 执行JDBCValueTemplate的execute方法，该方法有返回值
+	 * 整个方法的执行过程被包含在一个事务中，如果有异常发生则事务将被回滚，如果整个事务被正常结束，则被提交
+	 * 并且将返回值返回给业务层。
+	 * 如果模板方法在执行的过程当中抛出异常，则该异常将被继续抛出给业务层
+	 *
+	 * @param template
+	 * @throws Throwable
+	 * @return Object
+	 */
+	public static <T> T executeTemplate(DBOptions dbOptions, JDBCValueTemplate<T> template) throws Throwable
+	{
+		TransactionManager tm = new TransactionManager();
+		T value = null;
+		try
+		{
+			tm.begin();
+			value = template.execute(  dbOptions);
+			tm.commit();
+			return value;
+		}
+		catch(SQLException e)
+		{
+			try {
+				tm.rollback();
+			} catch (RollbackException e1) {
+			}
+			throw e;
+		}
+		catch(Throwable e)
+		{
+			try {
+				tm.rollback();
+			} catch (RollbackException e1) {
+
+			}
+			throw e;
+		}
+	}
+
+
 }

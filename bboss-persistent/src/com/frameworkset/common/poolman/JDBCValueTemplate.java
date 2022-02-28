@@ -15,6 +15,8 @@
  */
 package com.frameworkset.common.poolman;
 
+import com.frameworkset.common.poolman.util.DBOptions;
+
 /**
  * 
  * 
@@ -46,5 +48,14 @@ public interface JDBCValueTemplate<T> {
 	 * 
 	 */
 	public T execute() throws Exception;
+	/**
+	 * 用来实现需要控制的数据库事务的数据库操作的模板方法，避免用户直接在代码中使用
+	 * 数据库事务管理代码。
+	 * 该方法允许用户返回一个对象类型的返回值
+	 * @throws Exception
+	 * @return Object
+	 *
+	 */
+	public T execute(DBOptions dbOptions) throws Exception;
 
 }

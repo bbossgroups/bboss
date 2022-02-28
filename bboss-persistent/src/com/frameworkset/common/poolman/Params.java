@@ -18,8 +18,6 @@ package com.frameworkset.common.poolman;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.frameworkset.common.poolman.PreparedDBUtil.UpdateKeyInfo;
-
 /**
  * 
  * 
@@ -86,7 +84,7 @@ public class Params implements java.lang.Comparable
 	/**
 	 * 更新数据库记录时的主键信息
 	 */
-	UpdateKeyInfo updateKeyInfo;
+	DBOptionsPreparedDBUtil.UpdateKeyInfo updateKeyInfo;
 	
 	/**
 	 * -1:无含义 0:insert 1:update 2:delete

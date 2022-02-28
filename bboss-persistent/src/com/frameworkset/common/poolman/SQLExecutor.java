@@ -19,12 +19,10 @@ package com.frameworkset.common.poolman;
 import com.frameworkset.common.poolman.handle.FieldRowHandler;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.RowHandler;
+import com.frameworkset.common.poolman.util.DBOptions;
 import com.frameworkset.util.ListInfo;
-import org.frameworkset.persitent.util.SQLInfo;
-import org.frameworkset.persitent.util.SQLUtil;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,303 +34,20 @@ import java.util.List;
  * @author biaoping.yin
  * @version 1.0
  */
-public class SQLExecutor
+public class SQLExecutor extends DBOPtionsSQLExecutor
 {
-    /**
-     * 数据库查询语句属性
-     */
-    protected String statement ;    
-//    protected String pretoken;
-//    protected String endtoken;
-    protected String action;
-    public static final String ACTION_INSERT = "insert";
-    public static final String ACTION_UPDATE = "update";
-    public static final String ACTION_DELETE = "delete";
-    
-    public static final String BATCH_COMMON = "common";
-    public static final String BATCH_PREPARED = "prepared";
-//    protected String dbname;
-    
 
-    /**
-	 * 批处理预编译操作参数集，
-	 * List<Params>
-	 */
-	private List<SQLParams> batchsqlparams;
-	/**
-	 * 批处理预编译操作参数集，
-	 * List<String>
-	 */
-	private List<String> batchsqls;
-	private String batchtype=BATCH_COMMON;
-	
-    /**
-     * 预编译参数列表,单独的预编语句参数
-     * Map<String,Param>
-     */
-    protected SQLParams sqlparams ;
-	private String batchDBName;
-	private boolean batchOptimize = false;
-	
-    
-    public SQLParams getSQLParams() throws SetSQLParamException
-    {
-        if(sqlparams != null )
-        {
-            if((this.getPretoken() == null && this.getEndtoken()!= null) ||
-                    (getPretoken() != null && getEndtoken() == null))
-                throw new SetSQLParamException("非法的绑定变量分割符设置:pretoken = " + getPretoken() + "endtoken =" + getEndtoken() );            
-        }
-        
-        return this.sqlparams;
-    }
-    
-    /**
-     * 添加sql参数，由DefaultDataInfoImpl进行处理
-     * @param name
-     * @param value
-     * @param type
-     * @throws SetSQLParamException 
-     */
-    public void addSQLParam(String name, String value, String type) throws SetSQLParamException
-    {   
-        addSQLParam( name,  value,  type, null);
-    }
-   
-    private void init()
-    {
-        if(sqlparams == null)
-        {
-            sqlparams = new SQLParams();            
-        }
-    }
-    /**
-     * 添加sql参数，由DefaultDataInfoImpl进行处理
-     * @param name
-     * @param value
-     * @param type
-     * @throws SetSQLParamException 
-     */
-    public void addSQLParam(String name, Object value, String type,String dataformat) throws SetSQLParamException
-    {   
-        init();
-       
-        addSQLParam( sqlparams, name,  value,  type, dataformat);
-    }
-    
-    /**
-     * 添加sql参数，由DefaultDataInfoImpl进行处理
-     * @param name
-     * @param value
-     * @param type
-     * @throws SetSQLParamException 
-     */
-    public void addSQLParam(String name, Object value, String type,String dataformat,String charset) throws SetSQLParamException
-    {   
-        init();
-       
-        addSQLParam( sqlparams, name,  value,  type, dataformat,charset);
-    }
-    
-    /**
-     * 添加sql参数，由DefaultDataInfoImpl进行处理
-     * @param name
-     * @param value
-     * @param type
-     * @throws SetSQLParamException 
-     */
-    public static void addSQLParam(SQLParams sqlparams,String name, Object value, String type,String dataformat) throws SetSQLParamException
-    {   
-//        init();
-       
-        sqlparams.addSQLParam( name,  value,  type, dataformat);
-    }
-    /**
-     * 添加sql参数，由DefaultDataInfoImpl进行处理
-     * @param name
-     * @param value
-     * @param type
-     * @throws SetSQLParamException 
-     */
-    public static void addSQLParam(SQLParams sqlparams,String name, Object value, String type,String dataformat,String charset) throws SetSQLParamException
-    {   
-//        init();
-       
-        sqlparams.addSQLParam( name,  value,  type, dataformat,charset);
-    }
-    
-    public String getDbname()
-    {
-        init();
-        return this.sqlparams.getDbname();
-    }
+	//    protected String dbname;
 
-    public void setDbname(String dbname)
-    {
-        init();
-        this.sqlparams.setDbname(dbname);
-    }
 
-    public String getStatement()
+	public Object execute() throws SQLException
     {
-        return statement;
-    }
-
-    public void setStatement(String statement)
-    {
-        this.statement = statement;
-    }
-
-    public String getPretoken()
-    {
-        init();
-        return this.sqlparams.getPretoken();
-    }
-
-    public void setPretoken(String pretoken)
-    {
-        init();
-        sqlparams.setPretoken(pretoken);
-    }
-
-    public String getEndtoken()
-    {
-        init();
-        return this.sqlparams.getEndtoken();
-    }
-
-    public void setEndtoken(String endtoken)
-    {
-        init();
-        this.sqlparams.setEndtoken(endtoken);
-    }
-
-    public String getAction()
-    {
-        return action;
-    }
-
-    public void setAction(String action)
-    {
-        this.action = action;
-    }
-    
-    public Object execute() throws SQLException
-    {
-    	if(this.batchsqlparams == null && this.batchsqls == null)
-    	{
-	        action = action.toLowerCase();
-	        PreparedDBUtil dbutil = new PreparedDBUtil();
-	        if(action.equals(ACTION_INSERT))
-	        {
-	            if(this.getSQLParams().size() > 0)
-	            {
-	            	
-	                dbutil.preparedInsert(this.getSQLParams(), this.getDbname(), SQLUtil.getGlobalSQLUtil().getSQLInfo(this.getStatement(),true,true));
-	            }
-	            else
-	            {
-	                dbutil.executeInsert(this.getDbname(),this.getStatement());
-	            }
-	        }
-	        else if(action.equals(ACTION_UPDATE))
-	        {
-	            if(this.getSQLParams().size() > 0)
-	            {
-	                dbutil.preparedUpdate(this.getSQLParams(), this.getDbname(),SQLUtil.getGlobalSQLUtil().getSQLInfo(this.getStatement(),true,true));
-	            }
-	            else
-	            {
-	                dbutil.executeUpdate(this.getDbname(),this.getStatement());
-	            }
-	                
-	        }
-	        else if(action.equals(ACTION_DELETE))
-	        {
-	            if(this.getSQLParams().size() > 0)
-	            {
-	                dbutil.preparedDelete(this.getSQLParams(), this.getDbname(),SQLUtil.getGlobalSQLUtil().getSQLInfo(this.getStatement(),true,true));
-	            }
-	            else
-	            {
-	                dbutil.executeDelete(this.getDbname(),this.getStatement());
-	            }
-	        }
-	        else
-	            throw new SQLException("不支持的数据库操作：" + action);
-	        return dbutil.executePrepared();
-    	}
-    	else
-    	{
-    		if(this.batchtype.equals(BATCH_PREPARED))
-    		{
-    			PreparedDBUtil dbutil = new PreparedDBUtil();
-    			dbutil.setBatchOptimize(isBatchOptimize());
-    			dbutil.setPrepareDBName(batchDBName);
-    			dbutil.addPreparedBatch(new ListSQLParams(batchsqlparams,null));
-    			dbutil.executePreparedBatch();
-    		}
-    		else
-    		{
-    			DBUtil dbutil = new PreparedDBUtil();
-    			
-    			dbutil.addBatch(this.batchsqls);
-    			dbutil.executeBatch(this.getBatchDBName());
-    		}
-    		return null;
-    	}
+    	return execute((DBOptions)null);
         
         
     }
-    
-    public void addPreparedBatch()
-    {
-    	if(this.batchsqlparams == null)
-		{
-    		batchsqlparams = new ArrayList<SQLParams>();
-//			batchparamsIDXBySQL = new HashMap();
-		}
-    	batchsqlparams.add(this.sqlparams);
-//		batchparamsIDXBySQL.put(Params.prepareselect_sql, Params);
-		SQLInfo old = this.sqlparams.getOldsql();
-		String oldendtoken = this.sqlparams.getEndtoken();
-		String oldpretoken = this.sqlparams.getPretoken();
-		
-		sqlparams = this.buildParams();
-		sqlparams.setOldsql(old);
-		sqlparams.setEndtoken(oldendtoken);
-		sqlparams.setPretoken(oldpretoken);
-    }
-    
-    public void addBatch(String statement)
-    {
-    	if(batchsqls == null)
-    		batchsqls = new ArrayList<String>();
-    	batchsqls.add(statement);
-    }
 
-	private SQLParams buildParams() {
-		// TODO Auto-generated method stub
-		return new SQLParams();
-	}
-
-	public String getBatchDBName() {
-		return batchDBName;
-	}
-
-	public void setBatchDBName(String batchDBName) {
-		this.batchDBName = batchDBName;
-	}
-
-	public boolean isBatchOptimize() {
-		return batchOptimize;
-	}
-
-	public void setBatchOptimize(boolean batchOptimize) {
-		this.batchOptimize = batchOptimize;
-	}
-	
-//	public static void init(SQLParams sqlparams,String statement,String pretoken,String endtoken,String action)
+	//	public static void init(SQLParams sqlparams,String statement,String pretoken,String endtoken,String action)
 //	{
 ////		this.sqlparams = new SQLParams();
 //		sqlparams.setOldsql( statement);
@@ -351,198 +66,26 @@ public class SQLExecutor
 //		
 //		
 //	}
-	
-	public void init(String statement,String pretoken,String endtoken,String action)
-	{
-		this.sqlparams = new SQLParams();
-//		sqlparams.setOldsql( statement);
-//		if(action != null)
-//		{
-//			if(action.equals(ACTION_INSERT))
-//				sqlparams.setAction(PreparedDBUtil.INSERT);
-//			else if(action.equals(ACTION_DELETE))
-//				sqlparams.setAction(PreparedDBUtil.DELETE);
-//			else if(action.equals(ACTION_UPDATE))
-//				sqlparams.setAction(PreparedDBUtil.UPDATE);
-//		}
-//		sqlparams.setPretoken(pretoken);
-//		sqlparams.setEndtoken(endtoken);
-//		//http://changsha.koubei.com/store/detail--storeId-b227fc4aee6e4862909ea7bf62556a7a
-		
-		
-		SQLInfoExecutor.init(sqlparams, SQLUtil.getGlobalSQLUtil().getSQLInfo(statement,true,true), pretoken, endtoken, action);
-		
-		
-	}
 
-	public String getBatchtype() {
-		return batchtype;
-	}
 
-	public void setBatchtype(String batchtype) {
-		this.batchtype = batchtype;
-	}
-	
-	
 	public static void insertBeans(String dbname, String sql, List beans) throws SQLException {
-		
-		if(beans == null || beans.size() == 0)
-			return ;
-//		execute( dbname,  sql,  beans,PreparedDBUtil.INSERT,(GetCUDResult)null);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);
-		SQLInfoExecutor.insertBeans(dbname,sqlinfo, beans);
+
+
+				insertBeans((DBOptions) null, dbname,   sql,   beans);
 	}
 	
 	public static void insertBeans(String dbname, String sql, List beans,GetCUDResult getCUDResult) throws SQLException {
-		
-		if(beans == null || beans.size() == 0)
-			return ;
-//		execute( dbname,  sql,  beans,PreparedDBUtil.INSERT,getCUDResult);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);
-		SQLInfoExecutor.insertBeans(dbname,sqlinfo, beans,getCUDResult);
+
+
+				insertBeans((DBOptions) null, dbname,   sql,   beans,  getCUDResult);
 	}
-	
-	
-//	public static void execute(String dbname, String sql, List beans,boolean isBatchOptimize,int action) throws SQLException
-//	{
-//		execute(dbname, sql, beans,isBatchOptimize,action,(GetCUDResult)null) ;
-//	}
-	
-//	public static void execute(String dbname, String sql, List beans,boolean isBatchOptimize,int action,GetCUDResult getCUDResult) throws SQLException
-//	{
-//		Connection con = null;
-//		try
-//		{
-//			con = DBUtil.getConection(dbname);
-//			List<SQLParams> batchsqlparams = SQLParams.convertBeansToSqlParams(beans,new SQLInfo(sql,true,true),dbname,action,con);
-//			if(batchsqlparams == null)
-//				return ;
-//			PreparedDBUtil dbutil = new PreparedDBUtil();
-//			dbutil.setBatchOptimize(isBatchOptimize);
-//			dbutil.setPrepareDBName(dbname);
-//			dbutil.addPreparedBatch(new ListSQLParams(batchsqlparams,null));
-//			dbutil.executePreparedBatch(con,getCUDResult);
-//		}
-//		finally
-//		{
-//			try {
-//				if (con != null)
-//					con.close();
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//			}
-//		}
-//	}
-//	private static Object CUDexecute(String dbname, String sql, Object bean,int action) throws SQLException
-//	{
-//		return CUDexecute(dbname, sql, bean,action,false) ;
-//	}
-//	/**
-//	 * 针对增删改三种类型DB操作的统一处理方法
-//	 * @param dbname
-//	 * @param sql
-//	 * @param bean
-//	 * @param isBatchOptimize
-//	 * @param action
-//	 * @return
-//	 * @throws SQLException
-//	 */
-//	private static Object CUDexecute(String dbname, String sql, Object bean,int action,boolean getCUDResult) throws SQLException
-//	{
-//		Connection con = null;
-//		try
-//		{
-//			SQLInfo sqlinfo = new SQLInfo(sql,true,false);
-//			con = DBUtil.getConection(dbname);
-//			SQLParams batchsqlparams = SQLParams.convertBeanToSqlParams(bean,sqlinfo,dbname,action,con);
-//			if(batchsqlparams == null)
-//				return null;
-////			PreparedDBUtil dbutil = new PreparedDBUtil();
-////			dbutil.setBatchOptimize(isBatchOptimize);
-////			dbutil.setPrepareDBName(dbname);
-////			dbutil.addPreparedBatch(batchsqlparams);
-////			dbutil.executePreparedBatch(con);
-//			
-//			
-////			 action = action.toLowerCase();
-//	        PreparedDBUtil dbutil = new PreparedDBUtil();
-//	        if(action == PreparedDBUtil.INSERT)
-//	        {
-//	            if(batchsqlparams.size() > 0)
-//	            {
-//	                dbutil.preparedInsert(batchsqlparams, dbname,sqlinfo);
-//	                return dbutil.executePrepared(con,getCUDResult);
-//	            }
-//	            else
-//	            {
-//	                return dbutil.executeInsert(dbname,sql,con);
-//	            }
-//	        }
-//	        else if(action == PreparedDBUtil.UPDATE)
-//	        {
-//	            if(batchsqlparams.size() > 0)
-//	            {
-//	                dbutil.preparedUpdate(batchsqlparams, dbname,sqlinfo);
-//	                return dbutil.executePrepared(con,getCUDResult);
-//	            }
-//	            else
-//	            {
-//	                return dbutil.executeUpdate(dbname,sql,con);
-//	            }
-//	                
-//	        }
-//	        else if(action == PreparedDBUtil.DELETE)
-//	        {
-//	            if(batchsqlparams.size() > 0)
-//	            {
-//	                dbutil.preparedDelete(batchsqlparams, dbname,sqlinfo);
-//	                return dbutil.executePrepared(con,getCUDResult);
-//	            }
-//	            else
-//	            {
-//	                return dbutil.executeDelete(dbname,sql,con);
-//	            }
-//	        }
-//	        else
-//	            throw new SQLException("不支持的数据库操作：" + action);
-//		        
-//		}
-//		finally
-//		{
-//			try {
-//				if (con != null)
-//					con.close();
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//			}
-//		}
-//	}
-	
-	
-	
-	
 	
 
 	
-	
-	
-//	public static void execute(String dbname, String sql, List beans,int action) throws SQLException
-//	{
-//		execute(dbname, sql, beans,false,action,null);
-//	}
-//	
-//	public static void execute(String dbname, String sql, List beans,int action,GetCUDResult getCUDResult) throws SQLException
-//	{
-//		execute(dbname, sql, beans,false,action,getCUDResult);
-//	}
-	
-//	
-	
-	
 	public static Object update( String sql, Object... fields) throws SQLException {
 //		return execute(null, sql,PreparedDBUtil.UPDATE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);		
-		return SQLInfoExecutor.update(   sqlinfo,fields);
+
+				return update( (DBOptions) null, sql, fields) ;
 	}
 	
 
@@ -550,8 +93,7 @@ public class SQLExecutor
 
 	public static Object delete(String sql, Object... fields) throws SQLException {
 //		return execute(null, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		return SQLInfoExecutor.delete(sqlinfo, fields);
+		return delete((DBOptions) null, sql,fields);
 		
 	}
 	
@@ -567,135 +109,136 @@ public class SQLExecutor
 	
 	public static void deleteByKeys(String sql, int... fields) throws SQLException {
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.deleteByKeys(sqlinfo, fields);
+
+				deleteByKeys((DBOptions) null, sql, fields);
 		
 	}
 	public static void deleteByKeysWithDBName(String dbname,String sql, int... fields) throws SQLException {
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.deleteByKeysWithDBName(dbname,sqlinfo, fields);
+
+				deleteByKeysWithDBName((DBOptions) null, dbname,  sql,   fields);
 		
 	}
 	
 	public static void deleteByLongKeys(String sql, long... fields) throws SQLException {
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.deleteByLongKeys(sqlinfo, fields);
+
+				deleteByLongKeys((DBOptions) null, sql,  fields) ;
 		
 	}
 	public static void deleteByLongKeysWithDBName(String dbname,String sql, long... fields) throws SQLException {
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.deleteByLongKeysWithDBName(dbname,sqlinfo, fields);
+
+				deleteByLongKeysWithDBName((DBOptions) null, dbname,  sql,  fields);
 		
 	}
 	
 	public static <T> void executeBatch(String sql,List<T> datas,int batchsize, BatchHandler<T> batchHandler) throws SQLException{
-		executeBatch(null,sql,datas,batchsize, batchHandler);
+
+				executeBatch((DBOptions) null, sql, datas,  batchsize,  batchHandler) ;
 	}
 	
 	public static <T> void executeBatch(String dbname,String sql,List<T> datas,int batchsize, BatchHandler<T> batchHandler) throws SQLException{
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.executeBatch(  dbname,  sqlinfo,datas,batchsize,batchHandler) ;
+
+				executeBatch((DBOptions) null, dbname,  sql, datas,  batchsize,   batchHandler);
 	}
 	
 	
 	public static void updateByKeys(String sql, int... fields) throws SQLException {
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.updateByKeys(sqlinfo, fields);
+
+				updateByKeys((DBOptions) null, sql,  fields);
 		
 	}
 	public static void updateByKeysWithDBName(String dbname,String sql, int... fields) throws SQLException {
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.updateByKeysWithDBName(dbname,sqlinfo, fields);
+
+				updateByKeysWithDBName((DBOptions) null, dbname,  sql,   fields) ;
 		
 	}
 	
 	public static void updateByLongKeys(String sql, long... fields) throws SQLException {
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.updateByLongKeys(sqlinfo, fields);
+
+				updateByLongKeys((DBOptions) null, sql,   fields);
 		
 	}
 	public static void updateByLongKeysWithDBName(String dbname,String sql, long... fields) throws SQLException {
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.updateByLongKeysWithDBName(dbname,sqlinfo, fields);
+
+				updateByLongKeysWithDBName((DBOptions) null, dbname,  sql,  fields);
 		
 	}
 	
 	public static void updateByKeys(String sql, String... fields) throws SQLException {
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.updateByKeys(sqlinfo, fields);
+
+				updateByKeys((DBOptions) null, sql,  fields);
 		
 	}
 	public static void updateByKeysWithDBName(String dbname,String sql, String... fields) throws SQLException {
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.updateByKeysWithDBName(dbname,sqlinfo, fields);
+
+				updateByKeysWithDBName((DBOptions) null, dbname,  sql,   fields) ;
 		
 	}
 	
 	public static void deleteByKeys(String sql, String... fields) throws SQLException {
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.deleteByKeys(sqlinfo, fields);
+
+				deleteByKeys((DBOptions) null, sql,   fields);
 		
 	}
 	public static void deleteByKeysWithDBName(String dbname,String sql, String... fields) throws SQLException {
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.deleteByKeysWithDBName(dbname,sqlinfo, fields);
+
+				deleteByKeysWithDBName((DBOptions) null, dbname,  sql,   fields);
 		
 	}
 	
 	
 	public static void deleteByShortKeys(String sql, short... fields) throws SQLException {
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.deleteByShortKeys(sqlinfo, fields);
+
+				deleteByShortKeys((DBOptions) null, sql,   fields);
 		
 	}
 	public static void deleteByShortKeysWithDBName(String dbname,String sql, short... fields) throws SQLException {
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.deleteByShortKeysWithDBName(dbname,sqlinfo, fields);
+
+				deleteByShortKeysWithDBName((DBOptions) null, dbname,  sql,   fields) ;
 	}
 	
 	public static void updateByShortKeys(String sql, short... fields) throws SQLException {
 //		executeBatch(null, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.updateByShortKeys(sqlinfo, fields);
+
+				updateByShortKeys((DBOptions) null, sql,  fields);
 		
 	}
 	public static void updateByShortKeysWithDBName(String dbname,String sql, short... fields) throws SQLException {
 //		executeBatch(dbname, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfoExecutor.updateByShortKeysWithDBName(dbname,sqlinfo, fields);
+
+				updateByShortKeysWithDBName((DBOptions) null, dbname,  sql,  fields);
 	}
 
 
 
 	public static Object insert(String sql, Object... fields) throws SQLException {
 //		return execute(null, sql,PreparedDBUtil.INSERT, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		return SQLInfoExecutor.insert(sqlinfo, fields);
+
+		return insert((DBOptions) null, sql,(DBOptions) null, fields) ;
 	}
 	
 	public static Object updateWithDBName(String dbname, String sql, Object... fields) throws SQLException {
 //		return execute(dbname, sql,PreparedDBUtil.UPDATE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);		
-		return SQLInfoExecutor.updateWithDBName(  dbname,  sqlinfo,  fields);
+
+		return updateWithDBName((DBOptions) null, dbname,   sql,  fields) ;
 	}
 	
 	public static Object deleteWithDBName(String dbname, String sql, Object... fields) throws SQLException {
 //		return execute(dbname, sql,PreparedDBUtil.DELETE, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		return SQLInfoExecutor.deleteWithDBName(dbname,sqlinfo, fields);
+
+		return deleteWithDBName((DBOptions) null, dbname,   sql,  fields) ;
 		
 	}
 
@@ -703,111 +246,59 @@ public class SQLExecutor
 
 	public static Object insertWithDBName(String dbname, String sql, Object... fields) throws SQLException {
 //		return execute(dbname, sql,PreparedDBUtil.INSERT, fields);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		return SQLInfoExecutor.insertWithDBName(dbname,sqlinfo, fields);
+
+		return insertWithDBName((DBOptions) null, dbname,   sql,   fields);
 	}
 
 	public static void updateBeans(String dbname, String sql, List beans) throws SQLException {
-		if(beans == null || beans.size() == 0)
-			return ;
-//		execute( dbname,  sql,  beans,PreparedDBUtil.UPDATE,(GetCUDResult)null);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);		
-		SQLInfoExecutor.updateBeans(  dbname,  sqlinfo,  beans);
+
+				updateBeans((DBOptions) null, dbname,   sql,   beans);
 	}
 	
 	public static void updateBeans(String dbname, String sql, List beans,GetCUDResult GetCUDResult) throws SQLException {
-		if(beans == null || beans.size() == 0)
-			return ;
-//		execute( dbname,  sql,  beans,PreparedDBUtil.UPDATE,GetCUDResult);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);		
-		SQLInfoExecutor.updateBeans(  dbname,  sqlinfo,  beans,GetCUDResult);
+
+
+				updateBeans(	(DBOptions) null, dbname,   sql,   beans,  GetCUDResult) ;
 	}
 
 
 
 	public static void deleteBeans(String dbname, String sql, List beans) throws SQLException {
-		if(beans == null || beans.size() == 0)
-			return ;
-		
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);
-		SQLInfoExecutor.deleteBeans(dbname, sqlinfo, beans);
-//		execute( dbname,  sql,  beans,PreparedDBUtil.DELETE);
+
+				deleteBeans((DBOptions) null, dbname,   sql,   beans);
 		
 	}
 	
 	public static void deleteBeans(String dbname, String sql, List beans,GetCUDResult GetCUDResult) throws SQLException {
-		if(beans == null || beans.size() == 0)
-			return ;
-//		execute( dbname,  sql,  beans,PreparedDBUtil.DELETE, GetCUDResult);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);
-		SQLInfoExecutor.deleteBeans(dbname, sqlinfo, beans,GetCUDResult);
+
+				deleteBeans((DBOptions) null, dbname,   sql,   beans,  GetCUDResult);
 		
 	}
 
 
 
 	public static void insertBean(String dbname, String sql, Object bean) throws SQLException {
-		if(bean == null)
-			return ;
-//		List datas = new ArrayList();
-//		datas.add(bean);
-//		insertBeans( dbname,  sql,  datas);
-//		CUDexecute(dbname, sql, bean,PreparedDBUtil.INSERT,false);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		SQLInfoExecutor.insertBean(dbname,sqlinfo, bean);
+
+				insertBean((DBOptions) null, dbname,   sql,   bean) ;
 	}
 	
 	public static void insertBean(String dbname, String sql, Object bean,GetCUDResult getCUDResult) throws SQLException {
-		if(bean == null)
-			return ;
-////		List datas = new ArrayList();
-////		datas.add(bean);
-////		insertBeans( dbname,  sql,  datas);
-//		if(getCUDResult == null)
-//		{
-//			
-//			CUDexecute(dbname, sql, bean,PreparedDBUtil.INSERT,false);
-//		}
-//		else
-//		{
-//			GetCUDResult getCUDResult_ = (GetCUDResult)CUDexecute(dbname, sql, bean,PreparedDBUtil.INSERT,true);
-//			getCUDResult.setGetCUDResult(getCUDResult_);
-//			
-//		}
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		SQLInfoExecutor.insertBean(dbname,sqlinfo, bean,getCUDResult);
+
+				insertBean((DBOptions) null, dbname,   sql,   bean,  getCUDResult);
 	}
 
 
 
 	public static void updateBean(String dbname, String sql, Object bean) throws SQLException {
-		if(bean == null )
-			return ;
-//		List datas = new ArrayList();
-//		datas.add(bean);
-//		updateBeans( dbname,  sql,  datas);
-//		CUDexecute(dbname, sql, bean,PreparedDBUtil.UPDATE,false);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);		
-		SQLInfoExecutor.updateBean(   dbname,  sqlinfo,  bean);
+
+				updateBean((DBOptions) null, dbname,   sql,   bean) ;
 	
 	}
 	
 	public static void updateBean(String dbname, String sql, Object bean,GetCUDResult getCUDResult) throws SQLException {
-		if(bean == null )
-			return ;
-//		List datas = new ArrayList();
-//		datas.add(bean);
-//		updateBeans( dbname,  sql,  datas);
-		
-//		if(getCUDResult != null)
-//		{
-//			GetCUDResult getCUDResult_ = (GetCUDResult)CUDexecute(dbname, sql, bean,PreparedDBUtil.UPDATE,true);
-//			getCUDResult.setGetCUDResult(getCUDResult_);
-//		}
-//		else
-//			CUDexecute(dbname, sql, bean,PreparedDBUtil.UPDATE,false);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);		
-		SQLInfoExecutor.updateBean(  dbname,  sqlinfo,  bean, getCUDResult);
+
+
+				updateBean( (DBOptions) null, dbname,   sql,   bean,  getCUDResult) ;
 	}
 	
 	public static void updateBean( String sql, Object bean,GetCUDResult getCUDResult) throws SQLException {
@@ -816,48 +307,32 @@ public class SQLExecutor
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		updateBeans( null,  sql,  datas);
-		updateBean((String)null,  sql,  bean, getCUDResult);
+
+				updateBean( (DBOptions) null, sql,   bean,  getCUDResult) ;
 	}
 
 	public static void deleteBean( String sql, Object bean,GetCUDResult getCUDResult) throws SQLException {
-		deleteBean((String )null,sql, bean,getCUDResult) ;
+
+				deleteBean( (DBOptions) null, sql,   bean,  getCUDResult) ;
 	}
 
 	public static void deleteBean(String dbname, String sql, Object bean) throws SQLException {
-		
-		if(bean == null)
-			return ;
-//		List datas = new ArrayList();
-//		datas.add(bean);
-//		deleteBeans( dbname,  sql,  datas);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		SQLInfoExecutor.deleteBean(dbname, sqlinfo, bean);
-//		CUDexecute(dbname, sql, bean,PreparedDBUtil.DELETE,false);
+
+				deleteBean(	(DBOptions) null, dbname,   sql,   bean);
 	}
 	public static void deleteBean(String dbname, String sql, Object bean,GetCUDResult getCUDResult) throws SQLException {
-		
-		if(bean == null)
-			return ;
-//		List datas = new ArrayList();
-//		datas.add(bean);
-//		deleteBeans( dbname,  sql,  datas);
-//		if(getCUDResult != null)
-//		{
-//			GetCUDResult getCUDResult_ = (GetCUDResult)CUDexecute(dbname, sql, bean,PreparedDBUtil.DELETE,true);
-//			getCUDResult.setGetCUDResult(getCUDResult_);
-//		}
-//		else
-//			CUDexecute(dbname, sql, bean,PreparedDBUtil.DELETE,false);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		SQLInfoExecutor.deleteBean(dbname, sqlinfo, bean,getCUDResult);
+
+				deleteBean((DBOptions) null, dbname,   sql,   bean,  getCUDResult) ;
 	}
 	
 	public static void insertBeans(String sql, List beans) throws SQLException {
-		insertBeans( null,sql, beans); 
+
+				insertBeans( (DBOptions) null,sql, beans);
 	}
 	
 	public static void insertBeans(String sql, List beans,GetCUDResult getCUDResult) throws SQLException {
-		insertBeans( (String)null,sql, beans,getCUDResult); 
+
+				insertBeans( (DBOptions) null,sql, beans,getCUDResult);
 	}
 	
 	
@@ -865,13 +340,13 @@ public class SQLExecutor
 
 
 	public static void updateBeans( String sql, List beans) throws SQLException {
-		updateBeans( null,sql, beans); 
+		updateBeans( (DBOptions) null,sql, beans);
 	}
 
 
 
 	public static void deleteBeans( String sql, List beans) throws SQLException {
-		deleteBeans( null,sql, beans); 
+		deleteBeans( (DBOptions) null,sql, beans);
 		
 	}
 
@@ -883,7 +358,8 @@ public class SQLExecutor
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		insertBeans( null,  sql,  datas);
-		insertBean( (String)null,sql, bean);
+
+				insertBean( (DBOptions) null,sql, bean);
 	}
 	public static void insertBean( String sql, Object bean,GetCUDResult getCUDResult) throws SQLException {
 //		if(bean == null)
@@ -891,7 +367,8 @@ public class SQLExecutor
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		insertBeans( null,  sql,  datas);
-		insertBean( (String)null,sql, bean,getCUDResult);
+
+				insertBean( (DBOptions) null,sql, bean,getCUDResult);
 	}
 
 
@@ -902,27 +379,29 @@ public class SQLExecutor
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		updateBeans( null,  sql,  datas);
-		updateBean( (String)null,sql, bean);
+
+				updateBean((DBOptions) null,sql, bean);
 	}
 
 	
 
 	public static void deleteBean(String sql, Object bean) throws SQLException {
-		
+
 //		if(bean == null)
 //			return ;
 //		List datas = new ArrayList();
 //		datas.add(bean);
 //		deleteBeans( null,  sql,  datas);
-		deleteBean((String)null,sql, bean);
+		deleteBean(  (DBOptions) null,sql,   bean);
 		
 	}
 	
 	
 	public static <T> List<T> queryList(Class<T> beanType, String sql, Object... fields) throws SQLException
 	{
-		
-		return queryListWithDBName(beanType,null, sql, fields); 
+
+
+		return queryList((DBOptions) null, beanType,   sql,  fields);
 	}
 	/**
 	 * 
@@ -955,8 +434,8 @@ public class SQLExecutor
 //		datas.setDatas(dbutil.executePreparedForList(beanType));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		return SQLInfoExecutor.queryListInfoWithDBName(  beanType, dbname,  sqlinfo,  offset, pagesize, fields);
+
+		return queryListInfoWithDBName((DBOptions) null,beanType,  dbname,   sql,   offset,  pagesize, fields);
 	}
 	public static ListInfo queryListInfoWithDBName2ndTotalsize(Class<?> beanType,String dbname, String sql, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
 	{
@@ -978,8 +457,7 @@ public class SQLExecutor
 //		datas.setDatas(dbutil.executePreparedForList(beanType));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;	
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		return SQLInfoExecutor.queryListInfoWithDBName2ndTotalsize(  beanType, dbname,  sqlinfo,  offset, pagesize, totalsize, fields);
+		return queryListInfoWithDBName2ndTotalsize((DBOptions) null, beanType,  dbname,   sql,   offset,  pagesize,  totalsize,fields) ;
 	}
 	public static ListInfo queryListInfoWithDBName2ndTotalsizesql(Class<?> beanType,String dbname, String sql, long offset,int pagesize,String totalsizesql,Object... fields) throws SQLException
 	{
@@ -1001,10 +479,9 @@ public class SQLExecutor
 //		datas.setDatas(dbutil.executePreparedForList(beanType));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfo totalsizesqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(totalsizesql,false,false);
-		
-		return SQLInfoExecutor.queryListInfoWithDBName2ndTotalsizesql(   beanType, dbname,  sqlinfo,  offset, pagesize, totalsizesqlinfo, fields);
+
+
+		return queryListInfoWithDBName2ndTotalsizesql((DBOptions) null,beanType,  dbname,   sql,   offset,  pagesize,  totalsizesql,  fields) ;
 	}
 	/**
 	 * 
@@ -1018,23 +495,27 @@ public class SQLExecutor
 	 */
 	public static ListInfo queryListInfo(Class<?> beanType, String sql, long offset,int pagesize,Object... fields) throws SQLException
 	{
-		return queryListInfoWithDBName(beanType, null,sql, offset,pagesize,fields);		 
+
+		return queryListInfo((DBOptions) null, beanType,   sql,   offset,  pagesize, fields);
 	}
 	
 	public static ListInfo queryListInfoWithTotalsize(Class<?> beanType, String sql, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
 	{
-		return queryListInfoWithDBName2ndTotalsize(beanType, null,sql, offset,pagesize,totalsize,fields);		 
+
+		return queryListInfoWithTotalsize((DBOptions) null, beanType,   sql,   offset,  pagesize,  totalsize, fields);
 	}
 	
 	public static ListInfo queryListInfoWithTotalsizesql(Class<?> beanType, String sql, long offset,int pagesize,String totalsizesql,Object... fields) throws SQLException
 	{
-		return queryListInfoWithDBName2ndTotalsizesql(beanType, null,sql, offset,pagesize,totalsizesql,fields);		 
+
+		return queryListInfoWithDBName2ndTotalsizesql((DBOptions) null,beanType, null,sql, offset,pagesize,totalsizesql,fields);
 	}
 	
 	
 	public static <T> T queryObject(Class<T> beanType, String sql, Object... fields) throws SQLException
 	{
-		return queryObjectWithDBName(beanType,null, sql, fields);
+
+		return queryObjectWithDBName((DBOptions) null,beanType,null, sql, fields);
 		
 		 
 	}
@@ -1057,8 +538,8 @@ public class SQLExecutor
 //		
 //		
 //		return dbutil.executePreparedForList(beanType);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);		
-		return SQLInfoExecutor.queryListWithDBName(  beanType, dbname,  sqlinfo,  fields);
+
+		return queryListWithDBName((DBOptions) null, beanType,  dbname,   sql,   fields) ;
 	}
 	
 	
@@ -1078,16 +559,17 @@ public class SQLExecutor
 //		}
 //		
 //		return (T)dbutil.executePreparedForObject(beanType);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);		
-		return SQLInfoExecutor.queryObjectWithDBName( beanType, dbname,  sqlinfo,  fields);
+
+		return queryObjectWithDBName((DBOptions) null, beanType,  dbname,   sql, fields);
 		 
 	}
 	
 	
 	public static <T> List<T> queryListByRowHandler(RowHandler rowhandler,Class<T> beanType, String sql, Object... fields) throws SQLException
 	{
-		
-		return queryListWithDBNameByRowHandler(rowhandler,beanType,null, sql, fields); 
+
+
+		return queryListWithDBNameByRowHandler((DBOptions) null,rowhandler,beanType,null, sql, fields);
 	}
 	/**
 	 * 
@@ -1121,11 +603,12 @@ public class SQLExecutor
 //		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);		
-		return SQLInfoExecutor.queryListInfoWithDBNameByRowHandler(  rowhandler, beanType, dbname, sqlinfo, offset,pagesize,fields);
+
+		return queryListInfoWithDBNameByRowHandler((DBOptions) null, rowhandler, beanType,  dbname,   sql,   offset,  pagesize, fields);
 	}
 	
-	public static ListInfo queryListInfoWithDBName2ndTotalsizeByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sql, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
+	public static ListInfo queryListInfoWithDBName2ndTotalsizeByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sql,
+																		   long offset,int pagesize,long totalsize,Object... fields) throws SQLException
 	{
 		
 //		PreparedDBUtil dbutil = new PreparedDBUtil();
@@ -1145,11 +628,13 @@ public class SQLExecutor
 //		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		return SQLInfoExecutor.queryListInfoWithDBName2ndTotalsizeByRowHandler(   rowhandler, beanType, dbname,  sqlinfo,  offset, pagesize, totalsize,fields);
+
+		return queryListInfoWithDBName2ndTotalsizeByRowHandler((DBOptions) null, rowhandler,  beanType,  dbname,   sql,
+		  offset,  pagesize,  totalsize, fields);
 	}
 	
-	public static ListInfo queryListInfoWithDBName2ndTotalsizesqlByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sql, long offset,int pagesize,String totalsizesql,Object... fields) throws SQLException
+	public static ListInfo queryListInfoWithDBName2ndTotalsizesqlByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sql,
+																			  long offset,int pagesize,String totalsizesql,Object... fields) throws SQLException
 	{
 		
 //		PreparedDBUtil dbutil = new PreparedDBUtil();
@@ -1169,10 +654,10 @@ public class SQLExecutor
 //		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfo totalsizesqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(totalsizesql,false,false);
-		
-		return SQLInfoExecutor.queryListInfoWithDBName2ndTotalsizesqlByRowHandler(   rowhandler, beanType, dbname,  sqlinfo,  offset, pagesize, totalsizesqlinfo, fields);
+
+
+		return queryListInfoWithDBName2ndTotalsizesqlByRowHandler((DBOptions) null, rowhandler, beanType,  dbname,   sql,
+		  offset,  pagesize,  totalsizesql,  fields);
 	}
 	/**
 	 * 
@@ -1187,23 +672,27 @@ public class SQLExecutor
 	 */
 	public static ListInfo queryListInfoByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,Object... fields) throws SQLException
 	{
-		return queryListInfoWithDBNameByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,fields);		 
+
+		return queryListInfoWithDBNameByRowHandler((DBOptions) null, rowhandler,beanType, null,sql, offset,pagesize,fields);
 	}
 	
 	public static ListInfo queryListInfoWithTotalsizeByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
 	{
-		return queryListInfoWithDBName2ndTotalsizeByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,totalsize,fields);		 
+
+		return queryListInfoWithDBName2ndTotalsizeByRowHandler((DBOptions) null, rowhandler,beanType, null,sql, offset,pagesize,totalsize,fields);
 	}
 	
 	public static ListInfo queryListInfoWithTotalsizesqlByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,String totalsizesql,Object... fields) throws SQLException
 	{
-		return queryListInfoWithDBName2ndTotalsizesqlByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,totalsizesql,fields);		 
+
+		return queryListInfoWithDBName2ndTotalsizesqlByRowHandler( (DBOptions) null,rowhandler,beanType, null,sql, offset,pagesize,totalsizesql,fields);
 	}
 	
 	
 	public static <T> T queryObjectByRowHandler(RowHandler rowhandler,Class<T> beanType, String sql, Object... fields) throws SQLException
 	{
-		return queryObjectWithDBNameByRowHandler(rowhandler,beanType,null, sql, fields);
+
+		return queryObjectWithDBNameByRowHandler(	(DBOptions) null,rowhandler,beanType,null, sql, fields);
 		
 		 
 	}
@@ -1226,8 +715,8 @@ public class SQLExecutor
 //		
 //		
 //		return dbutil.executePreparedForList(beanType,rowhandler);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);		
-		return SQLInfoExecutor.queryListWithDBNameByRowHandler(   rowhandler,beanType, dbname,  sqlinfo,  fields);
+
+		return queryListWithDBNameByRowHandler((DBOptions) null, rowhandler, beanType,  dbname,   sql,   fields);
 	}
 	
 	
@@ -1247,8 +736,8 @@ public class SQLExecutor
 //		}
 //		
 //		return (T)dbutil.executePreparedForObject(beanType,rowhandler);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);		
-		return SQLInfoExecutor.queryObjectWithDBNameByRowHandler(  rowhandler, beanType, dbname,  sqlinfo,  fields);
+
+		return queryObjectWithDBNameByRowHandler((DBOptions) null, rowhandler,  beanType,  dbname,   sql,   fields);
 		 
 	}
 	
@@ -1264,8 +753,9 @@ public class SQLExecutor
 	 */
 	public static void queryByNullRowHandler(NullRowHandler rowhandler, String sql, Object... fields) throws SQLException
 	{
-		
-		 queryWithDBNameByNullRowHandler( rowhandler,null, sql, fields); 
+
+
+				queryWithDBNameByNullRowHandler((DBOptions) null, rowhandler,null, sql, fields);
 	}
 	
 	/**
@@ -1299,11 +789,12 @@ public class SQLExecutor
 //		
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		
-		return SQLInfoExecutor.queryListInfoWithDBNameByNullRowHandler(   rowhandler, dbname,  sqlinfo,  offset, pagesize, fields);
+
+
+		return queryListInfoWithDBNameByNullRowHandler((DBOptions) null, rowhandler,  dbname,   sql,   offset,  pagesize,  fields);
 	}
-	public static ListInfo queryListInfoWithDBName2ndTotalsizeByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
+	public static ListInfo queryListInfoWithDBName2ndTotalsizeByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql, long offset,
+																			   int pagesize,long totalsize,Object... fields) throws SQLException
 	{
 		
 //		PreparedDBUtil dbutil = new PreparedDBUtil();
@@ -1323,10 +814,12 @@ public class SQLExecutor
 //		
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		return SQLInfoExecutor.queryListInfoWithDBName2ndTotalsizeByNullRowHandler(  rowhandler, dbname,  sqlinfo,  offset, pagesize, totalsize,fields);
+
+		return queryListInfoWithDBName2ndTotalsizeByNullRowHandler((DBOptions) null, rowhandler,  dbname,   sql,   offset,
+		  pagesize,  totalsize, fields) ;
 	}
-	public static ListInfo queryListInfoWithDBName2ndTotalsizesqlByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql, long offset,int pagesize,String totalsizesql,Object... fields) throws SQLException
+	public static ListInfo queryListInfoWithDBName2ndTotalsizesqlByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql, long offset,
+																				  int pagesize,String totalsizesql,Object... fields) throws SQLException
 	{
 		
 //		PreparedDBUtil dbutil = new PreparedDBUtil();
@@ -1346,10 +839,10 @@ public class SQLExecutor
 //		
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		SQLInfo totalsizesqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(totalsizesql,false,false);
-		
-		return SQLInfoExecutor.queryListInfoWithDBName2ndTotalsizesqlByNullRowHandler(   rowhandler, dbname,  sqlinfo,  offset, pagesize, totalsizesqlinfo, fields);
+
+
+		return queryListInfoWithDBName2ndTotalsizesqlByNullRowHandler((DBOptions) null, rowhandler,  dbname,   sql,   offset,
+		  pagesize,  totalsizesql,  fields) ;
 	}
 	/**
 	 * 
@@ -1363,15 +856,17 @@ public class SQLExecutor
 	 */
 	public static ListInfo queryListInfoByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,Object... fields) throws SQLException
 	{
-		return queryListInfoWithDBNameByNullRowHandler( rowhandler, null,sql, offset,pagesize,fields);		 
+
+		return queryListInfoWithDBNameByNullRowHandler( (DBOptions) null,rowhandler, null,sql, offset,pagesize,fields);
 	}
 	public static ListInfo queryListInfoWithTotalsizeByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,long totalsize,Object... fields) throws SQLException
 	{
-		return queryListInfoWithDBName2ndTotalsizeByNullRowHandler( rowhandler, null,sql, offset,pagesize,totalsize,fields);		 
+
+		return queryListInfoWithDBName2ndTotalsizeByNullRowHandler( (DBOptions) null,rowhandler, null,sql, offset,pagesize,totalsize,fields);
 	}
 	public static ListInfo queryListInfoWithTotalsizesqlByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,String totalsizesql,Object... fields) throws SQLException
 	{
-		return queryListInfoWithDBName2ndTotalsizesqlByNullRowHandler( rowhandler, null,sql, offset,pagesize,totalsizesql,fields);		 
+		return queryListInfoWithDBName2ndTotalsizesqlByNullRowHandler( (DBOptions) null,rowhandler, null,sql, offset,pagesize,totalsizesql,fields);
 	}
 	
 	
@@ -1401,15 +896,16 @@ public class SQLExecutor
 //		
 //		
 //		 dbutil.executePreparedWithRowHandler(rowhandler);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);		
-		SQLInfoExecutor.queryWithDBNameByNullRowHandler( rowhandler, dbname,  sqlinfo,fields);
+
+		queryWithDBNameByNullRowHandler((DBOptions) null, rowhandler,  dbname,   sql,  fields) ;
 	}
 	
 	
 	public static <T> List<T> queryListBean(Class<T> beanType, String sql, Object bean) throws SQLException
 	{
-		
-		return queryListBeanWithDBName(beanType,null, sql, bean); 
+
+
+		return queryListBeanWithDBName((DBOptions) null,beanType,null, sql, bean);
 	}
 	/**
 	 * 
@@ -1433,8 +929,8 @@ public class SQLExecutor
 //		datas.setDatas(dbutil.executePreparedForList(beanType));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		return SQLInfoExecutor.queryListInfoBeanWithDBName( beanType, dbname,  sqlinfo,  offset, pagesize, totalsize, bean);
+
+		return queryListInfoBeanWithDBName((DBOptions) null, beanType,  dbname,   sql,   offset,  pagesize,  totalsize,  bean) ;
 	}
 	
 	public static ListInfo queryListInfoBeanWithDBName(Class<?> beanType,String dbname, String sql, long offset,int pagesize,String totalsizesql,Object bean) throws SQLException
@@ -1447,9 +943,8 @@ public class SQLExecutor
 //		datas.setDatas(dbutil.executePreparedForList(beanType));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		SQLInfo totalsizesqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(totalsizesql,true,false);
-		return SQLInfoExecutor.queryListInfoBeanWithDBName(beanType, dbname,  sqlinfo,  offset, pagesize, totalsizesqlinfo, bean);
+
+		return queryListInfoBeanWithDBName((DBOptions) null, beanType,  dbname,   sql,   offset,  pagesize,  totalsizesql,  bean) ;
 	}
 	
 	/**
@@ -1473,8 +968,8 @@ public class SQLExecutor
 //		datas.setDatas(dbutil.executePreparedForList(beanType));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		return SQLInfoExecutor.queryListInfoBeanWithDBName( beanType, dbname,  sqlinfo,  offset, pagesize,  bean);
+
+		return queryListInfoBeanWithDBName((DBOptions) null,beanType,  dbname,   sql,   offset,  pagesize,  bean) ;
 	}
 	/**
 	 * 
@@ -1489,26 +984,27 @@ public class SQLExecutor
 	 */
 	public static ListInfo queryListInfoBean(Class<?> beanType, String sql, long offset,int pagesize,long totalsize,Object bean) throws SQLException
 	{
-		return queryListInfoBeanWithDBName(beanType, null,sql, offset,pagesize,totalsize,bean);		 
+
+		return queryListInfoBeanWithDBName((DBOptions) null,beanType, null,sql, offset,pagesize,totalsize,bean);
 	}
 	
 	public static ListInfo queryListInfoBean(Class<?> beanType, String sql, long offset,int pagesize,String totalsizesql,Object bean) throws SQLException
 	{
-		return queryListInfoBeanWithDBName(beanType, null,sql, offset,pagesize,totalsizesql,bean);		 
+		return queryListInfoBeanWithDBName((DBOptions) null,beanType, null,sql, offset,pagesize,totalsizesql,bean);
 	}
 	
 	public static ListInfo queryListInfoBean(Class<?> beanType, String sql, long offset,int pagesize,Object bean) throws SQLException
 	{
-		return queryListInfoBeanWithDBName(beanType, null,sql, offset,pagesize,-1L,bean);		 
+		return queryListInfoBeanWithDBName((DBOptions) null,beanType, null,sql, offset,pagesize,-1L,bean);
 	}
 	
 	public static String queryField( String sql, Object... fields) throws SQLException
 	{
-		return queryFieldWithDBName(null, sql, fields);
+		return queryFieldWithDBName((DBOptions) null,(String)null, sql, fields);
 	}
 	public static String queryFieldBean( String sql, Object bean) throws SQLException
 	{
-		return queryFieldBeanWithDBName(null, sql, bean);
+		return queryFieldBeanWithDBName((DBOptions) null,(String)null, sql, bean);
 	}
 	
 	public static String queryFieldBeanWithDBName(String dbname, String sql, Object bean) throws SQLException
@@ -1528,8 +1024,8 @@ public class SQLExecutor
 //		{
 //			return null;
 //		}
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		return SQLInfoExecutor.queryFieldBeanWithDBName(  dbname,  sqlinfo,  bean);
+
+		return queryFieldBeanWithDBName((DBOptions) null, dbname,   sql,   bean) ;
 	}
 	
 	public static String queryFieldWithDBName(String dbname, String sql, Object... fields) throws SQLException
@@ -1556,8 +1052,8 @@ public class SQLExecutor
 //		{
 //			return null;
 //		}
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		return SQLInfoExecutor.queryFieldWithDBName(  dbname,  sqlinfo,  fields);
+
+		return queryFieldWithDBName((DBOptions) null, dbname,   sql,  fields) ;
 	}
 	
 	
@@ -1575,11 +1071,13 @@ public class SQLExecutor
 	
 	public static <T> T queryTField( Class<T> type,String sql, Object... fields) throws SQLException
 	{
-		return queryTFieldWithDBName(null, type,sql, fields);
+
+		return queryTFieldWithDBName((DBOptions) null,(String)null, type,sql, fields);
 	}
 	public static <T> T queryTFieldBean( Class<T> type,String sql, Object bean) throws SQLException
 	{
-		return queryTFieldBeanWithDBName(null, type,sql, bean);
+
+		return queryTFieldBeanWithDBName((DBOptions) null,(String)null, type,sql, bean);
 	}
 	
 	public static <T> T queryTFieldBeanWithDBName(String dbname, Class<T> type,String sql, Object bean) throws SQLException
@@ -1599,22 +1097,23 @@ public class SQLExecutor
 //		{
 //			return (T)ValueObjectUtil.getDefaultValue(type);
 //		}
-		return queryTFieldBeanWithDBName(dbname, type,(FieldRowHandler<T>)null,sql, bean) ;
+
+		return queryTFieldBeanWithDBName((DBOptions) null,dbname, type,(FieldRowHandler<T>)null,sql, bean) ;
 	}
 	
 	public static <T> T queryTFieldWithDBName(String dbname, Class<T> type,String sql, Object... fields) throws SQLException
 	{
-		
-		return queryTFieldWithDBName(dbname, type,(FieldRowHandler<T>)null,sql, fields);
+
+		return queryTFieldWithDBName((DBOptions) null,dbname, type,(FieldRowHandler<T>)null,sql, fields);
 	}
 	
 	public static <T> T queryTField( Class<T> type,FieldRowHandler<T> fieldRowHandler,String sql, Object... fields) throws SQLException
 	{
-		return queryTFieldWithDBName(null, type,fieldRowHandler,sql, fields);
+		return queryTFieldWithDBName((DBOptions) null,(String)null, type,fieldRowHandler,sql, fields);
 	}
 	public static <T> T queryTFieldBean( Class<T> type,FieldRowHandler<T> fieldRowHandler,String sql, Object bean) throws SQLException
 	{
-		return queryTFieldBeanWithDBName(null, type,fieldRowHandler,sql, bean);
+		return queryTFieldBeanWithDBName((DBOptions) null,(String)null, type,fieldRowHandler,sql, bean);
 	}
 	
 	public static <T> T queryTFieldBeanWithDBName(String dbname, Class<T> type,FieldRowHandler<T> fieldRowHandler,String sql, Object bean) throws SQLException
@@ -1641,8 +1140,8 @@ public class SQLExecutor
 //		{
 //			return (T)dbutil.executePreparedForObject(type, fieldRowHandler);
 //		}
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);		
-		return SQLInfoExecutor.queryTFieldBeanWithDBName(  dbname, type,fieldRowHandler,sqlinfo, bean);
+
+		return queryTFieldBeanWithDBName((DBOptions) null, dbname,  type, fieldRowHandler,  sql,   bean) ;
 		 
 	}
 	
@@ -1677,21 +1176,23 @@ public class SQLExecutor
 //		{
 //			return (T)dbutil.executePreparedForObject(type, fieldRowHandler);
 //		}
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);		
-		return SQLInfoExecutor.queryTFieldWithDBName(  dbname, type,fieldRowHandler,sqlinfo, fields);
+
+		return queryTFieldWithDBName((DBOptions) null, dbname,  type,  fieldRowHandler,  sql,   fields);
 	}
 	
 	
 	public static <T> T queryObjectBean(Class<T> beanType, String sql, Object bean) throws SQLException
 	{
-		return queryObjectBeanWithDBName(beanType,null, sql, bean);
+
+		return queryObjectBeanWithDBName((DBOptions) null,beanType,null, sql, bean);
 		
 		 
 	}
 	
 	public static <T> List<T> queryListBeanWithDBName(Class<T> beanType,String dbname, String sql, Object bean) throws SQLException
 	{
-		
+
+
 //		PreparedDBUtil dbutil = new PreparedDBUtil();
 //		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,false), dbname, PreparedDBUtil.SELECT, null);
 //		dbutil.preparedSelect(params,dbname, sql);
@@ -1701,8 +1202,7 @@ public class SQLExecutor
 //		
 //		
 //		return dbutil.executePreparedForList(beanType);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		return SQLInfoExecutor.queryListBeanWithDBName(beanType, dbname,  sqlinfo,  bean);
+		return queryListBeanWithDBName((DBOptions) null,beanType,  dbname,   sql,   bean) ;
 	}
 	
 	public static <T> T queryObjectBeanWithDBName(Class<T> beanType,String dbname, String sql, Object bean) throws SQLException
@@ -1712,16 +1212,17 @@ public class SQLExecutor
 //		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,false), dbname, PreparedDBUtil.SELECT, null);
 //		dbutil.preparedSelect(params,dbname, sql);
 //		return (T)dbutil.executePreparedForObject(beanType);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);		
-		return SQLInfoExecutor.queryObjectBeanWithDBName( beanType, dbname,  sqlinfo, bean);
+
+		return queryObjectBeanWithDBName((DBOptions) null, beanType,  dbname,   sql,   bean);
 		 
 	}
 	
 	
 	public static <T> List<T> queryListBeanByRowHandler(RowHandler rowhandler,Class<T> beanType, String sql, Object bean) throws SQLException
 	{
-		
-		return queryListBeanWithDBNameByRowHandler(rowhandler,beanType,null, sql, bean); 
+
+
+		return queryListBeanWithDBNameByRowHandler((DBOptions) null,rowhandler,beanType,(String)null, sql, bean);
 	}
 	/**
 	 * 
@@ -1736,10 +1237,12 @@ public class SQLExecutor
 	 * @return
 	 * @throws SQLException
 	 */
-	public static ListInfo queryListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sql, long offset,int pagesize,long totalsize,Object  bean) throws SQLException
-	{	
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sqlinfo, offset,pagesize,totalsize,bean);	 
+	public static ListInfo queryListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sql, long offset,
+																   int pagesize,long totalsize,Object  bean) throws SQLException
+	{
+
+		return queryListInfoBeanWithDBNameByRowHandler((DBOptions) null, rowhandler, beanType,  dbname,   sql,   offset,
+		  pagesize,  totalsize,   bean);
 	}
 	
 	public static ListInfo queryListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sql, long offset,int pagesize,String totalsizesql,Object  bean) throws SQLException
@@ -1752,9 +1255,8 @@ public class SQLExecutor
 //		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		SQLInfo totalsizesqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(totalsizesql,true,false);
-		return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler, beanType, dbname,  sqlinfo,  offset, pagesize, totalsizesqlinfo,  bean);
+
+		return queryListInfoBeanWithDBNameByRowHandler(	(DBOptions) null, rowhandler, beanType,  dbname,   sql,   offset,  pagesize,  totalsizesql,   bean) ;
 	}
 	/**
 	 * 
@@ -1778,8 +1280,8 @@ public class SQLExecutor
 //		datas.setDatas(dbutil.executePreparedForList(beanType,rowhandler));
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sqlinfo, offset,pagesize,bean);
+
+		return queryListInfoBeanWithDBNameByRowHandler((DBOptions) null, rowhandler, beanType,  dbname,   sql,   offset,  pagesize,   bean);
 	}
 	/**
 	 * 
@@ -1795,35 +1297,31 @@ public class SQLExecutor
 	 */
 	public static ListInfo queryListInfoBeanByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,long totalsize,Object bean) throws SQLException
 	{
-		return queryListInfoBeanWithDBNameByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,totalsize,bean);		 
+
+		return queryListInfoBeanWithDBNameByRowHandler( (DBOptions) null,rowhandler,beanType, (String)null,sql, offset,pagesize,totalsize,bean);
 	}
 	
 	public static ListInfo queryListInfoBeanByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,String totalsizesql,Object bean) throws SQLException
 	{
-		return queryListInfoBeanWithDBNameByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,totalsizesql,bean);		 
+		return queryListInfoBeanWithDBNameByRowHandler( (DBOptions) null,rowhandler,beanType, (String)null,sql, offset,pagesize,totalsizesql,bean);
 	}
 	public static ListInfo queryListInfoBeanByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,Object bean) throws SQLException
 	{
-		return queryListInfoBeanWithDBNameByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,-1L,bean);		 
+		return queryListInfoBeanWithDBNameByRowHandler( (DBOptions) null,rowhandler,beanType, (String)null,sql, offset,pagesize,-1L,bean);
 	}
 	
 	public static <T> T queryObjectBeanByRowHandler(RowHandler rowhandler,Class<T> beanType, String sql, Object bean) throws SQLException
 	{
-		return queryObjectBeanWithDBNameByRowHandler(rowhandler,beanType,null, sql, bean);
+		return queryObjectBeanWithDBNameByRowHandler((DBOptions) null,rowhandler,beanType,(String)null, sql, bean);
 		
 		 
 	}
 	
 	public static <T> List<T> queryListBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<T> beanType,String dbname, String sql, Object bean) throws SQLException
 	{
-		
-//		PreparedDBUtil dbutil = new PreparedDBUtil();
-//		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,false), dbname, PreparedDBUtil.SELECT, null);
-//		dbutil.preparedSelect(params,dbname, sql);
-//		
-//		return dbutil.executePreparedForList(beanType,rowhandler);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		return SQLInfoExecutor.queryListBeanWithDBNameByRowHandler( rowhandler, beanType, dbname,  sqlinfo,  bean);
+
+
+		return queryListBeanWithDBNameByRowHandler((DBOptions) null, rowhandler,  beanType,  dbname,   sql,   bean) ;
 	}
 	
 	
@@ -1834,9 +1332,9 @@ public class SQLExecutor
 //		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,false), dbname, PreparedDBUtil.SELECT, null);
 //		dbutil.preparedSelect(params,dbname, sql);		
 //		return (T)dbutil.executePreparedForObject(beanType,rowhandler);
-		
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);		
-		return SQLInfoExecutor.queryObjectBeanWithDBNameByRowHandler( rowhandler,beanType,dbname, sqlinfo, bean);
+
+
+		return queryObjectBeanWithDBNameByRowHandler((DBOptions) null, rowhandler,  beanType,  dbname,   sql,   bean);
 	}
 	
 	
@@ -1845,8 +1343,9 @@ public class SQLExecutor
 	
 	public static void queryBeanByNullRowHandler(NullRowHandler rowhandler, String sql, Object bean) throws SQLException
 	{
-		
-		 queryBeanWithDBNameByNullRowHandler( rowhandler,null, sql, bean); 
+
+
+				queryBeanWithDBNameByNullRowHandler((DBOptions) null, rowhandler,(String)null, sql, bean);
 	}
 	/**
 	 * 
@@ -1871,16 +1370,17 @@ public class SQLExecutor
 //		
 //		datas.setTotalSize(dbutil.getLongTotalSize());
 //		return datas;		 
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, dbname,  sqlinfo,  offset, pagesize, totalsize, bean);
+
+		return queryListInfoBeanWithDBNameByNullRowHandler((DBOptions) null, rowhandler,  dbname,   sql,   offset,  pagesize,  totalsize,  bean);
 	}
 	
-	public static ListInfo queryListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql, long offset,int pagesize,String totalsizesql,Object bean) throws SQLException
+	public static ListInfo queryListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql,
+																	   long offset,int pagesize,String totalsizesql,Object bean) throws SQLException
 	{
-		
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		SQLInfo totalsizesqlsqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(totalsizesql,true,false);
-		return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler(  rowhandler, dbname,  sqlinfo,  offset, pagesize, totalsizesqlsqlinfo, bean);	 
+
+
+		return queryListInfoBeanWithDBNameByNullRowHandler((DBOptions) null, rowhandler,  dbname,   sql,
+		  offset,  pagesize,  totalsizesql,  bean);
 	}
 	/**
 	 * 
@@ -1895,9 +1395,9 @@ public class SQLExecutor
 	 */
 	public static ListInfo queryListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql, long offset,int pagesize,Object bean) throws SQLException
 	{
-		
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, dbname,  sqlinfo,  offset, pagesize, bean);	 
+
+
+		return queryListInfoBeanWithDBNameByNullRowHandler((DBOptions) null, rowhandler,  dbname,   sql,   offset,  pagesize,  bean) ;
 	}
 	/**
 	 * 
@@ -1912,17 +1412,19 @@ public class SQLExecutor
 	 */
 	public static ListInfo queryListInfoBeanByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,long totalsize,Object bean) throws SQLException
 	{
-		return queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, null,sql, offset,pagesize,totalsize,bean);		 
+
+		return queryListInfoBeanWithDBNameByNullRowHandler((DBOptions) null, rowhandler, (String)null,sql, offset,pagesize,totalsize,bean);
 	}
 	
 	public static ListInfo queryListInfoBeanByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,String totalsizesql,Object bean) throws SQLException
 	{
-		return queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, null,sql, offset,pagesize,totalsizesql,bean);		 
+
+		return queryListInfoBeanWithDBNameByNullRowHandler( (DBOptions) null,rowhandler, (String)null,sql, offset,pagesize,totalsizesql,bean);
 	}
 	
 	public static ListInfo queryListInfoBeanByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,Object bean) throws SQLException
 	{
-		return queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, null,sql, offset,pagesize,-1L,bean);		 
+		return queryListInfoBeanWithDBNameByNullRowHandler( (DBOptions) null,rowhandler, (String)null,sql, offset,pagesize,-1L,bean);
 	}
 	
 	public static void queryBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql, Object bean) throws SQLException
@@ -1932,8 +1434,8 @@ public class SQLExecutor
 //		SQLParams params = SQLParams.convertBeanToSqlParams(bean,  new SQLInfo(sql,true,false), dbname, PreparedDBUtil.SELECT, null);
 //		dbutil.preparedSelect(params,dbname, sql);
 //		 dbutil.executePreparedWithRowHandler(rowhandler);
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-		SQLInfoExecutor.queryBeanWithDBNameByNullRowHandler( rowhandler, dbname,  sqlinfo,  bean);
+
+				queryBeanWithDBNameByNullRowHandler(	(DBOptions) null, rowhandler,  dbname,   sql,   bean) ;
 	}
 	
 	/**
@@ -1954,11 +1456,11 @@ public class SQLExecutor
 	 */
 	public static ListInfo moreListInfoWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sql, long offset,int pagesize,Object... fields) throws SQLException
 	{
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);		
+
 //		return SQLInfoExecutor.queryListInfoWithDBNameByRowHandler(  rowhandler, beanType, dbname, sqlinfo, offset,pagesize,fields);
 		
 //		SQLInfo sql = getSqlInfo(dbname, sqlname);
-		return SQLInfoExecutor.moreListInfoWithDBNameByRowHandler(rowhandler,beanType,dbname, sqlinfo, offset,pagesize,fields);  	  
+		return moreListInfoWithDBNameByRowHandler((DBOptions) null, rowhandler,  beanType,  dbname,   sql,   offset,  pagesize,  fields);
 	}
 	
 	/**
@@ -1974,11 +1476,11 @@ public class SQLExecutor
 	 */
 	public static ListInfo moreListInfoWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql, long offset,int pagesize,Object... fields) throws SQLException
 	{
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
-		
+
+
 //		return SQLInfoExecutor.queryListInfoWithDBNameByNullRowHandler(   rowhandler, dbname,  sqlinfo,  offset, pagesize, fields);
 //		SQLInfo sql = getSqlInfo(dbname, sqlname);
-		return SQLInfoExecutor.moreListInfoWithDBNameByNullRowHandler(  rowhandler,dbname, sqlinfo, offset,pagesize,fields);  
+		return moreListInfoWithDBNameByNullRowHandler((DBOptions) null, rowhandler,  dbname,   sql,   offset,  pagesize,  fields) ;
 	}
 	
 		/**
@@ -1994,10 +1496,10 @@ public class SQLExecutor
 	 */
 	public static ListInfo moreListInfoWithDBName(Class<?> beanType,String dbname, String sql, long offset,int pagesize,Object... fields) throws SQLException
 	{
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false);
+
 //		return SQLInfoExecutor.queryListInfoWithDBName(  beanType, dbname,  sqlinfo,  offset, pagesize, fields);
 //		SQLInfo sql = getSqlInfo(dbname, sqlname);
-		return SQLInfoExecutor.moreListInfoWithDBName(beanType,dbname, sqlinfo, offset,pagesize,fields);  	 
+		return moreListInfoWithDBName((DBOptions) null, beanType,  dbname,   sql,   offset,  pagesize,  fields) ;
 	}
 	
 		/**
@@ -2013,7 +1515,8 @@ public class SQLExecutor
 	 */
 	public static ListInfo moreListInfoByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,Object... fields) throws SQLException
 	{
-		return moreListInfoWithDBNameByRowHandler( rowhandler,beanType, null,sql, offset,pagesize,fields);		 
+
+		return moreListInfoWithDBNameByRowHandler( (DBOptions) null,rowhandler,beanType, (String)null,sql, offset,pagesize,fields);
 	}
 	
 		/**
@@ -2028,7 +1531,8 @@ public class SQLExecutor
 	 */
 	public static ListInfo moreListInfoByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,Object... fields) throws SQLException
 	{
-		return moreListInfoWithDBNameByNullRowHandler( rowhandler, null,sql, offset,pagesize,fields);
+
+		return moreListInfoWithDBNameByNullRowHandler((DBOptions) null, rowhandler, (String)null,sql, offset,pagesize,fields);
 	}
 	
 		/**
@@ -2045,10 +1549,10 @@ public class SQLExecutor
 	 */
 	public static ListInfo moreListInfoBeanWithDBNameByRowHandler(RowHandler rowhandler,Class<?> beanType,String dbname, String sql, long offset,int pagesize,Object  bean) throws SQLException
 	{
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
+
 //		return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sqlinfo, offset,pagesize,bean);
 //		SQLInfo sql = getSqlInfo(dbname, sql);
-		return SQLInfoExecutor.moreListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sqlinfo, offset,pagesize,bean);  
+		return moreListInfoBeanWithDBNameByRowHandler((DBOptions) null, rowhandler, beanType,  dbname,   sql,   offset,  pagesize,   bean);
 	}
 	
 		/**
@@ -2065,10 +1569,8 @@ public class SQLExecutor
 	 */
 	public static ListInfo moreListInfoBeanWithDBNameByNullRowHandler(NullRowHandler rowhandler,String dbname, String sql, long offset,int pagesize,Object bean) throws SQLException
 	{
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-//		return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, dbname,  sqlinfo,  offset, pagesize, bean);	 
-//		SQLInfo sql = getSqlInfo(dbname, sql);
-		return SQLInfoExecutor.moreListInfoBeanWithDBNameByNullRowHandler(  rowhandler, dbname, sqlinfo, offset,pagesize,bean);  	 
+
+		return moreListInfoBeanWithDBNameByNullRowHandler((DBOptions) null, rowhandler,  dbname,   sql,   offset,  pagesize,  bean) ;
 	}
 	
 		/**
@@ -2084,34 +1586,34 @@ public class SQLExecutor
 	 */
 	public static ListInfo moreListInfoBeanWithDBName(Class<?> beanType,String dbname, String sql, long offset,int pagesize,Object bean) throws SQLException
 	{
-		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
+
 //		return SQLInfoExecutor.queryListInfoBeanWithDBName( beanType, dbname,  sqlinfo,  offset, pagesize,  bean);
 //		SQLInfo sql = getSqlInfo(dbname, sql);
-		return SQLInfoExecutor.moreListInfoBeanWithDBName(  beanType, dbname,  sqlinfo,  offset, pagesize, bean); 
+		return moreListInfoBeanWithDBName((DBOptions) null, beanType,  dbname,   sql,   offset,  pagesize,  bean) ;
 	}
 	
 		public static ListInfo moreListInfoBeanByRowHandler(RowHandler rowhandler,Class<?> beanType, String sql, long offset,int pagesize,Object bean) throws SQLException
 	{
-			SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
-//			return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sqlinfo, offset,pagesize,totalsize,bean);	 
-			return SQLInfoExecutor.moreListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,(String)null, sqlinfo, offset,pagesize,bean);  		 
+
+//			return SQLInfoExecutor.queryListInfoBeanWithDBNameByRowHandler(  rowhandler,beanType,dbname, sqlinfo, offset,pagesize,totalsize,bean);
+			return moreListInfoBeanByRowHandler((DBOptions) null, rowhandler,  beanType,   sql,   offset,  pagesize,  bean);
 	}
 	
 		public static ListInfo moreListInfoBeanByNullRowHandler(NullRowHandler rowhandler, String sql, long offset,int pagesize,Object bean) throws SQLException
 	{
-			
-			SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
+
+
 //			return SQLInfoExecutor.queryListInfoBeanWithDBNameByNullRowHandler( rowhandler, dbname,  sqlinfo,  offset, pagesize, totalsize, bean);
 //			SQLInfo sql = getSqlInfo(null, sql);
-			return SQLInfoExecutor.moreListInfoBeanWithDBNameByNullRowHandler(  rowhandler, (String)null, sqlinfo, offset,pagesize,bean);  	
+			return moreListInfoBeanByNullRowHandler((DBOptions) null, rowhandler,   sql,   offset,  pagesize,  bean);
 	}
 	
 		public static ListInfo moreListInfoBean(Class<?> beanType, String sql, long offset,int pagesize,Object bean) throws SQLException
 	{
-			SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,false);
+
 //			return SQLInfoExecutor.queryListInfoBeanWithDBName( beanType, dbname,  sqlinfo,  offset, pagesize, totalsize, bean);
 //			SQLInfo sql = getSqlInfo(null, sql);
-			return SQLInfoExecutor.moreListInfoBeanWithDBName(  beanType, (String)null,  sqlinfo,  offset, pagesize, bean); 
+			return moreListInfoBean((DBOptions) null, beanType,   sql,   offset,  pagesize,  bean) ;
 	}
 	
 		/**
@@ -2126,7 +1628,8 @@ public class SQLExecutor
 	 */
 	public static ListInfo moreListInfo(Class<?> beanType, String sql, long offset,int pagesize,Object... fields) throws SQLException
 	{
-		return moreListInfoWithDBName(beanType, null,sql, offset,pagesize,fields);
+
+		return moreListInfoWithDBName((DBOptions) null,beanType,(String) null,sql, offset,pagesize,fields);
 	}
 	
 	

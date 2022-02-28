@@ -30,26 +30,18 @@ package com.frameworkset.orm.transaction;
 //$Id: JDBCTransaction.java,v 1.12 2005/05/03 21:50:17 oneovthafew Exp $
 
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Stack;
-
-import javax.sql.DataSource;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.RollbackException;
-import javax.transaction.Status;
-import javax.transaction.Synchronization;
-import javax.transaction.SystemException;
-import javax.transaction.xa.XAResource;
-
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.orm.annotation.TransactionType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.sql.DataSource;
+import javax.transaction.*;
+import javax.transaction.xa.XAResource;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.*;
 
 /**
  * Implements a basic transaction strategy for JDBC connections.This is the
@@ -59,6 +51,7 @@ import com.frameworkset.orm.annotation.TransactionType;
  * @author biaoping.yin
  */
 public class JDBCTransaction {
+	private static Logger logger = LoggerFactory.getLogger(JDBCTransaction.class);
 	/**
 	 * 事务类型，默认为无事务
 	 */
@@ -205,8 +198,7 @@ public class JDBCTransaction {
 	    			if(con != null && currenttxtype != TransactionType.RW_TRANSACTION) 
 	    				this.con.setAutoCommit(this.toggleAutoCommit);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error("this.con.setAutoCommit("+toggleAutoCommit+") failed:",e);
 				}
 				try
 				{
@@ -232,12 +224,12 @@ public class JDBCTransaction {
 				this.status = Status.STATUS_ROLLEDBACK;
 				
 			} catch (SQLException e) {
-				
-				e.printStackTrace();
+
+				logger.error("this.con.rollback() failed:",e);
 			
 	    	} catch (Exception e) {
-				
-				e.printStackTrace();
+
+				logger.error("this.con.rollback() failed:",e);
 			}
 			finally
 			{
@@ -273,7 +265,7 @@ public class JDBCTransaction {
     				    }
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logger.error("this.con.setAutoCommit("+toggleAutoCommit+") failed:",e);
 					}
 					try
 					{
@@ -391,7 +383,7 @@ public class JDBCTransaction {
     			}
     			catch(Exception ie)
     			{
-    				ie.printStackTrace();
+					logger.error("this.executeStack.removeElement(txentity) failed:",ie);
     			}
     			try
     			{
@@ -399,7 +391,7 @@ public class JDBCTransaction {
     			}
     			catch(Exception ie)
     			{
-    				ie.printStackTrace();
+					logger.error("this.txentities.remove(datasource) failed:",ie);
     			}
     		}
     		throw new TransactionException(e);
@@ -474,7 +466,7 @@ public class JDBCTransaction {
     			}
     			catch(Exception ie)
     			{
-    				ie.printStackTrace();
+					logger.error("this.executeStack.removeElement(txentity) failed:",ie);
     			}
     			try
     			{
@@ -482,7 +474,7 @@ public class JDBCTransaction {
     			}
     			catch(Exception ie)
     			{
-    				ie.printStackTrace();
+					logger.error("this.txentities.remove("+t_dbName+") failed:",ie);
     			}
     		}
     		throw new TransactionException(e);
@@ -610,8 +602,7 @@ public class JDBCTransaction {
 				try {
 					this.setRollbackOnly();
 				} catch (SystemException se) {
-					// TODO Auto-generated catch block
-					se.printStackTrace();
+					logger.error("this.setRollbackOnly(); failed:",se);
 				}
 				this.increament(); //重新加1防止在回滚时重复减1
 				throw new RollbackException(e.getMessage());						
@@ -705,8 +696,7 @@ public class JDBCTransaction {
 			try {
 				this.setRollbackOnly();
 			} catch (SystemException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("this.setRollbackOnly(); failed:",e);
 			}
 			if(this.currenttxtype != TransactionManager.RW_TRANSACTION)
 			{

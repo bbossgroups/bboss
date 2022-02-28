@@ -20,6 +20,7 @@ import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.handle.XMLRowHandler;
 import com.frameworkset.common.poolman.interceptor.InterceptorInf;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
+import com.frameworkset.common.poolman.util.DBOptions;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.common.poolman.util.SQLUtil;
@@ -82,23 +83,44 @@ public class StatementInfo {
 
 	public StatementInfo(String dbname_, NewSQLInfo sql_, boolean goNative_,
 			Connection con_, boolean needTransaction) {
-		this(dbname_, sql_, goNative_, -1, -1, SQLUtil.isRobotQuery(dbname_),
+		this((DBOptions)null,  dbname_,   sql_,   goNative_,
+		  con_,   needTransaction);
+	}
+	public StatementInfo(DBOptions dbOptions,String dbname_, NewSQLInfo sql_, boolean goNative_,
+						 Connection con_, boolean needTransaction) {
+		this(dbOptions,dbname_, sql_, goNative_, -1, -1, SQLUtil.isRobotQuery(dbname_),
 				con_, needTransaction, null, false);
 	}
-
 	public StatementInfo(String dbname_, NewSQLInfo sql_, boolean goNative_,
 			long offset_, int maxsize_, boolean robotquery_, Connection con_,
 			String rownum, boolean prepared) {
-		this(dbname_, sql_, goNative_, offset_, maxsize_, robotquery_, con_,
+		this((DBOptions)null,   dbname_,   sql_,   goNative_,
+					  offset_,   maxsize_,   robotquery_,   con_,
+							  rownum,   prepared);
+	}
+
+	public StatementInfo(DBOptions dbOptions, String dbname_, NewSQLInfo sql_, boolean goNative_,
+						 long offset_, int maxsize_, boolean robotquery_, Connection con_,
+						 String rownum, boolean prepared) {
+		this(  dbOptions,dbname_, sql_, goNative_, offset_, maxsize_, robotquery_, con_,
 				false, rownum, prepared);
 	}
 	private InterceptorInf interceptorInf;
 	private DB dbadapter ;
+	private DBOptions dbOptions;
 	private JDBCPool pool ;
 	public StatementInfo(String dbname_, NewSQLInfo sql_, boolean goNative_,
+						 long offset_, int maxsize_, boolean robotquery_, Connection con_,
+						 boolean needTransaction, String rownum, boolean prepared){
+		this((DBOptions)null,  dbname_,   sql_,   goNative_,
+		  offset_,   maxsize_,   robotquery_,   con_,
+		  needTransaction,   rownum,   prepared);
+	}
+	public StatementInfo(DBOptions dbOptions,String dbname_, NewSQLInfo sql_, boolean goNative_,
 			long offset_, int maxsize_, boolean robotquery_, Connection con_,
 			boolean needTransaction, String rownum, boolean prepared) {
 		this.dbname = dbname_;
+		this.dbOptions = dbOptions;
 		if(this.dbname == null)
 			this.dbname = SQLManager.getInstance().getDefaultDBName();
 		newsqlinfo = sql_;
@@ -210,6 +232,10 @@ public class StatementInfo {
 						this.oldautocommit = con.getAutoCommit();
 						con.setAutoCommit(false);
 					}
+					else{
+						this.oldautocommit = con.getAutoCommit();
+						this.dbadapter.handleConnection(this.dbOptions,con);
+					}
 				} else {
 					try {
 						con = tx.getConnection(dbname);
@@ -254,9 +280,7 @@ public class StatementInfo {
 		PreparedStatement pstmt = this.con.prepareStatement(this.sql,this.getScrollType(dbname),this.getCursorType(dbname));
 		if(isquery)
 		{
-			Integer fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
-			if(fetchsize != null && fetchsize != 0)
-				pstmt.setFetchSize(fetchsize);
+			putFetchsize(pstmt);
 		}
 		this.statements.add(pstmt);
 		return pstmt;
@@ -267,6 +291,18 @@ public class StatementInfo {
 		return _prepareStatement(true);
 	}
 
+	private void putFetchsize(PreparedStatement pstmt) throws SQLException {
+		Integer fetchsize = null;
+		if(dbOptions != null && dbOptions.getFetchSize() != null && dbOptions.getFetchSize() != 0){
+			fetchsize = dbOptions.getFetchSize();
+		}
+		else{
+			fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
+		}
+
+		if(fetchsize != null && fetchsize != 0)
+			pstmt.setFetchSize(fetchsize);
+	}
 	private PreparedStatement _prepareStatement(String sql,boolean isquery) throws SQLException {
 		/**
 		 * must be removed.
@@ -277,9 +313,7 @@ public class StatementInfo {
 		PreparedStatement pstmt = this.con.prepareStatement(sql,this.getScrollType(dbname),this.getCursorType(dbname));
 		if(isquery)
 		{
-			Integer fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
-			if(fetchsize != null && fetchsize != 0)
-				pstmt.setFetchSize(fetchsize);
+			putFetchsize(  pstmt);
 		}
 		this.statements.add(pstmt);
 		return pstmt;
@@ -622,6 +656,12 @@ public class StatementInfo {
 				// connection:" + con);
 				if (!outcon) {
 					if (tx == null && con != null) {
+						try {
+							this.dbadapter.recoverConnection(this.dbOptions, con, oldautocommit);
+						}
+						catch (Exception e) {
+							// e.printStackTrace();
+						}
 						con.close();
 						con = null;
 	

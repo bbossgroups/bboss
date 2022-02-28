@@ -16,6 +16,8 @@
 package com.frameworkset.common.poolman;
 
 
+import com.frameworkset.common.poolman.util.DBOptions;
+
 /**
  * 
  * 
@@ -47,8 +49,13 @@ public interface JDBCTemplate {
 	 * @throws Exception
 	 */
 	public void execute() throws Exception;
-	
-	
-	
+
+
+
+	/**
+	 * 用来实现需要控制的数据库事务的数据库操作
+	 * @throws Exception
+	 */
+	public void execute(DBOptions dbOptions) throws Exception;
 
 }
