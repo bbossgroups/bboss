@@ -299,9 +299,9 @@ public class StatementInfo {
 		else{
 			fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
 		}
-
-		if(fetchsize != null && fetchsize != 0)
-			pstmt.setFetchSize(fetchsize);
+		this.dbadapter.putFetchsize(pstmt,fetchsize);
+//		if(fetchsize != null && fetchsize != 0)
+//			pstmt.setFetchSize(fetchsize);
 	}
 	private PreparedStatement _prepareStatement(String sql,boolean isquery) throws SQLException {
 		/**

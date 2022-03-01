@@ -1211,4 +1211,12 @@ public abstract class DB implements IDMethod, Platform {
 
 	}
 
+
+	public void putFetchsize(PreparedStatement pstmt,Integer fetchSize) throws SQLException {
+
+
+		if(fetchSize != null && fetchSize > 0)
+			pstmt.setFetchSize(fetchSize);
+	}
+
 }

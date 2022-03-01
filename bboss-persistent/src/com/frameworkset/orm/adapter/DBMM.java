@@ -31,22 +31,15 @@ package com.frameworkset.orm.adapter;
  * limitations under the License.
  */
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
-import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.orm.platform.PlatformMysqlImpl;
 import com.frameworkset.util.SimpleStringUtil;
+
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * This is used in order to connect to a MySQL database using the MM
@@ -636,6 +629,13 @@ public class DBMM extends DB
 	public boolean neadGetGenerateKeys()
 	{
 		return true;
+	}
+	@Override
+	public void putFetchsize(PreparedStatement pstmt,Integer fetchSize) throws SQLException {
+
+
+		if(fetchSize != null && fetchSize != 0)
+			pstmt.setFetchSize(fetchSize);
 	}
     
 }
