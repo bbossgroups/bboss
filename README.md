@@ -4,17 +4,13 @@ http://www.bbossgroups.com
 # bboss group project blog:
 https://doc.bbossgroups.com
 
-# bboss版本构建方法
-gradle install
+# 版本构建方法
 
+gradle clean publishToMavenLocal
 
-开发工程生成方法：
+需要通过gradle构建发布版本,gradle安装配置参考文档：
 
-gradle eclipse
-
-gradle idea
-
-亦可以直接通过idea或者eclipse gradle插件将下载的bboss源码工程导入eclipse或者idea
+https://esdoc.bbossgroups.com/#/bboss-build
 
 # bboss 源码
 github托管地址： 
