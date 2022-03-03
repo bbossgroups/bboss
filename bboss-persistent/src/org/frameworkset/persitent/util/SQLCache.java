@@ -154,7 +154,7 @@ public class SQLCache extends SQLBaseCache{
 					urlStruction = sqlstructionMap.get(ikey);
 					if (urlStruction == null) {
 						missing = sqlstructionMap.increamentMissing();
-						urlStruction = VariableHandler.parserSQLStruction(newsql);
+						urlStruction = evalSQLStruction(newsql);
 						outOfSize = sqlstructionMap.put(ikey, urlStruction);
 					}
 				} finally {
@@ -166,7 +166,7 @@ public class SQLCache extends SQLBaseCache{
 			}
 		}
 		else{
-			urlStruction = VariableHandler.parserSQLStruction(newsql);
+			urlStruction = evalSQLStruction(newsql);
 		}
 		return urlStruction;
 	}

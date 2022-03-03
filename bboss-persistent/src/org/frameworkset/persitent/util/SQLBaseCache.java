@@ -157,7 +157,7 @@ public abstract class SQLBaseCache {
 		logger.warn(info.toString());
 
 	}
-
+	public final static PersistentSQLStructionBuilder persistentSQLStructionBuilder = new PersistentSQLStructionBuilder();
 	public SQLStruction getSQLStruction(SQLInfo sqlinfo,String newsql)
 	{
 
@@ -179,6 +179,9 @@ public abstract class SQLBaseCache {
 
 	}
 
+	protected SQLStruction evalSQLStruction(String newsql){
+		return (SQLStruction) VariableHandler._parserStruction(newsql,persistentSQLStructionBuilder);
+	}
 	protected SQLStruction _getSQLStruction(Map<String,SQLStruction> parserSQLStructions ,SQLInfo sqlinfo, String newsql)
 	{
 
@@ -192,7 +195,7 @@ public abstract class SQLBaseCache {
 				sqlstruction =  parserSQLStructions.get(key);
 				if(sqlstruction == null)
 				{
-					sqlstruction = VariableHandler.parserSQLStruction(newsql);
+					sqlstruction = evalSQLStruction(newsql);//(SQLStruction) VariableHandler._parserStruction(newsql,persistentSQLStructionBuilder);
 					parserSQLStructions.put(key,sqlstruction);
 				}
 			}

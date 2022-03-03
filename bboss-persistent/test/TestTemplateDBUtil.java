@@ -1,14 +1,11 @@
+import com.frameworkset.common.poolman.*;
+import com.frameworkset.common.poolman.util.DBOptions;
+import com.frameworkset.sqlexecutor.ListBean;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
-
-import com.frameworkset.common.poolman.DBUtil;
-import com.frameworkset.common.poolman.JDBCTemplate;
-import com.frameworkset.common.poolman.PreparedDBUtil;
-import com.frameworkset.common.poolman.SQLExecutor;
-import com.frameworkset.common.poolman.TemplateDBUtil;
-import com.frameworkset.sqlexecutor.ListBean;
 
 /**
  * 
@@ -81,7 +78,12 @@ public class TestTemplateDBUtil {
 						
 						dbUtil.executeInsert("insert into table values()");
 					}
-				
+
+					@Override
+					public void execute(DBOptions dbOptions) throws Exception {
+
+					}
+
 				}
 			);
 	}
@@ -122,7 +124,12 @@ public class TestTemplateDBUtil {
 						
 						dbUtil.executeInsert("bspf","insert into table values()");
 					}
-				
+
+					@Override
+					public void execute(DBOptions dbOptions) throws Exception {
+
+					}
+
 				}
 			);
 	}
@@ -233,7 +240,12 @@ public class TestTemplateDBUtil {
 						
 						dbUtil.executeInsert("bspf","insert into td_reg_bank_acc_bak (clob1,clob2) values('aa','bb')");
 					}
-				
+
+					@Override
+					public void execute(DBOptions dbOptions) throws Exception {
+
+					}
+
 				}
 			);
 	}
@@ -344,7 +356,12 @@ public class TestTemplateDBUtil {
 						
 						dbUtil.executeInsert("insert into td_reg_bank_acc_bak (clob1,clob2) values('aa','bb')");
 					}
-				
+
+					@Override
+					public void execute(DBOptions dbOptions) throws Exception {
+
+					}
+
 				}
 			);
 	}
@@ -369,7 +386,12 @@ public class TestTemplateDBUtil {
 						SQLExecutor.delete("delete from LISTBEAN");
 						SQLExecutor.insertBeans(sql, beans);
 				}
-			}
+
+					@Override
+					public void execute(DBOptions dbOptions) throws Exception {
+
+					}
+				}
 		);
 	}
 	
@@ -410,7 +432,12 @@ public class TestTemplateDBUtil {
 						
 						dbUtil.executeInsert("insert into td_reg_bank_acc_bak (clob1,clob2) values('conaa','conbb')");
 					}
-				
+
+					@Override
+					public void execute(DBOptions dbOptions) throws Exception {
+
+					}
+
 				}
 			);
 	}

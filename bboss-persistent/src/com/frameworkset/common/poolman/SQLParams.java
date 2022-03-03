@@ -23,6 +23,7 @@ import com.frameworkset.orm.annotation.PrimaryKey;
 import com.frameworkset.util.*;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.util.VariableHandler.Variable;
+import org.frameworkset.persitent.type.BaseTypeMethod;
 import org.frameworkset.persitent.util.SQLInfo;
 import org.frameworkset.persitent.util.SQLUtil;
 import org.frameworkset.soa.BBossStringWriter;
@@ -1470,7 +1471,7 @@ public class SQLParams
         }
         param.setType(type);
         param.setCharset(charset);
-        String method = this.converttypeToMethod(type);
+        BaseTypeMethod method = this.converttypeToMethod(type);
         param.setMethod(method);
         if(dataformat != null)
         	param.setDataformat(dataformat.getDateformat());
@@ -1526,14 +1527,18 @@ public class SQLParams
         }
         param.setType(type);
         param.setCharset(charset);
-        String method = this.converttypeToMethod(type);
+        BaseTypeMethod method = this.converttypeToMethod(type);
         param.setMethod(method);
         param.setDataformat(dataformat);
         this.sqlparams.put(param.getName(), param);
     }
-    
-    public String converttypeToMethod(String type)
+	public static BaseTypeMethod converttypeToMethod(String type){
+    	return converttypeToMethod(type,true);
+	}
+    public static BaseTypeMethod converttypeToMethod(String type,boolean useDefualt)
     {
+    	if(type == null || type.equals(""))
+    		return null;
        if(type.equals(STRING))    
             return Param.setString_int_String ;
         else if(type.equals(INT))    

@@ -16,9 +16,11 @@
 package com.frameworkset.common.poolman;
 
 
-import java.sql.Types;
-
 import com.frameworkset.common.poolman.util.SQLUtil;
+import org.frameworkset.persitent.type.BaseTypeMethod;
+import org.frameworkset.persitent.type.procdule.*;
+
+import java.sql.Types;
 
 public class CallableParam extends Param
 {
@@ -45,10 +47,9 @@ public class CallableParam extends Param
      *        <code>registerOutParameter</code> that accepts a scale value 
      *        should be used.
      *
-     * @exception SQLException if a database access error occurs
-     * @see Types 
+     * @see Types
      */
-    static final String  registerOutParameter_int_parameterIndex_int_sqlType = "registerOutParameter(int parameterIndex, int sqlType)";
+    static final BaseTypeMethod registerOutParameter_int_parameterIndex_int_sqlType = new Parameter_int_parameterIndex_int_sqlTypeRegisterOutMethod();//"registerOutParameter(int parameterIndex, int sqlType)";
 	
 
     /**
@@ -70,10 +71,9 @@ public class CallableParam extends Param
      * @param sqlType the SQL type code defined by <code>java.sql.Types</code>.
      * @param scale the desired number of digits to the right of the
      * decimal point.  It must be greater than or equal to zero.
-     * @exception SQLException if a database access error occurs
-     * @see Types 
+     * @see Types
      */
-    static final String   registerOutParameter_int_parameterIndex_int_sqlType_int_scale = "registerOutParameter(int parameterIndex, int sqlType, int scale)";
+    static final BaseTypeMethod   registerOutParameter_int_parameterIndex_int_sqlType_int_scale = new Parameter_int_parameterIndex_int_sqlType_int_scaleRegisterOutMethod();//"registerOutParameter(int parameterIndex, int sqlType, int scale)";
 	
     
     /**
@@ -106,11 +106,10 @@ public class CallableParam extends Param
      * @param paramIndex the first parameter is 1, the second is 2,...
      * @param sqlType a value from {@link java.sql.Types}
      * @param typeName the fully-qualified name of an SQL structured type
-     * @exception SQLException if a database access error occurs
      * @see Types
      * @since 1.2
      */
-    static final String registerOutParameter_int_paramIndex_int_sqlType_String_typeName = "registerOutParameter (int paramIndex, int sqlType, String typeName)";
+    static final BaseTypeMethod registerOutParameter_int_paramIndex_int_sqlType_String_typeName = new Parameter_int_paramIndex_int_sqlType_String_typeNameRegisterOutMethod();//"registerOutParameter (int paramIndex, int sqlType, String typeName)";
 
   //--------------------------JDBC 3.0-----------------------------
 
@@ -138,7 +137,7 @@ public class CallableParam extends Param
      * @since 1.4
      * @see Types 
      */
-    static final String registerOutParameter_String_parameterName_int_sqlType = "registerOutParameter(String parameterName, int sqlType)";
+    static final BaseTypeMethod registerOutParameter_String_parameterName_int_sqlType = new Parameter_String_parameterName_int_sqlTypeRegisterOutMethod();//"registerOutParameter(String parameterName, int sqlType)";
 	
 
     /**
@@ -158,11 +157,10 @@ public class CallableParam extends Param
      * @param sqlType SQL type code defined by <code>java.sql.Types</code>.
      * @param scale the desired number of digits to the right of the
      * decimal point.  It must be greater than or equal to zero.
-     * @exception SQLException if a database access error occurs
      * @since 1.4
      * @see Types 
      */
-    static final String registerOutParameter_String_parameterName_int_sqlType_int_scale = "registerOutParameter(String parameterName, int sqlType, int scale)";
+    static final BaseTypeMethod registerOutParameter_String_parameterName_int_sqlType_int_scale = new Parameter_String_parameterName_int_sqlType_int_scaleRegisterOutMethod();//"registerOutParameter(String parameterName, int sqlType, int scale)";
 
     /**
      * Registers the designated output parameter.  This version of 
@@ -198,7 +196,7 @@ public class CallableParam extends Param
      * @see Types
      * @since 1.4
      */
-    static final String registerOutParameter_String_parameterName_int_sqlType_String_typeName = "registerOutParameter (String parameterName, int sqlType, String typeName)";
+    static final BaseTypeMethod registerOutParameter_String_parameterName_int_sqlType_String_typeName = new Parameter_String_parameterName_int_sqlType_String_typeNameRegisterOutMethod();//"registerOutParameter (String parameterName, int sqlType, String typeName)";
     
     /**
      * Sets the designated parameter to the given input stream, which will have 
@@ -219,7 +217,7 @@ public class CallableParam extends Param
      * @exception SQLException if a database access error occurs
      * @since 1.4
      */
-    static final String setAsciiStream_String_parameterName_InputStream_x_int_length = "setAsciiStream(String parameterName, java.io.InputStream x, int length)";
+    static final BaseTypeMethod setAsciiStream_String_parameterName_InputStream_x_int_length = new AsciiStream_String_parameterName_InputStream_x_int_lengthRegisterOutMethod();//"setAsciiStream(String parameterName, java.io.InputStream x, int length)";
     
     /**
      * Sets the designated parameter to the given
@@ -233,7 +231,7 @@ public class CallableParam extends Param
      * @see #getBigDecimal
      * @since 1.4
      */
-    static final String setBigDecimal_String_parameterName_BigDecimal_x = "setBigDecimal(String parameterName, BigDecimal x)";
+    static final BaseTypeMethod setBigDecimal_String_parameterName_BigDecimal_x = new BigDecimal_String_parameterName_BigDecimal_xRegisterOutMethod();//"setBigDecimal(String parameterName, BigDecimal x)";
     
     
     /**
@@ -251,10 +249,9 @@ public class CallableParam extends Param
      * @param parameterName the name of the parameter
      * @param x the java input stream which contains the binary parameter value
      * @param length the number of bytes in the stream 
-     * @exception SQLException if a database access error occurs
      * @since 1.4
      */
-    static final String setBinaryStream_String_parameterName_InputStream_x_int_length = "setBinaryStream(String parameterName, java.io.InputStream x, int length)";
+    static final BaseTypeMethod setBinaryStream_String_parameterName_InputStream_x_int_length = new BinaryStream_String_parameterName_InputStream_x_int_lengthRegisterOutMethod();//"setBinaryStream(String parameterName, java.io.InputStream x, int length)";
 			    
 			    
 			    
@@ -269,7 +266,7 @@ public class CallableParam extends Param
      * @see #getBoolean
      * @since 1.4
      */
-    static final String setBoolean_String_parameterName_boolean_x = "setBoolean(String parameterName, boolean x)";
+    static final BaseTypeMethod setBoolean_String_parameterName_boolean_x = new Boolean_String_parameterName_boolean_xRegisterOutMethod();//"setBoolean(String parameterName, boolean x)";
     
     /**
      * Sets the designated parameter to the given Java <code>byte</code> value.  
@@ -282,7 +279,7 @@ public class CallableParam extends Param
      * @see #getByte
      * @since 1.4
      */
-    static final String setByte_String_parameterName_byte_x = "setByte(String parameterName, byte x)";
+    static final BaseTypeMethod setByte_String_parameterName_byte_x = new Byte_String_parameterName_byte_xRegisterOutMethod();//"setByte(String parameterName, byte x)";
     
         /**
      * Sets the designated parameter to the given Java array of bytes.  
@@ -297,7 +294,7 @@ public class CallableParam extends Param
      * @see #getBytes
      * @since 1.4
      */
-    static final String setBytes_String_parameterName_byteArray_x = "setBytes(String parameterName, byte x[])";
+    static final BaseTypeMethod setBytes_String_parameterName_byteArray_x = new Bytes_String_parameterName_byteArray_xRegisterOutMethod();//"setBytes(String parameterName, byte x[])";
     
     
     /**
@@ -317,10 +314,9 @@ public class CallableParam extends Param
      * @param reader the <code>java.io.Reader</code> object that
      *        contains the UNICODE data used as the designated parameter
      * @param length the number of characters in the stream 
-     * @exception SQLException if a database access error occurs
      * @since 1.4
      */
-    static final String setCharacterStream_String_parameterName_Reader_reader_int_length = "setCharacterStream(String parameterName,java.io.Reader reader,int length)";
+    static final BaseTypeMethod setCharacterStream_String_parameterName_Reader_reader_int_length = new CharacterStream_String_parameterName_Reader_reader_int_lengthRegisterOutMethod();//"setCharacterStream(String parameterName,java.io.Reader reader,int length)";
 
  /**
      * Sets the designated parameter to the given <code>java.sql.Date</code> value.  
@@ -333,7 +329,7 @@ public class CallableParam extends Param
      * @see #getDate
      * @since 1.4
      */
-    static final String setDate_String_parameterName_Date_x = "setDate(String parameterName, java.sql.Date x)";
+    static final BaseTypeMethod setDate_String_parameterName_Date_x = new Date_String_parameterName_Date_xRegisterOutMethod();//"setDate(String parameterName, java.sql.Date x)";
 	
     
     /**
@@ -354,7 +350,7 @@ public class CallableParam extends Param
      * @see #getDate
      * @since 1.4
      */
-    static final String setDate_String_parameterName_Date_x_Calendar_cal = "setDate(String parameterName, java.sql.Date x, Calendar cal)";
+    static final BaseTypeMethod setDate_String_parameterName_Date_x_Calendar_cal = new Date_String_parameterName_Date_x_Calendar_calRegisterOutMethod();//"setDate(String parameterName, java.sql.Date x, Calendar cal)";
     
         /**
      * Sets the designated parameter to the given Java <code>double</code> value.  
@@ -367,7 +363,7 @@ public class CallableParam extends Param
      * @see #getDouble
      * @since 1.4
      */
-    static final String setDouble_String_parameterName_double_x = "setDouble(String parameterName, double x)";
+    static final BaseTypeMethod setDouble_String_parameterName_double_x = new Double_String_parameterName_double_xRegisterOutMethod();//"setDouble(String parameterName, double x)";
     
       /**
      * Sets the designated parameter to the given Java <code>float</code> value. 
@@ -380,7 +376,7 @@ public class CallableParam extends Param
      * @see #getFloat
      * @since 1.4
      */
-    static final String setFloat_String_parameterName_float_x = "setFloat(String parameterName, float x)";
+    static final BaseTypeMethod setFloat_String_parameterName_float_x = new Float_String_parameterName_float_x();//"setFloat(String parameterName, float x)";
     
         /**
      * Sets the designated parameter to the given Java <code>int</code> value.  
@@ -393,7 +389,7 @@ public class CallableParam extends Param
      * @see #getInt
      * @since 1.4
      */
-    static final String setInt_String_parameterName_int_x = "setInt(String parameterName, int x)";
+    static final BaseTypeMethod setInt_String_parameterName_int_x = new Int_String_parameterName_int_x();//"setInt(String parameterName, int x)";
     
     
         /**
@@ -407,7 +403,7 @@ public class CallableParam extends Param
      * @see #getLong
      * @since 1.4
      */
-    static final String setLong_String_parameterName_long_x = "setLong(String parameterName, long x)";
+    static final BaseTypeMethod setLong_String_parameterName_long_x = new Long_String_parameterName_long_x();//"setLong(String parameterName, long x)";
     
         /**
      * Sets the designated parameter to SQL <code>NULL</code>.
@@ -419,7 +415,7 @@ public class CallableParam extends Param
      * @exception SQLException if a database access error occurs
      * @since 1.4
      */
-    static final String setNull_String_parameterName_int_sqlType = "setNull(String parameterName, int sqlType)";
+    static final BaseTypeMethod setNull_String_parameterName_int_sqlType = new Null_String_parameterName_int_sqlType();//"setNull(String parameterName, int sqlType)";
     /**
      * Sets the designated parameter to SQL <code>NULL</code>.
      * This version of the method <code>setNull</code> should
@@ -449,7 +445,7 @@ public class CallableParam extends Param
      * @exception SQLException if a database access error occurs
      * @since 1.4
      */
-    static final String setNull_String_parameterName_int_sqlType_String_typeName = "setNull(String parameterName, int sqlType, String typeName)";
+    static final BaseTypeMethod setNull_String_parameterName_int_sqlType_String_typeName = new Null_String_parameterName_int_sqlType_String_typeName();//"setNull(String parameterName, int sqlType, String typeName)";
 	
 
 
@@ -485,7 +481,7 @@ public class CallableParam extends Param
      * @see #getObject
      * @since 1.4
      */
-    static final String setObject_String_parameterName_Object_x = "setObject(String parameterName, Object x)";
+    static final BaseTypeMethod setObject_String_parameterName_Object_x = new Object_String_parameterName_Object_x();//"setObject(String parameterName, Object x)";
     
     
         /**
@@ -501,7 +497,7 @@ public class CallableParam extends Param
      * @see #getObject
      * @since 1.4
      */
-    static final String setObject_String_parameterName_Object_x_int_targetSqlType = "setObject(String parameterName, Object x, int targetSqlType)";
+    static final BaseTypeMethod setObject_String_parameterName_Object_x_int_targetSqlType = new Object_String_parameterName_Object_x_int_targetSqlType();//"setObject(String parameterName, Object x, int targetSqlType)";
     
     
         /**
@@ -536,7 +532,7 @@ public class CallableParam extends Param
      * @see #getObject
      * @since 1.4 
      */
-    static final String setObject_String_parameterName_Object_x_int_targetSqlType_int_scale = "setObject(String parameterName, Object x, int targetSqlType, int scale)";
+    static final BaseTypeMethod setObject_String_parameterName_Object_x_int_targetSqlType_int_scale = new Object_String_parameterName_Object_x_int_targetSqlType_int_scale();//"setObject(String parameterName, Object x, int targetSqlType, int scale)";
     
     
         /**
@@ -550,7 +546,7 @@ public class CallableParam extends Param
      * @see #getShort
      * @since 1.4
      */
-    static final String setShort_String_parameterName_short_x = "setShort(String parameterName, short x)";
+    static final BaseTypeMethod setShort_String_parameterName_short_x = new Short_String_parameterName_short_x();//"setShort(String parameterName, short x)";
     
         /**
      * Sets the designated parameter to the given Java <code>String</code> value. 
@@ -566,7 +562,7 @@ public class CallableParam extends Param
      * @see #getString
      * @since 1.4
      */
-    static final String setString_String_parameterName_String_x = "setString(String parameterName, String x)";
+    static final BaseTypeMethod setString_String_parameterName_String_x = new String_String_parameterName_String_x();//"setString(String parameterName, String x)";
     
         /**
      * Sets the designated parameter to the given <code>java.sql.Time</code> value.  
@@ -575,11 +571,9 @@ public class CallableParam extends Param
      *
      * @param parameterName the name of the parameter
      * @param x the parameter value
-     * @exception SQLException if a database access error occurs
-     * @see #getTime
      * @since 1.4
      */
-    static final String setTime_String_parameterName_Time_x = "setTime(String parameterName, java.sql.Time x)";
+    static final BaseTypeMethod setTime_String_parameterName_Time_x = new Time_String_parameterName_Time_x();//"setTime(String parameterName, java.sql.Time x)";
 	
     
         /**
@@ -600,7 +594,7 @@ public class CallableParam extends Param
      * @see #getTime
      * @since 1.4
      */
-    static final String setTime_String_parameterName_Time_x_Calendar_cal = "setTime(String parameterName, java.sql.Time x, Calendar cal)";
+    static final BaseTypeMethod setTime_String_parameterName_Time_x_Calendar_cal = new Time_String_parameterName_Time_x_Calendar_cal();//"setTime(String parameterName, java.sql.Time x, Calendar cal)";
 	
     
         /**
@@ -615,7 +609,7 @@ public class CallableParam extends Param
      * @see #getTimestamp
      * @since 1.4
      */
-    static final String setTimestamp_String_parameterName_Timestamp_x = "setTimestamp(String parameterName, java.sql.Timestamp x)";
+    static final BaseTypeMethod setTimestamp_String_parameterName_Timestamp_x = new Timestamp_String_parameterName_Timestamp_x();//"setTimestamp(String parameterName, java.sql.Timestamp x)";
 	
     
         /**
@@ -636,7 +630,7 @@ public class CallableParam extends Param
      * @see #getTimestamp
      * @since 1.4
      */
-    static final String setTimestamp_String_parameterName_Timestamp_x_Calendar_cal = "setTimestamp(String parameterName, java.sql.Timestamp x, Calendar cal)";
+    static final BaseTypeMethod setTimestamp_String_parameterName_Timestamp_x_Calendar_cal = new Timestamp_String_parameterName_Timestamp_x_Calendar_cal();//"setTimestamp(String parameterName, java.sql.Timestamp x, Calendar cal)";
     
         /**
      * Sets the designated parameter to the given <code>java.net.URL</code> object.
@@ -650,15 +644,26 @@ public class CallableParam extends Param
      * @see #getURL
      * @since 1.4
      */
-    static final String setURL_String_parameterName_URL_val = "setURL(String parameterName, java.net.URL val)";
+    static final BaseTypeMethod setURL_String_parameterName_URL_val = new URL_String_parameterName_URL_val();//"setURL(String parameterName, java.net.URL val)";
         			    
     String parameterName;
     String typeName;
     int sqlType;
     int scale;
     boolean isOut = false;
-    
-    
+
+    public String getParameterName() {
+        return parameterName;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public int getScale() {
+        return scale;
+    }
+
     public String toString()
 	{
 		return new StringBuilder("method[")
@@ -696,5 +701,17 @@ public class CallableParam extends Param
 				.append("]")
 				.toString();
 	}
-    
+
+    public int getSqlType() {
+        return sqlType;
+    }
+    RegisterOutMethod registerOutMethod;
+
+    public void setRegisterOutMethod(RegisterOutMethod registerOutMethod) {
+        this.registerOutMethod = registerOutMethod;
+    }
+
+    public RegisterOutMethod getRegisterOutMethod() {
+        return registerOutMethod;
+    }
 }

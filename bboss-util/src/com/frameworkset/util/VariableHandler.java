@@ -16,6 +16,7 @@
 
 package com.frameworkset.util;
 
+import com.frameworkset.persistent.SQLVariable;
 import com.frameworkset.util.variable.DefaultvalueVariableStructionBuiler;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
@@ -573,7 +574,7 @@ public class VariableHandler
 
 		@Override
 		public Variable buildVariable() {
-			return new Variable();
+			return new SQLVariable();
 		}
 
 	}

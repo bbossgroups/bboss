@@ -18,7 +18,6 @@ package org.frameworkset.persitent.util;
 
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.JDBCPool;
-import com.frameworkset.util.VariableHandler;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import org.frameworkset.cache.MissingStaticCache;
 import org.slf4j.Logger;
@@ -154,7 +153,7 @@ public class SQLMissingCache extends SQLBaseCache{
 				if (logger.isWarnEnabled() && sqlstructionMap.needLogWarn(missing,warnInterval)) {
 					this.logSqlStructionWarn(logger, ikey, sqlstructionMap.getMissesMax(), okey,missing);
 				}
-				return VariableHandler.parserSQLStruction(newsql);
+				return  evalSQLStruction(newsql);
 			} else {
 				SQLStruction urlStruction = sqlstructionMap.get(ikey);
 				if (urlStruction == null) {
@@ -163,7 +162,7 @@ public class SQLMissingCache extends SQLBaseCache{
 						urlStruction = sqlstructionMap.get(ikey);
 						if (urlStruction == null) {
 							missing = sqlstructionMap.increamentMissing();
-							urlStruction = VariableHandler.parserSQLStruction(newsql);
+							urlStruction = evalSQLStruction(newsql);
 							if (!sqlstructionMap.stopCache()) {
 								sqlstructionMap.put(ikey, urlStruction);
 							}
@@ -179,7 +178,7 @@ public class SQLMissingCache extends SQLBaseCache{
 			}
 		}
 		else{
-			return  VariableHandler.parserSQLStruction(newsql);
+			return  evalSQLStruction(newsql);
 		}
 
 	}
