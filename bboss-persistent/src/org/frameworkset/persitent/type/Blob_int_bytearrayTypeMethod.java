@@ -80,7 +80,7 @@ public class Blob_int_bytearrayTypeMethod extends BaseTypeMethod{
 //						}
 //						bis = null;
 //					}
-			if(bis != null)
+			if(bis != null && resources != null)
 				resources.add(bis);
 
 		}

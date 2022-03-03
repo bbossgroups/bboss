@@ -60,7 +60,7 @@ public class UnicodeStream_int_InputStream_intTypeMethod extends BaseTypeMethod{
 //						}
 //					}
 			data = null;
-			if(in != null)
+			if(in != null && resources != null)
 				resources.add(in);
 		}
 	}

@@ -77,7 +77,7 @@ public class Blob_int_blobTypeMethod extends BaseTypeMethod{
 				finally
 				{
 
-					if(in != null)
+					if(in != null && resources != null)
 						resources.add(in);
 
 				}

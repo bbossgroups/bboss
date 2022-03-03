@@ -70,7 +70,7 @@ public class BinaryStream_int_InputStreamTypeMethod extends BaseTypeMethod{
 //							e.printStackTrace();
 //						}
 //					}
-			if(in != null)
+			if(in != null && resources != null)
 				resources.add(in);
 //					in = null;
 

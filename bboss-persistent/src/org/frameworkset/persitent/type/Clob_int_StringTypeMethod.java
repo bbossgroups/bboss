@@ -85,7 +85,7 @@ public class Clob_int_StringTypeMethod extends BaseTypeMethod{
 //						}
 //						reader = null;
 //					}
-			if(reader != null)
+			if(reader != null && resources != null)
 				resources.add(reader);
 
 		}

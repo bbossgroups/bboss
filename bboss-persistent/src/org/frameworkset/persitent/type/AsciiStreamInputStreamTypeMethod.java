@@ -57,7 +57,7 @@ public class AsciiStreamInputStreamTypeMethod extends BaseTypeMethod{
 		}
 		finally
 		{
-			if(in != null)
+			if(in != null && resources != null)
 				resources.add(in);
 		}
 	}

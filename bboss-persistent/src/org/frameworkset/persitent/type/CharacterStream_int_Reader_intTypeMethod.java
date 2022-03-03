@@ -72,7 +72,7 @@ public class CharacterStream_int_Reader_intTypeMethod extends BaseTypeMethod{
 //						}
 //						reader = null;
 //					}
-			if(reader != null)
+			if(reader != null && resources != null)
 				resources.add(reader);
 
 		}

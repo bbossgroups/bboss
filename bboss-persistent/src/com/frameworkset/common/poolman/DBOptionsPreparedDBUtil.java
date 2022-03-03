@@ -205,8 +205,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 
 	private void setUpParams(StatementInfo stmtInfo,Params Params,PreparedStatement statement,PreparedStatement statement_count,List resources)throws SQLException
 	{
-		if(resources == null)
-			resources = new ArrayList();
+
 		for(int i = 0; i < Params.params.size(); i ++)
 		{
 			Param param = (Param )Params.params.get(i);
@@ -644,7 +643,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 	 *
 	 * @param resources
 	 */
-	protected void releaseResources(List resources)
+	public static  void releaseResources(List resources)
 	{
 		if(resources == null)
 			return;

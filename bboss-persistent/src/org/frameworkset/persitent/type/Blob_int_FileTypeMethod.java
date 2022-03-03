@@ -112,7 +112,7 @@ public class Blob_int_FileTypeMethod extends BaseTypeMethod{
 //						}
 //					}
 //					in = null;
-			if(in != null)
+			if(in != null && resources != null)
 				resources.add(in);
 
 		}
