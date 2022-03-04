@@ -19,7 +19,6 @@ import com.frameworkset.common.poolman.CallableParam;
 import com.frameworkset.common.poolman.StatementInfo;
 import org.frameworkset.persitent.type.BaseTypeMethod;
 
-import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 
@@ -31,10 +30,9 @@ import java.sql.SQLException;
  * @author biaoping.yin
  * @version 1.0
  */
-public class BigDecimal_String_parameterName_BigDecimal_xRegisterOutMethod extends BaseTypeMethod {
+public class Byte_String_parameterName_byte_x extends BaseTypeMethod {
 	@Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
-		BigDecimal value = (BigDecimal)param.getData();
-		cstmt.setBigDecimal(param.getParameterName(), value);
+		cstmt.setByte(param.getParameterName(),((Byte)param.getData()).byteValue());
 	}
 }

@@ -30,9 +30,9 @@ import java.sql.SQLException;
  * @author biaoping.yin
  * @version 1.0
  */
-public class Boolean_String_parameterName_boolean_xRegisterOutMethod  extends BaseTypeMethod {
+public class Bytes_String_parameterName_byteArray_x extends BaseTypeMethod {
 	@Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
-		cstmt.setBoolean(param.getParameterName(),((Boolean)param.getData()).booleanValue());
+		cstmt.setBytes(param.getParameterName(),((byte[])param.getData()));
 	}
 }

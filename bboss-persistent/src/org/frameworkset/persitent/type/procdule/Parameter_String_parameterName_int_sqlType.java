@@ -30,9 +30,9 @@ import java.sql.SQLException;
  * @author biaoping.yin
  * @version 1.0
  */
-public class Parameter_int_parameterIndex_int_sqlTypeRegisterOutMethod  extends BaseTypeMethod {
+public class Parameter_String_parameterName_int_sqlType extends BaseTypeMethod {
 	@Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
-		cstmt.registerOutParameter(param.getIndex(), param.getSqlType());
+		cstmt.registerOutParameter(param.getParameterName(), param.getSqlType());
 	}
 }

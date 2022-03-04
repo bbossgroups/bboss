@@ -30,7 +30,7 @@ import java.sql.SQLException;
  * @author biaoping.yin
  * @version 1.0
  */
-public class CharacterStream_String_parameterName_Reader_reader_int_lengthRegisterOutMethod extends BaseTypeMethod {
+public class CharacterStream_String_parameterName_Reader_reader_int_length extends BaseTypeMethod {
 	@Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
 		Object[] value = (Object[])param.getData();

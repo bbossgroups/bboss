@@ -18,7 +18,6 @@ package org.frameworkset.persitent.type;
 import com.frameworkset.common.poolman.Param;
 import com.frameworkset.common.poolman.StatementInfo;
 
-import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -27,17 +26,17 @@ import java.util.List;
  * <p>Description: </p>
  * <p></p>
  * <p>Copyright (c) 2020</p>
- * @Date 2022/3/2
+ * @Date 2022/3/2zzz
  * @author biaoping.yin
  * @version 1.0
  */
 public class ArrayTypeMethod extends BaseTypeMethod {
 	@Override
 	public void action(StatementInfo stmtInfo, Param param, PreparedStatement statement, PreparedStatement statement_count, List resources) throws SQLException {
-		statement.setArray(param.getIndex(), (Array)param.getData());
+		statement.setArray(param.getIndex(), (java.sql.Array)param.getData());
 		if(statement_count != null)
 		{
-			statement_count.setArray(param.getIndex(), (Array)param.getData());
+			statement_count.setArray(param.getIndex(), (java.sql.Array)param.getData());
 		}
 	}
 }

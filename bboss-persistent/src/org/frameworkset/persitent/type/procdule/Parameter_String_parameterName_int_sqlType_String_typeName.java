@@ -30,9 +30,9 @@ import java.sql.SQLException;
  * @author biaoping.yin
  * @version 1.0
  */
-public class Bytes_String_parameterName_byteArray_xRegisterOutMethod extends BaseTypeMethod {
+public class Parameter_String_parameterName_int_sqlType_String_typeName extends BaseTypeMethod {
 	@Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
-		cstmt.setBytes(param.getParameterName(),((byte[])param.getData()));
+		cstmt.registerOutParameter(param.getParameterName(), param.getSqlType(), param.getTypeName());
 	}
 }

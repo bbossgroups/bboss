@@ -19,9 +19,9 @@ import com.frameworkset.common.poolman.CallableParam;
 import com.frameworkset.common.poolman.StatementInfo;
 import org.frameworkset.persitent.type.BaseTypeMethod;
 
+import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
-import java.util.Calendar;
 
 /**
  * <p>Description: </p>
@@ -31,18 +31,10 @@ import java.util.Calendar;
  * @author biaoping.yin
  * @version 1.0
  */
-public class Date_String_parameterName_Date_x_Calendar_calRegisterOutMethod  extends BaseTypeMethod {
+public class BinaryStream_String_parameterName_InputStream_x_int_length extends BaseTypeMethod {
 	@Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
 		Object[] value = (Object[])param.getData();
-		java.util.Date date = (java.util.Date)value[0];
-		java.sql.Date sqldate = null;
-		if(date instanceof java.sql.Date){
-			sqldate = (java.sql.Date)date;
-		}
-		else{
-			sqldate = new java.sql.Date(date.getTime());
-		}
-		cstmt.setDate(param.getParameterName(), sqldate, (Calendar)value[1]);
+		cstmt.setBinaryStream(param.getParameterName(),(InputStream)value[0], ((Integer)value[1]).intValue());
 	}
 }

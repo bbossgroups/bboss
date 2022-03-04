@@ -30,9 +30,9 @@ import java.sql.SQLException;
  * @author biaoping.yin
  * @version 1.0
  */
-public class Parameter_int_parameterIndex_int_sqlType_int_scaleRegisterOutMethod  extends BaseTypeMethod {
+public class Boolean_String_parameterName_boolean_x extends BaseTypeMethod {
 	@Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
-		cstmt.registerOutParameter(param.getIndex(), param.getSqlType(), param.getScale());
+		cstmt.setBoolean(param.getParameterName(),((Boolean)param.getData()).booleanValue());
 	}
 }

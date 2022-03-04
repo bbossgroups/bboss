@@ -21,6 +21,7 @@ import org.frameworkset.persitent.type.BaseTypeMethod;
 
 import java.sql.CallableStatement;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 /**
  * <p>Description: </p>
@@ -30,9 +31,18 @@ import java.sql.SQLException;
  * @author biaoping.yin
  * @version 1.0
  */
-public class Parameter_String_parameterName_int_sqlTypeRegisterOutMethod  extends BaseTypeMethod {
+public class Date_String_parameterName_Date_x_Calendar_cal extends BaseTypeMethod {
 	@Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
-		cstmt.registerOutParameter(param.getParameterName(), param.getSqlType());
+		Object[] value = (Object[])param.getData();
+		java.util.Date date = (java.util.Date)value[0];
+		java.sql.Date sqldate = null;
+		if(date instanceof java.sql.Date){
+			sqldate = (java.sql.Date)date;
+		}
+		else{
+			sqldate = new java.sql.Date(date.getTime());
+		}
+		cstmt.setDate(param.getParameterName(), sqldate, (Calendar)value[1]);
 	}
 }

@@ -30,17 +30,9 @@ import java.sql.SQLException;
  * @author biaoping.yin
  * @version 1.0
  */
-public class Date_String_parameterName_Date_xRegisterOutMethod  extends BaseTypeMethod {
+public class Double_String_parameterName_double_x extends BaseTypeMethod {
 	@Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
-		java.util.Date date = (java.util.Date)param.getData();
-		java.sql.Date sqldate = null;
-		if(date instanceof java.sql.Date){
-			sqldate = (java.sql.Date)date;
-		}
-		else{
-			sqldate = new java.sql.Date(date.getTime());
-		}
-		cstmt.setDate(param.getParameterName(),sqldate);
+		cstmt.setDouble(param.getParameterName(), ((Double)param.getData()).doubleValue());
 	}
 }

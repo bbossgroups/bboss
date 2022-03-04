@@ -30,9 +30,9 @@ import java.sql.SQLException;
  * @author biaoping.yin
  * @version 1.0
  */
-public class Double_String_parameterName_double_xRegisterOutMethod  extends BaseTypeMethod {
+public class Parameter_String_parameterName_int_sqlType_int_scale extends BaseTypeMethod {
 	@Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
-		cstmt.setDouble(param.getParameterName(), ((Double)param.getData()).doubleValue());
+		cstmt.registerOutParameter(param.getParameterName(), param.getSqlType(),param.getScale());
 	}
 }

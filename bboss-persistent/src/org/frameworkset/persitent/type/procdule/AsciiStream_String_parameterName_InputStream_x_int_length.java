@@ -19,7 +19,6 @@ import com.frameworkset.common.poolman.CallableParam;
 import com.frameworkset.common.poolman.StatementInfo;
 import org.frameworkset.persitent.type.BaseTypeMethod;
 
-import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 
@@ -31,10 +30,10 @@ import java.sql.SQLException;
  * @author biaoping.yin
  * @version 1.0
  */
-public class BinaryStream_String_parameterName_InputStream_x_int_lengthRegisterOutMethod extends BaseTypeMethod {
+public class AsciiStream_String_parameterName_InputStream_x_int_length extends BaseTypeMethod {
 	@Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
-		Object[] value = (Object[])param.getData();
-		cstmt.setBinaryStream(param.getParameterName(),(InputStream)value[0], ((Integer)value[1]).intValue());
+		Object[] value = (Object[])param.getData() ;
+		cstmt.setAsciiStream(param.getParameterName(), (java.io.InputStream)value[0], ((Integer)value[1]).intValue());
 	}
 }
