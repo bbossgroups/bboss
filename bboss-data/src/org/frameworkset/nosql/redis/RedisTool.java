@@ -15,6 +15,7 @@ package org.frameworkset.nosql.redis;
  * limitations under the License.
  */
 
+import redis.clients.jedis.ClusterPipeline;
 import redis.clients.jedis.JedisPubSub;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.args.ListPosition;
@@ -54,6 +55,19 @@ public class RedisTool {
 			if(defaultRedisTool != null)
 				return defaultRedisTool;
 			return defaultRedisTool = new RedisTool();
+		}
+	}
+	public void select(int position){
+		RedisHelper redisHelper = null;
+		try
+		{
+			redisHelper = RedisFactory.getRedisHelper(redisPoolName);
+			redisHelper.select(position);
+		}
+		finally
+		{
+			if(redisHelper != null)
+				redisHelper.release();
 		}
 	}
 	public static RedisTool getInstance(String redisPoolName){
@@ -948,6 +962,23 @@ public class RedisTool {
 		}
 	}
 
+	/**
+	 * 集群模式下使用
+	 * @return
+	 */
+	public ClusterPipeline getClusterPipelined(){
+		RedisHelper redisHelper = null;
+		try
+		{
+			redisHelper = RedisFactory.getRedisHelper(redisPoolName);
+			return redisHelper.getClusterPipelined( );
+		}
+		finally
+		{
+			if(redisHelper != null)
+				redisHelper.release();
+		}
+	}
 	/**
 	 * Test for existence of a specified field in a hash. <b>Time complexity:</b> O(1)
 	 * @param key

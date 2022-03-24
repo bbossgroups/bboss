@@ -2,8 +2,8 @@ package org.frameworkset.nosql.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import redis.clients.jedis.ClusterPipeline;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPubSub;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.args.ListPosition;
@@ -33,7 +33,7 @@ public class RedisHelper {
 
 	private Jedis jedis;
 //	private ShardedJedis shardedJedis;
-	private JedisCluster jc; 
+	private ProviderJedisCluster jc;
 	private RedisDB db;
 	private boolean inited;
 	
@@ -60,8 +60,8 @@ public class RedisHelper {
 		}
 		inited = true;	
 	}
-	
-	 
+
+
 	public void release()
 	{
 //		if(shardedJedis != null)
@@ -70,12 +70,13 @@ public class RedisHelper {
 //			} catch (Exception e) {
 //				logger.warn("",e);
 //			}
-		if(this.jedis != null)
+		if(this.jedis != null) {
 			try {
 				db.releaseRedis(jedis);
 			} catch (Exception e) {
-				logger.warn("",e);
+				logger.warn("", e);
 			}
+		}
 	}
 	/**
 	   * Set the string value as value of the key. The string can't be longer than 1073741824 bytes (1
@@ -3611,7 +3612,58 @@ public class RedisHelper {
 		  if(this.jedis != null)
 				return jedis.pipelined();
 		  else {
+
+
 			  throw new java.lang.UnsupportedOperationException("  Cluster Jedis  Unsupport   pipelined  mehtod.");
 		  }
+
+
 	  }
+
+	/**
+	 * 集群模式下使用
+	 * @return
+	 */
+	public ClusterPipeline getClusterPipelined() {
+		init();
+		try {
+
+			ClusterPipeline clusterPipeline = new ClusterPipeline(jc.getClusterConnectionProvider());
+			return clusterPipeline;
+		}
+		catch (Exception e){
+			throw new DataRedisException("getClusterPipelined failed:",e);
+		}
+
+
+
+
+
+
+
+
+	}
+
+
+	public Pipeline pipelined(int db) {
+		init();
+		if(this.jedis != null) {
+			jedis.select(db);
+			return jedis.pipelined();
+
+		}
+		else {
+			throw new java.lang.UnsupportedOperationException("  Cluster Jedis  Unsupport   pipelined  mehtod.");
+		}
+
+
+	}
+	public void select(int position){
+		init();
+		if(this.jedis != null)
+			jedis.select(position);
+		else {
+			throw new java.lang.UnsupportedOperationException("  Cluster Jedis  Unsupport   pipelined  mehtod.");
+		}
+	}
 }

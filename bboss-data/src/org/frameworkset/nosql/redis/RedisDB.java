@@ -56,8 +56,7 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	 */
 	private String mode = mode_single;
 
-	private JedisCluster jc;
-
+	private ProviderJedisCluster jc;
 
 	public RedisDB() {
 		// TODO Auto-generated constructor stub
@@ -126,8 +125,9 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 
 //		    jc = new JedisCluster(jedisClusterNode,this.timeout,this.maxRedirections, config);
 
-		jc = new JedisCluster(jedisClusterNode, timeout, soTimeout,
+		jc = new ProviderJedisCluster(jedisClusterNode, timeout, soTimeout,
 				this.maxRedirections, auth,config);
+
 //		    jc.set("52", "poolTestValue2");
 //		    jc.set("53", "poolTestValue2");
 //		    System.out.println(jc.get("52"));
@@ -195,7 +195,7 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	 return jedis;
 	 }
 	 */
-	public JedisCluster geJedisCluster()
+	public ProviderJedisCluster geJedisCluster()
 	{
 		return jc;
 	}
