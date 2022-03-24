@@ -9,6 +9,7 @@ import redis.clients.jedis.*;
 import redis.clients.jedis.exceptions.JedisException;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.*;
 
 import static java.lang.Thread.sleep;
@@ -40,8 +41,14 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	private int poolMaxTotal;
 	private long poolMaxWaitMillis;
 	private int maxIdle = -1;
-	private int timeout = Protocol.DEFAULT_TIMEOUT;
-	private int soTimeout =  Protocol.DEFAULT_TIMEOUT;
+	/**
+	 * connectionTimeout
+	 */
+	private int connectionTimeout = Protocol.DEFAULT_TIMEOUT;
+	/**
+	 * socketTimeout
+	 */
+	private int socketTimeout =  Protocol.DEFAULT_TIMEOUT;
 	private int maxRedirections = 5;
 	private boolean needAuthPerJedis = false;
 	private boolean testOnBorrow = false;
@@ -62,6 +69,61 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		// TODO Auto-generated constructor stub
 	}
 
+	public int getMaxIdle() {
+		return maxIdle;
+	}
+
+	public void setMaxIdle(int maxIdle) {
+		this.maxIdle = maxIdle;
+	}
+
+	public int getConnectionTimeout() {
+		return connectionTimeout;
+	}
+
+	public void setConnectionTimeout(int connectionTimeout) {
+		this.connectionTimeout = connectionTimeout;
+	}
+
+	public int getSocketTimeout() {
+		return socketTimeout;
+	}
+
+	public void setSocketTimeout(int socketTimeout) {
+		this.socketTimeout = socketTimeout;
+	}
+
+	public int getMaxRedirections() {
+		return maxRedirections;
+	}
+
+	public void setMaxRedirections(int maxRedirections) {
+		this.maxRedirections = maxRedirections;
+	}
+
+	public boolean isTestOnBorrow() {
+		return testOnBorrow;
+	}
+
+	public void setTestOnBorrow(boolean testOnBorrow) {
+		this.testOnBorrow = testOnBorrow;
+	}
+
+	public boolean isTestOnReturn() {
+		return testOnReturn;
+	}
+
+	public void setTestOnReturn(boolean testOnReturn) {
+		this.testOnReturn = testOnReturn;
+	}
+
+	public boolean isTestWhileIdle() {
+		return testWhileIdle;
+	}
+
+	public void setTestWhileIdle(boolean testWhileIdle) {
+		this.testWhileIdle = testWhileIdle;
+	}
 
 	/**
 
@@ -88,14 +150,15 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	{
 		JedisPoolConfig config = new JedisPoolConfig();
 		config.setMaxTotal(poolMaxTotal);
-		config.setMaxWaitMillis(poolMaxWaitMillis);
+		config.setMaxWait(Duration.ofMillis(poolMaxWaitMillis));
+//		config.setMaxWaitMillis(poolMaxWaitMillis);
 		if(maxIdle > 0)
 			config.setMaxIdle(maxIdle);
 		config.setTestOnBorrow(testOnBorrow);
 		config.setTestOnReturn(testOnReturn);
 		config.setTestWhileIdle(testWhileIdle);
 		NodeInfo node = nodes.get(0);
-		jedisPool = new JedisPool(config,node.getHost(), node.getPort(), timeout,this.auth);
+		jedisPool = new JedisPool(config,node.getHost(), node.getPort(), connectionTimeout,this.auth);
 
 //		    Jedis jedis = pool.getResource();
 //		    jedis.auth(this.auth);
@@ -106,7 +169,7 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 	public void startPoolClusterPools() {
 		GenericObjectPoolConfig<Connection> config = new GenericObjectPoolConfig<Connection>();
 		config.setMaxTotal(poolMaxTotal);
-		config.setMaxWaitMillis(poolMaxWaitMillis);
+		config.setMaxWait(Duration.ofMillis(poolMaxWaitMillis));
 		if(maxIdle > 0)
 			config.setMaxIdle(maxIdle);
 
@@ -125,7 +188,7 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 
 //		    jc = new JedisCluster(jedisClusterNode,this.timeout,this.maxRedirections, config);
 
-		jc = new ProviderJedisCluster(jedisClusterNode, timeout, soTimeout,
+		jc = new ProviderJedisCluster(jedisClusterNode, connectionTimeout, socketTimeout,
 				this.maxRedirections, auth,config);
 
 //		    jc.set("52", "poolTestValue2");
@@ -263,7 +326,7 @@ public class RedisDB extends BeanInfoAware implements InitializingBean,org.frame
 		if(logger.isInfoEnabled()) {
 			logger.info("Redis datasourceName:{},servers:{},auth:{},mode:{},needAuthPerJedis:{},poolMaxTotal:{},poolMaxWaitMillis:{},poolTimeoutRetry:{},poolTimeoutRetryInterval:{},timeout:{},soTimeout:{},maxIdle:{},maxRedirections:{},testOnBorrow:{},testOnReturn:{},testWhileIdle:{}",
 					this.getBeaninfo().getName(),servers, "******"/**auth*/, mode, needAuthPerJedis,poolMaxTotal,poolMaxWaitMillis,poolTimeoutRetry,
-					poolTimeoutRetryInterval,this.timeout,this.soTimeout,this.maxIdle,this.maxRedirections,this.testOnBorrow,this.testOnReturn,this.testWhileIdle);
+					poolTimeoutRetryInterval,this.connectionTimeout,this.socketTimeout,this.maxIdle,this.maxRedirections,this.testOnBorrow,this.testOnReturn,this.testWhileIdle);
 		}
 		if(this.nodes == null){
 			buildNodes();
