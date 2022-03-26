@@ -64,7 +64,7 @@ public class BlockedRejectedExecutionHandler implements RejectedExecutionHandler
 		}
 //
 		try {
-			if(blockedWaitTimeout <= 0) {
+			if(blockedWaitTimeout <= 0l) {
 				executor.getQueue().put(r);
 			}
 			else {
