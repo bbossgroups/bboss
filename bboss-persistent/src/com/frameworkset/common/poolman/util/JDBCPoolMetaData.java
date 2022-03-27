@@ -1047,8 +1047,7 @@ public class JDBCPoolMetaData implements Serializable{
 					.append("\",\"dbname\":\"").append(getDbname()).append("\",")
 					.append("\"usepool\":").append(usepool).append(",\"driver\":\"")
 					.append(driver).append("\",")
-					.append("\"password\":\"").append(password)
-					.append("\",\"jndiname\":\"").append(this.getJNDIName()).append("\",")
+					.append("\"password\":\"******\",\"jndiname\":\"").append(this.getJNDIName()).append("\",")
 					.append("\"dbtype\":").append(dbtype).append(",\"loadmetadata\":\"")
 					.append(loadmetadata).append("\",\"minimumSize\":")
 					.append(minimumSize).append(",")
@@ -1091,7 +1090,7 @@ public class JDBCPoolMetaData implements Serializable{
 					.append("\"idGenerator\":").append(idGenerator)
 					.append(",\"jndiclass\":").append(jndiclass)
 					.append(",\"jndiuser\":").append(jndiuser).append(",")
-					.append("\"jndipassword\":").append(jndipassword);
+					.append("\"jndipassword\":******");
 			if(this.getDbInfoEncrypt() != null)
 					data.append(",\"DbInfoEncrypt\":").append(this.getDbInfoEncrypt().getClass().getCanonicalName());
 			else{
