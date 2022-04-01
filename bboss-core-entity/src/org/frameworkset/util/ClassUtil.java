@@ -884,8 +884,7 @@ public class ClassUtil
 				//ReflectionUtils.makeAccessible(c);
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("getConstructor failed:",e);
 			}
 	    	return null;
 	    }
