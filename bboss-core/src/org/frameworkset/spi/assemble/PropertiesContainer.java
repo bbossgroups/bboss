@@ -21,9 +21,11 @@ public class PropertiesContainer extends AbstractGetProperties{
 	public static boolean showPassword = false;
     protected List<String> configPropertiesFiles;
     protected Map<Object,Object> allProperties ;
+    private Map<String,PropertiesInterceptor> propertiesInterceptors = new LinkedHashMap<>();
     protected Map<Object,Object> sonAndParentProperties ;
     private static Logger log = LoggerFactory.getLogger(PropertiesContainer.class);
     protected PropertiesFilePlugin propertiesFilePlugin ;
+    public static final String propertiesInterceptorKey = "propertiesInterceptor";
 	public PropertiesContainer(){
 
 	}
@@ -31,6 +33,85 @@ public class PropertiesContainer extends AbstractGetProperties{
     	if(propertiesFilePlugin != null){
 			propertiesFilePlugin.afterLoaded(getProperties,this);
 		}
+	}
+	private void scanPropertiesInterceptor(Map<Object,Object> properties){
+		if(properties != null && properties.size() > 0){
+			Iterator<Map.Entry<Object, Object>> iterator = properties.entrySet().iterator();
+			while (iterator.hasNext()){
+				Map.Entry<Object, Object> entry = iterator.next();
+				String key = String.valueOf(entry.getKey());
+				if(key.equals(propertiesInterceptorKey)){
+					String value = String.valueOf(entry.getValue()).trim();
+					if(!propertiesInterceptors.containsKey(value)) {
+						try {
+
+							Class clz = Class.forName(value);
+							PropertiesInterceptor propertiesInterceptor = (PropertiesInterceptor) clz.newInstance();
+							propertiesInterceptors.put(value, propertiesInterceptor);
+						} catch (ClassNotFoundException e) {
+							log.error(key + "=" + value, e);
+						} catch (IllegalAccessException e) {
+							log.error(key + "=" + value, e);
+						} catch (InstantiationException e) {
+							log.error(key + "=" + value, e);
+						}
+					}
+				}
+			}
+
+		}
+	}
+
+	public Object interceptorValues(Object bean){
+		if(bean == null)
+			return bean;
+
+		Iterator<Map.Entry<String, PropertiesInterceptor>> propertiesInterceptorsItr = propertiesInterceptors.entrySet().iterator();
+		while (propertiesInterceptorsItr.hasNext()) {
+			Map.Entry<String, PropertiesInterceptor> propertiesInterceptorEntry = propertiesInterceptorsItr.next();
+			PropertiesInterceptor propertiesInterceptor  = propertiesInterceptorEntry.getValue();
+			PropertyContext propertyContext = new PropertyContext();
+			propertyContext.setValue(bean);
+			bean = propertiesInterceptor.convert(propertyContext);
+		}
+		return bean;
+
+	}
+
+	/**
+	 * 对加载的属性值进行拦截处理，用处理后的值替换原来的值，常用于对加密数据的解密处理
+	 * @param evaledProperties
+	 * @return
+	 */
+	public Map interceptorValues(Map evaledProperties){
+		if(evaledProperties == null || evaledProperties.size() == 0)
+			return evaledProperties;
+		scanPropertiesInterceptor(evaledProperties);
+		Map newEvaledProperties = new LinkedHashMap(evaledProperties.size());
+		if(this.propertiesInterceptors.size() > 0){
+			Iterator<Map.Entry > iterator = evaledProperties.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry entry = iterator.next();
+				Object key = entry.getKey();
+				Object value = entry.getValue();
+				Iterator<Map.Entry<String, PropertiesInterceptor>> propertiesInterceptorsItr = propertiesInterceptors.entrySet().iterator();
+				while (propertiesInterceptorsItr.hasNext()) {
+					Map.Entry<String, PropertiesInterceptor> propertiesInterceptorEntry = propertiesInterceptorsItr.next();
+					PropertiesInterceptor propertiesInterceptor  = propertiesInterceptorEntry.getValue();
+					PropertyContext propertyContext = new PropertyContext();
+					propertyContext.setValue(value);
+					propertyContext.setProperty(key);
+					value = propertiesInterceptor.convert(propertyContext);
+					newEvaledProperties.put(key, value);
+				}
+
+			}
+			return newEvaledProperties;
+		}
+		else{
+			return evaledProperties;
+		}
+
 	}
     public void addConfigPropertiesFile(String configPropertiesFile,LinkConfigFile linkfile)
     {
@@ -41,15 +122,17 @@ public class PropertiesContainer extends AbstractGetProperties{
     	}
     	if(allProperties  == null)
     		allProperties = new Properties();
-
+		Properties currentProperties = new Properties();
     	String[] configPropertiesFiles = configPropertiesFile.split(",");//属性文件可以配置多个，每个用逗号分隔
 		for(String file_:configPropertiesFiles) {
 			this.configPropertiesFiles.add(file_);
-			evalfile(file_, linkfile);
+			evalfile(currentProperties,file_, linkfile);
 		}
 		//解析属性值中的环境变量
-		Map evaledProperties = EnvUtil.evalEnvVariable(allProperties);
+		Map evaledProperties = EnvUtil.evalEnvVariable(currentProperties);
+
 		if(evaledProperties != null){
+			evaledProperties = interceptorValues(evaledProperties);
 			allProperties.putAll(evaledProperties);
 		}
     	if(linkfile != null)
@@ -58,6 +141,7 @@ public class PropertiesContainer extends AbstractGetProperties{
     }
 
     public void addAll(Map properties){
+		properties = this.interceptorValues(properties);
 		if(configPropertiesFiles == null)
 		{
 			configPropertiesFiles = new ArrayList<String>();
@@ -122,20 +206,25 @@ public class PropertiesContainer extends AbstractGetProperties{
 			synchronized (PropertiesFilePlugin.class) {
 				PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin) clazz.newInstance();
 				try {
+					Map configProperties = null;
 					if (propertiesFilePlugin.getInitType(applicationContext,extendsAttributes,this) != 1) {
 						String configPropertiesFile = propertiesFilePlugin.getFiles(applicationContext,extendsAttributes,this);
 						if (SimpleStringUtil.isNotEmpty(configPropertiesFile)) {
-							loadPropertiesFromFiles(configPropertiesFile, linkfile);
+							configProperties = new LinkedHashMap();
+							loadPropertiesFromFiles(configProperties,configPropertiesFile, linkfile);
 						}
 					} else {
-						Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext,extendsAttributes,this);
-						if (configProperties != null && configProperties.size() > 0) {
-							allProperties.putAll(configProperties);
-						}
+						configProperties = propertiesFilePlugin.getConfigProperties(applicationContext,extendsAttributes,this);
+//						if (configProperties != null && configProperties.size() > 0) {
+//
+//							allProperties.putAll(configProperties);
+//						}
 					}
-					Map evaledProperties = EnvUtil.evalEnvVariable(allProperties);
-					if(evaledProperties != null){
-						allProperties.putAll(evaledProperties);
+					if(configProperties != null){
+						configProperties = EnvUtil.evalEnvVariable(configProperties);
+						configProperties = this.interceptorValues(configProperties);
+
+						allProperties.putAll(configProperties);
 					}
 				} finally {
 					propertiesFilePlugin.restore(applicationContext,extendsAttributes,this);
@@ -207,7 +296,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 			configPropertiesFiles = new ArrayList<String>();
 
 		}
-		Properties allProperties = new Properties();
+		Map allProperties = new LinkedHashMap();
 		String configPropertiesPlugin = "org.frameworkset.apollo.ApolloPropertiesFilePlugin";
 		try {
 
@@ -242,12 +331,12 @@ public class PropertiesContainer extends AbstractGetProperties{
 					msg.append("Add Config Properties From Apollo failed: " )
 							.append( SimpleStringUtil.object2json(extendsAttributes) );
 				}
-				msg.append(", Add compile dependency to build.gradle in gralde project: \r\ncompile \"com.bbossgroups.plugins:bboss-plugin-apollo:5.7.7\"")
+				msg.append(", Add compile dependency to build.gradle in gralde project: \r\ncompile \"com.bbossgroups.plugins:bboss-plugin-apollo:5.9.7\"")
 				.append(" \r\nor Add compile dependency to pom.xml in maven project: \r\n    " )
 							.append( "    <dependency>\n"  )
 						.append("            <groupId>com.bbossgroups.plugins</groupId>\n"  )
 						.append("            <artifactId>bboss-plugin-apollo</artifactId>\n"  )
-						.append("            <version>5.7.7</version>\n"  )
+						.append("            <version>5.9.7</version>\n"  )
 						.append("        </dependency>");
 				log.error(msg.toString(),e);
 			}
@@ -263,6 +352,8 @@ public class PropertiesContainer extends AbstractGetProperties{
 		}
 
 
+		if(allProperties != null && allProperties.size() > 0)
+			allProperties =  interceptorValues(allProperties);
 		if(this.allProperties  == null)
 			this.allProperties = allProperties;
 		else{
@@ -273,11 +364,11 @@ public class PropertiesContainer extends AbstractGetProperties{
 
 	}
 
-	private void loadPropertiesFromFiles(String configPropertiesFile,LinkConfigFile linkfile ){
+	private void loadPropertiesFromFiles(Map configProperties ,String configPropertiesFile,LinkConfigFile linkfile ){
 		String[] configPropertiesFiles = configPropertiesFile.split(",");//属性文件可以配置多个，每个用逗号分隔
 		for(String file_:configPropertiesFiles) {
 			this.configPropertiesFiles.add(file_);
-			evalfile(file_, linkfile);
+			evalfile(configProperties ,file_, linkfile);
 		}
 	}
 
@@ -511,7 +602,7 @@ public class PropertiesContainer extends AbstractGetProperties{
     {
     	linkfile.loopback(this);
     }
-    private void evalfile(String configPropertiesFile,LinkConfigFile linkfile)
+    private void evalfile(Map currentProperties,String configPropertiesFile,LinkConfigFile linkfile)
     {
     	Properties properties = new java.util.Properties();
     	
@@ -587,7 +678,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 				properties.load(read);
 			}
 			if(!properties.isEmpty()) {
-				allProperties.putAll(properties);
+				currentProperties.putAll(properties);
 //				Iterator<Map.Entry<Object, Object>> temp = properties.entrySet().iterator();
 //				StringBuilder builder = new StringBuilder();
 //				while(temp.hasNext()) {
