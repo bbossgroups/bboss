@@ -26,12 +26,12 @@ package org.frameworkset.spi.assemble;
 public interface PropertiesInterceptor {
 	/**
 	 * 对加载的属性值进行拦截处理，用处理后的值替换原来的值，常用于对加密数据的解密处理
-	 * @param propertyContext
-	 *   property 属性名称 如果value是复杂对象，property可能为空，
-	 *   property为空时，只需要处理value即可,并且复杂对象处理后的值必须设置回复杂对象
+	 * @param propertyContext 包含property和value两个属性
+	 *   property 属性名称 如果value是复杂对象，property可能为空
+	 *   value  属性值
+	 *	property为空时，只需要处理value即可,并且复杂对象处理后的值必须设置回复杂对象
 	 *   会忽略返回值
-	 * 	 value  属性值
-	 * @return 处理加工后的新值
+	 * @return 返回处理加工后的新值
 	 */
 	public Object convert(PropertyContext propertyContext);
 }
