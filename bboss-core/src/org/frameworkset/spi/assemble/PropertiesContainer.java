@@ -129,7 +129,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 			evalfile(currentProperties,file_, linkfile);
 		}
 		//解析属性值中的环境变量
-		Map evaledProperties = EnvUtil.evalEnvVariable(currentProperties);
+		Map evaledProperties = EnvUtil.evalEnvVariable(allProperties,currentProperties);
 
 		if(evaledProperties != null){
 			evaledProperties = interceptorValues(evaledProperties);
@@ -221,7 +221,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 //						}
 					}
 					if(configProperties != null){
-						configProperties = EnvUtil.evalEnvVariable(configProperties);
+						configProperties = EnvUtil.evalEnvVariable(allProperties,configProperties);
 						configProperties = this.interceptorValues(configProperties);
 
 						allProperties.putAll(configProperties);
@@ -309,7 +309,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 					allProperties.putAll(configProperties);
 				}
 
-				Map evaledProperties = EnvUtil.evalEnvVariable(allProperties);
+				Map evaledProperties = EnvUtil.evalEnvVariable(this.allProperties,allProperties);
 				if(evaledProperties != null){
 					allProperties.putAll(evaledProperties);
 				}

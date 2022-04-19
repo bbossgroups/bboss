@@ -34,7 +34,36 @@ import java.util.Map;
  */
 public abstract class EnvUtil {
 	private static Logger log = LoggerFactory.getLogger(EnvUtil.class);
+	/**
+	 * 解析属性值中的环境变量
+	 * @param properties
+	 * @return
+	 */
+	public static Map evalEnvVariable(Map parent,Map properties){
 
+		if(!properties.isEmpty()) {
+			Map allProperties = new HashMap(properties.size());
+			Iterator<Map.Entry<Object, Object>> temp = properties.entrySet().iterator();
+			StringBuilder builder = new StringBuilder();
+			while(temp.hasNext()) {
+				Map.Entry<Object, Object> entry = temp.next();
+				String key = (String)entry.getKey();
+				try {
+					EnvUtil.getSystemEnv(parent,builder, null,key, null, properties);
+					allProperties.put(key, builder.toString());
+					builder.setLength(0);
+				}
+				catch (Throwable e){
+					if(log.isWarnEnabled()){
+						log.warn("",e);
+					}
+				}
+
+			}
+			return allProperties;
+		}
+		return null;
+	}
 	/**
 	 * 解析属性值中的环境变量
 	 * @param properties
@@ -105,9 +134,20 @@ public abstract class EnvUtil {
 	 * @param property
 	 * @return
 	 */
-	public static void getSystemEnv(StringBuilder propertiesValue, VariableHandler.Variable variable ,String property, String parentName, Map properties)
+	public static void getSystemEnv(StringBuilder propertiesValue, VariableHandler.Variable variable ,String property, String parentName, Map properties){
+		 getSystemEnv((Map)null,  propertiesValue,   variable ,  property,   parentName,   properties);
+	}
+	/**
+	 * 首先从配置文件中查找属性值，然后从jvm系统熟悉和系统环境变量中查找属性值
+	 * @param property
+	 * @return
+	 */
+	public static void getSystemEnv(Map parent,StringBuilder propertiesValue, VariableHandler.Variable variable ,String property, String parentName, Map properties)
 	{
 		Object value = properties.get( property);
+		if(value == null && parent != null){
+			value = parent.get(property);
+		}
 
 		if(value != null){
 			String value_ = String.valueOf(value);
@@ -119,56 +159,70 @@ public abstract class EnvUtil {
 				if (!urlStruction.hasVars()) {
 					propertiesValue.append(value_);
 				} else {
-					evalStruction(propertiesValue, urlStruction, properties, property);
+					evalStruction( parent,propertiesValue, urlStruction, properties, property);
 				}
 			}
 
 		}
 		else{ //Get value from jvm system propeties,just like -Dproperty=value
 //			Properties pros = System.getProperties();
-			String value_ =System.getProperty(property);
-			if(value_ == null) {
-				//Get value from os env ,just like property=value in user profile
-				value_ = System.getenv(property);
+			evalValue(  propertiesValue,   variable ,  parentName,  property);
+		}
+	}
+	private static void evalValue(StringBuilder propertiesValue, VariableHandler.Variable variable ,String parentName,String property){
+		String value_ =getSystemEnvDirect(  property);
 
+		if(value_ == null) {
+			if( variable != null ){
+				value_ = variable.getDefaultValue();
 			}
-			if(value_ == null) {
-				if( variable != null ){
-					value_ = variable.getDefaultValue();
+
+		}
+
+		if(value_ != null){
+			propertiesValue.append(value_);
+		}
+		else {
+
+			if (parentName == null) {
+				if(variable == null) {
+					throw new IllegalArgumentException("Eval property " + property + " value failed:not set variable value in config file or system environment.");
 				}
-
-			}
-
-			if(value_ != null){
-				propertiesValue.append(value_);
+				else{
+					throw new IllegalArgumentException("Eval property " + property + " value failed:not set variable value in config file or system environment. variable is "+variable.getOriginVariableName());
+				}
 			}
 			else {
-
-				if (parentName == null) {
+				if(log.isWarnEnabled()) {
 					if(variable == null) {
-						throw new IllegalArgumentException("Eval property " + property + " value failed:not set variable value in config file or system environment.");
+						log.warn("Eval property " + property + " for " + parentName + " value failed:not set variable value in config file or system environment.");
 					}
 					else{
-						throw new IllegalArgumentException("Eval property " + property + " value failed:not set variable value in config file or system environment. variable is "+variable.getOriginVariableName());
+						log.warn("Eval property " + property + " for " + parentName + " value failed:not set variable value in config file or system environment. variable is "+variable.getOriginVariableName());
 					}
-				}
-				else {
-					if(log.isWarnEnabled()) {
-						if(variable == null) {
-							log.warn("Eval property " + property + " for " + parentName + " value failed:not set variable value in config file or system environment.");
-						}
-						else{
-							log.warn("Eval property " + property + " for " + parentName + " value failed:not set variable value in config file or system environment. variable is "+variable.getOriginVariableName());
-						}
 
-					}
-					propertiesValue.append("#[").append(property).append("]");
 				}
+				propertiesValue.append("#[").append(property).append("]");
 			}
 		}
 	}
+	/**
+	 * 从jvm系统属性和系统环境变量中查找属性值
+	 * @param property
+	 * @return
+	 */
+	public static String getSystemEnvDirect(String property)
+	{
+		String value_ =System.getProperty(property);
+		if(value_ == null) {
+			//Get value from os env ,just like property=value in user profile
+			value_ = System.getenv(property);
 
-	private static void evalStruction(StringBuilder builder,VariableHandler.URLStruction templateStruction,Map properties,String parentName){
+		}
+		return value_;
+
+	}
+	private static void evalStruction(Map parent,StringBuilder builder,VariableHandler.URLStruction templateStruction,Map properties,String parentName){
 		List<String> tokens = templateStruction.getTokens();
 		List<VariableHandler.Variable> variables = templateStruction.getVariables();
 		for(int i = 0; i < tokens.size(); i ++){
@@ -176,9 +230,13 @@ public abstract class EnvUtil {
 			if(i < variables.size()) {
 				VariableHandler.Variable variable = variables.get(i);
 				if(parentName.equals(variable.getVariableName())){
-					throw new IllegalArgumentException("Eval property " + variable.getOriginVariableName() + " for " + parentName + " value failed:loop reference ocour." );
+//					String value = getSystemEnvDirect(variable.getVariableName());
+//					throw new IllegalArgumentException("Eval property " + variable.getOriginVariableName() + " for " + parentName + " value failed:loop reference ocour." );
+					evalValue(  builder,   variable ,  parentName,  variable.getVariableName());
 				}
-				getSystemEnv(builder,variable, variable.getVariableName(), parentName, properties);
+				else {
+					getSystemEnv(parent, builder, variable, variable.getVariableName(), parentName, properties);
+				}
 
 
 			}
