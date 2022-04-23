@@ -452,7 +452,12 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			this.configfile = configfile;
 		}
 	}
-	
+	public PropertiesContainer getPropertiesContainer() {
+    	if(providerManager != null)
+			return providerManager.getPropertiesContainer();
+    	else
+    		return null;
+	}
 	public BaseApplicationContext(String docbaseType, String docbase,
 			InputStream instream, boolean isfile,boolean init) {
 		if (instream == null )

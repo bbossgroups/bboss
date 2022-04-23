@@ -324,15 +324,20 @@ public class ServiceProviderManager implements AOPValueHandler{
         
 
     }
-    
-    private void parseXML(ManagerImport managerImport, LinkConfigFile parentFile) {
+	private PropertiesContainer propertiesContainer = null;
+
+	public PropertiesContainer getPropertiesContainer() {
+		return propertiesContainer;
+	}
+
+	private void parseXML(ManagerImport managerImport, LinkConfigFile parentFile) {
 
     	String configFile = managerImport.getRealPath();
         /* CHANGED TO USE JAXP */
 
         String url = configFile;
         boolean isfile = false;
-		PropertiesContainer propertiesContainer = null;
+
 		try {
         	if(managerImport.isClasspathBase())
         	{
