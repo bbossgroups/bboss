@@ -18,7 +18,7 @@ package org.frameworkset.spi.annotations;
 import java.lang.annotation.*;
 
 /**
- * <p>Description: </p>
+ * <p>Description: 标记业务组件，将组件发布为业务组件</p>
  * <p></p>
  * <p>Copyright (c) 2020</p>
  * @Date 2020/6/26 10:29
@@ -29,4 +29,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface BService {
+
+	String name() default "";
+	String value()default "";
 }

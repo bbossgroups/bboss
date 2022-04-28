@@ -34,4 +34,9 @@ public @interface BAutowired {
 	 * @return
 	 */
 	public String name() default "";
+	/**
+	 * 组件名称，不指定直接采用field或者参数名称
+	 * @return
+	 */
+	public String value() default "";
 }
