@@ -62,7 +62,9 @@ public abstract class EnvUtil {
 			}
 			return allProperties;
 		}
-		return null;
+		else {
+			return properties;
+		}
 	}
 	/**
 	 * 解析属性值中的环境变量

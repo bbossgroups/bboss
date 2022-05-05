@@ -133,7 +133,8 @@ public class PropertiesContainer extends AbstractGetProperties{
 
 		if(evaledProperties != null){
 			evaledProperties = interceptorValues(evaledProperties);
-			allProperties.putAll(evaledProperties);
+			if(evaledProperties != null && evaledProperties.size() > 0)
+				allProperties.putAll(evaledProperties);
 		}
     	if(linkfile != null)
     		loopback(linkfile);
@@ -220,11 +221,11 @@ public class PropertiesContainer extends AbstractGetProperties{
 //							allProperties.putAll(configProperties);
 //						}
 					}
-					if(configProperties != null){
+					if(configProperties != null && configProperties.size() > 0 ){
 						configProperties = EnvUtil.evalEnvVariable(allProperties,configProperties);
 						configProperties = this.interceptorValues(configProperties);
-
-						allProperties.putAll(configProperties);
+						if(configProperties != null && configProperties.size() > 0)
+							allProperties.putAll(configProperties);
 					}
 				} finally {
 					propertiesFilePlugin.restore(applicationContext,extendsAttributes,this);
@@ -357,7 +358,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 		if(this.allProperties  == null)
 			this.allProperties = allProperties;
 		else{
-			if(allProperties.size() > 0)
+			if(allProperties != null && allProperties.size() > 0)
 				this.allProperties.putAll(allProperties);
 		}
 
