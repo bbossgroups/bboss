@@ -38,8 +38,9 @@ public class CommonBootstrap implements CommonBootstrapInf{
 	private static Logger logger = LoggerFactory.getLogger(CommonBootstrap.class);
 	public static final String lineSeparator;
 	static{
-		lineSeparator = java.security.AccessController.doPrivileged(
-				new sun.security.action.GetPropertyAction("line.separator"));
+//		lineSeparator = java.security.AccessController.doPrivileged(
+//				new sun.security.action.GetPropertyAction("line.separator"));
+		lineSeparator = System.getProperty("line.separator");
 	}
 	@Override
 	public void startup(String propertfile,ClassLoader cl,String mainclass,File appDir,String args[],URL classpathEntries[]){
