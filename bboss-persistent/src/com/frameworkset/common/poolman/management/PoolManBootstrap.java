@@ -21,7 +21,6 @@ import com.frameworkset.orm.adapter.DBFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.management.MBeanServer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -114,20 +113,21 @@ public class PoolManBootstrap  {
             //throw ex;
         }
 
-        PoolManDeployer deployer;
+        PoolManDeployer deployer = null;
 
-        if (config.isUsingJMX()) {
-            deployer = new JMXPoolDeployer((MBeanServer)null);
-            try {
-                deployer.deployConfiguration(config);
-            } catch (Exception ex1) {
-                if(log.isErrorEnabled())
-                    log.error("Start(configFile) deployConfiguration error: {},config: \r\n{}", ex1.getMessage() ,config.toString(),ex1);
-                //throw ex1;
-            }
-        }
-
-        else {
+//        if (config.isUsingJMX()) {
+//            deployer = new JMXPoolDeployer((MBeanServer)null);
+//            try {
+//                deployer.deployConfiguration(config);
+//            } catch (Exception ex1) {
+//                if(log.isErrorEnabled())
+//                    log.error("Start(configFile) deployConfiguration error: {},config: \r\n{}", ex1.getMessage() ,config.toString(),ex1);
+//                //throw ex1;
+//            }
+//        }
+//
+//        else
+            {
         	DBFactory.addDBAdaptors(config.getAdaptors());
             deployer = new LocalPoolDeployer();
             try {
@@ -169,19 +169,20 @@ public class PoolManBootstrap  {
             //throw ex;
         }
 
-        PoolManDeployer deployer;
+        PoolManDeployer deployer = null;
 
-        if (config.isUsingJMX()) {
-            deployer = new JMXPoolDeployer((MBeanServer)null);
-            try {
-                deployer.deployConfiguration(config);
-            } catch (Exception ex1) {
-                log.error("Start(configFile) deployConfiguration error: {},config: \r\n{}", ex1.getMessage() ,config.toString(),ex1);
-                //throw ex1;
-            }
-        }
-
-        else {
+//        if (config.isUsingJMX()) {
+//            deployer = new JMXPoolDeployer((MBeanServer)null);
+//            try {
+//                deployer.deployConfiguration(config);
+//            } catch (Exception ex1) {
+//                log.error("Start(configFile) deployConfiguration error: {},config: \r\n{}", ex1.getMessage() ,config.toString(),ex1);
+//                //throw ex1;
+//            }
+//        }
+//
+//        else
+            {
         	DBFactory.addDBAdaptors(config.getAdaptors());
             deployer = new LocalPoolDeployer();
             try {
@@ -232,19 +233,20 @@ public class PoolManBootstrap  {
             //throw ex;
         }
 
-        PoolManDeployer deployer;
+        PoolManDeployer deployer = null;
 
-        if (config.isUsingJMX()) {
-            deployer = new JMXPoolDeployer((MBeanServer)null);
-            try {
-                deployer.deployConfiguration(config);
-            } catch (Exception ex1) {
-                log.error("Start(configFile) deployConfiguration error: {},config: \r\n{}", ex1.getMessage() ,config.toString(),ex1);
-                //throw ex1;
-            }
-        }
-
-        else {
+//        if (config.isUsingJMX()) {
+//            deployer = new JMXPoolDeployer((MBeanServer)null);
+//            try {
+//                deployer.deployConfiguration(config);
+//            } catch (Exception ex1) {
+//                log.error("Start(configFile) deployConfiguration error: {},config: \r\n{}", ex1.getMessage() ,config.toString(),ex1);
+//                //throw ex1;
+//            }
+//        }
+//
+//        else
+            {
         	DBFactory.addDBAdaptors(config.getAdaptors());
             deployer = new LocalPoolDeployer();
             try {

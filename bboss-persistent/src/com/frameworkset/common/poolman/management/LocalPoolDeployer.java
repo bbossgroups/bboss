@@ -17,6 +17,7 @@ package com.frameworkset.common.poolman.management;
 
 // PoolMan Classes
 
+import com.frameworkset.common.poolman.util.DBStartResult;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.common.poolman.util.SQLManager;
@@ -62,30 +63,32 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
         }
 	}
 	
-    public void deployConfiguration(PoolManConfiguration config) throws Exception {
+    public DBStartResult deployConfiguration(PoolManConfiguration config) throws Exception {
 
-        startDataSources(config.getDataSources());
+		DBStartResult dbStartResult =startDataSources(config.getDataSources());
 //        startGenericPools(config.getGenericPools());
 
         // Note: there is no admin for the non-JMX PoolMan
 
         // add VM shutdown event handler
         shutdownHandle();
+        return dbStartResult;
     }
     
-    public void deployConfiguration(PoolManConfiguration config,String dbname) throws Exception {
+    public DBStartResult deployConfiguration(PoolManConfiguration config,String dbname) throws Exception {
 
-        startDataSources(config.getDataSources());
+        return startDataSources(config.getDataSources());
 //        startGenericPools(config.getGenericPools());
 
         
     }
     
-	public void deployConfiguration(PoolManConfiguration config, Map values)
+	public DBStartResult deployConfiguration(PoolManConfiguration config, Map values)
 	throws Exception {
 // TODO Auto-generated method stub
-		startDataSource(config.getDataSources(),values);
+		DBStartResult dbStartResult = startDataSource(config.getDataSources(),values);
 		shutdownHandle();
+		return dbStartResult;
 	}
 
 //    public void run() {
@@ -99,11 +102,12 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 //        }
 //    }
 
-    private void startDataSources(ArrayList datasources) throws Exception {
+    private DBStartResult startDataSources(ArrayList datasources) throws Exception {
 
         if (datasources == null)
-            return;
+            return null;
 
+		DBStartResult dbStartResult = new DBStartResult();
         for (Iterator iter = datasources.iterator(); iter.hasNext();) {
 
             // Get each set of datasource entries
@@ -144,17 +148,23 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 			if(logger.isInfoEnabled()) {
 				logger.info(" Created JDBC Connection Pool named {},config:{}",metadata.getName(),metadata.toString());
 			}
-			SQLManager.getInstance().createPool(metadata);
+			JDBCPool jdbcPool = SQLManager.getInstance().createPool(metadata);
+			if(jdbcPool != null ){
+				dbStartResult.addDBStartResult(jdbcPool.getDBName());
+			}
+
             //jpool.log("PoolMan Local Pool Deployer: Created JDBC Connection Pool named: " + metadata.getDbname());
 
         }
+        return dbStartResult;
     }
     
     
-    private void startDataSource(ArrayList datasources,Map<String,String> values) throws Exception {
+    private DBStartResult startDataSource(ArrayList datasources,Map<String,String> values) throws Exception {
 
         if (datasources == null )
-            return;
+            return null;
+		DBStartResult dbStartResult = new DBStartResult();
         Properties dbprops = null;
         for (Iterator iter = datasources.iterator(); iter.hasNext();) {
 
@@ -235,9 +245,12 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 				logger.info(" Created JDBC Connection Pool named {},config:{}",metadata.getName(),metadata.toString());
 			}
             JDBCPool jpool = SQLManager.getInstance().createPool(metadata);
-
+			if(jpool != null){
+				dbStartResult.addDBStartResult(jpool.getDBName());
+			}
             //jpool.log("PoolMan Local Pool Deployer: Created JDBC Connection Pool named: " + metadata.getDbname());
         }
+        return dbStartResult;
        
     }
 

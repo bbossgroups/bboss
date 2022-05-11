@@ -15,8 +15,7 @@ package com.frameworkset.common.poolman.util;
  * limitations under the License.
  */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * <p>Description: 记录启动数据源结果信息</p>
@@ -27,17 +26,18 @@ import java.util.List;
  * @version 1.0
  */
 public class DBStartResult {
-	private List<String> dbstartResult;
+	private Map<String,Object> dbstartResult;
+
 	public DBStartResult addDBStartResult(String dbName){
 		if(dbstartResult == null){
-			dbstartResult = new ArrayList<>();
+			dbstartResult = new java.util.LinkedHashMap<>();
 
 		}
-		dbstartResult.add(dbName);
+		dbstartResult.put(dbName,dbName);
 		return this;
 	}
 
-	public List<String> getDbstartResult() {
+	public Map<String,Object> getDbstartResult() {
 		return dbstartResult;
 	}
 }

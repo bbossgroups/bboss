@@ -15,12 +15,14 @@
  */
 package com.frameworkset.common.poolman.management;
 
+import com.frameworkset.common.poolman.util.DBStartResult;
+
 import java.util.Map;
 
 public interface PoolManDeployer {
 
-    public void deployConfiguration(PoolManConfiguration config) throws Exception;
-    public void deployConfiguration(PoolManConfiguration config,Map<String,String> values) throws Exception;
-    public void deployConfiguration(PoolManConfiguration config,String dbname) throws Exception;
+    public DBStartResult deployConfiguration(PoolManConfiguration config) throws Exception;
+    public DBStartResult deployConfiguration(PoolManConfiguration config,Map<String,String> values) throws Exception;
+    public DBStartResult deployConfiguration(PoolManConfiguration config,String dbname) throws Exception;
 
 }

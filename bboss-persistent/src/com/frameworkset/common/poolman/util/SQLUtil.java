@@ -1619,16 +1619,16 @@ public class SQLUtil{
         {
             SQLUtil.getSQLManager().stopPool(dbname);
         }
-        public static void startPool(String dbname) throws Exception
+        public static boolean startPool(String dbname) throws Exception
         {
         	
-        	SQLManager.startPool(dbname);
+        	return SQLManager.startPool(dbname);
         }
 
-	public static void startPoolByDBconf(DBConf dbConf) throws Exception
+	public static boolean startPoolByDBconf(DBConf dbConf) throws Exception
 	{
 
-		SQLManager.startPool(dbConf);
+		return SQLManager.startPool(dbConf);
 	}
         
         public static String statusCheck(String dbname)
@@ -1636,35 +1636,35 @@ public class SQLUtil{
             return SQLUtil.getSQLManager().statusCheck(dbname);
            
         }
-        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
+        public static boolean startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
         {
-        	SQLManager.startPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery);
+        	return SQLManager.startPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery);
         }
-        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,int fetchsize)
+        public static boolean startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,int fetchsize)
         {
-        	SQLManager.startPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery,fetchsize);
+        	return SQLManager.startPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery,fetchsize);
         }
-        public static void startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,int fetchsize)
+        public static boolean startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,int fetchsize)
         {
-        	SQLManager.startNoPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery, fetchsize);
+        	return SQLManager.startNoPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery, fetchsize);
         }
         
-        public static void startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
+        public static boolean startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
         {
-        	SQLManager.startNoPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery);
+        	return SQLManager.startNoPool(  poolname,  driver,  jdbcurl,  username,  password,  validationQuery);
         }
-        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery)
+        public static boolean startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery)
     	{
-        	SQLManager.startPool(poolname, driver, jdbcurl, username, password, readOnly, validationQuery);
+        	return SQLManager.startPool(poolname, driver, jdbcurl, username, password, readOnly, validationQuery);
     	}
         
-        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery,boolean encryptdbinfo)
+        public static boolean startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery,boolean encryptdbinfo)
     	{
-        	SQLManager.startPool(poolname, driver, jdbcurl, username, password, readOnly, validationQuery,encryptdbinfo);
+        	return SQLManager.startPool(poolname, driver, jdbcurl, username, password, readOnly, validationQuery,encryptdbinfo);
     	}
         
         
-        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
+        public static boolean startPool(String poolname,String driver,String jdbcurl,String username,String password,
         		String readOnly,
         		String txIsolationLevel,
         		String validationQuery,
@@ -1677,7 +1677,7 @@ public class SQLUtil{
         		String externaljndiName        ,boolean showsql		,boolean encryptdbinfo
         		)
     	{
-        	SQLManager.startPool( poolname, driver, jdbcurl, username, password,
+        	return SQLManager.startPool( poolname, driver, jdbcurl, username, password,
             		 readOnly,
             		 txIsolationLevel,
             		 validationQuery,
@@ -1692,7 +1692,7 @@ public class SQLUtil{
     	}
         
         
-        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
+        public static boolean startPool(String poolname,String driver,String jdbcurl,String username,String password,
         		String readOnly,
         		String txIsolationLevel,
         		String validationQuery,
@@ -1705,7 +1705,7 @@ public class SQLUtil{
         		String externaljndiName        ,boolean showsql		,boolean encryptdbinfo,int fetchsize
         		)
     	{
-        	SQLManager.startPool( poolname, driver, jdbcurl, username, password,
+        	return SQLManager.startPool( poolname, driver, jdbcurl, username, password,
             		 readOnly,
             		 txIsolationLevel,
             		 validationQuery,
@@ -1719,7 +1719,7 @@ public class SQLUtil{
             		);
     	}
 
-	public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
+	public static boolean startPool(String poolname,String driver,String jdbcurl,String username,String password,
 								 String readOnly,
 								 String txIsolationLevel,
 								 String validationQuery,
@@ -1732,7 +1732,7 @@ public class SQLUtil{
 								 String externaljndiName        ,boolean showsql		,boolean encryptdbinfo,int fetchsize,String dbtype,String dbAdaptor
 	)
 	{
-		SQLManager.startPool( poolname, driver, jdbcurl, username, password,
+		return SQLManager.startPool( poolname, driver, jdbcurl, username, password,
 				readOnly,
 				txIsolationLevel,
 				validationQuery,
@@ -1746,7 +1746,7 @@ public class SQLUtil{
 		);
 	}
         
-        public static void startPool(String poolname,String driver,String jdbcurl,String username,String password,
+        public static boolean startPool(String poolname,String driver,String jdbcurl,String username,String password,
         		String readOnly,
         		String txIsolationLevel,
         		String validationQuery,
@@ -1759,7 +1759,7 @@ public class SQLUtil{
         		String externaljndiName        ,boolean showsql		
         		)
     	{
-        	SQLManager.startPool( poolname, driver, jdbcurl, username, password,
+        	return SQLManager.startPool( poolname, driver, jdbcurl, username, password,
             		 readOnly,
             		 txIsolationLevel,
             		 validationQuery,
@@ -1773,9 +1773,9 @@ public class SQLUtil{
             		);
     	}
 
-	public static void startPoolWithDBConf(DBConf dbConf	)
+	public static boolean startPoolWithDBConf(DBConf dbConf	)
 	{
-		SQLManager.startPool( dbConf);
+		return SQLManager.startPool( dbConf);
 	}
     	
     	
