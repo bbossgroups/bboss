@@ -29,10 +29,23 @@ public class Count {
 		count ++;
 		return count;
 	}
+	public synchronized int increament(int incr){
+		count = count + incr;
+		return count;
+	}
 	public synchronized int getCount(){
 		return count;
 	}
 	public int getCountUnSynchronized(){
+		return count;
+	}
+
+	public int increamentUnSynchronized(){
+		count ++;
+		return count;
+	}
+	public int increamentUnSynchronized(int incr){
+		count = count + incr;
 		return count;
 	}
 
