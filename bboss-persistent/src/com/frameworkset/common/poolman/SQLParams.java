@@ -120,7 +120,7 @@ public class SQLParams
     public String toString()
     {
         StringBuilder ret = new StringBuilder();
-        ret.append("sql{").append(this.newsql.getNewsql()).append(",").append(this.pagineOrderby == null?"":pagineOrderby.toString(null)).append("},params");
+        ret.append("sql{").append(this.newsql != null?this.newsql.getNewsql():"").append(",").append(this.pagineOrderby == null?"":pagineOrderby.toString(null)).append("},params");
         if(sqlparams != null && sqlparams.size() > 0)
         {
             ret.append("{");
