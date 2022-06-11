@@ -19,6 +19,7 @@ import com.frameworkset.spi.assemble.BeanInstanceException;
 import com.frameworkset.util.StringUtil;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.IOCContainerHolder;
 import org.frameworkset.spi.LifeCycleProcessorExecutor;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
@@ -664,7 +665,7 @@ public class DispatchServlet extends BaseServlet {
 		//start event
 		
 		webApplicationContext = WebApplicationContext.getWebApplicationContext(config.getServletContext(),contextConfigLocation);
-		
+		IOCContainerHolder.setApplicationContext(webApplicationContext);
 		return webApplicationContext;
 	}
 	//-------------------begin
