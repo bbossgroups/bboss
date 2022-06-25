@@ -424,6 +424,9 @@ public class SQLUtil {
 
 
 	public static SQLUtil getInstance(String sqlfile){
+		if(sqlfile == null){
+			throw new SQLConfigException("SQL config file is null.");
+		}
 		SQLUtil sqlUtil = sqlutils.get(sqlfile);
 		if(sqlUtil != null)
 			return sqlUtil;
