@@ -36,6 +36,12 @@ public class SOAFileApplicationContext extends SOAApplicationContext{
 		
 	}
 
+	public SOAFileApplicationContext(String baseDir,String file,boolean needInitProvider) {
+		this(baseDir,file,default_charset,needInitProvider);
+
+
+	}
+
 
 	public SOAFileApplicationContext(URL file, String path)
 	{
@@ -46,6 +52,13 @@ public class SOAFileApplicationContext extends SOAApplicationContext{
 	{
 		super( baseDir,file,  path);
 	}
+
+	public SOAFileApplicationContext(String baseDir,URL file, String path,boolean needInitProvider)
+	{
+		super( baseDir,file,  path,needInitProvider);
+	}
+
+
 	public SOAFileApplicationContext(String baseDir,String file,String charset) {
 		this(baseDir, ResourceUtils.getFileURL(baseDir,file),file);
 //		try {
@@ -57,6 +70,19 @@ public class SOAFileApplicationContext extends SOAApplicationContext{
 //		}
 //		this.configfile = file;
 		
+	}
+
+	public SOAFileApplicationContext(String baseDir,String file,String charset,boolean needInitProvider) {
+		this(baseDir, ResourceUtils.getFileURL(baseDir,file),file,  needInitProvider);
+//		try {
+//			File file_ = ValueObjectUtil.getClassPathFile(file);
+//			if(file_ != null)
+//				this.configfile = file_.getAbsolutePath();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		this.configfile = file;
+
 	}
 
 }

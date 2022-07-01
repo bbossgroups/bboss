@@ -54,9 +54,13 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 		
 		super((String)soacontent,false,charset,init);
 	}
-	
-	
-	
+
+
+	public SOAApplicationContext(String baseDir,URL file, String path,boolean needInitProvider)
+	{
+		super(baseDir,(URL)file,  path,needInitProvider);
+
+	}
 	
 	
 	public SOAApplicationContext(String baseDir,URL file, String path)

@@ -170,7 +170,11 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 
 		super(baseDir,(URL)file,  path);
 	}
+	public DefaultApplicationContext(String baseDir,URL file, String path,boolean needInitProvider)
+	{
 
+		super(baseDir,(URL)file,  path,needInitProvider);
+	}
 	public DefaultApplicationContext(InputStream instream, boolean isfile,boolean init) {
 		super((InputStream)instream,isfile,init);
 	}

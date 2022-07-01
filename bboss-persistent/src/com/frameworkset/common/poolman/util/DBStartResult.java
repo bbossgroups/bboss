@@ -41,6 +41,19 @@ public class DBStartResult {
 		return this;
 	}
 
+	public DBStartResult addDBStartResults(Map<String,Object> _dbstartResult){
+		if(_dbstartResult == null || _dbstartResult.size() == 0){
+			return this;
+		}
+		if(dbstartResult == null){
+			dbstartResult = new java.util.LinkedHashMap<>();
+
+		}
+		dbstartResult.putAll(_dbstartResult);
+		return this;
+	}
+
+
 	public Map<String,Object> getDbstartResult() {
 		return dbstartResult;
 	}

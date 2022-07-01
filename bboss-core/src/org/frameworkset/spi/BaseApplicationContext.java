@@ -515,6 +515,11 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	
 	public BaseApplicationContext(String baseDir,URL file, String path)
 	{
+		this( baseDir, file,  path,true);
+	}
+
+	public BaseApplicationContext(String baseDir,URL file, String path,boolean needInit)
+	{
 		if (file == null )
 			throw new NullPointerException(
 					"build ApplicationContext failed:configfile is "
@@ -527,8 +532,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		this.configfile = path;
 		this.configFileURL = file;
 		this.needRecordFile = false;
+		if(needInit) {
+			initProviderManager();
+		}
+	}
+	public void initProviderManager(){
 		providerManager = _getServiceProviderManager();
-		providerManager.init(AssembleCallback.classpathprex, "", configfile,file);
+		providerManager.init(AssembleCallback.classpathprex, "", configfile, configFileURL);
 	}
 	public BaseApplicationContext(InputStream instream, boolean isfile,boolean init) {
 		this(AssembleCallback.classpathprex, "", instream,isfile, init);
