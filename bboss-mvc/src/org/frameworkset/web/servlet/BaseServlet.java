@@ -284,6 +284,10 @@ public abstract class BaseServlet extends HttpServlet{
 			failureCause = ex;
 			throw ex;
 		}
+		catch (Exception ex) {
+			failureCause = ex;
+			throw new NestedServletException("Request processing failed", ex);
+		}
 		catch (Throwable ex) {
 			failureCause = ex;
 			throw new NestedServletException("Request processing failed", ex);
@@ -295,19 +299,22 @@ public abstract class BaseServlet extends HttpServlet{
 				requestAttributes.requestCompleted();
 			}
 
-			if (logger.isDebugEnabled()) {
-				if (failureCause != null) {
-					this.logger.debug("Could not complete request", failureCause);
+
+			if (failureCause != null) {
+				if (logger.isErrorEnabled()) {
+					this.logger.error("Could not complete request", failureCause);
 				}
-				else {
+			}
+			else {
+				if(logger.isDebugEnabled()) {
 					if (asyncManager.isConcurrentHandlingStarted()) {
 						logger.debug("Leaving response open for concurrent processing");
-					}
-					else {
+					} else {
 						this.logger.debug("Successfully completed request");
 					}
 				}
 			}
+
 			if(fac != null && pageContext != null)
 			{
 				fac.releasePageContext(pageContext);
