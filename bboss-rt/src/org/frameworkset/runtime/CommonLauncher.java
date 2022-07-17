@@ -234,6 +234,7 @@ public class CommonLauncher {
 		Reader read = null;
 		try {
 			File propertiesFile = new File(appDir, propertfile);
+			System.setProperty("bboss.boot.propertfile","file:"+propertiesFile.getCanonicalPath());
 			in = new FileInputStream(propertiesFile);
 			read = new InputStreamReader(in, "UTF-8");
 			System.out.println("Load properties from file:" + propertiesFile);

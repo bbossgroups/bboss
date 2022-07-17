@@ -51,7 +51,12 @@ public class MethodInvoker {
 	public void invoker() throws IllegalArgumentException, 
 								IllegalAccessException, InvocationTargetException
 	{
-		this.method.invoke(instance, argments);
+		if(argments != null) {
+			this.method.invoke(instance, argments);
+		}
+		else{
+			this.method.invoke(instance);
+		}
 	}
 	public Pro getProviderManagerInfo() {
 		return providerManagerInfo;

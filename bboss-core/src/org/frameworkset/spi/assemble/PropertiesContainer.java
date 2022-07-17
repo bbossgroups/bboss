@@ -15,6 +15,7 @@ import java.io.*;
 import java.util.*;
 
 public class PropertiesContainer extends AbstractGetProperties{
+	private static Logger logger = LoggerFactory.getLogger(PropertiesContainer.class);
 	/**
 	 * 可以通过控制改变量控制是否在日志中显示db口令、http proxy口令、elasticsearch口令，mongodb口令
 	 */
@@ -120,6 +121,7 @@ public class PropertiesContainer extends AbstractGetProperties{
     		configPropertiesFiles = new ArrayList<String>();
     		
     	}
+
     	if(allProperties  == null)
     		allProperties = new Properties();
 		Properties currentProperties = new Properties();

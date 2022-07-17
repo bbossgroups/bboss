@@ -51,14 +51,17 @@ public abstract class ScheduleService implements Serializable{
 	private MethodInvoker buildJobMethod(SchedulejobInfo jobInfo)
 	{
 		MethodInvoker jobMethod = null; 
-		
-		if(jobInfo.getBeanName() != null && !jobInfo.getBeanName().equals(""))
+		if(jobInfo.getBean() != null){
+			return BeanAccembleHelper.creatorMethodInvokerByBean(jobInfo.getBean(), jobInfo.getMethod());
+		}
+		else if(jobInfo.getBeanName() != null && !jobInfo.getBeanName().equals(""))
 		{
 //			Pro providerManagerInfo = jobInfo.getJobPro().getApplicationContext().getProBean(jobInfo.getBeanName());
 			return BeanAccembleHelper.creatorMethodInvokerByBean(jobInfo.getJobPro(), jobInfo.getBeanName(), jobInfo.getMethod());
 			
 			
 		}
+
 		else
 		{
 			return BeanAccembleHelper.creatorMethodInvokerByClass(jobInfo.getJobPro(), jobInfo.getBeanClass(), jobInfo.getMethod());

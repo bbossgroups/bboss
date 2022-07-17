@@ -559,6 +559,30 @@ public class BeanAccembleHelper {
 	/**
 	 * 通过工厂对象创建组件实例
 	 *
+	 * @param instance
+	 * @return
+	 */
+	public static MethodInvoker creatorMethodInvokerByBean(Object instance, String method) {
+		Class cls = instance.getClass();
+		ClassInfo classInfo = ClassUtil.getClassInfo(cls);
+		try {
+
+
+
+			 Method method_ = classInfo.getDeclaredMethod(method);
+
+
+			return new MethodInvoker(false, instance, null, method_, null);
+
+
+		}  catch (Exception e) {
+			throw new MethodInvokerException("Call method "+method+" on instance " + classInfo.getName() +" failed:",e);
+		}
+	}
+
+	/**
+	 * 通过工厂对象创建组件实例
+	 *
 	 * @param providerManagerInfo
 	 * @return
 	 */

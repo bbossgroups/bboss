@@ -1,4 +1,4 @@
-package com.frameworkset.common.poolman.util;
+package org.frameworkset.util;
 /**
  * Copyright 2022 bboss
  * <p>
@@ -15,32 +15,15 @@ package com.frameworkset.common.poolman.util;
  * limitations under the License.
  */
 
-import org.frameworkset.util.ResourceStartResult;
-
-import java.util.Map;
-
 /**
- * <p>Description: 记录启动数据源结果信息</p>
+ * <p>Description: </p>
  * <p></p>
  * <p>Copyright (c) 2020</p>
- * @Date 2022/5/2
+ * @Date 2022/7/17
  * @author biaoping.yin
  * @version 1.0
  */
-public class DBStartResult extends ResourceStartResult {
+public interface ResourceEnd {
+	void endResource(ResourceStartResult resourceStartResult);
 
-	public DBStartResult addDBStartResult(String dbName){
-		addResourceStartResult(dbName);
-		return this;
-	}
-
-	public DBStartResult addDBStartResults(Map<String,Object> _dbstartResult){
-		this.addResourceStartResults(_dbstartResult);
-		return this;
-	}
-
-
-	public Map<String,Object> getDbstartResult() {
-		return getResourceStartResult();
-	}
 }

@@ -1,9 +1,9 @@
 package org.frameworkset.task;
 
+import org.frameworkset.spi.assemble.Pro;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import org.frameworkset.spi.assemble.Pro;
 
 /**
  * 
@@ -29,7 +29,12 @@ public class SchedulejobInfo implements java.io.Serializable {
 	 * 如果指定的bean和method属性，那么clazz对应的executejob就不需要指定，二者选一
 	 */
 	private String beanName ;
+
 	private String beanClass ;
+	/**
+	 * 直接设置bean组件
+	 */
+	private Object bean;
 	private String method;
 	private String cronb_time ;
 	private org.frameworkset.spi.assemble.Construction methodConstruction;
@@ -113,22 +118,22 @@ public class SchedulejobInfo implements java.io.Serializable {
 	public void setShouldRecover(boolean shouldRecover) {
 		this.shouldRecover = shouldRecover;
 	}
-	protected String getBeanName() {
+	public String getBeanName() {
 		return beanName;
 	}
-	protected void setBeanName(String beanName) {
+	public void setBeanName(String beanName) {
 		this.beanName = beanName;
 	}
-	protected String getMethod() {
+	public String getMethod() {
 		return method;
 	}
-	protected void setMethod(String method) {
+	public void setMethod(String method) {
 		this.method = method;
 	}
-	protected String getBeanClass() {
+	public String getBeanClass() {
 		return beanClass;
 	}
-	protected void setBeanClass(String beanClass) {
+	public void setBeanClass(String beanClass) {
 		this.beanClass = beanClass;
 	}
 	protected org.frameworkset.spi.assemble.Construction getMethodConstruction() {
@@ -147,4 +152,11 @@ public class SchedulejobInfo implements java.io.Serializable {
 		this.jobPro = jobPro;
 	}
 
+	public Object getBean() {
+		return bean;
+	}
+
+	public void setBean(Object bean) {
+		this.bean = bean;
+	}
 }
