@@ -981,12 +981,16 @@ public class SQLManager extends PoolManager{
 		if(temConf.getJndiName() != null && !temConf.getJndiName().equals(""))
 		{
 			values.put("dbname_datasource_jndiname", temConf.getJndiName());
-			values.put("enablejta", "true");
+
 		}
 		else
 		{
 			values.put("dbname_datasource_jndiname", "");
 		}
+		if(temConf.isEnablejta())
+			values.put("enablejta", "true");
+		else
+			values.put("enablejta", "false");
 		values.put("columnLableUpperCase",temConf.isColumnLableUpperCase());
 		values.put("driver", temConf.getDriver());
 		values.put("jdbcurl", temConf.getJdbcurl());
