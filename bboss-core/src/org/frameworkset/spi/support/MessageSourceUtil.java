@@ -16,8 +16,8 @@
 
 package org.frameworkset.spi.support;
 
-import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.util.io.ResourceLoader;
+import org.frameworkset.util.shutdown.ShutdownUtil;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,7 +37,7 @@ public abstract class MessageSourceUtil {
 	protected static  Map<String,HotDeployResourceBundleMessageSource> messageSources = new HashMap<String,HotDeployResourceBundleMessageSource>();
 	static
 	{
-		BaseApplicationContext.addShutdownHook(new Runnable(){
+		ShutdownUtil.addShutdownHook(new Runnable(){
 
 			public void run() {
 				HotDeployResourceBundleMessageSource.stopmonitor();	

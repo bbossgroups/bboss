@@ -27,6 +27,7 @@ import org.frameworkset.spi.assemble.callback.WebDocbaseAssembleCallback;
 import org.frameworkset.spi.support.MessageSource;
 import org.frameworkset.util.io.Resource;
 import org.frameworkset.util.io.ResourcePatternResolver;
+import org.frameworkset.util.shutdown.ShutdownUtil;
 import org.frameworkset.web.servlet.DispatchServlet;
 import org.frameworkset.web.servlet.i18n.WebMessageSourceUtil;
 import org.frameworkset.web.servlet.support.ServletContextResource;
@@ -233,9 +234,9 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 //				System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%docbase:" + docbase);
 				AssembleUtil.registAssembleCallback(new WebDocbaseAssembleCallback(docbase));
 				instance = new WebApplicationContext(AssembleCallback.webprex,"",configfile);
-				
-				
-				BaseApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
+
+
+				ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 				applicationContexts.put(BaseApplicationContext.mvccontainer_identifier, instance);
 				applicationContexts.put(configfile, instance);
 			}

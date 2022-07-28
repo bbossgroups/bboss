@@ -27,6 +27,7 @@ import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.velocity.BBossVelocityUtil;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
+import org.frameworkset.util.shutdown.ShutdownUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -345,7 +346,7 @@ public class SQLUtil {
 	}
 	static
 	{
-		BaseApplicationContext.addShutdownHook(new Runnable(){
+		ShutdownUtil.addShutdownHook(new Runnable(){
 
 			public void run() {
 				SQLUtil.stopmonitor();

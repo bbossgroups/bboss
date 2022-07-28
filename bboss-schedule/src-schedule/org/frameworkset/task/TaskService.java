@@ -5,6 +5,7 @@ import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.assemble.ProMap;
+import org.frameworkset.util.shutdown.ShutdownUtil;
 import org.quartz.Calendar;
 import org.quartz.*;
 import org.quartz.impl.SchedulerRepository;
@@ -47,7 +48,7 @@ public class TaskService implements Service {
 	}
 	static 
 	{
-		BaseApplicationContext.addShutdownHook(new ShutdownThread(),1000);
+		ShutdownUtil.addShutdownHook(new ShutdownThread(),1000);
 	}
 	static class ShutdownThread extends Thread {
 //		TaskService taskService;

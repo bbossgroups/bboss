@@ -18,6 +18,7 @@ package org.frameworkset.spi;
 
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 import org.frameworkset.spi.assemble.callback.AssembleCallback;
+import org.frameworkset.util.shutdown.ShutdownUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +60,7 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 			if (instance != null)
 				return instance;
 			instance = new DefaultApplicationContext(configfile);
-			BaseApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
+			ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 			applicationContexts.put(configfile, instance);
 			
 
@@ -89,7 +90,7 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 					instance.destroy(true);
 				}
 				instance = new DefaultApplicationContext(configfile);
-				BaseApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
+				ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 				applicationContexts.put(configfile, instance);
 			}
 
@@ -104,7 +105,7 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 				if (instance != null)
 					return instance;
 				instance = new DefaultApplicationContext(configfile);
-				BaseApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
+				ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 				applicationContexts.put(configfile, instance);
 
 
@@ -132,7 +133,7 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 			if (instance != null)
 				return instance;
 			instance = new DefaultApplicationContext(configfile);
-			BaseApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
+			ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 			applicationContexts.put(conf, instance);
 			
 

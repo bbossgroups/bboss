@@ -18,6 +18,7 @@ package org.frameworkset.spi;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ServiceProviderManager;
 import org.frameworkset.spi.assemble.soa.SOAServiceProviderManager;
+import org.frameworkset.util.shutdown.ShutdownUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,7 +112,7 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 			if (instance != null)
 				return instance;
 			instance = new SOAApplicationContext(configfile);
-			BaseApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
+			ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 			applicationContexts.put(configfile, instance);
 			
 
