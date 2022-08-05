@@ -1,12 +1,16 @@
 package org.frameworkset.http.converter.json;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.charset.Charset;
-import java.util.concurrent.atomic.AtomicReference;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.PrettyPrinter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.frameworkset.http.HttpInputMessage;
 import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.MediaType;
@@ -20,17 +24,12 @@ import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.TypeUtils;
 import org.frameworkset.util.annotations.ValueConstants;
 
-import com.fasterxml.jackson.core.JsonEncoding;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.PrettyPrinter;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.type.TypeFactory;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.nio.charset.Charset;
+import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class AbstractJackson2HttpMessageConverter extends AbstractGenericHttpMessageConverter<Object> 
 		implements GenericHttpMessageConverter<Object>,JsonConvertInf {
@@ -193,7 +192,19 @@ public abstract class AbstractJackson2HttpMessageConverter extends AbstractGener
 							.readValue(inputMessage.getBody());
 				}
 			}
-			return this.objectMapper.readValue(inputMessage.getBody(), javaType);
+			InputStream im = inputMessage.getBody();
+			int av = 0;
+			try {
+				av = im.available();
+			}catch (Exception e){
+
+			}
+			if(av > 0) {
+				return this.objectMapper.readValue(im, javaType);
+			}
+			else {
+				return null;
+			}
 		} catch (IOException ex) {
 			throw new HttpMessageNotReadableException("Could not read document: " + ex.getMessage(), ex);
 		}
