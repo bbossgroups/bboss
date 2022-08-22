@@ -283,6 +283,14 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	public URL getConfigFileURL() {
 		return configFileURL;
 	}
+	public String getRealConfigPath(){
+		if(configFileURL != null){
+			return configFileURL.toString();
+		}
+		else{
+			return configfile;
+		}
+	}
 
 	public void setConfigFileURL(URL configFileURL) {
 		this.configFileURL = configFileURL;

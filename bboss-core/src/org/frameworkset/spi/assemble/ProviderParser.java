@@ -159,6 +159,7 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
 //	        this.file = applicationContext.getConfigfile();
 //	        this.parent = applicationContext.getp;
         }
+        this.file = applicationContext.getRealConfigPath();
         currentValue = new StringBuilder();
         this.applicationContext = applicationContext;
         if(applicationContext.getServiceProviderManager().findVariableFromSelf())
@@ -542,7 +543,9 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
     
     protected Pro _buildPro()
     {
-    	return new Pro(applicationContext);
+		Pro pro = new Pro(applicationContext);
+		pro.setConfigFile(this.file);
+		return pro;
     }
     
     @SuppressWarnings("unchecked")
@@ -857,7 +860,7 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
         	p.setEnablerpc(true);
         }
       
-        p.setConfigFile(this.file);
+//        p.setConfigFile(this.file);
         p.setSinglable(singlable);
         p.setFactory_bean(factory_bean);
         p.setFactory_class(factory_class);

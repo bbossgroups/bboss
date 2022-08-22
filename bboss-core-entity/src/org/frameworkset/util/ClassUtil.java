@@ -240,14 +240,19 @@ public class ClassUtil
 					 int mode = this.field.getModifiers();
 					 if( !Modifier.isStatic(mode))
 					 {
-						 if(!Modifier.isPublic(mode))
-						 {
-							 this.field.setAccessible(true);
+						 try {
+							 if(!Modifier.isPublic(mode))
+							 {
+							 	this.field.setAccessible(true);
+							 }
+							 if(!Modifier.isFinal(mode))
+								 canwrite = true;
+							 canread = true;
+						 }
+						 catch (Exception e){
 
 						 }
-						 if(!Modifier.isFinal(mode))
-							 canwrite = true;
-						 canread = true;
+
 
 					 }
 					 if(Modifier.isPublic(mode))

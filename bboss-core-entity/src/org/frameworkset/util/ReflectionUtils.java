@@ -389,7 +389,13 @@ public abstract class ReflectionUtils {
 	public static void makeAccessible(Field field) {
 		if (!Modifier.isPublic(field.getModifiers()) ||
 				!Modifier.isPublic(field.getDeclaringClass().getModifiers())) {
-			field.setAccessible(true);
+			try {
+				field.setAccessible(true);
+			}
+			catch (Exception e){
+
+			}
+
 		}
 	}
 

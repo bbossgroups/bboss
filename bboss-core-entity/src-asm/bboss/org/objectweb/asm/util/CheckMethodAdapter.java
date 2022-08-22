@@ -29,29 +29,16 @@
  */
 package bboss.org.objectweb.asm.util;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import bboss.org.objectweb.asm.AnnotationVisitor;
-import bboss.org.objectweb.asm.Attribute;
-import bboss.org.objectweb.asm.Handle;
-import bboss.org.objectweb.asm.Label;
-import bboss.org.objectweb.asm.MethodVisitor;
-import bboss.org.objectweb.asm.Opcodes;
-import bboss.org.objectweb.asm.Type;
-import bboss.org.objectweb.asm.TypePath;
-import bboss.org.objectweb.asm.TypeReference;
+import bboss.org.objectweb.asm.*;
 import bboss.org.objectweb.asm.tree.MethodNode;
 import bboss.org.objectweb.asm.tree.analysis.Analyzer;
 import bboss.org.objectweb.asm.tree.analysis.BasicValue;
 import bboss.org.objectweb.asm.tree.analysis.BasicVerifier;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.lang.reflect.Field;
+import java.util.*;
 
 /**
  * A {@link MethodVisitor} that checks that its methods are properly used. More
@@ -1533,7 +1520,13 @@ public class CheckMethodAdapter extends MethodVisitor {
     private static Field getLabelField(final String name) {
         try {
             Field f = Label.class.getDeclaredField(name);
-            f.setAccessible(true);
+            try {
+                f.setAccessible(true);
+            }
+            catch (Exception e){
+
+            }
+
             return f;
         } catch (NoSuchFieldException e) {
             return null;
