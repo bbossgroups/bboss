@@ -87,6 +87,24 @@ public class ServiceProviderManager implements AOPValueHandler{
     public static String seriralConfigFile = "org/frameworkset/soa/serialconf.xml";
 
     private Map<String,Pro> properties = new LinkedHashMap<String,Pro>();
+    public String getKeysString(){
+    	StringBuilder stringBuilder = new StringBuilder();
+		getKeysString(  stringBuilder );
+    	return stringBuilder.toString();
+	}
+
+	public void getKeysString(StringBuilder stringBuilder ){
+    	boolean first = true;
+		if(properties != null && properties.size() > 0){
+			for(String key:properties.keySet()){
+				if(!first)
+					stringBuilder.append(",");
+				else
+					first = false;
+				stringBuilder.append(key);
+			}
+		}
+	}
 
     /**
      * 对已经分析过的配置文件进行记录，避免重复分析配置文件

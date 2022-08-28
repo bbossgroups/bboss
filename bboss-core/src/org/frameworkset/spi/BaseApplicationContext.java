@@ -1634,8 +1634,10 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				.getInnerPropertyBean(name,strrefid);
 
 		if (providerManagerInfo == null) {
-			if(defaultValue == null)
-				throw new SPIException("容器["+this.getConfigfile()+"]没有定义名称为[" + strrefid + "]的bean对象。");
+			if(defaultValue == null) {
+
+				throwUndefineException(this.getConfigfile(),strrefid);
+			}
 			else
 				return defaultValue;
 		}
@@ -1645,6 +1647,14 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		
 	}
 
+	protected void throwUndefineException(String configfile,String name){
+		StringBuilder message = new StringBuilder();
+		message.append("容器[").append( configfile ).append( "]没有定义名称为[" ).append( name )
+				.append( "]的bean对象。请检查名称大小写问题或者检查组件[" ).append( name ).append( "]是否配置正确!已正确加载组件清单如下：\r\n");
+		providerManager.getKeysString(message);
+		String msg = message.toString();
+		throw new SPIException(msg);
+	}
 	/**
 	 * bean工厂方法
 	 * 
@@ -1686,14 +1696,16 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				if (providerManagerInfo_ == null)
 				{
 					if(defaultValue == null)
-						throw new SPIException("容器["+this.getConfigfile()+"]没有定义名称为[" + name + "]的bean对象。");
+						throwUndefineException(this.getConfigfile(),name);
+//						throw new SPIException("容器["+this.getConfigfile()+"]没有定义名称为[" + name + "]的bean对象。");
 					else
 						return defaultValue;
 				}
 				return getProvider(context, _name, null, true);
 			} else {
 				if(defaultValue == null)
-					throw new SPIException("容器["+this.getConfigfile()+"]没有定义名称为[" + name + "]的bean对象。");
+					throwUndefineException(this.getConfigfile(),name);
+//					throw new SPIException("容器["+this.getConfigfile()+"]没有定义名称为[" + name + "]的bean对象。");
 				else
 					return defaultValue;
 			}
@@ -1738,10 +1750,9 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 //				if (providerManagerInfo_ == null)
 //					throw new SPIException("没有定义名称为[" + name + "]的bean对象。");
 //				return getProvider(context, _name, null, true);
-//			} else 
-			{
-				throw new SPIException("容器["+this.getConfigfile()+"]没有定义名称为[" + name + "]的bean对象。");
-			}
+//			} else
+			throwUndefineException(this.getConfigfile(),name);
+//				throw new SPIException("容器["+this.getConfigfile()+"]没有定义名称为[" + name + "]的bean对象。");
 		}
 		return (T)getBeanObject(context, providerManagerInfo, null);
 		
