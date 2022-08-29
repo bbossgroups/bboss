@@ -325,8 +325,8 @@ public class ServiceProviderManager implements AOPValueHandler{
     public void load(ManagerImport managerImport, LinkConfigFile parentFile) {
         if (isParsered(managerImport.getFile()))
             return;
+		parsedList.put(managerImport.getFile(), trace);
         parseXML( managerImport, parentFile);
-        parsedList.put(managerImport.getFile(), trace);
 
     }
     
