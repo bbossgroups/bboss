@@ -133,49 +133,11 @@ public class ServiceProviderManager implements AOPValueHandler{
      */
     private Map managerimports;
     private BaseApplicationContext applicationContext;
-//    static {
-//    	ServiceProviderManager temp = new ServiceProviderManager();
-//    	temp.init();
-//    	serviceProviderManager = temp;
-//    }
-//
-//    public static ServiceProviderManager getInstance() {
-//
-//        return serviceProviderManager;
-//    }
-    
-//    public void init()
-//    {
-////    	 try {
-////
-////             load(defaultConfigFile, null);
-////
-////         }
-////
-////         catch (Exception e) {
-////             e.printStackTrace();
-////             log.error("Load [" + defaultConfigFile + "]失败", e);
-////         }
-//    	this.init(defaultConfigFile);
-//    }
-    
+
     public void init(String configfile)
     {
     	init(AssembleCallback.classpathprex, "", configfile);
-//    	 try {
-//    		 List<ManagerImport> mis = AssembleUtil.getManagerImports(AssembleCallback.classpathprex, "", configfile);
-//    		 for(int i = 0; i < mis.size(); i ++)
-//    		 {
-//    			 load(mis.get(i), null);
-//    		 }
-//    		 
-//
-//         }
-//
-//         catch (Exception e) {
-//             e.printStackTrace();
-//             log.error("Load [" + defaultConfigFile + "]失败", e);
-//         }
+
     }
     
     
@@ -195,15 +157,12 @@ public class ServiceProviderManager implements AOPValueHandler{
 
 		try {
 	   		 
-	   		 {
 	   			 this.loadFromURL(file);
-	   		 }
-   		 
+
 
         }
 
         catch (Exception e) {
-//            e.printStackTrace();
 			if(log.isErrorEnabled())
 				log.error(new StringBuilder().append("Load [" ).append( defaultConfigFile ).append( "]失败").toString(), e);
         }
@@ -246,24 +205,13 @@ public class ServiceProviderManager implements AOPValueHandler{
     public void init(String docbaseType,String docbase,InputStream instream,boolean isfile)
     {
     	 try {
-//    		 if(this.applicationContext.isfile())
-//    		 {
-//	    		 List<ManagerImport> mis = AssembleUtil.getManagerImports(docbaseType, docbase, configfile);
-//	    		 for(int i = 0; i < mis.size(); i ++)
-//	    		 {
-//	    			 load(mis.get(i), null);
-//	    		 }
-//    		 }
-//    		 else
-    		 {
+
     			 this.parseXML(instream);
-    		 }
-    		 
+
 
          }
 
          catch (Exception e) {
-//             e.printStackTrace();
 			 if(log.isErrorEnabled())
              	log.error(new StringBuilder().append("Load [" ).append( defaultConfigFile ).append( "]失败").toString(), e);
          }
@@ -307,11 +255,13 @@ public class ServiceProviderManager implements AOPValueHandler{
             List<ManagerImport> resolvermis = AssembleUtil.getManagerImports(mi);
             for(int j = 0; j < resolvermis.size(); j ++)
             {
+				ManagerImport resolvermi = (ManagerImport)resolvermis.get(j);
 	            try {
-	            	ManagerImport resolvermi = (ManagerImport)resolvermis.get(j);
+
 	                this.load(resolvermi, parentFile);
 	            } catch (Exception e) {
-	            	e.printStackTrace();
+					if(log.isErrorEnabled())
+						log.error(new StringBuilder().append("Load [" ).append( resolvermi.getFile() ).append( "]失败").toString(), e);
 
 	            }
             }
