@@ -97,6 +97,11 @@ public class ESPropertyDescripts {
 	private volatile transient ClassUtil.PropertieDescription esMetaFieldsProperty;
 
 	/**
+	 * es meta matched_queries属性
+	 */
+	private volatile transient ClassUtil.PropertieDescription esMatchedQueriesProperty;
+
+	/**
 	 * es meta Found属性
 	 */
 	private volatile transient ClassUtil.PropertieDescription esMetaFoundProperty;
@@ -264,6 +269,17 @@ public class ESPropertyDescripts {
 		if(!containReadSetProperty)
 			containReadSetProperty = esMetaFieldsProperty.isESReadSet();
 		this.esAnnonationProperties.add(esMetaFieldsProperty);
+	}
+
+	public void setEsMatchedQueriesProperty(ClassUtil.PropertieDescription esMatchedQueriesProperty) {
+		this.esMatchedQueriesProperty = esMatchedQueriesProperty;
+		if(!containReadSetProperty)
+			containReadSetProperty = esMatchedQueriesProperty.isESReadSet();
+		this.esAnnonationProperties.add(esMatchedQueriesProperty);
+	}
+
+	public ClassUtil.PropertieDescription getEsMatchedQueriesProperty() {
+		return esMatchedQueriesProperty;
 	}
 
 	public ClassUtil.PropertieDescription getEsMetaFoundProperty() {

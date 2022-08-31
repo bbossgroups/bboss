@@ -455,6 +455,11 @@ public class ClassUtil
 					esAnnoInfo.setReadSet(((ESMetaFields) a).readSet());
 					classInfo.esPropertyDescripts.setEsMetaFieldsProperty(this);
 				}
+				else if(a instanceof ESMatchedQueries)
+				{
+					esAnnoInfo.setReadSet(((ESMatchedQueries) a).readSet());
+					classInfo.esPropertyDescripts.setEsMatchedQueriesProperty(this);
+				}
 				else if(a instanceof ESMetaFound)
 				{
 					classInfo.esPropertyDescripts.setEsMetaFoundProperty(this);
