@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.frameworkset.http.HttpInputMessage;
@@ -193,18 +194,33 @@ public abstract class AbstractJackson2HttpMessageConverter extends AbstractGener
 				}
 			}
 			InputStream im = inputMessage.getBody();
-			int av = 0;
-			try {
-				av = im.available();
-			}catch (Exception e){
 
-			}
-			if(av > 0) {
+			try {
 				return this.objectMapper.readValue(im, javaType);
 			}
-			else {
-				return null;
+			catch (MismatchedInputException mismatchedInputException){
+				String msg = mismatchedInputException.getMessage();
+				if(msg != null && msg.startsWith("No content to map due to end-of-input")){
+					return null;
+				}
+				throw mismatchedInputException;
 			}
+			catch(Exception e) {
+				throw e;
+			}
+//			int av = 0;
+//			try {
+//				av = im.available();
+//			}catch (Exception e){
+//
+//			}
+//			if(av > 0) {
+//				return this.objectMapper.readValue(im, javaType);
+//			}
+//			else {
+//				return null;
+//			}
+
 		} catch (IOException ex) {
 			throw new HttpMessageNotReadableException("Could not read document: " + ex.getMessage(), ex);
 		}
