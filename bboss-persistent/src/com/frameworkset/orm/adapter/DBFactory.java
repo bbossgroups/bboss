@@ -119,7 +119,7 @@ public class DBFactory
         adapters.put("org.apache.derby.jdbc.ClientDriver", DBDerby.class);
 		adapters.put("dm.jdbc.driver.DmDriver", DMAdaptor.class);
 
-
+		adapters.put("com.github.housepower.jdbc.ClickHouseDriver", DBClickhouse.class);
 
         // add some short names to be used when drivers are not used
         adapters.put("as400", DBDB2400.class);        
@@ -152,7 +152,7 @@ public class DBFactory
         adapters.put("org.apache.hive.jdbc.HiveDriver", DBHive.class);
     	adapters.put(DBHive, DBHive.class);
 		adapters.put("dm", DMAdaptor.class);
-
+		adapters.put("clickhouse", DBClickhouse.class);
 	}
 
     /**
