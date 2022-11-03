@@ -29,6 +29,25 @@ import java.io.Serializable;
  * @version 1.0
  */
 public class DBConf implements Serializable {
+	private boolean testWhileidle = true;
+	/**
+	 * 建立链接超时时间
+	 */
+	private int connectionTimeout = 5000;
+	/**
+	 * 申请链接超时时间，单位：毫秒
+	 */
+	private int maxWait = 6000;
+	/**
+	 * Set max idle Times in seconds ,if exhaust this times the used connection object will be Abandoned removed if removeAbandoned is true.
+	 default value is 300 seconds.
+
+	 see removeAbandonedTimeout parameter in commons dbcp.
+	 单位：秒
+	 */
+	private int maxIdleTime = 300;
+	private boolean removeAbandoned ;
+	private boolean logAbandoned = true;
 	private String poolname;
 	private String driver;
 	private String dbtype;
@@ -211,5 +230,53 @@ public class DBConf implements Serializable {
 
 	public void setEnablejta(boolean enablejta) {
 		this.enablejta = enablejta;
+	}
+
+	public boolean isTestWhileidle() {
+		return testWhileidle;
+	}
+
+	public void setTestWhileidle(boolean testWhileidle) {
+		this.testWhileidle = testWhileidle;
+	}
+
+	public int getMaxWait() {
+		return maxWait;
+	}
+
+	public void setMaxWait(int maxWait) {
+		this.maxWait = maxWait;
+	}
+
+	public int getConnectionTimeout() {
+		return connectionTimeout;
+	}
+
+	public void setConnectionTimeout(int connectionTimeout) {
+		this.connectionTimeout = connectionTimeout;
+	}
+
+	public int getMaxIdleTime() {
+		return maxIdleTime;
+	}
+
+	public void setMaxIdleTime(int maxIdleTime) {
+		this.maxIdleTime = maxIdleTime;
+	}
+
+	public boolean isRemoveAbandoned() {
+		return removeAbandoned;
+	}
+
+	public void setRemoveAbandoned(boolean removeAbandoned) {
+		this.removeAbandoned = removeAbandoned;
+	}
+
+	public boolean isLogAbandoned() {
+		return logAbandoned;
+	}
+
+	public void setLogAbandoned(boolean logAbandoned) {
+		this.logAbandoned = logAbandoned;
 	}
 }

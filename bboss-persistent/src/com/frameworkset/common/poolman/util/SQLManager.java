@@ -1032,10 +1032,9 @@ public class SQLManager extends PoolManager{
 		else
 			values.put("maximumSize", ""+10);
 		
-		int maxWait = 60;
+		int maxWait = temConf.getMaxWait();
 		if(maxWait > 0)
 		{
-			maxWait = maxWait * 1000;
 			values.put("maxWait", ""+maxWait);
 		}
 		else
@@ -1047,16 +1046,16 @@ public class SQLManager extends PoolManager{
 		values.put("showsql", temConf.isShowsql()+"");
 		values.put("encryptdbinfo", temConf.isEncryptdbinfo()+"");
 		
-		boolean testWhileidle = true;
+		boolean testWhileidle = temConf.isTestWhileidle();
 		values.put("testWhileidle", testWhileidle+"");
 		int shrinkBy = 5;
 		values.put("shrinkBy", shrinkBy+"");
 		
-		int connectionTimeout = 36000000;
+		int connectionTimeout = temConf.getConnectionTimeout();
 		values.put("connectionTimeout", connectionTimeout+"");
 		int skimmerFrequency = 180000;
 		values.put("skimmerFrequency", skimmerFrequency+"");
-		boolean logAbandoned = true;
+		boolean logAbandoned = temConf.isLogAbandoned();
 		values.put("logAbandoned", logAbandoned+"");
 		/**
 		 * Set max idle Times in seconds ,if exhaust this times the used connection object will be Abandoned removed if removeAbandoned is true.
@@ -1065,9 +1064,9 @@ public class SQLManager extends PoolManager{
 		see removeAbandonedTimeout parameter in commons dbcp. 
 		单位：秒
 		 */
-		int userTimeout = 300;
+		int userTimeout = temConf.getMaxIdleTime();
 		values.put("userTimeout", userTimeout+"");
-		boolean removeAbandoned = false;
+		boolean removeAbandoned = temConf.isRemoveAbandoned();
 		values.put("removeAbandoned", removeAbandoned+"");
 		if(temConf.getExternaljndiName() != null && !temConf.getExternaljndiName().equals(""))
 			values.put("externaljndiName", temConf.getExternaljndiName());
