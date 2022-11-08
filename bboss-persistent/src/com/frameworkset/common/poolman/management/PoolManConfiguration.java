@@ -18,15 +18,13 @@ package com.frameworkset.common.poolman.management;
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.sql.ParserException;
 import com.frameworkset.util.SimpleStringUtil;
-import com.frameworkset.util.ValueObjectUtil;
-import com.frameworkset.velocity.BBossVelocityUtil;
 import org.frameworkset.soa.BBossStringWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.io.*;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -89,7 +87,7 @@ public class PoolManConfiguration   {
 	public static String jndi_credentials = null;
 	private String[] filterdbname = null;
 	private String dbnamespace;
-	public static String pooltemplates;
+//	public static String pooltemplates;
 
 	/**
 	 * 用户自定义的适配器
@@ -129,11 +127,12 @@ public class PoolManConfiguration   {
 	}
 
 	/** Load DataSource info from XML and create a Service for each entry set. */
-	public void loadConfiguration(Map context) throws Exception {
+	public boolean loadConfiguration(Map context) throws Exception {
 
 		// first try XML
 		try {
 			parseXML(context);
+			return true;
 		} catch (NullPointerException ne) {
 //			ne.printStackTrace();
 			// then try deprecated properties
@@ -149,9 +148,10 @@ public class PoolManConfiguration   {
 //					+ configFile );
 //			log.warn("Load datasource Configuration failed from "
 //					+ configFile ,e);
-			Exception ex = new ParserException("Load datasource Configuration from default bboss persistent config file, please config and start datasource follow document：https://doc.bbossgroups.com/#/persistent/PersistenceLayer1");
+			Exception ex = new ParserException("Load datasource Configuration from default bboss persistent config file, please config and start datasource follow document：https://doc.bbossgroups.com/#/persistent/PersistenceLayer1",e);
 			log.error("",ex);
 		}
+		return false;
 
 	}
 
@@ -189,54 +189,125 @@ public class PoolManConfiguration   {
 
 	private static Object lock = new Object();
 
-	private static void initpooltemplates() {
-		if (pooltemplates == null) {
-			synchronized (lock) {
-				if (pooltemplates == null) {
-					InputStream reader = null;
-					ByteArrayOutputStream swriter = null;
-					OutputStream temp = null;
-					try {
-						reader = ValueObjectUtil
-								.getInputStreamFromFile(PoolManConstants.XML_CONFIG_FILE_TEMPLATE);
 
-						swriter = new ByteArrayOutputStream();
-						temp = new BufferedOutputStream(swriter);
 
-						int len = 0;
-						byte[] buffer = new byte[1024];
-						while ((len = reader.read(buffer)) > 0) {
-							temp.write(buffer, 0, len);
-						}
-						temp.flush();
-						pooltemplates = swriter.toString("UTF-8");
-
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} finally {
-						if (reader != null)
-							try {
-								reader.close();
-							} catch (IOException e) {
-							}
-						if (swriter != null)
-							try {
-								swriter.close();
-							} catch (IOException e) {
-							}
-						if (temp != null)
-							try {
-								temp.close();
-							} catch (IOException e) {
-							}
-					}
-					// pooltemplates =
-					// ValueObjectUtil.getFileContent(PoolManConstants.XML_CONFIG_FILE_TEMPLATE,"UTF-8");
-				}
+	private void initConfig(Map context){
+		/**
+		 * 用户自定义的适配器
+		 */
+		Map<String,String> adaptors = new LinkedHashMap<String,String>();
+		String dbAdaptor = (String)context.get("dbAdaptor");
+		String driver = (String)context.get("driver");
+		if(dbAdaptor != null && !dbAdaptor.equals("")){
+			adaptors.put(driver,dbAdaptor);
+			String dbtype = (String)context.get("dbtype");
+			if(dbtype != null && !dbtype.equals("")){
+				adaptors.put(dbtype,dbAdaptor);
 			}
 
 		}
+		this.adaptors = adaptors;
+		ArrayList datasources = new ArrayList();
+		Properties datasource = new Properties();
+		String external = (String)context.get("external");
+		datasource.put("external",external);
+		String dbname = (String)context.get("dbname");
+		datasource.put("dbname",dbname);
+		datasource.put("loadmetadata","false");
+		String dbname_datasource_jndiname = (String)context.get("dbname_datasource_jndiname");
+		datasource.put("jndiName".toLowerCase(),dbname_datasource_jndiname);
+		datasource.put("autoprimarykey".toLowerCase(),"false");
+
+		String encryptdbinfo = (String)context.get("encryptdbinfo");
+		datasource.put("encryptdbinfo".toLowerCase(),encryptdbinfo);
+		String cachequerymetadata = (String)context.get("cachequerymetadata");
+		datasource.put("cachequerymetadata".toLowerCase(),cachequerymetadata);
+		datasource.put("driver".toLowerCase(),driver);
+		String enablejta = (String)context.get("enablejta");
+		datasource.put("enablejta".toLowerCase(),enablejta);
+
+		String jdbcurl = (String)context.get("jdbcurl");
+		datasource.put("url".toLowerCase(),jdbcurl);
+
+		String username = (String)context.get("username");
+		datasource.put("username".toLowerCase(),username);
+
+		String password = (String)context.get("password");
+		datasource.put("password".toLowerCase(),password);
+
+		String txIsolationLevel = (String)context.get("txIsolationLevel");
+		datasource.put("txIsolationLevel".toLowerCase(),txIsolationLevel);
+
+		datasource.put("nativeResults".toLowerCase(),"true");
+
+		datasource.put("poolPreparedStatements".toLowerCase(),"false");
+		String initialConnections = (String)context.get("initialConnections");
+		datasource.put("initialConnections".toLowerCase(),initialConnections);
+		String minimumSize = (String)context.get("minimumSize");
+		datasource.put("minimumSize".toLowerCase(),minimumSize);
+
+		String maximumSize = (String)context.get("maximumSize");
+		datasource.put("maximumSize".toLowerCase(),maximumSize);
+
+		String removeAbandoned = (String)context.get("removeAbandoned");
+		datasource.put("removeAbandoned".toLowerCase(),removeAbandoned);
+
+		String userTimeout = (String)context.get("userTimeout");
+		datasource.put("userTimeout".toLowerCase(),userTimeout);
+
+		String logAbandoned = (String)context.get("logAbandoned");
+		datasource.put("logAbandoned".toLowerCase(),logAbandoned);
+
+		String readOnly = (String)context.get("readOnly");
+		datasource.put("readOnly".toLowerCase(),readOnly);
+
+		String skimmerFrequency = (String)context.get("skimmerFrequency");
+		datasource.put("skimmerFrequency".toLowerCase(),skimmerFrequency);
+
+		String connectionTimeout = (String)context.get("connectionTimeout");
+		datasource.put("connectionTimeout".toLowerCase(),connectionTimeout);
+
+		String shrinkBy = (String)context.get("shrinkBy");
+		datasource.put("shrinkBy".toLowerCase(),shrinkBy);
+
+		String testWhileidle = (String)context.get("testWhileidle");
+		datasource.put("testWhileidle".toLowerCase(),testWhileidle);
+
+		datasource.put("keygenerate".toLowerCase(),"composite");
+
+		String maxWait = (String)context.get("maxWait");
+		datasource.put("maxWait".toLowerCase(),maxWait);
+
+		String validationQuery = (String)context.get("validationQuery");
+		datasource.put("validationQuery".toLowerCase(),validationQuery);
+
+		String showsql = (String)context.get("showsql");
+		datasource.put("showsql".toLowerCase(),showsql);
+
+		String externaljndiName = (String)context.get("externaljndiName");
+		if(externaljndiName != null && !externaljndiName.equals(""))
+			datasource.put("externaljndiName".toLowerCase(),externaljndiName);
+
+		String usepool = (String)context.get("usepool");
+		datasource.put("usepool".toLowerCase(),usepool);
+
+		datasource.put("RETURN_GENERATED_KEYS".toLowerCase(),"true");
+
+		Integer queryfetchsize = (Integer) context.get("queryfetchsize");
+		if(queryfetchsize != null && queryfetchsize != 0)
+			datasource.put("queryfetchsize".toLowerCase(),queryfetchsize+"");
+
+		String dbInfoEncryptClass = (String)context.get("dbInfoEncryptClass");
+		if(SimpleStringUtil.isNotEmpty(dbInfoEncryptClass))
+			datasource.put("dbInfoEncryptClass".toLowerCase(),dbInfoEncryptClass);
+
+		Boolean columnLableUpperCase = (Boolean) context.get("columnLableUpperCase");
+		if(columnLableUpperCase != null)
+			datasource.put("columnLableUpperCase".toLowerCase(),columnLableUpperCase + "");
+		else
+			datasource.put("columnLableUpperCase".toLowerCase(), "true");
+		datasources.add(datasource);
+		this.datasources = datasources;
 	}
 
 	private void parseXML(Map context) throws Exception {
@@ -282,45 +353,46 @@ public class PoolManConfiguration   {
 			this.datasources = handler.getDataSourceProperties();
 			this.genericObjects = handler.getGenericProperties();
 		} else {
-			initpooltemplates();
-			String poolconfig = BBossVelocityUtil.evaluate(context, "",
-					pooltemplates);
-			InputStream in = null;
-			ByteArrayInputStream sr = null;
-			try {
-
-				this.handler = new ConfigParser(
-						PoolManConstants.XML_CONFIG_FILE_TEMPLATE,
-						this.dbnamespace, this.filterdbname);
-
-				SAXParserFactory factory = SAXParserFactory.newInstance();
-				factory.setNamespaceAware(false);
-				factory.setValidating(false);
-				SAXParser parser = factory.newSAXParser();
-				sr = new ByteArrayInputStream(poolconfig.getBytes());
-				in = new java.io.BufferedInputStream(sr);
-				parser.parse(in, handler);
-				this.adaptors = handler.getAdaptors();
-				if(handler.getSqlMappingDir() != null)
-					this.sqlMappingDir = handler.getSqlMappingDir();
-				this.datasources = handler.getDataSourceProperties();
-				this.genericObjects = handler.getGenericProperties();
-			} finally {
-				if (sr != null) {
-					try {
-						sr.close();
-					} catch (Exception e2) {
-
-					}
-				}
-				if (in != null) {
-					try {
-						in.close();
-					} catch (Exception e2) {
-
-					}
-				}
-			}
+			this.initConfig(context);
+//			initpooltemplates();
+//			String poolconfig = BBossVelocityUtil.evaluate(context, "",
+//					pooltemplates);
+//			InputStream in = null;
+//			ByteArrayInputStream sr = null;
+//			try {
+//
+//				this.handler = new ConfigParser(
+//						PoolManConstants.XML_CONFIG_FILE_TEMPLATE,
+//						this.dbnamespace, this.filterdbname);
+//
+//				SAXParserFactory factory = SAXParserFactory.newInstance();
+//				factory.setNamespaceAware(false);
+//				factory.setValidating(false);
+//				SAXParser parser = factory.newSAXParser();
+//				sr = new ByteArrayInputStream(poolconfig.getBytes());
+//				in = new java.io.BufferedInputStream(sr);
+//				parser.parse(in, handler);
+//				this.adaptors = handler.getAdaptors();
+//				if(handler.getSqlMappingDir() != null)
+//					this.sqlMappingDir = handler.getSqlMappingDir();
+//				this.datasources = handler.getDataSourceProperties();
+//				this.genericObjects = handler.getGenericProperties();
+//			} finally {
+//				if (sr != null) {
+//					try {
+//						sr.close();
+//					} catch (Exception e2) {
+//
+//					}
+//				}
+//				if (in != null) {
+//					try {
+//						in.close();
+//					} catch (Exception e2) {
+//
+//					}
+//				}
+//			}
 		}
 
 	}

@@ -131,9 +131,9 @@ public class JDBCPool {
 	
 
 
-	private Map tableMetaDatasindexByTablename = new java.util.concurrent.ConcurrentHashMap();
+	private Map<String,TableMetaData> tableMetaDatasindexByTablename = new java.util.concurrent.ConcurrentHashMap<>();
 
-	private Set tableMetaDatas = new TreeSet();
+	private Set<TableMetaData> tableMetaDatas = new TreeSet<>();
 	
 	
 	public final static InterceptorInf defaultInterceptor = new com.frameworkset.common.poolman.interceptor.DummyInterceptor();
@@ -2298,7 +2298,7 @@ public class JDBCPool {
 			if (this.tableMetaDatas != null) {
 				try {
 					tableMetaDatas.clear();
-					tableMetaDatas = new TreeSet();
+					tableMetaDatas = new TreeSet<>();
 				} catch (Exception e) {
 					log.warn("",e);
 				}
@@ -2410,12 +2410,12 @@ public class JDBCPool {
 
 	private boolean inited = false;
 
-	public Set getTableMetaDatas() {
+	public Set<TableMetaData> getTableMetaDatas() {
 
 		return getTableMetaDatas(-1);
 	}
 
-	public Set getTableMetaDatas(int limit) {
+	public Set<TableMetaData> getTableMetaDatas(int limit) {
 
 		if(this.externalDBName == null)
 		{

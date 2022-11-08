@@ -1081,8 +1081,11 @@ public class SQLManager extends PoolManager{
 		if(temConf.getDbInfoEncryptClass() != null && !temConf.getDbInfoEncryptClass().equals("")){
 			values.put("dbInfoEncryptClass",temConf.getDbInfoEncryptClass());
 		}
-		PoolManBootstrap.startFromTemplte(values);
-		return true;
+		if(PoolManBootstrap.startFromTemplte(values) != null)
+			return true;
+		else
+			return false;
+
 	}
 	
 	public static boolean startPool(String poolname,String driver,String jdbcurl,String username,String password,

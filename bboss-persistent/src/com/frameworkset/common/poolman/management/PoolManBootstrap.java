@@ -16,6 +16,7 @@
 package com.frameworkset.common.poolman.management;
 
 import com.frameworkset.common.poolman.PoolManConstants;
+import com.frameworkset.common.poolman.util.DBStartResult;
 import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.adapter.DBFactory;
 import org.slf4j.Logger;
@@ -101,15 +102,22 @@ public class PoolManBootstrap  {
         }
     }
    
-    public static void startFromTemplte(Map<String,Object> values) {
+    public static DBStartResult startFromTemplte(Map<String,Object> values) {
         if(log.isDebugEnabled()) {
             log.debug("PoolManBootstrap(configFile): {}", PoolManConstants.XML_CONFIG_FILE_TEMPLATE);
         }
         PoolManConfiguration config = new PoolManConfiguration(PoolManConstants.XML_CONFIG_FILE_TEMPLATE,null);
+        DBStartResult dbStartResult = null;
         try {
-            config.loadConfiguration(values);
+            boolean result = config.loadConfiguration(values);
+            if(!result){
+
+
+                return null;
+            }
         } catch (Exception ex) {
             log.error("Start(configFile) loadConfiguration error: " + ex.getMessage(),ex);
+            return null;
             //throw ex;
         }
 
@@ -132,7 +140,7 @@ public class PoolManBootstrap  {
             deployer = new LocalPoolDeployer();
             try {
 //                deployer.deployConfiguration(config, values);
-            	deployer.deployConfiguration(config, (Map<String,String>)null);
+                dbStartResult = deployer.deployConfiguration(config, (Map<String,String>)null);
             } catch (Exception ex2) {
                 if(log.isErrorEnabled())
                     log.error("LocalPoolDeployer deployConfiguration error: {},config: \r\n{}", ex2.getMessage() ,config.toString(),ex2);
@@ -140,7 +148,7 @@ public class PoolManBootstrap  {
             }
         }
         //初始化主键生成机制
-        if(deployer != null)
+        if(deployer != null && dbStartResult != null)
         {
             try
             {
@@ -155,8 +163,10 @@ public class PoolManBootstrap  {
             }
         }
 
-       
-        com.frameworkset.common.poolman.sql.PoolMan.STARTED = true;
+       if(dbStartResult != null)
+            com.frameworkset.common.poolman.sql.PoolMan.STARTED = true;
+       return dbStartResult;
+
     }
     
     public void start(String configFile) {
