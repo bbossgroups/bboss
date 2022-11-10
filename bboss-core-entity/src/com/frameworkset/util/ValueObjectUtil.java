@@ -1029,26 +1029,22 @@ public class ValueObjectUtil {
 	 */
 	public static Object cast(Object obj,Class toType)
 	{
-//		if (!java.util.Date.class.isAssignableFrom(type))
-		{
-			if(!toType.isArray())
+		try {
+			if (!toType.isArray())
 				return toType.cast(obj);
-			else
-			{
+			else {
 				int size = Array.getLength(obj);
 				Class ctype = toType.getComponentType();
 				Object ret = Array.newInstance(ctype, size);
-				for(int i = 0; i < size; i ++)
-				{
-					Array.set(ret, i,ctype.cast(Array.get(obj, i)));
+				for (int i = 0; i < size; i++) {
+					Array.set(ret, i, ctype.cast(Array.get(obj, i)));
 				}
 				return ret;
 			}
 		}
-		/**
-		 * 日期类型处理比较特殊
-		 */
-//		return null;
+		catch (Exception e){
+			throw new ValueCastException("类型转换异常，原值："+String.valueOf(obj) + ",目标类型："+toType.getCanonicalName(),e);
+		}
 
 	}
 	public final static Object typeCast(Object obj, Class type, Class toType,String dateformat )
