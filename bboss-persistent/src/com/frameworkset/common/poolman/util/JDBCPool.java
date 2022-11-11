@@ -1130,10 +1130,10 @@ public class JDBCPool {
 	{
 		return getSchemaName_( databaseMetaData,this.getDbAdapter().getSchema(info));
 	}
-	public void refreshDatabaseMetaData(){
-		refreshDatabaseMetaData(-1);
+	public Set<TableMetaData> refreshDatabaseMetaData(){
+		return refreshDatabaseMetaData(-1);
 	}
-	public void refreshDatabaseMetaData(int limit)
+	public Set<TableMetaData> refreshDatabaseMetaData(int limit)
 	{
 		ResultSet rs = null;
 		
@@ -1212,6 +1212,7 @@ public class JDBCPool {
 			}
 
 		}
+		return tableMetaDatas;
 	}
 	private void initDatabaseMetaData(Connection con){
 		initDatabaseMetaData( con,-1);

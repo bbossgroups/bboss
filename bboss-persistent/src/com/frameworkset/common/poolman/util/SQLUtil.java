@@ -1880,24 +1880,26 @@ public class SQLUtil{
     			pool.increamentMaxTotalConnections( nums);
     	}
     	
-    	public static void refreshDatabaseMetaData(String dbname,int limit)
+    	public static Set<TableMetaData> refreshDatabaseMetaData(String dbname, int limit)
     	{
     		 
-    			try {
-    				getPool(dbname).refreshDatabaseMetaData(limit);
-    			} catch (Exception e) {
-    				log.error("刷新数据库连接池"+dbname+"对应的db元数据失败:", e);
-    			}
-    		 
-    	}
-	public static void refreshDatabaseMetaData(String dbname)
+			try {
+				return getPool(dbname).refreshDatabaseMetaData(limit);
+			} catch (Exception e) {
+				log.error("刷新数据库连接池"+dbname+"对应的db元数据失败:", e);
+			}
+
+			return null;
+		}
+	public static Set<TableMetaData> refreshDatabaseMetaData(String dbname)
 	{
 
 		try {
-			getPool(dbname).refreshDatabaseMetaData(-1);
+			return getPool(dbname).refreshDatabaseMetaData(-1);
 		} catch (Exception e) {
 			log.error("刷新数据库连接池"+dbname+"对应的db元数据失败:", e);
 		}
+		return null;
 
 	}
 
