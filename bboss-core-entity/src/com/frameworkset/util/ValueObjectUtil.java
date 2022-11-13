@@ -1599,6 +1599,14 @@ public class ValueObjectUtil {
 //			throw new RuntimeException(e);
 //		}
 	}
+
+	public final static Object basicTypeCast(Object obj,
+											 Class toType) throws NoSupportTypeCastException,
+			NumberFormatException
+	{
+		return  basicTypeCast( obj,obj.getClass(),
+				toType,null,(Locale )null);
+	}
 	public final static Object basicTypeCast(Object obj, Class type,
 			Class toType) throws NoSupportTypeCastException,
 			NumberFormatException
