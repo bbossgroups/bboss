@@ -86,8 +86,9 @@ public class SQLCache extends SQLBaseCache{
 			boolean newMeta = false;
 			long missing = 0l;
 			if (meta == null) {
+				metaLock.lock();
 				try {
-					metaLock.lock();
+
 					meta = dbmetas.get(sqlkey);
 					if (meta == null) {
 						newMeta = true;
@@ -134,8 +135,9 @@ public class SQLCache extends SQLBaseCache{
 			String ikey = newsql;
 			EdenConcurrentCache<String, VariableHandler.SQLStruction> sqlstructionMap = _parserTPLSQLStructions.get(okey);
 			if (sqlstructionMap == null) {
+				this.vtplLock.lock();
 				try {
-					this.vtplLock.lock();
+
 					sqlstructionMap = _parserTPLSQLStructions.get(okey);
 					if (sqlstructionMap == null) {
 						sqlstructionMap = new EdenConcurrentCache<String, VariableHandler.SQLStruction>(cacheSize);
@@ -149,8 +151,9 @@ public class SQLCache extends SQLBaseCache{
 			boolean outOfSize = false;
 			long missing = 0l;
 			if (urlStruction == null) {
+				this.vtplLock.lock();
 				try {
-					this.vtplLock.lock();
+
 					urlStruction = sqlstructionMap.get(ikey);
 					if (urlStruction == null) {
 						missing = sqlstructionMap.increamentMissing();

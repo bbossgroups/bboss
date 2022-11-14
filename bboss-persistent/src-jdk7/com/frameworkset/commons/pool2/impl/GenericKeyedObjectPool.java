@@ -1098,8 +1098,9 @@ public class GenericKeyedObjectPool<K,T> extends BaseGenericObjectPool<T>
     private ObjectDeque<T> register(K k) {
         Lock lock = keyLock.readLock();
         ObjectDeque<T> objectDeque = null;
+        lock.lock();
         try {
-            lock.lock();
+
             objectDeque = poolMap.get(k);
             if (objectDeque == null) {
                 // Upgrade to write lock

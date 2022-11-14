@@ -87,8 +87,9 @@ public class SQLMissingCache extends SQLBaseCache{
 				boolean newMeta = false;
 				meta = dbmetas.get(sqlkey);
 				if (meta == null) {
+					metaLock.lock();
 					try {
-						metaLock.lock();
+
 						meta = dbmetas.get(sqlkey);
 						if (meta == null) {
 							missing = dbmetas.increamentMissing();
@@ -136,8 +137,9 @@ public class SQLMissingCache extends SQLBaseCache{
 			String ikey = newsql;
 			MissingStaticCache<String, SQLStruction> sqlstructionMap = _parserTPLSQLStructions.get(okey);
 			if (sqlstructionMap == null) {
+				this.vtplLock.lock();
 				try {
-					this.vtplLock.lock();
+
 					sqlstructionMap = _parserTPLSQLStructions.get(okey);
 					if (sqlstructionMap == null) {
 						sqlstructionMap = new MissingStaticCache<String, SQLStruction>(cacheSize);
@@ -157,8 +159,9 @@ public class SQLMissingCache extends SQLBaseCache{
 			} else {
 				SQLStruction urlStruction = sqlstructionMap.get(ikey);
 				if (urlStruction == null) {
+					this.vtplLock.lock();
 					try {
-						this.vtplLock.lock();
+
 						urlStruction = sqlstructionMap.get(ikey);
 						if (urlStruction == null) {
 							missing = sqlstructionMap.increamentMissing();

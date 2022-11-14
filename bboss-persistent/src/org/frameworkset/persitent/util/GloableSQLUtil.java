@@ -116,8 +116,9 @@ public class GloableSQLUtil extends SQLUtil {
 		boolean outOfSize = false;
 		SQLInfo sqlinfo = tplEdenConcurrentCache.get(sql);
 		if (sqlinfo == null) {
+			tplCacheLock.lock();
 			try {
-				tplCacheLock.lock();
+
 				sqlinfo = tplEdenConcurrentCache.get(sql);
 				if (sqlinfo != null)
 					return sqlinfo;
@@ -153,8 +154,9 @@ public class GloableSQLUtil extends SQLUtil {
 		}
 		SQLInfo sqlinfo = tplMissingStaticCache.get(sql);
 		if (sqlinfo == null) {
+			tplCacheLock.lock();
 			try {
-				tplCacheLock.lock();
+
 				sqlinfo = tplMissingStaticCache.get(sql);
 				if (sqlinfo != null)
 					return sqlinfo;

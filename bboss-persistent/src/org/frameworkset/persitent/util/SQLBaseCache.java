@@ -189,9 +189,10 @@ public abstract class SQLBaseCache {
 		SQLStruction sqlstruction =  parserSQLStructions.get(key);
 		if(sqlstruction == null)
 		{
+			lock.lock();
 			try
 			{
-				lock.lock();
+
 				sqlstruction =  parserSQLStructions.get(key);
 				if(sqlstruction == null)
 				{

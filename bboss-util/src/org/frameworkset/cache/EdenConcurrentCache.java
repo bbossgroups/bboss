@@ -53,8 +53,9 @@ public final class EdenConcurrentCache<K,V> {
     public V get(K k) {
         V v = this.eden.get(k);
         if (v == null) {
+            cacheLock.lock();
             try{
-                cacheLock.lock();
+
                 v = this.longterm.get(k);
             }
             finally {
@@ -82,8 +83,9 @@ public final class EdenConcurrentCache<K,V> {
     public boolean put(K k, V v) {
         boolean outOfSize = false;
         if (this.eden.size() >= size) {
+            cacheLock.lock();
             try{
-                cacheLock.lock();
+
                 this.longterm.putAll(this.eden);
             }
             finally {
@@ -105,8 +107,9 @@ public final class EdenConcurrentCache<K,V> {
 
     public void clear(){
         this.eden.clear();
+        cacheLock.lock();
         try {
-            cacheLock.lock();
+
             this.longterm.clear();
         }
         finally {

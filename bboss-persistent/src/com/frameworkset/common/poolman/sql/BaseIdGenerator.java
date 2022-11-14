@@ -103,8 +103,9 @@ public abstract class BaseIdGenerator implements IdGenerator{
 			this.value = value;
 		}
 		public long increamentAndGet(){
+			lock.lock();
 			try {
-				lock.lock();
+
 				value++;
 				return value;
 			}
@@ -117,8 +118,9 @@ public abstract class BaseIdGenerator implements IdGenerator{
 		KeyValue current = currentValue.get(pka.tableName());
 		Long _value = null;
 		if(current == null) {
+			lock.lock();
 			try {
-				lock.lock();
+
 				current = currentValue.get(pka.tableName());
 				if (current == null) {
 					current = new KeyValue(_get(pka, dbname, proName));
