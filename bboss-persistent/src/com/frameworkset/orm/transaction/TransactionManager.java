@@ -81,7 +81,7 @@ public class TransactionManager implements java.io.Serializable {
 
 	private TransactionType currenttxtype = TransactionType.REQUIRED_TRANSACTION;
 
-	private static final long serialVersionUID = -6716097342564237376l;
+	private static final long serialVersionUID = -6716097342564237376L;
 
 	/**
 	 * Starts a new transaction, and associate it with the calling thread.

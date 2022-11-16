@@ -752,7 +752,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 			} catch (Exception e) {
 				log.warn(e.getMessage(), e);
-				return resourcefileRefreshInterval = -1l;
+				return resourcefileRefreshInterval = -1L;
 			}
 		}
 		

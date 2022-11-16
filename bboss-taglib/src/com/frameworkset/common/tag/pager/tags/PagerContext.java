@@ -826,7 +826,7 @@ public class PagerContext
 	 * @return int
 	 */
 	public final long getPrevOffset() {
-		return Math.max(0l, offset - maxPageItems);
+		return Math.max(0L, offset - maxPageItems);
 	}
 
 	/**
@@ -1282,7 +1282,7 @@ public class PagerContext
 
 			try {
 				if (offsetParam != null)
-					offset = Math.max(0l, Long.parseLong(offsetParam));
+					offset = Math.max(0L, Long.parseLong(offsetParam));
 				setDataInfo();
 				long newPageCount = pageNumber(offset);
 				if(!this.isMore())

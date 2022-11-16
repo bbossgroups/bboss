@@ -38,7 +38,7 @@ public class CommonBulkConfig {
 	 */
 	private CommonBulkRetryHandler bulkRetryHandler;
 	private int retryTimes = 3;
-	private long retryInterval = 0l;
+	private long retryInterval = 0L;
 	/**
 	 * 记录数达到bulkRecords指定的条数时执行一次bulk操作
 	 */

@@ -164,7 +164,7 @@ public abstract class BaseTableManager {
 					{
 						
 						rs1 = q_pstmt.executeQuery(maxSql);
-						long new_table_id_value = 0l;
+						long new_table_id_value = 0L;
 						
 	
 						if (rs1.next()) {

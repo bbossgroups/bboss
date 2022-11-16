@@ -84,7 +84,7 @@ public class SQLCache extends SQLBaseCache{
 			meta = dbmetas.get(sqlkey);
 			boolean outOfSize = false;
 			boolean newMeta = false;
-			long missing = 0l;
+			long missing = 0L;
 			if (meta == null) {
 				metaLock.lock();
 				try {
@@ -149,7 +149,7 @@ public class SQLCache extends SQLBaseCache{
 			}
 			urlStruction = sqlstructionMap.get(ikey);
 			boolean outOfSize = false;
-			long missing = 0l;
+			long missing = 0L;
 			if (urlStruction == null) {
 				this.vtplLock.lock();
 				try {

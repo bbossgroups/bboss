@@ -70,7 +70,7 @@ public class PoolManConfiguration   {
 			PoolManConfiguration.refresh_interval = refresh_interval;
 	}
 
-	private static long refresh_interval = 5000l;
+	private static long refresh_interval = 5000L;
 
 	public static boolean isColumnNameMapping() {
 		return columnNameMapping;

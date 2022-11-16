@@ -1,26 +1,7 @@
 package org.frameworkset.web.socket.sockjs;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.frameworkset.http.CorsUtils;
-import org.frameworkset.http.HttpStatus;
-import org.frameworkset.http.InvalidMediaTypeException;
-import org.frameworkset.http.MediaType;
-import org.frameworkset.http.ServerHttpRequest;
-import org.frameworkset.http.ServerHttpResponse;
+import com.frameworkset.util.StringUtil;
+import org.frameworkset.http.*;
 import org.frameworkset.schedule.TaskScheduler;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.CollectionUtils;
@@ -32,7 +13,11 @@ import org.frameworkset.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.util.StringUtil;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractSockJsService  implements SockJsService, CorsConfigurationSource {
 
@@ -473,7 +458,7 @@ public abstract class AbstractSockJsService  implements SockJsService, CorsConfi
 
 	protected void addCacheHeaders(ServerHttpResponse response) {
 		response.getHeaders().setCacheControl("public, max-age=" + ONE_YEAR);
-		response.getHeaders().setExpires(new Date().getTime() + ONE_YEAR * 1000);
+		response.getHeaders().setExpires(System.currentTimeMillis() + ONE_YEAR * 1000);
 	}
 
 	protected void addNoCacheHeaders(ServerHttpResponse response) {

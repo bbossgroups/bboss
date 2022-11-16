@@ -76,7 +76,7 @@ public class SQLMissingCache extends SQLBaseCache{
 					}
 				}
 			}
-			long missing = 0l;
+			long missing = 0L;
 			if (dbmetas.stopCache()) {
 				missing = dbmetas.increamentMissing();
 				meta = PoolManResultSetMetaData.getCopy(db, rsmetadata);
@@ -149,7 +149,7 @@ public class SQLMissingCache extends SQLBaseCache{
 					vtplLock.unlock();
 				}
 			}
-			long missing = 0l;
+			long missing = 0L;
 			if (sqlstructionMap.stopCache()) {
 				missing = sqlstructionMap.increamentMissing();
 				if (logger.isWarnEnabled() && sqlstructionMap.needLogWarn(missing,warnInterval)) {

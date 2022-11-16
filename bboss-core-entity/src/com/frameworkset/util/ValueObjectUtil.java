@@ -3074,7 +3074,7 @@ public class ValueObjectUtil {
 			return null;
 		}
 		if (toType == long.class )
-			return 0l;
+			return 0L;
 		if (toType == int.class )
 			return 0;
 		if (toType == float.class )
@@ -3403,88 +3403,104 @@ public class ValueObjectUtil {
 
 	public static int doubleCompare(double value1,Object value2)
 	{
+		BigDecimal v1 = BigDecimal.valueOf(value1);
+		BigDecimal v2 = null;
 		Class vc2 = value2.getClass();
-		if(String.class.isAssignableFrom(vc2))
-		{
-			double v2 = Double.parseDouble((String)value2);
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
+		if(java.util.Date.class.isAssignableFrom(vc2)) {
+			v2 = BigDecimal.valueOf(((java.util.Date) value2).getTime());
 		}
-		else if(Integer.class.isAssignableFrom(vc2))
-		{
-			int v2 = ((Integer)value2).intValue();
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
+		else {
+			v2 = new BigDecimal(String.valueOf(value2));
 		}
-		else if(Long.class.isAssignableFrom(vc2))
-		{
-			long v2 = (Long)value2;
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
-		}
-		else if(Double.class.isAssignableFrom(vc2))
-		{
-			double v2 = ((Double)value2).doubleValue();
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
-		}
-		else if(Float.class.isAssignableFrom(vc2))
-		{
-			float v2 = ((Float)value2).floatValue();
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
-		}
-		else if(Short.class.isAssignableFrom(vc2))
-		{
-			short v2 = ((Short)value2).shortValue();
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
-		}
+		return v1.compareTo(v2);
 
-		else if(java.util.Date.class.isAssignableFrom(vc2))
-		{
-			long v2 = ((java.util.Date)value2).getTime();
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
-		}
-		else
-		{
-			double v2 = Double.parseDouble((String)value2);
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
-		}
+//
+//		Class vc2 = value2.getClass();
+//		if(String.class.isAssignableFrom(vc2))
+//		{
+//			v2 = new BigDecimal((String)value2);
+//			return v1.compareTo(v2);
+////			if(value1 == v2)
+////				return 0;
+////			else if(value1 > v2)
+////				return 1;
+////			else
+////				return -1;
+//		}
+//		else if(Integer.class.isAssignableFrom(vc2))
+//		{
+//			 v2 = new BigDecimal((Integer)value2);
+//			return v1.compareTo(v2);
+////			if(value1 == v2)
+////				return 0;
+////			else if(value1 > v2)
+////				return 1;
+////			else
+////				return -1;
+//		}
+//		else if(Long.class.isAssignableFrom(vc2))
+//		{
+//			v2 = new BigDecimal((Long)value2);
+//			return v1.compareTo(v2);
+////			long v2 = (Long)value2;
+////			if(value1 == v2)
+////				return 0;
+////			else if(value1 > v2)
+////				return 1;
+////			else
+////				return -1;
+//		}
+//		else if(Double.class.isAssignableFrom(vc2))
+//		{
+//			double v2 = ((Double)value2).doubleValue();
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
+//		else if(Float.class.isAssignableFrom(vc2))
+//		{
+//			float v2 = ((Float)value2).floatValue();
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
+//		else if(Short.class.isAssignableFrom(vc2))
+//		{
+//			short v2 = ((Short)value2).shortValue();
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
+//
+//		else if(java.util.Date.class.isAssignableFrom(vc2))
+//		{
+//			long v2 = ((java.util.Date)value2).getTime();
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
+//		else
+//		{
+//			double v2 = Double.parseDouble((String)value2);
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
 	}
 
 	public static int DoubleCompare(Double value1,Object value2)
@@ -3494,88 +3510,98 @@ public class ValueObjectUtil {
 
 	public static int floatCompare(float value1,Object value2)
 	{
+		BigDecimal v1 = BigDecimal.valueOf(value1);
+		BigDecimal v2 = null;
 		Class vc2 = value2.getClass();
-		if(String.class.isAssignableFrom(vc2))
-		{
-			float v2 = Float.parseFloat(String.valueOf(value2));
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
+		if(java.util.Date.class.isAssignableFrom(vc2)) {
+			v2 = BigDecimal.valueOf(((java.util.Date) value2).getTime());
 		}
-		else if(Integer.class.isAssignableFrom(vc2))
-		{
-			int v2 = ((Integer)value2).intValue();
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
+		else {
+			v2 = new BigDecimal(String.valueOf(value2));
 		}
-		else if(Long.class.isAssignableFrom(vc2))
-		{
-			long v2 = (Long)value2;
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
-		}
-		else if(Double.class.isAssignableFrom(vc2))
-		{
-			double v2 = ((Double)value2).doubleValue();
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
-		}
-		else if(Float.class.isAssignableFrom(vc2))
-		{
-			float v2 = ((Float)value2).floatValue();
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
-		}
-		else if(Short.class.isAssignableFrom(vc2))
-		{
-			short v2 = ((Short)value2).shortValue();
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
-		}
-
-		else if(java.util.Date.class.isAssignableFrom(vc2))
-		{
-			long v2 = ((java.util.Date)value2).getTime();
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
-		}
-		else
-		{
-			float v2 = Float.parseFloat(String.valueOf(value2));
-			if(value1 == v2)
-				return 0;
-			else if(value1 > v2)
-				return 1;
-			else
-				return -1;
-		}
+		return v1.compareTo(v2);
+//		Class vc2 = value2.getClass();
+//		if(String.class.isAssignableFrom(vc2))
+//		{
+//			float v2 = Float.parseFloat(String.valueOf(value2));
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
+//		else if(Integer.class.isAssignableFrom(vc2))
+//		{
+//			int v2 = ((Integer)value2).intValue();
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
+//		else if(Long.class.isAssignableFrom(vc2))
+//		{
+//			long v2 = (Long)value2;
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
+//		else if(Double.class.isAssignableFrom(vc2))
+//		{
+//			double v2 = ((Double)value2).doubleValue();
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
+//		else if(Float.class.isAssignableFrom(vc2))
+//		{
+//			float v2 = ((Float)value2).floatValue();
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
+//		else if(Short.class.isAssignableFrom(vc2))
+//		{
+//			short v2 = ((Short)value2).shortValue();
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
+//
+//		else if(java.util.Date.class.isAssignableFrom(vc2))
+//		{
+//			long v2 = ((java.util.Date)value2).getTime();
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
+//		else
+//		{
+//			float v2 = Float.parseFloat(String.valueOf(value2));
+//			if(value1 == v2)
+//				return 0;
+//			else if(value1 > v2)
+//				return 1;
+//			else
+//				return -1;
+//		}
 	}
 
 	public static int FloatCompare(Float value1,Object value2)

@@ -171,7 +171,7 @@ public class CommonBulkCommand implements Runnable{
 								logger.error("Exception occur and  Retry process will be take.",e);
 							}
 							count ++;
-							if(retryInterval > 0l){
+							if(retryInterval > 0L){
 								try {
 									Thread.sleep(retryInterval);
 								}
