@@ -330,6 +330,16 @@ public class BasicDataSource implements DataSource, BasicDataSourceMXBean, MBean
 
     private boolean fastFailValidation;
 
+    public boolean isValidateDatasourceWhenCreate() {
+        return validateDatasourceWhenCreate;
+    }
+
+    public void setValidateDatasourceWhenCreate(boolean validateDatasourceWhenCreate) {
+        this.validateDatasourceWhenCreate = validateDatasourceWhenCreate;
+    }
+
+    protected boolean validateDatasourceWhenCreate;
+
     /**
      * The object pool that internally manages our connections.
      */
@@ -567,8 +577,9 @@ public class BasicDataSource implements DataSource, BasicDataSourceMXBean, MBean
                     connectionPool.addObject();
                 }
             } catch (final Exception e) {
-                closeConnectionPool();
-                throw new SQLException("Error preloading the connection pool", e);
+//                closeConnectionPool();
+//                throw new SQLException("Error preloading the connection pool", e);
+                log.warn("Error preloading the connection pool",e);
             }
 
             // If timeBetweenEvictionRunsMillis > 0, start the pool's evictor
@@ -647,7 +658,9 @@ public class BasicDataSource implements DataSource, BasicDataSourceMXBean, MBean
             connectionFactory.setDefaultQueryTimeout(getDefaultQueryTimeout());
             connectionFactory.setFastFailValidation(fastFailValidation);
             connectionFactory.setDisconnectionSqlCodes(disconnectionSqlCodes);
-            validateConnectionFactory(connectionFactory);
+            if(validateDatasourceWhenCreate) {
+                validateConnectionFactory(connectionFactory);
+            }
         } catch (final RuntimeException e) {
             throw e;
         } catch (final Exception e) {
