@@ -577,9 +577,13 @@ public class BasicDataSource implements DataSource, BasicDataSourceMXBean, MBean
                     connectionPool.addObject();
                 }
             } catch (final Exception e) {
-//                closeConnectionPool();
-//                throw new SQLException("Error preloading the connection pool", e);
-                log.warn("Error preloading the connection pool",e);
+                if(validateDatasourceWhenCreate) {
+                    closeConnectionPool();
+                    throw new SQLException("Error preloading the connection pool", e);
+                }
+                else {
+                    log.warn("Error preloading the connection pool", e);
+                }
             }
 
             // If timeBetweenEvictionRunsMillis > 0, start the pool's evictor

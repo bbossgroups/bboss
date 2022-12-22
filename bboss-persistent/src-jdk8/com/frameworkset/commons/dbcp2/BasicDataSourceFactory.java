@@ -71,6 +71,7 @@ public class BasicDataSourceFactory implements ObjectFactory {
     private static final String PROP_SOFT_MIN_EVICTABLE_IDLE_TIME_MILLIS = "softMinEvictableIdleTimeMillis";
     private static final String PROP_EVICTION_POLICY_CLASS_NAME = "evictionPolicyClassName";
     private static final String PROP_TEST_WHILE_IDLE = "testWhileIdle";
+    private final static String PROP_validateDatasourceWhenCreate = "validateDatasourceWhenCreate";
     private static final String PROP_PASSWORD = "password";
     private static final String PROP_URL = "url";
     private static final String PROP_USER_NAME = "username";
@@ -126,7 +127,7 @@ public class BasicDataSourceFactory implements ObjectFactory {
             PROP_DRIVER_CLASS_NAME, PROP_LIFO, PROP_MAX_TOTAL, PROP_MAX_IDLE, PROP_MIN_IDLE, PROP_INITIAL_SIZE,
             PROP_MAX_WAIT_MILLIS, PROP_TEST_ON_CREATE, PROP_TEST_ON_BORROW, PROP_TEST_ON_RETURN,
             PROP_TIME_BETWEEN_EVICTION_RUNS_MILLIS, PROP_NUM_TESTS_PER_EVICTION_RUN, PROP_MIN_EVICTABLE_IDLE_TIME_MILLIS,
-            PROP_SOFT_MIN_EVICTABLE_IDLE_TIME_MILLIS, PROP_EVICTION_POLICY_CLASS_NAME, PROP_TEST_WHILE_IDLE, PROP_PASSWORD,
+            PROP_SOFT_MIN_EVICTABLE_IDLE_TIME_MILLIS, PROP_EVICTION_POLICY_CLASS_NAME, PROP_TEST_WHILE_IDLE, PROP_validateDatasourceWhenCreate,PROP_PASSWORD,
             PROP_URL, PROP_USER_NAME, PROP_VALIDATION_QUERY, PROP_VALIDATION_QUERY_TIMEOUT, PROP_CONNECTION_INIT_SQLS,
             PROP_ACCESS_TO_UNDERLYING_CONNECTION_ALLOWED, PROP_REMOVE_ABANDONED_ON_BORROW, PROP_REMOVE_ABANDONED_ON_MAINTENANCE,
             PROP_REMOVE_ABANDONED_TIMEOUT, PROP_LOG_ABANDONED, PROP_ABANDONED_USAGE_TRACKING, PROP_POOL_PREPARED_STATEMENTS,
@@ -419,7 +420,10 @@ public class BasicDataSourceFactory implements ObjectFactory {
         if (value != null) {
             dataSource.setTestWhileIdle(Boolean.valueOf(value).booleanValue());
         }
-
+        value = properties.getProperty(PROP_validateDatasourceWhenCreate);
+        if (value != null) {
+            dataSource.setValidateDatasourceWhenCreate(Boolean.valueOf(value).booleanValue());
+        }
         value = properties.getProperty(PROP_PASSWORD);
         if (value != null) {
             dataSource.setPassword(value);

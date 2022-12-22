@@ -55,6 +55,8 @@ public class BasicDataSourceFactory  {
     private final static String PROP_NUMTESTSPEREVICTIONRUN = "numTestsPerEvictionRun";
     private final static String PROP_MINEVICTABLEIDLETIMEMILLIS = "minEvictableIdleTimeMillis";
     private final static String PROP_TESTWHILEIDLE = "testWhileIdle";
+	private final static String PROP_validateDatasourceWhenCreate = "validateDatasourceWhenCreate";
+
     private final static String PROP_PASSWORD = "password";
     private final static String PROP_URL = "url";
     private final static String PROP_USERNAME = "username";
@@ -229,6 +231,11 @@ public class BasicDataSourceFactory  {
 	        if (value != null) {
 	            dataSource.setTestWhileIdle(Boolean.valueOf(value).booleanValue());
 	        }
+			value = properties.getProperty(PROP_validateDatasourceWhenCreate);
+			if (value != null) {
+				dataSource.setValidateDatasourceWhenCreate(Boolean.valueOf(value).booleanValue());
+			}
+
 	
 	        value = properties.getProperty(PROP_PASSWORD);
 	        if (value != null) {
