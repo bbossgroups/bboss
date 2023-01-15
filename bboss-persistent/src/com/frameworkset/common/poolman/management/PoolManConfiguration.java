@@ -48,6 +48,10 @@ public class PoolManConfiguration   {
 	private String configFile;
 	private ConfigParser handler;
 
+
+
+
+
 	private ArrayList datasources;
 	private ArrayList genericObjects;
 

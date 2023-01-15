@@ -993,6 +993,7 @@ public class SQLManager extends PoolManager{
 			values.put("enablejta", "false");
 		values.put("columnLableUpperCase",temConf.isColumnLableUpperCase());
 		values.put("driver", temConf.getDriver());
+		values.put("enableShutdownHook",temConf.isEnableShutdownHook());
 		values.put("jdbcurl", temConf.getJdbcurl());
 		if(temConf.getUsername() == null) 
 			values.put("username", "");

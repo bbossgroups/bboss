@@ -36,10 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 /**
@@ -51,26 +48,32 @@ import java.util.Map.Entry;
 public class PrimaryKeyCacheManager {
     private static Logger log = LoggerFactory.getLogger(PrimaryKeyCacheManager.class);
     private Map<String,PrimaryKeyCache> primaryKeyCaches;
-    public static void  destroy()
+    public static void  destroy( Map<String,Integer> destroies )
     {
     	if(self != null)
     	{
-    		self._destroy();
+    		self._destroy( destroies );
     		self = null;
     	}
     }
-    void _destroy()
+    void _destroy(Map<String,Integer> destroies )
     {
     	if(primaryKeyCaches != null)
     	{
     		Iterator<Entry<String, PrimaryKeyCache>> it = primaryKeyCaches.entrySet().iterator();
+			List<String> closed = new ArrayList<>();
     		while(it.hasNext())
     		{
     			Entry<String, PrimaryKeyCache> entry = it.next();
-    			entry.getValue().destroy();
+    			if(destroies.containsKey(entry.getKey())) {
+					entry.getValue().destroy();
+					closed.add(entry.getKey());
+				}
     		}
-    		primaryKeyCaches.clear();
-    		primaryKeyCaches = null;
+    		for(String name: closed) {
+				primaryKeyCaches.remove(name);
+			}
+//    		primaryKeyCaches = null;
     	}
     }
     

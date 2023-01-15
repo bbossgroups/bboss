@@ -192,28 +192,47 @@ public class PoolManager  {
 //            pool.returnConnection(o);
 //    }
 
-    public void destroyPools() {
+    public synchronized void destroyPools() {
         if (this.pools != null) {
+            List<String> closed = new ArrayList<>();
+            Map<String,Integer> temps = new HashMap<>();
             for (Iterator enum_ = pools.entrySet().iterator(); enum_.hasNext();) {
             	Map.Entry entry = (Map.Entry)enum_.next();
                 JDBCPool pool = (JDBCPool) entry.getValue();
                 try {
-					pool.closeAllResources();
+                    if(pool.getJDBCPoolMetadata().isEnableShutdownHook()) {
+                        pool.closeAllResources();
+                        closed.add(pool.getDBName());
+                        temps.put(pool.getDBName(),1);
+                    }
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					log.error(e.getMessage(),e);
 				}
             }
-            pools.clear();
-            pools = null;
+            for(String name:closed) {
+                pools.remove(name);
+
+            }
+            if(defaultpool.getJDBCPoolMetadata().isEnableShutdownHook())
+                this.defaultpool = null;
+
+            List<String> pools = new ArrayList<>();
+            for(String name : poolnames){
+                if(!temps.containsKey(name)){
+                    pools.add(name);
+                }
+            }
+            poolnames.clear();
+            if(pools.size() > 0){
+                poolnames.addAll(pools);
+            }
+            try {
+                PrimaryKeyCacheManager.destroy(temps);
+            } catch (Exception e) {
+                log.error("PrimaryKeyCacheManager.destroy failed:",e);
+            }
         }
-        this.defaultpool = null;
-        this.poolnames = null;
-        try {
-			PrimaryKeyCacheManager.destroy();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
     }
 }

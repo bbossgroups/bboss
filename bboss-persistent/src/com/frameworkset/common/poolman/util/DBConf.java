@@ -30,6 +30,7 @@ import java.io.Serializable;
  */
 public class DBConf implements Serializable {
 	private boolean testWhileidle = true;
+	private boolean enableShutdownHook;
 	/**
 	 * 建立链接超时时间
 	 */
@@ -278,5 +279,13 @@ public class DBConf implements Serializable {
 
 	public void setLogAbandoned(boolean logAbandoned) {
 		this.logAbandoned = logAbandoned;
+	}
+
+	public boolean isEnableShutdownHook() {
+		return enableShutdownHook;
+	}
+
+	public void setEnableShutdownHook(boolean enableShutdownHook) {
+		this.enableShutdownHook = enableShutdownHook;
 	}
 }

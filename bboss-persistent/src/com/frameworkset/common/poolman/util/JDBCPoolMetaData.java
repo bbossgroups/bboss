@@ -27,7 +27,7 @@ public class JDBCPoolMetaData implements Serializable{
 	/* POOL ATTRIBUTES (set to default beforehand) */
 
     protected String poolname;
-    
+	private boolean enableShutdownHook;
     transient JDBCPoolMetaData extenalInfo = null;
 
     private int initialObjects = PoolManConstants.DEFAULT_INITIAL_SIZE;
@@ -1122,6 +1122,14 @@ public class JDBCPoolMetaData implements Serializable{
 
 	public void setShowsqlParams(boolean showsqlParams) {
 		this.showsqlParams = showsqlParams;
+	}
+
+	public boolean isEnableShutdownHook() {
+		return enableShutdownHook;
+	}
+
+	public void setEnableShutdownHook(boolean enableShutdownHook) {
+		this.enableShutdownHook = enableShutdownHook;
 	}
 
 

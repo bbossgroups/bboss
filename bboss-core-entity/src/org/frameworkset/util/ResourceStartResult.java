@@ -25,7 +25,7 @@ import java.util.Map;
  * @author biaoping.yin
  * @version 1.0
  */
-public abstract class ResourceStartResult {
+public class ResourceStartResult {
 	private Map<String,Object> resourceStartResult;
 	public boolean contain(String dbname){
 		if(resourceStartResult == null)
