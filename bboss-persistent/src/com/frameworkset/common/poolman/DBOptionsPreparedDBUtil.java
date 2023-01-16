@@ -43,7 +43,7 @@ import java.util.List;
  * @author biaoping.yin created on 2005-6-8 version 1.0
  */
 public class DBOptionsPreparedDBUtil extends DBUtil {
-
+	private static Logger logger = LoggerFactory.getLogger(DBOptionsPreparedDBUtil.class);
 	/**
 	 * more分页查询，不会计算总记录数，如果没有记录那么返回的ListInfo的datas的size为0,
 	 * 提升性能，同时前台标签库也会做响应的调整
@@ -1504,7 +1504,8 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			this.conditions = null;
 //		}
 
-		this.prepareDBName = SQLManager.getInstance().getDefaultDBName();
+		if(SQLManager.getInstance(false) != null)
+			this.prepareDBName = SQLManager.getInstance(false).getDefaultDBName();
 //		this.prepareselect_sql = null;
 		this.oldcommited = true;
 		oraclerownum = null;
@@ -3609,7 +3610,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 		try {
 			this.resetFromSetMethod(null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.warn("reset prepared failed:",e);
 		}
 
 	}

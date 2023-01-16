@@ -65,21 +65,37 @@ public class SQLManager extends PoolManager{
 
     public static void destroy()
     {
-    	if(myself != null)
-    	{
-    		myself.destroyPools();
-    		myself = null;
-    	}
+		destroy(false);
     }
+
+	public static void destroy(boolean force)
+	{
+		if(myself != null)
+		{
+			myself.destroyPools(  force);
+
+		}
+	}
     /**
      * This method retrieves the singleton SQLManager instance
      * created when the class was first loaded.
      * @return SQLManager
      */
     public static SQLManager getInstance() {
-		initMyself();
-        return myself;
+
+        return getInstance(true);
     }
+
+	/**
+	 * This method retrieves the singleton SQLManager instance
+	 * created when the class was first loaded.
+	 * @return SQLManager
+	 */
+	public static SQLManager getInstance(boolean needInit) {
+		if(needInit)
+			initMyself();
+		return myself;
+	}
 
     /**
      * If a configuration file other than the default is specified,

@@ -48,7 +48,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 				public void run() {
 					 try {
 						 updateTableInfo();
-				            SQLManager.destroy();
+				            SQLManager.destroy(false);
 				           // GenericPoolManager.getInstance().destroyPools();
 				        } catch (Exception e) {
 				           logger.warn("Unable to properly shutdown: ", e);

@@ -192,7 +192,7 @@ public class PoolManager  {
 //            pool.returnConnection(o);
 //    }
 
-    public synchronized void destroyPools() {
+    public synchronized void destroyPools(boolean force) {
         if (this.pools != null) {
             List<String> closed = new ArrayList<>();
             Map<String,Integer> temps = new HashMap<>();
@@ -200,7 +200,7 @@ public class PoolManager  {
             	Map.Entry entry = (Map.Entry)enum_.next();
                 JDBCPool pool = (JDBCPool) entry.getValue();
                 try {
-                    if(pool.getJDBCPoolMetadata().isEnableShutdownHook()) {
+                    if(force || pool.getJDBCPoolMetadata().isEnableShutdownHook()) {
                         pool.closeAllResources();
                         closed.add(pool.getDBName());
                         temps.put(pool.getDBName(),1);
@@ -210,27 +210,29 @@ public class PoolManager  {
 					log.error(e.getMessage(),e);
 				}
             }
-            for(String name:closed) {
-                pools.remove(name);
+            if(closed.size() > 0) {
+                for (String name : closed) {
+                    pools.remove(name);
 
-            }
-            if(defaultpool.getJDBCPoolMetadata().isEnableShutdownHook())
-                this.defaultpool = null;
-
-            List<String> pools = new ArrayList<>();
-            for(String name : poolnames){
-                if(!temps.containsKey(name)){
-                    pools.add(name);
                 }
-            }
-            poolnames.clear();
-            if(pools.size() > 0){
-                poolnames.addAll(pools);
-            }
-            try {
-                PrimaryKeyCacheManager.destroy(temps);
-            } catch (Exception e) {
-                log.error("PrimaryKeyCacheManager.destroy failed:",e);
+                if (defaultpool.getJDBCPoolMetadata().isEnableShutdownHook())
+                    this.defaultpool = null;
+
+                List<String> pools = new ArrayList<>();
+                for (String name : poolnames) {
+                    if (!temps.containsKey(name)) {
+                        pools.add(name);
+                    }
+                }
+                poolnames.clear();
+                if (pools.size() > 0) {
+                    poolnames.addAll(pools);
+                }
+                try {
+                    PrimaryKeyCacheManager.destroy(temps);
+                } catch (Exception e) {
+                    log.error("PrimaryKeyCacheManager.destroy failed:", e);
+                }
             }
         }
 
