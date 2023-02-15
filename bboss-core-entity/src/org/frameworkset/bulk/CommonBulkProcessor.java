@@ -16,6 +16,7 @@ package org.frameworkset.bulk;
  */
 
 import org.frameworkset.util.concurrent.ThreadPoolFactory;
+import org.frameworkset.util.shutdown.ShutdownUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,12 +102,12 @@ public class CommonBulkProcessor {
 			flush = new Flush(bulkConfig.getBulkProcessorName() + "-flush-thread");
 			flush.start();
 		}
-//		ShutdownUtil.addShutdownHook(new Runnable() {
-//			@Override
-//			public void run() {
-//				shutDown();
-//			}
-//		});
+		ShutdownUtil.addShutdownHook(new Runnable() {
+			@Override
+			public void run() {
+				shutDown();
+			}
+		});
 	}
 
 	private boolean touchBatchSize(){
