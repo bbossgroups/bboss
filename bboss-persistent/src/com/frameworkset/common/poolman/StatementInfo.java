@@ -542,25 +542,31 @@ public class StatementInfo {
 				}
 			}
 		}
-
+        if (sqle instanceof NestedSQLException) {
+            throw (SQLException) sqle;
+        }
 		
-		if (sqle instanceof SQLException)
-			throw (SQLException) sqle;
+		else if (sqle instanceof SQLException) {
+            throw new NestedSQLException("Sql执行异常:"+getSql(), sqle);
+        }
 		else if(sqle instanceof TransactionException)
 		{
 			Throwable e = ((TransactionException)sqle).getCause();
 			if(e == null)
 			{
-				throw new NestedSQLException(sqle.getMessage(), sqle);
+				throw new NestedSQLException("Sql执行异常:"+getSql(), sqle);
 			}
+            else if (sqle instanceof NestedSQLException) {
+                throw (SQLException) sqle;
+            }
 			else if(e instanceof SQLException)
-				throw (SQLException)e;
+				throw new NestedSQLException("Sql执行异常:"+getSql(), sqle);
 			else
-				throw new NestedSQLException(sqle.getMessage(), sqle);
+				throw new NestedSQLException("Sql执行异常:"+getSql(), sqle);
 				
 		}
 		else
-			throw new NestedSQLException(sqle.getMessage(), sqle);
+			throw new NestedSQLException("Sql执行异常:"+getSql(), sqle);
 
 	}
 

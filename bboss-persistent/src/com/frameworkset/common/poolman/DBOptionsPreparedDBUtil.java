@@ -878,49 +878,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 			this.meta = stmtInfo.getMeta();
 			if(rowhandler != null)
 				rowhandler.init(stmtInfo,meta, stmtInfo.getDbname());
-			ResultMap resultMap = new ResultMap();
-//			if(result_type == ResultMap.type_maparray)
-//			{
-//				Record[] results = stmtInfo.buildResult(res,10,false);
-//				resultMap.setCommonresult(results);
-//				if(results != null)
-//					resultMap.setSize(results.length);
-//			}
-//			else if(result_type == ResultMap.type_list)
-//			{
-//				List results = stmtInfo.buildResultForList(res, 10, false, objectType, rowhandler);
-//				resultMap.setCommonresult(results);
-//				if(results != null)
-//					resultMap.setSize(results.size());
-//			}
-//			else if(result_type == ResultMap.type_objcet)
-//			{
-//				if(res.next())
-//				{
-//					Object result = ResultMap.buildValueObject(res, objectType, stmtInfo, rowhandler);
-//					resultMap.setCommonresult(result);
-//					if(result != null)
-//					{
-//						resultMap.setSize(1);
-//					}
-//				}
-//			}
-//			else if(result_type == ResultMap.type_objectarray)
-//			{
-//				Object[] results = stmtInfo.buildResultForObjectArray(res, 10, false, objectType, rowhandler);
-//				resultMap.setCommonresult(results);
-//				if(results != null)
-//				{
-//					resultMap.setSize(results.length);
-//				}
-//			}
-//			else if(result_type == ResultMap.type_xml)
-//			{
-//				resultMap.setCommonresult(stmtInfo.buildResultForXml(res, 10, false, objectType, rowhandler));
-//				resultMap.setSize(stmtInfo.getRowcount());
-//			}
-
-			resultMap = stmtInfo.buildResultMap(res, objectType, rowhandler, 10, false, result_type);
+			ResultMap resultMap = stmtInfo.buildResultMap(res, objectType, rowhandler, 10, false, result_type);
 
 			return resultMap;
 
