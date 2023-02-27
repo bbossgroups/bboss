@@ -1,4 +1,14 @@
-﻿# bboss group website:
+﻿bboss is a j2ee framework include aop/ioc,mvc,persistent taglib,rpc,event 
+
+,bean-xml serializable and so on 
+
+基于bboss构建了一系列实用功能
+1. bboss数据采集ETL工具
+2. 流批一体化Stream工具
+3. Elasticsearch client客户端工具
+4. WebSession共享框架
+
+# bboss group website:
 http://www.bbossgroups.com
 
 # bboss group project blog:
