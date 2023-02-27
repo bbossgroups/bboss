@@ -13,22 +13,8 @@ gradle clean publishToMavenLocal
 https://esdoc.bbossgroups.com/#/bboss-build
 
 # bboss 源码
-github托管地址： 
 
-https://github.com/bbossgroups/bboss 
-
-svn下载地址 
-
-https://github.com/bbossgroups/bboss/trunk 
-
-# bboss 会话共享源码
-github托管地址： 
-
-https://github.com/bbossgroups/security 
-
-svn下载地址 
-
-https://github.com/bbossgroups/security/trunk 
+https://www.bbossgroups.com/sources.html
 
 # bboss demos源码
 github托管地址： 
