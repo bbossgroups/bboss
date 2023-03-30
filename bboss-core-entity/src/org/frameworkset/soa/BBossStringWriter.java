@@ -204,6 +204,16 @@ public class BBossStringWriter  extends Writer {
      * an <tt>IOException</tt>.
      */
     public void close() throws IOException {
+        if(this.buf != null){
+            buf.setLength(0);
+            buf = null;
+        }
+    }
+    public int size(){
+        if(this.buf != null){
+            return buf.length();
+        }
+        return 0;
     }
 
 }
