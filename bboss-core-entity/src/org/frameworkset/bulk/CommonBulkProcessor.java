@@ -35,6 +35,13 @@ import java.util.concurrent.locks.ReentrantLock;
 public class CommonBulkProcessor {
 	private Logger logger = LoggerFactory.getLogger(CommonBulkProcessor.class);
 	private CommonBulkCommand bulkCommand ;
+    /**
+     * 已追加总记录数据
+     */
+    private long appendRecords;
+
+
+
 	private long lastAppendDataTime = -1;
 	private Lock r = new ReentrantLock();
 	private Lock w = new ReentrantLock();
@@ -62,7 +69,7 @@ public class CommonBulkProcessor {
 	 * 0 正常
 	 * 1 stop;
 	 */
-	private int status;
+	private volatile int status;
 	private  void stop(){
 		this.status = 1;
 		synchronized (flush) {
@@ -144,13 +151,16 @@ public class CommonBulkProcessor {
 	}
 
 	private void _appendBulkData(CommonBulkData bulkData){
+        appendRecords ++;
 		lastAppendDataTime = System.currentTimeMillis();
 		this.bulkCommand.addBulkData(bulkData);
 		if(this.touchBatchSize()){
 			this.execute(true);
 		}
 	}
-
+    public long getAppendRecords(){
+        return appendRecords;
+    }
 	private void forceFlush(long flushInterval){
 		try {
 			w.lock();
@@ -193,6 +203,49 @@ public class CommonBulkProcessor {
 			bulkData.setType(CommonBulkData.INSERT);
 			appendBulkData( bulkData);
 	}
+
+    /**
+     * 通用类型：添加指定类型的数据到bulk队列
+     * @param data
+     * @param type
+     */
+    public void appendData(Object data,int type){
+
+        assertShutdown();
+        CommonBulkData bulkData = new CommonBulkData();
+        bulkData.setData(data);
+        bulkData.setType(type);
+        appendBulkData( bulkData);
+    }
+
+
+    /**
+     * 通用类型：添加指定类型的集合数据到bulk队列
+     * @param datas
+     * @param type
+     */
+    public void appendDatas(List<?> datas,int type){
+
+        if(datas == null || datas.size() == 0)
+            return;
+        assertShutdown();
+        try {
+            w.lock();
+            if(bulkCommand == null){
+                return;
+            }
+            for(Object data:datas) {
+                CommonBulkData bulkData = new CommonBulkData();
+                bulkData.setData(data);
+                bulkData.setType(type);
+                _appendBulkData( bulkData);
+            }
+
+        }
+        finally {
+            w.unlock();
+        }
+    }
 
 
 	/**

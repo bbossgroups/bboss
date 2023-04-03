@@ -220,6 +220,14 @@ public class CommonBulkCommand implements Runnable{
 		return bulkProcessor.getFailedSize();
 	}
 
+    /**
+     * 获取已追加总记录数据
+     * @return
+     */
+    public long getAppendRecords(){
+        return bulkProcessor.getAppendRecords();
+    }
+
 	public CommonBulkProcessor getBulkProcessor() {
 		return bulkProcessor;
 	}
