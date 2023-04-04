@@ -6,6 +6,7 @@ import java.io.Writer;
 public class BBossStringWriter  extends Writer {
 
     private StringBuilder buf;
+    private boolean innerBuilder;
 
     /**
      * Create a new string writer using the default initial string-buffer
@@ -22,6 +23,7 @@ public class BBossStringWriter  extends Writer {
     public BBossStringWriter() {
         buf = new StringBuilder();
         lock = buf;
+        innerBuilder = true;
     }
 
     /**
@@ -41,6 +43,7 @@ public class BBossStringWriter  extends Writer {
         }
         buf = new StringBuilder(initialSize);
         lock = buf;
+        innerBuilder = true;
     }
 
     /**
@@ -204,9 +207,8 @@ public class BBossStringWriter  extends Writer {
      * an <tt>IOException</tt>.
      */
     public void close() throws IOException {
-        if(this.buf != null){
+        if(innerBuilder && this.buf != null){
             buf.setLength(0);
-            buf = null;
         }
     }
     public int size(){
