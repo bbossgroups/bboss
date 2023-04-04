@@ -71,19 +71,36 @@ public class CommonBulkProcessor {
 	 */
 	private volatile int status;
 	private  void stop(){
-		this.status = 1;
+        if(status == 1)
+            return;
+        w.lock();
+        try {
+            if (status == 1)
+                return;
+            this.status = 1;
+        }
+        finally {
+            w.unlock();
+        }
 		synchronized (flush) {
-			flush.notify();
+
+			flush.interrupt();
 		}
-	}
+        try {
+            flush.join();
+        } catch (InterruptedException e) {
+
+        }
+    }
 
 	public CommonBulkProcessor(CommonBulkConfig bulkConfig){
 		this.bulkConfig = bulkConfig;
 	}
 
 	public synchronized void increamentTotalsize(int totalSize){
+        r.lock();
 		try {
-			r.lock();
+
 			this.totalSize = this.totalSize + totalSize;
 		}
 		finally {
@@ -130,11 +147,13 @@ public class CommonBulkProcessor {
 		return lastAppendDataTime;
 	}
 	private void appendBulkData(CommonBulkData bulkData){
+        w.lock();
 		try {
-			w.lock();
+
 			if(bulkCommand == null){
 				return;
 			}
+            assertShutdown();
 //			lastAppendDataTime = System.currentTimeMillis();
 //			this.bulkCommand.addBulkData(bulkData);
 //			if(this.touchBatchSize()){
@@ -162,8 +181,9 @@ public class CommonBulkProcessor {
         return appendRecords;
     }
 	private void forceFlush(long flushInterval){
+        w.lock();
 		try {
-			w.lock();
+
 			if(bulkCommand == null){
 				return;
 			}
@@ -180,8 +200,9 @@ public class CommonBulkProcessor {
 	}
 
 	private void forceExecute(){
+        w.lock();
 		try {
-			w.lock();
+
 
 			if (bulkCommand !=null && bulkCommand.getBulkDataSize() > 0) {
 				execute(false);
@@ -229,11 +250,13 @@ public class CommonBulkProcessor {
         if(datas == null || datas.size() == 0)
             return;
         assertShutdown();
+        w.lock();
         try {
-            w.lock();
+
             if(bulkCommand == null){
                 return;
             }
+            assertShutdown();
             for(Object data:datas) {
                 CommonBulkData bulkData = new CommonBulkData();
                 bulkData.setData(data);
@@ -273,17 +296,12 @@ public class CommonBulkProcessor {
 	 * @param data 待删除的文档_id
 	 */
 	public void deleteData(Object data){
-//		try {
-			assertShutdown();
-			CommonBulkData bulkData = new CommonBulkData();
+        assertShutdown();
+        CommonBulkData bulkData = new CommonBulkData();
 		bulkData.setData(data);
 		bulkData.setType(CommonBulkData.DELETE);
-			appendBulkData( bulkData);
-//			bulkCommand.addBulkData(bulkData);
-//			this.dataQueue.put(bulkData);
-//		} catch (InterruptedException e) {
-//			logger.info("InterruptedException");
-//		}
+        appendBulkData( bulkData);
+
 	}
 
 
@@ -306,11 +324,13 @@ public class CommonBulkProcessor {
 		if(datas == null || datas.size() == 0)
 			return;
 		assertShutdown();
+        w.lock();
 		try {
-			w.lock();
+
 			if(bulkCommand == null){
 				return;
 			}
+            assertShutdown();
 			for(Object data:datas) {
 				CommonBulkData bulkData = new CommonBulkData();
 				bulkData.setData(data);
@@ -335,12 +355,13 @@ public class CommonBulkProcessor {
 		if(datas == null || datas.size() == 0)
 			return;
 		assertShutdown();
-
+        w.lock();
 		try {
-			w.lock();
+
 			if(bulkCommand == null){
 				return;
 			}
+            assertShutdown();
 			for(Object data:datas) {
 				CommonBulkData bulkData = new CommonBulkData();
 				bulkData.setData(data);
@@ -372,11 +393,13 @@ public class CommonBulkProcessor {
 			return ;
 		}
 		assertShutdown();
+        w.lock();
 		try {
-			w.lock();
+
 			if(bulkCommand == null){
 				return;
 			}
+            assertShutdown();
 			for(Object data :datas) {
 				CommonBulkData bulkData = new CommonBulkData();
 				bulkData.setData(data);
@@ -403,8 +426,9 @@ public class CommonBulkProcessor {
 		return totalSize;
 	}
 	public   void increamentFailedSize(int failedSize){
+        r.lock();
 		try {
-			r.lock();
+
 			this.failedSize = this.failedSize + failedSize;
 		}
 		finally {
@@ -521,11 +545,21 @@ public class CommonBulkProcessor {
 			}
 		}
 	}
-
+    private boolean shutdown;
 	/**
 	 * 调用shutDown停止方法后，BulkProcessor不会接收新的请求，但是会处理完所有已经进入bulk队列的数据
 	 */
 	public void shutDown(){
+        if(shutdown)
+            return;
+        synchronized(this) {
+            if(shutdown)
+                return;
+            shutdown = true;
+            if (!inited) {
+                return;
+            }
+        }
 		if(logger.isInfoEnabled())
 			logger.info("ShutDown BulkProcessor[{}] begin.....",this.bulkConfig.getBulkProcessorName());
 		stop();
