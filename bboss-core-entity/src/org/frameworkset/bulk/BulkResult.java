@@ -28,6 +28,10 @@ public class BulkResult {
 	private Object result;
 	private Object errorInfo;
 
+
+
+    private boolean markStopBulk;
+
 	public boolean isError() {
 		return error;
 	}
@@ -51,4 +55,12 @@ public class BulkResult {
 	public void setErrorInfo(Object errorInfo) {
 		this.errorInfo = errorInfo;
 	}
+
+    public boolean isMarkStopBulk() {
+        return markStopBulk;
+    }
+
+    public void setMarkStopBulk(boolean markStopBulk) {
+        this.markStopBulk = markStopBulk;
+    }
 }
