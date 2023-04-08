@@ -83,4 +83,17 @@ public class ThreadPoolFactory {
 
 		return buildThreadPool(threadName,rejectMessage , threadCount,threadQueue,blockedWaitTimeout,1000);
 	}
+
+    public static void shutdownExecutor(ExecutorService executor){
+        executor.shutdown();
+        do {
+            try {
+                executor.awaitTermination(10000L, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
+               break;
+            }
+            if(executor.isTerminated())
+                break;
+        }while (true);
+    }
 }

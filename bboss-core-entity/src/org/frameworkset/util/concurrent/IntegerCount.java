@@ -29,6 +29,14 @@ public class IntegerCount {
 		count ++;
 		return count;
 	}
+    public synchronized int decreament(int incr){
+        count = count - incr;
+        return count;
+    }
+    public synchronized int decreament(){
+        count --;
+        return count;
+    }
 	public synchronized int increament(int incr){
 		count = count + incr;
 		return count;
@@ -48,5 +56,14 @@ public class IntegerCount {
 		count = count + incr;
 		return count;
 	}
+
+    public int decreamentUnSynchronized(int incr){
+        count = count - incr;
+        return count;
+    }
+    public int decreamentUnSynchronized(){
+        count --;
+        return count;
+    }
 
 }

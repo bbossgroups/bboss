@@ -581,10 +581,8 @@ public class CommonBulkProcessor {
 			try {
 				if(logger.isInfoEnabled())
 					logger.info("ShutDown BulkProcessor["+this.bulkConfig.getBulkProcessorName()+"] thread executor pool  begin......");
-				executor.shutdown();
-//				if(logger.isInfoEnabled()){
-//					logger.info("BulkProcessor process total success records {} failed records {}.",totalSize,failedSize);
-//				}
+                ThreadPoolFactory.shutdownExecutor(executor);
+
 				if(logger.isInfoEnabled())
 					logger.info("ShutDown BulkProcessor["+this.bulkConfig.getBulkProcessorName()+"] thread executor pool complete.");
 			}
