@@ -32,7 +32,6 @@ import java.util.List;
  * @version 1.0
  */
 public class ShutdownUtil {
-
 	static class PriorComparator implements Comparator<WrapperRunnable> {
 
 		public int compare(WrapperRunnable o1, WrapperRunnable o2) {
@@ -76,14 +75,27 @@ public class ShutdownUtil {
 	}
 
 	public static List<WrapperRunnable> getShutdownHooks(){
-		return shutdownHooks;
+        List<WrapperRunnable> shutdownHooks_ = null;
+        synchronized (ShutdownUtil.class){
+            if(shutdownHooks != null){
+                shutdownHooks_ = new ArrayList<>(shutdownHooks.size());
+                shutdownHooks_.addAll(shutdownHooks);
+
+            }
+        }
+        if(shutdownHooks_ == null){
+            shutdownHooks_ = new ArrayList<>(0);
+        }
+		return shutdownHooks_;
 	}
 	private static final Logger log = LoggerFactory.getLogger(ShutdownUtil.class);
 	private static List<WrapperRunnable> shutdownHooks = new ArrayList<WrapperRunnable>();
 	private static synchronized void addShutdownHook_(WrapperRunnable destroyVMHook)
 	{
-		shutdownHooks.add(destroyVMHook);
-		Collections.sort(shutdownHooks, priorComparator);
+        if(shutdownHooks != null) {
+            shutdownHooks.add(destroyVMHook);
+            Collections.sort(shutdownHooks, priorComparator);
+        }
 
 	}
 	/**
@@ -103,7 +115,7 @@ public class ShutdownUtil {
 //			m.invoke(Runtime.getRuntime(), new Object[] { new Thread(
 //					destroyVMHook) });
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn("addShutdownHook failed:",e);
 		}
 
 	}
@@ -143,52 +155,52 @@ public class ShutdownUtil {
 	 */
 	public static  void shutdown()
 	{
+        List<WrapperRunnable> shutdownHooks_ = null;
+        synchronized (ShutdownUtil.class){
+            if(shutdownHooks != null){
+                shutdownHooks_ = new ArrayList<>(shutdownHooks.size());
+                shutdownHooks_.addAll(shutdownHooks);
+                shutdownHooks.clear();
+                shutdownHooks = null;
+            }
+        }
+        try
+        {
+            if(shutdownHooks_ != null)
+            {
 
-			try
-			{
-				if(shutdownHooks != null)
-				{
+                for(int i = shutdownHooks_.size()-1; i >= 0; i --)
+                {
+                    try {
 
-					for(int i = shutdownHooks.size()-1; i >= 0; i --)
-					{
-						try {
+                        WrapperRunnable destroyVMHook = shutdownHooks_.get(i);
+                        destroyVMHook.run();
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
 
-							WrapperRunnable destroyVMHook = shutdownHooks.get(i);
-							destroyVMHook.run();
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
+                    }
+                    catch (Exception e) {
+                        if(log.isWarnEnabled()){
+                            log.warn("",e);
+                        }
+                    }
+                }
 
-						}
-						catch (Exception e) {
-							if(log.isWarnEnabled()){
-								log.warn("",e);
-							}
-						}
-					}
-					shutdownHooks.clear();
-					shutdownHooks = null;
-				}
+            }
 
 
 
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-//				log.warn("",e);
-			}
-			catch(Throwable e)
-			{
-//				log.warn("",e);
-				e.printStackTrace();
-			}
-			finally
-			{
-//				if(shutdownHook != null)
-//					Runtime.getRuntime().removeShutdownHook(shutdownHook);
-			}
+        }
+        catch(Exception e)
+        {
+            log.warn("",e);
+        }
+        catch(Throwable e)
+        {
+            log.warn("",e);
+        }
 
-		}
+    }
 
 
 }
