@@ -329,7 +329,10 @@ public class DBPostgres extends DB {
 	@Override
 	public void setObject(PreparedDBUtil dbutil, int parameterIndex, Object x) throws SQLException {
 		if (x != null) {
-			if (x instanceof Date) {
+            if (x instanceof String ) {
+                dbutil.setString(parameterIndex, (String) x);
+
+            } else if (x instanceof Date) {
 				Timestamp timestamp = new Timestamp(((Date) x).getTime());
 				dbutil.setTimestamp(parameterIndex, timestamp);
 
@@ -349,7 +352,7 @@ public class DBPostgres extends DB {
 				dbutil.setFloat(parameterIndex, (Float) x);
 
 			} else {
-				dbutil.setObject(parameterIndex, x);
+				dbutil._setObject(parameterIndex, x);
 
 
 			}
