@@ -1,40 +1,10 @@
 package org.frameworkset.http.converter.json;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLResolver;
-
-import org.frameworkset.spi.ApplicationContext;
-import org.frameworkset.spi.BaseApplicationContext;
-import org.frameworkset.util.Assert;
-import org.frameworkset.util.ClassUtils;
-import org.frameworkset.util.StreamUtils;
-import org.frameworkset.util.beans.FatalBeanException;
-
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.AnnotationIntrospector;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.KeyDeserializer;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.cfg.HandlerInstantiator;
 import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -42,6 +12,18 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.frameworkset.util.BeanUtils;
 import com.frameworkset.util.StringUtil;
+import org.frameworkset.json.Jackson2ObjectMapper;
+import org.frameworkset.spi.ApplicationContext;
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.util.Assert;
+import org.frameworkset.util.StreamUtils;
+import org.frameworkset.util.beans.FatalBeanException;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLResolver;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Jackson2ObjectMapperBuilder {
 
@@ -476,7 +458,6 @@ public class Jackson2ObjectMapperBuilder {
 	 * Customize the construction of Jackson handlers ({@link JsonSerializer}, {@link JsonDeserializer},
 	 * {@link KeyDeserializer}, {@code TypeResolverBuilder} and {@code TypeIdResolver}).
 	 * @since 4.1.3
-	 * @see Jackson2ObjectMapperBuilder#applicationContext(ApplicationContext)
 	 */
 	public Jackson2ObjectMapperBuilder handlerInstantiator(HandlerInstantiator handlerInstantiator) {
 		this.handlerInstantiator = handlerInstantiator;
@@ -487,7 +468,6 @@ public class Jackson2ObjectMapperBuilder {
 	 * Set the Spring {@link ApplicationContext} in order to autowire Jackson handlers ({@link JsonSerializer},
 	 * {@link JsonDeserializer}, {@link KeyDeserializer}, {@code TypeResolverBuilder} and {@code TypeIdResolver}).
 	 * @since 4.1.3
-	 * @see SpringHandlerInstantiator
 	 */
 	public Jackson2ObjectMapperBuilder applicationContext(BaseApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
@@ -529,7 +509,7 @@ public class Jackson2ObjectMapperBuilder {
 			objectMapper.registerModules(ObjectMapper.findModules(this.moduleClassLoader));
 		}
 		else if (this.findWellKnownModules) {
-			registerWellKnownModulesIfAvailable(objectMapper);
+            Jackson2ObjectMapper.registerWellKnownModulesIfAvailable(objectMapper);
 		}
 
 		if (this.modules != null) {
@@ -644,65 +624,75 @@ public class Jackson2ObjectMapperBuilder {
 			throw new FatalBeanException("Unknown feature class: " + feature.getClass().getName());
 		}
 	}
-
-	@SuppressWarnings("unchecked")
-	private void registerWellKnownModulesIfAvailable(ObjectMapper objectMapper) {
-		// Java 7 java.nio.file.Path class present?
-		if (ClassUtils.isPresent("java.nio.file.Path", this.moduleClassLoader)) {
-			try {
-				Class<? extends Module> jdk7Module = (Class<? extends Module>)
-						ClassUtils.forName("com.fasterxml.jackson.datatype.jdk7.Jdk7Module", this.moduleClassLoader);
-				objectMapper.registerModule(BeanUtils.instantiate(jdk7Module));
-			}
-			catch (ClassNotFoundException ex) {
-				// jackson-datatype-jdk7 not available
-			}
-		}
-
-		// Java 8 java.util.Optional class present?
-		if (ClassUtils.isPresent("java.util.Optional", this.moduleClassLoader)) {
-			try {
-				Class<? extends Module> jdk8Module = (Class<? extends Module>)
-						ClassUtils.forName("com.fasterxml.jackson.datatype.jdk8.Jdk8Module", this.moduleClassLoader);
-				objectMapper.registerModule(BeanUtils.instantiate(jdk8Module));
-			}
-			catch (ClassNotFoundException ex) {
-				// jackson-datatype-jdk8 not available
-			}
-		}
-
-		// Java 8 java.time package present?
-		if (ClassUtils.isPresent("java.time.LocalDate", this.moduleClassLoader)) {
-			try {
-				Class<? extends Module> javaTimeModule = (Class<? extends Module>)
-						ClassUtils.forName("com.fasterxml.jackson.datatype.jsr310.JavaTimeModule", this.moduleClassLoader);
-				objectMapper.registerModule(BeanUtils.instantiate(javaTimeModule));
-			}
-			catch (ClassNotFoundException ex) {
-				// jackson-datatype-jsr310 not available or older than 2.6
-				try {
-					Class<? extends Module> jsr310Module = (Class<? extends Module>)
-							ClassUtils.forName("com.fasterxml.jackson.datatype.jsr310.JSR310Module", this.moduleClassLoader);
-					objectMapper.registerModule(BeanUtils.instantiate(jsr310Module));
-				}
-				catch (ClassNotFoundException ex2) {
-					// OK, jackson-datatype-jsr310 not available at all...
-				}
-			}
-		}
-
-		// Joda-Time present?
-		if (ClassUtils.isPresent("org.joda.time.LocalDate", this.moduleClassLoader)) {
-			try {
-				Class<? extends Module> jodaModule = (Class<? extends Module>)
-						ClassUtils.forName("com.fasterxml.jackson.datatype.joda.JodaModule", this.moduleClassLoader);
-				objectMapper.registerModule(BeanUtils.instantiate(jodaModule));
-			}
-			catch (ClassNotFoundException ex) {
-				// jackson-datatype-joda not available
-			}
-		}
-	}
+//
+//	@SuppressWarnings("unchecked")
+//	private void registerWellKnownModulesIfAvailable(ObjectMapper objectMapper) {
+//		// Java 7 java.nio.file.Path class present?
+//		if (ClassUtils.isPresent("java.nio.file.Path", this.moduleClassLoader)) {
+//			try {
+//				Class<? extends Module> jdk7Module = (Class<? extends Module>)
+//						ClassUtils.forName("com.fasterxml.jackson.datatype.jdk7.Jdk7Module", this.moduleClassLoader);
+//				objectMapper.registerModule(BeanUtils.instantiate(jdk7Module));
+//			}
+//			catch (ClassNotFoundException ex) {
+//				// jackson-datatype-jdk7 not available
+//			}
+//		}
+//
+//		// Java 8 java.util.Optional class present?
+//		if (ClassUtils.isPresent("java.util.Optional", this.moduleClassLoader)) {
+//			try {
+//				Class<? extends Module> jdk8Module = (Class<? extends Module>)
+//						ClassUtils.forName("com.fasterxml.jackson.datatype.jdk8.Jdk8Module", this.moduleClassLoader);
+//				objectMapper.registerModule(BeanUtils.instantiate(jdk8Module));
+//			}
+//			catch (ClassNotFoundException ex) {
+//				// jackson-datatype-jdk8 not available
+//			}
+//		}
+//
+//		// Java 8 java.time package present?
+//		if (ClassUtils.isPresent("java.time.LocalDate", this.moduleClassLoader)) {
+//			try {
+////				Class<? extends Module> javaTimeModule = (Class<? extends Module>)
+////						ClassUtils.forName("com.fasterxml.jackson.datatype.jsr310.JavaTimeModule", this.moduleClassLoader);
+////				objectMapper.registerModule(BeanUtils.instantiate(javaTimeModule));
+//
+//                JavaTimeModule javaTimeModule = new JavaTimeModule();
+//                LocalDateTimeDeserializer localDateTimeDeserializer = new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'"));
+//                LocalDateTimeSerializer localDateTimeSerializer = new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'"));
+//
+//                javaTimeModule.addSerializer(LocalDateTime.class,localDateTimeSerializer);
+//                javaTimeModule.addDeserializer(LocalDateTime.class,localDateTimeDeserializer);
+//
+//
+//                objectMapper.registerModule(javaTimeModule);
+//			}
+//			catch (Exception ex) {
+//				// jackson-datatype-jsr310 not available or older than 2.6
+//				try {
+//					Class<? extends Module> jsr310Module = (Class<? extends Module>)
+//							ClassUtils.forName("com.fasterxml.jackson.datatype.jsr310.JSR310Module", this.moduleClassLoader);
+//					objectMapper.registerModule(BeanUtils.instantiate(jsr310Module));
+//				}
+//				catch (ClassNotFoundException ex2) {
+//					// OK, jackson-datatype-jsr310 not available at all...
+//				}
+//			}
+//		}
+//
+//		// Joda-Time present?
+//		if (ClassUtils.isPresent("org.joda.time.LocalDate", this.moduleClassLoader)) {
+//			try {
+//				Class<? extends Module> jodaModule = (Class<? extends Module>)
+//						ClassUtils.forName("com.fasterxml.jackson.datatype.joda.JodaModule", this.moduleClassLoader);
+//				objectMapper.registerModule(BeanUtils.instantiate(jodaModule));
+//			}
+//			catch (ClassNotFoundException ex) {
+//				// jackson-datatype-joda not available
+//			}
+//		}
+//	}
 
 
 	// Convenience factory methods

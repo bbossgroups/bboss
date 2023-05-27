@@ -1,10 +1,12 @@
 package org.frameworkset.json;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.frameworkset.util.BeanUtils;
+import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.annotations.DateFormateMeta;
 
 import java.io.File;
@@ -12,6 +14,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_SINGLE_QUOTES;
 
@@ -27,7 +31,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	private String timeZone;
 	private boolean disableTimestamp = false;
 	boolean failedOnUnknownProperties = false;
-
+    private static ClassLoader moduleClassLoader = Jackson2ObjectMapper.class.getClassLoader();
 	@Override
 	public String getDateFormat() {
 		return dateFormat;
@@ -81,20 +85,86 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 		mapper = new ObjectMapper();
 		//反序列化时，属性不存在时忽略属性
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+        registerWellKnownModulesIfAvailable(mapper);
 		ALLOW_SINGLE_QUOTES_mapper = new ObjectMapper();
 		//反序列化时，属性不存在时忽略属性
 		ALLOW_SINGLE_QUOTES_mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
 		ALLOW_SINGLE_QUOTES_mapper.configure(ALLOW_SINGLE_QUOTES, true);
-
+        registerWellKnownModulesIfAvailable(ALLOW_SINGLE_QUOTES_mapper);
 		NOT_ALLOW_SINGLE_QUOTES_mapper = new ObjectMapper();
 		//反序列化时，属性不存在时忽略属性
 		NOT_ALLOW_SINGLE_QUOTES_mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
-		ALLOW_SINGLE_QUOTES_mapper.configure(ALLOW_SINGLE_QUOTES, false);
-
+        NOT_ALLOW_SINGLE_QUOTES_mapper.configure(ALLOW_SINGLE_QUOTES, false);
+        registerWellKnownModulesIfAvailable(NOT_ALLOW_SINGLE_QUOTES_mapper);
 	}
 
 
- 
+    public static void registerWellKnownModulesIfAvailable(ObjectMapper objectMapper) {
+        // Java 7 java.nio.file.Path class present?
+        if (ClassUtils.isPresent("java.nio.file.Path", moduleClassLoader)) {
+            try {
+                Class<? extends Module> jdk7Module = (Class<? extends Module>)
+                        ClassUtils.forName("com.fasterxml.jackson.datatype.jdk7.Jdk7Module", moduleClassLoader);
+                objectMapper.registerModule(BeanUtils.instantiate(jdk7Module));
+            }
+            catch (ClassNotFoundException ex) {
+                // jackson-datatype-jdk7 not available
+            }
+        }
+
+        // Java 8 java.util.Optional class present?
+        if (ClassUtils.isPresent("java.util.Optional", moduleClassLoader)) {
+            try {
+                Class<? extends Module> jdk8Module = (Class<? extends Module>)
+                        ClassUtils.forName("com.fasterxml.jackson.datatype.jdk8.Jdk8Module", moduleClassLoader);
+                objectMapper.registerModule(BeanUtils.instantiate(jdk8Module));
+            }
+            catch (ClassNotFoundException ex) {
+                // jackson-datatype-jdk8 not available
+            }
+        }
+
+        // Java 8 java.time package present?
+        if (ClassUtils.isPresent("java.time.LocalDate", moduleClassLoader)) {
+            try {
+//                Class<? extends Module> javaTimeModule = (Class<? extends Module>)
+//                        ClassUtils.forName("com.fasterxml.jackson.datatype.jsr310.JavaTimeModule", moduleClassLoader);
+//                objectMapper.registerModule(BeanUtils.instantiate(javaTimeModule));
+                JavaTimeModule javaTimeModule = new JavaTimeModule();
+                LocalDateTimeDeserializer localDateTimeDeserializer = new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'"));
+                LocalDateTimeSerializer localDateTimeSerializer = new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'"));
+
+                javaTimeModule.addSerializer(LocalDateTime.class,localDateTimeSerializer);
+                javaTimeModule.addDeserializer(LocalDateTime.class,localDateTimeDeserializer);
+
+
+                objectMapper.registerModule(javaTimeModule);
+            }
+            catch (Exception ex) {
+                // jackson-datatype-jsr310 not available or older than 2.6
+                try {
+                    Class<? extends Module> jsr310Module = (Class<? extends Module>)
+                            ClassUtils.forName("com.fasterxml.jackson.datatype.jsr310.JSR310Module", moduleClassLoader);
+                    objectMapper.registerModule(BeanUtils.instantiate(jsr310Module));
+                }
+                catch (ClassNotFoundException ex2) {
+                    // OK, jackson-datatype-jsr310 not available at all...
+                }
+            }
+        }
+
+        // Joda-Time present?
+        if (ClassUtils.isPresent("org.joda.time.LocalDate", moduleClassLoader)) {
+            try {
+                Class<? extends Module> jodaModule = (Class<? extends Module>)
+                        ClassUtils.forName("com.fasterxml.jackson.datatype.joda.JodaModule", moduleClassLoader);
+                objectMapper.registerModule(BeanUtils.instantiate(jodaModule));
+            }
+            catch (ClassNotFoundException ex) {
+                // jackson-datatype-joda not available
+            }
+        }
+    }
 
 	 /* (non-Javadoc)
 	 * @see org.frameworkset.json.JacksonObjectMapper#json2Object(java.lang.String, java.lang.Class)
