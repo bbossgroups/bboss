@@ -109,6 +109,7 @@ public class StatementInfo {
 	private DB dbadapter ;
 	private DBOptions dbOptions;
 	private JDBCPool pool ;
+    private Integer fetchSize;
 	public StatementInfo(String dbname_, NewSQLInfo sql_, boolean goNative_,
 						 long offset_, int maxsize_, boolean robotquery_, Connection con_,
 						 boolean needTransaction, String rownum, boolean prepared){
@@ -149,6 +150,7 @@ public class StatementInfo {
 //		if (dbname == null)
 //			this.dbname = SQLManager.getInstance().getDefaultDBName();
 		this.needTransaction = needTransaction;
+        fetchSize = getFetchSize();
 	}
 	
 	public static List<Object> getGeneratedKeys(PreparedStatement statement) throws Exception
@@ -234,7 +236,7 @@ public class StatementInfo {
 					}
 					else{
 						this.oldautocommit = con.getAutoCommit();
-						this.dbadapter.handleConnection(this.dbOptions,con);
+						this.dbadapter.handleConnection(this.fetchSize,con);
 					}
 				} else {
 					try {
@@ -291,15 +293,20 @@ public class StatementInfo {
 		return _prepareStatement(true);
 	}
 
+    private Integer getFetchSize(){
+        Integer fetchsize = null;
+        if(dbOptions != null && dbOptions.getFetchSize() != null && dbOptions.getFetchSize() != 0){
+            fetchsize = dbOptions.getFetchSize();
+        }
+        else{
+            fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
+        }
+        return fetchsize;
+    }
 	private void putFetchsize(PreparedStatement pstmt) throws SQLException {
-		Integer fetchsize = null;
-		if(dbOptions != null && dbOptions.getFetchSize() != null && dbOptions.getFetchSize() != 0){
-			fetchsize = dbOptions.getFetchSize();
-		}
-		else{
-			fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
-		}
-		this.dbadapter.putFetchsize(pstmt,fetchsize);
+//		Integer fetchsize = getFetchSize();
+
+		this.dbadapter.putFetchsize(pstmt,fetchSize);
 //		if(fetchsize != null && fetchsize != 0)
 //			pstmt.setFetchSize(fetchsize);
 	}
@@ -663,7 +670,7 @@ public class StatementInfo {
 				if (!outcon) {
 					if (tx == null && con != null) {
 						try {
-							this.dbadapter.recoverConnection(this.dbOptions, con, oldautocommit);
+							this.dbadapter.recoverConnection(this.fetchSize, con, oldautocommit);
 						}
 						catch (Exception e) {
 							// e.printStackTrace();

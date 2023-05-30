@@ -35,7 +35,6 @@ import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.ValueExchange;
-import com.frameworkset.common.poolman.util.DBOptions;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.orm.engine.model.Domain;
 import com.frameworkset.orm.engine.model.SchemaType;
@@ -1141,11 +1140,11 @@ public abstract class DB implements IDMethod, Platform {
 		return false;
 	}
 
-	public void handleConnection(DBOptions dbOptions, Connection con) throws SQLException {
+	public void handleConnection(Integer fetchSize, Connection con) throws SQLException {
 		return ;
 	}
 
-	public void recoverConnection(DBOptions dbOptions, Connection con,boolean oldautocommit) throws SQLException {
+	public void recoverConnection(Integer fetchSize, Connection con,boolean oldautocommit) throws SQLException {
 		return ;
 	}
 

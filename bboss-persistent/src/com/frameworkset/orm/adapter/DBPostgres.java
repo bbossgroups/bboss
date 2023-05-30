@@ -32,7 +32,6 @@ package com.frameworkset.orm.adapter;
  */
 
 import com.frameworkset.common.poolman.PreparedDBUtil;
-import com.frameworkset.common.poolman.util.DBOptions;
 import com.frameworkset.orm.platform.PlatformPostgresqlImpl;
 
 import java.sql.*;
@@ -263,16 +262,17 @@ public class DBPostgres extends DB {
 		return sqlbuilder.toString();
 	}
 	@Override
-	public void handleConnection(DBOptions dbOptions, Connection con) throws SQLException {
-		if (dbOptions != null && dbOptions.hasFetchSize()) {
+	public void handleConnection(Integer fetchSize, Connection con) throws SQLException {
+		if (fetchSize != null && fetchSize > 0) {
 			if(con.getAutoCommit())
 				con.setAutoCommit(false);
 
 		}
 		return;
 	}
-	public void recoverConnection(DBOptions dbOptions, Connection con,boolean oldautocommit) throws SQLException {
-		if (dbOptions != null && dbOptions.hasFetchSize()) {
+    @Override
+	public void recoverConnection(Integer fetchSize, Connection con,boolean oldautocommit) throws SQLException {
+        if (fetchSize != null && fetchSize > 0) {
 			con.setAutoCommit(oldautocommit);
 		}
 		return ;
