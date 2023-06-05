@@ -35,6 +35,7 @@ import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.ValueExchange;
+import com.frameworkset.common.poolman.util.DBOptions;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.orm.engine.model.Domain;
 import com.frameworkset.orm.engine.model.SchemaType;
@@ -1217,5 +1218,16 @@ public abstract class DB implements IDMethod, Platform {
 		if(fetchSize != null && fetchSize > 0)
 			pstmt.setFetchSize(fetchSize);
 	}
+
+    public Integer getFetchSize(DBOptions dbOptions,JDBCPoolMetaData jdbcPoolMetaData){
+        Integer fetchsize = null;
+        if(dbOptions != null && dbOptions.getFetchSize() != null && dbOptions.getFetchSize() != 0){
+            fetchsize = dbOptions.getFetchSize();
+        }
+        else{
+            fetchsize = jdbcPoolMetaData.getQueryfetchsize();
+        }
+        return fetchsize;
+    }
 
 }

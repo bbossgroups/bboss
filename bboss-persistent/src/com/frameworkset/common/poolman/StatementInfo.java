@@ -294,14 +294,15 @@ public class StatementInfo {
 	}
 
     private Integer getFetchSize(){
-        Integer fetchsize = null;
-        if(dbOptions != null && dbOptions.getFetchSize() != null && dbOptions.getFetchSize() != 0){
-            fetchsize = dbOptions.getFetchSize();
-        }
-        else{
-            fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
-        }
-        return fetchsize;
+//        Integer fetchsize = null;
+//        if(dbOptions != null && dbOptions.getFetchSize() != null && dbOptions.getFetchSize() != 0){
+//            fetchsize = dbOptions.getFetchSize();
+//        }
+//        else{
+//            fetchsize = this.pool.getJDBCPoolMetadata().getQueryfetchsize();
+//        }
+//        return fetchsize;
+        return this.dbadapter.getFetchSize(dbOptions,this.pool.getJDBCPoolMetadata());
     }
 	private void putFetchsize(PreparedStatement pstmt) throws SQLException {
 //		Integer fetchsize = getFetchSize();

@@ -32,6 +32,8 @@ package com.frameworkset.orm.adapter;
  */
 
 import com.frameworkset.common.poolman.PreparedDBUtil;
+import com.frameworkset.common.poolman.util.DBOptions;
+import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.orm.platform.PlatformPostgresqlImpl;
 
 import java.sql.*;
@@ -362,4 +364,14 @@ public class DBPostgres extends DB {
 		}
 
 	}
+    public Integer getFetchSize(DBOptions dbOptions, JDBCPoolMetaData jdbcPoolMetaData){
+        Integer fetchsize = null;
+        if(dbOptions != null && dbOptions.getFetchSize() != null && dbOptions.getFetchSize() != 0){
+            fetchsize = dbOptions.getFetchSize();
+        }
+//        else{
+//            fetchsize = jdbcPoolMetaData.getQueryfetchsize();
+//        }
+        return fetchsize;
+    }
 }
