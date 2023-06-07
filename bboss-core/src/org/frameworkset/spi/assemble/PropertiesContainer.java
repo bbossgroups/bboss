@@ -605,6 +605,48 @@ public class PropertiesContainer extends AbstractGetProperties{
     {
     	linkfile.loopback(this);
     }
+    private void handleIncludeFiles(List<Properties> includeProperties,Properties currentProperties,String configPropertiesFile,LinkConfigFile linkfile){
+        Iterator<Map.Entry<Object, Object>> iterator = currentProperties.entrySet().iterator();
+
+
+        List<String> removeKeys = new ArrayList<>();
+        while (iterator.hasNext()){
+            Map.Entry entry = iterator.next();
+            String key = (String) entry.getKey();
+            String value = (String) entry.getValue();
+            if(key.equals("include.files")){
+                removeKeys.add(key);
+                if(!value.trim().equals("")){
+                    String[] configPropertiesFiles = value.split(",");//属性文件可以配置多个，每个用逗号分隔
+                    for(String file_:configPropertiesFiles) {
+                        file_ = file_.trim();
+                        if(!file_.equals("") && !contain(file_)) {
+                            logger.info("load properties from {} included by {}", file_, configPropertiesFile);
+//                            this.configPropertiesFiles.add(file_);
+                            evalfileInner( includeProperties,currentProperties, file_, linkfile);
+                        }
+                    }
+                }
+            }
+
+        }
+        if(removeKeys.size() > 0) {
+            for (String key:removeKeys){
+                currentProperties.remove(key);
+            }
+        }
+    }
+    private boolean contain(String file){
+        boolean contain = false;
+        for(String ofile:configPropertiesFiles){
+            if(ofile.equals(file))
+            {
+                contain = true;
+                break;
+            }
+        }
+        return contain;
+    }
     private void evalfile(Map currentProperties,String configPropertiesFile,LinkConfigFile linkfile)
     {
     	Properties properties = new java.util.Properties();
@@ -681,24 +723,13 @@ public class PropertiesContainer extends AbstractGetProperties{
 				properties.load(read);
 			}
 			if(!properties.isEmpty()) {
+                //加载include.files中的配置
+                List<Properties> propertiesList = new ArrayList<>();
+                handleIncludeFiles(propertiesList,properties, configPropertiesFile, linkfile);
+                for(Properties properties_:propertiesList){
+                    properties.putAll(properties_);
+                }
 				currentProperties.putAll(properties);
-//				Iterator<Map.Entry<Object, Object>> temp = properties.entrySet().iterator();
-//				StringBuilder builder = new StringBuilder();
-//				while(temp.hasNext()) {
-//					Map.Entry<Object, Object> entry = temp.next();
-//					String key = (String)entry.getKey();
-//					try {
-//						EnvUtil.getSystemEnv(builder, key, null, properties);
-//						allProperties.put(key, builder.toString());
-//						builder.setLength(0);
-//					}
-//					catch (Throwable e){
-//						if(log.isWarnEnabled()){
-//							log.warn("",e);
-//						}
-//					}
-//
-//				}
 			}
 	    
     	}
@@ -721,6 +752,109 @@ public class PropertiesContainer extends AbstractGetProperties{
 
 				}
     	}
+    }
+
+    private void evalfileInner(List<Properties> propertiesList,Map currentProperties,String configPropertiesFile,LinkConfigFile linkfile)
+    {
+        Properties properties = new java.util.Properties();
+
+        InputStream input = null;
+        Reader read = null;
+        try
+        {
+
+            if(!configPropertiesFile.startsWith("file:"))
+            {
+                ClassPathResource  resource = new ClassPathResource(configPropertiesFile);
+
+                try{
+                    input = resource.getInputStream();
+                    if(log.isInfoEnabled())
+                        log.info("load config Properties File :"+resource.getURL());
+                }
+                catch(Exception e){
+                    if(linkfile == null) {
+                        if(log.isInfoEnabled()) {
+                            log.info(new StringBuilder().append("load config Properties File :")
+                                    .append(configPropertiesFile)
+                                    .append(" does not exist,Ignore load.").toString());
+                        }
+                    }
+                    else {
+                        if(log.isInfoEnabled()) {
+                            StringBuilder builder = new StringBuilder();
+                            builder.append("load config Properties File :")
+                                    .append(configPropertiesFile)
+                                    .append(" in ");
+                            linkfile.toString(builder);
+                            builder.append(" does not exist,Ignore load.");
+                            log.info(builder.toString());
+                        }
+                    }
+                }
+            }
+            else
+            {
+                String _configPropertiesFile = configPropertiesFile.substring("file:".length());
+                File configFile = new File(_configPropertiesFile);
+
+                if(configFile.exists()) {
+
+                    input = new FileInputStream(configFile);
+                    if (log.isInfoEnabled())
+                        log.info("load config Properties File :" + _configPropertiesFile);
+                }
+                else
+                {
+                    if(linkfile == null)
+                        if(log.isInfoEnabled()) {
+                            log.info(new StringBuilder().append("load config Properties File :")
+                                    .append(configPropertiesFile)
+                                    .append(" does not exist,Ignore load.").toString());
+                        }
+                        else {
+                            if(log.isInfoEnabled()) {
+                                StringBuilder builder = new StringBuilder();
+                                builder.append("load config Properties File :")
+                                        .append(configPropertiesFile)
+                                        .append(" in ");
+                                linkfile.toString(builder);
+                                builder.append(" does not exist,Ignore load.");
+                                log.info(builder.toString());
+                            }
+                        }
+                }
+            }
+            if(input != null) {
+                read = new InputStreamReader(input, "UTF-8");
+                properties.load(read);
+            }
+            if(!properties.isEmpty()) {
+                //加载include.files中的配置
+                handleIncludeFiles(propertiesList,properties, configPropertiesFile, linkfile);
+                propertiesList.add(properties);
+            }
+
+        }
+        catch(Exception e)
+        {
+            log.error("load config Properties File failed:",e);
+        }
+        finally
+        {
+            if(input != null)
+                try {
+                    input.close();
+                } catch (IOException e) {
+
+                }
+            if(read != null)
+                try {
+                    read.close();
+                } catch (IOException e) {
+
+                }
+        }
     }
     
     public void mergeParentConfigProperties(PropertiesContainer parent)

@@ -44,10 +44,7 @@ public class CommonBulkConfig {
 	 */
 	private int bulkSizes;
 
-	/**
-	 * 失败重试次数
-	 */
-	private int bulkFailRetry;
+
 	/**
 	 * 强制bulk操作时间，单位毫秒，如果自上次bulk操作flushInterval毫秒后，数据量没有满足
 	 */
@@ -67,18 +64,13 @@ public class CommonBulkConfig {
 		return this;
 	}
 
-	public int getBulkFailRetry() {
-		return bulkFailRetry;
-	}
+
 
 	public List<CommonBulkInterceptor> getBulkInterceptors() {
 		return bulkInterceptors;
 	}
 
-	public CommonBulkConfig setBulkFailRetry(int bulkFailRetry) {
-		this.bulkFailRetry = bulkFailRetry;
-		return this;
-	}
+
 
 	public long getFlushInterval() {
 		return flushInterval;

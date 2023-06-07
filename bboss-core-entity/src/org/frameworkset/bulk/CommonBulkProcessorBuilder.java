@@ -62,12 +62,6 @@ public class CommonBulkProcessorBuilder {
 	}
 
 
-	public CommonBulkProcessorBuilder setBulkFailRetry(int bulkFailRetry) {
-		bulkConfig.setBulkFailRetry(bulkFailRetry);
-		return this;
-	}
-
-
 	public CommonBulkProcessorBuilder setFlushInterval(long flushInterval) {
 		this.bulkConfig.setFlushInterval(flushInterval);
 		return this;
