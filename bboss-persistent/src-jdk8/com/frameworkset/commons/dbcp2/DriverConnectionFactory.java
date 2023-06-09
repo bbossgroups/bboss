@@ -16,6 +16,8 @@
  */
 package com.frameworkset.commons.dbcp2;
 
+import com.frameworkset.common.poolman.NestedSQLException;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -52,7 +54,16 @@ public class DriverConnectionFactory implements ConnectionFactory {
 
     @Override
     public Connection createConnection() throws SQLException {
-        return driver.connect(connectionString, properties);
+        try {
+            //mark modify 20230609
+            return driver.connect(connectionString, properties);
+        }
+        catch (SQLException sqlException){
+            throw new NestedSQLException(connectionString,sqlException);
+        }
+        catch (Exception sqlException){
+            throw new NestedSQLException(connectionString,sqlException);
+        }
     }
 
     /**
