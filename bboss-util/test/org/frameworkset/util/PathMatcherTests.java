@@ -289,24 +289,24 @@ public class PathMatcherTests extends TestCase {
 	public void testrefer()
 	{
 		PathMatcher pathMatcher = new AntPathMatcher();
-		System.out.println(pathMatcher.urlContain("*.sany.com.cn", "http://test.sany.com.cn/test"));
-		System.out.println(pathMatcher.urlContain("http://*.sany.com.cn", "http://test.sany.com.cn/test"));
+		System.out.println(pathMatcher.urlContain("*.test.com.cn", "http://test.test.com.cn/test"));
+		System.out.println(pathMatcher.urlContain("http://*.test.com.cn", "http://test.test.com.cn/test"));
 		System.out.println("###############################################");
-		System.out.println(pathMatcher.urlContain("*.sany.com.cn", "http://test.sdany.com.cn/test"));
-		System.out.println(pathMatcher.urlContain("http://*.sany.com.cn", "https://test.sany.com.cn/test"));
+		System.out.println(pathMatcher.urlContain("*.test.com.cn", "http://test.test.com.cn/test"));
+		System.out.println(pathMatcher.urlContain("http://*.test.com.cn", "https://test.test.com.cn/test"));
 		System.out.println("###############################################");
-		System.out.println(pathMatcher.urlMatch("*.sany.com.cn/test", "http://test.sany.com.cn/test"));
-		System.out.println(pathMatcher.urlMatch("http://*.sany.com.cn/test", "http://test.sany.com.cn/test"));
+		System.out.println(pathMatcher.urlMatch("*.s.com.cn/test", "http://test.test.com.cn/test"));
+		System.out.println(pathMatcher.urlMatch("http://*.s.com.cn/test", "http://test.s.com.cn/test"));
 		
 		System.out.println("###############################################");
-		System.out.println(pathMatcher.urlMatch("*.sany.com.cn/test", "http://test.sany.com.cn/test/f"));
-		System.out.println(pathMatcher.urlMatch("http://*.sany.com.cn/test", "http://test.sany.com.cn/test/4"));
+		System.out.println(pathMatcher.urlMatch("*.s.com.cn/test", "http://test.s.com.cn/test/f"));
+		System.out.println(pathMatcher.urlMatch("http://*.s.com.cn/test", "http://test.s.com.cn/test/4"));
 	}
 	public void testyidiantong()
 	{
 		PathMatcher pathMatcher = new AntPathMatcher();
 		//		https://wap.hn.10086.cn/o2o_new/extension/shareForm?type=011&departId=EC3Vc5YDbBm1bA55cDRKcoLTinVqLxQFOCZGnQM0uasyOX3eAFTzqXEbqcRZxZkgY4shVeaNdEhfedsnRrGcDAzOy12xjF3e_RVZHhazqqUC2SKJ-DOj7x0JBSNhTIfWgnUJ9uR6oqxSjDHji9qLIWIgAFrQUD4Py8uDF0Ys4Lk&suNo=r9gqxYSmCpPqXkzKEm_2Qiuo_nqtuTUsorMQ7b-0ZknOFjhmSmDrr_L4lYTTf-Y9bBAs_OzyzYmbRBWeXBoio5HvVQ5wdM2m_sQqPh38LIfRCf-jRDINU-L6OP_mjsRPd0oksCH7CPlG4Q1n8wdysx7lvc-xJ22zs6dkezXZy7I&suPhone=MRBHbSiMHSujL-R8m15f-YZhSuG1JukG6nQZKmIJFQHQoEfmCV8_n-HJ46FsNTjbMtLEMWy8WSavghln9Oem0FRriNRzDkD0fWt9OX5SaBBh8QCRbC0wV9tnNEqQoQ6SZ9oJsYO1FxwJiPEQp2oN3rlNekfNWqX8bffV6bmoSnM&extChnl=1001&extType=1&chanId=ZZZZ&code=013LXA0w3LwtNV2YHk1w3NAMe54LXA0i&state=1
-		boolean matched = pathMatcher.match("**/**extChnl=1001**","https://wap.hn.10086.cn/wap/static/activity/UpEnjoyPacDown/index.html?forceLogin=1&forceAttention=0&sourceShopId=202004103013&sourceStaffId=100006841088&shopPhone=15575974417&serialNumberO2OQD=15575974417&isShare=yes&shopId=202004103013&bizHandType=3&extChnl=1001&departId=Rn34qvpo3LA%3D&suPhone=DZQ0W5%2Fg%2F%2F%2BP6qr7Laak8w%3D%3D&CHANID=E050&sourceChannelId=E050&chanId=E050&suNo=&openId=oTxKsuFDgrIIBl33gjoy2kP_y_YQ&secretOpenId=fc878a36f64aaae68ff3cb8f92513d0d");
+		boolean matched = pathMatcher.match("**/**extChnl=1001**","https://wap.hn.s.cn/wap/static/activity/UpEnjoyPacDown/index.html?forceLogin=1&forceAttention=0&sourceShopId=202004103013&sourceStaffId=100006841088&shopPhone=15575974417&serialNumberO2OQD=15575974417&isShare=yes&shopId=202004103013&bizHandType=3&extChnl=1001&departId=Rn34qvpo3LA%3D&suPhone=DZQ0W5%2Fg%2F%2F%2BP6qr7Laak8w%3D%3D&CHANID=E050&sourceChannelId=E050&chanId=E050&suNo=&openId=oTxKsuFDgrIIBl33gjoy2kP_y_YQ&secretOpenId=fc878a36f64aaae68ff3cb8f92513d0d");
 		System.out.println(matched);
 	}
 

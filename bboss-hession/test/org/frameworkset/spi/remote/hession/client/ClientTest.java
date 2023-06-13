@@ -15,13 +15,12 @@
  */
 package org.frameworkset.spi.remote.hession.client;
 
-import java.net.MalformedURLException;
-
+import com.caucho.hessian.client.HessianProxyFactory;
 import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.remote.hession.server.ServiceInf;
 import org.junit.Test;
 
-import com.caucho.hessian.client.HessianProxyFactory;
+import java.net.MalformedURLException;
 
 /**
  * <p> ClientTest.java</p>
@@ -50,7 +49,7 @@ public class ClientTest {
 	@Test
 	public void testHessian() throws MalformedURLException
 	{
-		String url = "http://localhost:8080/SanyPDP/hessian?container=org/frameworkset/spi/remote/hession/server/hessian-service.xml&service=basicservice";//指定容器标识和容器类型及服务标识
+		String url = "http://localhost:8080/sPDP/hessian?container=org/frameworkset/spi/remote/hession/server/hessian-service.xml&service=basicservice";//指定容器标识和容器类型及服务标识
 		
 		 HessianProxyFactory factory = new HessianProxyFactory();
 	    ServiceInf basic = (ServiceInf) factory.create(org.frameworkset.spi.remote.hession.server.ServiceInf.class, url);
@@ -61,7 +60,7 @@ public class ClientTest {
 	@Test
 	public void testSimpleHessian() throws MalformedURLException
 	{
-		String url = "http://localhost:8080/SanyPDP/hessian?service=basicservice";//指定容器标识和容器类型及服务标识
+		String url = "http://localhost:8080/sPDP/hessian?service=basicservice";//指定容器标识和容器类型及服务标识
 		
 		 HessianProxyFactory factory = new HessianProxyFactory();
 	    ServiceInf basic = (ServiceInf) factory.create(org.frameworkset.spi.remote.hession.server.ServiceInf.class, url);
@@ -72,7 +71,7 @@ public class ClientTest {
 	@Test
 	public void testGreatWall() throws MalformedURLException
 	{
-		String url = "http://gwall.sany.com.cn/sany-greatwall-web/helloservice";
+		String url = "http://gwall.test.com.cn/sany-greatwall-web/helloservice";
 		 HessianProxyFactory factory = new HessianProxyFactory();
 		 GreatWallHello basic = (GreatWallHello) factory.create(org.frameworkset.spi.remote.hession.client.GreatWallHello.class, url);
 		 System.out.println(basic.greet("greatwall"));

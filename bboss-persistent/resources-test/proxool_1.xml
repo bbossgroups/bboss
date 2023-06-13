@@ -8,12 +8,12 @@
 	<!--<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
    </property>  
   <!-- 连接数据库的用户名 -->
-  <property name="user" value="sanysfa">
+  <property name="user" value="ssfa">
     <!-- 如果账号是加密的账号，则需要配置解密的编辑器 -->
 <!--   	<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
   </property>  
   <!-- 连接数据库的密码 -->
-  <property name="password" value="sanysfa">
+  <property name="password" value="ssfa">
   <!-- 如果口令是加密的口令，则需要配置解密的编辑器 -->
 <!--   	<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
   </property>

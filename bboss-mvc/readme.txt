@@ -218,7 +218,7 @@ public @ResponseBody
 	Resource exportExeclTemplate(HttpServletRequest request, HttpServletResponse response, String excelType,
 			String module) throws Exception {
 		
-		String fileName = "com/sany/mms/background/action/exceldata.xls";
+		String fileName = "com/s/mms/background/action/exceldata.xls";
 		
 		ClassPathResource classpath = new ClassPathResource(fileName);
 		return classpath;

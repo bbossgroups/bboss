@@ -132,12 +132,12 @@ c3p0.xml参考测试配置文件/bboss-persistent/resources/c3p0.xml
 	<!--<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
    </property>  
   <!-- 连接数据库的用户名 -->
-  <property name="user" value="SANYGCMP">
+  <property name="user" value="sGCMP">
     <!-- 如果账号是加密的账号，则需要配置解密的编辑器 -->
 <!--   	<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
   </property>  
   <!-- 连接数据库的密码 -->
-  <property name="password" value="SANYGCMP">
+  <property name="password" value="sGCMP">
   <!-- 如果口令是加密的口令，则需要配置解密的编辑器 -->
 <!--   	<editor clazz="com.frameworkset.common.poolman.security.DecryptEditor"/> -->
   </property>
