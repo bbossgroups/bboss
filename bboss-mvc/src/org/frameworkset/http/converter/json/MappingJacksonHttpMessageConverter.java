@@ -30,18 +30,18 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 				convert = (AbstractHttpMessageConverter<Object>) Class.forName(jacson2Class).newInstance();
 			
 		} catch (ClassNotFoundException e) {
-			
+			logger.warn(jacson2Class,e);
 		} catch (InstantiationException e) {
-			
+            logger.warn(jacson2Class,e);
 		} catch (IllegalAccessException e) {
-			
+            logger.warn(jacson2Class,e);
 		}
 		 catch (NoClassDefFoundError e) {
-			
+             logger.warn(jacson2Class,e);
 		}
 		
 		catch (Exception e) {
-			
+            logger.warn(jacson2Class,e);
 		}
 		if(convert  == null)
 		{
@@ -53,17 +53,17 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 				convert = (AbstractHttpMessageConverter) Class.forName(jacson2Class).newInstance();
 				
 			} catch (ClassNotFoundException e) {
-				
+                logger.warn(jacson2Class,e);
 			} catch (InstantiationException e) {
-				
+                logger.warn(jacson2Class,e);
 			} catch (IllegalAccessException e) {
-				
+                logger.warn(jacson2Class,e);
 			}
 			 catch (NoClassDefFoundError e) {
-					
+                 logger.warn(jacson2Class,e);
 				}
 			catch (Exception e) {
-				
+                logger.warn(jacson2Class,e);
 			}
 		}
 	}
