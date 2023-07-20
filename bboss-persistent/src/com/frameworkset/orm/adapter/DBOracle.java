@@ -378,7 +378,7 @@ public class DBOracle extends DB
         return "||";
     }
 
-    public String getSchema(JDBCPoolMetaData info)
+    public String getSchema(JDBCPoolMetaData info,Connection con)
     {
     	if(info.getUserName() == null || info.getUserName().equals(""))
     	{

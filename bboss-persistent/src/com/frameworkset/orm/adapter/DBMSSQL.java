@@ -15,10 +15,11 @@
  */
 package com.frameworkset.orm.adapter;
 
-import java.sql.ResultSet;
-
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.orm.platform.PlatformMssqlImpl;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
 
 
 /**
@@ -94,7 +95,7 @@ public class DBMSSQL extends DBSybase
 //            return ResultSet.;
 //    }
     
-    public String getSchema(JDBCPoolMetaData info)
+    public String getSchema(JDBCPoolMetaData info, Connection con)
 	{
 		return DB.NULL_SCHEMA;
 	}

@@ -16,23 +16,26 @@ sourceSets {
 }
  
 
-project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.publishToMavenLocal)
-project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.publishToMavenLocal)
-project.tasks.compileJava.dependsOn(project(':bboss-htmlparser').tasks.publishToMavenLocal)
+//project.tasks.compileJava.dependsOn(project(':bboss-mvc').tasks.publishToMavenLocal)
+//project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.publishToMavenLocal)
+//project.tasks.compileJava.dependsOn(project(':bboss-htmlparser').tasks.publishToMavenLocal)
 dependencies {
-    api(
+	api project(":bboss-mvc")
+	api project(":bboss-htmlparser")
+	api project(":bboss-persistent")
+//    api(
     		
             
-            [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
-            [group: 'com.bbossgroups', name: 'bboss-mvc', version: "${version}", transitive: false],
-            [group: 'com.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
-            [group: 'com.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],
-            [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: true],
-            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
-            [group: 'com.bbossgroups', name: 'bboss-htmlparser', version: "${version}", transitive: false],
-           	[group: 'org.slf4j', name: 'slf4j-log4j12', version: "${slf4jlog4j12}", transitive: true],
+//            [group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: false],
+//            [group: 'com.bbossgroups', name: 'bboss-mvc', version: "${version}", transitive: false],
+//            [group: 'com.bbossgroups', name: 'bboss-soa', version: "${version}", transitive: false],
+//            [group: 'com.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],
+//            [group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: true],
+//            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+//            [group: 'com.bbossgroups', name: 'bboss-htmlparser', version: "${version}", transitive: false],
+//           	[group: 'org.slf4j', name: 'slf4j-log4j12', version: "${slf4jlog4j12}", transitive: true],
            
-    )
+//    )
     
     compileOnly (
     		 [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: false],

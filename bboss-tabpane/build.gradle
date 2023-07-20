@@ -13,14 +13,13 @@ sourceSets {
          
     }
 }
-project.tasks.compileJava.dependsOn(project(':bboss-taglib').tasks.publishToMavenLocal)
 dependencies {
-    api(
-    	 
-            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
-            [group: 'com.bbossgroups', name: 'bboss-taglib', version: "${version}", transitive: false],
-             
-    )
+	api project(":bboss-taglib")
+//    api(
+//
+//            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+//
+//    )
     
      compileOnly(
     	 [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],

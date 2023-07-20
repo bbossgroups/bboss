@@ -15,11 +15,12 @@ sourceSets {
 }
 
 dependencies {
-    api(
-    	 
-            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
-            
-    )
+	api project(":bboss-util")
+//    api(
+//
+//            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+//
+//    )
 
  
 }

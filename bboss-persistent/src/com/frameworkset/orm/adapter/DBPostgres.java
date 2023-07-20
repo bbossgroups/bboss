@@ -374,4 +374,20 @@ public class DBPostgres extends DB {
 //        }
         return fetchsize;
     }
+
+    public String getSchemaTableTableName(JDBCPoolMetaData info, String tablename) {
+        return tablename;
+    }
+
+    public String getSchema(JDBCPoolMetaData info,Connection con) {
+        if(con == null)
+            return DB.NULL_SCHEMA;
+        try {
+
+            return con.getSchema();
+        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+            return DB.NULL_SCHEMA;
+        }
+    }
 }

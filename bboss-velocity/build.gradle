@@ -11,7 +11,7 @@ sourceSets {
        
     }
 }
- project.tasks.compileJava.dependsOn(project(':bboss-soa').tasks.publishToMavenLocal)
+// project.tasks.compileJava.dependsOn(project(':bboss-soa').tasks.publishToMavenLocal)
 dependencies {
      
     

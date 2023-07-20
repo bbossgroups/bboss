@@ -518,7 +518,7 @@ public abstract class DB implements IDMethod, Platform {
 		return "|";
 	}
 
-	public String getSchema(JDBCPoolMetaData info) {
+	public String getSchema(JDBCPoolMetaData info,Connection con) {
 		if (info.getUserName() == null || info.getUserName().equals("")) {
 			return null;
 		}

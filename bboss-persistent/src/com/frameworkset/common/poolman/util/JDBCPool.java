@@ -839,7 +839,7 @@ public class JDBCPool {
 //				String schemaName = this.getDbAdapter().getSchema(info);
 //				if(schemaName == null)
 //					schemaName = metaData.getUserName();
-				String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info));
+				String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info,con));
 				TableMetaData tableMetaData = null;
 				String catalog = this.getDbAdapter().getDBCatalog(con);
 				// rs =
@@ -1128,7 +1128,7 @@ public class JDBCPool {
 	}
 	public String getDatabaseSchema(DatabaseMetaData databaseMetaData) throws Throwable
 	{
-		return getSchemaName_( databaseMetaData,this.getDbAdapter().getSchema(info));
+		return getSchemaName_( databaseMetaData,this.getDbAdapter().getSchema(info,null));
 	}
 	public Set<TableMetaData> refreshDatabaseMetaData(){
 		return refreshDatabaseMetaData(-1);
@@ -1146,7 +1146,7 @@ public class JDBCPool {
 			con = requestConnection();
 
 			metaData = con.getMetaData();
-			String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info));
+			String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info,con));
 //			String schemaName = this.getDbAdapter().getSchema(info);
 //			if(schemaName == null)
 //				schemaName = metaData.getUserName();
@@ -1234,7 +1234,7 @@ public class JDBCPool {
 				con = requestConnection();
 
 			metaData = con.getMetaData();
-			String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info));
+			String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info,con));
 //			String schemaName = this.getDbAdapter().getSchema(info);
 //			if(schemaName == null)
 //				schemaName = metaData.getUserName();
@@ -1439,7 +1439,7 @@ public class JDBCPool {
 			}
 
 			metaData = con.getMetaData();
-			String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info));
+			String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info,con));
 //			String schemaName = this.getDbAdapter().getSchema(info);
 //			if(schemaName == null)
 //				schemaName = metaData.getUserName();
@@ -1541,7 +1541,7 @@ public class JDBCPool {
 		} catch (Exception e) {
 
 		}
-		String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info));
+		String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info,con));
 		
 		String catalog = this.getDbAdapter().getDBCatalog(con);
 //		String schemaName = this.getDbAdapter().getSchema(info);
@@ -1777,6 +1777,9 @@ public class JDBCPool {
 	
 	private String getSchemaName_(DatabaseMetaData metaData,String schemaName) throws SQLException
 	{
+//        String sss = metaData.getSchemaTerm();
+//
+//        log.info(sss);
 		if(schemaName == null)
 			schemaName = metaData.getUserName();
 		else if(schemaName == DB.NULL_SCHEMA)
@@ -1813,7 +1816,10 @@ public class JDBCPool {
 				}
 	
 				metaData = con.getMetaData();
-				String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info));
+
+//				String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info));
+//                String schemaName = con.getSchema();
+                String schemaName = getSchemaName_( metaData,this.getDbAdapter().getSchema(info,con));
 //				String schemaName = this.getDbAdapter().getSchema(info);
 //				if(schemaName == null)
 //					schemaName = metaData.getUserName();

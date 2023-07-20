@@ -16,13 +16,14 @@ sourceSets {
         }
     }
 }
-project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.publishToMavenLocal)
+//project.tasks.compileJava.dependsOn(project(':bboss-persistent').tasks.publishToMavenLocal)
 dependencies {
+	api project(":bboss-persistent")
 	api (
-		[group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: true],
+//		[group: 'com.bbossgroups', name: 'bboss-core', version: "${version}", transitive: true],
 		[group: 'org.apache-extras.beanshell', name: 'bsh', version: '2.0b6', transitive: false],
-		[group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: true],
-		[group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
+//		[group: 'com.bbossgroups', name: 'bboss-persistent', version: "${version}", transitive: true],
+//		[group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
 
 		[group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2', transitive: true], [group: 'org.quartz-scheduler', name: 'quartz-backward-compat', version: '2.1.7', transitive: true],
  
