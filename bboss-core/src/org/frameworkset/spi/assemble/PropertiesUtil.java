@@ -15,6 +15,10 @@ package org.frameworkset.spi.assemble;
  * limitations under the License.
  */
 
+import com.frameworkset.util.SimpleStringUtil;
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.assemble.plugin.PropertiesFilePlugin;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,28 +31,140 @@ import java.util.Map;
  * @version 1.0
  */
 public class PropertiesUtil {
-	private static Map<String,PropertiesContainer> propertiesContainerMap = new LinkedHashMap<>();
-	public static PropertiesContainer getPropertiesContainer(){
+    private static Map<String, PropertiesContainer> propertiesContainerMap = new LinkedHashMap<>();
 
-		return getPropertiesContainer("application.properties");
-	}
+    private static Map<String, PropertiesContainer> propertiesApolloContainerMap = new LinkedHashMap<>();
+    private static Map<String, PropertiesContainer> propertiesPluginContainerMap = new LinkedHashMap<>();
+    public static PropertiesContainer getPropertiesContainer() {
 
-	public static PropertiesContainer getPropertiesContainer(String propertiesFile){
-		PropertiesContainer propertiesContainer = propertiesContainerMap.get(propertiesFile);
-		if(propertiesContainer != null){
-			return propertiesContainer;
-		}
-		synchronized (PropertiesUtil.class) {
-			propertiesContainer = propertiesContainerMap.get(propertiesFile);
-			if(propertiesContainer != null){
-				return propertiesContainer;
-			}
+        return getPropertiesContainer("application.properties");
+    }
 
-			propertiesContainer = new PropertiesContainer();
-			propertiesContainer.addConfigPropertiesFile(propertiesFile);
-			propertiesContainerMap.put(propertiesFile,propertiesContainer);
-		}
-		return propertiesContainer;
-	}
+    public static PropertiesContainer getPropertiesContainer(String propertiesFile) {
+        PropertiesContainer propertiesContainer = propertiesContainerMap.get(propertiesFile);
+        if (propertiesContainer != null) {
+            return propertiesContainer;
+        }
+        synchronized (PropertiesUtil.class) {
+            propertiesContainer = propertiesContainerMap.get(propertiesFile);
+            if (propertiesContainer != null) {
+                return propertiesContainer;
+            }
+
+            propertiesContainer = new PropertiesContainer();
+            propertiesContainer.addConfigPropertiesFile(propertiesFile);
+            propertiesContainerMap.put(propertiesFile, propertiesContainer);
+        }
+        return propertiesContainer;
+    }
+
+    public static PropertiesContainer getPropertiesContainer(String propertiesFile, LinkConfigFile linkfile) {
+        PropertiesContainer propertiesContainer = propertiesContainerMap.get(propertiesFile);
+        if (propertiesContainer != null) {
+            return propertiesContainer;
+        }
+        synchronized (PropertiesUtil.class) {
+            propertiesContainer = propertiesContainerMap.get(propertiesFile);
+            if (propertiesContainer != null) {
+                return propertiesContainer;
+            }
+
+            propertiesContainer = new PropertiesContainer();
+            propertiesContainer.addConfigPropertiesFile(propertiesFile, linkfile);
+            propertiesContainerMap.put(propertiesFile, propertiesContainer);
+        }
+        return propertiesContainer;
+    }
+
+
+    public static PropertiesContainer getPropertiesContainerFromPlugin(String configPropertiesPlugin, LinkConfigFile linkfile, BaseApplicationContext applicationContext, Map<String, String> extendsAttributes){
+        PropertiesContainer propertiesContainer = propertiesPluginContainerMap.get(configPropertiesPlugin);
+        if (propertiesContainer != null) {
+            return propertiesContainer;
+        }
+        synchronized (PropertiesUtil.class) {
+            propertiesContainer = propertiesPluginContainerMap.get(configPropertiesPlugin);
+            if (propertiesContainer != null) {
+                return propertiesContainer;
+            }
+            try {
+                Class clazz = Class.forName(configPropertiesPlugin.trim());
+                PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin) clazz.newInstance();
+                int initType = propertiesFilePlugin.getInitType(applicationContext, extendsAttributes, null);
+                if (initType != 1) {//采用文件模式
+                    String configPropertiesFile = propertiesFilePlugin.getFiles(applicationContext, extendsAttributes, null);
+                    if (SimpleStringUtil.isNotEmpty(configPropertiesFile)) {
+                        propertiesContainer = getPropertiesContainer(configPropertiesFile, linkfile);
+                        propertiesPluginContainerMap.put(configPropertiesPlugin, propertiesContainer);
+                        return propertiesContainer;
+                    } else {
+                        return getPropertiesContainerFromPlugin(propertiesFilePlugin, configPropertiesPlugin, linkfile, applicationContext, extendsAttributes);
+                    }
+                } else {
+                    return getPropertiesContainerFromPlugin(propertiesFilePlugin, configPropertiesPlugin, linkfile, applicationContext, extendsAttributes);
+                }
+            } catch (Exception e) {
+                throw new AssembleException("configPropertiesPlugin:" + configPropertiesPlugin, e);
+            }
+        }
+
+    }
+
+    public static PropertiesContainer getPropertiesContainerFromPlugin(PropertiesFilePlugin propertiesFilePlugin, String configPropertiesPlugin,LinkConfigFile linkfile, BaseApplicationContext applicationContext, Map<String, String> extendsAttributes){
+
+
+            PropertiesContainer propertiesContainer = propertiesPluginContainerMap.get(configPropertiesPlugin);
+            if (propertiesContainer != null) {
+                return propertiesContainer;
+            }
+            synchronized (PropertiesUtil.class) {
+                propertiesContainer = propertiesPluginContainerMap.get(configPropertiesPlugin);
+                if (propertiesContainer != null) {
+                    return propertiesContainer;
+                }
+
+                propertiesContainer = new PropertiesContainer();
+                propertiesContainer.addConfigPropertiesFromPlugin(propertiesFilePlugin, linkfile, applicationContext, extendsAttributes);
+                propertiesPluginContainerMap.put(configPropertiesPlugin, propertiesContainer);
+            }
+            return propertiesContainer;
+
+
+    }
+    public static PropertiesContainer getPropertiesContainerFromApollo(String propertiesFile, LinkConfigFile linkfile, BaseApplicationContext applicationContext, Map<String,String> extendsAttributes){
+        PropertiesContainer propertiesContainer = propertiesApolloContainerMap.get(propertiesFile);
+        if(propertiesContainer != null){
+            return propertiesContainer;
+        }
+        synchronized (PropertiesUtil.class) {
+            propertiesContainer = propertiesApolloContainerMap.get(propertiesFile);
+            if(propertiesContainer != null){
+                return propertiesContainer;
+            }
+
+            propertiesContainer = new PropertiesContainer();
+            propertiesContainer.addConfigPropertiesFromApollo(propertiesFile,linkfile,applicationContext,extendsAttributes);
+            propertiesApolloContainerMap.put(propertiesFile,propertiesContainer);
+        }
+        return propertiesContainer;
+    }
+
+    public static PropertiesContainer getPropertiesContainerFromApollo(String propertiesFile){
+        PropertiesContainer propertiesContainer = propertiesApolloContainerMap.get(propertiesFile);
+        if(propertiesContainer != null){
+            return propertiesContainer;
+        }
+        synchronized (PropertiesUtil.class) {
+            propertiesContainer = propertiesApolloContainerMap.get(propertiesFile);
+            if(propertiesContainer != null){
+                return propertiesContainer;
+            }
+
+            propertiesContainer = new PropertiesContainer();
+            propertiesContainer.addConfigPropertiesFromApollo(propertiesFile);
+            propertiesApolloContainerMap.put(propertiesFile,propertiesContainer);
+        }
+        return propertiesContainer;
+    }
 
 }

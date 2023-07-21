@@ -15,5 +15,5 @@ nohup java \$RT_JAVA_OPTS -jar ${project}-${bboss_version}.jar --conf=resources/
 if [  "\$1" == "auto" ];then
   tail /app/data/logs/${project}.log
 else
-  tail -f /app/data/logs/${project}.log
+  tail -fn200 /app/data/logs/${project}.log
 fi

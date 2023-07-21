@@ -114,6 +114,12 @@ public class PropertiesContainer extends AbstractGetProperties{
 		}
 
 	}
+
+    /**
+     * 后加入的属性配置文件，可以引用先前加入的属性，反之不成立
+     * @param configPropertiesFile
+     * @param linkfile
+     */
     public void addConfigPropertiesFile(String configPropertiesFile,LinkConfigFile linkfile)
     {
     	if(configPropertiesFiles == null)
@@ -142,9 +148,12 @@ public class PropertiesContainer extends AbstractGetProperties{
     		loopback(linkfile);
     	
     }
-
     public void addAll(Map properties){
-		properties = this.interceptorValues(properties);
+       addAll( properties,true);
+    }
+    public void addAll(Map properties,boolean interceptor){
+        if(interceptor)
+		    properties = this.interceptorValues(properties);
 		if(configPropertiesFiles == null)
 		{
 			configPropertiesFiles = new ArrayList<String>();
@@ -192,7 +201,13 @@ public class PropertiesContainer extends AbstractGetProperties{
 	}
 
 
-
+    /**
+     * 从plugin加载属性配置，后加入的，可以引用先前加入的属性，反之不成立
+     * @param configPropertiesPlugin
+     * @param linkfile
+     * @param applicationContext
+     * @param extendsAttributes
+     */
 	public void addConfigPropertiesFromPlugin(String configPropertiesPlugin, LinkConfigFile linkfile, BaseApplicationContext applicationContext,Map<String,String> extendsAttributes )
 	{
 
@@ -244,9 +259,75 @@ public class PropertiesContainer extends AbstractGetProperties{
 
 
 	}
+
+    /**
+     * 从plugin加载属性配置，后加入的，可以引用先前加入的属性，反之不成立
+     * @param propertiesFilePlugin
+     * @param linkfile
+     * @param applicationContext
+     * @param extendsAttributes
+     */
+    public void addConfigPropertiesFromPlugin(PropertiesFilePlugin propertiesFilePlugin, LinkConfigFile linkfile, BaseApplicationContext applicationContext,Map<String,String> extendsAttributes )
+    {
+
+        if(configPropertiesFiles == null)
+        {
+            configPropertiesFiles = new ArrayList<String>();
+
+        }
+        if(allProperties  == null)
+            allProperties = new Properties();
+
+        try {
+            synchronized (PropertiesFilePlugin.class) {
+                try {
+                    Map configProperties = null;
+                    if (propertiesFilePlugin.getInitType(applicationContext,extendsAttributes,this) != 1) {
+                        String configPropertiesFile = propertiesFilePlugin.getFiles(applicationContext,extendsAttributes,this);
+                        if (SimpleStringUtil.isNotEmpty(configPropertiesFile)) {
+                            configProperties = new LinkedHashMap();
+                            loadPropertiesFromFiles(configProperties,configPropertiesFile, linkfile);
+                        }
+                    } else {
+                        configProperties = propertiesFilePlugin.getConfigProperties(applicationContext,extendsAttributes,this);
+//						if (configProperties != null && configProperties.size() > 0) {
+//
+//							allProperties.putAll(configProperties);
+//						}
+                    }
+                    if(configProperties != null && configProperties.size() > 0 ){
+                        configProperties = EnvUtil.evalEnvVariable(allProperties,configProperties);
+                        configProperties = this.interceptorValues(configProperties);
+                        if(configProperties != null && configProperties.size() > 0)
+                            allProperties.putAll(configProperties);
+                    }
+                } finally {
+                    propertiesFilePlugin.restore(applicationContext,extendsAttributes,this);
+                    this.propertiesFilePlugin = propertiesFilePlugin;
+                }
+            }
+            if(linkfile != null)
+                loopback(linkfile);
+        } catch (Exception e) {
+//            if(log.isErrorEnabled()) {
+//                log.error("Add Config Properties for[" + applicationContext.getConfigfile() + "] From plugin failed: " + SimpleStringUtil.object2json(extendsAttributes), e);
+//            }
+            if(applicationContext != null) {
+                throw new AssembleException("Add Config Properties for[" + applicationContext.getConfigfile() + "]:plugin["+propertiesFilePlugin.getClass().getCanonicalName()+"] From plugin failed: " + SimpleStringUtil.object2json(extendsAttributes), e);
+            }
+        }
+
+
+    }
 	protected String namespace;
     protected String configChangeListener;
     protected boolean changeReload;
+
+    /**
+     * 从Apollo加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
+     * @param namespace
+     * @param configChangeListener
+     */
 	public void addConfigPropertiesFromApollo(String namespace,String configChangeListener)
 	{
 		this.namespace = namespace;
@@ -270,6 +351,11 @@ public class PropertiesContainer extends AbstractGetProperties{
 		this.afterLoaded(this);
 	}
 
+    /**
+     * 从Apollo加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
+     * @param namespace
+     * @param changeReload
+     */
 	public void addConfigPropertiesFromApollo(String namespace,boolean changeReload)
 	{
 		this.namespace = namespace;
@@ -283,6 +369,11 @@ public class PropertiesContainer extends AbstractGetProperties{
 		addConfigPropertiesFromApollo(  namespace,   (LinkConfigFile)null, (BaseApplicationContext)null,pros );
 
 	}
+
+    /**
+     * 从Apollo加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
+     * @param namespace
+     */
 	public void addConfigPropertiesFromApollo(String namespace)
 	{
 		Map<String,String> pros = new HashMap<String,String>();
@@ -291,6 +382,14 @@ public class PropertiesContainer extends AbstractGetProperties{
 		addConfigPropertiesFromApollo(  namespace,   (LinkConfigFile)null, (BaseApplicationContext)null,pros );
 
 	}
+
+    /**
+     * 从Apollo加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
+     * @param namespace
+     * @param linkfile
+     * @param applicationContext
+     * @param extendsAttributes
+     */
 	public void addConfigPropertiesFromApollo(String namespace, LinkConfigFile linkfile, BaseApplicationContext applicationContext,Map<String,String> extendsAttributes )
 	{
 
@@ -334,12 +433,12 @@ public class PropertiesContainer extends AbstractGetProperties{
 					msg.append("Add Config Properties From Apollo failed: " )
 							.append( SimpleStringUtil.object2json(extendsAttributes) );
 				}
-				msg.append(", Add compile dependency to build.gradle in gralde project: \r\ncompile \"com.bbossgroups.plugins:bboss-plugin-apollo:5.9.7\"")
+				msg.append(", Add compile dependency to build.gradle in gralde project: \r\napi \"com.bbossgroups.plugins:bboss-plugin-apollo:{lastVersion}\"")
 				.append(" \r\nor Add compile dependency to pom.xml in maven project: \r\n    " )
 							.append( "    <dependency>\n"  )
 						.append("            <groupId>com.bbossgroups.plugins</groupId>\n"  )
 						.append("            <artifactId>bboss-plugin-apollo</artifactId>\n"  )
-						.append("            <version>5.9.7</version>\n"  )
+						.append("            <version>{lastVersion}</version>\n"  )
 						.append("        </dependency>");
 				log.error(msg.toString(),e);
 			}
@@ -596,6 +695,11 @@ public class PropertiesContainer extends AbstractGetProperties{
 		return value;
 
 	}
+
+    /**
+     * 后加入的属性配置文件，可以引用先前加入的属性，反之不成立
+     * @param configPropertiesFile
+     */
     public void addConfigPropertiesFile(String configPropertiesFile)
     {
     	addConfigPropertiesFile(  configPropertiesFile,null);
@@ -623,7 +727,7 @@ public class PropertiesContainer extends AbstractGetProperties{
                         if(!file_.equals("") && !contain(file_)) {
                             logger.info("load properties from {} included by {}", file_, configPropertiesFile);
 //                            this.configPropertiesFiles.add(file_);
-                            evalfileInner( includeProperties,currentProperties, file_, linkfile);
+                            evalfileInner( includeProperties, file_, linkfile);
                         }
                     }
                 }
@@ -727,7 +831,8 @@ public class PropertiesContainer extends AbstractGetProperties{
                 List<Properties> propertiesList = new ArrayList<>();
                 handleIncludeFiles(propertiesList,properties, configPropertiesFile, linkfile);
                 for(Properties properties_:propertiesList){
-                    properties.putAll(properties_);
+//                    properties.putAll(properties_);
+                    mergeProperties( properties,properties_);
                 }
 				currentProperties.putAll(properties);
 			}
@@ -754,7 +859,26 @@ public class PropertiesContainer extends AbstractGetProperties{
     	}
     }
 
-    private void evalfileInner(List<Properties> propertiesList,Map currentProperties,String configPropertiesFile,LinkConfigFile linkfile)
+    /**
+     * 父配置文件中存在的配置不会被引用配置文件中的配置参数覆盖
+     *
+     * @param properties
+     * @param includeProperties
+     */
+    private void mergeProperties(Properties properties,Properties includeProperties){
+        Iterator<Map.Entry<Object, Object>> iterator = includeProperties.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = iterator.next();
+            Object key =  entry.getKey();
+            if(properties.containsKey(key)){
+                continue;
+            }
+            Object value = entry.getValue();
+            properties.put(key,value);
+        }
+    }
+
+    private void evalfileInner(List<Properties> propertiesList,String configPropertiesFile,LinkConfigFile linkfile)
     {
         Properties properties = new java.util.Properties();
 
@@ -831,7 +955,12 @@ public class PropertiesContainer extends AbstractGetProperties{
             }
             if(!properties.isEmpty()) {
                 //加载include.files中的配置
-                handleIncludeFiles(propertiesList,properties, configPropertiesFile, linkfile);
+                List<Properties> innerpropertiesList = new ArrayList<>();
+                handleIncludeFiles(innerpropertiesList,properties, configPropertiesFile, linkfile);
+                for(Properties properties_:innerpropertiesList){
+//                    properties.putAll(properties_);
+                    mergeProperties( properties,properties_);
+                }
                 propertiesList.add(properties);
             }
 

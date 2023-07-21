@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<properties>
+    <!--
+    可以配置多个config，但是每个config设置的属性无法相互引用，最终各个config中对应的所有属性被合并为一个容器属性配置注册器供外部或者组件引用
+    -->
+    <config file="org/frameworkset/spi/properties/includefiles/applicationincludes.properties"/>
+    <property name="ttt" value=" ${elasticEnvUser}"/>
+
+</properties>

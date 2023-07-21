@@ -31,4 +31,18 @@ public class AssembleException extends java.lang.RuntimeException {
         super(messgage);
     }
 
+    public AssembleException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public AssembleException(Throwable cause) {
+        super(cause);
+    }
+
+    public AssembleException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
+
+    public AssembleException() {
+    }
 }

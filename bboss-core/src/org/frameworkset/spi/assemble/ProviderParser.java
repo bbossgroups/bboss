@@ -1228,21 +1228,41 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
         }
         else if(name.equals("config"))
         {
-        	if(this.configPropertiesFile == null)
-        		configPropertiesFile = new PropertiesContainer();
+
         	String file = attributes.getValue("file");
         	if(file != null) {
-				this.configPropertiesFile.addConfigPropertiesFile(file, this.linkfile);
-			}
+                if(this.configPropertiesFile == null)
+                    configPropertiesFile = new PropertiesContainer();
+                PropertiesContainer propertiesContainer = PropertiesUtil.getPropertiesContainer(file, this.linkfile);
+
+                configPropertiesFile.addAll(propertiesContainer.getAllExternalProperties(), false);
+//                this.configPropertiesFile.addConfigPropertiesFile(file, this.linkfile);
+
+            }
         	else{
+
 				Map<String,String> extendsAttributes = converAttributes(attributes);
         		file = attributes.getValue("plugin");
 				if(file != null ) {
-					this.configPropertiesFile.addConfigPropertiesFromPlugin(file, this.linkfile, this.applicationContext, extendsAttributes);
+                    if(this.configPropertiesFile == null)
+                        configPropertiesFile = new PropertiesContainer();
+
+                    PropertiesContainer propertiesContainer = PropertiesUtil.getPropertiesContainerFromPlugin(file, this.linkfile, this.applicationContext, extendsAttributes);
+
+                    configPropertiesFile.addAll(propertiesContainer.getAllExternalProperties(), false);
+//					this.configPropertiesFile.addConfigPropertiesFromPlugin(file, this.linkfile, this.applicationContext, extendsAttributes);
 				}
 				else{
 					file = attributes.getValue("apolloNamespace");
-					this.configPropertiesFile.addConfigPropertiesFromApollo(file,this.linkfile, this.applicationContext, extendsAttributes);
+                    if(file != null) {
+                        if(this.configPropertiesFile == null)
+                            configPropertiesFile = new PropertiesContainer();
+
+                        PropertiesContainer propertiesContainer = PropertiesUtil.getPropertiesContainerFromApollo(file, this.linkfile,applicationContext, extendsAttributes);
+                        configPropertiesFile.addAll(propertiesContainer.getAllExternalProperties(), false);
+
+//                        this.configPropertiesFile.addConfigPropertiesFromApollo(file, this.linkfile, this.applicationContext, extendsAttributes);
+                    }
 				}
 			}
         }
