@@ -1,11 +1,9 @@
 package org.frameworkset.util.annotations;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * use static method to construction DateFormateMeta Object
@@ -22,6 +20,22 @@ public class DateFormateMeta {
 	private DateFormateMeta(){
 		
 	}
+    public static String format(Date date, String dateformat){
+        DateFormateMeta dateFormateMeta = DateFormateMeta.buildDateFormateMeta(dateformat);
+        String time = dateFormateMeta.toDateFormat().format(date);
+        return time;
+    }
+
+    public static Date toDate(String date, String dateformat){
+        DateFormateMeta dateFormateMeta = DateFormateMeta.buildDateFormateMeta(dateformat);
+        try {
+            Date time = dateFormateMeta.toDateFormat().parse(date);
+            return time;
+        } catch (ParseException e) {
+            throw new DateFormatException("date:"+date+",dateformat="+dateformat,e);
+        }
+
+    }
 	public String getDateformat() {
 		return dateformat;
 	}
