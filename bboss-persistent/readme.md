@@ -1214,7 +1214,7 @@ o mysql,derby数据库的datasource配置文件poolman.xml中的readOnly属性�
 o 增加注解方式的数据库事务管理
 	@Transaction("REQUIRED_TRANSACTION")
     @RollbackExceptions("") //@RollbackExceptions("{exception1,excpetion2}")
-    详细情况参看测试用例/bbossaop/test/com/chinacreator/spi/transaction/annotation
+    详细情况参看测试用例/bbossaop/test/com/frameworkset/spi/transaction/annotation
 ----------------------------------------
 1.0.5 - 2009-12-14
 ----------------------------------------
@@ -1244,7 +1244,7 @@ o 修改邮件地址错误问题
 If the StackTrace contains an InstanceAlreadyExistsException, then you have  encountered a ClassLoader linkage problem.  Please email poolman@codestudio.com **
 	at com.frameworkset.common.poolman.util.SQLManager.requestConnection(SQLManager.java:190)
 	at com.frameworkset.common.poolman.util.SQLUtil.getConection(SQLUtil.java:930)
-	at com.chinacreator.mq.transfer.send.SendBigData.execute(SendBigData.java:268)
+	at com.frameworkset.mq.transfer.send.SendBigData.execute(SendBigData.java:268)
 o 增加Serializable对象获取接口
 com.frameworkset.common.poolman.DBUtil
 
@@ -1348,8 +1348,8 @@ o 异常：java.util.ConcurrentModificationException: concurrent access to HashM
 	at com.frameworkset.common.poolman.DBUtil.executeInsert(DBUtil.java:1166)
 	at com.frameworkset.common.poolman.DBUtil.executeInsert(DBUtil.java:1176)
 	at com.frameworkset.common.poolman.DBUtil.executeInsert(DBUtil.java:1172)
-	at com.chinacreator.sms.BaseMTWriterImpl.traceSendSuccess(BaseMTWriterImpl.java:61)
-	at com.chinacreator.sms.thread.QueueServiceHandleThread.run(QueueServiceHandleThread.java:79)
+	at com.frameworkset.sms.BaseMTWriterImpl.traceSendSuccess(BaseMTWriterImpl.java:61)
+	at com.frameworkset.sms.thread.QueueServiceHandleThread.run(QueueServiceHandleThread.java:79)
 	at java.lang.Thread.run(Thread.java:570)
 
 [09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at java.util.HashMap.onEntry(HashMap.java(Inlined Compiled Code))
@@ -1365,8 +1365,8 @@ o 异常：java.util.ConcurrentModificationException: concurrent access to HashM
 [09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.common.poolman.DBUtil.executeInsert(DBUtil.java:1166)
 [09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.common.poolman.DBUtil.executeInsert(DBUtil.java:1176)
 [09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.common.poolman.DBUtil.executeInsert(DBUtil.java:1172)
-[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.chinacreator.sms.BaseMTWriterImpl.traceSendSuccess(BaseMTWriterImpl.java:61)
-[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.chinacreator.sms.thread.QueueServiceHandleThread.run(QueueServiceHandleThread.java:79)
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.sms.BaseMTWriterImpl.traceSendSuccess(BaseMTWriterImpl.java:61)
+[09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at com.frameworkset.sms.thread.QueueServiceHandleThread.run(QueueServiceHandleThread.java:79)
 [09-4-28 16:37:53:375 CST] 0000003b SystemErr     R 	at java.lang.Thread.run(Thread.java:570)
 
 问题分析：这个错误只是偶尔出现，在服务器压力大，或者数据库压力大的时候容易出现，参照文档：http://jira.codehaus.org/browse/XFIRE-1119
@@ -1582,8 +1582,8 @@ public class TestXMLHandler {
 }
 
 o 修改bug，执行o/r mapping 查询时，如果数字类型/byte/boolean的数据值为null时，会报以下异常：
-Build ValueObject for ResultSet[select * from mq_node where NODE_NAME='test'] Get Column[CA_ID] from  ResultSet to com.chinacreator.mq.client.MqNode@10cec16.CA_ID[int] failed:null
-ERROR 01-06 17:30:25,093 - Build ValueObject for ResultSet[select * from mq_node where NODE_NAME='test'] Get Column[CA_ID] from  ResultSet to com.chinacreator.mq.client.MqNode@10cec16.CA_ID[int] failed:null
+Build ValueObject for ResultSet[select * from mq_node where NODE_NAME='test'] Get Column[CA_ID] from  ResultSet to com.frameworkset.mq.client.MqNode@10cec16.CA_ID[int] failed:null
+ERROR 01-06 17:30:25,093 - Build ValueObject for ResultSet[select * from mq_node where NODE_NAME='test'] Get Column[CA_ID] from  ResultSet to com.frameworkset.mq.client.MqNode@10cec16.CA_ID[int] failed:null
 java.lang.IllegalArgumentException
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
@@ -1595,7 +1595,7 @@ java.lang.IllegalArgumentException
 	at com.frameworkset.common.poolman.DBUtil.executeSelectForObject(DBUtil.java:3753)
 	at com.frameworkset.common.poolman.DBUtil.executeSelectForObject(DBUtil.java:3742)
 	at com.frameworkset.common.poolman.DBUtil.executeSelectForObject(DBUtil.java:3618)
-	at com.chinacreator.mq.client.MqNodeService.getNodeByName(MqNodeService.java:150)
+	at com.frameworkset.mq.client.MqNodeService.getNodeByName(MqNodeService.java:150)
 	at be.ibridge.kettle.consumer_stream.ConsumerService.buildMQClient(ConsumerService.java:63)
 	at be.ibridge.kettle.consumer_stream.Consumer.processRow(Consumer.java:155)
 	at be.ibridge.kettle.consumer_stream.Consumer.run(Consumer.java:200)
@@ -1626,9 +1626,9 @@ java.lang.NullPointerException
 	at com.frameworkset.common.poolman.Record.getObject(Record.java:724)
 	at com.frameworkset.common.poolman.Record.getString(Record.java:156)
 	at com.frameworkset.common.poolman.DBUtil.getValue(DBUtil.java:292)
-	at com.chinacreator.jspreport.DimenDao.findReportBeans(DimenDao.java:133)
-	at com.chinacreator.jspreport.DimenDao.getReport(DimenDao.java:222)
-	at com.chinacreator.jspreport.report.ReportList.getDataList(ReportList.java:31)
+	at com.frameworkset.jspreport.DimenDao.findReportBeans(DimenDao.java:133)
+	at com.frameworkset.jspreport.DimenDao.getReport(DimenDao.java:222)
+	at com.frameworkset.jspreport.report.ReportList.getDataList(ReportList.java:31)
 	at com.frameworkset.common.tag.pager.DataInfoImpl.getItemCount(DataInfoImpl.java:147)
 	at com.frameworkset.common.tag.pager.tags.PagerContext.setDataInfo(PagerContext.java:1094)
 	at com.frameworkset.common.tag.pager.tags.PagerContext.initContext(PagerContext.java:954)

@@ -78,11 +78,11 @@ currentcell：保存list/array循环中当前的值
 #######update function list since bbossgroups-3.5.1 begin###########
 o bboss3.6.0分支相对于之前的分支版本（bboss3.5.1分支和master分支)的最大变化为：
 更换cms.jar中程序包路径
-com.chinacreator为
+com.frameworkset为
 com.frameworkset.platform
 这样就和bboss-cms[https://github.com/bbossgroups/bboss-cms.git]工程保持一致
 
-bboss3.5.1分支和master分支任然保留对com.chinacreator的支持。
+
 
 #######update function list since bbossgroups-3.5 begin###########
 o cms导航索引样式调整，频道导航调整
