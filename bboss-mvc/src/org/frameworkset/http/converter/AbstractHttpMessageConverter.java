@@ -204,8 +204,19 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	public final T read(Class<? extends T> clazz, HttpInputMessage inputMessage) throws IOException {
 		return readInternal(clazz, inputMessage);
 	}
-	
-	/**
+
+    /**
+     * This implementation simple delegates to {@link #readInternal(Class, HttpInputMessage)}.
+     * Future implementations might add some default behavior, however.
+     */
+    @Override
+    public final T read(Class<? extends T> clazz, Class[] elementTypes,HttpInputMessage inputMessage) throws IOException {
+        return readInternal(clazz,elementTypes, inputMessage);
+    }
+
+
+
+    /**
 	 * This implementation sets the default headers by calling {@link #addDefaultHeaders},
 	 * and then calls {@link #writeInternal}.
 	 */
@@ -324,6 +335,20 @@ public abstract class AbstractHttpMessageConverter<T> implements HttpMessageConv
 	 */
 	public abstract T readInternal(Class<? extends T> clazz, HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotReadableException;
+
+
+    /**
+     * Abstract template method that reads the actual object. Invoked from {@link #read}.
+     * @param clazz the type of object to return
+     * @param inputMessage the HTTP input message to read from
+     * @return the converted object
+     * @throws IOException in case of I/O errors
+     * @throws HttpMessageNotReadableException in case of conversion errors
+     */
+    public T readInternal(Class<? extends T> clazz,Class[] elementTypes, HttpInputMessage inputMessage)
+            throws IOException, HttpMessageNotReadableException{
+        return readInternal( clazz,  inputMessage);
+    }
 
 	/**
 	 * Abstract template method that writes the actual body. Invoked from {@link #write}.

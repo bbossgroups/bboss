@@ -19,6 +19,7 @@ package org.frameworkset.util;
 import com.frameworkset.util.EditorInf;
 import org.frameworkset.util.ClassUtil.Var;
 import org.frameworkset.util.annotations.MapKey;
+import org.frameworkset.util.annotations.MethodInfo;
 import org.frameworkset.util.annotations.Scope;
 import org.frameworkset.util.annotations.wraper.*;
 
@@ -59,6 +60,8 @@ public class MethodParameter {
 
 	private Method method;
 
+
+    private MethodInfo methodInfo;
 	private EditorInf editor;
 
 	private Constructor constructor;
@@ -67,6 +70,7 @@ public class MethodParameter {
 	private final int parameterIndex;
 
 	private Class parameterType;
+    private Class[] parameterElementTypes;
 
 	private Object[] parameterAnnotations;
 
@@ -84,9 +88,13 @@ public class MethodParameter {
 	}
 
 	private boolean namevariabled = false;
-	
 
-	public void setNamevariabled(boolean namevariabled) {
+
+    public Class[] getParameterElementTypes() {
+        return parameterElementTypes;
+    }
+
+    public void setNamevariabled(boolean namevariabled) {
 		this.namevariabled = namevariabled;
 	}
 
@@ -170,6 +178,7 @@ public class MethodParameter {
 		this.method = method;
 		this.parameterIndex = parameterIndex;
 		this.nestingLevel = nestingLevel;
+        initParameterTypes();
 	}
 
 	/**
@@ -203,6 +212,7 @@ public class MethodParameter {
 		this.constructor = constructor;
 		this.parameterIndex = parameterIndex;
 		this.nestingLevel = nestingLevel;
+        initParameterTypes();
 	}
 
 	/**
@@ -221,6 +231,7 @@ public class MethodParameter {
 		this.parameterType = original.parameterType;
 		this.parameterAnnotations = original.parameterAnnotations;
 		this.typeVariableMap = original.typeVariableMap;
+        this.parameterElementTypes = original.parameterElementTypes;
 	}
 
 	/**
@@ -261,6 +272,16 @@ public class MethodParameter {
 		this.parameterType = parameterType;
 	}
 
+    private void initParameterTypes(){
+            if (this.method != null) {
+                this.parameterType = this.method
+                        .getParameterTypes()[this.parameterIndex];
+                this.parameterElementTypes = ClassUtils.genericParameterTypes(method, parameterIndex);
+            } else if(constructor != null){
+                this.parameterType = this.constructor.getParameterTypes()[this.parameterIndex];
+                this.parameterElementTypes = ClassUtils.genericParameterTypes(constructor, parameterIndex);
+            }
+    }
 	/**
 	 * Return the type of the method/constructor parameter.
 	 * 
@@ -671,6 +692,15 @@ public class MethodParameter {
 	public boolean requestbody() {
 		return isrequestbody || innerRequestBody();
 	}
+
+
+    public MethodInfo getMethodInfo() {
+        return methodInfo;
+    }
+
+    public void setMethodInfo(MethodInfo methodInfo) {
+        this.methodInfo = methodInfo;
+    }
 
 
 }

@@ -129,6 +129,13 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 		return convert.readInternal(clazz, inputMessage);
 	}
 
+    @Override
+    public Object readInternal(Class<? extends Object> clazz,Class[] elementTypes, HttpInputMessage inputMessage)
+            throws IOException, HttpMessageNotReadableException {
+        // TODO Auto-generated method stub
+        return convert.readInternal(clazz, elementTypes,inputMessage);
+    }
+
 	@Override
 	public void writeInternal(Object t, HttpOutputMessage outputMessage, HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotWritableException {

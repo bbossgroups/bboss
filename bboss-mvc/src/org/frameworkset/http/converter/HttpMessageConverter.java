@@ -15,13 +15,13 @@
  */
 package org.frameworkset.http.converter;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.List;
-
 import org.frameworkset.http.HttpInputMessage;
 import org.frameworkset.http.HttpOutputMessage;
 import org.frameworkset.http.MediaType;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.List;
 
 /**
  * <p>Title: HttpMessageConverter.java</p> 
@@ -47,8 +47,7 @@ public interface HttpMessageConverter<T> {
 	
 	/**
 	 * Indicates whether the given class can be read by this converter.
-	 * @param clazz the class to test for readability
-	 * @param mediaType the media type to read, can be {@code null} if not specified.
+
 	 * Typically the value of a {@code Content-Type} header.
 	 * @return {@code true} if readable; {@code false} otherwise
 	 */
@@ -78,9 +77,12 @@ public interface HttpMessageConverter<T> {
 	 * @throws IOException in case of I/O errors
 	 * @throws HttpMessageNotReadableException in case of conversion errors
 	 */
-	T read(Class<? extends T> clazz, HttpInputMessage inputMessage)
-			throws IOException, HttpMessageNotReadableException;
-
+	default T read(Class<? extends T> clazz,Class[] paramElementTypes, HttpInputMessage inputMessage)
+			throws IOException, HttpMessageNotReadableException{
+        return read(clazz,  inputMessage);
+    }
+    T read(Class<? extends T> clazz, HttpInputMessage inputMessage)
+            throws IOException, HttpMessageNotReadableException;
 	/**
 	 * Write an given object to the given output message.
 	 * @param t the object to write to the output message. The type of this object must have previously been
@@ -89,7 +91,7 @@ public interface HttpMessageConverter<T> {
 	 * default content type of the converter must be used. If not {@code null}, this media type must have
 	 * previously been passed to the {@link #canWrite canWrite} method of this interface, which must have
 	 * returned {@code true}.
-	 * @param usecustomMediaTypeByMethod 识别contentType是不是由控制器方法单独指定，如果是则为true,否则为false，如果没有使用
+	 * @param t 识别contentType是不是由控制器方法单独指定，如果是则为true,否则为false，如果没有使用
 	 * @param outputMessage the message to write to
 	 * @throws IOException in case of I/O errors
 	 * @throws HttpMessageNotWritableException in case of conversion errors

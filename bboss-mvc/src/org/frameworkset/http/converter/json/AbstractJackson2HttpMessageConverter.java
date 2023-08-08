@@ -175,6 +175,25 @@ public abstract class AbstractJackson2HttpMessageConverter extends AbstractGener
 		return readJavaType(javaType, inputMessage);
 	}
 
+    /**
+     * Abstract template method that reads the actual object. Invoked from {@link #read}.
+     * @param clazz the type of object to return
+     * @param inputMessage the HTTP input message to read from
+     * @return the converted object
+     * @throws IOException in case of I/O errors
+     * @throws HttpMessageNotReadableException in case of conversion errors
+     */
+    @Override
+    public Object readInternal(Class<? > clazz,Class[] elementTypes, HttpInputMessage inputMessage)
+            throws IOException, HttpMessageNotReadableException{
+        JavaType javaType = null;
+        if(elementTypes == null || elementTypes.length == 0)
+            javaType =   getJavaType(clazz, null);
+        else
+            javaType = objectMapper.getTypeFactory().constructParametricType(clazz, elementTypes);
+        return readJavaType(javaType, inputMessage);
+    }
+
 	@Override
 	public Object read(Type type, Class<?> contextClass, HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotReadableException {

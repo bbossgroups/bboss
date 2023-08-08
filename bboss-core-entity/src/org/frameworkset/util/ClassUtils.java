@@ -944,7 +944,6 @@ public class ClassUtils
 	 * @param rhsType
 	 *            the value type that should be assigned to the target type
 	 * @return if the target type is assignable from the value type
-	 * @see TypeUtils#isAssignable
 	 */
 	public static boolean isAssignable(Class lhsType, Class rhsType)
 	{
@@ -1309,33 +1308,6 @@ public class ClassUtils
 		}
 	}
 
-	public static Class genericParameterType(Method method, int posistion)
-	{
-
-		Type[] types = method.getGenericParameterTypes();
-		// Class[] pts = method.getParameterTypes();
-
-		if (types == null || types.length == 0)
-		{
-			return null;
-		}
-
-		Type type = types[posistion];
-		if (type instanceof ParameterizedType)
-		{
-			Type[] types_ = ((ParameterizedType) type).getActualTypeArguments();
-			if(types_ == null || types_.length == 0)
-			{
-				return null;
-			}
-			Type zzz = types_[0];
-			return zzz instanceof Class?(Class) zzz:null;
-
-		}
-
-		return null;
-
-	}
 	
 	
 	public static Class genericType(Field field)
@@ -1366,6 +1338,35 @@ public class ClassUtils
 		return null;
 
 	}
+
+
+    public static Class genericParameterType(Method method, int posistion)
+    {
+
+        Type[] types = method.getGenericParameterTypes();
+        // Class[] pts = method.getParameterTypes();
+
+        if (types == null || types.length == 0)
+        {
+            return null;
+        }
+
+        Type type = types[posistion];
+        if (type instanceof ParameterizedType)
+        {
+            Type[] types_ = ((ParameterizedType) type).getActualTypeArguments();
+            if(types_ == null || types_.length == 0)
+            {
+                return null;
+            }
+            Type zzz = types_[0];
+            return zzz instanceof Class?(Class) zzz:null;
+
+        }
+
+        return null;
+
+    }
 
 	public static Class[] genericParameterTypes(Method method, int posistion)
 	{
@@ -1404,6 +1405,45 @@ public class ClassUtils
 		return null;
 
 	}
+
+
+    public static Class[] genericParameterTypes(Constructor method, int posistion)
+    {
+
+        Type[] types = method.getGenericParameterTypes();
+        // Class[] pts = method.getParameterTypes();
+
+        if (types == null || types.length == 0)
+        {
+            return null;
+        }
+
+        // for(int i = 0; i < types.length; i ++)
+
+        Type type = types[posistion];
+        if (type instanceof ParameterizedType)
+        {
+
+            Type[] ptypes = ((ParameterizedType) type)
+                    .getActualTypeArguments();
+
+            Class[] genericParameterTypes = new Class[ptypes.length];
+            int i = 0;
+            for (Type zzz : ptypes)
+            {
+                if(zzz instanceof Class)
+                {
+                    genericParameterTypes[i] = (Class) zzz;
+                    i++;
+                }
+            }
+            return resizeClasses(genericParameterTypes,i);
+
+        }
+
+        return null;
+
+    }
 	
 	public static Class[] genericTypes(Field field)
 	{

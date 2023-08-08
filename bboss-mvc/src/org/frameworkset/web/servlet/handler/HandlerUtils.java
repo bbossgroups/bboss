@@ -1103,23 +1103,36 @@ public abstract class HandlerUtils {
 											   HttpServletRequest webRequest,
 											   HttpMessageConverter[] messageConverters) throws Exception {
 
-		return resolveRequestBody(methodParam.getParameterType(),
+		return resolveRequestBody(methodParam.getParameterType(),methodParam.getParameterElementTypes(),
 				methodParam.getRequestParameterName(), webRequest,
 				messageConverters, methodParam.getRequestBody());
 	}
 
-	/**
-	 * Resolves the given {@link RequestBody @RequestBody} annotation.
-	 */
-	protected static Object resolveRequestBody(Class paramType,
-											   String paramName, HttpServletRequest webRequest,
-											   HttpMessageConverter[] messageConverters, RequestBodyWraper requestBody) throws Exception {
-		return readWithMessageConverters(paramType, paramName,
-				createHttpInputMessage(webRequest), messageConverters, requestBody);
-		// return readWithMessageConverters(methodParam,
-		// createHttpInputMessage(webRequest), methodParam
-		// .getParameterType(), messageConverters);
-	}
+//	/**
+//	 * Resolves the given {@link RequestBody @RequestBody} annotation.
+//	 */
+//	protected static Object resolveRequestBody(Class paramType,
+//											   String paramName, HttpServletRequest webRequest,
+//											   HttpMessageConverter[] messageConverters, RequestBodyWraper requestBody) throws Exception {
+//		return readWithMessageConverters(paramType, paramName,
+//				createHttpInputMessage(webRequest), messageConverters, requestBody);
+//		// return readWithMessageConverters(methodParam,
+//		// createHttpInputMessage(webRequest), methodParam
+//		// .getParameterType(), messageConverters);
+//	}
+
+    /**
+     * Resolves the given {@link RequestBody @RequestBody} annotation.
+     */
+    protected static Object resolveRequestBody(Class paramType,Class[] paramElementTypes,
+                                               String paramName, HttpServletRequest webRequest,
+                                               HttpMessageConverter[] messageConverters, RequestBodyWraper requestBody) throws Exception {
+        return readWithMessageConverters(paramType, paramElementTypes,paramName,
+                createHttpInputMessage(webRequest), messageConverters, requestBody);
+        // return readWithMessageConverters(methodParam,
+        // createHttpInputMessage(webRequest), methodParam
+        // .getParameterType(), messageConverters);
+    }
 
 
 
@@ -1155,7 +1168,7 @@ public abstract class HandlerUtils {
 		return new ServletServerHttpResponse(servletResponse);
 	}
 
-	private static Object readWithMessageConverters(Class paramType,
+	private static Object readWithMessageConverters(Class paramType,Class[] paramElementTypes,
 													String paramName, HttpInputMessage inputMessage,
 													HttpMessageConverter[] messageConverters, RequestBodyWraper requestBody) throws Exception {
 
@@ -1194,12 +1207,12 @@ public abstract class HandlerUtils {
 								+ "] as \"" + contentType + "\" using ["
 								+ messageConverter.getClass().getName() + "]");
 					}
-					return messageConverter.read(paramType, inputMessage);
+					return messageConverter.read(paramType,paramElementTypes, inputMessage);
 				}
 			}
 		}
 		if (defaultmessageConverter != null) {
-			return defaultmessageConverter.read(paramType, inputMessage);
+			return defaultmessageConverter.read(paramType,paramElementTypes, inputMessage);
 		}
 
 
@@ -2182,7 +2195,7 @@ public abstract class HandlerUtils {
 
 //			else if (field.isAnnotationPresent(RequestBody.class)) {
 			else if (property.getRequestBody() != null) {
-				value = resolveRequestBody(type, name, request,
+				value = resolveRequestBody(type,property.getPropertyGenericTypes(), name, request,
 						messageConverters, property.getRequestBody());
 				if (holder.needAddData()) {
 					holder.addData(name, value);

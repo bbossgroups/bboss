@@ -186,7 +186,7 @@ public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConv
 	 * @return the java type
 	 */
 	protected JavaType getJavaType(Class<?> clazz) {
-		return TypeFactory.type(clazz);
+		return objectMapper.getTypeFactory().type(clazz);
 	}
 
 	@Override
@@ -211,6 +211,25 @@ public class MappingJackson1HttpMessageConverter extends AbstractHttpMessageConv
 			throw new HttpMessageNotReadableException("Could not read JSON: " + ex.getMessage(), ex);
 		}
 	}
+
+    /**
+     * Abstract template method that reads the actual object. Invoked from {@link #read}.
+     * @param clazz the type of object to return
+     * @param inputMessage the HTTP input message to read from
+     * @return the converted object
+     * @throws IOException in case of I/O errors
+     * @throws HttpMessageNotReadableException in case of conversion errors
+     */
+    @Override
+    public Object readInternal(Class<? > clazz,Class[] elementTypes, HttpInputMessage inputMessage)
+            throws IOException, HttpMessageNotReadableException{
+        JavaType javaType = null;
+        if(elementTypes == null || elementTypes.length == 0)
+            javaType =   getJavaType(clazz);
+        else
+            javaType = objectMapper.getTypeFactory().constructParametricType(clazz, elementTypes);
+        return this.objectMapper.readValue(inputMessage.getBody(), javaType);
+    }
 
 	@Override
 	public void writeInternal(Object o, HttpOutputMessage outputMessage,HttpInputMessage inputMessage)
