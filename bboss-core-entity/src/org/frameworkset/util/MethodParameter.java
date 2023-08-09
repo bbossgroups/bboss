@@ -91,7 +91,13 @@ public class MethodParameter {
 
 
     public Class[] getParameterElementTypes() {
+        initParameterTypes();
         return parameterElementTypes;
+    }
+
+    public Class getParameterElementType() {
+        initParameterTypes();
+        return parameterElementTypes != null && parameterElementTypes.length > 0?parameterElementTypes[0]:null;
     }
 
     public void setNamevariabled(boolean namevariabled) {
@@ -178,7 +184,7 @@ public class MethodParameter {
 		this.method = method;
 		this.parameterIndex = parameterIndex;
 		this.nestingLevel = nestingLevel;
-        initParameterTypes();
+//        initParameterTypes();
 	}
 
 	/**
@@ -212,7 +218,7 @@ public class MethodParameter {
 		this.constructor = constructor;
 		this.parameterIndex = parameterIndex;
 		this.nestingLevel = nestingLevel;
-        initParameterTypes();
+//        initParameterTypes();
 	}
 
 	/**
@@ -272,15 +278,22 @@ public class MethodParameter {
 		this.parameterType = parameterType;
 	}
 
+    private Object lock = new Object();
     private void initParameterTypes(){
-            if (this.method != null) {
-                this.parameterType = this.method
-                        .getParameterTypes()[this.parameterIndex];
-                this.parameterElementTypes = ClassUtils.genericParameterTypes(method, parameterIndex);
-            } else if(constructor != null){
-                this.parameterType = this.constructor.getParameterTypes()[this.parameterIndex];
-                this.parameterElementTypes = ClassUtils.genericParameterTypes(constructor, parameterIndex);
+        if(parameterType == null) {
+            synchronized (lock) {
+                if(parameterType == null) {
+                    if (this.method != null) {
+                        this.parameterType = this.method
+                                .getParameterTypes()[this.parameterIndex];
+                        this.parameterElementTypes = ClassUtils.genericParameterTypes(method, parameterIndex);
+                    } else if (constructor != null) {
+                        this.parameterType = this.constructor.getParameterTypes()[this.parameterIndex];
+                        this.parameterElementTypes = ClassUtils.genericParameterTypes(constructor, parameterIndex);
+                    }
+                }
             }
+        }
     }
 	/**
 	 * Return the type of the method/constructor parameter.
@@ -288,11 +301,7 @@ public class MethodParameter {
 	 * @return the parameter type (never <code>null</code>)
 	 */
 	public Class getParameterType() {
-		if (this.parameterType == null) {
-			this.parameterType = (this.method != null ? this.method
-					.getParameterTypes()[this.parameterIndex]
-					: this.constructor.getParameterTypes()[this.parameterIndex]);
-		}
+        initParameterTypes();
 		return this.parameterType;
 	}
 

@@ -499,18 +499,18 @@ public abstract class HandlerUtils {
 			Object paramValue = null;
 			if (List.class.isAssignableFrom(type)) {// 如果是列表数据集
 				List command = new ArrayList();
-				Class ct = methodInfo.getGenericParameterType(position);// 获取元素类型
+//				Class ct = methodInfo.getGenericParameterType(position);// 获取元素类型
+                Class ct = methodParameter_.getParameterElementType();
 
-				{
 					String paramname = methodParameter_.getRequestParameterName();
 					bind(request, response, pageContext, handlerMethod, model,
 							command, ct, validators, messageConverters, paramname);
 					paramValue = command;
-				}
+
 			} else if (Set.class.isAssignableFrom(type)) {// 如果是Set数据集
 				Set command = new TreeSet();
 				String paramname = methodParameter_.getRequestParameterName();
-				Class ct = methodInfo.getGenericParameterType(position);// 获取元素类型
+//				Class ct = methodInfo.getGenericParameterType(position);// 获取元素类型
 //				if (ct == null) {
 //					model.getErrors().rejectValue(
 //							methodParameter_.getRequestParameterName(),
@@ -519,11 +519,10 @@ public abstract class HandlerUtils {
 //									+ methodInfo.getMethod().getName());
 //					paramValue = ValueObjectUtil.getDefaultValue(type);
 //				} else
-				{
+                Class ct = methodParameter_.getParameterElementType();
 					bind(request, response, pageContext, handlerMethod, model,
 							command, ct, validators, messageConverters, paramname);
 					paramValue = command;
-				}
 			} else if (isMultipartFile(type)) {
 
 				paramValue = evaluateMultipartFileParamWithNoName(request, type);
@@ -711,7 +710,8 @@ public abstract class HandlerUtils {
 								paramValue = ValueObjectUtil.typeCast(paramValue,
 										type, dateformat, locale);
 							} else {
-								Class elementType = methodInfo.getGenericParameterType(methodParameter_.getParameterIndex());
+//								Class elementType = methodInfo.getGenericParameterType(methodParameter_.getParameterIndex());
+                                Class elementType = methodParameter_.getParameterElementType();
 								paramValue = ValueObjectUtil.typeCastCollection(paramValue, type, elementType, dateformat, locale);
 							}
 						} else
