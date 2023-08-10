@@ -117,7 +117,7 @@ https://esdoc.bbossgroups.com/#/README
 
 <img src="https://esdoc.bbossgroups.com/images/alipay.png"  height="200" width="200">
 
-<img src="https://esdoc.bbossgroups.com/images/wchat.png" style="zoom:50%;" />
+<img src="https://esdoc.bbossgroups.com/images/wchat.png"   height="200" width="200" />
 
 非常感谢您对开源精神的支持！❤您的捐赠将用于bboss社区建设、QQ群年费、网站云服务器租赁费用。
 
