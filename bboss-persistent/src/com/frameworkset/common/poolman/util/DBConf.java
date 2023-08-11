@@ -16,6 +16,7 @@
 package com.frameworkset.common.poolman.util;
 
 import java.io.Serializable;
+import java.util.Properties;
 
 /**
  * 通过模板启动数据源配置参数
@@ -71,13 +72,17 @@ public class DBConf implements Serializable {
 	private int maximumSize;
 	private boolean usepool;
 	private boolean  external;
+    private Properties connectionProperties;
 
 	public boolean isColumnLableUpperCase() {
 		return columnLableUpperCase;
 	}
 
-	public void setColumnLableUpperCase(boolean columnLableUpperCase) {
+
+
+    public DBConf setColumnLableUpperCase(boolean columnLableUpperCase) {
 		this.columnLableUpperCase = columnLableUpperCase;
+        return this;
 	}
 
 	private boolean columnLableUpperCase = true;
@@ -91,126 +96,146 @@ public class DBConf implements Serializable {
 	public String getPoolname() {
 		return poolname;
 	}
-	public void setPoolname(String poolname) {
+	public DBConf setPoolname(String poolname) {
 		this.poolname = poolname;
+        return this;
 	}
 	public String getDriver() {
 		return driver;
 	}
-	public void setDriver(String driver) {
+	public DBConf setDriver(String driver) {
 		this.driver = driver;
+        return this;
 	}
 	public String getJdbcurl() {
 		return jdbcurl;
 	}
-	public void setJdbcurl(String jdbcurl) {
+	public DBConf setJdbcurl(String jdbcurl) {
 		this.jdbcurl = jdbcurl;
+        return this;
 	}
 	public String getUsername() {
 		return username;
 	}
-	public void setUsername(String username) {
+	public DBConf setUsername(String username) {
 		this.username = username;
+        return this;
 	}
 	public String getPassword() {
 		return password;
 	}
-	public void setPassword(String password) {
+	public DBConf setPassword(String password) {
 		this.password = password;
+        return this;
 	}
 	public String getReadOnly() {
 		return readOnly;
 	}
-	public void setReadOnly(String readOnly) {
+	public DBConf setReadOnly(String readOnly) {
 		this.readOnly = readOnly;
+        return this;
 	}
 	public String getTxIsolationLevel() {
 		return txIsolationLevel;
 	}
-	public void setTxIsolationLevel(String txIsolationLevel) {
+	public DBConf setTxIsolationLevel(String txIsolationLevel) {
 		this.txIsolationLevel = txIsolationLevel;
+        return this;
 	}
 	public String getValidationQuery() {
 		return validationQuery;
 	}
-	public void setValidationQuery(String validationQuery) {
+	public DBConf setValidationQuery(String validationQuery) {
 		this.validationQuery = validationQuery;
+        return this;
 	}
 	public String getJndiName() {
 		return jndiName;
 	}
-	public void setJndiName(String jndiName) {
+	public DBConf setJndiName(String jndiName) {
 		this.jndiName = jndiName;
+        return this;
 	}
 	public int getInitialConnections() {
 		return initialConnections;
 	}
-	public void setInitialConnections(int initialConnections) {
+	public DBConf setInitialConnections(int initialConnections) {
 		this.initialConnections = initialConnections;
+        return this;
 	}
 	public int getMinimumSize() {
 		return minimumSize;
 	}
-	public void setMinimumSize(int minimumSize) {
+	public DBConf setMinimumSize(int minimumSize) {
 		this.minimumSize = minimumSize;
+        return this;
 	}
 	public int getMaximumSize() {
 		return maximumSize;
 	}
-	public void setMaximumSize(int maximumSize) {
+	public DBConf setMaximumSize(int maximumSize) {
 		this.maximumSize = maximumSize;
+        return this;
 	}
 	public boolean isUsepool() {
 		return usepool;
 	}
-	public void setUsepool(boolean usepool) {
+	public DBConf setUsepool(boolean usepool) {
 		this.usepool = usepool;
+        return this;
 	}
 	public boolean isExternal() {
 		return external;
 	}
-	public void setExternal(boolean external) {
+	public DBConf setExternal(boolean external) {
 		this.external = external;
+        return this;
 	}
 	public String getExternaljndiName() {
 		return externaljndiName;
 	}
-	public void setExternaljndiName(String externaljndiName) {
+	public DBConf setExternaljndiName(String externaljndiName) {
 		this.externaljndiName = externaljndiName;
+        return this;
 	}
 	public boolean isShowsql() {
 		return showsql;
 	}
-	public void setShowsql(boolean showsql) {
+	public DBConf setShowsql(boolean showsql) {
 		this.showsql = showsql;
+        return this;
 	}
 	public boolean isEncryptdbinfo() {
 		return encryptdbinfo;
 	}
-	public void setEncryptdbinfo(boolean encryptdbinfo) {
+	public DBConf setEncryptdbinfo(boolean encryptdbinfo) {
 		this.encryptdbinfo = encryptdbinfo;
+        return this;
 	}
 	public Integer getQueryfetchsize() {
 		return queryfetchsize;
 	}
-	public void setQueryfetchsize(Integer queryfetchsize) {
+	public DBConf setQueryfetchsize(Integer queryfetchsize) {
 		this.queryfetchsize = queryfetchsize;
+        return this;
 	}
 
 	public String getDbtype() {
 		return dbtype;
 	}
 
-	public void setDbtype(String dbtype) {
+	public DBConf setDbtype(String dbtype) {
 		this.dbtype = dbtype;
+        return this;
 	}
 
 	public String getDbAdaptor() {
 		return dbAdaptor;
 	}
 
-	public void setDbAdaptor(String dbAdaptor) {
+	public DBConf setDbAdaptor(String dbAdaptor) {
 		this.dbAdaptor = dbAdaptor;
+        return this;
 	}
 
 	public String getDbInfoEncryptClass() {
@@ -221,71 +246,94 @@ public class DBConf implements Serializable {
 	 * https://doc.bbossgroups.com/#/persistent/encrypt
 	 * 同时如果想对账号、口令、url之间的任意两个组合加密的话，用户可以自己继承 com.frameworkset.common.poolman.security.BaseDBInfoEncrypt类，参考默认插件，实现相应的信息加密方法并配置到aop.properties中即可。
 	 */
-	public void setDbInfoEncryptClass(String dbInfoEncryptClass) {
+	public DBConf setDbInfoEncryptClass(String dbInfoEncryptClass) {
 		this.dbInfoEncryptClass = dbInfoEncryptClass;
+        return this;
 	}
 
 	public boolean isEnablejta() {
 		return enablejta;
 	}
 
-	public void setEnablejta(boolean enablejta) {
+	public DBConf setEnablejta(boolean enablejta) {
 		this.enablejta = enablejta;
+        return this;
 	}
 
 	public boolean isTestWhileidle() {
 		return testWhileidle;
 	}
 
-	public void setTestWhileidle(boolean testWhileidle) {
+	public DBConf setTestWhileidle(boolean testWhileidle) {
 		this.testWhileidle = testWhileidle;
+        return this;
 	}
 
 	public int getMaxWait() {
 		return maxWait;
 	}
 
-	public void setMaxWait(int maxWait) {
+	public DBConf setMaxWait(int maxWait) {
 		this.maxWait = maxWait;
+        return this;
 	}
 
 	public int getConnectionTimeout() {
 		return connectionTimeout;
 	}
 
-	public void setConnectionTimeout(int connectionTimeout) {
+	public DBConf setConnectionTimeout(int connectionTimeout) {
 		this.connectionTimeout = connectionTimeout;
+        return this;
 	}
 
 	public int getMaxIdleTime() {
 		return maxIdleTime;
 	}
 
-	public void setMaxIdleTime(int maxIdleTime) {
+	public DBConf setMaxIdleTime(int maxIdleTime) {
 		this.maxIdleTime = maxIdleTime;
+        return this;
 	}
 
 	public boolean isRemoveAbandoned() {
 		return removeAbandoned;
 	}
 
-	public void setRemoveAbandoned(boolean removeAbandoned) {
+	public DBConf setRemoveAbandoned(boolean removeAbandoned) {
 		this.removeAbandoned = removeAbandoned;
+        return this;
 	}
 
 	public boolean isLogAbandoned() {
 		return logAbandoned;
 	}
 
-	public void setLogAbandoned(boolean logAbandoned) {
+	public DBConf setLogAbandoned(boolean logAbandoned) {
 		this.logAbandoned = logAbandoned;
+        return this;
 	}
 
 	public boolean isEnableShutdownHook() {
 		return enableShutdownHook;
 	}
 
-	public void setEnableShutdownHook(boolean enableShutdownHook) {
+	public DBConf setEnableShutdownHook(boolean enableShutdownHook) {
 		this.enableShutdownHook = enableShutdownHook;
+        return this;
 	}
+    public DBConf setConnectionProperties(Properties connectionProperties) {
+        this.connectionProperties = connectionProperties;
+        return this;
+    }
+
+    public Properties getConnectionProperties() {
+        return connectionProperties;
+    }
+    public DBConf ConnectionProperty(String name,Object value){
+        if(connectionProperties == null)
+            connectionProperties = new Properties();
+        connectionProperties.put(name,value);
+        return this;
+    }
 }

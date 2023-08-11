@@ -65,7 +65,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 	
     public DBStartResult deployConfiguration(PoolManConfiguration config) throws Exception {
 
-		DBStartResult dbStartResult =startDataSources(config.getDataSources());
+		DBStartResult dbStartResult =startDataSources(config.getDataSources(),config.getConnectionProperties());
 //        startGenericPools(config.getGenericPools());
 
         // Note: there is no admin for the non-JMX PoolMan
@@ -77,7 +77,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
     
     public DBStartResult deployConfiguration(PoolManConfiguration config,String dbname) throws Exception {
 
-		DBStartResult dbStartResult = startDataSources(config.getDataSources());
+		DBStartResult dbStartResult = startDataSources(config.getDataSources(),config.getConnectionProperties());
 			shutdownHandle();
 //        startGenericPools(config.getGenericPools());
 		return dbStartResult;
@@ -87,7 +87,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 	public DBStartResult deployConfiguration(PoolManConfiguration config, Map values)
 	throws Exception {
 // TODO Auto-generated method stub
-		DBStartResult dbStartResult = startDataSource(config.getDataSources(),values);
+		DBStartResult dbStartResult = startDataSource(config.getDataSources(),values,config.getConnectionProperties());
 			shutdownHandle();
 		return dbStartResult;
 	}
@@ -103,7 +103,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 //        }
 //    }
 
-    private DBStartResult startDataSources(ArrayList datasources) throws Exception {
+    private DBStartResult startDataSources(ArrayList datasources,Properties connectionProperties) throws Exception {
 
         if (datasources == null)
             return null;
@@ -117,6 +117,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
             // create the metadata object
             JDBCPoolMetaData metadata = new JDBCPoolMetaData();
 
+            metadata.setConnectionProperties(connectionProperties);
             BeanInfo beanInfo = Introspector.getBeanInfo(metadata.getClass());
 
             // set attributes based on properties
@@ -161,7 +162,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
     }
     
     
-    private DBStartResult startDataSource(ArrayList datasources,Map<String,String> values) throws Exception {
+    private DBStartResult startDataSource(ArrayList datasources,Map<String,String> values,Properties connectionProperties) throws Exception {
 
         if (datasources == null )
             return null;
@@ -188,6 +189,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
             // create the metadata object
             JDBCPoolMetaData metadata = new JDBCPoolMetaData();
 
+            metadata.setConnectionProperties(connectionProperties);
             BeanInfo beanInfo = Introspector.getBeanInfo(metadata.getClass());
 
             // set attributes based on properties

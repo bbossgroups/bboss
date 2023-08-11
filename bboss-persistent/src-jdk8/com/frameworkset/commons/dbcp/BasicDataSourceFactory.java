@@ -305,13 +305,21 @@ public class BasicDataSourceFactory  {
 	            dataSource.setConnectionInitSqls(sqls);
 	        }
 	
-	        value = properties.getProperty(PROP_CONNECTIONPROPERTIES);
-	        if (value != null) {
-	          Properties p = getProperties(value);
+	        Object connectProperties = properties.get(PROP_CONNECTIONPROPERTIES);
+	        if (connectProperties != null) {
+                Properties p = null;
+                if(connectProperties instanceof String){
+                    p = getProperties((String)connectProperties);
+                }
+                else
+                {
+                    p = (Properties) connectProperties;
+                }
+
 	          Enumeration e = p.propertyNames();
 	          while (e.hasMoreElements()) {
 	            String propertyName = (String) e.nextElement();
-	            dataSource.addConnectionProperty(propertyName, p.getProperty(propertyName));
+	            dataSource.addConnectionProperty(propertyName, String.valueOf(p.get(propertyName)));
 	          }
 	        }
 	

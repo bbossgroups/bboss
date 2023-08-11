@@ -153,6 +153,10 @@ public class DBFactory
     	adapters.put(DBHive, DBHive.class);
 		adapters.put("dm", DMAdaptor.class);
 		adapters.put("clickhouse", DBClickhouse.class);
+        adapters.put("druid", DruidAdapter.class);
+        adapters.put("avatica", DruidAdapter.class);
+        adapters.put("org.apache.calcite.avatica.remote.Driver", DruidAdapter.class);
+
 	}
 
     /**

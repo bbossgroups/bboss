@@ -482,6 +482,9 @@ public class JDBCPool {
 		// "connectionProperties";
 		//				 
 
+        if(this.info.getConnectionProperties() != null && info.getConnectionProperties().size() > 0){
+            p.put(PoolManConstants.PROP_CONNECTIONPROPERTIES,info.getConnectionProperties());
+        }
 		return p;
 	}
 	
@@ -728,19 +731,17 @@ public class JDBCPool {
 			return;
 		initDBAdapter();
 		
-//		if(!this.isExternal())
-		{
-			if(this.datasource != null)
-			{
-				try {
 
-					DatasourceUtil.closeDS(datasource);
-				} catch (Exception e) {
-					
-				}
-				datasource = null;
-			}
-		}
+        if(this.datasource != null)
+        {
+            try {
+
+                DatasourceUtil.closeDS(datasource);
+            } catch (Exception e) {
+
+            }
+            datasource = null;
+        }
 
 		
 

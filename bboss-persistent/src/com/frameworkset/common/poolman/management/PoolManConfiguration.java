@@ -53,6 +53,7 @@ public class PoolManConfiguration   {
 
 
 	private ArrayList datasources;
+    private Properties connectionProperties;
 	private ArrayList genericObjects;
 
 	public static String getSqlMappingDir() {
@@ -312,13 +313,19 @@ public class PoolManConfiguration   {
 			datasource.put("columnLableUpperCase".toLowerCase(), "true");
 		datasources.add(datasource);
 		this.datasources = datasources;
+        this.connectionProperties = (Properties) context.get("connectionProperties");
+
 	}
 
-	private void parseXML(Map context) throws Exception {
+    public Properties getConnectionProperties() {
+        return connectionProperties;
+    }
+
+    private void parseXML(Map context) throws Exception {
 
 		/* CHANGED TO USE JAXP */
 
-		if (!this.configFile.equals(PoolManConstants.XML_CONFIG_FILE_TEMPLATE)) {
+		if (!this.configFile.equals(PoolManConstants.XML_CONFIG_FILE_TEMPLATE)) {//非模版解析，直接从配置文件加载持久层数据源
 			URL confURL = PoolManConfiguration.class.getClassLoader()
 					.getResource(configFile);
 			if (confURL == null)

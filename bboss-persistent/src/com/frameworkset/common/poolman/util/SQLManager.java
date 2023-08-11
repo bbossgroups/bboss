@@ -1073,6 +1073,7 @@ public class SQLManager extends PoolManager{
 		int skimmerFrequency = 180000;
 		values.put("skimmerFrequency", skimmerFrequency+"");
 		boolean logAbandoned = temConf.isLogAbandoned();
+
 		values.put("logAbandoned", logAbandoned+"");
 		/**
 		 * Set max idle Times in seconds ,if exhaust this times the used connection object will be Abandoned removed if removeAbandoned is true.
@@ -1098,6 +1099,9 @@ public class SQLManager extends PoolManager{
 		if(temConf.getDbInfoEncryptClass() != null && !temConf.getDbInfoEncryptClass().equals("")){
 			values.put("dbInfoEncryptClass",temConf.getDbInfoEncryptClass());
 		}
+        if(temConf.getConnectionProperties() != null && temConf.getConnectionProperties().size() > 0){
+            values.put("connectionProperties",temConf.getConnectionProperties());
+        }
 		if(PoolManBootstrap.startFromTemplte(values) != null)
 			return true;
 		else

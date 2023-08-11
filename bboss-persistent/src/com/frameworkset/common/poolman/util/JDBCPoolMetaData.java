@@ -21,6 +21,7 @@ import com.frameworkset.util.SimpleStringUtil;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Properties;
 
 public class JDBCPoolMetaData implements Serializable{
 
@@ -184,6 +185,8 @@ public class JDBCPoolMetaData implements Serializable{
     private boolean autoprimarykey = false;
     private boolean showsql = false;
 	private boolean showsqlParams = false;
+
+    private Properties connectionProperties;
     /**
      * 是否缓冲查询列表元数据
      */
@@ -868,6 +871,8 @@ public class JDBCPoolMetaData implements Serializable{
 			this.setQueryfetchsize(extenalInfo.getQueryfetchsize());
 			this.setShowsql(extenalInfo.isShowsql());
 			this.setShowsqlParams(extenalInfo.isShowsqlParams());
+            this.setConnectionProperties(extenalInfo.getConnectionProperties());
+
 //			this.setNeadGetGenerateKeys(extenalInfo.isNeadGetGenerateKeys());
 		}
 	}
@@ -1096,7 +1101,11 @@ public class JDBCPoolMetaData implements Serializable{
 			else{
 				data.append(",\"DbInfoEncrypt\":");
 			}
-					data.append(",\"jndiurl\":")
+            if(this.getConnectionProperties() != null)
+                data.append(",\"properties\":").append(SimpleStringUtil.object2json(getConnectionProperties()));
+
+
+            data.append(",\"jndiurl\":")
 					.append(jndiurl).append(",\"keygenerate\":\"")
 					.append(keygenerate).append("\",\"autoprimarykey\":").append(autoprimarykey)
 
@@ -1140,4 +1149,13 @@ public class JDBCPoolMetaData implements Serializable{
 //	public void setNeadGetGenerateKeys(boolean neadGetGenerateKeys) {
 //		this.neadGetGenerateKeys = neadGetGenerateKeys;
 //	}
+
+
+    public void setConnectionProperties(Properties connectionProperties) {
+        this.connectionProperties = connectionProperties;
+    }
+
+    public Properties getConnectionProperties() {
+        return connectionProperties;
+    }
 }
