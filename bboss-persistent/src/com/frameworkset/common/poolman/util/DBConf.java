@@ -100,6 +100,11 @@ public class DBConf implements Serializable {
 		this.poolname = poolname;
         return this;
 	}
+
+    public DBConf setDbName(String dbName) {
+        this.poolname = dbName;
+        return this;
+    }
 	public String getDriver() {
 		return driver;
 	}
