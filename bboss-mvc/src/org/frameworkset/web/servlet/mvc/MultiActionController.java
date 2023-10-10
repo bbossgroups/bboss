@@ -30,6 +30,7 @@ import org.frameworkset.util.AntPathMatcher;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.PathMatcher;
 import org.frameworkset.web.servlet.DispatchServlet;
+import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.ModelAndView;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
@@ -317,8 +318,26 @@ public class MultiActionController  extends AbstractController implements LastMo
 	/**
 	 * Determine a handler method and invoke it.
 	 * @see MethodNameResolver#getHandlerMethodName
-	 * @see #invokeNamedMethod
-	 * @see #handleNoSuchRequestHandlingMethod
+	 */
+	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response,PageContext pageContext,HandlerExecutionChain handlerExecutionChain)
+			throws Exception {
+//		try {
+//			String methodName = this.methodNameResolver.getHandlerMethodName(request);
+//			return invokeNamedMethod(methodName, request, response,pageContext);
+//		}
+//		catch (NoSuchRequestHandlingMethodException ex) {
+//			return handleNoSuchRequestHandlingMethod(ex, request, response);
+//		}
+		HttpMessageConverter[] messageConverters = (HttpMessageConverter[])request.getAttribute(DispatchServlet.messageConverters_KEY);
+		if(handlerExecutionChain != null)
+			return HandlerUtils.invokeHandlerMethod(request, response, pageContext, new HandlerExecutionChain(this.delegate,handlerExecutionChain.getInterceptors()), getServletHandlerMethodResolver(request),messageConverters);
+		else
+			return HandlerUtils.invokeHandlerMethod(request, response, pageContext, new HandlerExecutionChain(this.delegate), getServletHandlerMethodResolver(request),messageConverters);
+	}
+
+	/**
+	 * Determine a handler method and invoke it.
+	 * @see MethodNameResolver#getHandlerMethodName
 	 */
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response,PageContext pageContext)
 			throws Exception {
@@ -330,10 +349,14 @@ public class MultiActionController  extends AbstractController implements LastMo
 //			return handleNoSuchRequestHandlingMethod(ex, request, response);
 //		}
 		HttpMessageConverter[] messageConverters = (HttpMessageConverter[])request.getAttribute(DispatchServlet.messageConverters_KEY);
-		return HandlerUtils.invokeHandlerMethod(request, response, pageContext, this.delegate, getServletHandlerMethodResolver(request),messageConverters);
+
+		return HandlerUtils.invokeHandlerMethod(request, response, pageContext, new HandlerExecutionChain(this.delegate), getServletHandlerMethodResolver(request),messageConverters);
 	}
-	
-	
+
+
+
+
+
 	private  ServletHandlerMethodResolver getServletHandlerMethodResolver(HttpServletRequest request)
 	{
 

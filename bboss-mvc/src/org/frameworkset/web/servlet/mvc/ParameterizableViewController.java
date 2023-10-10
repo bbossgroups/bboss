@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
+import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.ModelAndView;
 
 /**
@@ -60,10 +61,21 @@ public class ParameterizableViewController extends AbstractController {
 	 * Return a ModelAndView object with the specified view name.
 	 * @see #getViewName()
 	 */
+	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response, PageContext pageContext,HandlerExecutionChain handlerExecutionChain)
+			throws Exception {
+
+		return new ModelAndView(getViewName());
+	}
+
+	/**
+	 * Return a ModelAndView object with the specified view name.
+	 * @see #getViewName()
+	 */
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response, PageContext pageContext)
 			throws Exception {
 
 		return new ModelAndView(getViewName());
 	}
+
 
 }

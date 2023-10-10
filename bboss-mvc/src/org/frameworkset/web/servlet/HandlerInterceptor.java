@@ -15,6 +15,7 @@
  */
 package org.frameworkset.web.servlet;
 
+import org.frameworkset.util.annotations.MethodData;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +58,7 @@ public interface HandlerInterceptor {
 	 * getting applied in inverse order of the execution chain.
 	 * @param request current HTTP request
 	 * @param response current HTTP response
-	 * @param handler chosen handler to execute, for type and/or instance examination
+	 * @param handlerMeta chosen handler to execute, for type and/or instance examination
 	 * @param modelAndView the <code>ModelAndView</code> that the handler returned
 	 * (can also be <code>null</code>)
 	 * @throws Exception in case of errors
@@ -74,12 +75,28 @@ public interface HandlerInterceptor {
 	 * method has successfully completed and returned <code>true</code>!
 	 * @param request current HTTP request
 	 * @param response current HTTP response
-	 * @param handler chosen handler to execute, for type and/or instance examination
+	 * @param handlerMeta chosen handler to execute, for type and/or instance examination
 	 * @param ex exception thrown on handler execution, if any
 	 * @throws Exception in case of errors
 	 */
 	void afterCompletion(
 			HttpServletRequest request, HttpServletResponse response, HandlerMeta handlerMeta, Exception ex)
 			throws Exception;
-
+	/**
+	 * Callback when request processing
+	 * <p>Note: Will only be called if this interceptor's <code>preHandle</code>
+	 * method has successfully completed and returned <code>true</code>!
+	 * @param request current HTTP request
+	 * @param response current HTTP response
+	 * @param handlerMeta chosen handler to execute, for type and/or instance examination
+	 * @return <code>true</code> if the execution chain should proceed with the
+	 * 	 * next interceptor or the handler itself. Else, DispatcherServlet assumes
+	 * 	 * that this interceptor has already dealt with the response itself.
+	 * @throws Exception in case of errors
+	 */
+	default boolean invokerHandle(
+			HttpServletRequest request, HttpServletResponse response, HandlerMeta handlerMeta, MethodData handlerMethod)
+			throws Exception{
+		return true;
+	}
 }

@@ -23,6 +23,7 @@ import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.SmartLifecycle;
 import org.frameworkset.web.HttpRequestHandler;
 import org.frameworkset.web.servlet.HandlerAdapter;
+import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.ModelAndView;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
 
@@ -41,10 +42,11 @@ public class HttpRequestHandlerAdapter  implements HandlerAdapter  {
 		return (handler.getHandler() instanceof HttpRequestHandler);
 	}
 
-	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response, PageContext pageContext,HandlerMeta handler)
+	@Override
+	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response, PageContext pageContext, HandlerExecutionChain mappedHandler)
 			throws Exception {
 
-		((HttpRequestHandler) handler.getHandler()).handleRequest(request, response,pageContext);
+		((HttpRequestHandler) mappedHandler.getHandler().getHandler()).handleRequest(request, response,pageContext);
 		return null;
 	}
 

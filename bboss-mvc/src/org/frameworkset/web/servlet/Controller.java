@@ -33,5 +33,7 @@ import javax.servlet.jsp.PageContext;
 public interface Controller {
 	
 	ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response,PageContext pageContext) throws Exception;
-
+	default ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response,PageContext pageContext,HandlerExecutionChain mappedHandler) throws Exception{
+		return handleRequest(request, response, pageContext);
+	}
 }

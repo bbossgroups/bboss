@@ -35,6 +35,8 @@ import org.frameworkset.web.bind.WebDataBinder.CallHolder;
 import org.frameworkset.web.multipart.IgnoreFieldNameMultipartFile;
 import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
+import org.frameworkset.web.servlet.HandlerExecutionChain;
+import org.frameworkset.web.servlet.HandlerInterceptor;
 import org.frameworkset.web.servlet.ModelAndView;
 import org.frameworkset.web.servlet.ModelMap;
 import org.frameworkset.web.servlet.handler.annotations.ExcludeMethod;
@@ -198,7 +200,8 @@ public abstract class HandlerUtils {
 			return true;
 		Class[] parameterTypes = method.getParameterTypes();
 		String methodName = method.getName();
-		if (("handleRequest".equals(methodName) && parameterTypes.length == 3))
+		if (("handleRequest".equals(methodName) &&
+				(parameterTypes.length == 3 || parameterTypes.length == 4)))
 			// || parameterTypes.length == 0)
 			return false;
 
@@ -2744,8 +2747,10 @@ public abstract class HandlerUtils {
 
 	public static ModelAndView invokeHandlerMethod(HttpServletRequest request,
 												   HttpServletResponse response, PageContext pageContext,
-												   HandlerMeta handler, ServletHandlerMethodResolver methodResolver,
+												   HandlerExecutionChain mappedHandler,
+												   ServletHandlerMethodResolver methodResolver,
 												   HttpMessageConverter[] messageConverters) throws Exception {
+		HandlerMeta handlerMeta = mappedHandler.getHandler();
 
 		try {
 			// ServletHandlerMethodResolver methodResolver =
@@ -2754,7 +2759,28 @@ public abstract class HandlerUtils {
 					.resolveHandlerMethod(request);
 			if (assertTokenMethod != null) {
 //				assertDToken(request, response, handlerMethod);
-				assertTokenMethod.invoke(null, request, response, handlerMethod);
+				Object result = assertTokenMethod.invoke(null, request, response, handlerMethod);
+				if(result != null){
+					if(!((Boolean) result).booleanValue()){
+						return null;
+					}
+				}
+			}
+			boolean checkResult = true;
+			if(mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0){
+
+				for(HandlerInterceptor handlerInterceptor :mappedHandler.getInterceptors()){
+					if(!checkResult) {
+						handlerInterceptor.invokerHandle(request, response, handlerMeta,handlerMethod);
+					}
+					else{
+						checkResult = handlerInterceptor.invokerHandle(request,response,handlerMeta,handlerMethod);
+					}
+
+				}
+			}
+			if(!checkResult){
+				return null;
 			}
 			ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker(
 					methodResolver, messageConverters);
@@ -2763,9 +2789,9 @@ public abstract class HandlerUtils {
 			ModelMap implicitModel = new ModelMap();
 
 			Object result = methodInvoker.invokeHandlerMethod(handlerMethod,
-					handler, request, response, pageContext, implicitModel);
+					handlerMeta, request, response, pageContext, implicitModel);
 			ModelAndView mav = methodInvoker.getModelAndView(
-					handlerMethod.getMethodInfo(), handler, result,
+					handlerMethod.getMethodInfo(), handlerMeta, result,
 					implicitModel, webRequest);
 			// methodInvoker.updateModelAttributes(
 			// handler, (mav != null ? mav.getModel() : null), implicitModel,

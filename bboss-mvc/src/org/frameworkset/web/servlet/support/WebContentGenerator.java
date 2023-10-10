@@ -29,9 +29,7 @@ import org.frameworkset.web.HttpRequestMethodNotSupportedException;
 import org.frameworkset.web.HttpSessionRequiredException;
 
 import com.frameworkset.util.StringUtil;
-
-
-
+import org.frameworkset.web.servlet.handler.annotations.ExcludeMethod;
 
 
 /**
@@ -119,6 +117,7 @@ public abstract class WebContentGenerator extends WebApplicationObjectSupport
 	 * <p>Default is GET, HEAD and POST for simple form controller types;
 	 * unrestricted for general controllers and interceptors.
 	 */
+	@ExcludeMethod
 	public final void setSupportedMethods(String... methods) {
 		if (methods != null) {
 			this.supportedMethods = new HashSet<String>(Arrays.asList(methods));
@@ -256,7 +255,6 @@ public abstract class WebContentGenerator extends WebApplicationObjectSupport
 	 * An option to add 'must-revalidate' to every Cache-Control header.
 	 * This may be useful with annotated controller methods, which can
 	 * programmatically do a last-modified calculation as described in
-	 * {@link WebRequest#checkNotModified(long)}.
 	 * <p>Default is "false".
 	 * @deprecated as of 4.2, in favor of {@link #setCacheControl}
 	 */

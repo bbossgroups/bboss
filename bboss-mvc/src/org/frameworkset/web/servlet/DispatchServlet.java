@@ -781,7 +781,7 @@ public class DispatchServlet extends BaseServlet {
 				}
 
 				// Actually invoke the handler.
-				mv = ha.handle(processedRequest, response,pageContext, mappedHandler.getHandler());
+				mv = ha.handle(processedRequest, response,pageContext, mappedHandler);
 
 				if (asyncManager.isConcurrentHandlingStarted()) {
 					return;

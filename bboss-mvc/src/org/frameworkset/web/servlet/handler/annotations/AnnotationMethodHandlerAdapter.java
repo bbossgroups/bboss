@@ -32,6 +32,7 @@ import org.frameworkset.util.ParameterNameDiscoverer;
 import org.frameworkset.util.PathMatcher;
 import org.frameworkset.util.annotations.SessionAttributes;
 import org.frameworkset.web.servlet.HandlerAdapter;
+import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.ModelAndView;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
@@ -139,7 +140,6 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 	/**
 	 * Set the PathMatcher implementation to use for matching URL paths
 	 * against registered URL patterns. Default is AntPathMatcher.
-	 * @see org.frameworkset.web.util.AntPathMatcher
 	 */
 	public void setPathMatcher(PathMatcher pathMatcher) {
 		Assert.notNull(pathMatcher, "PathMatcher must not be null");
@@ -213,7 +213,6 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 	/**
 	 * Set the ParameterNameDiscoverer to use for resolving method parameter
 	 * names if needed (e.g. for default attribute names).
-	 * <p>Default is a {@link org.frameworkset.spi.support.LocalVariableTableParameterNameDiscoverer}.
 	 */
 	public void setParameterNameDiscoverer(ParameterNameDiscoverer parameterNameDiscoverer) {
 		this.parameterNameDiscoverer = parameterNameDiscoverer;
@@ -249,10 +248,11 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 		return getMethodResolver(handler).hasHandlerMethods();
 	}
 
-	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response, PageContext pageContext,HandlerMeta handler)
+	@Override
+	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response, PageContext pageContext, HandlerExecutionChain mappedHandler)
 			throws Exception {
 
-		if (handler.getHandlerClass().getAnnotation(SessionAttributes.class) != null) {
+		if (mappedHandler.getHandler().getHandlerClass().getAnnotation(SessionAttributes.class) != null) {
 			// Always prevent caching in case of session attribute management.
 			checkAndPrepare(request, response, this.cacheSecondsForSessionAttributeHandlers, true);
 			// Prepare cached set of session attributes names.
@@ -268,16 +268,16 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 			if (session != null) {
 				Object mutex = WebUtils.getSessionMutex(session);
 				synchronized (mutex) {
-					return invokeHandlerMethod(request, response, pageContext,handler);
+					return invokeHandlerMethod(request, response, pageContext,mappedHandler);
 				}
 			}
 		}
 
-		return invokeHandlerMethod(request, response, pageContext,handler);
+		return invokeHandlerMethod(request, response, pageContext,mappedHandler);
 	}
 
 	protected ModelAndView invokeHandlerMethod(
-			HttpServletRequest request, HttpServletResponse response,  PageContext pageContext,HandlerMeta handler) throws Exception {
+			HttpServletRequest request, HttpServletResponse response,  PageContext pageContext,HandlerExecutionChain mappedHandler) throws Exception {
 
 //		try {
 //			ServletHandlerMethodResolver methodResolver = getMethodResolver(handler.getClass());
@@ -296,8 +296,8 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 //		catch (NoSuchRequestHandlingMethodException ex) {
 //			return handleNoSuchRequestHandlingMethod(ex, request, response);
 //		}
-		ServletHandlerMethodResolver methodResolver = getMethodResolver(handler.getHandlerClass());
-		return HandlerUtils.invokeHandlerMethod(request, response, pageContext, handler, 
+		ServletHandlerMethodResolver methodResolver = getMethodResolver(mappedHandler.getHandler().getHandlerClass());
+		return HandlerUtils.invokeHandlerMethod(request, response, pageContext, mappedHandler,
 				methodResolver,messageConverters);
 	}
 	

@@ -61,6 +61,7 @@ public class MethodInfo {
 	private HandlerMapping typeLevelMapping;
 	private AssertDToken assertDToken;
 	private AssertTicket assertTicket;
+	private PermissionToken permissionToken;
 	private boolean requireTicket;
 	private boolean responsebody = false;
 	private ResponseBodyWraper responsebodyAnno ;
@@ -116,6 +117,7 @@ public class MethodInfo {
 		this.assertTicket = method.getAnnotation(AssertTicket.class);
 		this.requireTicket = assertTicket != null;
 		mapping = method.getAnnotation(HandlerMapping.class);
+		permissionToken = method.getAnnotation(PermissionToken.class);
 		
 		ResponseBody body = method.getAnnotation(ResponseBody.class);
 //		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
@@ -146,6 +148,7 @@ public class MethodInfo {
 		this.requiredDToken = assertDToken != null;
 		this.assertTicket = method.getAnnotation(AssertTicket.class);
 		this.requireTicket = assertTicket != null;
+		permissionToken = method.getAnnotation(PermissionToken.class);
 		ResponseBody body = method.getAnnotation(ResponseBody.class);
 //		this.responsebodyAnno = method.getAnnotation(ResponseBody.class);
 		if(body != null)
@@ -547,6 +550,7 @@ public class MethodInfo {
 		
 		this.assertTicket = method.getAnnotation(AssertTicket.class);
 		this.requireTicket = assertTicket != null;
+		permissionToken = method.getAnnotation(PermissionToken.class);
 		ResponseBody body = method.getAnnotation(ResponseBody.class);
 		
 		if(body != null)
@@ -563,7 +567,12 @@ public class MethodInfo {
 	{
 		return mapping == null?null:mapping.value();
 	}
-	private MethodParameter buildMutilMethodParamAnnotations(Annotation[] annotations,int parampostion,String methodparamname,Class paramType)
+
+	public PermissionToken getPermissionToken() {
+		return permissionToken;
+	}
+
+	private MethodParameter buildMutilMethodParamAnnotations(Annotation[] annotations, int parampostion, String methodparamname, Class paramType)
 	{
 		MethodParameter ret = new MethodParameter(method,parampostion);
 		List<MethodParameter> mutilMethodParamAnnotations = new ArrayList<MethodParameter>();

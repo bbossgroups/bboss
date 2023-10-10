@@ -51,14 +51,14 @@ public interface HandlerAdapter {
 	 * The workflow that is required may vary widely.
 	 * @param request current HTTP request
 	 * @param response current HTTP response
-	 * @param handler handler to use. This object must have previously been passed
+	 * @param mappedHandler handler to use. This object must have previously been passed
 	 * to the <code>supports</code> method of this interface, which must have
 	 * returned <code>true</code>.
 	 * @throws Exception in case of errors
 	 * @return ModelAndView object with the name of the view and the required
 	 * model data, or <code>null</code> if the request has been handled directly
 	 */
-	ModelAndView handle(HttpServletRequest request, HttpServletResponse response, PageContext pageContext,HandlerMeta handler) throws Exception;
+	ModelAndView handle(HttpServletRequest request, HttpServletResponse response, PageContext pageContext,HandlerExecutionChain mappedHandler) throws Exception;
 
 	/**
 	 * Same contract as for HttpServlet's <code>getLastModified</code> method.
@@ -66,7 +66,6 @@ public interface HandlerAdapter {
 	 * @param request current HTTP request
 	 * @param handler handler to use
 	 * @return the lastModified value for the given handler
-	 * @see javax.servlet.http.HttpServlet#getLastModified
 	 * @see LastModified#getLastModified
 	 */
 	long getLastModified(HttpServletRequest request, HandlerMeta handler);

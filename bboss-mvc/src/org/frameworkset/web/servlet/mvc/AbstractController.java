@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
 import org.frameworkset.web.servlet.Controller;
+import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.ModelAndView;
 import org.frameworkset.web.servlet.support.WebContentGenerator;
 import org.frameworkset.web.util.WebUtils;
@@ -70,6 +71,7 @@ public abstract class AbstractController  extends WebContentGenerator implements
 	}
 
 
+	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response,PageContext pageContext)
 			throws Exception {
 
@@ -82,12 +84,33 @@ public abstract class AbstractController  extends WebContentGenerator implements
 			if (session != null) {
 				Object mutex = WebUtils.getSessionMutex(session);
 				synchronized (mutex) {
-					return handleRequestInternal(request, response,pageContext);
+					return handleRequestInternal(request, response,pageContext,null);
 				}
 			}
 		}
 		
-		return handleRequestInternal(request, response,pageContext);
+		return handleRequestInternal(request, response,pageContext,null);
+	}
+
+	@Override
+	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response,PageContext pageContext,HandlerExecutionChain handlerExecutionChain)
+			throws Exception {
+
+		// Delegate to WebContentGenerator for checking and preparing.
+		checkAndPrepare(request, response, this instanceof LastModified);
+
+		// Execute handleRequestInternal in synchronized block if required.
+		if (this.synchronizeOnSession) {
+			HttpSession session = request.getSession(false);
+			if (session != null) {
+				Object mutex = WebUtils.getSessionMutex(session);
+				synchronized (mutex) {
+					return handleRequestInternal(request, response,pageContext,handlerExecutionChain);
+				}
+			}
+		}
+
+		return handleRequestInternal(request, response,pageContext,handlerExecutionChain);
 	}
 
 	/**
@@ -95,7 +118,19 @@ public abstract class AbstractController  extends WebContentGenerator implements
 	 * The contract is the same as for <code>handleRequest</code>.
 	 * @see #handleRequest
 	 */
-	protected abstract ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response,PageContext pageContext)
-	    throws Exception;
+	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response, PageContext pageContext,HandlerExecutionChain handlerExecutionChain)
+	    throws Exception{
+		return handleRequestInternal(  request,   response,   pageContext);
+	}
+
+	/**
+	 * Template method. Subclasses must implement this.
+	 * The contract is the same as for <code>handleRequest</code>.
+	 * @see #handleRequest
+	 */
+	protected abstract ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response, PageContext pageContext)
+			throws Exception;
+
+
 
 }

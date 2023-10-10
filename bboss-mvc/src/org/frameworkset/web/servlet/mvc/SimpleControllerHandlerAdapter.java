@@ -20,10 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 import org.frameworkset.http.converter.HttpMessageConverter;
-import org.frameworkset.web.servlet.Controller;
-import org.frameworkset.web.servlet.DispatchServlet;
-import org.frameworkset.web.servlet.HandlerAdapter;
-import org.frameworkset.web.servlet.ModelAndView;
+import org.frameworkset.web.servlet.*;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
 import org.frameworkset.web.servlet.handler.PathURLNotSetException;
@@ -47,14 +44,21 @@ public class SimpleControllerHandlerAdapter  implements HandlerAdapter  {
 		return !handler.isWebsocket() && (handler.getHandler() instanceof Controller);
 	}
 	
-	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response,PageContext pageContext, HandlerMeta handlerMeta)
+	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response,PageContext pageContext,  HandlerExecutionChain mappedHandler)
 			throws Exception {
+		HandlerMeta handlerMeta = mappedHandler.getHandler();
 		if(this.messageConverters != null && messageConverters.length > 0)
 		{
 			try
 			{
 				request.setAttribute(DispatchServlet.messageConverters_KEY, this.messageConverters);
-				ModelAndView mav = ((Controller) handlerMeta.getHandler()).handleRequest(request, response,pageContext);
+				ModelAndView mav = null;
+				if(!(handlerMeta.getHandler() instanceof MultiActionController)) {
+					mav = ((Controller) handlerMeta.getHandler()).handleRequest(request, response, pageContext);
+				}
+				else{
+					mav = ((Controller) handlerMeta.getHandler()).handleRequest(request, response,pageContext,mappedHandler);
+				}
 				if(mav != null )
 				{
 					if(mav.getView() != null && mav.getView() instanceof AbstractUrlBasedView)
@@ -88,7 +92,13 @@ public class SimpleControllerHandlerAdapter  implements HandlerAdapter  {
 		{
 			try
 			{
-				ModelAndView mav =  ((Controller) handlerMeta.getHandler()).handleRequest(request, response,pageContext);
+				ModelAndView mav = null;
+				if(!(handlerMeta.getHandler() instanceof MultiActionController)) {
+					mav = ((Controller) handlerMeta.getHandler()).handleRequest(request, response, pageContext);
+				}
+				else{
+					mav = ((Controller) handlerMeta.getHandler()).handleRequest(request, response,pageContext,mappedHandler);
+				}
 				if(mav != null && UrlBasedViewResolver.isPathVariable(mav.getViewName()))
 				{
 					mav.setViewName(handlerMeta.getUrlPath(mav.getViewName(),mname,handlerMeta.getHandler(),request));
