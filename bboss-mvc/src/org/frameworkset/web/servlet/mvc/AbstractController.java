@@ -23,6 +23,7 @@ import javax.servlet.jsp.PageContext;
 import org.frameworkset.web.servlet.Controller;
 import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.ModelAndView;
+import org.frameworkset.web.servlet.handler.annotations.ExcludeMethod;
 import org.frameworkset.web.servlet.support.WebContentGenerator;
 import org.frameworkset.web.util.WebUtils;
 
@@ -71,6 +72,7 @@ public abstract class AbstractController  extends WebContentGenerator implements
 	}
 
 
+	@ExcludeMethod
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response,PageContext pageContext)
 			throws Exception {
@@ -92,6 +94,7 @@ public abstract class AbstractController  extends WebContentGenerator implements
 		return handleRequestInternal(request, response,pageContext,null);
 	}
 
+	@ExcludeMethod
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response,PageContext pageContext,HandlerExecutionChain handlerExecutionChain)
 			throws Exception {
