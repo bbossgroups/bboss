@@ -198,14 +198,14 @@ public abstract class HandlerUtils {
 		boolean flag = containParamAnnotations(method);
 		if (flag)
 			return true;
-
+/**
 		Class[] parameterTypes = method.getParameterTypes();
 		String methodName = method.getName();
 		if (("handleRequest".equals(methodName) &&
 				(parameterTypes.length == 3 || parameterTypes.length == 4)))
 			// || parameterTypes.length == 0)
 			return false;
-
+*/
 		Class returnType = method.getReturnType();
 
 		if (ModelAndView.class.equals(returnType)
