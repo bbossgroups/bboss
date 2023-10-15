@@ -99,4 +99,22 @@ public interface HandlerInterceptor {
 			throws Exception{
 		return true;
 	}
+
+	/**
+	 * Callback when request process complete,you can handle result and return a new result here.
+	 * <p>Note: Will only be called if this interceptor's <code>preHandle</code>
+	 * method has successfully completed and returned <code>true</code>!
+	 * @param request current HTTP request
+	 * @param response current HTTP response
+	 * @param handlerMeta chosen handler to execute, for type and/or instance examination
+	 * @return <code>true</code> if the execution chain should proceed with the
+	 * 	 * next interceptor or the handler itself. Else, DispatcherServlet assumes
+	 * 	 * that this interceptor has already dealt with the response itself.
+	 * @throws Exception in case of errors
+	 */
+	default Object invokerHandleComplete(
+			HttpServletRequest request, HttpServletResponse response, HandlerMeta handlerMeta, MethodData handlerMethod,Object result)
+			throws Exception{
+		return result;
+	}
 }

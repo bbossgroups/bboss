@@ -2791,6 +2791,15 @@ public abstract class HandlerUtils {
 
 			Object result = methodInvoker.invokeHandlerMethod(handlerMethod,
 					handlerMeta, request, response, pageContext, implicitModel);
+
+			if(mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0){
+
+				for(HandlerInterceptor handlerInterceptor :mappedHandler.getInterceptors()){
+
+					result = handlerInterceptor.invokerHandleComplete(request,response,handlerMeta,handlerMethod,result);
+
+				}
+			}
 			ModelAndView mav = methodInvoker.getModelAndView(
 					handlerMethod.getMethodInfo(), handlerMeta, result,
 					implicitModel, webRequest);
