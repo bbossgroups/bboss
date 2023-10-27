@@ -1873,9 +1873,9 @@ public class DBOracle extends DB
 	}
 
 	public  boolean isOracleTimestamp(int sqlType){
-		if(sqlType ==  Types.TIMESTAMP || sqlType ==  OracleTypes.TIMESTAMPLTZ
+		if(sqlType ==  Types.TIMESTAMP || sqlType == Types.DATE || sqlType ==  OracleTypes.TIMESTAMPLTZ
 				|| sqlType ==  OracleTypes.TIMESTAMPNS
-				|| sqlType ==  OracleTypes.TIMESTAMPTZ)
+				|| sqlType ==  OracleTypes.TIMESTAMPTZ )
 			return true;
 		return false;
 	}
