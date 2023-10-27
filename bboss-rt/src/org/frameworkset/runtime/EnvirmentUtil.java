@@ -23,7 +23,7 @@ package org.frameworkset.runtime;
  * @author biaoping.yin
  * @version 1.0
  */
-public class EnvirmentUtil {
+public class EnvironmentUtil {
 	public static void main(String[] args){
 		String mainclalss = "#[mainclass:org.frameworkset.elasticsearch.imp.DB2CSVFile]";
 		String value = parserMainClass(mainclalss);
