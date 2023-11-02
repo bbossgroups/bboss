@@ -32,6 +32,7 @@ package com.frameworkset.orm.adapter;
  */
 
 import com.frameworkset.common.poolman.PreparedDBUtil;
+import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.util.SimpleStringUtil;
@@ -627,5 +628,7 @@ public class DBClickhouse extends DBMM
 		if(fetchSize != null && fetchSize != 0)
 			pstmt.setFetchSize(fetchSize);
 	}
-    
+	public void setRowId(Record record, ResultSet rs) throws SQLException {
+		return;
+	}
 }

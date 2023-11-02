@@ -753,13 +753,14 @@ public class ResultMap {
 				record = new Record(columnLableUpperCase,cols, meta.get_columnLabel(), meta.getSamecols());
 			}
 		    try {
-				record.setRowid(rs.getRow());
+				db.setRowId(record,rs);
 			}
-		    catch (Exception e){
-		    	if(rsRowErrorCount.getCountUnSynchronized() < 10) {
-					rsRowErrorCount.increament();
-					if (log.isWarnEnabled()) {
-						log.warn("rs.getRow() failed:", e);
+		    catch (Exception e) {
+				if (log.isDebugEnabled()) {
+					if (rsRowErrorCount.getCountUnSynchronized() < 10) {
+						rsRowErrorCount.increament();
+
+						log.debug("rs.getRow() failed:", e);
 					}
 				}
 

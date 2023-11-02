@@ -32,6 +32,7 @@ package com.frameworkset.orm.adapter;
  */
 
 import com.frameworkset.common.poolman.PreparedDBUtil;
+import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.common.poolman.handle.ValueExchange;
@@ -1229,5 +1230,9 @@ public abstract class DB implements IDMethod, Platform {
         }
         return fetchsize;
     }
+
+	public void setRowId(Record record,ResultSet rs) throws SQLException {
+		record.setRowid(rs.getRow());
+	}
 
 }
