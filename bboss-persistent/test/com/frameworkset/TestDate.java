@@ -66,7 +66,7 @@ public class TestDate {
 		}
 		
 		//mysql
-		SQLUtil.startPool("testmysql","com.mysql.cj.jdbc.Driver","jdbc:mysql://10.0.15.134:3306/bbosstest","root","123456",
+		SQLUtil.startPool("testmysql","com.mysql.cj.jdbc.Driver","jdbc:mysql://10.0.15.134:3306/bbosstest?allowPublicKeyRetrieval=true","root","123456",
 				 null,
 				 null,//"READ_COMMITTED",
 				"select 1",
