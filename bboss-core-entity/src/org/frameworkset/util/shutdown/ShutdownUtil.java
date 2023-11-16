@@ -99,6 +99,36 @@ public class ShutdownUtil {
 
 	}
 	/**
+	 * 首先从配置文件中查找属性值，然后从jvm系统熟悉和系统环境变量中查找属性值
+	 * @param property
+	 * @return
+	 */
+	public static String getSystemEnvProperty(String property)
+	{
+
+//			Properties pros = System.getProperties();
+		//Get value from jvm system propeties,just like -Dproperty=value
+		String value =System.getProperty(property);
+		
+		if(value == null) {
+			//Get value from os env ,just like property=value in user profile
+			value = System.getenv(property);
+		}
+		return value;
+	}
+
+	/**
+	 * 首先从配置文件中查找属性值，然后从jvm系统熟悉和系统环境变量中查找属性值
+	 * @param property
+	 * @return
+	 */
+	public static String getSystemEnvProperty(String property,String defaultValue)
+	{
+		String value = getSystemEnvProperty( property);
+
+		return value != null? value:defaultValue;
+	}
+	/**
 	 * 添加系统中停止时的回调程序
 	 *
 	 * @param destroyVMHook
@@ -133,19 +163,23 @@ public class ShutdownUtil {
 	static
 	{
 		try {
-			Class r = Runtime.getRuntime().getClass();
-			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
-					Thread.class);
-			shutdownHook  = new Thread(
-					new Runnable(){
+			String enableShutdownHook = ShutdownUtil.getSystemEnvProperty("enableShutdownHook","false");
+			//只有在启用自动关闭的情况下，才可以在jvm退出时自动关闭和释放资源，否则需要手动调用ShutdownUtil.shutdown()方法释放资源
+			if(enableShutdownHook.equals("true")) {
+				Class r = Runtime.getRuntime().getClass();
+				java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
+						Thread.class);
+				shutdownHook = new Thread(
+						new Runnable() {
 
-						public void run() {
-							shutdown();
+							public void run() {
+								shutdown();
 
-						}
+							}
 
-					});
-			m.invoke(Runtime.getRuntime(), shutdownHook);
+						});
+				m.invoke(Runtime.getRuntime(), shutdownHook);
+			}
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
 		}
