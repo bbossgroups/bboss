@@ -121,8 +121,9 @@ public class SimpleStringUtil  extends BaseSimpleStringUtil{
 		if(objectMapper == null) {
 			synchronized (SimpleStringUtil.class) {
 				if(objectMapper == null) {
-					objectMapper = new JacksonObjectMapperWrapper();
-					objectMapper.init();
+                    JacksonObjectMapperWrapper objectMapper_ = new JacksonObjectMapperWrapper();
+                    objectMapper_.init();
+                    objectMapper = objectMapper_;
 				}
 			}
 		}

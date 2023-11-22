@@ -2,24 +2,25 @@ package org.frameworkset.json;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.frameworkset.util.BeanUtils;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.annotations.DateFormateMeta;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_SINGLE_QUOTES;
 
 public class Jackson2ObjectMapper implements JacksonObjectMapper {
+    private static final Logger logger = LoggerFactory.getLogger(Jackson2ObjectMapper.class);
+
+    static ClassLoader moduleClassLoader = Jackson2ObjectMapper.class.getClassLoader();
 	protected ObjectMapper mapper = null;
 	protected ObjectMapper ALLOW_SINGLE_QUOTES_mapper = null;
 	protected ObjectMapper NOT_ALLOW_SINGLE_QUOTES_mapper = null;
@@ -31,7 +32,6 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 	private String timeZone;
 	private boolean disableTimestamp = false;
 	boolean failedOnUnknownProperties = false;
-    private static ClassLoader moduleClassLoader = Jackson2ObjectMapper.class.getClassLoader();
 	@Override
 	public String getDateFormat() {
 		return dateFormat;
@@ -124,34 +124,20 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
             }
         }
 
-        // Java 8 java.time package present?
-        if (ClassUtils.isPresent("java.time.LocalDate", moduleClassLoader)) {
-            try {
-//                Class<? extends Module> javaTimeModule = (Class<? extends Module>)
-//                        ClassUtils.forName("com.fasterxml.jackson.datatype.jsr310.JavaTimeModule", moduleClassLoader);
-//                objectMapper.registerModule(BeanUtils.instantiate(javaTimeModule));
-                JavaTimeModule javaTimeModule = new JavaTimeModule();
-                LocalDateTimeDeserializer localDateTimeDeserializer = new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'"));
-                LocalDateTimeSerializer localDateTimeSerializer = new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'"));
-
-                javaTimeModule.addSerializer(LocalDateTime.class,localDateTimeSerializer);
-                javaTimeModule.addDeserializer(LocalDateTime.class,localDateTimeDeserializer);
-
-
-                objectMapper.registerModule(javaTimeModule);
-            }
-            catch (Exception ex) {
-                // jackson-datatype-jsr310 not available or older than 2.6
-                try {
-                    Class<? extends Module> jsr310Module = (Class<? extends Module>)
-                            ClassUtils.forName("com.fasterxml.jackson.datatype.jsr310.JSR310Module", moduleClassLoader);
-                    objectMapper.registerModule(BeanUtils.instantiate(jsr310Module));
-                }
-                catch (ClassNotFoundException ex2) {
-                    // OK, jackson-datatype-jsr310 not available at all...
-                }
+        try {
+            Class<?> javaTimeModuleRegistClass = (Class<?>)
+                    ClassUtils.forName("org.frameworkset.json.JavaTimeModuleRegist");
+            Method javaTimeModuleRegist = javaTimeModuleRegistClass.getMethod("javaTimeModuleRegist", ObjectMapper.class);
+            if (javaTimeModuleRegist != null) {
+                javaTimeModuleRegist.invoke(null, objectMapper);
             }
         }
+        catch (Exception e){
+        }
+
+        catch (Throwable e){
+        }
+
 
         // Joda-Time present?
         if (ClassUtils.isPresent("org.joda.time.LocalDate", moduleClassLoader)) {
@@ -164,6 +150,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
                 // jackson-datatype-joda not available
             }
         }
+
     }
 
 	 /* (non-Javadoc)
