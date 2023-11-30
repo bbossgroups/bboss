@@ -16,6 +16,7 @@
 package com.frameworkset.common.poolman.util;
 
 
+import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.management.BaseTableManager;
 import com.frameworkset.common.poolman.management.PoolManBootstrap;
@@ -477,7 +478,15 @@ public class SQLManager extends PoolManager{
 	 */
 	public DB getDBAdapter(String dbName)
 	{
-		return ((JDBCPool)getPool(dbName)).getDbAdapter();
+        JDBCPool jdbcPool = ((JDBCPool)getPool(dbName));
+        if(jdbcPool != null){
+            return jdbcPool.getDbAdapter();
+        }
+        else{
+            throw new DatasourceException("Get DBAdapter of Datasource["+dbName
+                    +"] failed: Datasource pool with name "
+                    +dbName+" is null,Please check that is configed right or inited right.More see document:\r\nhttps://doc.bbossgroups.com/#/persistent/PersistenceLayer1");
+        }
 	}
 	
 	
