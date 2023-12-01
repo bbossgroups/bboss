@@ -22,6 +22,7 @@ import com.frameworkset.common.poolman.handle.XMLMark;
 import com.frameworkset.common.poolman.sql.PrimaryKey;
 import com.frameworkset.common.poolman.sql.PrimaryKeyCacheManager;
 import com.frameworkset.common.poolman.sql.UpdateSQL;
+import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.common.poolman.util.StatementParser;
@@ -2341,17 +2342,19 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 */
 	public static boolean isAutoprimarykey(String dbname)
 	{
-		boolean autokey = getSQLManager().getPool(dbname).isAutoprimarykey();
+        JDBCPool pool = SQLManager.getInstance().getPool(dbname);
+        SQLManager.assertPool(pool,dbname);
+		boolean autokey = pool.isAutoprimarykey();
 		return autokey;
 		
 	}
 	/**
 	 * 在特定的数据库和链接上执行数据库批处理操作，
 	 * @param batchSQLS 批处理的sql语句集
-	 * @param dbname dbname == null?batchDBName:dbname 数据库逻辑库名称
-	 * @param con 外部传入的数据库链接，如果为空则重新向链接池申请链接
+	 * @param dbname_ dbname == null?batchDBName:dbname 数据库逻辑库名称
+	 * @param con_ 外部传入的数据库链接，如果为空则重新向链接池申请链接
 	 *        使用外部链接时，本方法不做任何事务性的操作，如果出现数据库的异常，直接抛出这个异常。
-	 * @param needtransaction 标识批处理操作是否采用手动控制的事务，true为需要事务，只有所有的sql语句都执行成功才提交，否则
+	 * @param needtransaction_ 标识批处理操作是否采用手动控制的事务，true为需要事务，只有所有的sql语句都执行成功才提交，否则
 	 * 		  全部回滚
 	 *        false为不需要事务，按顺序执行批处理操作，直到全部执行完或者碰到数据库异常后终止
 	 *        需要注意的是如果在该方法是在事务上下文环境中执行，则needtransaction参数将被忽略

@@ -378,8 +378,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 		List resources = null;
 		try {
 			JDBCPool pool = SQLManager.getInstance().getPool(this.prepareDBName);
-			if(pool == null)
-				throw new NestedSQLException(new StringBuilder().append("执行sql[").append(this.Params.prepareSqlifo != null?this.Params.prepareSqlifo.getNewsql():"").append("]失败：数据源[").append(prepareDBName).append("]不存在，请检查数据源是否正确启动.").toString());
+            SQLManager.assertPoolSQL(this.Params.prepareSqlifo != null ? this.Params.prepareSqlifo.getNewsql() : "",pool,prepareDBName);
 			stmtInfo = new StatementInfo(  dbOptions,this.prepareDBName, this.Params.prepareSqlifo,
 
 					false, offset, this.pagesize, pool.isRobotQuery(), con,oraclerownum,true);
@@ -3710,6 +3709,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 			if(getCUDResult)
 			{
 				JDBCPool pool = SQLManager.getInstance().getPool(this.prepareDBName);
+                SQLManager.assertPoolSQLException(pool,prepareDBName);
 				stmtInfo.setRETURN_GENERATED_KEYS(pool.getRETURN_GENERATED_KEYS());
 			}
 			//如果需要优化处理sql，则需要排序

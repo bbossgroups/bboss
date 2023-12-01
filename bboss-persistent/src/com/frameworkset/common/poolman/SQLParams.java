@@ -909,7 +909,8 @@ public class SQLParams
 		}		
 		return temp;
     }
-	public static SQLParams convertBeanToSqlParams(Object bean,SQLInfo sql,String dbname,int action,Connection con) throws SQLException
+	public static SQLParams convertBeanToSqlParams(Object bean,SQLInfo sql,
+                                                   String dbname,int action,Connection con) throws SQLException
 	{
 		PagineOrderby pagineOrderby = null;
 		if(bean == null)
@@ -1075,7 +1076,9 @@ public class SQLParams
 							}
 							else
 							{
-								IdGenerator idGenerator = SQLManager.getInstance().getPool(dbname).getIdGenerator();
+                                JDBCPool pool = SQLManager.getInstance().getPool(dbname);
+                                SQLManager.assertPoolSQLException(pool,dbname);
+								IdGenerator idGenerator = pool.getIdGenerator();
 
 								value = idGenerator.getNextId(pka,dbname,type,name);
 							}

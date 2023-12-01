@@ -128,7 +128,8 @@ public class StatementInfo {
 		/**
 		 * must be removed.
 		 */
-		pool = SQLUtil.getSQLManager().getPool(dbname);
+		pool = SQLUtil.getSQLManager().getPool(dbname);        
+        SQLManager.assertPool(pool,dbname);
 		interceptorInf = pool.getInterceptor();
 		dbadapter = pool.getDbAdapter();
 		if(sql_ != null)
@@ -1266,6 +1267,7 @@ public class StatementInfo {
 	    {
 	        log.error(dbname,e);
 	        JDBCPool pool = ((JDBCPool)SQLUtil.getSQLManager().getPool(null));
+            SQLManager.assertPool(pool,null);
 	        return pool.getDbAdapter().getCusorType(pool.getDriver());
 	    }
 	}
@@ -1298,6 +1300,7 @@ public class StatementInfo {
         {
             log.error(dbname,e);
             JDBCPool pool = ((JDBCPool)SQLUtil.getSQLManager().getPool(null));
+            SQLManager.assertPool(pool,null);
             return pool.getDbAdapter().getSCROLLType(pool.getDriver());
         }
     }

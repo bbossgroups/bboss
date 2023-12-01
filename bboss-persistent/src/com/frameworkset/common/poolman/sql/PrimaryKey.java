@@ -141,6 +141,7 @@ public class PrimaryKey
 	
 		
 		JDBCPool pool = (JDBCPool) (SQLManager.getInstance().getPool(dbname));
+        SQLManager.assertPool(pool,dbname);
 		synsequece = pool.getJDBCPoolMetadata().synsequence();
 		this.seqfunction = pool.getJDBCPoolMetadata().getSeqfunction();
 		try{
@@ -229,6 +230,7 @@ public class PrimaryKey
 		this.increment = increment;
 		this.curValue = curValue;
 		JDBCPool pool = (JDBCPool) (SQLManager.getInstance().getPool(dbname));
+        SQLManager.assertPool(pool,dbname);
 		synsequece = pool.getJDBCPoolMetadata().synsequence();
 		this.seqfunction = pool.getJDBCPoolMetadata().getSeqfunction();
 		String mode = pool.getKeygenerate();
@@ -287,6 +289,7 @@ public class PrimaryKey
 		this.increment = increment;
 		this.curValue = curValue;
 		JDBCPool pool = (JDBCPool) (SQLManager.getInstance().getPool(dbname));
+        SQLManager.assertPool(pool,dbname);
 		synsequece = pool.getJDBCPoolMetadata().synsequence();
 		this.seqfunction = pool.getJDBCPoolMetadata().getSeqfunction();
 		String mode = pool.getKeygenerate();

@@ -72,6 +72,7 @@ public abstract class BaseTableManager {
 			con = SQLManager.getInstance().requestConnection(poolName);
 			DB dbAdaptor = SQLManager.getInstance().getDBAdapter(poolName);
 			JDBCPool pool = SQLManager.getInstance().getPool(poolName);
+            SQLManager.assertPool(pool,poolName);
 			log.info("load pool[" + poolName + "] tables information.......");
 			stmt = con.createStatement(dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
 			try {

@@ -545,7 +545,9 @@ public class SQLUtil{
 	{
 		try
 		{
-			return DBUtil.getSQLManager().getPool(dbname).getJDBCPoolMetadata().isShowsql();
+            JDBCPool pool = SQLManager.getInstance().getPool(dbname);
+            SQLManager.assertPool(pool,dbname);
+			return pool.getJDBCPoolMetadata().isShowsql();
 		}
 		catch(Exception e)
 		{
@@ -556,7 +558,9 @@ public class SQLUtil{
 	{
 		try
 		{
-			return DBUtil.getSQLManager().getPool(dbname).getJDBCPoolMetadata().isShowsqlParams();
+            JDBCPool pool = SQLManager.getInstance().getPool(dbname);
+            SQLManager.assertPool(pool,dbname);
+			return pool.getJDBCPoolMetadata().isShowsqlParams();
 		}
 		catch(Exception e)
 		{
@@ -964,7 +968,9 @@ public class SQLUtil{
 	
 	public static boolean isRobotQuery(String dbName)
 	{
-		return SQLManager.getInstance().getPool(dbName).isRobotQuery();
+        JDBCPool pool = SQLManager.getInstance().getPool(dbName);
+        SQLManager.assertPool(pool,dbName);
+		return pool.isRobotQuery();
 	}
 	
 
@@ -1568,9 +1574,11 @@ public class SQLUtil{
 	}
 	
 	public static DataSource getDataSource(String dbname)
-        {
-	    return SQLUtil.getSQLManager().getPool(dbname).getDataSource();
-        }
+    {
+        JDBCPool pool = SQLManager.getInstance().getPool(dbname);
+        SQLManager.assertPool(pool,dbname);
+        return pool.getDataSource();
+    }
 	
 	
         
@@ -1787,7 +1795,9 @@ public class SQLUtil{
     	
     	public static InterceptorInf getInterceptorInf(String dbname)
     	{
-    		return SQLUtil.getSQLManager().getPool(dbname).getInterceptor();
+            JDBCPool pool = SQLManager.getInstance().getPool(dbname);
+            SQLManager.assertPool(pool,dbname);
+    		return pool.getInterceptor();
     	}
     	public static void startPoolFromConf(String configfile)
     	{

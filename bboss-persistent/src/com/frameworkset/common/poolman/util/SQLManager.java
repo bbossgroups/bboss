@@ -189,9 +189,8 @@ public class SQLManager extends PoolManager{
     public static DataSource getDatasourceByDBName(String dbname)
     {
     	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
-    	if(pool != null)
-    		return pool.getDataSource();
-    	throw new IllegalArgumentException("获取数据源失败："+dbname +"不存在，Check your datasource is started and config is right.");
+        SQLManager.assertPool(pool,dbname);
+    	return pool.getDataSource();
     }
     
     /**
@@ -202,9 +201,8 @@ public class SQLManager extends PoolManager{
     public static DataSource getDatasource()
     {
     	JDBCPool pool = SQLManager.getInstance().getPool(null);
-    	if(pool != null)
-    		return pool.getDataSource();
-    	throw new IllegalArgumentException("获取数据源失败：Check your datasource is started and config is right.");
+        SQLManager.assertPool(pool,null);
+        return pool.getDataSource();
     }
     
     
@@ -216,15 +214,13 @@ public class SQLManager extends PoolManager{
     public static DataSource getTXDatasourceByDBName(String dbname)
     {
     	JDBCPool pool = SQLManager.getInstance().getPool(dbname);
-    	if(pool != null)
-    	{
-    		DataSource datasource = pool.getDataSource();
-    		if(!(datasource instanceof TXDataSource))
-    			return new TXDataSource( pool.getDataSource(),pool);
-    		else
-    			return datasource;
-    	}
-    	throw new IllegalArgumentException("获取数据源失败："+dbname +"不存在，Check your datasource is started and config is right.");
+        SQLManager.assertPool(pool,dbname);
+    	 
+        DataSource datasource = pool.getDataSource();
+        if(!(datasource instanceof TXDataSource))
+            return new TXDataSource( pool.getDataSource(),pool);
+        else
+            return datasource;
     }
     
     /**
@@ -235,15 +231,12 @@ public class SQLManager extends PoolManager{
     public static DataSource getTXDatasource()
     {
     	JDBCPool pool = SQLManager.getInstance().getPool(null);
-    	if(pool != null)
-    	{
-    		DataSource datasource = pool.getDataSource();
-    		if(!(datasource instanceof TXDataSource))
-    			return new TXDataSource( pool.getDataSource(),pool);
-    		else
-    			return datasource;
-    	}
-    	throw new IllegalArgumentException("获取数据源失败：Check your datasource is started and config is right!");
+        SQLManager.assertPool(pool,null);
+        DataSource datasource = pool.getDataSource();
+        if(!(datasource instanceof TXDataSource))
+            return new TXDataSource( pool.getDataSource(),pool);
+        else
+            return datasource;
     }
     
     
@@ -334,6 +327,7 @@ public class SQLManager extends PoolManager{
     public void checkCredentials(String dbname, String user, String passwd) throws SQLException {
         assertLoaded();
         JDBCPool pool = (JDBCPool) getPool(dbname);
+        SQLManager.assertPoolSQLException(pool,dbname);
         pool.checkCredentials(user, passwd);
     }
 
@@ -478,16 +472,32 @@ public class SQLManager extends PoolManager{
 	 */
 	public DB getDBAdapter(String dbName)
 	{
-        JDBCPool jdbcPool = ((JDBCPool)getPool(dbName));
-        if(jdbcPool != null){
-            return jdbcPool.getDbAdapter();
-        }
-        else{
-            throw new DatasourceException("Get DBAdapter of Datasource["+dbName
-                    +"] failed: Datasource pool with name "
+        JDBCPool jdbcPool = getPool(dbName);
+        assertPool(  jdbcPool,  dbName);
+        return jdbcPool.getDbAdapter();
+	}
+    
+    public static void assertPool(JDBCPool jdbcPool,String dbName){
+        if(jdbcPool == null){
+            throw new DatasourceException("Datasource pool with name "
                     +dbName+" is null,Please check that is configed right or inited right.More see document:\r\nhttps://doc.bbossgroups.com/#/persistent/PersistenceLayer1");
         }
-	}
+    }
+
+    public static void assertPoolSQLException(JDBCPool jdbcPool,String dbName) throws NestedSQLException{
+        if(jdbcPool == null){
+            throw new NestedSQLException("Datasource pool with name "
+                    +dbName+" is null,Please check that is configed right or inited right.More see document:\r\nhttps://doc.bbossgroups.com/#/persistent/PersistenceLayer1");
+        }
+    }
+
+    public static void assertPoolSQL(String sql,JDBCPool jdbcPool,String dbName) throws NestedSQLException{
+        if(jdbcPool == null){
+            throw new NestedSQLException(new StringBuilder().append("执行sql[")
+                    .append(sql).append("]失败：数据源[").append(dbName)
+                    .append("]不存在，请检查数据源是否正确启动.More see document:\r\nhttps://doc.bbossgroups.com/#/persistent/PersistenceLayer1").toString());
+        }
+    }
 	
 	
 	

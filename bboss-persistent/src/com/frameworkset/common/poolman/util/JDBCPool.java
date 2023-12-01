@@ -174,7 +174,9 @@ public class JDBCPool {
 		}
 		else
 		{
-			return SQLManager.getInstance().getPool(externalDBName).getTableMetaData(con, tableName);
+            JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+            SQLManager.assertPool(pool,externalDBName);
+			return pool.getTableMetaData(con, tableName);
 		}
 	}
 
@@ -1124,7 +1126,9 @@ public class JDBCPool {
 		}
 		else
 		{
-			SQLManager.getInstance().getPool(externalDBName).updateTableMetaData(tableName);
+            JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+            SQLManager.assertPool(pool,externalDBName);
+            pool.updateTableMetaData(tableName);
 		}
 	}
 	public String getDatabaseSchema(DatabaseMetaData databaseMetaData) throws Throwable
@@ -1878,7 +1882,9 @@ public class JDBCPool {
 		}
 		else
 		{
-			return SQLManager.getInstance().getPool(externalDBName).getTableMetaDataFromDatabase(con, tableName);
+            JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+            SQLManager.assertPool(pool,externalDBName);
+			return pool.getTableMetaDataFromDatabase(con, tableName);
 		}
 
 	}
@@ -2143,7 +2149,9 @@ public class JDBCPool {
 		}
 		else
 		{
-			SQLManager.getInstance().getPool(externalDBName).checkCredentials(username, password);
+            JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+            SQLManager.assertPool(pool,externalDBName);
+            pool.checkCredentials(username, password);
 		}
 	}
 
@@ -2174,7 +2182,9 @@ public class JDBCPool {
 				}
 				else
 				{
-					return SQLManager.getInstance().getPool(externalDBName).requestConnection();
+                    JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+                    SQLManager.assertPoolSQLException(pool,externalDBName);
+					return pool.requestConnection();
 				}
 			
 			}
@@ -2201,7 +2211,9 @@ public class JDBCPool {
 		}
 		else
 		{
-			return SQLManager.getInstance().getPool(externalDBName).getNumActive();
+            JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+            SQLManager.assertPool(pool,externalDBName);
+			return pool.getNumActive();
 		}
 	}
 	
@@ -2218,7 +2230,9 @@ public class JDBCPool {
 		}
 		else
 		{
-			return SQLManager.getInstance().getPool(externalDBName).getGoodTraceObjects();
+            JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+            SQLManager.assertPool(pool,externalDBName);
+			return pool.getGoodTraceObjects();
 		}
 	}
 	
@@ -2241,7 +2255,9 @@ public class JDBCPool {
 		}
 		else
 		{
-			return SQLManager.getInstance().getPool(externalDBName).getMaxNumActive();
+            JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+            SQLManager.assertPool(pool,externalDBName);
+			return pool.getMaxNumActive();
 		}
 	}
 	
@@ -2259,7 +2275,9 @@ public class JDBCPool {
 		}
 		else
 		{
-			return SQLManager.getInstance().getPool(externalDBName).getMaxActiveNumTime();
+            JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+            SQLManager.assertPool(pool,externalDBName);
+			return pool.getMaxActiveNumTime();
 		}
     }
 
@@ -2277,7 +2295,9 @@ public class JDBCPool {
 		}
 		else
 		{
-			return SQLManager.getInstance().getPool(externalDBName).getNumIdle();
+            JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+            SQLManager.assertPool(pool,externalDBName);
+            return pool.getNumIdle();
 		}
 	}
 
@@ -2451,7 +2471,9 @@ public class JDBCPool {
 		}
 		else
 		{
-			return SQLManager.getInstance().getPool(externalDBName).getTableMetaDatas(limit);
+            JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+            SQLManager.assertPool(pool,externalDBName);
+            return pool.getTableMetaDatas(limit);
 		}
 	}
 
@@ -2473,7 +2495,9 @@ public class JDBCPool {
 	public String getStatus() {
 		if(this.externalDBName == null)
 			return status;
-		return SQLManager.getInstance().getPool(externalDBName).getStatus();
+        JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+        SQLManager.assertPool(pool,externalDBName);
+        return pool.getStatus();
 		
 	}
 
@@ -2484,7 +2508,9 @@ public class JDBCPool {
 	public long getStartTime() {
 		if(this.externalDBName == null)
 			return startTime;
-		return SQLManager.getInstance().getPool(externalDBName).getStartTime();
+        JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+        SQLManager.assertPool(pool,externalDBName);
+        return pool.getStartTime();
 	}
 
 	public void setStartTime(long startTime) {
@@ -2494,7 +2520,9 @@ public class JDBCPool {
 	public long getStopTime() {
 		if(this.externalDBName == null)
 			return stopTime;
-		return SQLManager.getInstance().getPool(externalDBName).getStopTime();
+        JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+        SQLManager.assertPool(pool,externalDBName);
+        return pool.getStopTime();
 	}
 
 	/**
@@ -2545,7 +2573,9 @@ public class JDBCPool {
 		}
 		else
 		{
-			return SQLManager.getInstance().getPool(externalDBName).getIdGenerator();
+            JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+            SQLManager.assertPool(pool,externalDBName);
+            return pool.getIdGenerator();
 		}
 	}
 	public boolean getRETURN_GENERATED_KEYS()
@@ -2556,7 +2586,9 @@ public class JDBCPool {
 		}
 		else
 		{
-			return SQLManager.getInstance().getPool(externalDBName).getRETURN_GENERATED_KEYS();
+            JDBCPool pool = SQLManager.getInstance().getPool(externalDBName);
+            SQLManager.assertPool(pool,externalDBName);
+            return pool.getRETURN_GENERATED_KEYS();
 		}
 	}
 

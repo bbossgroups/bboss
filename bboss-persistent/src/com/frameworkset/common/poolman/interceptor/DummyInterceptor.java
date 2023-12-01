@@ -15,6 +15,7 @@
  */
 package com.frameworkset.common.poolman.interceptor;
 
+import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.common.poolman.util.SQLManager;
 
 public class DummyInterceptor implements InterceptorInf {
@@ -24,7 +25,9 @@ public class DummyInterceptor implements InterceptorInf {
 	}
 
 	public String getDefaultDBName() {
-		return SQLManager.getInstance().getPool(null).getDBName();
+        JDBCPool pool = SQLManager.getInstance().getPool(null);
+        SQLManager.assertPool(pool,null);
+		return pool.getDBName();
 	}
 
 }

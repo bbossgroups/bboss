@@ -249,7 +249,8 @@ public class SQLInfoExecutor {
 	 * @param batchHandler
 	 * @throws SQLException
 	 */
-	public static <T> void executeBatch(DBOptions dbOptions,String dbname,SQLInfo sql,List<T> datas,int batchsize, BatchHandler<T> batchHandler) throws SQLException{
+	public static <T> void executeBatch(DBOptions dbOptions,String dbname,SQLInfo sql,List<T> datas,
+                                        int batchsize, BatchHandler<T> batchHandler) throws SQLException{
 		if(datas == null || datas.size() == 0){
 			return;
 		}
@@ -269,6 +270,7 @@ public class SQLInfoExecutor {
 			stmtInfo.init();
 			 
 			JDBCPool pool = SQLManager.getInstance().getPool(dbname);
+            SQLManager.assertPoolSQLException(pool,dbname);
 			boolean showsql = pool.getJDBCPoolMetadata().isShowsql();
 			if(showsql)
 			{
