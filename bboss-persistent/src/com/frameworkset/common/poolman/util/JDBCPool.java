@@ -1229,6 +1229,7 @@ public class JDBCPool {
 	private void initDatabaseMetaData(Connection con,int limit) {
 		
 
+        log.info("Init DatabaseMetaData[{}] begin...",this.getDBName());
 		ResultSet rs = null;
 		
 		DatabaseMetaData metaData = null;
@@ -1280,14 +1281,15 @@ public class JDBCPool {
 				count ++;
 			}
 			rs.close();
-
+            log.info("Init DatabaseMetaData[{}] complete.",this.getDBName());
 			// metaData.
 		} catch (SQLException e) {
-			log.warn("",e);
+			log.warn("Init DatabaseMetaData[{}] failed.",e);
+            
 			// TODO Auto-generated catch block
 
 		} catch (Exception e) {
-			log.warn("",e);
+            log.warn("Init DatabaseMetaData[{}] failed.",e);
 		}
 
 		finally {
@@ -2318,7 +2320,7 @@ public class JDBCPool {
 			return;
 		
 //		System.out.println("Shutdown poolman[" + this.getDBName() + "] start.");
-		log.debug("Shutdown datasource[" + this.getDBName() + "] start.");
+		log.info("Shutdown datasource[" + this.getDBName() + "] start.");
 			
 			undeployDataSource();
 			this.stopTime = System.currentTimeMillis();
@@ -2337,7 +2339,7 @@ public class JDBCPool {
 			this.inited = false;
 	
 //		System.out.println("Shutdown poolman[" + this.getDBName() + "] ok.");
-		log.debug("Shutdown datasource[" + this.getDBName() + "] ok.");
+		log.info("Shutdown datasource[" + this.getDBName() + "] complete.");
 		
 	}
 

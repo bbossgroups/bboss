@@ -295,7 +295,6 @@ public class PoolManBootstrap  {
      * @throws Exception 
      */
     public void startDB(String dbname) throws Exception {
-        log.debug("PoolManBootstrap(configFile): " + configFile);
         if(dbname == null || dbname.equals(""))
         	dbname = SQLUtil.getSQLManager().getDefaultDBName();
         PoolManConfiguration config = new PoolManConfiguration(configFile,dbname);

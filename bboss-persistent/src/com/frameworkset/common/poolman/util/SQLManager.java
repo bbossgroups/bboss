@@ -567,6 +567,7 @@ public class SQLManager extends PoolManager{
         }
         
         BaseTableManager.removePrimaryKeyCache(dbname);
+        log.info("Stop {} and remove[{}] Pool complete.",dbname,remove);
 		
 	}
 	public void stopPool(String dbname) throws Exception {
@@ -587,9 +588,7 @@ public class SQLManager extends PoolManager{
 	
 	public static boolean startPool(String poolname) throws Exception
     {
-//		if(poolname == null || poolname.equals(""))
-//			poolname = SQLUtil.getSQLManager().getDefaultDBName();
-//		JDBCPool pool = SQLUtil.getSQLManager().getPool(poolname);
+
 		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
 		if(pool != null)
 		{
@@ -598,14 +597,9 @@ public class SQLManager extends PoolManager{
 				log.warn("连接池[" + pool.getDBName() + "]已经启动。无需再启动,或者请停止后再启动.");
 				return false;
 			}
-//				throw new IllegalStateException("连接池[" + pool.getDBName() + "]已经启动。无需再启动,或者请停止后再启动.");
 				
 		}
-//		if(pool != null && pool.isExternal())
-//		{
-//			if(pool.getExternalDBName() != null)
-//				startRealDBNameFromExternalDBName(pool.getExternalDBName());
-//		}
+
 		PoolManBootstrap boot = new PoolManBootstrap();
 		boot.startDB(poolname);
 		return true;
@@ -646,29 +640,7 @@ public class SQLManager extends PoolManager{
 	
 	public static boolean startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery)
 	{
-//		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
-//		if(pool != null)
-//		{
-//			if(pool.getStatus().equals("start"))
-//			{
-////				throw new IllegalStateException("连接池[" + poolname + "]已经启动。无需再启动,或者请停止后再启动.");
-//				log.warn("连接池[" + poolname + "]已经启动。无需再启动,或者请停止后再启动.");
-//				return;
-//			}
-//				
-//		}
-//		Map<String,String> values = new HashMap<String,String>();
-//		values.put("dbname", poolname);
-//		values.put("jndiname", "");
-//		values.put("driver", driver);
-//		values.put("url", jdbcurl);
-//		values.put("username", username);
-//		values.put("password", password);
-//		
-//		values.put("readonly", readOnly);
-//		values.put("validationquery", validationQuery);
-//		
-//		PoolManBootstrap.startFromTemplte(values);
+
 		return startPool( poolname, driver, jdbcurl, username, password, readOnly, validationQuery,false);
 	}
 	
@@ -695,82 +667,15 @@ public class SQLManager extends PoolManager{
 	}
 	public static boolean startPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
 	{
-//		JDBCPool pool = SQLUtil.getSQLManager().getPoolIfExist(poolname);
-//		if(pool != null)
-//		{
-//			if(pool.getStatus().equals("start"))
-//			{
-////				throw new IllegalStateException("连接池[" + poolname + "]已经启动。无需再启动,或者请停止后再启动.");
-//				log.warn("连接池[" + poolname + "]已经启动。无需再启动,或者请停止后再启动.");
-//				return;
-//			}
-//				
-//		}
-//		Map<String,String> values = new HashMap<String,String>();
-//		values.put("dbname", poolname);
-//		values.put("jndiname", "");
-//		values.put("driver", driver);
-//		values.put("url", jdbcurl);
-//		values.put("username", username);
-//		values.put("password", password);
-//		
-//		values.put("readonly", readOnly);
-//		values.put("validationquery", validationQuery);
-//		
-//		PoolManBootstrap.startFromTemplte(values);
-//		TempConf tempConf = new TempConf();
-//		tempConf.setPoolname(poolname);
-//		tempConf.setDriver(driver);
-//		tempConf.setJdbcurl(jdbcurl);
-//		tempConf.setUsername(username);
-//		tempConf.setPassword(password);
-//		tempConf.setValidationQuery(validationQuery);
-//		tempConf.setTxIsolationLevel("READ_COMMITTED");
-//		tempConf.setJndiName("jndi-"+poolname);
-//		tempConf.setInitialConnections(10);
-//		tempConf.setMinimumSize(10);
-//		tempConf.setMaximumSize(20);
-//		tempConf.setUsepool(true);
-//		tempConf.setExternal(false);
-//		tempConf.setEncryptdbinfo(false);
-//		tempConf.setShowsql(false);
-//		tempConf.setQueryfetchsize(0);
-//		startPool(tempConf);
-		return startPool(poolname,driver,jdbcurl,username,password,validationQuery,0);
-		/**
-		 * startPool( poolname, driver, jdbcurl, username, password,
-	    		 readOnly,
-	    		 "READ_COMMITTED",
-	    		validationQuery,
-	    		"jndi-"+poolname,   
-	    		10,
-	    		10,
-	    		20,
-	    		true,
-	    		false,
-	    		null,false,encryptdbinfo
-	    		);
-	    		
-	    		startPool(poolname,  driver,  jdbcurl,  username,  password,
-	    		  readOnly,
-	    		  txIsolationLevel,
-	    		  validationQuery,
-	    		  jndiName,   
-	    		  initialConnections,
-	    		  minimumSize,
-	    		  maximumSize,
-	    		  usepool,
-	    		   external,
-	    		  externaljndiName ,  showsql ,  encryptdbinfo  ,0    		
-	    		);
-		 */
-//		startPool( poolname, driver, jdbcurl, username, password, (String)null, validationQuery,false);
+
+		return startPool(poolname,driver,jdbcurl,username,password,validationQuery,(Integer) null);
+		
 	}
 	
 	
 	public static boolean startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery)
 	{
-		return startNoPool(poolname,driver,jdbcurl,username,password,validationQuery,0);
+		return startNoPool(poolname,driver,jdbcurl,username,password,validationQuery,(Integer) null);
 	}
 	public static boolean startNoPool(String poolname,String driver,String jdbcurl,String username,String password,String validationQuery,Integer fetchsize)
 	{
@@ -818,34 +723,12 @@ public class SQLManager extends PoolManager{
 		tempConf.setEncryptdbinfo(false);
 		tempConf.setQueryfetchsize(fetchsize);
 		return startPool(tempConf);
-//		startPool( poolname, driver, jdbcurl, username, password,
-//	    		 null,
-//	    		 "READ_COMMITTED",
-//	    		validationQuery,
-//	    		"jndi-"+poolname,   
-//	    		10,
-//	    		10,
-//	    		20,
-//	    		false,
-//	    		false,
-//	    		null,false,false
-//	    		);
+
 	}
 	public static boolean startPool(String poolname,String driver,String jdbcurl,String username,String password,String readOnly,String validationQuery,boolean encryptdbinfo)
 	{
 
-//		startPool( poolname, driver, jdbcurl, username, password,
-//	    		 readOnly,
-//	    		 "READ_COMMITTED",
-//	    		validationQuery,
-//	    		"jndi-"+poolname,   
-//	    		10,
-//	    		10,
-//	    		20,
-//	    		true,
-//	    		false,
-//	    		null,false,encryptdbinfo
-//	    		);
+
 
 		DBConf tempConf = new DBConf();
 		tempConf.setPoolname(poolname);
@@ -882,18 +765,7 @@ public class SQLManager extends PoolManager{
     		String externaljndiName ,boolean showsql ,boolean encryptdbinfo      		
     		)
 	{
-//		startPool(poolname,  driver,  jdbcurl,  username,  password,
-//	    		  readOnly,
-//	    		  txIsolationLevel,
-//	    		  validationQuery,
-//	    		  jndiName,   
-//	    		  initialConnections,
-//	    		  minimumSize,
-//	    		  maximumSize,
-//	    		  usepool,
-//	    		   external,
-//	    		  externaljndiName ,  showsql ,  encryptdbinfo  ,0    		
-//	    		);
+
 		DBConf tempConf = new DBConf();
 		tempConf.setPoolname(poolname);
 		tempConf.setDriver(driver);
@@ -1007,8 +879,8 @@ public class SQLManager extends PoolManager{
 			}
 				
 		}
-		
-		
+
+        log.info("Start Pool {} begin.",temConf.getPoolname());
 		if(temConf.getTxIsolationLevel() == null)
 			temConf.setTxIsolationLevel("");
 		Map<String,Object> values = new HashMap<String,Object>();
@@ -1121,10 +993,14 @@ public class SQLManager extends PoolManager{
         if(temConf.getConnectionProperties() != null && temConf.getConnectionProperties().size() > 0){
             values.put("connectionProperties",temConf.getConnectionProperties());
         }
-		if(PoolManBootstrap.startFromTemplte(values) != null)
-			return true;
-		else
-			return false;
+		if(PoolManBootstrap.startFromTemplte(values) != null) {
+            log.info("Start Pool {} complete[success].",temConf.getPoolname());
+            return true;
+        }
+		else {
+            log.info("Start Pool {} complete[false]:Ignore started pool.",temConf.getPoolname());
+            return false;
+        }
 
 	}
 	
