@@ -631,4 +631,10 @@ public class DBClickhouse extends DBMM
 	public void setRowId(Record record, ResultSet rs) throws SQLException {
 		return;
 	}
+    public Statement createStatement(Connection con,int resultSetType, int resultSetConcurrency)
+            throws SQLException {
+        Statement stmt = con.createStatement();
+
+        return stmt;
+    }
 }

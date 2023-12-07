@@ -1234,5 +1234,11 @@ public abstract class DB implements IDMethod, Platform {
 	public void setRowId(Record record,ResultSet rs) throws SQLException {
 		record.setRowid(rs.getRow());
 	}
-
+    public Statement createStatement(Connection con,int resultSetType, int resultSetConcurrency)
+            throws SQLException {
+        Statement stmt = con.createStatement(resultSetType,
+                resultSetConcurrency);
+        
+        return stmt;
+    }
 }

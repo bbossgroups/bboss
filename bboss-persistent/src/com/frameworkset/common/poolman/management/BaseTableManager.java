@@ -74,7 +74,7 @@ public abstract class BaseTableManager {
 			JDBCPool pool = SQLManager.getInstance().getPool(poolName);
             SQLManager.assertPool(pool,poolName);
 			log.info("load pool[" + poolName + "] tables information.......");
-			stmt = con.createStatement(dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
+			stmt = dbAdaptor.createStatement(con,dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
 			try {
 				rs = stmt.executeQuery(queryTableInfoSql);
 			} catch (Exception e1) {
@@ -83,7 +83,7 @@ public abstract class BaseTableManager {
 			}
 			DB dbAdapter = SQLManager.getInstance().getDBAdapter(poolName);
 			
-			q_pstmt = con.createStatement(dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
+			q_pstmt = dbAdaptor.createStatement(con,dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
 			
 			u_pstmt = con.prepareStatement(updateTableInfoSql,dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
 			
@@ -305,7 +305,7 @@ public abstract class BaseTableManager {
 			}
 			DB dbAdaptor = SQLManager.getInstance().getDBAdapter(poolName);
 			JDBCPool pool = SQLManager.getInstance().getPool(poolName);
-			q_pstmt = con.createStatement(dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
+			q_pstmt = dbAdaptor.createStatement(con,dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
 			u_pstmt = con.prepareStatement(updateTableInfoSql,dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
 			stmt = con.prepareStatement(queryTableInfoSqlBytableName,dbAdaptor.getSCROLLType(pool.getDriver()),dbAdaptor.getCusorType(pool.getDriver()));
 			stmt.setString(1, tableName);

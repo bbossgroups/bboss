@@ -78,7 +78,7 @@ public class BaseSimpleStringUtil {
 
 		builder.append(contextPath);
         boolean contextPathEndsWith = contextPath.endsWith("/");
-        boolean pathEndsWith = path.endsWith("/");
+        boolean pathEndsWith = path.startsWith("/");
 		if(contextPathEndsWith || pathEndsWith){
 			if(contextPathEndsWith && pathEndsWith){
 				builder.append(path.substring(1));

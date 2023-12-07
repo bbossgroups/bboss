@@ -266,8 +266,10 @@ public class StatementInfo {
 
 	public Statement createStatement(int resultSetType, int resultSetConcurrency)
 			throws SQLException {
-		Statement stmt = this.con.createStatement(resultSetType,
-				resultSetConcurrency);
+        Statement stmt = this.dbadapter.createStatement(con,resultSetType,
+                resultSetConcurrency);
+//		Statement stmt = this.con.createStatement(resultSetType,
+//				resultSetConcurrency);
 		statements.add(stmt);
 		return stmt;
 	}
@@ -1233,7 +1235,9 @@ public class StatementInfo {
 	// }
 
 	public Statement createStatement() throws SQLException {
-		Statement stmt = this.con.createStatement(this.getScrollType(dbname),this.getCursorType(dbname));
+		Statement stmt = this.dbadapter.createStatement(this.con,this.getScrollType(dbname),this.getCursorType(dbname));
+
+        
 //	    Statement stmt = this.con.createStatement();
 		this.statements.add(stmt);
 		return stmt;
