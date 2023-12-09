@@ -15,10 +15,24 @@
  */
 package com.frameworkset.orm.adapter;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class DBSQLiteXerial extends DBMM{
 
 	public DBSQLiteXerial() {
 		// TODO Auto-generated constructor stub
 	}
+
+    public Statement createStatement(Connection con, int resultSetType, int resultSetConcurrency)
+            throws SQLException {
+        //SQLite only supports TYPE_FORWARD_ONLY cursors
+        Statement stmt = con.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                resultSetConcurrency);
+
+        return stmt;
+    }
 
 }
