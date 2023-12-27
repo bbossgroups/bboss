@@ -30,6 +30,8 @@ import java.util.Properties;
  * @version 1.0
  */
 public class DBConf implements Serializable {
+    public static final String BALANCE_RANDOM = "random";
+    public static final String BALANCE_ROUNDBIN = "roundbin";
 	private boolean testWhileidle = true;
 	private boolean enableShutdownHook;
 	/**
@@ -73,7 +75,18 @@ public class DBConf implements Serializable {
 	private boolean usepool;
 	private boolean  external;
     private Properties connectionProperties;
+    /**
+     * 是否启用数据源负载均衡
+     */
+    private boolean enableBalance = false;
 
+
+    /**
+     * 负载均衡算法，目前支持两种类型：
+     * DBConf.BALANCE_RANDOM  随机算法
+     * DBConf.BALANCE_ROUNDBIN   轮询算法
+     */
+    private String balance = DBConf.BALANCE_RANDOM;
 	public boolean isColumnLableUpperCase() {
 		return columnLableUpperCase;
 	}
@@ -340,5 +353,21 @@ public class DBConf implements Serializable {
             connectionProperties = new Properties();
         connectionProperties.put(name,value);
         return this;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public boolean isEnableBalance() {
+        return enableBalance;
+    }
+
+    public void setEnableBalance(boolean enableBalance) {
+        this.enableBalance = enableBalance;
     }
 }

@@ -898,6 +898,8 @@ public class SQLManager extends PoolManager{
 			values.put("enablejta", "true");
 		else
 			values.put("enablejta", "false");
+        values.put("balance",temConf.getBalance());
+        values.put("enableBalance", temConf.isEnableBalance());
 		values.put("columnLableUpperCase",temConf.isColumnLableUpperCase());
 		values.put("driver", temConf.getDriver());
 		values.put("enableShutdownHook",temConf.isEnableShutdownHook());

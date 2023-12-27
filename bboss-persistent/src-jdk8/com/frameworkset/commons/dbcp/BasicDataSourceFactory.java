@@ -18,8 +18,15 @@
 package com.frameworkset.commons.dbcp;
 
 import com.frameworkset.common.poolman.PoolManConstants;
+import com.frameworkset.common.poolman.util.DBConf;
+import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.commons.dbcp2.BasicDataSource;
 import com.frameworkset.commons.dbcp2.NativeDataSource;
+import com.frameworkset.orm.adapter.DB;
+import com.frameworkset.util.SimpleStringUtil;
+import org.frameworkset.persitent.datasource.BalanceDatasource;
+import org.frameworkset.persitent.datasource.RandomBalanceDatasource;
+import org.frameworkset.persitent.datasource.RoundbinBalanceDatasource;
 
 import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
@@ -113,200 +120,256 @@ public class BasicDataSourceFactory  {
      * Internal constant to indicate the level is not set.
      */
     static final int UNKNOWN_TRANSACTIONISOLATION = -1;
+//    /**
+//     * Creates and configures a {@link BasicDataSource} instance based on the
+//     * given properties.
+//     * 
+//     * @param properties the datasource configuration properties
+//     * @throws Exception if an error occurs creating the data source
+//     */
+//    public static DataSource createDBCP2DataSource(Properties properties) throws Exception {
+//        String url =  properties.getProperty(PROP_URL);
+//        return createDBCP2DataSource(url,properties);      
+//    }
+
     /**
      * Creates and configures a {@link BasicDataSource} instance based on the
      * given properties.
-     * 
+     *
      * @param properties the datasource configuration properties
      * @throws Exception if an error occurs creating the data source
      */
-    public static DataSource createDBCP2DataSource(Properties properties) throws Exception {
-    	com.frameworkset.commons.dbcp2.BasicDataSource dataSource = new com.frameworkset.commons.dbcp2.BasicDataSource();
-        String value = null;
-        boolean usepool = Boolean.parseBoolean((String)properties.get(PoolManConstants.PROP_USEPOOL));    	
-    	if(usepool)
-    	{
-	        value = properties.getProperty(PROP_DEFAULTAUTOCOMMIT);
-	        if (value != null) {
-	            dataSource.setDefaultAutoCommit(Boolean.valueOf(value).booleanValue());
-	        }
-	
-	        value = properties.getProperty(PROP_DEFAULTREADONLY);
-	        if (value != null &&   !"".equalsIgnoreCase(value)) {
-	            dataSource.setDefaultReadOnly(Boolean.valueOf(value).booleanValue());
-	        }
-	
-	        value = properties.getProperty(PROP_DEFAULTTRANSACTIONISOLATION);
-	        if (value != null && !value.equals("")) {
-	            int level = UNKNOWN_TRANSACTIONISOLATION;
-	            if ("NONE".equalsIgnoreCase(value) || "".equalsIgnoreCase(value)) {
-	                level = Connection.TRANSACTION_NONE;
-	            }
-	            else if ("READ_COMMITTED".equalsIgnoreCase(value)) {
-	                level = Connection.TRANSACTION_READ_COMMITTED;
-	            }
-	            else if ("READ_UNCOMMITTED".equalsIgnoreCase(value)) {
-	                level = Connection.TRANSACTION_READ_UNCOMMITTED;
-	            }
-	            else if ("REPEATABLE_READ".equalsIgnoreCase(value)) {
-	                level = Connection.TRANSACTION_REPEATABLE_READ;
-	            }
-	            else if ("SERIALIZABLE".equalsIgnoreCase(value)) {
-	                level = Connection.TRANSACTION_SERIALIZABLE;
-	            }
-	            else {
-	                try {
-	                    level = Integer.parseInt(value);
-	                } catch (NumberFormatException e) {
-	                    System.err.println("Could not parse defaultTransactionIsolation: " + value);
-	                    System.err.println("WARNING: defaultTransactionIsolation not set");
-	                    System.err.println("using default value of database driver");
-	                    level = UNKNOWN_TRANSACTIONISOLATION;
-	                }
-	            }
-	            dataSource.setDefaultTransactionIsolation(level);
-	        }
-	
-	        value = properties.getProperty(PROP_DEFAULTCATALOG);
-	        if (value != null) {
-	            dataSource.setDefaultCatalog(value);
-	        }
-	
-	        value = properties.getProperty(PROP_DRIVERCLASSNAME);
-	        if (value != null) {
-	            dataSource.setDriverClassName(value);
-	        }
-	
-	        value = properties.getProperty(PROP_MAXACTIVE);
-	        if (value != null) {
-	            dataSource.setMaxTotal(Integer.parseInt(value));
-	        }
-	
-	        value = properties.getProperty(PROP_MAXIDLE);
-	        if (value != null) {
-	            dataSource.setMaxIdle(Integer.parseInt(value));
-	        }
-	
-	        value = properties.getProperty(PROP_MINIDLE);
-	        if (value != null) {
-	            dataSource.setMinIdle(Integer.parseInt(value));
-	        }
-	
-	        value = properties.getProperty(PROP_INITIALSIZE);
-	        if (value != null) {
-	            dataSource.setInitialSize(Integer.parseInt(value));
-	        }
-	
-	        value = properties.getProperty(PROP_MAXWAIT);
-	        if (value != null) {
-	            dataSource.setMaxWaitMillis(Long.parseLong(value));
-	        }
-	
-	        value = properties.getProperty(PROP_TESTONBORROW);
-	        if (value != null) {
-	            dataSource.setTestOnBorrow(Boolean.valueOf(value).booleanValue());
-	        }
-	
-	        value = properties.getProperty(PROP_TESTONRETURN);
-	        if (value != null) {
-	            dataSource.setTestOnReturn(Boolean.valueOf(value).booleanValue());
-	        }
-	
-	        value = properties.getProperty(PROP_TIMEBETWEENEVICTIONRUNSMILLIS);
-	        if (value != null) {
-	            dataSource.setTimeBetweenEvictionRunsMillis(Long.parseLong(value));
-	        }
-	
-	        value = properties.getProperty(PROP_NUMTESTSPEREVICTIONRUN);
-	        if (value != null) {
-	            dataSource.setNumTestsPerEvictionRun(Integer.parseInt(value));
-	        }
-	
-	        value = properties.getProperty(PROP_MINEVICTABLEIDLETIMEMILLIS);
-	        if (value != null) {
-	            dataSource.setMinEvictableIdleTimeMillis(Long.parseLong(value));
-	        }
-	
-	        value = properties.getProperty(PROP_TESTWHILEIDLE);
-	        if (value != null) {
-	            dataSource.setTestWhileIdle(Boolean.valueOf(value).booleanValue());
-	        }
-			value = properties.getProperty(PROP_validateDatasourceWhenCreate);
-			if (value != null) {
-				dataSource.setValidateDatasourceWhenCreate(Boolean.valueOf(value).booleanValue());
-			}
+    public static DataSource createDBCP2DataSource(Properties properties, DB db,JDBCPoolMetaData jdbcPoolMetaData) throws Exception {
+        String url =  properties.getProperty(PROP_URL);
+        
+        if(!jdbcPoolMetaData.isEnableBalance()) {
 
-	
-	        value = properties.getProperty(PROP_PASSWORD);
-	        if (value != null) {
-	            dataSource.setPassword(value);
-	        }
-	
-	        value = properties.getProperty(PROP_URL);
-	        if (value != null) {
-	            dataSource.setUrl(value);
-	        }
-	
-	        value = properties.getProperty(PROP_USERNAME);
-	        if (value != null) {
-	            dataSource.setUsername(value);
-	        }
-	
-	        value = properties.getProperty(PROP_VALIDATIONQUERY);
-	        if (value != null) {
-	            dataSource.setValidationQuery(value);
-	        }
-	
-	        value = properties.getProperty(PROP_VALIDATIONQUERY_TIMEOUT);
-	        if (value != null) {
-	            dataSource.setValidationQueryTimeout(Integer.parseInt(value));
-	        }
-	        
-	        value = properties.getProperty(PROP_ACCESSTOUNDERLYINGCONNECTIONALLOWED);
-	        if (value != null) {
-	            dataSource.setAccessToUnderlyingConnectionAllowed(Boolean.valueOf(value).booleanValue());
-	        }
-	
-	        value = properties.getProperty(PROP_REMOVEABANDONED);
-	        if (value != null) {
-	            dataSource.setRemoveAbandonedOnBorrow(Boolean.valueOf(value).booleanValue());
-	        }
-	
-	        value = properties.getProperty(PROP_REMOVEABANDONEDTIMEOUT);
-	        if (value != null) {     
-	            dataSource.setRemoveAbandonedTimeout(Integer.parseInt(value));
-	        }
-	
-	        value = properties.getProperty(PROP_LOGABANDONED);
-	        if (value != null) {
-	            dataSource.setLogAbandoned(Boolean.valueOf(value).booleanValue());
-	        }
-	
-	        value = properties.getProperty(PROP_POOLPREPAREDSTATEMENTS);
-	        if (value != null) {
-	            dataSource.setPoolPreparedStatements(Boolean.valueOf(value).booleanValue());
-	        }
-	
-	        value = properties.getProperty(PROP_MAXOPENPREPAREDSTATEMENTS);
-	        if (value != null) {
-	            dataSource.setMaxOpenPreparedStatements(Integer.parseInt(value));
-	        }
-	
-	        value = properties.getProperty(PROP_INITCONNECTIONSQLS);
-	        if (value != null) {
-	            StringTokenizer tokenizer = new StringTokenizer(value, ";");
-	            
-	            List<String> sqls = new ArrayList<String>();
-	            while(tokenizer.hasMoreTokens())
-	            {
-	            	sqls.add(tokenizer.nextToken());
-	            }
-	            
-	            dataSource.setConnectionInitSqls(sqls);
-	        }
-	
-	        Object connectProperties = properties.get(PROP_CONNECTIONPROPERTIES);
-	        if (connectProperties != null) {
+            Map<String,Object> urlParams = db.getUrlParams(url);
+            if(urlParams != null){
+                String balance = (String)urlParams.get("b.balance");
+                String enableBalance = (String)urlParams.get("b.enableBalance");
+                if(enableBalance != null && enableBalance.equals("true")){
+                    if(SimpleStringUtil.isEmpty(balance) || balance.equals(DBConf.BALANCE_RANDOM)){
+                        BalanceDatasource balanceDatasource = new RandomBalanceDatasource(url,db,properties);
+                        balanceDatasource.init();
+                        return balanceDatasource;
+                    }
+                    else{
+                        BalanceDatasource balanceDatasource =  new RoundbinBalanceDatasource(url,db,properties);
+                        balanceDatasource.init();
+                        return balanceDatasource;
+                    }
+                }
+                else {
+                    return createDBCP2DataSource(url, properties);
+                }
+            }
+            else {
+                return createDBCP2DataSource(url, properties);
+            }
+        }
+        else{
+            String balance = jdbcPoolMetaData.getBalance();
+            if(SimpleStringUtil.isEmpty(balance) || balance.equals(DBConf.BALANCE_RANDOM)){
+                BalanceDatasource balanceDatasource = new RandomBalanceDatasource(url,db,properties);
+                balanceDatasource.init();
+                return balanceDatasource;
+            }
+            else{
+                BalanceDatasource balanceDatasource =  new RoundbinBalanceDatasource(url,db,properties);
+                balanceDatasource.init();
+                return balanceDatasource;
+            }
+        }
+    }
+
+    public static DataSource createDBCP2DataSource(String url,Properties properties) throws Exception {
+        com.frameworkset.commons.dbcp2.BasicDataSource dataSource = new com.frameworkset.commons.dbcp2.BasicDataSource();
+        String value = null;
+        boolean usepool = Boolean.parseBoolean((String)properties.get(PoolManConstants.PROP_USEPOOL));
+        if(usepool)
+        {
+            value = properties.getProperty(PROP_DEFAULTAUTOCOMMIT);
+            if (value != null) {
+                dataSource.setDefaultAutoCommit(Boolean.valueOf(value).booleanValue());
+            }
+
+            value = properties.getProperty(PROP_DEFAULTREADONLY);
+            if (value != null &&   !"".equalsIgnoreCase(value)) {
+                dataSource.setDefaultReadOnly(Boolean.valueOf(value).booleanValue());
+            }
+
+            value = properties.getProperty(PROP_DEFAULTTRANSACTIONISOLATION);
+            if (value != null && !value.equals("")) {
+                int level = UNKNOWN_TRANSACTIONISOLATION;
+                if ("NONE".equalsIgnoreCase(value) || "".equalsIgnoreCase(value)) {
+                    level = Connection.TRANSACTION_NONE;
+                }
+                else if ("READ_COMMITTED".equalsIgnoreCase(value)) {
+                    level = Connection.TRANSACTION_READ_COMMITTED;
+                }
+                else if ("READ_UNCOMMITTED".equalsIgnoreCase(value)) {
+                    level = Connection.TRANSACTION_READ_UNCOMMITTED;
+                }
+                else if ("REPEATABLE_READ".equalsIgnoreCase(value)) {
+                    level = Connection.TRANSACTION_REPEATABLE_READ;
+                }
+                else if ("SERIALIZABLE".equalsIgnoreCase(value)) {
+                    level = Connection.TRANSACTION_SERIALIZABLE;
+                }
+                else {
+                    try {
+                        level = Integer.parseInt(value);
+                    } catch (NumberFormatException e) {
+                        System.err.println("Could not parse defaultTransactionIsolation: " + value);
+                        System.err.println("WARNING: defaultTransactionIsolation not set");
+                        System.err.println("using default value of database driver");
+                        level = UNKNOWN_TRANSACTIONISOLATION;
+                    }
+                }
+                dataSource.setDefaultTransactionIsolation(level);
+            }
+
+            value = properties.getProperty(PROP_DEFAULTCATALOG);
+            if (value != null) {
+                dataSource.setDefaultCatalog(value);
+            }
+
+            value = properties.getProperty(PROP_DRIVERCLASSNAME);
+            if (value != null) {
+                dataSource.setDriverClassName(value);
+            }
+
+            value = properties.getProperty(PROP_MAXACTIVE);
+            if (value != null) {
+                dataSource.setMaxTotal(Integer.parseInt(value));
+            }
+
+            value = properties.getProperty(PROP_MAXIDLE);
+            if (value != null) {
+                dataSource.setMaxIdle(Integer.parseInt(value));
+            }
+
+            value = properties.getProperty(PROP_MINIDLE);
+            if (value != null) {
+                dataSource.setMinIdle(Integer.parseInt(value));
+            }
+
+            value = properties.getProperty(PROP_INITIALSIZE);
+            if (value != null) {
+                dataSource.setInitialSize(Integer.parseInt(value));
+            }
+
+            value = properties.getProperty(PROP_MAXWAIT);
+            if (value != null) {
+                dataSource.setMaxWaitMillis(Long.parseLong(value));
+            }
+
+            value = properties.getProperty(PROP_TESTONBORROW);
+            if (value != null) {
+                dataSource.setTestOnBorrow(Boolean.valueOf(value).booleanValue());
+            }
+
+            value = properties.getProperty(PROP_TESTONRETURN);
+            if (value != null) {
+                dataSource.setTestOnReturn(Boolean.valueOf(value).booleanValue());
+            }
+
+            value = properties.getProperty(PROP_TIMEBETWEENEVICTIONRUNSMILLIS);
+            if (value != null) {
+                dataSource.setTimeBetweenEvictionRunsMillis(Long.parseLong(value));
+            }
+
+            value = properties.getProperty(PROP_NUMTESTSPEREVICTIONRUN);
+            if (value != null) {
+                dataSource.setNumTestsPerEvictionRun(Integer.parseInt(value));
+            }
+
+            value = properties.getProperty(PROP_MINEVICTABLEIDLETIMEMILLIS);
+            if (value != null) {
+                dataSource.setMinEvictableIdleTimeMillis(Long.parseLong(value));
+            }
+
+            value = properties.getProperty(PROP_TESTWHILEIDLE);
+            if (value != null) {
+                dataSource.setTestWhileIdle(Boolean.valueOf(value).booleanValue());
+            }
+            value = properties.getProperty(PROP_validateDatasourceWhenCreate);
+            if (value != null) {
+                dataSource.setValidateDatasourceWhenCreate(Boolean.valueOf(value).booleanValue());
+            }
+
+
+            value = properties.getProperty(PROP_PASSWORD);
+            if (value != null) {
+                dataSource.setPassword(value);
+            }
+
+//            value = properties.getProperty(PROP_URL);
+            if (value != null) {
+                dataSource.setUrl(url);
+            }
+
+            value = properties.getProperty(PROP_USERNAME);
+            if (value != null) {
+                dataSource.setUsername(value);
+            }
+
+            value = properties.getProperty(PROP_VALIDATIONQUERY);
+            if (value != null) {
+                dataSource.setValidationQuery(value);
+            }
+
+            value = properties.getProperty(PROP_VALIDATIONQUERY_TIMEOUT);
+            if (value != null) {
+                dataSource.setValidationQueryTimeout(Integer.parseInt(value));
+            }
+
+            value = properties.getProperty(PROP_ACCESSTOUNDERLYINGCONNECTIONALLOWED);
+            if (value != null) {
+                dataSource.setAccessToUnderlyingConnectionAllowed(Boolean.valueOf(value).booleanValue());
+            }
+
+            value = properties.getProperty(PROP_REMOVEABANDONED);
+            if (value != null) {
+                dataSource.setRemoveAbandonedOnBorrow(Boolean.valueOf(value).booleanValue());
+            }
+
+            value = properties.getProperty(PROP_REMOVEABANDONEDTIMEOUT);
+            if (value != null) {
+                dataSource.setRemoveAbandonedTimeout(Integer.parseInt(value));
+            }
+
+            value = properties.getProperty(PROP_LOGABANDONED);
+            if (value != null) {
+                dataSource.setLogAbandoned(Boolean.valueOf(value).booleanValue());
+            }
+
+            value = properties.getProperty(PROP_POOLPREPAREDSTATEMENTS);
+            if (value != null) {
+                dataSource.setPoolPreparedStatements(Boolean.valueOf(value).booleanValue());
+            }
+
+            value = properties.getProperty(PROP_MAXOPENPREPAREDSTATEMENTS);
+            if (value != null) {
+                dataSource.setMaxOpenPreparedStatements(Integer.parseInt(value));
+            }
+
+            value = properties.getProperty(PROP_INITCONNECTIONSQLS);
+            if (value != null) {
+                StringTokenizer tokenizer = new StringTokenizer(value, ";");
+
+                List<String> sqls = new ArrayList<String>();
+                while(tokenizer.hasMoreTokens())
+                {
+                    sqls.add(tokenizer.nextToken());
+                }
+
+                dataSource.setConnectionInitSqls(sqls);
+            }
+
+            Object connectProperties = properties.get(PROP_CONNECTIONPROPERTIES);
+            if (connectProperties != null) {
                 Properties p = null;
                 if(connectProperties instanceof String){
                     p = getProperties((String)connectProperties);
@@ -316,94 +379,94 @@ public class BasicDataSourceFactory  {
                     p = (Properties) connectProperties;
                 }
 
-	          Enumeration e = p.propertyNames();
-	          while (e.hasMoreElements()) {
-	            String propertyName = (String) e.nextElement();
-	            dataSource.addConnectionProperty(propertyName, String.valueOf(p.get(propertyName)));
-	          }
-	        }
-	
-	        // DBCP-215
-	        // Trick to make sure that initialSize connections are created
-	        if (dataSource.getInitialSize() > 0) {
-	            dataSource.getLogWriter();
-	        }
-	        // Return the configured DataSource instance
-	        return dataSource;
-    	}
-    	else
-    	{
-    		NativeDataSource nativedataSource = new NativeDataSource();
-    		 value = properties.getProperty(PROP_DEFAULTAUTOCOMMIT);
- 	        if (value != null) {
- 	            nativedataSource.setDefaultAutoCommit(Boolean.valueOf(value).booleanValue());
- 	        }
- 	
- 	        value = properties.getProperty(PROP_DEFAULTREADONLY);
- 	        if (value != null &&  !"".equalsIgnoreCase(value)) {
- 	            nativedataSource.setDefaultReadOnly(Boolean.valueOf(value).booleanValue());
- 	        }
- 	
- 	        value = properties.getProperty(PROP_DEFAULTTRANSACTIONISOLATION);
- 	        if (value != null&& !value.equals("")) {
- 	            int level = UNKNOWN_TRANSACTIONISOLATION;
- 	            if ("NONE".equalsIgnoreCase(value)  || "".equalsIgnoreCase(value)) {
- 	                level = Connection.TRANSACTION_NONE;
- 	            }
- 	            else if ("READ_COMMITTED".equalsIgnoreCase(value)) {
- 	                level = Connection.TRANSACTION_READ_COMMITTED;
- 	            }
- 	            else if ("READ_UNCOMMITTED".equalsIgnoreCase(value)) {
- 	                level = Connection.TRANSACTION_READ_UNCOMMITTED;
- 	            }
- 	            else if ("REPEATABLE_READ".equalsIgnoreCase(value)) {
- 	                level = Connection.TRANSACTION_REPEATABLE_READ;
- 	            }
- 	            else if ("SERIALIZABLE".equalsIgnoreCase(value)) {
- 	                level = Connection.TRANSACTION_SERIALIZABLE;
- 	            }
- 	            else {
- 	                try {
- 	                    level = Integer.parseInt(value);
- 	                } catch (NumberFormatException e) {
- 	                    System.err.println("Could not parse defaultTransactionIsolation: " + value);
- 	                    System.err.println("WARNING: defaultTransactionIsolation not set");
- 	                    System.err.println("using default value of database driver");
- 	                    level = UNKNOWN_TRANSACTIONISOLATION;
- 	                }
- 	            }
- 	            nativedataSource.setDefaultTransactionIsolation(level);
- 	        }
- 	
- 	        value = properties.getProperty(PROP_DEFAULTCATALOG);
- 	        if (value != null) {
- 	            nativedataSource.setDefaultCatalog(value);
- 	        }
- 	
- 	        value = properties.getProperty(PROP_DRIVERCLASSNAME);
- 	        if (value != null) {
- 	            nativedataSource.setDriver(value);
- 	        }
- 	
- 
-  
- 	         
- 	
- 	        value = properties.getProperty(PROP_PASSWORD);
- 	        if (value != null) {
- 	            nativedataSource.setPassword(value);
- 	        }
- 	
- 	        value = properties.getProperty(PROP_URL);
- 	        if (value != null) {
- 	            nativedataSource.setUrl(value);
- 	        }
- 	
- 	        value = properties.getProperty(PROP_USERNAME);
- 	        if (value != null) {
- 	            nativedataSource.setUser(value);
- 	        }
- 	
+                Enumeration e = p.propertyNames();
+                while (e.hasMoreElements()) {
+                    String propertyName = (String) e.nextElement();
+                    dataSource.addConnectionProperty(propertyName, String.valueOf(p.get(propertyName)));
+                }
+            }
+
+            // DBCP-215
+            // Trick to make sure that initialSize connections are created
+            if (dataSource.getInitialSize() > 0) {
+                dataSource.getLogWriter();
+            }
+            // Return the configured DataSource instance
+            return dataSource;
+        }
+        else
+        {
+            NativeDataSource nativedataSource = new NativeDataSource();
+            value = properties.getProperty(PROP_DEFAULTAUTOCOMMIT);
+            if (value != null) {
+                nativedataSource.setDefaultAutoCommit(Boolean.valueOf(value).booleanValue());
+            }
+
+            value = properties.getProperty(PROP_DEFAULTREADONLY);
+            if (value != null &&  !"".equalsIgnoreCase(value)) {
+                nativedataSource.setDefaultReadOnly(Boolean.valueOf(value).booleanValue());
+            }
+
+            value = properties.getProperty(PROP_DEFAULTTRANSACTIONISOLATION);
+            if (value != null&& !value.equals("")) {
+                int level = UNKNOWN_TRANSACTIONISOLATION;
+                if ("NONE".equalsIgnoreCase(value)  || "".equalsIgnoreCase(value)) {
+                    level = Connection.TRANSACTION_NONE;
+                }
+                else if ("READ_COMMITTED".equalsIgnoreCase(value)) {
+                    level = Connection.TRANSACTION_READ_COMMITTED;
+                }
+                else if ("READ_UNCOMMITTED".equalsIgnoreCase(value)) {
+                    level = Connection.TRANSACTION_READ_UNCOMMITTED;
+                }
+                else if ("REPEATABLE_READ".equalsIgnoreCase(value)) {
+                    level = Connection.TRANSACTION_REPEATABLE_READ;
+                }
+                else if ("SERIALIZABLE".equalsIgnoreCase(value)) {
+                    level = Connection.TRANSACTION_SERIALIZABLE;
+                }
+                else {
+                    try {
+                        level = Integer.parseInt(value);
+                    } catch (NumberFormatException e) {
+                        System.err.println("Could not parse defaultTransactionIsolation: " + value);
+                        System.err.println("WARNING: defaultTransactionIsolation not set");
+                        System.err.println("using default value of database driver");
+                        level = UNKNOWN_TRANSACTIONISOLATION;
+                    }
+                }
+                nativedataSource.setDefaultTransactionIsolation(level);
+            }
+
+            value = properties.getProperty(PROP_DEFAULTCATALOG);
+            if (value != null) {
+                nativedataSource.setDefaultCatalog(value);
+            }
+
+            value = properties.getProperty(PROP_DRIVERCLASSNAME);
+            if (value != null) {
+                nativedataSource.setDriver(value);
+            }
+
+
+
+
+
+            value = properties.getProperty(PROP_PASSWORD);
+            if (value != null) {
+                nativedataSource.setPassword(value);
+            }
+
+//            value = properties.getProperty(PROP_URL);
+            if (value != null) {
+                nativedataSource.setUrl(url);
+            }
+
+            value = properties.getProperty(PROP_USERNAME);
+            if (value != null) {
+                nativedataSource.setUser(value);
+            }
+
 // 	        value = properties.getProperty(PROP_VALIDATIONQUERY);
 // 	        if (value != null) {
 // 	            nativedataSource.setValidationQuery(value);
@@ -413,7 +476,7 @@ public class BasicDataSourceFactory  {
 // 	        if (value != null) {
 // 	            nativedataSource.setValidationQueryTimeout(Integer.parseInt(value));
 // 	        }
- 	        
+
 // 	        value = properties.getProperty(PROP_ACCESSTOUNDERLYINGCONNECTIONALLOWED);
 // 	        if (value != null) {
 // 	            nativedataSource.setAccessToUnderlyingConnectionAllowed(Boolean.valueOf(value).booleanValue());
@@ -429,11 +492,11 @@ public class BasicDataSourceFactory  {
 // 	            nativedataSource.setRemoveAbandonedTimeout(Integer.parseInt(value));
 // 	        }
 // 	
- 	        value = properties.getProperty(PROP_LOGABANDONED);
- 	        if (value != null) {
- 	            nativedataSource.setLogAbandoned(Boolean.valueOf(value).booleanValue());
- 	        }
- 	
+            value = properties.getProperty(PROP_LOGABANDONED);
+            if (value != null) {
+                nativedataSource.setLogAbandoned(Boolean.valueOf(value).booleanValue());
+            }
+
 // 	        value = properties.getProperty(PROP_POOLPREPAREDSTATEMENTS);
 // 	        if (value != null) {
 // 	            nativedataSource.setPoolPreparedStatements(Boolean.valueOf(value).booleanValue());
@@ -443,20 +506,20 @@ public class BasicDataSourceFactory  {
 // 	        if (value != null) {
 // 	            nativedataSource.setMaxOpenPreparedStatements(Integer.parseInt(value));
 // 	        }
-    		 value = properties.getProperty(PROP_CONNECTIONPROPERTIES);
- 	        if (value != null) {
- 	          Properties p = getProperties(value);
- 	          Enumeration e = p.propertyNames();
- 	          while (e.hasMoreElements()) {
- 	            String propertyName = (String) e.nextElement();
- 	           nativedataSource.addConnectionProperty(propertyName, p.getProperty(propertyName));
- 	          }
- 	        }
- 	       // Return the configured DataSource instance
- 	        return nativedataSource;
-    	}
+            value = properties.getProperty(PROP_CONNECTIONPROPERTIES);
+            if (value != null) {
+                Properties p = getProperties(value);
+                Enumeration e = p.propertyNames();
+                while (e.hasMoreElements()) {
+                    String propertyName = (String) e.nextElement();
+                    nativedataSource.addConnectionProperty(propertyName, p.getProperty(propertyName));
+                }
+            }
+            // Return the configured DataSource instance
+            return nativedataSource;
+        }
 
-      
+
     }
 
     /**

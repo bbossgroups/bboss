@@ -40,13 +40,7 @@ public class JDBCPoolMetaData implements Serializable{
     private int shrinkBy = PoolManConstants.DEFAULT_SHRINKBY;
     private boolean emergencyCreates = PoolManConstants.DEFAULT_EMERGENCY_CREATES;
 
-	public boolean isColumnLableUpperCase() {
-		return columnLableUpperCase;
-	}
-
-	public void setColumnLableUpperCase(boolean columnLableUpperCase) {
-		this.columnLableUpperCase = columnLableUpperCase;
-	}
+	
 
 	private boolean columnLableUpperCase = true;
     private String maxWait = "30";//30秒  
@@ -62,24 +56,6 @@ public class JDBCPoolMetaData implements Serializable{
     private Map<String,Object> datasourceParameters ; 
     private DBInfoEncrypt dbInfoEncrypt;
 
-	public String getDbInfoEncryptClass() {
-		return dbInfoEncryptClass;
-	}
-
-	public void setDbInfoEncryptClass(String dbInfoEncryptClass) {
-		this.dbInfoEncryptClass = dbInfoEncryptClass;
-		if(this.dbInfoEncryptClass != null && !this.dbInfoEncryptClass.equals("")){
-			try {
-				dbInfoEncrypt = (DBInfoEncrypt) Class.forName(dbInfoEncryptClass).newInstance();
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 
 	private String dbInfoEncryptClass;
 //    addDbMetaDataEntry(dbMetaData, "probe.jsp.dataSourceTest.dbMetaData.dbProdName", md.getDatabaseProductName());
@@ -130,6 +106,18 @@ public class JDBCPoolMetaData implements Serializable{
     private String jndiuser;
     private String jndipassword;
     private boolean RETURN_GENERATED_KEYS;
+    /**
+     * 是否启用数据源负载均衡
+     */
+    private boolean enableBalance = false;
+
+
+    /**
+     * 负载均衡算法，目前支持两种类型：
+     * DBConf.BALANCE_RANDOM  随机算法
+     * DBConf.BALANCE_ROUNDBIN   轮询算法
+     */
+    private String balance = DBConf.BALANCE_RANDOM;
     /**
      * 是否对数据库信息进行加密：
      * 账号信息
@@ -872,7 +860,8 @@ public class JDBCPoolMetaData implements Serializable{
 			this.setShowsql(extenalInfo.isShowsql());
 			this.setShowsqlParams(extenalInfo.isShowsqlParams());
             this.setConnectionProperties(extenalInfo.getConnectionProperties());
-
+            this.setBalance(extenalInfo.getBalance());
+            this.setEnableBalance(extenalInfo.isEnableBalance());
 //			this.setNeadGetGenerateKeys(extenalInfo.isNeadGetGenerateKeys());
 		}
 	}
@@ -1104,7 +1093,9 @@ public class JDBCPoolMetaData implements Serializable{
             if(this.getConnectionProperties() != null)
                 data.append(",\"properties\":").append(SimpleStringUtil.object2json(getConnectionProperties()));
 
-
+            data.append(",\"balance\":")
+                    .append(balance).append(",\"enableBalance\":\"")
+                    .append(enableBalance);
             data.append(",\"jndiurl\":")
 					.append(jndiurl).append(",\"keygenerate\":\"")
 					.append(keygenerate).append("\",\"autoprimarykey\":").append(autoprimarykey)
@@ -1157,5 +1148,47 @@ public class JDBCPoolMetaData implements Serializable{
 
     public Properties getConnectionProperties() {
         return connectionProperties;
+    }
+
+    public boolean isEnableBalance() {
+        return enableBalance;
+    }
+
+    public void setEnableBalance(boolean enableBalance) {
+        this.enableBalance = enableBalance;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+    public boolean isColumnLableUpperCase() {
+        return columnLableUpperCase;
+    }
+
+    public void setColumnLableUpperCase(boolean columnLableUpperCase) {
+        this.columnLableUpperCase = columnLableUpperCase;
+    }
+
+    public String getDbInfoEncryptClass() {
+        return dbInfoEncryptClass;
+    }
+
+    public void setDbInfoEncryptClass(String dbInfoEncryptClass) {
+        this.dbInfoEncryptClass = dbInfoEncryptClass;
+        if(this.dbInfoEncryptClass != null && !this.dbInfoEncryptClass.equals("")){
+            try {
+                dbInfoEncrypt = (DBInfoEncrypt) Class.forName(dbInfoEncryptClass).newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

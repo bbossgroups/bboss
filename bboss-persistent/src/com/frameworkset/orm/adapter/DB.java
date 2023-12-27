@@ -52,7 +52,10 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <code>DB</code> defines the interface for a Torque database
@@ -1241,4 +1244,14 @@ public abstract class DB implements IDMethod, Platform {
         
         return stmt;
     }
+    public List<String> getBalanceUrls(String url) throws SQLException{
+        List<String> nodes = new ArrayList<>();
+        nodes.add(url);
+        return nodes;
+    }
+
+    public Map<String,Object> getUrlParams(String url) throws SQLException{
+       return null;
+    }
+    
 }

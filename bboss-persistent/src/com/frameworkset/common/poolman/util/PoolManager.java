@@ -95,10 +95,20 @@ public class PoolManager  {
         else{
             try {
                 BaseTableManager.removePrimaryKeyCache(name);
+                JDBCPool jdbcPool = null;
                 if(defaultpool != null && name.equals(defaultpool.getDBName())){
+//                    jdbcPool = defaultpool;
                     defaultpool = null;
                 }
-                return (JDBCPool) pools.remove(name);
+                jdbcPool = (JDBCPool) pools.remove(name);
+                List<String> tmp = new ArrayList<>();
+                for(String p:poolnames){
+                    if(!p.equals(name)) {
+                        tmp.add(p);
+                    }
+                }
+                this.poolnames = tmp;
+                return jdbcPool;
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             }

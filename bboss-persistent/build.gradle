@@ -51,7 +51,7 @@ dependencies {
     	  [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: false],
     	   [group: 'xjavadoc', name: 'xjavadoc', version: '1.1', transitive: false],
     	   [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
-           
+            [group: 'com.github.housepower', name: 'clickhouse-native-jdbc-shaded', version: "${clickhouse_verion}", transitive: true],
            
     )
     testImplementation (
@@ -62,6 +62,7 @@ dependencies {
              [group: 'com.cloudhopper.proxool', name: 'proxool', version: '0.9.1', transitive: false],
             [group: 'com.cloudhopper.proxool', name: 'proxool-cglib', version: '0.9.1', transitive: false],
                [group: 'com.mchange', name: 'c3p0', version: '0.9.2-pre4', transitive: false],
+            [group: 'com.github.housepower', name: 'clickhouse-native-jdbc-shaded', version: "${clickhouse_verion}", transitive: true],
                 
                  //c3p0 Database connection pool
          

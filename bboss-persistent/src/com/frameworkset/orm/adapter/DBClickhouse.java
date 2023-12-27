@@ -36,10 +36,20 @@ import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
 import com.frameworkset.util.SimpleStringUtil;
+import com.github.housepower.exception.InvalidValueException;
+import com.github.housepower.jdbc.ClickhouseJdbcUrlParser;
+import com.github.housepower.misc.Validate;
+import com.github.housepower.settings.ClickHouseConfig;
+import com.github.housepower.settings.SettingKey;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.Date;
+import java.util.regex.Matcher;
 
 /**
  * This is used in order to connect to a MySQL database using the MM
@@ -60,6 +70,7 @@ import java.util.Date;
 public class DBClickhouse extends DBMM
 {
 
+    private static Logger logger = LoggerFactory.getLogger(DBClickhouse.class);
 //    /** A specialized date format for MySQL. */
 //    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	private static final String defaultFiledTodateFormat = "%Y-%m-%d %H:%i:%s";
@@ -70,7 +81,7 @@ public class DBClickhouse extends DBMM
     /**
      * Empty protected constructor.
      */
-    protected DBClickhouse()
+    public DBClickhouse()
     {
     	super();
     }
@@ -631,10 +642,136 @@ public class DBClickhouse extends DBMM
 	public void setRowId(Record record, ResultSet rs) throws SQLException {
 		return;
 	}
+    @Override
     public Statement createStatement(Connection con,int resultSetType, int resultSetConcurrency)
             throws SQLException {
         Statement stmt = con.createStatement();
 
         return stmt;
+    }
+    public static final String JDBC_CLICKHOUSE_PREFIX = "jdbc:clickhouse://";
+    public boolean acceptsURL(String url) throws SQLException {
+        return url.startsWith(JDBC_CLICKHOUSE_PREFIX);
+    }
+    
+    /**
+     * jdbc:clickhouse://10.13.6.4:29000,10.13.6.7:29000,10.13.6.6:29000/visualops
+     * @param url
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public List<String> getBalanceUrls(String url) throws SQLException{
+        if (!this.acceptsURL(url)) {
+            return null;
+        }
+        int index = url.indexOf("/",JDBC_CLICKHOUSE_PREFIX.length());
+        
+        String hosts = null;
+        if(index > 0) {
+            hosts = url.substring(JDBC_CLICKHOUSE_PREFIX.length(), index);
+        }
+        else{
+            hosts = url.substring(JDBC_CLICKHOUSE_PREFIX.length());
+        }
+        String[] hostsA = hosts.split(",");
+
+
+        List<String> hostsL = new ArrayList<>(hostsA.length);
+        if(hostsA.length == 1){
+            hostsL.add(url);
+        }
+        else{
+            if(index < 0){
+                for(int i =0; i < hostsA.length; i ++){
+                    StringBuilder tmp = new StringBuilder();
+                    tmp.append(JDBC_CLICKHOUSE_PREFIX).append(hostsA[i]);
+                    for(int j = 0; j < hostsA.length; j ++) {
+                        if(j != i) {
+                            tmp.append(",").append(hostsA[j]);
+                        }
+                    }
+                   
+                    hostsL.add(tmp.toString());
+                    tmp.setLength(0);
+                }
+            }
+            else {
+                String database = url.substring(index);
+               
+                for(int i =0; i < hostsA.length; i ++){
+                    StringBuilder tmp = new StringBuilder();
+                    tmp.append(JDBC_CLICKHOUSE_PREFIX).append(hostsA[i]);
+                    for(int j = 0; j < hostsA.length; j ++) {
+                        if(j != i) {
+                            tmp.append(",").append(hostsA[j]);
+                        }
+                    }
+                    tmp.append(database);
+                    hostsL.add(tmp.toString());
+                    tmp.setLength(0);
+                }
+                
+            }
+        }
+        return hostsL;
+    }
+    private  Map<String, Object> parseJdbcUrl(String jdbcUrl) {
+        String uri = jdbcUrl.substring(ClickhouseJdbcUrlParser.JDBC_CLICKHOUSE_PREFIX.length());
+        Matcher matcher = ClickhouseJdbcUrlParser.CONNECTION_PATTERN.matcher(uri);
+        if (!matcher.matches()) {
+            throw new InvalidValueException("Connection is not support");
+        }
+
+        Map<String, Object> settings = new HashMap<>();
+
+        String hosts = matcher.group("hosts");
+        String database = matcher.group("database");
+        String properties = matcher.group("properties");
+
+        if (hosts.contains(ClickhouseJdbcUrlParser.HOST_DELIMITER)) { // multi-host
+            settings.put("hosts", hosts);
+        } else { // standard-host
+            String[] hostAndPort = hosts.split(ClickhouseJdbcUrlParser.PORT_DELIMITER, 2);
+
+            settings.put("hosts", hostAndPort[0]);
+
+            if (hostAndPort.length == 2) {
+                if (Integer.parseInt(hostAndPort[1]) == 8123) {
+                    logger.warn("8123 is default HTTP port, you may connect with error protocol!");
+                }
+                settings.put("port", Integer.parseInt(hostAndPort[1]));
+            }
+        }
+
+        settings.put("database", database);
+        settings.putAll(extractQueryParameters(properties));
+
+        return settings;
+    }
+
+
+    public Map<String, String> extractQueryParameters(String queryParameters) {
+        Map<String, String> parameters = new HashMap<>();
+        StringTokenizer tokenizer = new StringTokenizer(queryParameters == null ? "" : queryParameters, "&");
+
+        while (tokenizer.hasMoreTokens()) {
+            String[] queryParameter = tokenizer.nextToken().split("=", 2);
+            Validate.ensure(queryParameter.length == 2,
+                    "ClickHouse JDBC URL Parameter '" + queryParameters + "' Error, Expected '='.");
+
+            String name = queryParameter[0];
+            String value = queryParameter[1];
+            parameters.put(name,value);
+            
+        }
+        return parameters;
+    }
+    public Map<String,Object> getUrlParams(String jdbcUrl) throws SQLException{
+        Map<String,Object> settingKeySerializableMap = parseJdbcUrl(jdbcUrl);
+        return settingKeySerializableMap;
+    }
+    public static void main(String[] args) throws SQLException {
+
     }
 }

@@ -498,7 +498,7 @@ public class JDBCPool {
 			{
 				Properties p = getProperties();
 				_datasource =  BasicDataSourceFactory
-						.createDBCP2DataSource(p);
+						.createDBCP2DataSource(p,dbAdapter,info);
 			}
 			else //从ioc配置文件中获取数据源实例
 			{
@@ -2307,7 +2307,7 @@ public class JDBCPool {
 
 		closeAllResources();
 	}
-
+    private Object closeAllResourcesLock = new Object();
 	/**
 	 * Overriden in order to ensure that JNDI resources are disposed of
 	 * properly.
@@ -2318,13 +2318,17 @@ public class JDBCPool {
 			return;
 		if (!this.status.equals("start"))
 			return;
-		
+		synchronized (closeAllResourcesLock){
+            if (this.status.equals("stop"))
+                return;
+            this.status = "stop";
+        }
 //		System.out.println("Shutdown poolman[" + this.getDBName() + "] start.");
 		log.info("Shutdown datasource[" + this.getDBName() + "] start.");
 			
 			undeployDataSource();
 			this.stopTime = System.currentTimeMillis();
-			this.status = "stop";
+			
 			if (this.tableMetaDatas != null) {
 				try {
 					tableMetaDatas.clear();

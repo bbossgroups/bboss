@@ -219,6 +219,7 @@ public class PoolManConfiguration   {
 		String dbname = (String)context.get("dbname");
 		datasource.put("dbname",dbname);
 		datasource.put("loadmetadata","false");
+        
 		String dbname_datasource_jndiname = (String)context.get("dbname_datasource_jndiname");
 		datasource.put("jndiName".toLowerCase(),dbname_datasource_jndiname);
 		datasource.put("autoprimarykey".toLowerCase(),"false");
@@ -311,6 +312,9 @@ public class PoolManConfiguration   {
 			datasource.put("columnLableUpperCase".toLowerCase(),columnLableUpperCase + "");
 		else
 			datasource.put("columnLableUpperCase".toLowerCase(), "true");
+
+        datasource.put("balance",context.get("balance"));
+        datasource.put("enableBalance".toLowerCase(), context.get("enableBalance")+"");
 		datasources.add(datasource);
 		this.datasources = datasources;
         this.connectionProperties = (Properties) context.get("connectionProperties");
