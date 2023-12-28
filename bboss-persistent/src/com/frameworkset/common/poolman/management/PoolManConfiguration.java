@@ -141,7 +141,7 @@ public class PoolManConfiguration   {
 		} catch (NullPointerException ne) {
 //			ne.printStackTrace();
 			// then try deprecated properties
-			Exception e = new ParserException("Load datasource Configuration from default bboss persistent config file,please config and start datasource follow document：https://doc.bbossgroups.com/#/persistent/PersistenceLayer1");
+			Exception e = new ParserException("Load datasource Configuration from default bboss persistent config file,please config and start datasource follow document：https://doc.bbossgroups.com/#/persistent/PersistenceLayer1",ne);
 			log.error("",e);
 			// don't try the props files anymore, it's been over a year
 			// System.out.println("** WARNING: Attempting to use deprecated properties files\n");
@@ -313,8 +313,14 @@ public class PoolManConfiguration   {
 		else
 			datasource.put("columnLableUpperCase".toLowerCase(), "true");
 
-        datasource.put("balance",context.get("balance"));
-        datasource.put("enableBalance".toLowerCase(), context.get("enableBalance")+"");
+        String balance = (String)context.get("balance");
+        if(balance != null)
+            datasource.put("balance",context.get("balance"));
+
+        Object enableBalance = context.get("enableBalance");
+        if(enableBalance != null) {
+            datasource.put("enableBalance".toLowerCase(), enableBalance + "");
+        }
 		datasources.add(datasource);
 		this.datasources = datasources;
         this.connectionProperties = (Properties) context.get("connectionProperties");
