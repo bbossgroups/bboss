@@ -19,6 +19,7 @@ import com.frameworkset.common.poolman.util.DatasourceUtil;
 import com.frameworkset.commons.dbcp.BasicDataSourceFactory;
 import com.frameworkset.orm.adapter.DB;
 import org.frameworkset.balance.RoundRobinList;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;
@@ -36,6 +37,7 @@ import java.util.logging.Logger;
  * @Date 2023/12/26
  */
 public abstract class BalanceDatasource implements DataSource {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(BalanceDatasource.class);
     protected Map<String,DataSource> balanceDatasources = new LinkedHashMap<>();
     protected String url;
     protected DB db;
@@ -91,6 +93,9 @@ public abstract class BalanceDatasource implements DataSource {
         if(!balance)
             return currentDatasource;
         String node = getAnyUrl();
+        if(logger.isDebugEnabled()){
+            logger.debug("SwitchBalanceDatasource to {}",node);
+        }
         return balanceDatasources.get(node);
         
     }

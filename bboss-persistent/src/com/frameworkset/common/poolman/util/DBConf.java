@@ -359,6 +359,12 @@ public class DBConf implements Serializable {
         return balance;
     }
 
+    /**
+     * 负载均衡算法，目前支持两种类型：
+     * DBConf.BALANCE_RANDOM  随机算法
+     * DBConf.BALANCE_ROUNDBIN   轮询算法 
+     * @param balance
+     */
     public void setBalance(String balance) {
         this.balance = balance;
     }
@@ -367,6 +373,11 @@ public class DBConf implements Serializable {
         return enableBalance;
     }
 
+    /**
+     * 是否启用数据源负载均衡 true 启用，false 不启用（默认值）
+     * 针对Clickhouse-native-jdbc等没有自带负载均衡的驱动器起作用
+     * @param enableBalance
+     */
     public void setEnableBalance(boolean enableBalance) {
         this.enableBalance = enableBalance;
     }

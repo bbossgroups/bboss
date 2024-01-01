@@ -39,12 +39,9 @@ import com.frameworkset.util.SimpleStringUtil;
 import com.github.housepower.exception.InvalidValueException;
 import com.github.housepower.jdbc.ClickhouseJdbcUrlParser;
 import com.github.housepower.misc.Validate;
-import com.github.housepower.settings.ClickHouseConfig;
-import com.github.housepower.settings.SettingKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
