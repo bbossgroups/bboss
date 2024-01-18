@@ -1028,9 +1028,9 @@ public class SQLParams
 					}
 					catch(InvocationTargetException e1)
 					{
-						log.error("获取属性["+beanInfo.getClazz().getName()+"."+property.getName()+"]值失败：",e1.getTargetException());
+						log.error("获取属性["+beanInfo.getName()+"."+property.getName()+"]值失败：",e1.getTargetException());
 					} catch (Exception e1) {
-						log.error("获取属性["+beanInfo.getClazz().getName()+"."+property.getName()+"]值失败：",e1);
+						log.error("获取属性["+beanInfo.getName()+"."+property.getName()+"]值失败：",e1);
 					}
 //					Field field = null;
 //					try
@@ -1148,7 +1148,7 @@ public class SQLParams
 						{	
 							Object cv = editor.toColumnValue(column, value);
 							if(cv == null)
-								throw new NestedSQLException("转换属性["+beanInfo.getClazz().getName()+"."+property.getName()+"]值失败：值为null时，转换器必须返回ColumnType类型的对象,用来指示表字段对应的java类型。");
+								throw new NestedSQLException("转换属性["+beanInfo.getName()+"."+property.getName()+"]值失败：值为null时，转换器必须返回ColumnType类型的对象,用来指示表字段对应的java类型。");
 							 
 							if(!(cv instanceof ColumnType))
 							{
