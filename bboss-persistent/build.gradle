@@ -35,7 +35,7 @@ dependencies {
 //            [group: 'com.bbossgroups', name: 'bboss-util', version: "${version}", transitive: false],
 //            [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
 //           	[group: 'org.slf4j', name: 'slf4j-log4j12', version: "${slf4jlog4j12}", transitive: true],
-            [group: 'com.fasterxml.uuid', name: 'java-uuid-generator', version: '3.1.4', transitive: false],
+            [group: 'com.fasterxml.uuid', name: 'java-uuid-generator', version: '4.3.0', transitive: false],
 //            [group: 'cglib', name: 'cglib-nodep', version: '3.1', transitive: false],
 //           [group: 'commons-collections', name: 'commons-collections', version: '3.2.1', transitive: false],
 //            [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],
@@ -68,8 +68,8 @@ dependencies {
          
             [group: 'com.mchange', name: 'mchange-commons-java', version: '0.2.2', transitive: false],
             //dbcp Database connection pool
-            [group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.0.1', transitive: false],
-            [group: 'org.apache.commons', name: 'commons-pool2', version: '2.4.2', transitive: false],
+            [group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.11.0', transitive: false],
+            [group: 'org.apache.commons', name: 'commons-pool2', version: '2.12.0', transitive: false],
             //proxool Database connection pool
            [group: 'net.sourceforge.jtds', name: 'jtds', version: '1.3.1', transitive: false],
             
