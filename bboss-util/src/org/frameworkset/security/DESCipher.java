@@ -62,7 +62,7 @@ public class DESCipher {
     /**
      * 指定密钥构造方法
      * 
-     * @param String
+     * @param strKey
      *            指定的密钥
      * @throws Exception
      *             JAVA异常

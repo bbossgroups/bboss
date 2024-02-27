@@ -614,6 +614,11 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 		JsonTypeReference ref = new DefaultJsonTypeReference(getJacksonObjectMapper().getJavaType(containType,beanType)) ;
 		return (D)json2ObjectWithType(jsonString,ref,true);
 	}
+
+    public static <D,T> D json2TypeObject(String jsonString,final Class<D> containType,final Class<T> beanType) {
+        JsonTypeReference ref = new DefaultJsonTypeReference(getJacksonObjectMapper().getJavaType(containType,beanType)) ;
+        return (D)json2ObjectWithType(jsonString,ref,true);
+    }
 	public static <T> Set<T> json2LSetObject(InputStream jsonString,final Class<T> beanType) {
 		JsonTypeReference ref = new DefaultJsonTypeReference(getJacksonObjectMapper().getJavaType(Set.class,beanType)) ;
 		return (Set<T>)json2ObjectWithType(jsonString,ref,true);

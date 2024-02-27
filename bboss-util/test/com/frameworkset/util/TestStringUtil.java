@@ -46,6 +46,30 @@ public class TestStringUtil {
 		 
 		System.out.println(SimpleStringUtil.object2json(1));
 	}
+
+    @org.junit.Test
+    public void testCustomContainer()
+    {
+        ExampleBean exampleBean = new ExampleBean();
+        exampleBean.setName("张三");
+        exampleBean.setAge(20);
+        exampleBean.setBirthDay(new Date());
+        List<ExampleBean> datas = new ArrayList<ExampleBean>();
+        datas.add(exampleBean);
+
+        exampleBean = new ExampleBean();
+        exampleBean.setName("王五");
+        exampleBean.setAge(32);
+        exampleBean.setBirthDay(new Date());
+        datas.add(exampleBean);
+
+        CustomContainer<ExampleBean> customContainer = new CustomContainer<>();
+        customContainer.setDatas(datas);
+
+       
+       String json = SimpleStringUtil.object2json(customContainer);
+        SimpleStringUtil.json2TypeObject(json,CustomContainer.class,ExampleBean.class);
+    }
 	
 	@org.junit.Test
 	public void testmObjecttoJson()
