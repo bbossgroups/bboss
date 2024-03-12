@@ -35,6 +35,7 @@ import com.frameworkset.common.poolman.PreparedDBUtil;
 import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.SQLExecutor;
 import com.frameworkset.common.poolman.handle.NullRowHandler;
+import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.util.SimpleStringUtil;
 import com.github.housepower.exception.InvalidValueException;
 import com.github.housepower.jdbc.ClickhouseJdbcUrlParser;
@@ -98,6 +99,12 @@ public class DBClickhouse extends DBMM
     {
         return in;
     }
+
+    public String getSchema(JDBCPoolMetaData info, Connection con) throws SQLException {
+        return con.getSchema();
+        
+    }
+
 
     /**
      * This method is used to ignore case.

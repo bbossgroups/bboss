@@ -964,17 +964,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	 * Executes a statement and returns results in the form of a Hashtable
 	 * array. 本方法执行完毕后无需对结果集进行缓冲
 	 * 
-	 * @param dbname
-	 *            数据库连接池名称
-	 * @param sql
-	 *            数据查询或者更新语句
-	 * 
-	 * @param goNative
-	 *            是否使用原始的数据库api
-	 * @param offset
-	 *            返回记录的起始地址
-	 * @param maxsize
-	 *            返回记录条数
+
 	 * @return 结果集
 	 * @throws SQLException
 	 */
@@ -1274,10 +1264,6 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * 执行数据库插入操作，
 	 * 
-	 * @param dbname
-	 * @param sql
-	 * 
-	 * @param goNative
 	 * @return 产生的数据库主键
 	 * @throws SQLException
 	 */
@@ -3331,10 +3317,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * Returns the bytes from a result set
 	 * 
-	 * @param res
-	 *            The ResultSet to read from
-	 * @param columnName
-	 *            The name of the column to read from
+
 	 * 
 	 * @return The byte value from the column
 	 */
@@ -3352,11 +3335,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 
 	/**
 	 * Returns the bytes from a result set
-	 * 
-	 * @param res
-	 *            The ResultSet to read from
-	 * @param columnName
-	 *            The name of the column to read from
+
 	 * 
 	 * @return The byte value from the column
 	 */
@@ -3376,10 +3355,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 	/**
 	 * Returns the bytes from a result set
 	 * 
-	 * @param res
-	 *            The ResultSet to read from
-	 * @param columnName
-	 *            The name of the column to read from
+
 	 * 
 	 * @return The byte value from the column
 	 */

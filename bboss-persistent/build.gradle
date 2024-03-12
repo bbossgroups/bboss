@@ -51,7 +51,7 @@ dependencies {
     	  [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: false],
     	   [group: 'xjavadoc', name: 'xjavadoc', version: '1.1', transitive: false],
     	   [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
-            [group: 'com.github.housepower', name: 'clickhouse-native-jdbc-shaded', version: "${clickhouse_verion}", transitive: true],
+            [group: 'com.github.housepower', name: 'clickhouse-native-jdbc', version: "${clickhouse_verion}", transitive: true],
            
     )
     testImplementation (

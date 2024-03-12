@@ -18,6 +18,7 @@ package com.frameworkset.common.poolman.util;
 
 
 import com.frameworkset.common.poolman.*;
+import com.frameworkset.common.poolman.Record;
 import com.frameworkset.common.poolman.handle.RowHandler;
 import com.frameworkset.common.poolman.interceptor.InterceptorInf;
 import com.frameworkset.common.poolman.management.PoolManBootstrap;
