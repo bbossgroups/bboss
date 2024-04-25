@@ -121,6 +121,10 @@ public class DBFactory
 
 		adapters.put("com.github.housepower.jdbc.ClickHouseDriver", DBClickhouse.class);
 
+        adapters.put("ru.yandex.clickhouse.ClickHouseDriver", DBYandexClickhouse.class);
+        adapters.put("com.clickhouse.jdbc.ClickHouseDriver", DBYandexClickhouse.class);
+       
+
         // add some short names to be used when drivers are not used
         adapters.put("as400", DBDB2400.class);        
         adapters.put("db2app", DBDB2App.class);
@@ -153,6 +157,7 @@ public class DBFactory
     	adapters.put(DBHive, DBHive.class);
 		adapters.put("dm", DMAdaptor.class);
 		adapters.put("clickhouse", DBClickhouse.class);
+        adapters.put("yandex_clickhouse", DBYandexClickhouse.class);
         adapters.put("druid", DruidAdapter.class);
         adapters.put("avatica", DruidAdapter.class);
         adapters.put("org.apache.calcite.avatica.remote.Driver", DruidAdapter.class);
