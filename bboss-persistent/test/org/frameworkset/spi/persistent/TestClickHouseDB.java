@@ -33,17 +33,17 @@ import java.util.Map;
 public class TestClickHouseDB {
     @Test
     public void test() throws SQLException {
-        String url = "jdbc:clickhouse://10.13.6.4:29000,10.13.6.7:29000,10.13.6.6:29000/visualops";
+        String url = "jdbc:clickhouse://101.13.6.4:29000,101.13.6.7:29000,101.13.6.6:29000/visualops";
         DBClickhouse dbClickhouse = new DBClickhouse();
         List<String> hostsL = dbClickhouse.getBalanceUrls(url);
 
         System.out.println(SimpleStringUtil.object2json(hostsL));
-        url = "jdbc:clickhouse://10.13.6.4:29000,10.13.6.7:29000,10.13.6.6:29000/";
+        url = "jdbc:clickhouse://101.13.6.4:29000,101.13.6.7:29000,101.13.6.6:29000/";
 
         hostsL = dbClickhouse.getBalanceUrls(url);
 
         System.out.println(SimpleStringUtil.object2json(hostsL));
-        url = "jdbc:clickhouse://10.13.6.4:29000,10.13.6.7:29000,10.13.6.6:29000";
+        url = "jdbc:clickhouse://101.13.6.4:29000,101.13.6.7:29000,101.13.6.6:29000";
         hostsL = dbClickhouse.getBalanceUrls(url);
 
         System.out.println(SimpleStringUtil.object2json(hostsL));
@@ -51,7 +51,7 @@ public class TestClickHouseDB {
 
         System.out.println(SimpleStringUtil.object2json(p));
 
-        url = "jdbc:clickhouse://10.13.6.4:29000,10.13.6.7:29000,10.13.6.6:29000/visualops?b.balance=roundbin&b.enableBalance=true";
+        url = "jdbc:clickhouse://101.13.6.4:29000,101.13.6.7:29000,101.13.6.6:29000/visualops?b.balance=roundbin&b.enableBalance=true";
         p = dbClickhouse.getUrlParams(url);
 
         System.out.println(SimpleStringUtil.object2json(p));

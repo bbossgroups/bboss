@@ -659,7 +659,7 @@ public class DBClickhouse extends DBMM
     }
     
     /**
-     * jdbc:clickhouse://10.13.6.4:29000,10.13.6.7:29000,10.13.6.6:29000/visualops
+     * jdbc:clickhouse://101.13.6.4:29000,101.13.6.7:29000,101.13.6.6:29000/visualops
      * @param url
      * @return
      * @throws SQLException
