@@ -154,10 +154,15 @@ public class ResultMap {
 			Class<T> valueObjectType, 
 			StatementInfo stmtInfo) throws SQLException
 	{
-		
-		return buildValueObject(rs,
-				valueObjectType, 
-				stmtInfo, null,false,ClassUtil.getClassInfo(valueObjectType));
+		boolean ismap = Map.class.isAssignableFrom(valueObjectType);
+        if(!ismap) {
+            return buildValueObject(rs,
+                    valueObjectType,
+                    stmtInfo, null, false, ClassUtil.getClassInfo(valueObjectType));
+        }
+        else{
+            return (T)buildMap(valueObjectType,rs,stmtInfo);
+        }
 	}
 	private static <T> T makeObject(Class<T> valueObjectType) throws IllegalAccessException, InstantiationException {
 		if(valueObjectType == Map.class){
