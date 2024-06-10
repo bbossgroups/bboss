@@ -119,7 +119,7 @@ public class JDBCPool {
 				try {
 					this.dummyctx = (new DummyContextFactory()).getInitialContext(null);
 				} catch (NamingException e) {
-					log.info(e.getMessage());
+                    log.warn("InitialContext ignored:"+e.getMessage());
 				}
 			}
 				
@@ -609,7 +609,7 @@ public class JDBCPool {
 						if(_datasource != null)
 							return _datasource;
 					} catch (NamingException e) {
-						log.warn("",e);
+                        log.warn("InitialContext ignored:"+e.getMessage());
 						continue;
 					}
 				}
@@ -622,7 +622,7 @@ public class JDBCPool {
 					DataSource _datasource = (DataSource) ctx.lookup(ContextUtil.handleJndiName(jndiName));
 					return _datasource;
 				} catch (NamingException e) {
-					log.warn("",e);
+//					log.warn("",e);
 					throw e;
 				}
 			}
@@ -652,7 +652,8 @@ public class JDBCPool {
 					if(_datasource != null)
 						return _datasource;
 				} catch (NamingException e) {
-					log.warn("",e);
+                    log.warn("InitialContext ignored:"+e.getMessage());
+//					log.warn("",e);
 					continue;
 				}
 			}
@@ -1929,12 +1930,12 @@ public class JDBCPool {
 
 			this.deployedDataSource = true;
 
-			log.info("DataSource bound to JNDI under name[" + jndiName + "]");
+			log.info("DataSource bound to JNDI with name[" + jndiName + "]");
 			
 
 		} catch (Exception e) {
 			
-			log.info(e.getMessage());
+			log.info("Bind the DataSource view of this pool to JNDI  with name[" + info.getJNDIName() + "] ignored:"+e.getMessage());
 		}
 	}
 

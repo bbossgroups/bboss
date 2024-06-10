@@ -77,11 +77,11 @@ public class ContextUtil {
 					ctx = new InitialContext();
 				} catch (NamingException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					log.warn("Find Context ignored:",e1);
 				}
 			}
 			catch (NamingException e) {
-				log.info(e.getMessage());
+				log.info("Find Context failed and ignored:"+e.getMessage());
 				
 			}
 			catch (Exception e) {
@@ -96,7 +96,7 @@ public class ContextUtil {
 //					// TODO Auto-generated catch block
 //					e1.printStackTrace();
 //				}
-				log.info(e.getMessage());
+				log.info("Find Context failed and ignored:"+e.getMessage());
 			}
 			
 			
