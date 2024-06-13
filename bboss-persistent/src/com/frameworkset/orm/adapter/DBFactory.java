@@ -70,6 +70,9 @@ public class DBFactory
 
     public static final String  DBNone = "";
     public static final String  SQLITEX = "sqlitex";
+    public static final String  DBTDEngine = "tdengine";
+
+    
 
     /**
      * Initialize the JDBC driver to Torque Adapter map.
@@ -161,6 +164,9 @@ public class DBFactory
         adapters.put("druid", DruidAdapter.class);
         adapters.put("avatica", DruidAdapter.class);
         adapters.put("org.apache.calcite.avatica.remote.Driver", DruidAdapter.class);
+
+        adapters.put(DBTDEngine, DBTDEngine.class);
+        adapters.put("com.taosdata.jdbc.TSDBDriver", DBTDEngine.class);
 
 	}
 
