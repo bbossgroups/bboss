@@ -110,11 +110,17 @@ public class PoolManBootstrap  {
         config.setDatasourceConfig(datasourceConfig);
         DBStartResult dbStartResult = null;
         try {
-            boolean result = config.loadConfiguration(values);
-            if(!result){
-
-
-                return null;
+            if(datasourceConfig.getDataSource() == null) {
+                boolean result = config.initConfig(values);
+                if (!result) {
+                    return null;
+                }
+            }
+            else{
+                boolean result = config.initDatasourceConfig(values);
+                if (!result) {
+                    return null;
+                }
             }
         } catch (Exception ex) {
             log.error("Start(configFile) loadConfiguration error: " + ex.getMessage(),ex);

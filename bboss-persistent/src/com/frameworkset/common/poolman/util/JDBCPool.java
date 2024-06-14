@@ -21,7 +21,6 @@ import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.interceptor.InterceptorInf;
 import com.frameworkset.common.poolman.jndi.ContextUtil;
 import com.frameworkset.common.poolman.jndi.DummyContextFactory;
-import com.frameworkset.common.poolman.management.PoolManConfiguration;
 import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
 import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.common.poolman.sql.*;

@@ -195,9 +195,90 @@ public class PoolManConfiguration   {
 
 	private static Object lock = new Object();
 
+    /**
+     * DBConf tempConf = new DBConf();
+     *                         tempConf.setPoolname(statusDbname);
+     *                         tempConf.setDriver(statusDBConfig.getDbDriver());
+     *
+     *                         tempConf.setJndiName(dbJNDIName);
+     *
+     *                         tempConf.setShowsql(statusDBConfig.isShowSql());
+     *                         tempConf.setDbAdaptor(statusDBConfig.getDbAdaptor());
+     *                         tempConf.setDbtype(statusDBConfig.getDbtype());
+     *                         tempConf.setColumnLableUpperCase(statusDBConfig.isColumnLableUpperCase());
+     * @param context
+     * @return
+     */
 
+    public boolean initDatasourceConfig(Map context){
+        /**
+         * 用户自定义的适配器
+         */
+        Map<String,String> adaptors = new LinkedHashMap<String,String>();
+        String dbAdaptor = (String)context.get("dbAdaptor");
+        String driver = (String)context.get("driver");
+        if(dbAdaptor != null && !dbAdaptor.equals("")){
+            adaptors.put(driver,dbAdaptor);
+            String dbtype = (String)context.get("dbtype");
+            if(dbtype != null && !dbtype.equals("")){
+                adaptors.put(dbtype,dbAdaptor);
+            }
 
-	private void initConfig(Map context){
+        }
+        this.adaptors = adaptors;
+        ArrayList datasources = new ArrayList();
+        Properties datasource = new Properties();
+        String external = (String)context.get("external");
+        datasource.put("external",external);
+        String dbname = (String)context.get("dbname");
+        datasource.put("dbname",dbname);
+        datasource.put("loadmetadata","false");
+
+        String dbname_datasource_jndiname = (String)context.get("dbname_datasource_jndiname");
+        datasource.put("jndiName".toLowerCase(),dbname_datasource_jndiname);
+        datasource.put("autoprimarykey".toLowerCase(),"false");
+ 
+        String cachequerymetadata = (String)context.get("cachequerymetadata");
+        datasource.put("cachequerymetadata".toLowerCase(),cachequerymetadata);
+       
+        String enablejta = (String)context.get("enablejta");
+        datasource.put("enablejta".toLowerCase(),enablejta);
+
+      
+
+        datasource.put("nativeResults".toLowerCase(),"true");
+
+        datasource.put("poolPreparedStatements".toLowerCase(),"false");
+        
+
+        datasource.put("keygenerate".toLowerCase(),"composite");
+
+       
+        String showsql = (String)context.get("showsql");
+        datasource.put("showsql".toLowerCase(),showsql);
+ 
+      
+        datasource.put("RETURN_GENERATED_KEYS".toLowerCase(),"true");
+
+        Integer queryfetchsize = (Integer) context.get("queryfetchsize");
+        if(queryfetchsize != null && queryfetchsize != 0)
+            datasource.put("queryfetchsize".toLowerCase(),queryfetchsize+"");
+ 
+        Boolean columnLableUpperCase = (Boolean) context.get("columnLableUpperCase");
+        if(columnLableUpperCase != null)
+            datasource.put("columnLableUpperCase".toLowerCase(),columnLableUpperCase + "");
+        else
+            datasource.put("columnLableUpperCase".toLowerCase(), "true");
+
+       
+        datasources.add(datasource);
+        this.datasources = datasources;
+        this.connectionProperties = (Properties) context.get("connectionProperties");
+        return true;
+
+    }
+
+	public boolean initConfig(Map context){
 		/**
 		 * 用户自定义的适配器
 		 */
@@ -229,12 +310,14 @@ public class PoolManConfiguration   {
 		datasource.put("encryptdbinfo".toLowerCase(),encryptdbinfo);
 		String cachequerymetadata = (String)context.get("cachequerymetadata");
 		datasource.put("cachequerymetadata".toLowerCase(),cachequerymetadata);
-		datasource.put("driver".toLowerCase(),driver);
+        if(driver != null)
+		    datasource.put("driver".toLowerCase(),driver);
 		String enablejta = (String)context.get("enablejta");
 		datasource.put("enablejta".toLowerCase(),enablejta);
 
 		String jdbcurl = (String)context.get("jdbcurl");
-		datasource.put("url".toLowerCase(),jdbcurl);
+        if(jdbcurl != null)
+            datasource.put("url".toLowerCase(),jdbcurl);
 
 		String username = (String)context.get("username");
 		datasource.put("username".toLowerCase(),username);
@@ -325,6 +408,7 @@ public class PoolManConfiguration   {
 		datasources.add(datasource);
 		this.datasources = datasources;
         this.connectionProperties = (Properties) context.get("connectionProperties");
+        return true;
 
 	}
 
