@@ -341,8 +341,26 @@ public class StatementInfo {
 //		return pstmt;
 		return _prepareStatement(sql,false);
 	}
-	
-	public PreparedStatement prepareStatement(String sql,boolean getgenkeys) throws SQLException {
+
+    public PreparedStatement prepareStatement(String sql,String loginfo) throws SQLException {
+//		/**
+//		 * must be removed.
+//		 */
+//		if(dbname == null)
+//			dbname = SQLManager.getInstance().getDefaultDBName();
+//		sql = this.interceptorInf.convertSQL(sql, this.dbadapter.getDBTYPE(), dbname);
+//		PreparedStatement pstmt = this.con.prepareStatement(sql,this.getScrollType(dbname),this.getCursorType(dbname));
+//		this.statements.add(pstmt);
+//		return pstmt;
+        if(log.isInfoEnabled() && pool.showsql())
+        {
+            log.info(loginfo,sql);
+        }
+        return _prepareStatement(sql,false);
+    }
+
+
+    public PreparedStatement prepareStatement(String sql,boolean getgenkeys) throws SQLException {
 		if(dbname == null)
 			dbname = SQLManager.getInstance().getDefaultDBName();
 		sql = this.interceptorInf.convertSQL(sql, this.dbadapter.getDBTYPE(), dbname);
@@ -402,11 +420,11 @@ public class StatementInfo {
 		{
 			countsql = totalsizesql;
 		}
-		if(log.isInfoEnabled() && showsql)
-		{
-			log.info("Execute JDBC prepared pagine query count statement:{}",countsql);
-		}
-		return prepareStatement(countsql);
+//		if(log.isInfoEnabled() && showsql)
+//		{
+//			log.info("Execute JDBC prepared pagine query count statement:{}",countsql);
+//		}
+		return prepareStatement(countsql,"Execute JDBC prepared pagine query count statement:{}");
 	}
 	
 

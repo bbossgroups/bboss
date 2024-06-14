@@ -17,6 +17,7 @@ package com.frameworkset.common.poolman.management;
 
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.util.DBStartResult;
+import com.frameworkset.common.poolman.util.DatasourceConfig;
 import com.frameworkset.common.poolman.util.SQLUtil;
 import com.frameworkset.orm.adapter.DBFactory;
 import org.slf4j.Logger;
@@ -102,11 +103,11 @@ public class PoolManBootstrap  {
         }
     }
    
-    public static DBStartResult startFromTemplte(Map<String,Object> values) {
-        if(log.isDebugEnabled()) {
-            log.debug("PoolManBootstrap(configFile): {}", PoolManConstants.XML_CONFIG_FILE_TEMPLATE);
-        }
+    public static DBStartResult startFromTemplte(DatasourceConfig datasourceConfig) {
+     
+        Map<String,Object> values = datasourceConfig.getValues();
         PoolManConfiguration config = new PoolManConfiguration(PoolManConstants.XML_CONFIG_FILE_TEMPLATE,null);
+        config.setDatasourceConfig(datasourceConfig);
         DBStartResult dbStartResult = null;
         try {
             boolean result = config.loadConfiguration(values);
@@ -123,29 +124,16 @@ public class PoolManBootstrap  {
 
         PoolManDeployer deployer = null;
 
-//        if (config.isUsingJMX()) {
-//            deployer = new JMXPoolDeployer((MBeanServer)null);
-//            try {
-//                deployer.deployConfiguration(config);
-//            } catch (Exception ex1) {
-//                if(log.isErrorEnabled())
-//                    log.error("Start(configFile) deployConfiguration error: {},config: \r\n{}", ex1.getMessage() ,config.toString(),ex1);
-//                //throw ex1;
-//            }
-//        }
-//
-//        else
-            {
-        	DBFactory.addDBAdaptors(config.getAdaptors());
-            deployer = new LocalPoolDeployer();
-            try {
+ 
+        DBFactory.addDBAdaptors(config.getAdaptors());
+        deployer = new LocalPoolDeployer();
+        try {
 //                deployer.deployConfiguration(config, values);
-                dbStartResult = deployer.deployConfiguration(config, (Map<String,String>)null);
-            } catch (Exception ex2) {
-                if(log.isErrorEnabled())
-                    log.error("LocalPoolDeployer deployConfiguration error: {},config: \r\n{}", ex2.getMessage() ,config.toString(),ex2);
-                //throw ex2;
-            }
+            dbStartResult = deployer.deployConfiguration(config, (Map<String,String>)null);
+        } catch (Exception ex2) {
+            if(log.isErrorEnabled())
+                log.error("LocalPoolDeployer deployConfiguration error: {},config: \r\n{}", ex2.getMessage() ,config.toString(),ex2);
+            //throw ex2;
         }
         //初始化主键生成机制
         if(deployer != null && dbStartResult != null)

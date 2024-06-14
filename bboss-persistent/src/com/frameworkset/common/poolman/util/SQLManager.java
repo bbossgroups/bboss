@@ -31,10 +31,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class SQLManager extends PoolManager{
@@ -145,7 +142,7 @@ public class SQLManager extends PoolManager{
         super();
     }
 
-    public JDBCPool createPool(JDBCPoolMetaData metad) {
+    public JDBCPool createPool(JDBCPoolMetaData metad,DatasourceConfig config) {
     	try {
     		JDBCPool pool = this.getPoolIfExist(metad.getDbname());
 			if(pool != null)
@@ -153,7 +150,7 @@ public class SQLManager extends PoolManager{
 		} catch (Exception e) {
 			log.warn("stop pool failed:",e);
 		}
-        JDBCPool jpool = new JDBCPool(metad);
+        JDBCPool jpool = new JDBCPool(metad,config);
         addPool(metad.getName(), jpool);
         return jpool;
     }
@@ -883,7 +880,7 @@ public class SQLManager extends PoolManager{
         log.info("Start Pool {} begin.",temConf.getPoolname());
 		if(temConf.getTxIsolationLevel() == null)
 			temConf.setTxIsolationLevel("");
-		Map<String,Object> values = new HashMap<String,Object>();
+		Map<String,Object> values = new LinkedHashMap<>();
 		values.put("dbname", temConf.getPoolname());
 		if(temConf.getJndiName() != null && !temConf.getJndiName().equals(""))
 		{
@@ -995,7 +992,10 @@ public class SQLManager extends PoolManager{
         if(temConf.getConnectionProperties() != null && temConf.getConnectionProperties().size() > 0){
             values.put("connectionProperties",temConf.getConnectionProperties());
         }
-		if(PoolManBootstrap.startFromTemplte(values) != null) {
+        DatasourceConfig datasourceConfig = new DatasourceConfig();
+        datasourceConfig.setValues(values);
+        datasourceConfig.setDataSource(temConf.getDatasource());
+		if(PoolManBootstrap.startFromTemplte(datasourceConfig) != null) {
             log.info("Start Pool {} complete[success].",temConf.getPoolname());
             return true;
         }

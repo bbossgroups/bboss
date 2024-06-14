@@ -71,6 +71,12 @@ public class DBFactory
     public static final String  DBNone = "";
     public static final String  SQLITEX = "sqlitex";
     public static final String  DBTDEngine = "tdengine";
+    public static final String  dm = "dm";
+    public static final String  clickhouse = "clickhouse";
+    public static final String  yandex_clickhouse = "yandex_clickhouse";
+    public static final String  druid = "druid";
+    public static final String  avatica = "avatica";
+ 
 
     
 

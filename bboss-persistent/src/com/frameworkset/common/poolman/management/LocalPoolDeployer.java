@@ -15,7 +15,6 @@
  */
 package com.frameworkset.common.poolman.management;
 
-// PoolMan Classes
 
 import com.frameworkset.common.poolman.util.DBStartResult;
 import com.frameworkset.common.poolman.util.JDBCPool;
@@ -87,21 +86,11 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 	public DBStartResult deployConfiguration(PoolManConfiguration config, Map values)
 	throws Exception {
 // TODO Auto-generated method stub
-		DBStartResult dbStartResult = startDataSource(config.getDataSources(),values,config.getConnectionProperties());
+		DBStartResult dbStartResult = startDataSource(config.getDataSources(),values,config.getConnectionProperties(),config);
 			shutdownHandle();
 		return dbStartResult;
 	}
 
-//    public void run() {
-//        try {
-//            // get SQLManager and closeAllResources
-//        	
-//            SQLManager.destroy();
-//           // GenericPoolManager.getInstance().destroyPools();
-//        } catch (Exception e) {
-//            System.out.println("Unable to properly shutdown: " + e);
-//        }
-//    }
 
     private DBStartResult startDataSources(ArrayList datasources,Properties connectionProperties) throws Exception {
 
@@ -150,19 +139,18 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 			if(logger.isInfoEnabled()) {
 				logger.info(" Created JDBC Connection Pool named {},config:{}",metadata.getName(),metadata.toString());
 			}
-			JDBCPool jdbcPool = SQLManager.getInstance().createPool(metadata);
+			JDBCPool jdbcPool = SQLManager.getInstance().createPool(metadata,null);
 			if(jdbcPool != null ){
 				dbStartResult.addDBStartResult(jdbcPool.getDBName());
 			}
 
-            //jpool.log("PoolMan Local Pool Deployer: Created JDBC Connection Pool named: " + metadata.getDbname());
 
         }
         return dbStartResult;
     }
     
     
-    private DBStartResult startDataSource(ArrayList datasources,Map<String,String> values,Properties connectionProperties) throws Exception {
+    private DBStartResult startDataSource(ArrayList datasources,Map<String,String> values,Properties connectionProperties,PoolManConfiguration config) throws Exception {
 
         if (datasources == null )
             return null;
@@ -247,61 +235,16 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 			if(logger.isInfoEnabled()) {
 				logger.info(" Created JDBC Connection Pool named {},config:{}",metadata.getName(),metadata.toString());
 			}
-            JDBCPool jpool = SQLManager.getInstance().createPool(metadata);
+            JDBCPool jpool = SQLManager.getInstance().createPool(metadata,config!= null?config.getDatasourceConfig():null);
 			if(jpool != null){
 				dbStartResult.addDBStartResult(jpool.getDBName());
 			}
-            //jpool.log("PoolMan Local Pool Deployer: Created JDBC Connection Pool named: " + metadata.getDbname());
         }
         return dbStartResult;
        
     }
 
-
-
-//    private void startGenericPools(ArrayList genericObjects) throws Exception {
-//
-//        if (genericObjects == null)
-//            return;
-//
-//        for (Iterator iter = genericObjects.iterator(); iter.hasNext();) {
-//
-//            // Get each set of pool entries
-//            Properties props = (Properties) iter.next();
-//
-//            GenericPoolMetaData metadata = new GenericPoolMetaData();
-//
-//            // set attributes based on properties
-//
-//            BeanInfo beanInfo = Introspector.getBeanInfo(metadata.getClass());
-//
-//            // set attributes based on properties
-//
-//            PropertyDescriptor[] attributes = beanInfo.getPropertyDescriptors();
-//            for (int n = 0; n < attributes.length; n++) {
-//
-//                // get attribute name
-//                String attrName = attributes[n].getName();
-//
-//                if (props.containsKey(attrName.toLowerCase())) {
-//
-//                    // get value in props
-//                    String propsVal = props.getProperty(attrName.toLowerCase());
-//
-//                    Class type = attributes[n].getPropertyType();
-//                    // create attribute value of correct type
-//                    PropertyEditor editor = PropertyEditorManager.findEditor(type);
-//                    editor.setAsText(propsVal);
-//                    Object value = editor.getValue();
-//
-//                    attributes[n].getWriteMethod().invoke(metadata, new Object[]{value});
-//                }
-//            }
-//
-//            GenericPool gpool = GenericPoolManager.getInstance().createPool(metadata);
-//            gpool.log("PoolMan Local Pool Deployer: Created Object Pool Named: " + metadata.getName());
-//        }
-//    }
+ 
 
 }
 

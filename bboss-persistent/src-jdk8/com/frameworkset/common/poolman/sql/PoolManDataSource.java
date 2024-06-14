@@ -255,19 +255,7 @@ public class PoolManDataSource
 
 
 	public void close() {
-//		if(datasource != null && this.datasource instanceof BasicDataSource)
-//		{
-//			log.debug("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] begin.");
-////			System.out.println("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] begin.");
-//			try {
-//				((BasicDataSource)datasource).close();
-//				log.debug("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] end.");
-////				System.out.println("Close  datasource[jndiName="+this.jndiName+",dbname=" + this.poolName + "] end.");
-//			} catch (Exception e) {
-//				
-//				e.printStackTrace();
-//			}
-//		}
+
 		DatasourceUtil.closeDS(datasource);
 		
 	}

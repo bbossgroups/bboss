@@ -271,15 +271,15 @@ public class SQLInfoExecutor {
 			 
 			JDBCPool pool = SQLManager.getInstance().getPool(dbname);
             SQLManager.assertPoolSQLException(pool,dbname);
-			boolean showsql = pool.getJDBCPoolMetadata().isShowsql();
-			if(showsql)
-			{
-				if(log.isInfoEnabled())
-        			log.info("Execute JDBC prepared batch statement:"+sql.getSql());
-			}
+//			boolean showsql = pool.getJDBCPoolMetadata().isShowsql();
+//			if(showsql)
+//			{
+//				if(log.isInfoEnabled())
+//        			log.info("Execute JDBC prepared batch statement:"+sql.getSql());
+//			}
 
 			statement = stmtInfo
-					.prepareStatement(sql.getSql());
+					.prepareStatement(sql.getSql(),"Execute JDBC prepared batch statement:{}");
 			if(batchsize <= 1 ){//如果batchsize被设置为0或者1直接一次性批处理所有记录
 				for(int i = 0;i < datas.size(); i ++ )
 				{

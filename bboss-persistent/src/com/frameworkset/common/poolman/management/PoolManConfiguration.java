@@ -17,6 +17,7 @@ package com.frameworkset.common.poolman.management;
 
 import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.sql.ParserException;
+import com.frameworkset.common.poolman.util.DatasourceConfig;
 import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.soa.BBossStringWriter;
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class PoolManConfiguration   {
 
 	private String configFile;
 	private ConfigParser handler;
-
+    private DatasourceConfig datasourceConfig;
 
 
 
@@ -375,45 +376,6 @@ public class PoolManConfiguration   {
 			this.genericObjects = handler.getGenericProperties();
 		} else {
 			this.initConfig(context);
-//			initpooltemplates();
-//			String poolconfig = BBossVelocityUtil.evaluate(context, "",
-//					pooltemplates);
-//			InputStream in = null;
-//			ByteArrayInputStream sr = null;
-//			try {
-//
-//				this.handler = new ConfigParser(
-//						PoolManConstants.XML_CONFIG_FILE_TEMPLATE,
-//						this.dbnamespace, this.filterdbname);
-//
-//				SAXParserFactory factory = SAXParserFactory.newInstance();
-//				factory.setNamespaceAware(false);
-//				factory.setValidating(false);
-//				SAXParser parser = factory.newSAXParser();
-//				sr = new ByteArrayInputStream(poolconfig.getBytes());
-//				in = new java.io.BufferedInputStream(sr);
-//				parser.parse(in, handler);
-//				this.adaptors = handler.getAdaptors();
-//				if(handler.getSqlMappingDir() != null)
-//					this.sqlMappingDir = handler.getSqlMappingDir();
-//				this.datasources = handler.getDataSourceProperties();
-//				this.genericObjects = handler.getGenericProperties();
-//			} finally {
-//				if (sr != null) {
-//					try {
-//						sr.close();
-//					} catch (Exception e2) {
-//
-//					}
-//				}
-//				if (in != null) {
-//					try {
-//						in.close();
-//					} catch (Exception e2) {
-//
-//					}
-//				}
-//			}
 		}
 
 	}
@@ -553,4 +515,11 @@ public class PoolManConfiguration   {
 		this.needtableinfo = needtableinfo;
 	}
 
+    public DatasourceConfig getDatasourceConfig() {
+        return datasourceConfig;
+    }
+
+    public void setDatasourceConfig(DatasourceConfig datasourceConfig) {
+        this.datasourceConfig = datasourceConfig;
+    }
 }

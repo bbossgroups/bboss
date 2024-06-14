@@ -21,6 +21,7 @@ import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.interceptor.InterceptorInf;
 import com.frameworkset.common.poolman.jndi.ContextUtil;
 import com.frameworkset.common.poolman.jndi.DummyContextFactory;
+import com.frameworkset.common.poolman.management.PoolManConfiguration;
 import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
 import com.frameworkset.common.poolman.security.DBInfoEncrypt;
 import com.frameworkset.common.poolman.sql.*;
@@ -60,6 +61,7 @@ public class JDBCPool {
 //	protected JDBCPoolMetaData metadata;
 
 	private boolean deployedDataSource;
+    private DatasourceConfig datasourceConfig;
 
 	private JDBCPoolMetaData info;
 
@@ -73,6 +75,9 @@ public class JDBCPool {
 	 */
 	private long stopTime;
 
+    /**
+     * 外部jndi context
+     */
 	private  Context ctx = null;
 	private  Context dummyctx = null;
 	private  boolean initcontexted = false;
@@ -293,7 +298,10 @@ public class JDBCPool {
 	 * 初始化数据库适配器
 	 */
 	private void initDBAdapter() {
-		if(!this.info.isExternal())
+        if(datasourceConfig != null && datasourceConfig.getDataSource() != null){
+            _initAdaptor();
+        }
+		else if(!this.info.isExternal())
 		{
 			_initAdaptor();
 		}
@@ -308,12 +316,9 @@ public class JDBCPool {
 			}
 			else
 			{
-				externalDBName = ep.getDBName();
-				
-				{
-					JDBCPool pool = SQLManager.getInstance().getPool(this.externalDBName,false);
-					this.info.setExtenalInfo(pool.getJDBCPoolMetadata());
-				}
+				externalDBName = ep.getDBName();				
+                JDBCPool pool = SQLManager.getInstance().getPool(this.externalDBName,false);
+                this.info.setExtenalInfo(pool.getJDBCPoolMetadata());
 			}
 			
 			
@@ -489,80 +494,42 @@ public class JDBCPool {
         }
 		return p;
 	}
-	
-	private void initPoolDatasource() throws Exception
-	{
-		try {
-			DataSource _datasource = null;
-			if(StringUtil.isEmpty(this.info.getDatasourceFile()))//没有指定IOC数据源配置文件，直接初始化内置数据源apache dbcp
-			{
-				Properties p = getProperties();
-				_datasource =  BasicDataSourceFactory
-						.createDBCP2DataSource(p,dbAdapter,info);
-			}
-			else //从ioc配置文件中获取数据源实例
-			{
-				_datasource =  DatasourceUtil.getDataSource(info.getDatasourceFile());
-			}
-
-			if (this.info.getJNDIName() != null
-					&& !this.info.getJNDIName().equals("")) {
-				this.datasource = new PoolManDataSource(_datasource, info
-						.getDbname(), info.getJNDIName());
-			} else {
-				this.datasource = _datasource;
-			}
-			if(this.info.isEnablejta())
-			{
-				this.datasource = new TXDataSource(datasource,this);
-			}
-			
-			
-
-		} catch (Exception e) {
-			throw e;
-
-		}
-	}
+	 
 	public void setUpCommonPool() throws Exception {
+        DataSource _datasource = null;
+        if(this.datasourceConfig != null&& datasourceConfig.getDataSource() != null){
+            
+            _datasource = datasourceConfig.getDataSource();
+            if(!(_datasource instanceof ExtenerDataSource)){
+                _datasource = new ExtenerDataSource(_datasource);
+            }
+        }
+		else if (!this.info.isExternal()) {
 
-		if (!this.info.isExternal()) {
-			
-				initPoolDatasource();
+            try {
+               
+                if(StringUtil.isEmpty(this.info.getDatasourceFile()))//没有指定IOC数据源配置文件，直接初始化内置数据源apache dbcp
+                {
+                    Properties p = getProperties();
+                    _datasource =  BasicDataSourceFactory
+                            .createDBCP2DataSource(p,dbAdapter,info);
+                }
+                else //从ioc配置文件中获取数据源实例
+                {
+                    _datasource =  DatasourceUtil.getDataSource(info.getDatasourceFile());
+                }
+
+            } catch (Exception e) {
+                throw e;
+
+            }
 			
 		} else {
 
 			try {
-				// Context ctx = new InitialContext();
 				if(this.externalDBName == null)//如果引用的是poolman.xml文件中定义的数据源externalDBName不会为空，externalDBName为空表示表示外部数据源始容器数据源或者外部数据源
 				{
-					DataSource _datasource = find(this.info.getExternaljndiName(),info);
-					
-					if (_datasource != null) {
-						
-						if (this.info.getJNDIName() != null
-								&& !this.info.getJNDIName().equals("")) {
-							this.datasource = new PoolManDataSource(_datasource,
-									info.getDbname(), info.getJNDIName());
-						} else {
-							this.datasource = _datasource;
-						}
-						
-						if(this.info.isEnablejta())
-						{
-							if(!(_datasource instanceof TXDataSource))
-							{
-//								if(_datasource instanceof PoolManDataSource)
-//								{
-//									
-//								}
-//								else
-								{
-									this.datasource = new TXDataSource(datasource,this);
-								}
-							}
-						}
-					}
+					_datasource = find(this.info.getExternaljndiName(),info);
 					
 				}
 			} catch (NamingException e) {
@@ -571,6 +538,24 @@ public class JDBCPool {
 			}
 
 		}
+        if (_datasource != null) {
+
+            if (this.info.getJNDIName() != null
+                    && !this.info.getJNDIName().equals("")) {
+                this.datasource = new PoolManDataSource(_datasource,
+                        info.getDbname(), info.getJNDIName());
+            } else {
+                this.datasource = _datasource;
+            }
+
+            if(this.info.isEnablejta())
+            {
+                if(!(_datasource instanceof TXDataSource))
+                {
+                    this.datasource = new TXDataSource(datasource,this);
+                }
+            }
+        }
 
 		
 
@@ -583,7 +568,7 @@ public class JDBCPool {
 			return null;
 		DataSource _datasource = ctx != null ?(DataSource) ctx.lookup(jndiName):null;
 		if(_datasource != null)
-			return _datasource;
+            return new ExtenerDataSource(_datasource);
 		if(dummyctx != null)
 			_datasource = (DataSource) dummyctx.lookup(jndiName);
 		return _datasource;
@@ -650,7 +635,7 @@ public class JDBCPool {
 						continue;
 					DataSource _datasource = (DataSource) ctx.lookup(name);
 					if(_datasource != null)
-						return _datasource;
+						return new ExtenerDataSource(_datasource);
 				} catch (NamingException e) {
                     log.warn("InitialContext ignored:"+e.getMessage());
 //					log.warn("",e);
@@ -673,7 +658,8 @@ public class JDBCPool {
 	
 }
 
-	public JDBCPool(JDBCPoolMetaData metad) {
+	public JDBCPool(JDBCPoolMetaData metad, DatasourceConfig datasourceConfig) {
+        this.datasourceConfig = datasourceConfig;
 		initctx(metad);
 		
 		this.deployedDataSource = false;
@@ -732,7 +718,7 @@ public class JDBCPool {
 			return;
 		if (!status.equals("stop") && !status.equals("unknown") && !status.equals("failed"))
 			return;
-		initDBAdapter();
+		
 		
 
         if(this.datasource != null)
@@ -746,7 +732,7 @@ public class JDBCPool {
             datasource = null;
         }
 
-		
+        initDBAdapter();
 
 		try {
 

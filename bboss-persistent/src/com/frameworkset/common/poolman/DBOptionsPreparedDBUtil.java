@@ -404,23 +404,18 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 					 */
 
 					temp = StatementParser.refactorInsertStatement(stmtInfo);
-					if(log.isInfoEnabled() && showsql(stmtInfo.getDbname()))
-					{
-
-						log.info("Execute JDBC prepared statement:{}",temp[0]);
-					}
-					statement = stmtInfo.prepareStatement(temp[0].toString());
+//					if(log.isInfoEnabled() && showsql(stmtInfo.getDbname()))
+//					{
+//
+//						log.info("Execute JDBC prepared statement:{}",temp[0]);
+//					}
+					statement = stmtInfo.prepareStatement(temp[0].toString(),"Execute JDBC prepared statement:{}");
 
 					// 如果sql为insert语句并且有新的主键值生成，则保存该主键值
 					if (temp[1] != null) {
 						result = temp[1];
 					}
-					//				if (temp[2] != null && temp[3] != null) {
-					//					preparedUpdate = (UpdateSQL) temp[2];
-					//
-					//				}
-					//				preparedfields = (String[]) temp[5];
-
+		
 					if (Params.updateKeyInfo == null) {
 						Params.updateKeyInfo = new PreparedDBUtil.UpdateKeyInfo();
 					}

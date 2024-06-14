@@ -15,6 +15,7 @@
  */
 package com.frameworkset.common.poolman.util;
 
+import javax.sql.DataSource;
 import java.io.Serializable;
 import java.util.Properties;
 
@@ -54,6 +55,40 @@ public class DBConf implements Serializable {
 	private boolean logAbandoned = true;
 	private String poolname;
 	private String driver;
+    /**
+     * see  com.frameworkset.orm.adapter.DBFactory
+     *     public static final String  DBDB2400 = "as400";
+     *     public static final String  DBDB2App = "db2app";
+     *     public static final String  DBDB2Net = "db2net";
+     *     public static final String  DBCloudscape = "cloudscape";
+     *     public static final String  DBHypersonicSQL = "hypersonic";
+     *     public static final String  DBInterbase = "interbase";
+     *     public static final String  DBInstantDB =  "instantdb";
+     *     public static final String  DBMSSQL = "mssql";
+     *     public static final String  DBMMysql = "mysql";
+     *     public static final String  DBMariaDB = "mariadb";
+     *     public static final String  DBOracle = "oracle";
+     *     public static final String  DBPostgres = "postgresql";
+     *     public static final String  DBSapDB = "sapdb";
+     *     public static final String  DBSybase = "sybase";
+     *     public static final String  DBWeblogic = "weblogic";
+     *     public static final String  DBAxion = "axion";
+     *     public static final String  DBInformix = "informix";
+     *     public static final String  DBOdbc = "odbc";
+     *     public static final String  DBAccess = "msaccess";
+     *
+     *     public static final String  DBDerby =  "derby";
+     *     public static final String  DBHive =  "hive";
+     *
+     *     public static final String  DBNone = "";
+     *     public static final String  SQLITEX = "sqlitex";
+     *     public static final String  DBTDEngine = "tdengine";
+     *     public static final String  dm = "dm";
+     *     public static final String  clickhouse = "clickhouse";
+     *     public static final String  yandex_clickhouse = "yandex_clickhouse";
+     *     public static final String  druid = "druid";
+     *     public static final String  avatica = "avatica";
+     */
 	private String dbtype;
 	private boolean enablejta;
 	/**
@@ -75,6 +110,11 @@ public class DBConf implements Serializable {
 	private boolean usepool;
 	private boolean  external;
     private Properties connectionProperties;
+
+    /**
+     * 配置外部数据源，这时候需要指定dbtype，以便识别数据库类型
+     */
+    private DataSource datasource; 
     /**
      * 是否启用数据源负载均衡
      */
@@ -237,11 +277,78 @@ public class DBConf implements Serializable {
 		this.queryfetchsize = queryfetchsize;
         return this;
 	}
-
+    /**
+     * see  com.frameworkset.orm.adapter.DBFactory
+     *     public static final String  DBDB2400 = "as400";
+     *     public static final String  DBDB2App = "db2app";
+     *     public static final String  DBDB2Net = "db2net";
+     *     public static final String  DBCloudscape = "cloudscape";
+     *     public static final String  DBHypersonicSQL = "hypersonic";
+     *     public static final String  DBInterbase = "interbase";
+     *     public static final String  DBInstantDB =  "instantdb";
+     *     public static final String  DBMSSQL = "mssql";
+     *     public static final String  DBMMysql = "mysql";
+     *     public static final String  DBMariaDB = "mariadb";
+     *     public static final String  DBOracle = "oracle";
+     *     public static final String  DBPostgres = "postgresql";
+     *     public static final String  DBSapDB = "sapdb";
+     *     public static final String  DBSybase = "sybase";
+     *     public static final String  DBWeblogic = "weblogic";
+     *     public static final String  DBAxion = "axion";
+     *     public static final String  DBInformix = "informix";
+     *     public static final String  DBOdbc = "odbc";
+     *     public static final String  DBAccess = "msaccess";
+     *
+     *     public static final String  DBDerby =  "derby";
+     *     public static final String  DBHive =  "hive";
+     *
+     *     public static final String  DBNone = "";
+     *     public static final String  SQLITEX = "sqlitex";
+     *     public static final String  DBTDEngine = "tdengine";
+     *     public static final String  dm = "dm";
+     *     public static final String  clickhouse = "clickhouse";
+     *     public static final String  yandex_clickhouse = "yandex_clickhouse";
+     *     public static final String  druid = "druid";
+     *     public static final String  avatica = "avatica";
+     */
 	public String getDbtype() {
 		return dbtype;
 	}
 
+    /**
+     * see  com.frameworkset.orm.adapter.DBFactory
+     *     public static final String  DBDB2400 = "as400";
+     *     public static final String  DBDB2App = "db2app";
+     *     public static final String  DBDB2Net = "db2net";
+     *     public static final String  DBCloudscape = "cloudscape";
+     *     public static final String  DBHypersonicSQL = "hypersonic";
+     *     public static final String  DBInterbase = "interbase";
+     *     public static final String  DBInstantDB =  "instantdb";
+     *     public static final String  DBMSSQL = "mssql";
+     *     public static final String  DBMMysql = "mysql";
+     *     public static final String  DBMariaDB = "mariadb";
+     *     public static final String  DBOracle = "oracle";
+     *     public static final String  DBPostgres = "postgresql";
+     *     public static final String  DBSapDB = "sapdb";
+     *     public static final String  DBSybase = "sybase";
+     *     public static final String  DBWeblogic = "weblogic";
+     *     public static final String  DBAxion = "axion";
+     *     public static final String  DBInformix = "informix";
+     *     public static final String  DBOdbc = "odbc";
+     *     public static final String  DBAccess = "msaccess";
+     *
+     *     public static final String  DBDerby =  "derby";
+     *     public static final String  DBHive =  "hive";
+     *
+     *     public static final String  DBNone = "";
+     *     public static final String  SQLITEX = "sqlitex";
+     *     public static final String  DBTDEngine = "tdengine";
+     *     public static final String  dm = "dm";
+     *     public static final String  clickhouse = "clickhouse";
+     *     public static final String  yandex_clickhouse = "yandex_clickhouse";
+     *     public static final String  druid = "druid";
+     *     public static final String  avatica = "avatica";
+     */
 	public DBConf setDbtype(String dbtype) {
 		this.dbtype = dbtype;
         return this;
@@ -348,7 +455,7 @@ public class DBConf implements Serializable {
     public Properties getConnectionProperties() {
         return connectionProperties;
     }
-    public DBConf ConnectionProperty(String name,Object value){
+    public DBConf connectionProperty(String name,Object value){
         if(connectionProperties == null)
             connectionProperties = new Properties();
         connectionProperties.put(name,value);
@@ -365,8 +472,9 @@ public class DBConf implements Serializable {
      * DBConf.BALANCE_ROUNDBIN   轮询算法 
      * @param balance
      */
-    public void setBalance(String balance) {
+    public DBConf setBalance(String balance) {
         this.balance = balance;
+        return this;
     }
 
     public boolean isEnableBalance() {
@@ -378,7 +486,17 @@ public class DBConf implements Serializable {
      * 针对Clickhouse-native-jdbc等没有自带负载均衡的驱动器起作用
      * @param enableBalance
      */
-    public void setEnableBalance(boolean enableBalance) {
+    public DBConf setEnableBalance(boolean enableBalance) {
         this.enableBalance = enableBalance;
+        return this;
     }
+    public DataSource getDatasource() {
+        return datasource;
+    }
+
+    public DBConf setDatasource(DataSource datasource) {
+        this.datasource = datasource;
+        return this;
+    }
+
 }
