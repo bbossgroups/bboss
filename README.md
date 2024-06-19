@@ -98,7 +98,7 @@ https://esdoc.bbossgroups.com/#/README
 
 # 联系我们
 
-**Elasticsearch技术交流群：21220580,166471282**
+**技术交流群：21220580,166471282**
 
 <img src="https://esdoc.bbossgroups.com/images/qrcode.jpg"  height="200" width="200"><img src="https://esdoc.bbossgroups.com/images/douyin.png"  height="200" width="200"><img src="https://esdoc.bbossgroups.com/images/wvidio.png"  height="200" width="200">
 
