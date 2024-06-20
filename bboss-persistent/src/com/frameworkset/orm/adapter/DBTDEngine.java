@@ -628,5 +628,9 @@ public class DBTDEngine extends DB
 		if(fetchSize != null && fetchSize != 0)
 			pstmt.setFetchSize(fetchSize);
 	}
-    
+    @Override
+    public boolean isDefinitelyWritable(ResultSetMetaData other, int rc) throws SQLException {
+        // TODO Auto-generated method stub
+        return false;
+    }    
 }
