@@ -745,60 +745,7 @@ public class SQLUtil{
 				stmtInfo = null;
 			}
 		}
-//		Record[] results = null;
-//		ResultSet res = null;
-//		Statement s = null;
-//
-//		try {
-//			if(stmtInfo != null)
-//				stmtInfo.init();
-//
-//			
-//
-//			
-//
-//			s = stmtInfo.createStatement();
-//
-//	
-//			boolean hasResult = s.execute(stmtInfo.getSql());
-////			results = new DBHashtable[10];
-//			if(hasResult)
-//			{
-//				res = s.getResultSet();
-//				stmtInfo.addResultSet(res);
-//				stmtInfo.cacheResultSetMetaData(res);
-//				this.meta = stmtInfo.getMeta();
-//				results = stmtInfo.buildResult(res,10,false);
-////				this.fields = stmtInfo.getFields();
-////				this.f_temps = fields;
-//			}
-//			else
-//			{
-//				results = stmtInfo.buildCommonResult(s);
-//			}
-//			stmtInfo.commit();
-//
-//		} catch (SQLException sqle) {
-//			// 如果是手动提交数据库模式，当错误发生时回滚所有的数据库操作
-//
-//			if(stmtInfo != null)
-//				stmtInfo.errorHandle(sqle);
-//			throw sqle;
-//		} 
-//
-//		catch (Exception e) {
-//
-//			if(stmtInfo != null)
-//				stmtInfo.errorHandle(e);
-//			throw new NestedSQLException(e.getMessage(),e);
-//		}
-//		finally {
-//			if(stmtInfo != null)
-//				stmtInfo.dofinally();
-//
-//		}
-//		
-//		return results;
+ 
 
 	}
 
