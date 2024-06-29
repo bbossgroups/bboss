@@ -95,7 +95,21 @@ public class GloableSQLUtil extends SQLUtil {
 	{
 		return getSQLInfo( sql, false, false);
 	}
-	
+    public SQLInfo getSQLInfo(String sql,boolean istpl,boolean multiparser,boolean cacheSql) {
+
+
+        if(!istpl){
+            SQLInfo sqlinfo = new SQLInfo(sql, sql, istpl, multiparser,cacheSql);
+            sqlinfo.setSqlutil(this);
+            return sqlinfo;
+        }
+        if(alwaysCache){
+            return getAwaysCacheSQLInfo(sql,istpl,multiparser);
+        }
+        else{
+            return getMissingCacheSQLInfo(sql,  istpl,  multiparser);
+        }
+    }
 	public SQLInfo getSQLInfo(String sql,boolean istpl,boolean multiparser) {
 		
 				
@@ -112,7 +126,18 @@ public class GloableSQLUtil extends SQLUtil {
 			}
 	}
 
-	private SQLInfo getAwaysCacheSQLInfo(String sql,boolean istpl,boolean multiparser){
+    public SQLInfo getPureSQLInfo(String sql) {
+
+
+        
+            SQLInfo sqlinfo = new SQLInfo( sql);
+            sqlinfo.setSqlutil(this);
+            return sqlinfo;
+        
+    }
+
+
+    private SQLInfo getAwaysCacheSQLInfo(String sql,boolean istpl,boolean multiparser){
 		boolean outOfSize = false;
 		SQLInfo sqlinfo = tplEdenConcurrentCache.get(sql);
 		if (sqlinfo == null) {

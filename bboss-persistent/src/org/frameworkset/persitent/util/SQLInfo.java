@@ -41,6 +41,10 @@ public class SQLInfo {
 		this.multiparser = multiparser;
 	}
 
+    /**
+     * 纯sql，无需变量解析和模版解析
+     */
+    private boolean pureSQL;
 	private SQLUtil sqlutil;
 	public SQLInfo(String sqlname, String sql,boolean istpl,boolean multiparser, boolean cacheSql) {
 		super();		
@@ -50,9 +54,47 @@ public class SQLInfo {
 		this.multiparser = multiparser;
 		this.cacheSql = cacheSql;
 	}
-	
-	
-	public SQLInfo(String sql, boolean istpl, boolean multiparser, boolean cacheSql) {
+
+    public SQLInfo(String sqlname, String sql,boolean istpl,boolean multiparser, boolean cacheSql,boolean pureSQL) {
+        super();
+        this.sqlname = sqlname;
+        this.sql = sql;
+        this.istpl = istpl;
+        this.multiparser = multiparser;        
+        this.cacheSql = cacheSql;
+        if(pureSQL){
+            this.istpl = false;
+            this.multiparser = false;
+            this.cacheSql = false;
+        }
+    }
+
+    public SQLInfo(String sqlname, String sql) {
+        super();
+        this.sqlname = sqlname;
+        this.sql = sql;
+        pureSQL = true;
+        
+        this.istpl = false;
+        this.multiparser = false;
+        this.cacheSql = false;
+    }
+
+    public SQLInfo(String sql) {
+        super();
+        this.sql = sql;
+        pureSQL = true;
+
+        this.istpl = false;
+        this.multiparser = false;
+        this.cacheSql = false;
+    }
+
+    public boolean isPureSQL() {
+        return pureSQL;
+    }
+
+    public SQLInfo(String sql, boolean istpl, boolean multiparser, boolean cacheSql) {
 		super();		
 		this.sql = sql;
 		this.istpl = istpl;

@@ -42,31 +42,30 @@ import java.util.Map;
  *
  */
 public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, java.io.Serializable {
-
     private int _columnCount;
     private String[] _columnTypeName;
     private String[] _columnClassName;
-    private int[] _scale;
+//    private int[] _scale;
     private String[] _columnLabel;
     private String[] _columnLabel_upper;
     private String[] _columnLabel_lower;
 
-    private boolean[] _autoIncrement;
+//    private boolean[] _autoIncrement;
     private int[] _columnDisplaySize;
     private String[] _catalogName;
     private String[] _columnName;
-    private boolean[] _writable;
-    private boolean[] _searchable;
+//    private boolean[] _writable;
+//    private boolean[] _searchable;
     private int[] _columnType;
-    private boolean[] _currency;
+//    private boolean[] _currency;
     private String[] _tableName;
-    private int[] _nullable;
-    private boolean[] _signed;
-    private boolean[] _readOnly;
-    private boolean[] _definitelyWritable;
-    private int[] _precision;
-    private String[] _schemaName;
-    private boolean[] _caseSensitive;
+//    private int[] _nullable;
+//    private boolean[] _signed;
+//    private boolean[] _readOnly;
+//    private boolean[] _definitelyWritable;
+//    private int[] _precision;
+//    private String[] _schemaName;
+//    private boolean[] _caseSensitive;
     /**
      * 存储符合java规范java属性名称，转换规则为：aaa_bb_cc-->aaaBbCc
      */
@@ -148,31 +147,32 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         return new StringBuilder(name).append(col_uuid_split ).append(id).toString();
     }
     private PoolManResultSetMetaData(JDBCPool pool,java.sql.ResultSetMetaData other) throws java.sql.SQLException {
+//        resultSetMetaData = other;
         DB db = pool.getDbAdapter();
         _columnCount = other.getColumnCount();
 
         _columnTypeName = new String[_columnCount];
         _columnClassName = new String[_columnCount];
-        _scale = new int[_columnCount];
+//        _scale = new int[_columnCount];
         _columnLabel = new String[_columnCount];
         _columnLabel_upper = new String[_columnCount];
         _columnLabel_lower = new String[_columnCount];
-        _autoIncrement = new boolean[_columnCount];
+//        _autoIncrement = new boolean[_columnCount];
         _columnDisplaySize = new int[_columnCount];
         _catalogName = new String[_columnCount];
         _columnName = new String[_columnCount];
-        _writable = new boolean[_columnCount];
-        _searchable = new boolean[_columnCount];
+//        _writable = new boolean[_columnCount];
+//        _searchable = new boolean[_columnCount];
         _columnType = new int[_columnCount];
-        _currency = new boolean[_columnCount];
+//        _currency = new boolean[_columnCount];
         _tableName = new String[_columnCount];
-        _nullable = new int[_columnCount];
-        _signed = new boolean[_columnCount];
-        _readOnly = new boolean[_columnCount];
-        _definitelyWritable = new boolean[_columnCount];
-        _precision = new int[_columnCount];
-        _schemaName = new String[_columnCount];
-        _caseSensitive = new boolean[_columnCount];
+//        _nullable = new int[_columnCount];
+//        _signed = new boolean[_columnCount];
+//        _readOnly = new boolean[_columnCount];
+//        _definitelyWritable = new boolean[_columnCount];
+//        _precision = new int[_columnCount];
+//        _schemaName = new String[_columnCount];
+//        _caseSensitive = new boolean[_columnCount];
         samecols = new HashMap();
         
         if(PoolManConfiguration.isColumnNameMapping())
@@ -203,7 +203,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 
             }
 
-            _scale[c] = other.getScale(rc);
+//            _scale[c] = other.getScale(rc);
             columnName = other.getColumnName(rc);
             _columnName[c] = columnName;
             columnLabel = other.getColumnLabel(rc);
@@ -229,7 +229,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
             {
                 wi.increament(c);
             }
-            _autoIncrement[c] = other.isAutoIncrement(rc);
+//            _autoIncrement[c] = other.isAutoIncrement(rc);
             _columnDisplaySize[c] = other.getColumnDisplaySize(rc);
 
             try {
@@ -243,40 +243,40 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
             
             if(db != null)
             {
-            	_writable[c] = db.isWritebable(other,rc);
-            	_searchable[c] = db.isSearchable(other,rc);
-            	 _signed[c] = db.isSigned(other,rc);
-            	 _definitelyWritable[c] = db.isDefinitelyWritable(other,rc);
+//            	_writable[c] = db.isWritebable(other,rc);
+//            	_searchable[c] = db.isSearchable(other,rc);
+//            	 _signed[c] = db.isSigned(other,rc);
+//            	 _definitelyWritable[c] = db.isDefinitelyWritable(other,rc);
             }
             else
             {
-            	try {
-					_writable[c] = other.isWritable(rc);
-				} catch (Exception e) {
-					
-				}
-            	try {
-            		 _searchable[c] = other.isSearchable(rc);
-				} catch (Exception e) {
-					
-				}
-            	
-            	try {
-            		 _signed[c] = other.isSigned(rc);
-				} catch (Exception e) {
-					
-				}
-            	try {
-            		_definitelyWritable[c] = other.isDefinitelyWritable(rc);
-				} catch (Exception e) {
-					
-				}
+//            	try {
+//					_writable[c] = other.isWritable(rc);
+//				} catch (Exception e) {
+//					
+//				}
+//            	try {
+//            		 _searchable[c] = other.isSearchable(rc);
+//				} catch (Exception e) {
+//					
+//				}
+//            	
+//            	try {
+//            		 _signed[c] = other.isSigned(rc);
+//				} catch (Exception e) {
+//					
+//				}
+//            	try {
+//            		_definitelyWritable[c] = other.isDefinitelyWritable(rc);
+//				} catch (Exception e) {
+//					
+//				}
             	 
             	 
             }
            
             _columnType[c] = other.getColumnType(rc);
-            _currency[c] = other.isCurrency(rc);
+//            _currency[c] = other.isCurrency(rc);
 
             try {
                 _tableName[c] = other.getTableName(rc);
@@ -285,27 +285,27 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
             if (_tableName[c] == null)
                 _tableName[c] = "";
 
-            _nullable[c] = other.isNullable(rc);
-          
-            _readOnly[c] = other.isReadOnly(rc);
-           
-            try
-            {
-                _precision[c] = other.getPrecision(rc);
-            }
-            catch(Exception e)
-            {
-                
-            }
+//            _nullable[c] = other.isNullable(rc);
+//          
+//            _readOnly[c] = other.isReadOnly(rc);
+//           
+//            try
+//            {
+//                _precision[c] = other.getPrecision(rc);
+//            }
+//            catch(Exception e)
+//            {
+//                
+//            }
 
-            try {
-                _schemaName[c] = other.getSchemaName(rc);
-            } catch (Exception e) {
-            }
-            if (_schemaName[c] == null)
-                _schemaName[c] = "";
-
-            _caseSensitive[c] = false;//other.isCaseSensitive(rc);,fixed mysql 每次都会向mysql后台发送SHOW FULL COLUMNS FROM 指令
+//            try {
+//                _schemaName[c] = other.getSchemaName(rc);
+//            } catch (Exception e) {
+//            }
+//            if (_schemaName[c] == null)
+//                _schemaName[c] = "";
+//
+//            _caseSensitive[c] = false;//other.isCaseSensitive(rc);,fixed mysql 每次都会向mysql后台发送SHOW FULL COLUMNS FROM 指令
         }
 
         for (int c = 0; c < _columnCount; c++) {
@@ -374,11 +374,14 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     }
 
     public int getScale(int column) throws java.sql.SQLException {
-        return _scale[column - 1];
+//        return resultSetMetaData.getScale(column);
+        return -1;
     }
     
     public int getScaleByIndex(int column) throws java.sql.SQLException {
-        return _scale[column ];
+//        return _scale[column ];
+//        return resultSetMetaData.getScale(column+1);
+        return -1;
     }
 
     public java.lang.String getColumnLabel(int column) throws java.sql.SQLException {
@@ -414,11 +417,13 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     }
 
     public boolean isAutoIncrement(int column) throws java.sql.SQLException {
-        return _autoIncrement[column - 1];
+//        return _autoIncrement[column - 1];
+        return false;
     }
     
     public boolean isAutoIncrementByIndex(int column) throws java.sql.SQLException {
-        return _autoIncrement[column ];
+//        return _autoIncrement[column ];
+        return false;
     }
 
     public int getColumnDisplaySize(int column) throws java.sql.SQLException {
@@ -445,19 +450,23 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     }
 
     public boolean isWritable(int column) throws java.sql.SQLException {
-        return _writable[column - 1];
+//        return _writable[column - 1];
+        return false;
     }
     
     public boolean isWritableByIndex(int column) throws java.sql.SQLException {
-        return _writable[column ];
+//        return _writable[column ];
+        return false;
     }
 
     public boolean isSearchable(int column) throws java.sql.SQLException {
-        return _searchable[column - 1];
+//        return _searchable[column - 1];
+        return false;
     }
     
     public boolean isSearchableByIndex(int column) throws java.sql.SQLException {
-        return _searchable[column];
+//        return _searchable[column];
+        return false;
     }
 
     public int getColumnType(int column) throws java.sql.SQLException {
@@ -469,11 +478,13 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     }
 
     public boolean isCurrency(int column) throws java.sql.SQLException {
-        return _currency[column - 1];
+//        return _currency[column - 1];
+        return false;
     }
     
     public boolean isCurrencyByIndex(int column) throws java.sql.SQLException {
-        return _currency[column ];
+//        return _currency[column ];
+        return false;
     }
 
     public java.lang.String getTableName(int column) throws java.sql.SQLException {
@@ -484,56 +495,71 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     }
 
     public int isNullable(int column) throws java.sql.SQLException {
-        return _nullable[column - 1];
+//        return _nullable[column - 1];
+        return -1;
     }
     
     public int isNullableByIndex(int column) throws java.sql.SQLException {
-        return _nullable[column];
+//        return _nullable[column];
+        return -1;
     }
 
     public boolean isSigned(int column) throws java.sql.SQLException {
-        return _signed[column - 1];
+//        return _signed[column - 1];
+        return false;
     }
     public boolean isSignedByIndex(int column) throws java.sql.SQLException {
-        return _signed[column ];
+//        return _signed[column ];
+        return false
+                ;
     }
 
     public boolean isReadOnly(int column) throws java.sql.SQLException {
-        return _readOnly[column - 1];
+//        return _readOnly[column - 1];
+        return false;
     }
     public boolean isReadOnlyByIndex(int column) throws java.sql.SQLException {
-        return _readOnly[column ];
+//        return _readOnly[column ];
+        return false;
     }
 
     public boolean isDefinitelyWritable(int column) throws java.sql.SQLException {
-        return _definitelyWritable[column - 1];
+//        return _definitelyWritable[column - 1];
+        return false;
     }
     
     public boolean isDefinitelyWritableByIndex(int column) throws java.sql.SQLException {
-        return _definitelyWritable[column ];
+//        return _definitelyWritable[column ];
+        return false;
     }
 
     public int getPrecision(int column) throws java.sql.SQLException {
-        return _precision[column - 1];
+//        return _precision[column - 1];
+        return -1;
     }
     
     public int getPrecisionByIndex(int column) throws java.sql.SQLException {
-        return _precision[column ];
+//        return _precision[column ];
+        return -1;
     }
 
     public java.lang.String getSchemaName(int column) throws java.sql.SQLException {
-        return _schemaName[column - 1];
+//        return _schemaName[column - 1];
+        return null;
     }
     
     public java.lang.String getSchemaNameByIndex(int column) throws java.sql.SQLException {
-        return _schemaName[column ];
+//        return _schemaName[column ];
+        return null;
     }
 
     public boolean isCaseSensitive(int column) throws java.sql.SQLException {
-        return _caseSensitive[column - 1];
+//        return _caseSensitive[column - 1];
+        return false;
     }
     public boolean isCaseSensitiveByIndex(int column) throws java.sql.SQLException {
-        return _caseSensitive[column ];
+//        return _caseSensitive[column ];
+        return false;
     }
 
 	public String[] get_columnLabel_upper() {

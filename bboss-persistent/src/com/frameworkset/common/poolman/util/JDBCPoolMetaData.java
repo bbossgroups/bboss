@@ -178,7 +178,7 @@ public class JDBCPoolMetaData implements Serializable{
     /**
      * 是否缓冲查询列表元数据
      */
-    private boolean cachequerymetadata = true;
+    private boolean cachequerymetadata = false;
     
     /**
      * 标识分页查询是否使用高效查询，缺省为true
@@ -708,7 +708,8 @@ public class JDBCPoolMetaData implements Serializable{
 	}
 
 	public void setCachequerymetadata(boolean cachequerymetadata) {
-		this.cachequerymetadata = cachequerymetadata;
+//		this.cachequerymetadata = cachequerymetadata;
+        //do nothing
 	}
 
 	

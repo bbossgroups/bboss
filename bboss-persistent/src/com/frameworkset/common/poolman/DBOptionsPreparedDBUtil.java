@@ -2051,7 +2051,8 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 	 */
 	public void preparedSelect(String prepareDBName, String sql, long offset,
 							   int pagesize, String oraclerownum,long totalsize) throws SQLException {
-		preparedSelect( prepareDBName, SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false), offset,
+//		preparedSelect( prepareDBName, SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false), offset,
+        preparedSelect( prepareDBName, SQLUtil.getGlobalSQLUtil().getPureSQLInfo(sql), offset,
 				pagesize, oraclerownum,totalsize);
 	}
 
@@ -2083,8 +2084,10 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 	 */
 	public void preparedSelectWithTotalsizesql(String prepareDBName, String sql, long offset,
 											   int pagesize, String oraclerownum,String totalsizesql) throws SQLException {
-		preparedSelectWithTotalsizesql(prepareDBName, SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false), offset,
-				pagesize, oraclerownum,SQLUtil.getGlobalSQLUtil().getSQLInfo(totalsizesql,false,false));
+//		preparedSelectWithTotalsizesql(prepareDBName, SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,false,false), offset,
+//				pagesize, oraclerownum,SQLUtil.getGlobalSQLUtil().getSQLInfo(totalsizesql,false,false));
+        preparedSelectWithTotalsizesql(prepareDBName, SQLUtil.getGlobalSQLUtil().getPureSQLInfo(sql), offset,
+                pagesize, oraclerownum,SQLUtil.getGlobalSQLUtil().getPureSQLInfo(totalsizesql));
 	}
 
 	/**

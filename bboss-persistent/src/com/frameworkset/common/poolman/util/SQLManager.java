@@ -910,7 +910,7 @@ public class SQLManager extends PoolManager{
 			values.put("password", "");
 		else
 			values.put("password", temConf.getPassword());
-		boolean cachequerymetadata = true;
+		boolean cachequerymetadata = false;
 		values.put("cachequerymetadata", cachequerymetadata+"");
 		if(temConf.getReadOnly() == null)			
 			values.put("readOnly", "");
