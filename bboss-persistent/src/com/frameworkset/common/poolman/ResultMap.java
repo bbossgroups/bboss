@@ -825,23 +825,17 @@ public class ResultMap {
 			return (Map)constructor.newInstance(initialCapacity);
 			
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("findMapObject",e);
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            log.warn("findMapObject",e);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            log.warn("findMapObject",e);
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            log.warn("findMapObject",e);
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            log.warn("findMapObject",e);
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            log.warn("findMapObject",e);
 		}
 		
 		

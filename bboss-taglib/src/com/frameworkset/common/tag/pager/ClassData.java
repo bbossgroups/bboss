@@ -41,7 +41,7 @@ public class ClassData
 	private Map data = null;
 	private Object mapkey = null;
 	
-	private boolean toUpercase = true;
+	private boolean toUpercase = false;
 	/**
 //	 * 值对象定义的方法
 //	 */
@@ -57,7 +57,7 @@ public class ClassData
 		this.data = data;
 		if(data instanceof DBHashtable)
 		{
-			
+            toUpercase = ((DBHashtable)data).isColumnLableUpperCase();
 		}
 		else
 		{

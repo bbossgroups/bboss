@@ -138,7 +138,7 @@ public class DBConf implements Serializable {
         return this;
 	}
 
-	private boolean columnLableUpperCase = true;
+	private boolean columnLableUpperCase = false;
 	private String externaljndiName ;
 	private boolean showsql ;
 	private boolean encryptdbinfo  ;

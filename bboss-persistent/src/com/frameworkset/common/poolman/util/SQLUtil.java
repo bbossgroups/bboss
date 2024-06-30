@@ -993,7 +993,12 @@ public class SQLUtil{
 	 * @return
 	 */
 	public String[] getFields() {
-		return this.meta.get_columnLabel_upper();
+        if(this.meta.isColumnLableUpperCase()) {
+            return this.meta.get_columnLabel_upper();
+        }
+        else{
+            return this.meta.get_columnLabel();
+        }
 	}
 	
 	/**
@@ -1444,9 +1449,10 @@ public class SQLUtil{
  */
 	public static class DBHashtable extends LinkedHashMap
 	{
-
-		public DBHashtable(int i) {
+        protected boolean columnLableUpperCase;
+		public DBHashtable(int i,boolean columnLableUpperCase) {
 			super(i);
+            this.columnLableUpperCase = columnLableUpperCase;
 		}
 		
 		public DBHashtable()
@@ -1462,8 +1468,12 @@ public class SQLUtil{
 		public DBHashtable(Map t)
 		{
 			super(t);
-		}		
-	}
+		}
+
+        public boolean isColumnLableUpperCase() {
+            return columnLableUpperCase;
+        }
+    }
 	public static void debugMemory()
 	{
 		System.out.println("FreeMemory:" + Runtime.getRuntime().freeMemory() / 1024/1024 + "M");

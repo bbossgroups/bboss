@@ -44,15 +44,14 @@ import java.util.Map;
 public class Record extends DBHashtable{
 	private String[] fields;
 	private Map sameCols = null;
-	private boolean columnLableUpperCase = true;
+	
 	public Record(int i) {
-		super(i);
+		super(i,false);
 	}
 	
 	public Record(boolean columnLableUpperCase,int i,String[] fields,Map sameCols) {
-		super(i);
+		super(i,columnLableUpperCase);
 		this.fields = fields;
-		this.columnLableUpperCase = columnLableUpperCase;
 		if(sameCols != null && sameCols.size() > 0)
 		    this.sameCols = sameCols;
 		
