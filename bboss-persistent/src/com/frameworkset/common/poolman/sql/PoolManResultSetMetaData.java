@@ -52,14 +52,14 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 //    private String[] _columnLabel_lower;
 
 //    private boolean[] _autoIncrement;
-    private int[] _columnDisplaySize;
-    private String[] _catalogName;
+//    private int[] _columnDisplaySize;
+//    private String[] _catalogName;
     private String[] _columnName;
 //    private boolean[] _writable;
 //    private boolean[] _searchable;
     private int[] _columnType;
 //    private boolean[] _currency;
-    private String[] _tableName;
+//    private String[] _tableName;
 //    private int[] _nullable;
 //    private boolean[] _signed;
 //    private boolean[] _readOnly;
@@ -165,14 +165,14 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
          _columnLabel_upper = new String[_columnCount];
 //        _columnLabel_lower = new String[_columnCount];
 //        _autoIncrement = new boolean[_columnCount];
-        _columnDisplaySize = new int[_columnCount];
-        _catalogName = new String[_columnCount];
+//        _columnDisplaySize = new int[_columnCount];
+//        _catalogName = new String[_columnCount];
         _columnName = new String[_columnCount];
 //        _writable = new boolean[_columnCount];
 //        _searchable = new boolean[_columnCount];
         _columnType = new int[_columnCount];
 //        _currency = new boolean[_columnCount];
-        _tableName = new String[_columnCount];
+//        _tableName = new String[_columnCount];
 //        _nullable = new int[_columnCount];
 //        _signed = new boolean[_columnCount];
 //        _readOnly = new boolean[_columnCount];
@@ -236,14 +236,14 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
                 wi.increament(c);
             }
 //            _autoIncrement[c] = other.isAutoIncrement(rc);
-            _columnDisplaySize[c] = other.getColumnDisplaySize(rc);
+//            _columnDisplaySize[c] = other.getColumnDisplaySize(rc);
 
-            try {
-                _catalogName[c] = other.getCatalogName(rc);
-            } catch (Exception e) {
-            }
-            if (_catalogName[c] == null)
-                _catalogName[c] = "";
+//            try {
+//                _catalogName[c] = other.getCatalogName(rc);
+//            } catch (Exception e) {
+//            }
+//            if (_catalogName[c] == null)
+//                _catalogName[c] = "";
 
 
             
@@ -284,12 +284,12 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
             _columnType[c] = other.getColumnType(rc);
 //            _currency[c] = other.isCurrency(rc);
 
-            try {
-                _tableName[c] = other.getTableName(rc);
-            } catch (Exception e) {
-            }
-            if (_tableName[c] == null)
-                _tableName[c] = "";
+//            try {
+//                _tableName[c] = other.getTableName(rc);
+//            } catch (Exception e) {
+//            }
+//            if (_tableName[c] == null)
+//                _tableName[c] = "";
 
 //            _nullable[c] = other.isNullable(rc);
 //          
@@ -443,18 +443,22 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     }
 
     public int getColumnDisplaySize(int column) throws java.sql.SQLException {
-        return _columnDisplaySize[column - 1];
+//        return _columnDisplaySize[column - 1];
+        return -1;
     }
     public int getColumnDisplaySizeByIndex(int column) throws java.sql.SQLException {
-        return _columnDisplaySize[column];
+//        return _columnDisplaySize[column];
+        return -1;
     }
 
     public java.lang.String getCatalogName(int column) throws java.sql.SQLException {
-        return _catalogName[column - 1];
+//        return _catalogName[column - 1];
+        return "";
     }
     
     public java.lang.String getCatalogNameByIndex(int column) throws java.sql.SQLException {
-        return _catalogName[column];
+//        return _catalogName[column];
+        return "";
     }
 
     public java.lang.String getColumnName(int column) throws java.sql.SQLException {
@@ -504,10 +508,12 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
     }
 
     public java.lang.String getTableName(int column) throws java.sql.SQLException {
-        return _tableName[column - 1];
+//        return _tableName[column - 1];
+        return "";
     }
     public java.lang.String getTableNameByIndex(int column) throws java.sql.SQLException {
-        return _tableName[column ];
+//        return _tableName[column ];
+        return "";
     }
 
     public int isNullable(int column) throws java.sql.SQLException {
