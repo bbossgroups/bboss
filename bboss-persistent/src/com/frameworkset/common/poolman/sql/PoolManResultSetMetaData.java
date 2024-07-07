@@ -10,26 +10,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-/*
- *  An addition to the PoolMan Java Object Pooling and Caching Library
- *  Copyright (C) 1999-2001 The Code Studio
- *
- *  This file was contrbuted by and is
- *  Copyright (C) 2001 HotMagna, http://www.hotmagna.com
- *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 2 of the License, or (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
- *
- *  The full license is located at the root of this distribution
- *  in the LICENSE file.
- */
+
 
 /** PoolManResultSetMetaData takes a copy of a java.sql.ResultSetMetaData
  * for later usage. Some databases use the underlying ResultSet for
