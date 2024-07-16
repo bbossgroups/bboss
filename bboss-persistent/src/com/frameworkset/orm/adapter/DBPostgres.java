@@ -201,14 +201,14 @@ public class DBPostgres extends DB {
 //		return new StringBuilder(sql).append(" limit ").append(offset).append(",").append(maxsize).toString();
 		StringBuilder newsql = null;
 		if (prepared)
-			newsql = new StringBuilder().append(sql).append(" limit ?,?");
+			newsql = new StringBuilder().append(sql).append(" offset ? limit ?");
 		else
-			newsql = new StringBuilder().append(sql).append(" limit ").append(offset).append(",").append(maxsize);
+			newsql = new StringBuilder().append(sql).append(" offset ").append(offset).append(" limit ").append(maxsize);
 		return new PagineSql(newsql.toString(), offset, (long) maxsize, offset, maxsize, prepared).setRebuilded(true);
 	}
 
 	public String getStringPagineSql(String sql) {
-		StringBuilder newsql = new StringBuilder().append(sql).append(" limit ?,?");
+		StringBuilder newsql = new StringBuilder().append(sql).append(" offset ? limit ?");
 		return newsql.toString();
 	}
 
@@ -223,7 +223,7 @@ public class DBPostgres extends DB {
 		if (schema != null && !schema.equals(""))
 			sqlbuilder.append(schema).append(".");
 		sqlbuilder.append(tablename);
-		sqlbuilder.append(" limit ?,?");
+		sqlbuilder.append(" offset ? limit ?");
 		return sqlbuilder.toString();
 	}
 
@@ -238,14 +238,14 @@ public class DBPostgres extends DB {
 //			return new StringBuilder(sql).append(" limit ").append(offset).append(",").append(maxsize).toString();
 		StringBuilder newsql = null;
 		if (prepared)
-			newsql = new StringBuilder().append(sql).append(" ").append(orderBy).append(" limit ?,?");
+			newsql = new StringBuilder().append(sql).append(" ").append(orderBy).append(" offset ? limit ?");
 		else
-			newsql = new StringBuilder().append(sql).append(" ").append(orderBy).append(" limit ").append(offset).append(",").append(maxsize);
+			newsql = new StringBuilder().append(sql).append(" ").append(orderBy).append(" offset ").append(offset).append(" limit ").append(maxsize);
 		return new PagineSql(newsql.toString(), offset, (long) maxsize, offset, maxsize, prepared).setRebuilded(true);
 	}
 
 	public String getStringPagineSql(String sql, String orderBy) {
-		StringBuilder newsql = new StringBuilder().append(sql).append(" ").append(orderBy).append(" limit ?,?");
+		StringBuilder newsql = new StringBuilder().append(sql).append(" ").append(orderBy).append(" offset ? limit ?");
 		return newsql.toString();
 	}
 
@@ -260,7 +260,7 @@ public class DBPostgres extends DB {
 		if (schema != null && !schema.equals(""))
 			sqlbuilder.append(schema).append(".");
 		sqlbuilder.append(tablename);
-		sqlbuilder.append(" ").append(orderBy).append(" limit ?,?");
+		sqlbuilder.append(" ").append(orderBy).append(" offset ? limit ?");
 		return sqlbuilder.toString();
 	}
 	@Override
