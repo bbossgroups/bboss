@@ -27,6 +27,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 /**
@@ -38,7 +39,7 @@ import java.util.logging.Logger;
  */
 public abstract class BalanceDatasource implements DataSource {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(BalanceDatasource.class);
-    protected Map<String,DataSource> balanceDatasources = new LinkedHashMap<>();
+    protected Map<String,DataSource> balanceDatasources = new ConcurrentHashMap();
     protected String url;
     protected DB db;
     protected DataSource currentDatasource;

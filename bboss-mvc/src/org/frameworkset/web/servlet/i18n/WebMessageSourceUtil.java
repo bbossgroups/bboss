@@ -53,30 +53,7 @@ public abstract class WebMessageSourceUtil extends MessageSourceUtil {
 			key = "web::" + basenames;
 		}
 		return getMessageSource_( basenames,new ServletContextResourceLoader(servletContext), useCodeAsDefaultMessage,key);
-//		HotDeployResourceBundleMessageSource messageSource = messageSources.get(key);
-//		
-//		if(messageSource != null)
-//		{
-//			return messageSource;
-//		}
-//		else
-//		{
-//			synchronized(messageSources)
-//			{
-//				messageSource = messageSources.get(key);
-//				if(messageSource != null)
-//				{
-//					return messageSource;
-//				}
-//				messageSource = new HotDeployResourceBundleMessageSource();
-//				messageSource.setBasename(basenames);
-//				messageSource.setResourceLoader(new ServletContextResourceLoader(servletContext));
-//				messageSource.setUseCodeAsDefaultMessage(useCodeAsDefaultMessage);
-//				messageSource.setChangemonitor(true);
-//				messageSources.put(key, messageSource);
-//				return messageSource;
-//			}
-//		}
+
 		
 	}
 	public static MessageSource getMessageSource(String[] basenames,ServletContext servletContext)

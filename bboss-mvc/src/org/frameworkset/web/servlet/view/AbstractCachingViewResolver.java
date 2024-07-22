@@ -18,6 +18,7 @@ package org.frameworkset.web.servlet.view;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.frameworkset.web.servlet.support.WebApplicationObjectSupport;
 
@@ -36,7 +37,7 @@ public abstract class AbstractCachingViewResolver extends WebApplicationObjectSu
 	private boolean cache = true;
 
 	/** Map from view name to View instance */
-	private final Map viewCache = new HashMap();
+	private final Map viewCache = new ConcurrentHashMap();
 
 
 	/**

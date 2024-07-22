@@ -18,6 +18,7 @@ package org.frameworkset.web.util;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.jsp.JspException;
@@ -289,7 +290,7 @@ public abstract class ExpressionEvaluationUtils {
 				servletContext.setAttribute(EXPRESSION_CACHE_FLAG_CONTEXT_ATTR, cacheFlag);
 			}
 			if (cacheFlag.booleanValue()) {
-				cacheMap = Collections.synchronizedMap(new HashMap());
+				cacheMap = new ConcurrentHashMap();
 				servletContext.setAttribute(EXPRESSION_CACHE_MAP_CONTEXT_ATTR, cacheMap);
 			}
 		}

@@ -19,6 +19,7 @@ import com.frameworkset.orm.annotation.PrimaryKey;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class BaseIdGenerator implements IdGenerator{
@@ -67,7 +68,7 @@ public abstract class BaseIdGenerator implements IdGenerator{
 		}
 
 	}
-	private Map<String,KeyValue> currentValue = new HashMap<String,KeyValue>();
+	private Map<String,KeyValue> currentValue = new ConcurrentHashMap<String,KeyValue>();
 
 	private Long _get(PrimaryKey pka,String dbname,String proName){
 		try {

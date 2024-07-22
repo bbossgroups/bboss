@@ -35,6 +35,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>
@@ -86,13 +87,13 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	private ResourceLoader resourceLoader = new HotResourceLoader();
 
 	/** Cache to hold filename lists per Locale */
-	private final Map cachedFilenames = new HashMap();
+	private final Map cachedFilenames = new ConcurrentHashMap();
 
 	/** Cache to hold already loaded properties per filename */
-	private final Map cachedProperties = new HashMap();
+	private final Map cachedProperties = new ConcurrentHashMap();
 
 	/** Cache to hold merged loaded properties per basename */
-	private final Map cachedMergedProperties = new HashMap();
+	private final Map cachedMergedProperties = new ConcurrentHashMap();
 	private static final PropertiesHolder  NOTEXIST_propHolder = new PropertiesHolder();
 	
 	private static final PropertiesHolder  ERROR_propHolder = new PropertiesHolder();
@@ -625,7 +626,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 //		private long refreshTimestamp = -1;
 
 		/** Cache to hold already generated MessageFormats per message code */
-		private final Map cachedMessageFormats = new HashMap();
+		private final Map cachedMessageFormats = new ConcurrentHashMap();
 
 		public PropertiesHolder(Properties properties,File resource,String basename,String relativefile) {
 			this.properties = properties;

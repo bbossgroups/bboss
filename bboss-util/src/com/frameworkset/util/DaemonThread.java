@@ -261,14 +261,7 @@ public class DaemonThread extends java.lang.Thread
         		if(log.isInfoEnabled())
         			log.info("marked  file " + file.getAbsolutePath() + " to be removed from monitor thread that moniting changed files.");
         	}
-//        	for(FileBean f:files)
-//        	{
-//        		if(f.getFile() != null && f.getFile().getAbsolutePath().equals(file.getAbsolutePath()))
-//        		{
-////        			files.remove(f);
-//        			f.setRemoveflag(true);
-//        		}
-//        	}
+
 	    	 
     	}
     }

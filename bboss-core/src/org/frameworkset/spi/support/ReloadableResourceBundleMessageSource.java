@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>Title: ReloadableResourceBundleMessageSource.java</p> 
@@ -64,13 +65,13 @@ public class ReloadableResourceBundleMessageSource extends AbstractMessageSource
 	private ResourceLoader resourceLoader = new DefaultResourceLoader();
 
 	/** Cache to hold filename lists per Locale */
-	private final Map cachedFilenames = new HashMap();
+	private final Map cachedFilenames = new ConcurrentHashMap();
 
 	/** Cache to hold already loaded properties per filename */
-	private final Map cachedProperties = new HashMap();
+	private final Map cachedProperties = new ConcurrentHashMap();
 
 	/** Cache to hold merged loaded properties per basename */
-	private final Map cachedMergedProperties = new HashMap();
+	private final Map cachedMergedProperties = new ConcurrentHashMap();
 
 
 	/**

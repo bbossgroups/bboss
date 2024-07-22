@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>Title: ResourceBundleThemeSource.java</p> 
@@ -46,7 +47,7 @@ public class ResourceBundleThemeSource implements HierarchicalThemeSource {
 	private String basenamePrefix = "";
 
 	/** Map from theme name to Theme instance */
-	private final Map themeCache = new HashMap();
+	private final Map themeCache = new ConcurrentHashMap();
 
 
 	public void setParentThemeSource(ThemeSource parent) {

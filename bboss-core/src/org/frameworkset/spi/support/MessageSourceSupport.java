@@ -20,6 +20,7 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +55,7 @@ public abstract class MessageSourceSupport {
 	 * passed-in default messages. MessageFormats for resolved codes are cached
 	 * on a specific basis in subclasses.
 	 */
-	private final Map cachedMessageFormats = new HashMap();
+	private final Map cachedMessageFormats = new ConcurrentHashMap();
 
 	/**
 	 * Set whether to always apply the MessageFormat rules, parsing even

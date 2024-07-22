@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p> HessianHanderContainer.java</p>
@@ -42,9 +43,9 @@ public class HessianHanderContainer {
 	private Map<String,AbstractHessionHandler> hessionHandlers;
 	private BaseApplicationContext context;
 	private static final Logger log = LoggerFactory.getLogger(HessianHanderContainer.class);
-	private Map<String,Pro> hessionPortServices = new HashMap<String,Pro>();
+	private Map<String,Pro> hessionPortServices = new ConcurrentHashMap<String,Pro>();
 	public HessianHanderContainer(BaseApplicationContext context) {
-		hessionHandlers = new HashMap<String,AbstractHessionHandler>();
+		hessionHandlers = new ConcurrentHashMap<String,AbstractHessionHandler>();
 		this.context = context;
 		initHessionPortServices();
 	}

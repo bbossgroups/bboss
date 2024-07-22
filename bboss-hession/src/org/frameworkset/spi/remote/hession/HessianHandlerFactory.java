@@ -27,6 +27,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -44,7 +45,7 @@ public class HessianHandlerFactory {
 	private Map<String,HessianHanderContainer> containers ;
 	private Method getWebApplicationContext;
 	public HessianHandlerFactory() {
-		containers = new HashMap<String,HessianHanderContainer>();
+		containers = new ConcurrentHashMap<String,HessianHanderContainer>();
 		try {
 			Class WebApplicationContextUtils = Class.forName("org.frameworkset.web.servlet.support.WebApplicationContextUtils");
 			getWebApplicationContext = WebApplicationContextUtils.getMethod("getWebApplicationContext");

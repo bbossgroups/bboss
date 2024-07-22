@@ -40,6 +40,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -95,7 +96,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	public static int container_type_soafile = 3;
 	public static int container_type_mvc = 4;
 	public static String mvccontainer_identifier = "webmvc";
-	protected static Map<String, BaseApplicationContext> applicationContexts = new HashMap<String, BaseApplicationContext>();
+	protected static Map<String, BaseApplicationContext> applicationContexts = new ConcurrentHashMap<>();
 //	public Map<String, ServiceID> serviceids = new java.util.WeakHashMap<String, ServiceID>();
 	protected static List<String> rootFiles = new ArrayList<String>();
 	protected boolean started = true;
@@ -760,40 +761,6 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 }
 
-//	/**
-//	 * 获取指定根配置文件上下文bean组件管理容器，配置文件从参数configfile对应配置文件开始
-//	 * 不同的上下文件环境容器互相隔离，组件间不存在依赖关系，属性也不存在任何引用关系。
-//	 * 
-//	 * @return
-//	 */
-//	public static BaseApplicationContext getBaseApplicationContext(String configfile) {
-//		if (configfile == null || configfile.equals("")) {
-//			log.debug("configfile is null or empty.default Config File["
-//					+ ServiceProviderManager.defaultConfigFile
-//					+ "] will be used. ");
-//			configfile = ServiceProviderManager.defaultConfigFile;
-//		}
-//		BaseApplicationContext instance = applicationContexts.get(configfile);
-//		if (instance != null)
-//		{
-//			instance.initApplicationContext();
-//			return instance;
-//		}
-//		synchronized (lock) {
-//			instance = applicationContexts.get(configfile);
-//			if (instance != null)
-//				return instance;
-//			instance = new ApplicationContext(configfile);
-//			ApplicationContext.addShutdownHook(new BeanDestroyHook(instance));
-//			applicationContexts.put(configfile, instance);
-//			
-//
-//		}
-//		instance.initApplicationContext();
-//		return instance;
-//	}
-
-	
 
 	public ParserError getParserError() {
 		return parserError;
@@ -1145,101 +1112,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 		return getProvider(null, null);
 	}
 
-	// /**
-	// * 通用特定服务类型中特定数据源实现的提供接口获取类
-	// * @param providerManagerType String
-	// * @param sourceType String
-	// * @return Provider
-	// * @throws SPIException
-	// */
-	// public static Provider getProvider(String providerManagerType,String
-	// sourceType) throws SPIException
-	// {
-	// ProviderManagerInfo providerManagerInfo = null;
-	// if(providerManagerType != null)
-	// providerManagerInfo = ConfigManager.getInstance().
-	// getProviderManagerInfo(providerManagerType);
-	// else
-	// {
-	// providerManagerInfo =
-	// ConfigManager.getInstance().getDefaultProviderManagerInfo();
-	// providerManagerType = providerManagerInfo.getId() ;
-	// }
-	// //各spi管理者的缓冲关键字为providerManagerType ＋ ":" + sourceType;
-	// String cacheKey = sourceType != null?providerManagerType+":"+sourceType
-	// :providerManagerType+":"+DEFAULT_CACHE_KEY;
-	// String syncacheKey = providerManagerType+":"+SYNCHRO_CACHE_KEY;
-	//
-	// Provider provider = null;
-	// //判断是否允许为单实例模式，如果是获取单实例，否则重新创建provider实例
-	// if(providerManagerInfo.isSinglable())
-	// {
-	// provider = (Provider) providers.get(cacheKey);
-	// if (provider == null) {
-	// try {
-	// if (sourceType == null) {
-	// provider =
-	// (Provider) providerManagerInfo.
-	// getDefaulProviderInfo().
-	// getProvider();
-	// } else {
-	// provider =
-	// (Provider) providerManagerInfo.
-	// getSecurityProviderInfoByType(sourceType).
-	// getProvider();
-	//
-	// }
-	// providers.put(cacheKey, provider);
-	// } catch (Exception e) {
-	// throw new SPIException(
-	// "Failed to get UserManagement class instance..."
-	// + e.toString());
-	// }
-	// }
-	// }
-	// else
-	// {
-	// if (sourceType == null)
-	// provider = providerManagerInfo.
-	// getDefaulProviderInfo().getProvider();
-	// else
-	// provider = providerManagerInfo.
-	// getSecurityProviderInfoByType(sourceType)
-	// .getProvider();
-	// }
-	// //如果开启同步机制，获取同步代理接口，否则直接返回缺省的管理接口
-	// if (providerManagerInfo.isSynchronizedEnabled()) {
-	// Provider synProvider = null;
-	// //如果是单实例则获取代理单实例，否则重新生成代理实例
-	// if(providerManagerInfo.isSinglable())
-	// {
-	// synProvider = (Provider) providers.get(
-	// syncacheKey);
-	//
-	// if (synProvider == null) {
-	// Provider finalsynProvider = provider;
-	// synProvider = (Provider) createInf(providerManagerInfo,
-	// finalsynProvider);
-	// if (synProvider != null) {
-	// providers.put(
-	// syncacheKey, synProvider);
-	// }
-	// }
-	// }
-	// else
-	// {
-	// Provider finalsynProvider = provider;
-	// synProvider = (Provider) createInf(providerManagerInfo,
-	// finalsynProvider);
-	//
-	// }
-	// return synProvider;
-	// }
-	// else
-	// {
-	// return provider;
-	// }
-	// }
+	
 
 	/**
 	 * 获取管理服务的特定提供者实例对象
@@ -1250,7 +1123,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 				false);
 	}
 
-	private final Map<String, Object> servicProviders = new HashMap<String, Object>();
+	private final Map<String, Object> servicProviders = new ConcurrentHashMap<String, Object>();
 
 	private final List<DestroyMethod> destroyServiceMethods = new ArrayList<DestroyMethod>();
 
