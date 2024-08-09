@@ -278,10 +278,25 @@ public class BaseSimpleStringUtil {
 				||  path.startsWith("ftp://")   
 				||  path.startsWith("tps://")  ;
 	}
+
+    /**
+     * 获取36位 uuid
+     * @return
+     */
 	public static String getUUID()
 	{
 		return UUID.randomUUID().toString();
 	}
+
+    /**
+     * 获取32位 uuid
+     * @return
+     */
+    public static String getUUID32()
+    {
+        String uuid = UUID.randomUUID().toString();
+        return uuid.replace("-","");
+    }
 	public static String getRealPath(String contextPath, String path,boolean usebase) {
 		
 		if(isHttpUrl(path))
