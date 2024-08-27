@@ -319,7 +319,14 @@ public class PropertiesContainer extends AbstractGetProperties{
 
 
     }
-	protected String namespace;
+	protected String apolloNamespace;
+
+    protected String nacosNamespace;
+    protected String nacosServerAddr;
+    protected String nacosDataId;
+    protected String nacosGroup;
+    protected long nacosTimeOut;
+    
     protected String configChangeListener;
     protected boolean changeReload;
 
@@ -330,16 +337,45 @@ public class PropertiesContainer extends AbstractGetProperties{
      */
 	public void addConfigPropertiesFromApollo(String namespace,String configChangeListener)
 	{
-		this.namespace = namespace;
+		this.apolloNamespace = namespace;
 		this.configChangeListener = configChangeListener;
 		Map<String,String> pros = new HashMap<String,String>();
 		pros.put("apolloNamespace",namespace);
 		if(configChangeListener != null)
 			pros.put("configChangeListener",configChangeListener);
 
-		addConfigPropertiesFromApollo(  namespace,   (LinkConfigFile)null, (BaseApplicationContext)null,pros );
+        addConfigPropertiesFromApollo(   (LinkConfigFile)null, (BaseApplicationContext)null,pros );
 
 	}
+
+    /**
+     * 从nacos加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
+     * @param namespace
+     * @param configChangeListener
+     */
+    public void addConfigPropertiesFromNacos(String namespace, String serverAddr, String dataId, String group, long timeOut,String configChangeListener)
+    {
+        this.nacosNamespace = namespace;
+        this.nacosServerAddr = serverAddr;
+        this.nacosDataId = dataId;
+        this.nacosGroup = group;
+        this.nacosTimeOut = timeOut;
+        this.configChangeListener = configChangeListener;
+        Map<String,String> pros = new HashMap<String,String>();
+        pros.put("nacosNamespace",namespace);
+        pros.put("serverAddr",serverAddr);
+
+        pros.put("dataId",dataId);
+
+        pros.put("group",group);
+
+        pros.put("timeOut",String.valueOf(timeOut));
+        if(configChangeListener != null)
+            pros.put("configChangeListener",configChangeListener);
+
+        addConfigPropertiesFromNacos(   (LinkConfigFile)null, (BaseApplicationContext)null,pros );
+
+    }
 
 	/**
 	 * 热加载属性配置文件
@@ -347,7 +383,12 @@ public class PropertiesContainer extends AbstractGetProperties{
 	public synchronized void reset(){
 		configPropertiesFiles = null;
 		allProperties = null;
-		addConfigPropertiesFromApollo(namespace, changeReload);
+        if(apolloNamespace != null) {
+            addConfigPropertiesFromApollo(apolloNamespace, changeReload);
+        }
+        else {            
+            addConfigPropertiesFromNacos(nacosNamespace,nacosServerAddr,nacosDataId,nacosGroup,nacosTimeOut);
+        }
 		this.afterLoaded(this);
 	}
 
@@ -358,7 +399,7 @@ public class PropertiesContainer extends AbstractGetProperties{
      */
 	public void addConfigPropertiesFromApollo(String namespace,boolean changeReload)
 	{
-		this.namespace = namespace;
+		this.apolloNamespace = namespace;
 		this.changeReload = changeReload;
 		Map<String,String> pros = new HashMap<String,String>();
 		pros.put("apolloNamespace",namespace);
@@ -366,9 +407,40 @@ public class PropertiesContainer extends AbstractGetProperties{
 		if(changeReload) {
 			pros.put("configChangeListener","org.frameworkset.apollo.PropertiesContainerChangeListener");
 		}
-		addConfigPropertiesFromApollo(  namespace,   (LinkConfigFile)null, (BaseApplicationContext)null,pros );
+		addConfigPropertiesFromApollo(      (LinkConfigFile)null, (BaseApplicationContext)null,pros );
 
 	}
+
+    /**
+     * 从nacos加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
+     * @param namespace
+     * @param changeReload
+     */
+    public void addConfigPropertiesFromNacos(String namespace, String serverAddr, String dataId, String group, long timeOut,boolean changeReload)
+    {
+        this.nacosNamespace = namespace;
+        this.nacosServerAddr = serverAddr;
+        this.nacosDataId = dataId;
+        this.nacosGroup = group;
+        this.nacosTimeOut = timeOut;
+        this.changeReload = changeReload;
+        Map<String,String> pros = new HashMap<String,String>();
+        pros.put("nacosNamespace",namespace);
+        pros.put("serverAddr",serverAddr);
+
+        pros.put("dataId",dataId);
+
+        pros.put("group",group);
+
+        pros.put("timeOut",String.valueOf(timeOut));
+        
+        pros.put("changeReload",changeReload?"true":"false");
+        if(changeReload) {
+            pros.put("configChangeListener","org.frameworkset.nacos.PropertiesContainerChangeListener");
+        }
+        addConfigPropertiesFromNacos(      (LinkConfigFile)null, (BaseApplicationContext)null,pros );
+
+    }
 
     /**
      * 从Apollo加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
@@ -379,18 +451,43 @@ public class PropertiesContainer extends AbstractGetProperties{
 		Map<String,String> pros = new HashMap<String,String>();
 		pros.put("apolloNamespace",namespace);
 
-		addConfigPropertiesFromApollo(  namespace,   (LinkConfigFile)null, (BaseApplicationContext)null,pros );
+		addConfigPropertiesFromApollo(     (LinkConfigFile)null, (BaseApplicationContext)null,pros );
 
 	}
 
     /**
-     * 从Apollo加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
+     * 从Nacos加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
      * @param namespace
+     */
+    public void addConfigPropertiesFromNacos(String namespace, String serverAddr, String dataId, String group, long timeOut)
+    {
+        this.nacosNamespace = namespace;
+        this.nacosServerAddr = serverAddr;
+        this.nacosDataId = dataId;
+        this.nacosGroup = group;
+        this.nacosTimeOut = timeOut;
+        Map<String,String> pros = new HashMap<String,String>();
+        pros.put("nacosNamespace",namespace);
+
+        pros.put("serverAddr",serverAddr);
+
+        pros.put("dataId",dataId);
+
+        pros.put("group",group);
+
+        pros.put("timeOut",String.valueOf(timeOut));
+
+        addConfigPropertiesFromNacos(     (LinkConfigFile)null, (BaseApplicationContext)null,pros );
+
+    }
+
+    /**
+     * 从Apollo加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
      * @param linkfile
      * @param applicationContext
      * @param extendsAttributes
      */
-	public void addConfigPropertiesFromApollo(String namespace, LinkConfigFile linkfile, BaseApplicationContext applicationContext,Map<String,String> extendsAttributes )
+	public void addConfigPropertiesFromApollo( LinkConfigFile linkfile, BaseApplicationContext applicationContext,Map<String,String> extendsAttributes )
 	{
 
 		if(configPropertiesFiles == null)
@@ -465,6 +562,95 @@ public class PropertiesContainer extends AbstractGetProperties{
 
 
 	}
+
+    /**
+     * 从Nacos加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
+     * <config nacosNamespace="application" 
+     *             serverAddr="localhost:8848" 
+     *             dataId="redis" 
+     *             group="DEFAULT_GROUP" 
+     *             timeOut="5000" 
+     *             changeReload="false"/>
+     *             String namespace, String serverAddr, String dataId, String group, long timeOut, 
+     * @param linkfile
+     * @param applicationContext
+     * @param extendsAttributes
+     */
+    public void addConfigPropertiesFromNacos(LinkConfigFile linkfile, BaseApplicationContext applicationContext,Map<String,String> extendsAttributes )
+    {
+
+        if(configPropertiesFiles == null)
+        {
+            configPropertiesFiles = new ArrayList<String>();
+
+        }
+        Map allProperties = new LinkedHashMap();
+        String configPropertiesPlugin = "org.frameworkset.nacos.NacosPropertiesFilePlugin";
+        try {
+
+            Class clazz = Class.forName(configPropertiesPlugin);
+            synchronized (clazz) {
+                PropertiesFilePlugin propertiesFilePlugin = (PropertiesFilePlugin) clazz.newInstance();
+
+                Map configProperties = propertiesFilePlugin.getConfigProperties(applicationContext,extendsAttributes,this);
+                if (configProperties != null && configProperties.size() > 0) {
+                    allProperties.putAll(configProperties);
+                }
+
+                Map evaledProperties = EnvUtil.evalEnvVariable(this.allProperties,allProperties);
+                if(evaledProperties != null){
+                    allProperties.putAll(evaledProperties);
+                }
+                this.propertiesFilePlugin = propertiesFilePlugin;
+            }
+            if(linkfile != null)
+                loopback(linkfile);
+        }
+        catch (ClassNotFoundException e){
+            if(log.isErrorEnabled()) {
+                StringBuilder msg = new StringBuilder();
+
+                if(applicationContext != null) {
+                    msg.append("Add Config Properties for[" )
+                            .append( applicationContext.getConfigfile() )
+                            .append( "] From Nacos failed: " )
+                            .append( SimpleStringUtil.object2json(extendsAttributes));
+                }else{
+                    msg.append("Add Config Properties From Nacos failed: " )
+                            .append( SimpleStringUtil.object2json(extendsAttributes) );
+                }
+                msg.append(", Add compile dependency to build.gradle in gralde project: \r\napi \"com.bbossgroups.plugins:bboss-plugin-nacos:{lastVersion}\"")
+                        .append(" \r\nor Add compile dependency to pom.xml in maven project: \r\n    " )
+                        .append( "    <dependency>\n"  )
+                        .append("            <groupId>com.bbossgroups.plugins</groupId>\n"  )
+                        .append("            <artifactId>bboss-plugin-nacos</artifactId>\n"  )
+                        .append("            <version>{lastVersion}</version>\n"  )
+                        .append("        </dependency>");
+                log.error(msg.toString(),e);
+            }
+        }
+        catch (Exception e) {
+            if(log.isErrorEnabled()) {
+                if(applicationContext != null)
+                    log.error("Add Config Properties for[" + applicationContext.getConfigfile() + "] From nacos failed: " + SimpleStringUtil.object2json(extendsAttributes), e);
+                else{
+                    log.error("Add Config Properties From nacos failed: " + SimpleStringUtil.object2json(extendsAttributes), e);
+                }
+            }
+        }
+
+
+        if(allProperties != null && allProperties.size() > 0)
+            allProperties =  interceptorValues(allProperties);
+        if(this.allProperties  == null)
+            this.allProperties = allProperties;
+        else{
+            if(allProperties != null && allProperties.size() > 0)
+                this.allProperties.putAll(allProperties);
+        }
+
+
+    }
 
 	private void loadPropertiesFromFiles(Map configProperties ,String configPropertiesFile,LinkConfigFile linkfile ){
 		String[] configPropertiesFiles = configPropertiesFile.split(",");//属性文件可以配置多个，每个用逗号分隔

@@ -15,6 +15,7 @@
  */
 package org.frameworkset.spi.assemble;
 
+import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.soa.SerialFactory;
 import org.frameworkset.soa.SerialFactory.MagicClass;
 import org.frameworkset.spi.BaseApplicationContext;
@@ -1262,6 +1263,22 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
                         configPropertiesFile.addAll(propertiesContainer.getAllExternalProperties(), false);
 
 //                        this.configPropertiesFile.addConfigPropertiesFromApollo(file, this.linkfile, this.applicationContext, extendsAttributes);
+                    }
+                    else{
+                        file = attributes.getValue("nacosNamespace");
+                        if(file != null) {
+                            if(this.configPropertiesFile == null)
+                                configPropertiesFile = new PropertiesContainer();
+                            String serverAddr = extendsAttributes.get("serverAddr");
+                            String dataId = extendsAttributes.get("dataId");
+                            String group = extendsAttributes.get("group");
+                            
+                            PropertiesContainer propertiesContainer = PropertiesUtil.getPropertiesContainerFromNacos(file,  serverAddr,
+                                      dataId,  group,    this.linkfile,applicationContext, extendsAttributes);
+                            configPropertiesFile.addAll(propertiesContainer.getAllExternalProperties(), false);
+
+//                        this.configPropertiesFile.addConfigPropertiesFromApollo(file, this.linkfile, this.applicationContext, extendsAttributes);
+                        }
                     }
 				}
 			}

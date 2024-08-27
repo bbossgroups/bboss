@@ -21,6 +21,7 @@ import org.frameworkset.spi.assemble.plugin.PropertiesFilePlugin;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>Description: 获取默认属性配置容器</p>
@@ -31,10 +32,12 @@ import java.util.Map;
  * @version 1.0
  */
 public class PropertiesUtil {
-    private static Map<String, PropertiesContainer> propertiesContainerMap = new LinkedHashMap<>();
+    private static Map<String, PropertiesContainer> propertiesContainerMap = new ConcurrentHashMap<>();
 
-    private static Map<String, PropertiesContainer> propertiesApolloContainerMap = new LinkedHashMap<>();
-    private static Map<String, PropertiesContainer> propertiesPluginContainerMap = new LinkedHashMap<>();
+    private static Map<String, PropertiesContainer> propertiesApolloContainerMap = new ConcurrentHashMap<>();
+
+    private static Map<String, PropertiesContainer> propertiesNacosContainerMap = new ConcurrentHashMap<>();
+    private static Map<String, PropertiesContainer> propertiesPluginContainerMap = new ConcurrentHashMap<>();
     public static PropertiesContainer getPropertiesContainer() {
 
         return getPropertiesContainer("application.properties");
@@ -143,7 +146,7 @@ public class PropertiesUtil {
             }
 
             propertiesContainer = new PropertiesContainer();
-            propertiesContainer.addConfigPropertiesFromApollo(propertiesFile,linkfile,applicationContext,extendsAttributes);
+            propertiesContainer.addConfigPropertiesFromApollo(linkfile,applicationContext,extendsAttributes);
             propertiesApolloContainerMap.put(propertiesFile,propertiesContainer);
         }
         return propertiesContainer;
@@ -163,6 +166,57 @@ public class PropertiesUtil {
             propertiesContainer = new PropertiesContainer();
             propertiesContainer.addConfigPropertiesFromApollo(propertiesFile);
             propertiesApolloContainerMap.put(propertiesFile,propertiesContainer);
+        }
+        return propertiesContainer;
+    }
+
+    private static String buildNacosKey(String propertiesFile,  String  serverAddr,
+                                        String dataId,  String group){
+        StringBuilder builder = new StringBuilder();
+        builder.append("nacos:").append(propertiesFile).append("^").append(serverAddr)
+                .append("^").append(dataId)
+                .append("^").append(group);
+        return builder.toString();
+    }
+    public static PropertiesContainer getPropertiesContainerFromNacos(String propertiesFile,  String  serverAddr,
+                                                                      String dataId,  String group,LinkConfigFile linkfile, BaseApplicationContext applicationContext, Map<String,String> extendsAttributes){
+        String key = buildNacosKey(  propertiesFile,     serverAddr,
+                  dataId,    group);
+        PropertiesContainer propertiesContainer = propertiesNacosContainerMap.get(key);
+        if(propertiesContainer != null){
+            return propertiesContainer;
+        }
+        synchronized (PropertiesUtil.class) {
+            propertiesContainer = propertiesNacosContainerMap.get(key);
+            if(propertiesContainer != null){
+                return propertiesContainer;
+            }
+
+            propertiesContainer = new PropertiesContainer();
+            propertiesContainer.addConfigPropertiesFromNacos(linkfile,applicationContext,extendsAttributes);
+            propertiesNacosContainerMap.put(key,propertiesContainer);
+        }
+        return propertiesContainer;
+    }
+
+    public static PropertiesContainer getPropertiesContainerFromNacos(String propertiesFile,  String  serverAddr,
+                                                                      String dataId,  String group, long timeOut){
+        String key = buildNacosKey(  propertiesFile,     serverAddr,
+                dataId,    group);
+        PropertiesContainer propertiesContainer = propertiesNacosContainerMap.get(key);
+        if(propertiesContainer != null){
+            return propertiesContainer;
+        }
+        synchronized (PropertiesUtil.class) {
+            propertiesContainer = propertiesNacosContainerMap.get(key);
+            if(propertiesContainer != null){
+                return propertiesContainer;
+            }
+
+            propertiesContainer = new PropertiesContainer();
+            propertiesContainer.addConfigPropertiesFromNacos(  propertiesFile,     serverAddr,
+                      dataId,    group,   timeOut);
+            propertiesNacosContainerMap.put(key,propertiesContainer);
         }
         return propertiesContainer;
     }
