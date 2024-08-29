@@ -319,6 +319,11 @@ public class PropertiesContainer extends AbstractGetProperties{
 
 
     }
+
+    public final static String nacosNamespaceName = "nacosNamespace";
+
+    public final static String apolloNamespaceName = "apolloNamespace";
+    
 	protected String apolloNamespace;
 
     protected String nacosNamespace;
@@ -340,7 +345,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 		this.apolloNamespace = namespace;
 		this.configChangeListener = configChangeListener;
 		Map<String,String> pros = new HashMap<String,String>();
-		pros.put("apolloNamespace",namespace);
+		pros.put(PropertiesContainer.apolloNamespaceName,namespace);
 		if(configChangeListener != null)
 			pros.put("configChangeListener",configChangeListener);
 
@@ -362,7 +367,36 @@ public class PropertiesContainer extends AbstractGetProperties{
         this.nacosTimeOut = timeOut;
         this.configChangeListener = configChangeListener;
         Map<String,String> pros = new HashMap<String,String>();
-        pros.put("nacosNamespace",namespace);
+        pros.put(PropertiesContainer.nacosNamespaceName,namespace);
+        pros.put("serverAddr",serverAddr);
+
+        pros.put("dataId",dataId);
+
+        pros.put("group",group);
+
+        pros.put("timeOut",String.valueOf(timeOut));
+        if(configChangeListener != null)
+            pros.put("configChangeListener",configChangeListener);
+
+        addConfigPropertiesFromNacos(   (LinkConfigFile)null, (BaseApplicationContext)null,pros );
+
+    }
+
+    /**
+     * 从nacos加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
+     * @param namespace
+     * @param configChangeListener
+     */
+    public void addConfigPropertiesFromNacos(String namespace, String serverAddr, String dataId, String group, long timeOut,String configChangeListener,Map<String,String> pros)
+    {
+        this.nacosNamespace = namespace;
+        this.nacosServerAddr = serverAddr;
+        this.nacosDataId = dataId;
+        this.nacosGroup = group;
+        this.nacosTimeOut = timeOut;
+        this.configChangeListener = configChangeListener;
+//        Map<String,String> pros = new HashMap<String,String>();
+        pros.put(PropertiesContainer.nacosNamespaceName,namespace);
         pros.put("serverAddr",serverAddr);
 
         pros.put("dataId",dataId);
@@ -402,7 +436,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 		this.apolloNamespace = namespace;
 		this.changeReload = changeReload;
 		Map<String,String> pros = new HashMap<String,String>();
-		pros.put("apolloNamespace",namespace);
+		pros.put(PropertiesContainer.apolloNamespaceName,namespace);
 		pros.put("changeReload",changeReload?"true":"false");
 		if(changeReload) {
 			pros.put("configChangeListener","org.frameworkset.apollo.PropertiesContainerChangeListener");
@@ -425,7 +459,7 @@ public class PropertiesContainer extends AbstractGetProperties{
         this.nacosTimeOut = timeOut;
         this.changeReload = changeReload;
         Map<String,String> pros = new HashMap<String,String>();
-        pros.put("nacosNamespace",namespace);
+        pros.put(PropertiesContainer.nacosNamespaceName,namespace);
         pros.put("serverAddr",serverAddr);
 
         pros.put("dataId",dataId);
@@ -443,13 +477,44 @@ public class PropertiesContainer extends AbstractGetProperties{
     }
 
     /**
+     * 从nacos加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
+     * @param namespace
+     * @param changeReload
+     */
+    public void addConfigPropertiesFromNacos(String namespace, String serverAddr, String dataId, String group, long timeOut,boolean changeReload,Map<String,String> pros)
+    {
+        this.nacosNamespace = namespace;
+        this.nacosServerAddr = serverAddr;
+        this.nacosDataId = dataId;
+        this.nacosGroup = group;
+        this.nacosTimeOut = timeOut;
+        this.changeReload = changeReload;
+//        Map<String,String> pros = new HashMap<String,String>();
+        pros.put(PropertiesContainer.nacosNamespaceName,namespace);
+        pros.put("serverAddr",serverAddr);
+
+        pros.put("dataId",dataId);
+
+        pros.put("group",group);
+
+        pros.put("timeOut",String.valueOf(timeOut));
+
+        pros.put("changeReload",changeReload?"true":"false");
+        if(changeReload) {
+            pros.put("configChangeListener","org.frameworkset.nacos.PropertiesContainerChangeListener");
+        }
+        addConfigPropertiesFromNacos(      (LinkConfigFile)null, (BaseApplicationContext)null,pros );
+
+    }
+
+    /**
      * 从Apollo加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
      * @param namespace
      */
 	public void addConfigPropertiesFromApollo(String namespace)
 	{
 		Map<String,String> pros = new HashMap<String,String>();
-		pros.put("apolloNamespace",namespace);
+		pros.put(PropertiesContainer.apolloNamespaceName,namespace);
 
 		addConfigPropertiesFromApollo(     (LinkConfigFile)null, (BaseApplicationContext)null,pros );
 
@@ -467,7 +532,33 @@ public class PropertiesContainer extends AbstractGetProperties{
         this.nacosGroup = group;
         this.nacosTimeOut = timeOut;
         Map<String,String> pros = new HashMap<String,String>();
-        pros.put("nacosNamespace",namespace);
+        pros.put(PropertiesContainer.nacosNamespaceName,namespace);
+
+        pros.put("serverAddr",serverAddr);
+
+        pros.put("dataId",dataId);
+
+        pros.put("group",group);
+
+        pros.put("timeOut",String.valueOf(timeOut));
+
+        addConfigPropertiesFromNacos(     (LinkConfigFile)null, (BaseApplicationContext)null,pros );
+
+    }
+
+    /**
+     * 从Nacos加载属性配置，后加入的属性配置命名空间，可以引用先前加入的属性，反之不成立
+     * @param namespace
+     */
+    public void addConfigPropertiesFromNacos(String namespace, String serverAddr, String dataId, String group, long timeOut,Map<String,String> pros)
+    {
+        this.nacosNamespace = namespace;
+        this.nacosServerAddr = serverAddr;
+        this.nacosDataId = dataId;
+        this.nacosGroup = group;
+        this.nacosTimeOut = timeOut;
+//        Map<String,String> pros = new HashMap<String,String>();
+        pros.put(PropertiesContainer.nacosNamespaceName,namespace);
 
         pros.put("serverAddr",serverAddr);
 

@@ -1254,7 +1254,7 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
 //					this.configPropertiesFile.addConfigPropertiesFromPlugin(file, this.linkfile, this.applicationContext, extendsAttributes);
 				}
 				else{
-					file = attributes.getValue("apolloNamespace");
+					file = attributes.getValue(PropertiesContainer.apolloNamespaceName);
                     if(file != null) {
                         if(this.configPropertiesFile == null)
                             configPropertiesFile = new PropertiesContainer();
@@ -1265,7 +1265,7 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
 //                        this.configPropertiesFile.addConfigPropertiesFromApollo(file, this.linkfile, this.applicationContext, extendsAttributes);
                     }
                     else{
-                        file = attributes.getValue("nacosNamespace");
+                        file = attributes.getValue(PropertiesContainer.nacosNamespaceName);
                         if(file != null) {
                             if(this.configPropertiesFile == null)
                                 configPropertiesFile = new PropertiesContainer();
