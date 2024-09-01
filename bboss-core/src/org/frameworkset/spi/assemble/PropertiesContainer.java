@@ -396,7 +396,8 @@ public class PropertiesContainer extends AbstractGetProperties{
      * @param namespace
      * @param configChangeListener
      */
-    public void addConfigPropertiesFromNacos(String namespace, String serverAddr, String dataId, String group, long timeOut,String configChangeListener,Map<String,String> pros)
+    public void addConfigPropertiesFromNacos(String namespace, String serverAddr, String dataId, String group, 
+                                             long timeOut,String configChangeListener,Map<String,String> pros)
     {
         this.nacosNamespace = namespace;
         this.nacosServerAddr = serverAddr;
@@ -405,6 +406,9 @@ public class PropertiesContainer extends AbstractGetProperties{
         this.nacosTimeOut = timeOut;
         this.configChangeListener = configChangeListener;
 //        Map<String,String> pros = new HashMap<String,String>();
+        if(pros == null){
+            pros = new HashMap<String,String>();
+        }
         pros.put(PropertiesContainer.nacosNamespaceName,namespace);
         pros.put("serverAddr",serverAddr);
 
@@ -499,6 +503,9 @@ public class PropertiesContainer extends AbstractGetProperties{
         this.nacosTimeOut = timeOut;
         this.changeReload = changeReload;
 //        Map<String,String> pros = new HashMap<String,String>();
+        if(pros == null){
+            pros = new HashMap<>();
+        }
         pros.put(PropertiesContainer.nacosNamespaceName,namespace);
         pros.put("serverAddr",serverAddr);
 
@@ -567,6 +574,9 @@ public class PropertiesContainer extends AbstractGetProperties{
         this.nacosGroup = group;
         this.nacosTimeOut = timeOut;
 //        Map<String,String> pros = new HashMap<String,String>();
+        if(pros == null){
+            pros = new HashMap<>();
+        }
         pros.put(PropertiesContainer.nacosNamespaceName,namespace);
 
         pros.put("serverAddr",serverAddr);
