@@ -1261,7 +1261,9 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
 
                         PropertiesContainer propertiesContainer = PropertiesUtil.getPropertiesContainerFromApollo(file, this.linkfile,applicationContext, extendsAttributes);
                         configPropertiesFile.addAll(propertiesContainer.getAllExternalProperties(), false);
-
+                        if(propertiesContainer.getPropertiesFilePlugin() != null && configPropertiesFile.getPropertiesFilePlugin() == null){
+                            configPropertiesFile.setPropertiesFilePlugin(propertiesContainer.getPropertiesFilePlugin());
+                        }
 //                        this.configPropertiesFile.addConfigPropertiesFromApollo(file, this.linkfile, this.applicationContext, extendsAttributes);
                     }
                     else{
@@ -1275,8 +1277,11 @@ public class ProviderParser extends DefaultHandler implements ValueContainer
                             
                             PropertiesContainer propertiesContainer = PropertiesUtil.getPropertiesContainerFromNacos(file,  serverAddr,
                                       dataId,  group,    this.linkfile,applicationContext, extendsAttributes);
+                            
                             configPropertiesFile.addAll(propertiesContainer.getAllExternalProperties(), false);
-
+                            if(propertiesContainer.getPropertiesFilePlugin() != null && configPropertiesFile.getPropertiesFilePlugin() == null){
+                                configPropertiesFile.setPropertiesFilePlugin(propertiesContainer.getPropertiesFilePlugin());
+                            }
 //                        this.configPropertiesFile.addConfigPropertiesFromApollo(file, this.linkfile, this.applicationContext, extendsAttributes);
                         }
                     }

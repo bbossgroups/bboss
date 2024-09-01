@@ -35,7 +35,16 @@ public class PropertiesContainer extends AbstractGetProperties{
 			propertiesFilePlugin.afterLoaded(getProperties,this);
 		}
 	}
-	private void scanPropertiesInterceptor(Map<Object,Object> properties){
+
+    public void setPropertiesFilePlugin(PropertiesFilePlugin propertiesFilePlugin) {
+        this.propertiesFilePlugin = propertiesFilePlugin;
+    }
+
+    public PropertiesFilePlugin getPropertiesFilePlugin() {
+        return propertiesFilePlugin;
+    }
+
+    private void scanPropertiesInterceptor(Map<Object,Object> properties){
 		if(properties != null && properties.size() > 0){
 			Iterator<Map.Entry<Object, Object>> iterator = properties.entrySet().iterator();
 			while (iterator.hasNext()){
