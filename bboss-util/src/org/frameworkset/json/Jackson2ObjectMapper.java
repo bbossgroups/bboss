@@ -103,7 +103,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
         // Java 7 java.nio.file.Path class present?
         if (ClassUtils.isPresent("java.nio.file.Path", moduleClassLoader)) {
             try {
-                Class<? extends Module> jdk7Module = (Class<? extends Module>)
+                Class<? extends com.fasterxml.jackson.databind.Module> jdk7Module = (Class<? extends com.fasterxml.jackson.databind.Module>)
                         ClassUtils.forName("com.fasterxml.jackson.datatype.jdk7.Jdk7Module", moduleClassLoader);
                 objectMapper.registerModule(BeanUtils.instantiate(jdk7Module));
             }
@@ -115,7 +115,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
         // Java 8 java.util.Optional class present?
         if (ClassUtils.isPresent("java.util.Optional", moduleClassLoader)) {
             try {
-                Class<? extends Module> jdk8Module = (Class<? extends Module>)
+                Class<? extends com.fasterxml.jackson.databind.Module> jdk8Module = (Class<? extends com.fasterxml.jackson.databind.Module>)
                         ClassUtils.forName("com.fasterxml.jackson.datatype.jdk8.Jdk8Module", moduleClassLoader);
                 objectMapper.registerModule(BeanUtils.instantiate(jdk8Module));
             }
@@ -142,7 +142,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
         // Joda-Time present?
         if (ClassUtils.isPresent("org.joda.time.LocalDate", moduleClassLoader)) {
             try {
-                Class<? extends Module> jodaModule = (Class<? extends Module>)
+                Class<? extends com.fasterxml.jackson.databind.Module> jodaModule = (Class<? extends com.fasterxml.jackson.databind.Module>)
                         ClassUtils.forName("com.fasterxml.jackson.datatype.joda.JodaModule", moduleClassLoader);
                 objectMapper.registerModule(BeanUtils.instantiate(jodaModule));
             }

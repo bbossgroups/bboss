@@ -198,14 +198,7 @@ public abstract class HandlerUtils {
 		boolean flag = containParamAnnotations(method);
 		if (flag)
 			return true;
-/**
-		Class[] parameterTypes = method.getParameterTypes();
-		String methodName = method.getName();
-		if (("handleRequest".equals(methodName) &&
-				(parameterTypes.length == 3 || parameterTypes.length == 4)))
-			// || parameterTypes.length == 0)
-			return false;
-*/
+
 		Class returnType = method.getReturnType();
 
 		if (ModelAndView.class.equals(returnType)
@@ -213,18 +206,7 @@ public abstract class HandlerUtils {
 				|| String.class.equals(returnType)
 				|| void.class.equals(returnType)) {
 			flag = true;
-			// for (int i = 0; i < parameterTypes.length; i++) {
-			// flag = (HttpServletRequest.class
-			// .isAssignableFrom(parameterTypes[i])
-			// || HttpServletResponse.class
-			// .isAssignableFrom(parameterTypes[i])
-			// || PageContext.class
-			// .isAssignableFrom(parameterTypes[i]) || ModelMap.class
-			// .isAssignableFrom(parameterTypes[i]));
-			// if (flag == false)
-			// break;
-			//
-			// }
+
 			return flag;
 		}
 		return false;
@@ -282,30 +264,7 @@ public abstract class HandlerUtils {
 				if (values.length > 0) {
 					if (editor == null) {
 
-						// String value_ = values[0];
-						// if(decodeCharset != null)
-						// {
-						// try {
-						// paramValue = URLDecoder.decode(value_,decodeCharset);
-						// } catch (Exception e) {
-						// logger.error(e);
-						// paramValue = value_;
-						// }
-						// }
-						// else if(charset != null && convertcharset != null)
-						// {
-						// try {
-						// paramValue = new String(value_.getBytes(charset),
-						// convertcharset);
-						// } catch (Exception e) {
-						// logger.error(e);
-						// paramValue = value_;
-						// }
-						// }
-						// else
-						// {
-						// paramValue = value_;
-						// }
+						
 						paramValue = HandlerUtils._getRequestData(values,
 								decodeCharset, charset, convertcharset);
 					} else if (editor instanceof ArrayEditorInf) {
@@ -318,43 +277,7 @@ public abstract class HandlerUtils {
 
 				}
 			} else {
-				// paramValue = values;
-				// if(decodeCharset != null)
-				// {
-				// String[] values_ = new String[values.length];
-				//
-				// for(int i = 0; i < values_.length; i ++)
-				// {
-				// try {
-				// values_[i] = URLDecoder.decode(values[i],decodeCharset);
-				// } catch (Exception e) {
-				// logger.error(e);
-				// values_[i] = values[i];
-				// }
-				// }
-				// paramValue = values_;
-				//
-				// }
-				// else if(charset != null && convertcharset != null)
-				// {
-				// String[] values_ = new String[values.length];
-				//
-				// for(int i = 0; i < values_.length; i ++)
-				// {
-				// try {
-				// values_[i] = new String(values[i].getBytes(charset),
-				// convertcharset);
-				// } catch (Exception e) {
-				// logger.error(e);
-				// values_[i] = values[i];
-				// }
-				// }
-				// paramValue = values_;
-				// }
-				// else
-				// {
-				// paramValue = values;
-				// }
+				
 				if (editor == null) {
 					paramValue = HandlerUtils._getRequestDatas(values,
 							decodeCharset, charset, convertcharset);
@@ -452,33 +375,7 @@ public abstract class HandlerUtils {
 
 				}
 			}
-			// Iterator<String> filenames = multipartRequest.getFileNames();
-			// if(filenames == null)
-			// return null;
-			// while(filenames.hasNext())
-			// {
-			// MultipartFile[] values =
-			// multipartRequest.getFiles(filenames.next());
-			//
-			// if (values != null) {
-			//
-			//
-			// if (!type.isArray() )
-			// {
-			// if( values.length > 0)
-			// {
-			// MultipartFile value_ = values[0];
-			// paramValue = value_;
-			// break;
-			// }
-			// }
-			// else
-			// {
-			// paramValue = values;
-			// break;
-			// }
-			// }
-			// }
+		
 		} else {
 			if(logger.isDebugEnabled())
 				logger.debug("Evaluate Multipart File failed: request is not a MultipartHttpServletRequest.");
@@ -503,7 +400,6 @@ public abstract class HandlerUtils {
 			Object paramValue = null;
 			if (List.class.isAssignableFrom(type)) {// 如果是列表数据集
 				List command = new ArrayList();
-//				Class ct = methodInfo.getGenericParameterType(position);// 获取元素类型
                 Class ct = methodParameter_.getParameterElementType();
 
 					String paramname = methodParameter_.getRequestParameterName();
@@ -514,15 +410,7 @@ public abstract class HandlerUtils {
 			} else if (Set.class.isAssignableFrom(type)) {// 如果是Set数据集
 				Set command = new TreeSet();
 				String paramname = methodParameter_.getRequestParameterName();
-//				Class ct = methodInfo.getGenericParameterType(position);// 获取元素类型
-//				if (ct == null) {
-//					model.getErrors().rejectValue(
-//							methodParameter_.getRequestParameterName(),
-//							"evaluateAnnotationsValue.error",
-//							"没有获取到集合参数对象类型,请检查是否指定了集合泛型或者通过注解指定绑定变量："
-//									+ methodInfo.getMethod().getName());
-//					paramValue = ValueObjectUtil.getDefaultValue(type);
-//				} else
+
                 Class ct = methodParameter_.getParameterElementType();
 					bind(request, response, pageContext, handlerMethod, model,
 							command, ct, validators, messageConverters, paramname);
@@ -1003,54 +891,7 @@ public abstract class HandlerUtils {
 				continue;
 			}
 
-			// else if (List.class.isAssignableFrom(type)) {//如果是列表数据集
-			// List command = new ArrayList();
-			// Class ct = methodInfo.getGenericParameterType(i);//获取元素类型
-			// if(ct == null)
-			// {
-			// model.getErrors().rejectValue(methodParameter.getRequestParameterName(),
-			// "evaluateAnnotationsValue.error","没有获取到集合参数对象类型,请检查是否指定了集合泛型：" +
-			// method.getName());
-			// paramValue = ValueObjectUtil.getDefaultValue(type);
-			// }
-			// else
-			// {
-			// bind(request, response, pageContext, handlerMethod, model,
-			// command, ct,validators, messageConverters);
-			// paramValue = command;
-			// }
-			// }
-			// else if (Set.class.isAssignableFrom(type)) {//如果是Set数据集
-			// Set command = new TreeSet();
-			//
-			// Class ct = methodInfo.getGenericParameterType(i);//获取元素类型
-			// if(ct == null)
-			// {
-			// model.getErrors().rejectValue(methodParameter.getRequestParameterName(),
-			// "evaluateAnnotationsValue.error","没有获取到集合参数对象类型,请检查是否指定了集合泛型或者通过注解指定绑定变量："
-			// + method.getName());
-			// paramValue = ValueObjectUtil.getDefaultValue(type);
-			// }
-			// else
-			// {
-			// bind(request, response, pageContext, handlerMethod, model,
-			// command, ct,validators, messageConverters);
-			// paramValue = command;
-			// }
-			// }
-			// else if(isMultipartFile(type))
-			// {
-			//
-			// paramValue = evaluateMultipartFileParamWithNoName( request,
-			// type);
-			//
-			// }
-			// else {
-			// Object command = newCommandObject(type);
-			// bind(request, response, pageContext, handlerMethod, model,
-			// command, validators, messageConverters);
-			// paramValue = command;
-			// }
+			
 			if (paramValue == null) {
 				paramValue = ValueObjectUtil.getDefaultValue(type);
 			}
@@ -1112,18 +953,6 @@ public abstract class HandlerUtils {
 				messageConverters, methodParam.getRequestBody());
 	}
 
-//	/**
-//	 * Resolves the given {@link RequestBody @RequestBody} annotation.
-//	 */
-//	protected static Object resolveRequestBody(Class paramType,
-//											   String paramName, HttpServletRequest webRequest,
-//											   HttpMessageConverter[] messageConverters, RequestBodyWraper requestBody) throws Exception {
-//		return readWithMessageConverters(paramType, paramName,
-//				createHttpInputMessage(webRequest), messageConverters, requestBody);
-//		// return readWithMessageConverters(methodParam,
-//		// createHttpInputMessage(webRequest), methodParam
-//		// .getParameterType(), messageConverters);
-//	}
 
     /**
      * Resolves the given {@link RequestBody @RequestBody} annotation.
@@ -1133,9 +962,6 @@ public abstract class HandlerUtils {
                                                HttpMessageConverter[] messageConverters, RequestBodyWraper requestBody) throws Exception {
         return readWithMessageConverters(paramType, paramElementTypes,paramName,
                 createHttpInputMessage(webRequest), messageConverters, requestBody);
-        // return readWithMessageConverters(methodParam,
-        // createHttpInputMessage(webRequest), methodParam
-        // .getParameterType(), messageConverters);
     }
 
 
@@ -1237,101 +1063,22 @@ public abstract class HandlerUtils {
 		if (Cookie.class.isAssignableFrom(paramType)) {
 			return cookieValue;
 		} else if (cookieValue != null) {
-			// return UrlPathHelper.decodeRequestString(webRequest,
-			// cookieValue.getValue());
 			Object ret = cookieValue.getValue();
 
-			// try {
-			// if (editor == null)
-			// ret = ValueObjectUtil.typeCast(ret, paramType);
-			// else
-			// ret = ValueObjectUtil.typeCast(ret, editor);
-			// return ret;
-			// } catch (Exception e) {
-			// throw raiseMissingParameterException(paramname, paramType,ret,
-			// e);
-			// }
 			return ret;
 
 		} else {
-			// if (defaultValue != null) {
-			// // return defaultValue;
-			// Object ret = null;
-			// try {
-			// if (editor == null)
-			// ret = ValueObjectUtil.typeCast(ret, paramType);
-			// else
-			// ret = ValueObjectUtil.typeCast(ret, editor);
-			// return ret;
-			// } catch (Exception e) {
-			// throw raiseMissingParameterException(paramname, paramType,ret,
-			// e);
-			// }
-			// } else if (required) {
-			// // throw raiseMissingCookieException(paramname, paramType);
-			// } else {
-			// return ValueObjectUtil.getDefaultValue(paramType);
-			// }
 			return null;
 		}
-		// if (cookieValue == null) {
-		// if (methodParam.getDefaultValue() != null) {
-		// return methodParam.getDefaultValue();
-		// }
-		// else if (methodParam.isRequired()) {
-		// raiseMissingCookieException(methodParam.getRequestParameterName(),
-		// paramType);
-		// }
-		//
-		// }
-		// WebDataBinder binder = createBinder(webRequest, null, cookieName);
-		// initBinder(handlerForInitBinderCall, cookieName, binder, webRequest);
-		// return binder.convertIfNecessary(cookieValue, paramType,
-		// methodParam);
 	}
 
 	private static Object resolveRequestHeader(MethodParameter methodParam,
 											   HttpServletRequest webRequest) throws Exception {
 
-		// Class<?> paramType = methodParam.getParameterType();
-		// String headerName = methodParam.getRequestParameterName();
-		// if (Map.class.isAssignableFrom(paramType)) {
-		// return resolveRequestHeaderMap((Class<? extends Map>) paramType,
-		// webRequest);
-		// }
-		//
-		// Object headerValue = null;
-		// Enumeration<String> headerValues = webRequest.getHeaders(headerName);
-		// if (headerValues != null) {
-		// List<String> result = new ArrayList<String>();
-		// for (Enumeration<String> iterator_ = webRequest
-		// .getHeaders(headerName); iterator_.hasMoreElements();) {
-		// result.add(iterator_.nextElement());
-		// }
-		// headerValue = (result.size() == 1 ? result.get(0) : result
-		// .toArray());
-		// return headerValue;
-		// }
-		// if (headerValue == null || headerValues == null) {
-		// if (methodParam.getDefaultValue() != null
-		// && methodParam.getDefaultValue() != ValueConstants.DEFAULT_NONE) {
-		// headerValue = methodParam.getDefaultValue();
-		// return headerValue;
-		// } else if (methodParam.isRequired()) {
-		// throw raiseMissingHeaderException(headerName, paramType);
-		// } else
-		// return null;
-		// // headerValue = checkValue(headerName, headerValue, paramType);
-		// }
-		// return null;
 
 		return resolveRequestHeader(methodParam.getParameterType(),
 				methodParam.getRequestParameterName(), webRequest);
 
-		// WebDataBinder binder = createBinder(webRequest, null, headerName);
-		// initBinder(handlerForInitBinderCall, headerName, binder, webRequest);
-		// return binder.convertIfNecessary(headerValue, paramType,
-		// methodParam);
 	}
 
 	private static Object resolveRequestHeader(Class<?> paramType,
@@ -1354,24 +1101,8 @@ public abstract class HandlerUtils {
 						.toArray());
 			// return headerValue;
 		}
-		// if (headerValue == null ) {
-		// if (defaultValue != null) {
-		// headerValue = defaultValue;
-		// return headerValue;
-		// } else if (required) {
-		// throw raiseMissingHeaderException(headerName, paramType);
-		// } else
-		// {
-		// return ValueObjectUtil.getDefaultValue(paramType);
-		// }
-		// // headerValue = checkValue(headerName, headerValue, paramType);
-		// }
 		return headerValue;
 
-		// WebDataBinder binder = createBinder(webRequest, null, headerName);
-		// initBinder(handlerForInitBinderCall, headerName, binder, webRequest);
-		// return binder.convertIfNecessary(headerValue, paramType,
-		// methodParam);
 	}
 
 	private static Map resolveRequestHeaderMap(Class<? extends Map> mapType,
@@ -1469,9 +1200,6 @@ public abstract class HandlerUtils {
 				editor = (EditorInf) BeanUtils.instantiateClass(param
 						.editor());
 			String paramName = ParameterUtil.getParameterName(property, name, request, curpostion);
-//			String[] values = !param.name().equals("") ? request
-//					.getParameterValues(param.name()) : request
-//					.getParameterValues(name);
 			String[] values = request.getParameterValues(paramName);
 			// boolean needAddData = holder.needAddData();
 			value = getRequestData(values, holder, type, decodeCharset,
@@ -1485,10 +1213,6 @@ public abstract class HandlerUtils {
 			MultipartFile[] values = null;
 			String paramName = ParameterUtil.getParameterName(property, name, request, curpostion);
 			if (!HandlerUtils.isIgnoreFieldNameMultipartFile(type)) {
-//				values = !param.name().equals("") ? ((MultipartHttpServletRequest) request)
-//						.getFiles(param.name())
-//						: ((MultipartHttpServletRequest) request)
-//								.getFiles(name);
 				values = ((MultipartHttpServletRequest) request).getFiles(paramName);
 
 			} else {
@@ -2127,14 +1851,6 @@ public abstract class HandlerUtils {
 				if (List.class.isAssignableFrom(type)) {// 如果是列表数据集
 					List command = new ArrayList();
 					Class ct = property.getPropertyGenericType();// 获取元素类型
-//					if (ct == null) {
-//						model.getErrors().rejectValue(
-//								name,
-//								"evaluateAnnotationsValue.error",
-//								"没有获取到集合对象类型,请检查属性是否指定了集合泛型："
-//										+ property.getName());
-//						return ValueObjectUtil.getDefaultValue(type);
-//					}
 					bind(request, response, pageContext, handlerMethod, model,
 							command, ct, null, messageConverters, name);
 					value = command;
@@ -2145,14 +1861,6 @@ public abstract class HandlerUtils {
 				} else if (Set.class.isAssignableFrom(type)) {// 如果是Set数据集
 					Set command = new TreeSet();
 					Class ct = property.getPropertyGenericType();// 获取元素类型
-//					if (ct == null) {
-//						model.getErrors().rejectValue(
-//								name,
-//								"evaluateAnnotationsValue.error",
-//								"没有获取到集合对象类型,请检查是否指定了集合泛型："
-//										+ property.getName());
-//						return ValueObjectUtil.getDefaultValue(type);
-//					}
 					bind(request, response, pageContext, handlerMethod, model,
 							command, ct, null, messageConverters, name);
 					value = command;
@@ -2385,8 +2093,6 @@ public abstract class HandlerUtils {
 		ServletRequestDataBinder binder = new ServletRequestDataBinder(command,
 				getCommandName(command));
 		binder.setBindingResult(bindingResult);
-		// bindingResult.pushNestedPath(command.getClass().getName());
-		// initBinder(request, binder);
 		return binder;
 	}
 
@@ -2396,8 +2102,6 @@ public abstract class HandlerUtils {
 		ServletRequestDataBinder binder = new ServletRequestDataBinder(command,
 				getCommandName(command), objecttype, paramname);
 		binder.setBindingResult(bindingResult);
-		// bindingResult.pushNestedPath(command.getClass().getName());
-		// initBinder(request, binder);
 		return binder;
 	}
 
@@ -2410,8 +2114,6 @@ public abstract class HandlerUtils {
 		ServletRequestDataBinder binder = new ServletRequestDataBinder(command,
 				getCommandName(command), mapkeytype, objectType, mapkeyName);
 		binder.setBindingResult(bindingResult);
-		// bindingResult.pushNestedPath(command.getClass().getName());
-		// initBinder(request, binder);
 		return binder;
 	}
 
@@ -2482,11 +2184,6 @@ public abstract class HandlerUtils {
 			final Class<?> handlerType = beaninfos.getBeanClass();
 			if (handlerType == null)
 				return null;
-			// ListableBeanFactory bf = (context instanceof
-			// ConfigurableApplicationContext ?
-			// ((ConfigurableApplicationContext) context).getBeanFactory() :
-			// context);
-			// GenericBeanFactoryAccessor bfa = new GenericBeanFactoryAccessor(bf);
 			boolean iscontroller = beanName != null && beanName.startsWith("/");
 
 			String[] paths = null;
@@ -2506,10 +2203,7 @@ public abstract class HandlerUtils {
 						cachedMappings.put(handlerType, mapping);
 					paths = mapping.value();
 				}
-				// else if (AnnotationUtils.findAnnotation(handlerType,
-				// Controller.class) == null) {
-				// return null;
-				// }
+				
 			}
 
 			Set<String> urls = new LinkedHashSet<String>();
@@ -2527,14 +2221,7 @@ public abstract class HandlerUtils {
 				// @HandlerMapping specifies paths at type level
 				for (String path : paths) {
 
-					// if(mapping.restful())
-					{
-						addUrlsForRestfulPath(urls, path, handlerMethods);
-					}
-					// else
-					// {
-					// addUrlsForPath(urls, path);
-					// }
+					addUrlsForRestfulPath(urls, path, handlerMethods);
 				}
 
 				return StringUtil.toStringArray(urls);
@@ -2557,15 +2244,6 @@ public abstract class HandlerUtils {
 			}
 		}
 		return null;
-		// }
-		// else if (AnnotationUtils.findAnnotation(handlerType,
-		// Controller.class) != null) {
-		// // @HandlerMapping to be introspected at method level
-		// return determineUrlsForHandlerMethods(handlerType);
-		// }
-		// else {
-		// return null;
-		// }
 	}
 
 	/**
@@ -2621,121 +2299,27 @@ public abstract class HandlerUtils {
 	 * @param path the currently introspected path
 	 */
 	protected static void addUrlsForPath(Set<String> urls, String path) {
-		// Iterator<Method> methods = handlermethods.iterator();
-		// while(methods.hasNext())
-		// {
-		// urls.addAll(this.getUrl(path, restful, methods.next()));
-		// urls.add(path); 20110511注释掉，没有考虑restful风格地址
-		// if (this.useDefaultSuffixPattern && path.indexOf('.') == -1) {
-		// urls.add(path + ".*");
-		// }
-		// }
 		urls.add(getRestfulUrl(path));
 	}
 
 	protected static String getRestfulUrl(String methodpath) {
 
-//		String mappedPath = methodpath;
-//		StringBuilder pathUrl = new StringBuilder();
-//
-//		String tmp[] = mappedPath.split("/");
-//		for (int i = 1; i < tmp.length; i++) {
-//			if (tmp[i].startsWith("{"))
-//				pathUrl.append("/*");
-//			else {
-//				pathUrl.append("/").append(tmp[i]);
-//			}
-//
-//		}
-//		return pathUrl.toString();
 		return MethodInfo.buildPathPattern(methodpath);
 
 	}
 
-//	private static void assertDToken(ServletRequest request,
-//			ServletResponse response, MethodData handlerMethod)
-//			throws IOException {
-//		if (handlerMethod.getMethodInfo().isRequiredDToken()) {
-//			
-//			if (!TokenHelper.isEnableToken())
-//				return;
-//			TokenHelper.doDTokencheck(request, response);
-//			// if(!memTokenManager.assertDTokenSetted(request))
-//			// {
-//			// if(request instanceof HttpServletRequest)
-//			// {
-//			// memTokenManager.sendRedirect((HttpServletRequest)
-//			// request,(HttpServletResponse) response);
-//			// }
-//			// else
-//			// {
-//			// throw new DTokenValidateFailedException();
-//			// }
-//			// }
-//		}
-//		else if (handlerMethod.getMethodInfo().isRequireTicket())
-//		{			
-//			TokenHelper.doTicketcheck(request, response);
-//		}
-//
-//	}
-
-	// protected int convert(HttpMethod HttpMethod)
-	// {
-	//
-	// }
 	protected static Set<String> getRestfulUrl(String path, Method method) {
 
-//		String url = path;
-//		Set<String> urls = new LinkedHashSet<String>();
-//		HandlerMapping mapping = method.getAnnotation(HandlerMapping.class);
-//		// MethodInfo methodInfo = new MethodInfo(method);
-//		if (mapping != null) {
-//			String[] mappedPaths = mapping.value();
-//			if (mappedPaths != null && mappedPaths.length > 0) {
-//				String mappedPath = mappedPaths[0];
-//				StringBuilder pathUrl = new StringBuilder();
-//				pathUrl.append(url);
-//				String tmp[] = mappedPath.split("/");
-//				for (int i = 1; i < tmp.length; i++) {
-//					if (tmp[i].startsWith("{"))
-//						pathUrl.append("/*");
-//					else {
-//						pathUrl.append("/").append(tmp[i]);
-//					}
-//
-//				}
-//				urls.add(pathUrl.toString());
-//				pathUrl = null;
-//			} else {
-//				urls.add(url);
-//			}
-//		} else {
-//			urls.add(url);
-//		}
-//		return urls;
 
 		String url = path;
 		Set<String> urls = new LinkedHashSet<String>();
 		HandlerMapping mapping = method.getAnnotation(HandlerMapping.class);
-		// MethodInfo methodInfo = new MethodInfo(method);
 		if (mapping != null) {
 			String[] mappedPaths = mapping.value();
 			if (mappedPaths != null && mappedPaths.length > 0) {
 				String mappedPath = mappedPaths[0];
-//				StringBuilder pathUrl = new StringBuilder();
-//				pathUrl.append(url);
-//				String tmp[] = mappedPath.split("/");
-//				for (int i = 1; i < tmp.length; i++) {
-//					if (tmp[i].startsWith("{"))
-//						pathUrl.append("/*");
-//					else {
-//						pathUrl.append("/").append(tmp[i]);
-//					}
-//
-//				}
+
 				urls.add(MethodInfo.buildPathPattern(url, mappedPath));
-//				pathUrl = null;
 			} else {
 				urls.add(url);
 			}
@@ -2754,12 +2338,9 @@ public abstract class HandlerUtils {
 		HandlerMeta handlerMeta = mappedHandler.getHandler();
 
 		try {
-			// ServletHandlerMethodResolver methodResolver =
-			// getMethodResolver(handler.getClass(),methodResolverCache,urlPathHelper,pathMatcher,methodNameResolver);
 			MethodData handlerMethod = methodResolver
 					.resolveHandlerMethod(request);
 			if (assertTokenMethod != null) {
-//				assertDToken(request, response, handlerMethod);
 				Object result = assertTokenMethod.invoke(null, request, response, handlerMethod);
 				if(result != null){
 					if(!((Boolean) result).booleanValue()){
@@ -2803,9 +2384,6 @@ public abstract class HandlerUtils {
 			ModelAndView mav = methodInvoker.getModelAndView(
 					handlerMethod.getMethodInfo(), handlerMeta, result,
 					implicitModel, webRequest);
-			// methodInvoker.updateModelAttributes(
-			// handler, (mav != null ? mav.getModel() : null), implicitModel,
-			// webRequest);
 			return mav;
 		} catch (PathURLNotSetException ex) {
 			return handleNoSuchRequestHandlingMethod(ex, request, response);
@@ -2849,8 +2427,6 @@ public abstract class HandlerUtils {
 		return null;
 	}
 
-	// protected static final Log pageNotFoundLogger = LogFactory
-	// .getLog(PAGE_NOT_FOUND_LOG_CATEGORY);
 
 	public static class ServletHandlerMethodResolver extends
 			HandlerMethodResolver {
@@ -2891,8 +2467,6 @@ public abstract class HandlerUtils {
 				if (mapping == null) {
 					if (resolvedMethodName.equals(handlerMethod.getMethod()
 							.getName())) {
-						// String path_ = (String) request
-						// .getAttribute(org.frameworkset.web.servlet.HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
 						String path_ = RequestContext
 								.getHandlerMappingPath(request);
 						Map pathdatas = AnnotationUtils.resolvePathDatas(
@@ -2933,13 +2507,6 @@ public abstract class HandlerUtils {
 				} else {
 					// No paths specified: parameter match sufficient.
 					match = checkParameters(mappingInfo, request);
-					// if (match && mappingInfo.methods.length == 0 &&
-					// mappingInfo.params.length == 0 &&
-					// resolvedMethodName != null &&
-					// !resolvedMethodName.equals(handlerMethod.getMethod().getName()))
-					// {
-					// match = false;
-					// }
 				}
 				if (match) {
 					MethodInfo oldMappedMethod = targetHandlerMethods.put(
@@ -2954,45 +2521,6 @@ public abstract class HandlerUtils {
 										+ handlerMethod
 										+ "}. If you intend to handle the same path in multiple methods, then factor "
 										+ "them out into a dedicated handler class with that path mapped at the type level!");
-					// if (oldMappedMethod != null && oldMappedMethod !=
-					// handlerMethod.getMethod()) {
-					// if (methodNameResolver != null &&
-					// mappingInfo.paths.length == 0) {
-					// if
-					// (!oldMappedMethod.getName().equals(handlerMethod.getMethod().getName()))
-					// {
-					// if (resolvedMethodName == null) {
-					// resolvedMethodName =
-					// methodNameResolver.getHandlerMethodName(request);
-					// }
-					// if
-					// (!resolvedMethodName.equals(oldMappedMethod.getName())) {
-					// oldMappedMethod = null;
-					// }
-					// if
-					// (!resolvedMethodName.equals(handlerMethod.getMethod().getName()))
-					// {
-					// if (oldMappedMethod != null) {
-					// targetHandlerMethods.put(mappingInfo, oldMappedMethod);
-					// oldMappedMethod = null;
-					// }
-					// else {
-					// targetHandlerMethods.remove(mappingInfo);
-					// }
-					// }
-					// }
-					// }
-					// if (oldMappedMethod != null) {
-					// throw new
-					// IllegalStateException("Ambiguous handler methods mapped for HTTP path '"
-					// +
-					// lookupPath + "': {" + oldMappedMethod + ", " +
-					// handlerMethod +
-					// "}. If you intend to handle the same path in multiple methods, then factor "
-					// +
-					// "them out into a dedicated handler class with that path mapped at the type level!");
-					// }
-					// }
 				}
 			}
 			if (targetHandlerMethods.size() == 1) {
@@ -3116,18 +2644,6 @@ public abstract class HandlerUtils {
 			throw new HttpSessionRequiredException(message);
 		}
 
-		// @Override
-		// protected void doBind(NativeWebRequest webRequest, WebDataBinder
-		// binder, boolean failOnErrors)
-		// throws Exception {
-		//
-		// ServletRequestDataBinder servletBinder = (ServletRequestDataBinder)
-		// binder;
-		// servletBinder.bind((ServletRequest) webRequest.getNativeRequest());
-		// if (failOnErrors) {
-		// servletBinder.closeNoCatch();
-		// }
-		// }
 
 		@SuppressWarnings("unchecked")
 		public ModelAndView getModelAndView(MethodInfo handlerMethod,
@@ -3203,15 +2719,6 @@ public abstract class HandlerUtils {
 				return null;
 			} else if (returnValue == null) {
 				return null;
-				// Either returned null or was 'void' return.
-				// if (this.responseArgumentUsed || webRequest.isNotModified())
-				// {
-				// return null;
-				// }
-				// else {
-				// // Assuming view name translation...
-				// return new ModelAndView().addAllObjects(implicitModel);
-				// }
 			} else if (!BeanUtils.isSimpleProperty(returnValue.getClass())) {
 				// Assume a single model attribute...
 				ModelAttribute attr = AnnotationUtils.findAnnotation(
@@ -3324,25 +2831,10 @@ public abstract class HandlerUtils {
 						if (defaultMessageConverter == null && messageConverter.isdefault())
 							defaultMessageConverter = messageConverter;
 						if (messageConverter.canWrite(datatype))
-
-						//						if (messageConverter.canWrite(returnValueType,
-						//								acceptedMediaType))
 						{
 							messageConverter.write(returnValue,
 									responseMediaType, outputMessage,
 									inputMessage);
-							// if (logger.isDebugEnabled()) {
-							// MediaType contentType = outputMessage
-							// .getHeaders().getContentType();
-							// if (contentType == null) {
-							// contentType = acceptedMediaType;
-							// }
-							// logger
-							// .debug("Written [" + returnValue
-							// + "] as \"" + contentType
-							// + "\" using ["
-							// + messageConverter + "]");
-							// }
 							this.responseArgumentUsed = true;
 							return;
 						}
@@ -3409,90 +2901,12 @@ public abstract class HandlerUtils {
 				}
 			}
 
-
-//			List<MediaType> acceptedMediaTypes = inputMessage.getHeaders()
-//					.getAccept();
-//			boolean usecustomMediaTypeByMethod = false;
-//			if (acceptedMediaTypes.isEmpty()) {
-//				if (responseMediaType == null)
-//					acceptedMediaTypes = Collections
-//							.singletonList(MediaType.ALL);
-//				else
-//					acceptedMediaTypes = Collections
-//							.singletonList(responseMediaType);
-//
-//			} else {
-//				if (responseMediaType != null) {
-//					acceptedMediaTypes.clear();
-//					acceptedMediaTypes.add(responseMediaType);
-//					usecustomMediaTypeByMethod = true;
-//				} else {
-//					MediaType.sortByQualityValue(acceptedMediaTypes);
-//				}
-//			}
-//
-//			Class<?> returnValueType = returnValue.getClass();
-//			List<MediaType> allSupportedMediaTypes = new ArrayList<MediaType>();
-//			if (getMessageConverters() != null) {
-//				
-//				for (MediaType acceptedMediaType : acceptedMediaTypes) {
-//					for (HttpMessageConverter messageConverter : getMessageConverters()) {
-//						if(defaultMessageConverter == null && messageConverter.isdefault())
-//							defaultMessageConverter = messageConverter;
-//						if (messageConverter.canWrite(returnValueType,
-//								acceptedMediaType)) {
-//							messageConverter.write(returnValue,
-//									acceptedMediaType, outputMessage,
-//									inputMessage, usecustomMediaTypeByMethod);
-//							// if (logger.isDebugEnabled()) {
-//							// MediaType contentType = outputMessage
-//							// .getHeaders().getContentType();
-//							// if (contentType == null) {
-//							// contentType = acceptedMediaType;
-//							// }
-//							// logger
-//							// .debug("Written [" + returnValue
-//							// + "] as \"" + contentType
-//							// + "\" using ["
-//							// + messageConverter + "]");
-//							// }
-//							this.responseArgumentUsed = true;
-//							return;
-//						}
-//						
-//					}
-//				}
-//				if(defaultMessageConverter != null)
-//				{
-//					defaultMessageConverter.write(returnValue,
-//							defaultMessageConverter.getDefaultAcceptedMediaType(), outputMessage,
-//							inputMessage, usecustomMediaTypeByMethod);
-//					this.responseArgumentUsed = true;
-//					return;
-//				}
-//				for (HttpMessageConverter messageConverter : messageConverters) {
-//					if (messageConverter.getSupportedMediaTypes() != null
-//							&& messageConverter.getSupportedMediaTypes().size() > 0) {
-//						allSupportedMediaTypes.addAll(messageConverter
-//								.getSupportedMediaTypes());
-//					}
-//				}
-//			}
 			throw new HttpMediaTypeNotAcceptableException(
 					allSupportedMediaTypes);
 
 
 		}
 
-		// protected void doBind(NativeWebRequest webRequest,
-		// WebDataBinder binder, boolean failOnErrors) throws Exception {
-		//
-		// WebRequestDataBinder requestBinder = (WebRequestDataBinder) binder;
-		// requestBinder.bind(webRequest);
-		// if (failOnErrors) {
-		// requestBinder.closeNoCatch();
-		// }
-		// }
 
 	}
 

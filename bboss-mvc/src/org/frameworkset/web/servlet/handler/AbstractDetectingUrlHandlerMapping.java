@@ -68,38 +68,6 @@ public abstract class AbstractDetectingUrlHandlerMapping extends AbstractUrlHand
 	}
 
 	
-//	/**
-//	 * Register all handlers found in the current ApplicationContext.
-//	 * <p>The actual URL determination for a handler is up to the concrete
-//	 * {@link #determineUrlsForHandler(String)} implementation. A bean for
-//	 * which no such URLs could be determined is simply not considered a handler.
-//	 * @throws BeansException if the handler couldn't be registered
-//	 * @see #determineUrlsForHandler(String)
-//	 */
-//	protected Object detectHandlers() throws Exception {
-//		if (logger.isDebugEnabled()) {
-//			logger.debug("Looking for URL mappings in application context: " + getApplicationContext());
-//		}
-//		Set<String> beanNames = this.getApplicationContext().getPropertyKeys();
-//		if(beanNames == null || beanNames.size() == 0)
-//			return null;
-//		// Take any bean name that we can determine URLs for.
-//		Iterator<String> beanNamesItr = beanNames.iterator();
-//		while(beanNamesItr.hasNext()) {
-//			String beanName = beanNamesItr.next();
-//			String[] urls = determineUrlsForHandler(beanName);
-//			if(!ObjectUtils.isEmpty(urls) && StringUtil.containKey(urls, urlPath))
-//			{
-//			
-//				// URL paths found: Let's consider it a handler.
-//				return registerHandler(urls, beanName);
-//				
-//			}
-//			
-//		}
-//		return null;
-//	}
-	
 	/**
 	 * Register all handlers found in the current ApplicationContext.
 	 * <p>The actual URL determination for a handler is up to the concrete

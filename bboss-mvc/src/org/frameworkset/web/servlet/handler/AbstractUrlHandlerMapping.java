@@ -50,7 +50,8 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 		super.destroy();
 		if(handlerMap != null)
 		{
-			handlerMap.clear();handlerMap = null;
+			handlerMap.clear();
+            handlerMap = null;
 		}
 		this.rootHandler = null;
 		this.urlPathHelper = null;
