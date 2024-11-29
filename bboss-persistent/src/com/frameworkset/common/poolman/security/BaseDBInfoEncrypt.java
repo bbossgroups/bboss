@@ -15,6 +15,8 @@
  */
 package com.frameworkset.common.poolman.security;
 
+import org.frameworkset.security.DESCipher;
+
 /**
  * 4
  * <p>Title: BaseDBInfoEncrypt.java</p>

@@ -16,6 +16,7 @@
 package com.frameworkset.common.poolman.security;
 
 import com.frameworkset.util.EditorInf;
+import org.frameworkset.security.DESCipher;
 
 /**
  * 

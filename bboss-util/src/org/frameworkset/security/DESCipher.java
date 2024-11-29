@@ -16,7 +16,7 @@
 package org.frameworkset.security;
 
 import java.security.Key;
-import java.security.Security;
+//import java.security.Security;
 
 import javax.crypto.Cipher;
 
@@ -68,7 +68,7 @@ public class DESCipher {
      *             JAVA异常
      */
     public DESCipher(String strKey,int type) throws Exception {
-        Security.addProvider(new com.sun.crypto.provider.SunJCE());
+//        Security.addProvider(new com.sun.crypto.provider.SunJCE());
         Key key = getKey(strKey.getBytes());
         if(type == type_encode|| type == type_all){
 	        encryptCipher = Cipher.getInstance("DES");
