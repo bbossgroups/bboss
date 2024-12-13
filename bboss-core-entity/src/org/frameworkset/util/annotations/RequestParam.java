@@ -42,6 +42,12 @@ public @interface RequestParam {
 	String name() default "";
 	
 	boolean required() default false;
+
+    /**
+     * 实现接口
+     * com.frameworkset.util.EditorInf
+     * @return
+     */
 	String editor() default "";
 	/**
      * 数据格式

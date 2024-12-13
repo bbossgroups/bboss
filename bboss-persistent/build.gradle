@@ -58,7 +58,7 @@ dependencies {
             
             [group: 'org.apache.derby', name: 'derby', version: '10.9.1.0', transitive: false],
             [group: 'org.apache.derby', name: 'derbyclient', version: '10.12.1.1', transitive: false],
-            [group: 'mysql', name: 'mysql-connector-java', version: "${mysqlconnectorversion}", transitive: false],
+            [group: 'com.mysql', name: 'mysql-connector-j', version: "${mysqlconnectorversion}", transitive: false],
              [group: 'com.cloudhopper.proxool', name: 'proxool', version: '0.9.1', transitive: false],
             [group: 'com.cloudhopper.proxool', name: 'proxool-cglib', version: '0.9.1', transitive: false],
                [group: 'com.mchange', name: 'c3p0', version: '0.9.2-pre4', transitive: false],
