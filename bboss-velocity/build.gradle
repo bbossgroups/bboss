@@ -13,7 +13,11 @@ sourceSets {
 }
 // project.tasks.compileJava.dependsOn(project(':bboss-soa').tasks.publishToMavenLocal)
 dependencies {
-     
+    api(
+            [group: 'org.apache.logging.log4j', name: 'log4j-api', version: "${log4j2_version}", transitive: false],
+            [group: 'org.apache.logging.log4j', name: 'log4j-core', version: "${log4j2_version}", transitive: false],
+            [group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: "${log4j2_version}", transitive: true],
+    )
     
     api (
 	 //  [group: 'avalon-logkit', name: 'avalon-logkit', version: '2.1', transitive: false],
@@ -22,7 +26,7 @@ dependencies {
 	    [group: 'jdom', name: 'jdom', version: '1.0', transitive: false],
 	    [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
 	  // [group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25', transitive: false],
-           	[group: 'org.slf4j', name: 'slf4j-log4j12', version: "${slf4jlog4j12}", transitive: true],
+//           	[group: 'org.slf4j', name: 'slf4j-log4j12', version: "${slf4jlog4j12}", transitive: true],
 	    [group: 'werken-xpath', name: 'werken-xpath', version: '0.9.4', transitive: false],
 	   )
     compileOnly (
