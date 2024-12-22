@@ -7,6 +7,8 @@ import bboss.org.apache.velocity.exception.ParseErrorException;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 import bboss.org.apache.velocity.runtime.resource.Resource;
 import com.frameworkset.util.VelocityUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ public class BBossVelocityUtil {
 	private static VelocityEngine dbEngine;
 
 	private static VelocityEngine elasticEngine;
+    private static Logger logger = LoggerFactory.getLogger(BBossVelocityUtil.class);
 	public static VelocityContext buildVelocityContext(Map<String,Object> context)
     {
     	return VelocityUtil.buildVelocityContext(context);
@@ -131,16 +134,16 @@ public class BBossVelocityUtil {
 		try {
 			dbEngine.evaluate(buildVelocityContext( context), out, templateName, template);
 		} catch (ParseErrorException e) {
-			e.printStackTrace();
+            logger.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		} catch (MethodInvocationException e) {
-			e.printStackTrace();
+            logger.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
+            logger.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		}
 		return out.toString();
@@ -161,16 +164,16 @@ public class BBossVelocityUtil {
 		try {
 			elasticEngine.evaluate(buildVelocityContext( context), out, templateName, template);
 		} catch (ParseErrorException e) {
-			e.printStackTrace();
+            logger.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		} catch (MethodInvocationException e) {
-			e.printStackTrace();
+            logger.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
+            logger.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		}
 		return out.toString();

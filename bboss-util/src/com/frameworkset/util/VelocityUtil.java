@@ -52,12 +52,12 @@ public class VelocityUtil{
     {
         if (location == null)
         {
-            System.out.println("Warning: Cannot locate the program directory. Assuming default.");
+            log.warn("Warning: Cannot locate the program directory. Assuming default.");
             return defaultDir;
         }
         if (!"file".equalsIgnoreCase(location.getProtocol()))
         {
-            System.out.println("Warning: Unrecognized location type. Assuming default.");
+            log.warn("Warning: Unrecognized location type. Assuming default.");
             return new File(".");
         }
         String file = location.getFile();
@@ -72,7 +72,7 @@ public class VelocityUtil{
 
             }
 
-            System.out.println("Warning: Unrecognized location type. Assuming default.");
+            log.warn("Warning: Unrecognized location type. Assuming default.");
             return new File(location.getFile());
         }
         else
@@ -99,11 +99,11 @@ public class VelocityUtil{
             catch (UnsupportedEncodingException e)
             {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                log.error("computeApplicationDir failed:"+location.toString(),e);
             }
         }
 
-        System.out.println("Warning: Unrecognized location type. Assuming default.");
+        log.warn("Warning: Unrecognized location type. Assuming default.");
         return new File(location.getFile());
     }
 	/**
@@ -209,7 +209,11 @@ public class VelocityUtil{
 	    	       java.util.Properties pros =SimpleStringUtil.getProperties("/bboss-velocity.properties", VelocityUtil.class);
 	    	       
 //	    	       pros.load(new java.io.FileInputStream(configurationFile));
-	    	       String loadclass =(String) pros.get("file.resource.loader.class");
+//                 resource.loader.file.path
+//                 file.resource.loader.path 1.7
+//                 resource.loader.file.class  
+//                 file.resource.loader.class  1.7
+	    	       String loadclass =(String) pros.get("resource.loader.file.class");
 	    	       if(loadclass != null && loadclass.equals("bboss.org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader"))
 	    	       {
 //	    	    	   templatePath = "/";
@@ -217,7 +221,7 @@ public class VelocityUtil{
 	    	       }
 	    	       else
 	    	       {
-	    	    	   pros.setProperty("file.resource.loader.path", templatePath);
+	    	    	   pros.setProperty("resource.loader.file.path", templatePath);
 	    	       }
 	             
 	
@@ -306,16 +310,16 @@ public class VelocityUtil{
     	try {
 			Velocity.evaluate(context, out, templateName, template);
 		} catch (ParseErrorException e) {
-			e.printStackTrace();
+            log.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		} catch (MethodInvocationException e) {
-			e.printStackTrace();
+            log.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
+            log.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		}  catch (Exception e) {
-			e.printStackTrace();
+            log.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		}
     	return out.toString();
@@ -336,82 +340,82 @@ public class VelocityUtil{
     	try {
 			Velocity.evaluate(context, out, templateName, template);
 		} catch (ParseErrorException e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		} catch (MethodInvocationException e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		}catch (Exception e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		}
     	
     	
     }
     
-    
-    /**
-     * 字符串模板解析
-     * @param context
-     * @param templateName
-     * @param template
-     * @return
-     */
-    public static String evaluate(VelocityContext context,  String templateName, InputStream template)
-    {
-    	init(null);
-    	StringWriter out = new StringWriter();
-    	try {
-			Velocity.evaluate(context, out, templateName, template);
-		} catch (ParseErrorException e) {
-			e.printStackTrace();
-			return null;
-		} catch (MethodInvocationException e) {
-			e.printStackTrace();
-			return null;
-		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-    	return out.toString();
-    	
-    }
-    
-    
-    /**
-     * 字符串模板解析
-     * @param context
-     * @param templateName
-     * @param template
-     * @return
-     */
-    public static void evaluate(VelocityContext context,  Writer out,String templateName, InputStream template)
-    {
-    	init(null);
-    	try {
-			Velocity.evaluate(context, out, templateName, template);
-		} catch (ParseErrorException e) {
-			e.printStackTrace();
-			
-		} catch (MethodInvocationException e) {
-			e.printStackTrace();
-			
-		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
-			
-		}  catch (Exception e) {
-			e.printStackTrace();
-			
-		}
-    	
-    	
-    }
+//    
+//    /**
+//     * 字符串模板解析
+//     * @param context
+//     * @param templateName
+//     * @param template
+//     * @return
+//     */
+//    public static String evaluate(VelocityContext context,  String templateName, InputStream template)
+//    {
+//    	init(null);
+//    	StringWriter out = new StringWriter();
+//    	try {
+//			Velocity.evaluate(context, out, templateName, template);
+//		} catch (ParseErrorException e) {
+//			e.printStackTrace();
+//			return null;
+//		} catch (MethodInvocationException e) {
+//			e.printStackTrace();
+//			return null;
+//		} catch (ResourceNotFoundException e) {
+//			e.printStackTrace();
+//			return null;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//    	return out.toString();
+//    	
+//    }
+//    
+//    
+//    /**
+//     * 字符串模板解析
+//     * @param context
+//     * @param templateName
+//     * @param template
+//     * @return
+//     */
+//    public static void evaluate(VelocityContext context,  Writer out,String templateName, InputStream template)
+//    {
+//    	init(null);
+//    	try {
+//			Velocity.evaluate(context, out, templateName, template);
+//		} catch (ParseErrorException e) {
+//			e.printStackTrace();
+//			
+//		} catch (MethodInvocationException e) {
+//			e.printStackTrace();
+//			
+//		} catch (ResourceNotFoundException e) {
+//			e.printStackTrace();
+//			
+//		}  catch (Exception e) {
+//			e.printStackTrace();
+//			
+//		}
+//    	
+//    	
+//    }
     
     /**
      * 字符串模板解析
@@ -427,17 +431,13 @@ public class VelocityUtil{
     	try {
 			Velocity.evaluate(context, out, templateName, template);
 		} catch (ParseErrorException e) {
-			e.printStackTrace();
-			return null;
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 		} catch (MethodInvocationException e) {
-			e.printStackTrace();
-			return null;
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
-			return null;
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 		}
     	return out.toString();
     	
@@ -457,16 +457,16 @@ public class VelocityUtil{
     	try {
 			Velocity.evaluate(context, out, templateName, template);
 		} catch (ParseErrorException e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		} catch (MethodInvocationException e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		}  catch (Exception e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		}
     	
@@ -503,16 +503,16 @@ public class VelocityUtil{
     	try {
 			Velocity.evaluate(buildVelocityContext( context), out, templateName, template);
 		} catch (ParseErrorException e) {
-			e.printStackTrace();
+            log.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		} catch (MethodInvocationException e) {
-			e.printStackTrace();
+            log.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
+            log.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		} catch (Exception e) {
-			e.printStackTrace();
+            log.error("templateName evaluate failed:"+templateName,e);
 			return template;
 		}
     	return out.toString();
@@ -533,82 +533,82 @@ public class VelocityUtil{
     	try {
 			Velocity.evaluate(buildVelocityContext( context), out, templateName, template);
 		} catch (ParseErrorException e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		} catch (MethodInvocationException e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		}
     	
     	
     }
     
+//    
+//    /**
+//     * 字符串模板解析
+//     * @param context
+//     * @param templateName
+//     * @param template
+//     * @return
+//     */
+//    public static String evaluate(Map context,  String templateName, InputStream template)
+//    {
+//    	init(null);
+//    	StringWriter out = new StringWriter();
+//    	try {
+//			Velocity.evaluate(buildVelocityContext( context), out, templateName, template);
+//		} catch (ParseErrorException e) {
+//			e.printStackTrace();
+//			return null;
+//		} catch (MethodInvocationException e) {
+//			e.printStackTrace();
+//			return null;
+//		} catch (ResourceNotFoundException e) {
+//			e.printStackTrace();
+//			return null;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//    	return out.toString();
+//    	
+//    }
     
-    /**
-     * 字符串模板解析
-     * @param context
-     * @param templateName
-     * @param template
-     * @return
-     */
-    public static String evaluate(Map context,  String templateName, InputStream template)
-    {
-    	init(null);
-    	StringWriter out = new StringWriter();
-    	try {
-			Velocity.evaluate(buildVelocityContext( context), out, templateName, template);
-		} catch (ParseErrorException e) {
-			e.printStackTrace();
-			return null;
-		} catch (MethodInvocationException e) {
-			e.printStackTrace();
-			return null;
-		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-    	return out.toString();
-    	
-    }
-    
-    
-    /**
-     * 字符串模板解析
-     * @param context
-     * @param templateName
-     * @param template
-     * @return
-     */
-    public static void evaluate(Map context,  Writer out,String templateName, InputStream template)
-    {
-    	init(null);
-    	try {
-			Velocity.evaluate(buildVelocityContext( context), out, templateName, template);
-		} catch (ParseErrorException e) {
-			e.printStackTrace();
-			
-		} catch (MethodInvocationException e) {
-			e.printStackTrace();
-			
-		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-		}
-    	
-    	
-    }
+//    
+//    /**
+//     * 字符串模板解析
+//     * @param context
+//     * @param templateName
+//     * @param template
+//     * @return
+//     */
+//    public static void evaluate(Map context,  Writer out,String templateName, InputStream template)
+//    {
+//    	init(null);
+//    	try {
+//			Velocity.evaluate(buildVelocityContext( context), out, templateName, template);
+//		} catch (ParseErrorException e) {
+//			e.printStackTrace();
+//			
+//		} catch (MethodInvocationException e) {
+//			e.printStackTrace();
+//			
+//		} catch (ResourceNotFoundException e) {
+//			e.printStackTrace();
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			
+//		}
+//    	
+//    	
+//    }
     
     /**
      * 字符串模板解析
@@ -624,17 +624,13 @@ public class VelocityUtil{
     	try {
 			Velocity.evaluate(buildVelocityContext( context), out, templateName, template);
 		} catch (ParseErrorException e) {
-			e.printStackTrace();
-			return null;
+			throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 		} catch (MethodInvocationException e) {
-			e.printStackTrace();
-			return null;
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
-			return null;
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 		}
     	return out.toString();
     	
@@ -654,16 +650,16 @@ public class VelocityUtil{
     	try {
 			Velocity.evaluate(buildVelocityContext( context), out, templateName, template);
 		} catch (ParseErrorException e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		} catch (MethodInvocationException e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		} catch (ResourceNotFoundException e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+            throw new VelocityParserException("templateName evaluate failed:"+templateName,e);
 			
 		}
     	
