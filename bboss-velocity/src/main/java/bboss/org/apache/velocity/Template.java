@@ -71,11 +71,11 @@ public class Template extends Resource implements Cloneable
      * The name of the variable to use when placing
      * the scope object into the context.
      */
-    private String scopeName = "template";
-    private boolean provideScope = false;
-    private Map<String, Object> macros = new ConcurrentHashMap<>(17, 0.7f);
+    protected String scopeName = "template";
+    protected boolean provideScope = false;
+    protected Map<String, Object> macros = new ConcurrentHashMap<>(17, 0.7f);
 
-    private VelocityException errorCondition = null;
+    protected VelocityException errorCondition = null;
 
     /** Default constructor */
     public Template()
@@ -138,10 +138,10 @@ public class Template extends Resource implements Cloneable
             /*
              *  now parse the template
              */
-
+            BufferedReader br = null;
             try
             {
-                BufferedReader br = new BufferedReader( reader );
+                br = new BufferedReader( reader );
                 data = rsvc.parse( br, this);
                 initDocument();
                 return true;
@@ -179,12 +179,17 @@ public class Template extends Resource implements Cloneable
                 }
                 catch(IOException e)
                 {
-                    // If we are already throwing an exception then we want the original
-                    // exception to be continued to be thrown, otherwise, throw a new Exception.
-                    if (errorCondition == null)
-                    {
-                         throw new VelocityException(e, rsvc.getLogContext().getStackTrace());
-                    }
+                    
+                }
+
+                try
+                {
+                    if(br != null)
+                        br.close();
+                }
+                catch(IOException e)
+                {
+                     
                 }
             }
         }

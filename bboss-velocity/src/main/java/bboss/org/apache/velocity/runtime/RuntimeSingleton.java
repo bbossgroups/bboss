@@ -29,6 +29,7 @@ import bboss.org.apache.velocity.runtime.parser.ParseException;
 import bboss.org.apache.velocity.runtime.parser.node.Node;
 import bboss.org.apache.velocity.runtime.parser.node.SimpleNode;
 import bboss.org.apache.velocity.runtime.resource.ContentResource;
+import bboss.org.apache.velocity.runtime.resource.Resource;
 import bboss.org.apache.velocity.util.ExtProperties;
 import bboss.org.apache.velocity.util.introspection.Uberspect;
 import org.slf4j.Logger;
@@ -97,6 +98,15 @@ public class RuntimeSingleton implements RuntimeConstants
     public synchronized static void init()
     {
         ri.init();
+    }
+    public static void initTemplate(Resource template)
+    {
+        ri.initTemplate(template);
+    }
+
+    public static void initTemplate(Resource template, String  encoding)
+    {
+        ri.initTemplate(template,encoding);
     }
 
     /**

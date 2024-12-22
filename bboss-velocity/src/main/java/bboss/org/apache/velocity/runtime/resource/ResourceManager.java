@@ -44,6 +44,9 @@ public interface ResourceManager
      */
     int RESOURCE_CONTENT = 2;
 
+    int RESOURCE_SQL = 3;
+    int RESOURCE_ES = 4;
+
     /**
      * Initialize the ResourceManager.
      * @param rs
@@ -66,6 +69,7 @@ public interface ResourceManager
      */
     Resource getResource(String resourceName, int resourceType, String encoding)
         throws ResourceNotFoundException, ParseErrorException;
+    void initTemplate(Resource template, String  encoding);
 
     /**
      *  Determines is a template exists, and returns name of the loader that

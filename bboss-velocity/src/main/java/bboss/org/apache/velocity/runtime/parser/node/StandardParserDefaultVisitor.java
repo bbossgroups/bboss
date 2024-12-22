@@ -2,8 +2,9 @@
 package bboss.org.apache.velocity.runtime.parser.node;
 
 import bboss.org.apache.velocity.runtime.parser.*;
+import bboss.org.apache.velocity.runtime.parser.node.StandardParserVisitor;
 
-public class StandardParserDefaultVisitor implements StandardParserVisitor{
+public class StandardParserDefaultVisitor implements StandardParserVisitor {
   public Object defaultVisit(SimpleNode node, Object data){
     node.childrenAccept(this, data);
     return data;

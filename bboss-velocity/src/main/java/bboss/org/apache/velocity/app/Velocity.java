@@ -26,6 +26,7 @@ import bboss.org.apache.velocity.exception.ParseErrorException;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 import bboss.org.apache.velocity.runtime.RuntimeConstants;
 import bboss.org.apache.velocity.runtime.RuntimeSingleton;
+import bboss.org.apache.velocity.runtime.resource.Resource;
 import org.slf4j.Logger;
 
 import java.io.Reader;
@@ -67,6 +68,16 @@ public class Velocity implements RuntimeConstants
     public static void init()
     {
         RuntimeSingleton.init();
+    }
+
+    public static void initTemplate(Resource template)
+    {
+        RuntimeSingleton.initTemplate(template);
+    }
+
+    public static void initTemplate(Resource template,String encoding)
+    {
+        RuntimeSingleton.initTemplate(template, encoding);
     }
 
     /**

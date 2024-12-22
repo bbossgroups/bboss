@@ -647,4 +647,12 @@ public class SimpleNode implements Node, Cloneable
         }
         return clone;
     }
+
+    public Node[] getChildren() {
+        return children;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
 }

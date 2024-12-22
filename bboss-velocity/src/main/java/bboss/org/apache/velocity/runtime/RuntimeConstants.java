@@ -494,10 +494,10 @@ public interface RuntimeConstants extends DeprecatedRuntimeConstants
      */
 
     /** Default Runtime properties. */
-    String DEFAULT_RUNTIME_PROPERTIES = "org/apache/velocity/runtime/defaults/velocity.properties";
+    String DEFAULT_RUNTIME_PROPERTIES = "bboss-velocity.properties";
 
     /** Default Runtime properties. */
-    String DEFAULT_RUNTIME_DIRECTIVES = "org/apache/velocity/runtime/defaults/directive.properties";
+    String DEFAULT_RUNTIME_DIRECTIVES = "bboss-directive.properties";
 
     /** externally provided logger name. */
     String DEFAULT_RUNTIME_LOG_NAME = "bboss.org.apache.velocity";

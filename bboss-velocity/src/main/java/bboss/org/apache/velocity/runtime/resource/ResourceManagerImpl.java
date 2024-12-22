@@ -52,13 +52,7 @@ import java.util.Vector;
 public class ResourceManagerImpl
     implements ResourceManager
 {
-
-    /** A template resources. */
-    public static final int RESOURCE_TEMPLATE = 1;
-
-    /** A static content resource. */
-    public static final int RESOURCE_CONTENT = 2;
-
+ 
     /** Object implementing ResourceCache to be our resource manager's Resource cache. */
     protected ResourceCache globalCache = null;
 
@@ -476,6 +470,13 @@ public class ResourceManagerImpl
 
         return resource;
     }
+    
+    public void initTemplate(Resource resource, String  encoding)
+    {
+    	resource.setRuntimeServices(rsvc);
+//        resource.setName(resourceName);
+        resource.setEncoding(encoding);
+    }
 
     /**
      * Takes an existing resource, and 'refreshes' it. This generally means that the source of the resource is checked for changes
@@ -566,6 +567,29 @@ public class ResourceManagerImpl
             globalCache.put(resourceKey, newResource);
         }
         return resource;
+    }
+
+    /**
+     * Gets the named resource. Returned class type corresponds to specified type (i.e. <code>Template</code> to <code>
+     * RESOURCE_TEMPLATE</code>).
+     *
+     * @param  resourceName  The name of the resource to retrieve.
+     * @param  resourceType  The type of resource (<code>RESOURCE_TEMPLATE</code>, <code>RESOURCE_CONTENT</code>, etc.).
+     *
+     * @return  Resource with the template parsed and ready.
+     *
+     * @throws  ResourceNotFoundException  if template not found from any available source.
+     * @throws  ParseErrorException  if template cannot be parsed due to syntax (or other) error.
+     * @throws  Exception  if a problem in parse
+     *
+     * @deprecated  Use {@link #getResource(String resourceName, int resourceType, String encoding )}
+     */
+    public Resource getResource(String resourceName, int resourceType)
+        throws ResourceNotFoundException,
+            ParseErrorException,
+            Exception
+    {
+        return getResource(resourceName, resourceType, RuntimeConstants.ENCODING_DEFAULT);
     }
 
     /**

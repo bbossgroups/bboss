@@ -26,6 +26,7 @@ import bboss.org.apache.velocity.exception.ParseErrorException;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 import bboss.org.apache.velocity.runtime.RuntimeConstants;
 import bboss.org.apache.velocity.runtime.RuntimeInstance;
+import bboss.org.apache.velocity.runtime.resource.Resource;
 import org.slf4j.Logger;
 
 import java.io.Reader;
@@ -428,4 +429,14 @@ public class VelocityEngine implements RuntimeConstants
      {
         ri.loadDirective(directiveClass);
      }
+
+    public void initTemplate(Resource template)
+    {
+        ri.initTemplate(template);
+    }
+
+    public void initTemplate(Resource template, String encoding)
+    {
+        ri.initTemplate(template,  encoding);
+    }
 }

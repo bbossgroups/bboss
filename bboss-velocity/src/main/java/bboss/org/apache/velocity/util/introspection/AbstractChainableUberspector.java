@@ -69,7 +69,7 @@ public abstract class AbstractChainableUberspector extends UberspectImpl impleme
      * {@inheritDoc}
      *
      * @see bboss.org.apache.velocity.util.introspection.Uberspect#getIterator(java.lang.Object,
-     *      org.apache.velocity.util.introspection.Info)
+     *      bboss.org.apache.velocity.util.introspection.Info)
      */
     //@SuppressWarnings("unchecked")
     //@Override
@@ -96,7 +96,7 @@ public abstract class AbstractChainableUberspector extends UberspectImpl impleme
      * {@inheritDoc}
      *
      * @see bboss.org.apache.velocity.util.introspection.Uberspect#getPropertyGet(java.lang.Object, java.lang.String,
-     *      org.apache.velocity.util.introspection.Info)
+     *      bboss.org.apache.velocity.util.introspection.Info)
      */
     //@Override
     @Override
