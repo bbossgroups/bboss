@@ -1,0 +1,30 @@
+
+// project.tasks.compileJava.dependsOn(project(':bboss-soa').tasks.publishToMavenLocal)
+dependencies {
+    api(
+            [group: 'org.apache.logging.log4j', name: 'log4j-api', version: "${log4j2_version}", transitive: false],
+            [group: 'org.apache.logging.log4j', name: 'log4j-core', version: "${log4j2_version}", transitive: false],
+            [group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: "${log4j2_version}", transitive: true],
+
+            [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
+            [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],
+            [group: 'commons-collections', name: 'commons-collections', version: '3.2.2', transitive: false],
+
+    )
+    
+    api 'org.apache.commons:commons-lang3:3.17.0'
+//    api (
+//	    [group: 'commons-collections', name: 'commons-collections', version: '3.2.2', transitive: false],
+//	   )
+//    compileOnly (
+//    		 [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: false],
+//             [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],
+//                [group: 'ant', name: 'ant', version: '1.6.4', transitive: false],
+//	    [group: 'antlr', name: 'antlr', version: '2.7.5', transitive: false],
+//	      [group: 'hsqldb', name: 'hsqldb', version: '1.7.1', transitive: false],
+//	  
+//            [group: 'org.apache.maven', name: 'maven-ant-tasks', version: '2.0.9', transitive: false],
+//	    
+//             
+//    )
+}
