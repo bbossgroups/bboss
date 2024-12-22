@@ -16,9 +16,7 @@
 
 package org.frameworkset.task;
 
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-
+import com.frameworkset.orm.transaction.TransactionManager;
 import org.frameworkset.spi.assemble.MethodInvoker;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
@@ -27,7 +25,8 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frameworkset.orm.transaction.TransactionManager;
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 
 
 /**
@@ -47,18 +46,19 @@ public class MethodInvokerJob implements Job, Serializable{
 			 JobDataMap data = jobExecutionContext.getJobDetail().getJobDataMap();
 			 MethodInvoker action = (MethodInvoker)data.get("JobMethod");
 			 try
-		    	{
-				 
-		    		boolean state = TransactionManager.destroyTransaction();
-					if(state){
-						log.debug("A DB transaction leaked before Job ["+ action.getProviderManagerInfo().getStringExtendAttribute("jobid") +"] been forcibly destoried. ");
-					}
-		    	}
-				catch(Throwable e)
-				{
-					
-				}
-			 action.invoker();
+            {
+             
+                boolean state = TransactionManager.destroyTransaction();
+                if(state){
+                    log.debug("A DB transaction leaked before Job ["+ action.getProviderManagerInfo().getStringExtendAttribute("jobid") +"] been forcibly destoried. ");
+                }
+            }
+            catch(Throwable e)
+            {
+                
+            }
+             
+             action.invoker();
 			 try
 		    	{
 				 

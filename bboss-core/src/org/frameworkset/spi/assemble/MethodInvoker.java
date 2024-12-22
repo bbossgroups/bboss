@@ -34,6 +34,10 @@ public class MethodInvoker {
 	private Object[] argments;
 	private Method method;
 	private Pro providerManagerInfo;
+    /**
+     * 标记方法是否是同步调用，默认为true
+     */
+    private boolean synable = true;
 	public boolean isClassMethod()
 	{
 		return this.isClassMethod;
@@ -46,20 +50,40 @@ public class MethodInvoker {
 		this.argments = argments;
 		this.method = method;
 		this.providerManagerInfo = providerManagerInfo;
+        synable = this.providerManagerInfo.getBooleanExtendAttribute("synable",true);
 	}
-	
+	private Object lock = new Object();
 	public void invoker() throws IllegalArgumentException, 
 								IllegalAccessException, InvocationTargetException
 	{
-		if(argments != null) {
-			this.method.invoke(instance, argments);
-		}
-		else{
-			this.method.invoke(instance);
-		}
+        if(synable){
+            synchronized (lock){
+                _call();
+            }
+        }
+        else{
+            _call();
+        }
+		
 	}
+    private void _call() throws IllegalArgumentException,
+            IllegalAccessException, InvocationTargetException{
+        if(argments != null) {
+            this.method.invoke(instance, argments);
+        }
+        else{
+            this.method.invoke(instance);
+        }
+    }
 	public Pro getProviderManagerInfo() {
 		return providerManagerInfo;
 	}
 
+    public boolean isSynable() {
+        return synable;
+    }
+
+    public void setSynable(boolean synable) {
+        this.synable = synable;
+    }
 }
