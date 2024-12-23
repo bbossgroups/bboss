@@ -1,0 +1,12 @@
+
+//project.tasks.compileJava.dependsOn(project(':bboss-core').tasks.publishToMavenLocal)
+dependencies {
+	api( project(":bboss-persistent")){
+//        exclude group: 'com.bbossgroups', module: 'bboss-velocity'
+        exclude group: 'com.bbossgroups', module: 'bboss-velocity'
+    }
+     
+    api project(":bboss-velocity1")
+ 
+}
+

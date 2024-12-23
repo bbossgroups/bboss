@@ -17,6 +17,8 @@
 package org.frameworkset.persitent.util;
 
 import bboss.org.apache.velocity.VelocityContext;
+import bboss.org.apache.velocity.runtime.VelocityEngineVersion;
+import bboss.org.apache.velocity.runtime.resource.Resource;
 import com.frameworkset.common.poolman.management.PoolManConfiguration;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.JDBCPool;
@@ -25,6 +27,7 @@ import com.frameworkset.util.DaemonThread;
 import com.frameworkset.util.ResourceInitial;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.velocity.BBossVelocityUtil;
+import org.frameworkset.persitent.template.SQLTemplateFactory;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.util.shutdown.ShutdownUtil;
@@ -32,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.StringWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -75,6 +79,80 @@ public class SQLUtil {
 	protected String sqlFile;
 	protected int resultMetaCacheSize;
 	protected int perKeySqlStructionCacheSize;
+    private static SQLTemplateFactory factory = null;
+    static {
+        initSQLTemplateFactory();
+    }
+    private static void initSQLTemplateFactory(){
+
+        if(factory != null)
+            return;
+        
+        if(VelocityEngineVersion.getVersion() >= 20) {
+            initSQLTemplateFactory2();
+        }
+        else{
+            initSQLTemplateFactory1();
+        }
+        
+
+    
+    }
+
+    private static void initSQLTemplateFactory1(){
+
+        if(factory != null)
+            return;
+
+        try {
+            Class clazz = Class.forName("org.frameworkset.persitent.template.SQLTemplateFactoryImpl1");
+            factory = (SQLTemplateFactory) clazz.getConstructor().newInstance();
+            
+        } catch (ClassNotFoundException e) {
+            log.error("org.frameworkset.persitent.template.SQLTemplateFactoryImpl not exist", e);
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+    }
+
+    private static void initSQLTemplateFactory2(){
+
+        if(factory != null)
+            return;
+
+        try {
+            Class clazz = Class.forName("org.frameworkset.persitent.template.SQLTemplateFactoryImpl2");
+            factory = (SQLTemplateFactory) clazz.getConstructor().newInstance();
+            
+        } catch (ClassNotFoundException e) {
+            log.error("org.frameworkset.persitent.template.SQLTemplateFactoryImpl2 not exist", e);
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+    }
+    public static Resource createSQLTemplate(SQLInfo sqlinfo){
+        return factory.createSQLTemplate(sqlinfo);
+    }
 	public static class SQLRef
 	{
 		public SQLRef(String sqlname, String sqlfile, String name) {
@@ -189,15 +267,15 @@ public class SQLUtil {
 
 							boolean istpl = pro.getBooleanExtendAttribute("istpl",true);//标识sql语句是否为velocity模板
 							boolean multiparser = pro.getBooleanExtendAttribute("multiparser",istpl);//如果sql语句为velocity模板，则在批处理时是否需要每条记录都需要分析sql语句
-							SQLTemplate sqltpl = null;
+							Resource sqltpl = null;
 							value = value.trim();
 							SQLInfo sqlinfo = new SQLInfo(key, value, istpl,multiparser,cacheSql);
 							sqlinfo.setSqlutil(this);
 							if(istpl)
 							{
-								sqltpl = new SQLTemplate(sqlinfo);
+								sqltpl = SQLUtil.createSQLTemplate(sqlinfo);
 								sqlinfo.setSqltpl(sqltpl);
-								BBossVelocityUtil.initDBTemplate(sqltpl);
+								BBossVelocityUtil.initDBTemplate((Resource) sqltpl);
 								sqltpl.process();
 							}
 							

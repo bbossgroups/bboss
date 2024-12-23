@@ -15,6 +15,7 @@
  */
 package org.frameworkset.persitent.util;
 
+import bboss.org.apache.velocity.runtime.resource.Resource;
 import com.frameworkset.common.poolman.sql.PoolManResultSetMetaData;
 import com.frameworkset.common.poolman.util.JDBCPool;
 import com.frameworkset.util.VariableHandler.SQLStruction;
@@ -165,7 +166,7 @@ public class GloableSQLUtil extends SQLUtil {
 		SQLInfo sqlinfo = new SQLInfo(sql, sql, istpl, multiparser,true);
 		sqlinfo.setSqlutil(this);
 
-		SQLTemplate sqltpl = new SQLTemplate(sqlinfo);
+		Resource sqltpl = createSQLTemplate(sqlinfo);
 		sqlinfo.setSqltpl(sqltpl);
 		BBossVelocityUtil.initDBTemplate(sqltpl);
 		sqltpl.process();

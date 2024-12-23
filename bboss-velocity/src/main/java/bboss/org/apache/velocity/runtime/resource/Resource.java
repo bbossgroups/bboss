@@ -19,12 +19,16 @@ package bboss.org.apache.velocity.runtime.resource;
  * under the License.
  */
 
+import bboss.org.apache.velocity.context.Context;
+import bboss.org.apache.velocity.exception.MethodInvocationException;
 import bboss.org.apache.velocity.exception.ParseErrorException;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 import bboss.org.apache.velocity.runtime.RuntimeConstants;
 import bboss.org.apache.velocity.runtime.RuntimeServices;
 import bboss.org.apache.velocity.runtime.resource.loader.ResourceLoader;
 import org.slf4j.Logger;
+
+import java.io.Writer;
 
 /**
  * This class represent a general text resource that
@@ -104,7 +108,22 @@ public abstract class Resource implements Cloneable
         rsvc = rs;
         log = rsvc.getLog("loader");
     }
-
+    /**
+     * The AST node structure is merged with the
+     * context to produce the final output.
+     *
+     *  @param context Context with data elements accessed by template
+     *  @param writer output writer for rendered template
+     *  @throws ResourceNotFoundException if template not found
+     *          from any available source.
+     *  @throws ParseErrorException if template cannot be parsed due
+     *          to syntax (or other) error.
+     *  @throws MethodInvocationException When a method on a referenced object in the context could not invoked.
+     */
+    public void merge(Context context, Writer writer)
+            throws ResourceNotFoundException, ParseErrorException, MethodInvocationException{
+        
+    }
     /**
      * Perform any subsequent processing that might need
      * to be done by a resource. In the case of a template

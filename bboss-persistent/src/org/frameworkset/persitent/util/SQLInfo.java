@@ -16,6 +16,8 @@
 
 package org.frameworkset.persitent.util;
 
+import bboss.org.apache.velocity.runtime.resource.Resource;
+
 /**
  * <p>Title: SQLInfo.java</p> 
  * <p>Description: </p>
@@ -29,7 +31,7 @@ public class SQLInfo {
 	private String sqlname;
 	/**原始sql*/
 	private String sql;
-	private SQLTemplate sqltpl;
+	private Resource sqltpl;
 	private boolean istpl;
 	private boolean multiparser;
 
@@ -132,10 +134,10 @@ public class SQLInfo {
 	public void setSql(String sql) {
 		this.sql = sql;
 	}
-	public SQLTemplate getSqltpl() {
+	public Resource getSqltpl() {
 		return sqltpl;
 	}
-	public void setSqltpl(SQLTemplate sqltpl) {
+	public void setSqltpl(Resource sqltpl) {
 		this.sqltpl = sqltpl;
 	}
 
