@@ -21,9 +21,16 @@ dependencies {
 	api project(":bboss-persistent")
 	api (
 		[group: 'org.apache-extras.beanshell', name: 'bsh', version: '2.0b6', transitive: false],
-        [group: 'org.quartz-scheduler', name: 'quartz-backward-compat', version: '2.1.7', transitive: true],
  
 	)
+
+    api (
+           [group: 'org.quartz-scheduler', name: 'quartz-backward-compat', version: '2.1.7', transitive: true],
+
+    ){
+
+        exclude group: 'org.quartz-scheduler', module: 'quartz'
+    }
 
     api (
 
