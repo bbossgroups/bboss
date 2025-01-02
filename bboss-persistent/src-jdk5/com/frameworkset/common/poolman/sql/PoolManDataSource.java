@@ -35,7 +35,6 @@ import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
 import javax.sql.PooledConnection;
 
-import org.apache.log4j.Logger;
 
 import com.frameworkset.common.poolman.util.DatasourceUtil;
 import com.frameworkset.common.poolman.util.SQLManager;

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 
 import com.frameworkset.commons.pool.PoolableObjectFactory;
 import com.frameworkset.commons.pool.impl.GenericObjectPool;
@@ -48,7 +47,7 @@ public class AbandonedObjectPool extends GenericObjectPool {
      */
     private List trace = new ArrayList();
     
-    private static final Logger log = Logger.getLogger(AbandonedObjectPool.class);
+    private static final Logger log = LoggerFactory.getLogger(AbandonedObjectPool.class);
 
     /**
      * Create an ObjectPool which tracks db connections.

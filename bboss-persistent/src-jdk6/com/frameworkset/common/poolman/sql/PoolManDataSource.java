@@ -35,7 +35,6 @@ import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
 import javax.sql.PooledConnection;
 
-import org.apache.log4j.Logger;
 
 import com.frameworkset.common.poolman.util.DatasourceUtil;
 import com.frameworkset.common.poolman.util.SQLManager;
@@ -61,7 +60,7 @@ import com.frameworkset.orm.transaction.TXDataSource;
  */
 public class PoolManDataSource
         implements DataSource, ConnectionPoolDataSource, Referenceable, ObjectFactory {
-    private static final Logger log = Logger.getLogger(PoolManDataSource.class);
+    private static final Logger log = LoggerFactory.getLogger(PoolManDataSource.class);
     private String poolName;
     private String jndiName;
     private PrintWriter logger;

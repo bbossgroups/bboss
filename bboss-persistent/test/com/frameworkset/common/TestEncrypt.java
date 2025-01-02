@@ -16,11 +16,12 @@
 package com.frameworkset.common;
 
 import com.frameworkset.common.poolman.DBUtil;
+import org.frameworkset.security.DESCipher;
 
 public class TestEncrypt {
 	public static void main(String[] args) throws Exception
 	{
-		com.frameworkset.common.poolman.security.DESCipher aa = new com.frameworkset.common.poolman.security.DESCipher();
+		DESCipher aa = new DESCipher();
 		String bb = aa.encrypt("123456");
 		System.out.println(bb);
 		System.out.println(aa.decrypt(bb));

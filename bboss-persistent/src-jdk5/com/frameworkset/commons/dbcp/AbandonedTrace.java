@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 
 /**
  * Tracks db connection usage for recovering and reporting
@@ -43,7 +42,7 @@ public class AbandonedTrace implements java.io.Serializable{
 //        ("'DBCP object created' yyyy-MM-dd HH:mm:ss " +
 //         "'by the following code was never closed:'");
     
-    private static final Logger log = Logger.getLogger(AbandonedTrace.class);
+    private static final Logger log = LoggerFactory.getLogger(AbandonedTrace.class);
 
     /** DBCP AbandonedConfig */
     transient private AbandonedConfig config = null;

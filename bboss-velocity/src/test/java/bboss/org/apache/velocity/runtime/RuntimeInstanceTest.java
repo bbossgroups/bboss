@@ -42,6 +42,11 @@ public class RuntimeInstanceTest {
         }
 
         @Override
+        public void initTemplate(Resource template, String encoding) {
+            
+        }
+
+        @Override
         public void initialize(RuntimeServices rs) {
 
         }

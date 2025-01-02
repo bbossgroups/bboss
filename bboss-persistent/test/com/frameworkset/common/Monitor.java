@@ -18,6 +18,7 @@ package com.frameworkset.common;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.frameworkset.security.DESCipher;
 import org.junit.Test;
 
 import com.frameworkset.common.poolman.DBUtil;
@@ -174,7 +175,7 @@ public class Monitor
     	{
     		DBUtil dbutil = new DBUtil();
     		String name = "db", driver="oracle.jdbc.driver.OracleDriver", jdbcurl="jdbc:oracle:thin:@//10.0.15.134:1521/orcl", username="sgcmp", password="sgcmp", readOnly="true", validationQuery="select 1 from dual";
-    		com.frameworkset.common.poolman.security.DESCipher aa = new com.frameworkset.common.poolman.security.DESCipher();
+    		DESCipher aa = new DESCipher();
     		password = aa.encrypt(password);
     		DBUtil.startPool("db", driver, jdbcurl, username, password, readOnly, validationQuery,true);
     		tm.begin();
