@@ -60,7 +60,7 @@ public class MapGetProperties extends AbstractGetProperties{
     @Override
     public Map<String,Object> getExternalProperties(String namespace,String propertyPrex,boolean truncated){
         Map<String,Object> values = null;
-        int len = propertyPrex.length();
+        int len = propertyPrex.length()+1;
         if(this.values != null){
             Iterator<Map.Entry<String, Object>> iterator = this.values.entrySet().iterator();
             while (iterator.hasNext()){
