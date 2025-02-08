@@ -17,6 +17,8 @@ package org.frameworkset.spi.assemble;/*
 import com.frameworkset.util.ValueCastUtil;
 import org.frameworkset.spi.support.EnvUtil;
 
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MapGetProperties extends AbstractGetProperties{
@@ -49,6 +51,34 @@ public class MapGetProperties extends AbstractGetProperties{
 
 		return value.toString();
 	}
+
+    /**
+     * 根据属性名称前缀获取属性集
+     * @param propertyPrex
+     * @return
+     */
+    @Override
+    public Map<String,Object> getExternalProperties(String namespace,String propertyPrex,boolean truncated){
+        Map<String,Object> values = null;
+        int len = propertyPrex.length();
+        if(this.values != null){
+            Iterator<Map.Entry<String, Object>> iterator = this.values.entrySet().iterator();
+            while (iterator.hasNext()){
+                Map.Entry<String, Object> entry = iterator.next();
+                String key = entry.getKey();
+                if(key.startsWith(propertyPrex)){
+                    if(values == null){
+                        values = new LinkedHashMap<>();
+                    }
+                    if(truncated){
+                        key = key.substring(len);
+                    }
+                    values.put(key,entry.getValue());
+                }
+            }
+        }        
+        return values;
+    }
 	public String getExternalProperty(String property, String defaultValue){
 		Object value = values.get(property);
 

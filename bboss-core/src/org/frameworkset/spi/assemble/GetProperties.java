@@ -17,19 +17,30 @@ package org.frameworkset.spi.assemble;/*
 import java.util.Map;
 
 public interface GetProperties {
-	public void reset();
-	public String getExternalProperty(String property);
-	public String getSystemEnvProperty(String property);
-	public String getExternalProperty(String property,String defaultValue);
-	public Object getExternalObjectProperty(String property);
-	public Object getExternalObjectProperty(String property,Object defaultValue);
-	public boolean getExternalBooleanProperty(String property,boolean defaultValue);
-//	public String getProperty(String property);
-	public String getExternalPropertyWithNS(String namespace,String property);
-	public String getExternalPropertyWithNS(String namespace,String property,String defaultValue);
-	public Object getExternalObjectPropertyWithNS(String namespace,String property);
-	public Object getExternalObjectPropertyWithNS(String namespace,String property,Object defaultValue);
-//	public boolean getBooleanProperty(String property,boolean defaultValue);
-//	public Map getAllProperties();
-    public Map getAllExternalProperties();
+	void reset();
+	String getExternalProperty(String property);
+	String getSystemEnvProperty(String property);
+	String getExternalProperty(String property,String defaultValue);
+
+    /**
+     * 根据属性名称前缀获取属性集
+     * @param namespace
+     * @param propertyPrex 属性名称前缀
+     * @param truncated 返回的key是否截取掉前缀
+     * @return
+     */
+    default Map<String,Object> getExternalProperties(String namespace,String propertyPrex,boolean truncated){
+        return null;
+    }
+	Object getExternalObjectProperty(String property);
+	Object getExternalObjectProperty(String property,Object defaultValue);
+	boolean getExternalBooleanProperty(String property,boolean defaultValue);
+//	String getProperty(String property);
+	String getExternalPropertyWithNS(String namespace,String property);
+	String getExternalPropertyWithNS(String namespace,String property,String defaultValue);
+	Object getExternalObjectPropertyWithNS(String namespace,String property);
+	Object getExternalObjectPropertyWithNS(String namespace,String property,Object defaultValue);
+//	boolean getBooleanProperty(String property,boolean defaultValue);
+//	Map getAllProperties();
+    Map getAllExternalProperties();
 }

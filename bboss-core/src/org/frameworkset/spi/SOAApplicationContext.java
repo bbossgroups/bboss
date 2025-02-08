@@ -40,20 +40,20 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 	protected boolean serial; 
 	
 	public SOAApplicationContext(String soacontent) {
-		super((String)soacontent,false,true);
+		super(soacontent,false,true);
 	}
 	
 	public SOAApplicationContext(String soacontent,boolean init) {
-		super((String)soacontent,false,init);
+		super(soacontent,false,init);
 	}
 	public SOAApplicationContext(String soacontent,String charset) {
 		
-		super((String)soacontent,false,charset,true);
+		super(soacontent,false,charset,true);
 	}
 	
 	public SOAApplicationContext(String soacontent,String charset,boolean init) {
 		
-		super((String)soacontent,false,charset,init);
+		super(soacontent,false,charset,init);
 	}
 
 
@@ -72,13 +72,13 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 	
 	public SOAApplicationContext(InputStream instream)
 	{
-		super((InputStream)instream,  false,true);
+		super(instream,  false,true);
 		
 	}
 	
 	public SOAApplicationContext(InputStream instream,boolean init)
 	{
-		super((InputStream)instream,  false, init);
+		super(instream,  false, init);
 		
 	}
 

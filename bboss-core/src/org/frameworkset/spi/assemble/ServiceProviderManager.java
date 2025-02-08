@@ -1128,6 +1128,29 @@ public class ServiceProviderManager implements AOPValueHandler{
 		}
 		return value;
 	}
+
+    /**
+     * 根据属性名称前缀获取属性集
+     * @param propertyPrex 属性名称前缀
+     * @return
+     */
+    public Map<String,Object> getExternalProperties(String namespace,String propertyPrex,boolean truncated){
+        Map<String,Object> values = null;
+        for(int i = 0;traceFiles != null &&  i < this.traceFiles.size();i ++)
+        {
+            LinkConfigFile f = traceFiles.get(i);
+            Map<String,Object> temp = f.getConfigPropertiesFile() != null?f.getConfigPropertiesFile().getExternalProperties(  namespace,propertyPrex,truncated):null;
+            if(temp != null){
+                if (values == null){
+                    values = new LinkedHashMap<>();
+                }
+                values.putAll(temp);
+            }
+                 
+        }
+        return values;
+
+    }
 	public String getExternalProperty(String property,String defaultValue)
 	{
 		String value = null;

@@ -30,6 +30,7 @@ public class PropertiesContainer extends AbstractGetProperties{
 	public PropertiesContainer(){
 
 	}
+
 	public void afterLoaded(GetProperties getProperties){
     	if(propertiesFilePlugin != null){
 			propertiesFilePlugin.afterLoaded(getProperties,this);
@@ -1515,6 +1516,59 @@ public class PropertiesContainer extends AbstractGetProperties{
 		if(value == null)
 			value = getObjectProperty( property);
 		return ValueCastUtil.toString(value,null);
+    }
+
+    /**
+     * 根据属性名称前缀获取属性
+     * @param propertyPrex
+     * @return
+     */
+    @Override
+    public Map<String,Object> getExternalProperties(String namespace,String propertyPrex,boolean truncated){   
+        Map<String,Object> values = null;
+        int len = propertyPrex.length() + 1;
+        if(sonAndParentProperties != null){
+            Iterator<Map.Entry<Object, Object>> iterator = sonAndParentProperties.entrySet().iterator();
+            while (iterator.hasNext()){
+                Map.Entry<Object, Object> entry = iterator.next();
+                String key = (String)entry.getKey();
+                if(key.startsWith(propertyPrex)){
+                    if(values == null){
+                        values = new LinkedHashMap<>();
+                    }
+                    if(truncated){
+                        key = key.substring(len);
+                    }
+
+                    values.put(key,entry.getValue());
+                }
+            }
+        }
+        if(allProperties != null){
+            Iterator<Map.Entry<Object, Object>> iterator = allProperties.entrySet().iterator();
+            while (iterator.hasNext()){
+                Map.Entry<Object, Object> entry = iterator.next();
+                String key = (String)entry.getKey();
+  
+                if(key.startsWith(propertyPrex) ){
+                    String truncatKey = null;
+                    if(truncated){
+                        truncatKey = key.substring(len);
+                    }
+                    else{
+                        truncatKey = key;
+                    }
+                   
+                    if(values == null){
+                        values = new LinkedHashMap<>();
+                    }
+                    if(!values.containsKey(truncatKey)) {
+                        values.put(truncatKey, entry.getValue());
+                    }
+                }
+            }
+        }
+        return values;
     }
     
     public int size()

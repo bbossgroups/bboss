@@ -2456,6 +2456,16 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	{
 		return providerManager.getExternalProperty(property);
 	}
+
+    /**
+     * 根据属性名称前缀获取属性集
+     * @param propertyPrex 属性名称前缀
+     * @return
+     */
+    @Override
+    public Map<String,Object> getExternalProperties(String namespace,String propertyPrex,boolean truncated){
+        return providerManager.getExternalProperties(  namespace,propertyPrex,truncated);
+    }
 	/**
 	 * 获取外部属性配置文件中的属性值
 	 * @param property
