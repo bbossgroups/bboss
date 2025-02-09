@@ -1525,6 +1525,15 @@ public class PropertiesContainer extends AbstractGetProperties{
      */
     @Override
     public Map<String,Object> getExternalProperties(String namespace,String propertyPrex,boolean truncated){   
+        return getExternalProperties(  propertyPrex,  truncated);
+    }
+
+    /**
+     * 根据属性名称前缀获取属性
+     * @param propertyPrex
+     * @return
+     */
+    public Map<String,Object> getExternalProperties(String propertyPrex,boolean truncated){
         Map<String,Object> values = null;
         int len = propertyPrex.length() + 1;
         if(sonAndParentProperties != null){
@@ -1549,7 +1558,7 @@ public class PropertiesContainer extends AbstractGetProperties{
             while (iterator.hasNext()){
                 Map.Entry<Object, Object> entry = iterator.next();
                 String key = (String)entry.getKey();
-  
+
                 if(key.startsWith(propertyPrex) ){
                     String truncatKey = null;
                     if(truncated){
@@ -1558,7 +1567,7 @@ public class PropertiesContainer extends AbstractGetProperties{
                     else{
                         truncatKey = key;
                     }
-                   
+
                     if(values == null){
                         values = new LinkedHashMap<>();
                     }
