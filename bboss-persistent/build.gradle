@@ -45,7 +45,8 @@ dependencies {
     		fileTree(dir: 'lib', include: '**/*.jar'),             
             [group: 'javax.transaction', name: 'jta', version: '1.1', transitive: false],
     )
-    compileOnly 'com.oracle:ojdbc14:10.2.0.4.0'
+//    compileOnly 'com.oracle:ojdbc14:10.2.0.4.0'
+//    compileOnly 'com.oracle.ojdbc:ojdbc10:19.3.0.0'
     compileOnly(
     	  [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: false],
     	   [group: 'xjavadoc', name: 'xjavadoc', version: '1.1', transitive: false],
@@ -53,7 +54,8 @@ dependencies {
             [group: 'com.github.housepower', name: 'clickhouse-native-jdbc', version: "${clickhouse_verion}", transitive: true],
            
     )
-    testImplementation 'com.oracle:ojdbc14:10.2.0.4.0'
+//    testImplementation 'com.oracle.ojdbc:ojdbc10:19.3.0.0'
+//    testImplementation 'com.oracle:ojdbc14:10.2.0.4.0'
     testImplementation (
             
             [group: 'org.apache.derby', name: 'derby', version: '10.9.1.0', transitive: false],
