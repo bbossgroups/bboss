@@ -1,6 +1,4 @@
-﻿bboss is a j2ee framework include aop/ioc,mvc,persistent taglib,rpc,event 
-
-,bean-xml serializable and so on 
+﻿bboss is a j2ee framework include aop/ioc,mvc,persistent,etl,stream, taglib,rpc,event,bean-xml serializable and so on
 
 基于bboss构建了一系列实用功能
 1. [bboss数据采集ETL](https://esdoc.bbossgroups.com/#/db-es-tool)工具
@@ -8,10 +6,10 @@
 3. [Elasticsearch client客户端](https://esdoc.bbossgroups.com/#/quickstart)工具
 4. [WebSession共享](https://doc.bbossgroups.com/#/SessionSharing/demoguide)框架
 
-# bboss group website:
+# bboss website:
 http://www.bbossgroups.com
 
-# bboss group project blog:
+# bboss document site:
 https://doc.bbossgroups.com
 
 https://esdoc.bbossgroups.com
@@ -24,73 +22,12 @@ gradle clean publishToMavenLocal
 
 https://esdoc.bbossgroups.com/#/bboss-build
 
-# bboss 源码
+# bboss 所有工程源码地址
 
 https://www.bbossgroups.com/sources.html
 
 # bboss 案例源码
 https://www.bbossgroups.com/sources-demos.html
-
-# Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=bbossgroups/bboss&type=Date)](https://star-history.com/#bbossgroups/bboss&Date)
-
-# 基于bboss的开源工作流Activiti5.12 
-
-github托管地址 
-
-https://github.com/yin-bp/activiti-engine-5.12 
-
-码云下载地址 
-
-https://gitee.com/bboss/activiti-engine-5.12
-
-# 自动代码生成框架github源码托管地址 
-
-github源码托管地址 
-
-https://github.com/bbossgroups/bboss-gencode 
-
-码云下载地址 
-
-https://gitee.com/bboss/bboss-gencode
-
-# bboss大数据抽取工具db-hdfs 
-github托管地址 
-
-https://github.com/bbossgroups/bigdatas 
-
-码云下载地址 
-
-https://gitee.com/bboss/bigdatas
-
-# bboss rpc源码 
-github托管地址 
-
-https://github.com/bbossgroups/bboss-rpc
-
-码云下载地址 
-
-https://gitee.com/bboss/bboss-rpc
-
-# bboss 搭建平台开发环境工具源码 
-github托管地址 
-
-https://github.com/bbossgroups/genproject
-
-码云下载地址 
-
-https://gitee.com/bboss/genproject
-
-# bboss site源码 
-github托管地址 
-
-https://github.com/bbossgroups/bboss-site
-
-码云下载地址 
-
-https://gitee.com/bboss/bboss-site
-
 
 
 ## bboss项目特色请查看文档了解
@@ -129,3 +66,7 @@ https://esdoc.bbossgroups.com/#/README
 The BBoss Framework is released under version 2.0 of the [Apache License][].
 
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
+
+# Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=bbossgroups/bboss&type=Date)](https://star-history.com/#bbossgroups/bboss&Date)
