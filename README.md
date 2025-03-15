@@ -31,7 +31,9 @@ https://www.bbossgroups.com/sources.html
 # bboss 案例源码
 https://www.bbossgroups.com/sources-demos.html
 
+# Star History
 
+[![Star History Chart](https://api.star-history.com/svg?repos=bbossgroups/bboss&type=Date)](https://star-history.com/#bbossgroups/bboss&Date)
 
 # 基于bboss的开源工作流Activiti5.12 
 
