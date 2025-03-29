@@ -35,14 +35,37 @@ public class DBConf implements Serializable {
     public static final String BALANCE_ROUNDBIN = "roundbin";
 	private boolean testWhileidle = true;
 	private boolean enableShutdownHook;
+    /**
+     * 申请链接超时时间，单位：毫秒
+     */
+    private int maxWait = 6000;
 	/**
-	 * 建立链接超时时间
+	 * 空闲链接回收时间，空闲时间超过指定的值时，将被回收  
+     * 对应于minEvictableIdleTimeMillis 属性：
+     * 	minEvictableIdleTimeMillis the minimum number of milliseconds 
+     * 	an object can sit idle in the pool before it is eligable for evcition
+     * 	单位：毫秒
+     * 	use minEvictableIdleTimeMilli
 	 */
-	private int connectionTimeout = 5000;
-	/**
-	 * 申请链接超时时间，单位：毫秒
-	 */
-	private int maxWait = 6000;
+    
+    private int minEvictableIdleTimeMilli = 5000;
+
+
+    /**
+     * 空闲链接清理时间间隔，单位：毫秒
+     * 对应属性：timeBetweenEvictionRunsMillis
+     * 		the amount of time (in milliseconds) to sleep between examining idle objects for eviction 
+     */
+    private int timeBetweenEvictionRunsMillis = 180000;
+
+    /**
+     * numTestsPerEvictionRun 
+     * 	the number of idle objects to 
+     * 	examine per run within the idle object eviction thread (if any)
+     *
+     * 	每次回收的链接个数 
+     */
+    private int numTestsPerEvictionRun = 5;
 	/**
 	 * Set max idle Times in seconds ,if exhaust this times the used connection object will be Abandoned removed if removeAbandoned is true.
 	 default value is 300 seconds.
@@ -403,12 +426,17 @@ public class DBConf implements Serializable {
         return this;
 	}
 
+    @Deprecated
 	public int getConnectionTimeout() {
-		return connectionTimeout;
+		return this.minEvictableIdleTimeMilli;
 	}
 
+    @Deprecated
+    /**
+     * user setMinEvictableIdleTimeMilli
+     */
 	public DBConf setConnectionTimeout(int connectionTimeout) {
-		this.connectionTimeout = connectionTimeout;
+		this.minEvictableIdleTimeMilli = connectionTimeout;
         return this;
 	}
 
@@ -499,4 +527,32 @@ public class DBConf implements Serializable {
         return this;
     }
 
+    public int getTimeBetweenEvictionRunsMillis() {
+        return timeBetweenEvictionRunsMillis;
+    }
+
+    public DBConf setTimeBetweenEvictionRunsMillis(int timeBetweenEvictionRunsMillis) {
+        this.timeBetweenEvictionRunsMillis = timeBetweenEvictionRunsMillis;
+        return this;
+    }
+
+ 
+
+    public int getNumTestsPerEvictionRun() {
+        return numTestsPerEvictionRun;
+    }
+
+    public DBConf setNumTestsPerEvictionRun(int numTestsPerEvictionRun) {
+        this.numTestsPerEvictionRun = numTestsPerEvictionRun;
+        return this;
+    }
+
+    public int getMinEvictableIdleTimeMilli() {
+        return minEvictableIdleTimeMilli;
+    }
+
+    public DBConf setMinEvictableIdleTimeMilli(int minEvictableIdleTimeMilli) {
+        this.minEvictableIdleTimeMilli = minEvictableIdleTimeMilli;
+        return this;
+    }
 }

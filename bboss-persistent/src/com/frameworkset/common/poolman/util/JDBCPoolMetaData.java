@@ -34,10 +34,10 @@ public class JDBCPoolMetaData implements Serializable{
     private int initialObjects = PoolManConstants.DEFAULT_INITIAL_SIZE;
     private int minimumSize = PoolManConstants.DEFAULT_MIN_SIZE;
     private int maximumSize = PoolManConstants.DEFAULT_MAX_SIZE;
-    private int objectTimeout = PoolManConstants.DEFAULT_TIMEOUT;
+    private int minEvictableIdleTimeMillis = PoolManConstants.DEFAULT_TIMEOUT;
     private int userTimeout = PoolManConstants.DEFAULT_USERTIMEOUT;
-    private int skimmerFrequency = PoolManConstants.DEFAULT_SKIMMER_SLEEP;
-    private int shrinkBy = PoolManConstants.DEFAULT_SHRINKBY;
+    private int timeBetweenEvictionRunsMillis = PoolManConstants.DEFAULT_SKIMMER_SLEEP;
+    private int numTestsPerEvictionRun = PoolManConstants.DEFAULT_SHRINKBY;
     private boolean emergencyCreates = PoolManConstants.DEFAULT_EMERGENCY_CREATES;
 
 	
@@ -353,13 +353,8 @@ public class JDBCPoolMetaData implements Serializable{
         setInitialObjects(n);
     }
 
-    public int getConnectionTimeout() {
-        return getObjectTimeout();
-    }
-
-    public void setConnectionTimeout(int n) {
-        setObjectTimeout(n);
-    }
+ 
+ 
 
     /* TX METHODS */
 
@@ -543,12 +538,12 @@ public class JDBCPoolMetaData implements Serializable{
         this.maximumSize = n;
     }
 
-    public int getObjectTimeout() {
-        return this.objectTimeout;
+    public int getMinEvictableIdleTimeMillis() {
+        return this.minEvictableIdleTimeMillis;
     }
 
-    public void setObjectTimeout(int n) {
-        this.objectTimeout = n;
+    public void setMinEvictableIdleTimeMillis(int n) {
+        this.minEvictableIdleTimeMillis = n;
     }
 
     public int getUserTimeout() {
@@ -559,20 +554,20 @@ public class JDBCPoolMetaData implements Serializable{
         this.userTimeout = n;
     }
 
-    public int getSkimmerFrequency() {
-        return this.skimmerFrequency;
+    public int getTimeBetweenEvictionRunsMillis() {
+        return this.timeBetweenEvictionRunsMillis;
     }
 
-    public void setSkimmerFrequency(int n) {
-        this.skimmerFrequency = n;
+    public void setTimeBetweenEvictionRunsMillis(int n) {
+        this.timeBetweenEvictionRunsMillis = n;
     }
 
-    public int getShrinkBy() {
-        return this.shrinkBy;
+    public int getNumTestsPerEvictionRun() {
+        return this.numTestsPerEvictionRun;
     }
 
-    public void setShrinkBy(int n) {
-        this.shrinkBy = n;
+    public void setNumTestsPerEvictionRun(int n) {
+        this.numTestsPerEvictionRun = n;
     }
 
     public String getLogFile() {
@@ -757,8 +752,7 @@ public class JDBCPoolMetaData implements Serializable{
 
 		    
 		    setInitialConnections(extenalInfo.getInitialConnections());
-
-		    setConnectionTimeout(extenalInfo.getConnectionTimeout());
+		    setMinEvictableIdleTimeMillis(extenalInfo.getMinEvictableIdleTimeMillis());
 		    setTransactionTimeout(extenalInfo.getTransactionTimeout());
 
 		    setIsolationLevel(extenalInfo.getIsolationLevel());
@@ -787,14 +781,14 @@ public class JDBCPoolMetaData implements Serializable{
 		    setMaximumSize(extenalInfo.getMaximumSize());
 
 
-		    setObjectTimeout(extenalInfo.getObjectTimeout())		    ;
+		    setMinEvictableIdleTimeMillis(extenalInfo.getMinEvictableIdleTimeMillis())		    ;
 		    setUserTimeout(extenalInfo.getUserTimeout());
 
 		    
 
-		    setSkimmerFrequency(extenalInfo.getSkimmerFrequency());
+		    setTimeBetweenEvictionRunsMillis(extenalInfo.getTimeBetweenEvictionRunsMillis());
 
-		    setShrinkBy(extenalInfo.getShrinkBy());
+		    setNumTestsPerEvictionRun(extenalInfo.getNumTestsPerEvictionRun());
 
 
 		    
@@ -1075,11 +1069,11 @@ public class JDBCPoolMetaData implements Serializable{
 					.append(",\"removeOnExceptions\":").append(removeOnExceptions).append(",")
 					.append("\"maxOpenPreparedStatements\":").append(maxOpenPreparedStatements)
 					.append(",\"userTimeout\":").append(userTimeout)
-					.append(",\"connectionTimeout\":").append(this.getConnectionTimeout())
+					.append(",\"minEvictableIdleTimeMilli\":").append(this.getMinEvictableIdleTimeMillis())
 					.append(",\"maxWait\":\"").append(maxWait).append("\"" )
 					.append(",\"transactionTimeout\":").append(transactionTimeout)
-					.append(",\"skimmerFrequency\":").append(skimmerFrequency).append("," )
-					.append("\"shrinkBy\":").append(shrinkBy).append("," )
+					.append(",\"timeBetweenEvictionRunsMillis\":").append(timeBetweenEvictionRunsMillis).append("," )
+					.append("\"numTestsPerEvictionRun\":").append(numTestsPerEvictionRun).append("," )
 
 					.append("\"interceptor\":\"").append(interceptor).append("\",")
 					.append("\"idGenerator\":").append(idGenerator)

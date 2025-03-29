@@ -187,6 +187,18 @@ public class BBossStringWriter  extends Writer {
     }
 
     /**
+     * Return the buffer's current value as a string.
+     */
+    public String toString(boolean clean) {
+        
+        String data =  buf.toString();
+        if(clean){
+            buf.setLength(0);
+        }
+        return data;
+    }
+
+    /**
      * Return the string buffer itself.
      *
      * @return StringBuilder holding the current buffer value.

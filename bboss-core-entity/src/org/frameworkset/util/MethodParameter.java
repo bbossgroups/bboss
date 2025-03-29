@@ -385,7 +385,7 @@ public class MethodParameter {
 	 * @see #getNestingLevel()
 	 */
 	public void decreaseNestingLevel() {
-		getTypeIndexesPerLevel().remove(new Integer(this.nestingLevel));
+		getTypeIndexesPerLevel().remove(this.nestingLevel);
 		this.nestingLevel--;
 	}
 
@@ -407,8 +407,8 @@ public class MethodParameter {
 	 * @see #getNestingLevel()
 	 */
 	public void setTypeIndexForCurrentLevel(int typeIndex) {
-		getTypeIndexesPerLevel().put(new Integer(this.nestingLevel),
-				new Integer(typeIndex));
+		getTypeIndexesPerLevel().put(this.nestingLevel,
+				typeIndex);
 	}
 
 	/**
@@ -432,7 +432,7 @@ public class MethodParameter {
 	 */
 	public Integer getTypeIndexForLevel(int nestingLevel) {
 		return (Integer) getTypeIndexesPerLevel()
-				.get(new Integer(nestingLevel));
+				.get(nestingLevel);
 	}
 
 	/**

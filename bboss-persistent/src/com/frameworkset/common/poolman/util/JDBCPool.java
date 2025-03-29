@@ -388,11 +388,11 @@ public class JDBCPool {
 
 		p.setProperty(
 				PoolManConstants.PROP_TIMEBETWEENEVICTIONRUNSMILLIS,
-				info.getSkimmerFrequency() + "");
+				info.getTimeBetweenEvictionRunsMillis() + "");
 		p.setProperty(PoolManConstants.PROP_NUMTESTSPEREVICTIONRUN,
-				info.getShrinkBy() + "");
+				info.getNumTestsPerEvictionRun() + "");
 		p.setProperty(PoolManConstants.PROP_MINEVICTABLEIDLETIMEMILLIS,
-				(info.getConnectionTimeout()) + "");
+				(info.getMinEvictableIdleTimeMillis()) + "");
 
 		p.setProperty(PoolManConstants.PROP_MAXWAIT, info.getMaxWait());
 		p.setProperty(PoolManConstants.PROP_REMOVEABANDONED, info

@@ -955,13 +955,18 @@ public class SQLManager extends PoolManager{
 		
 		boolean testWhileidle = temConf.isTestWhileidle();
 		values.put("testWhileidle", testWhileidle+"");
-		int shrinkBy = 5;
-		values.put("shrinkBy", shrinkBy+"");
+		int numTestsPerEvictionRun = temConf.getNumTestsPerEvictionRun();
+        /**
+         * shrinkBy
+         */
+		values.put("numTestsPerEvictionRun", numTestsPerEvictionRun+"");
 		
-		int connectionTimeout = temConf.getConnectionTimeout();
-		values.put("connectionTimeout", connectionTimeout+"");
-		int skimmerFrequency = 180000;
-		values.put("skimmerFrequency", skimmerFrequency+"");
+		int minEvictableIdleTimeMilli = temConf.getMinEvictableIdleTimeMilli();
+        //connectionTimeout
+		values.put("minEvictableIdleTimeMilli", minEvictableIdleTimeMilli+"");
+        //skimmerFrequency
+		int timeBetweenEvictionRunsMillis = temConf.getTimeBetweenEvictionRunsMillis();
+		values.put("timeBetweenEvictionRunsMillis", timeBetweenEvictionRunsMillis+"");
 		boolean logAbandoned = temConf.isLogAbandoned();
 
 		values.put("logAbandoned", logAbandoned+"");

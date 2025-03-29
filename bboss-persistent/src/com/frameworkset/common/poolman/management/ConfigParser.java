@@ -156,7 +156,10 @@ public class ConfigParser extends DefaultHandler{
         		!name.equals("removeAbandoned") &&       
         		!name.equals("userTimeout") &&             
         		!name.equals("logAbandoned") &&          
-        		!name.equals("readOnly") &&               
+        		!name.equals("readOnly") &&
+                !name.equals("timeBetweenEvictionRunsMillis") &&
+                !name.equals("numTestsPerEvictionRun") &&
+                !name.equals("minEvictableIdleTimeMilli") &&
         		!name.equals("skimmerFrequency") &&      
         		!name.equals("connectionTimeout") &&       
         		!name.equals("shrinkBy") &&        
@@ -238,8 +241,24 @@ public class ConfigParser extends DefaultHandler{
             	}
             	if(!name.equals("password"))
             		p.put(name.toLowerCase(), value.trim());
-            	else
-            		p.put(name.toLowerCase(), value);
+            	else {
+                    if(name.equals("skimmerFrequency"))
+                    {
+                        log.warn("skimmerFrequency is Deprecated,use timeBetweenEvictionRunsMillis.");
+                        name = "timeBetweenEvictionRunsMillis";
+                    }
+                    else if(name.equals("connectionTimeout"))
+                    {
+                        log.warn("connectionTimeout is Deprecated,use minEvictableIdleTimeMilli.");
+                        name = "minEvictableIdleTimeMilli";
+                    }
+                    else if(name.equals("shrinkBy"))
+                    {
+                        log.warn("shrinkBy is Deprecated,use numTestsPerEvictionRun.");
+                        name = "numTestsPerEvictionRun";
+                    } 
+                    p.put(name.toLowerCase(), value);
+                }
             }
         }
         else if (this.currentSet.equals("generic")) {

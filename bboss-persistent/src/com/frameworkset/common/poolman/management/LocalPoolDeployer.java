@@ -186,21 +186,21 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
             for (int n = 0; n < attributes.length; n++) {
 
                 // get bean attribute name
-                String attrName = attributes[n].getName();
+                String attrName = attributes[n].getName().toLowerCase();
                 
-                if (dbprops.containsKey(attrName.toLowerCase())) {
+                if (dbprops.containsKey(attrName)) {
 
                     // get value in props
                     String propsVal = null;
                     if(!useTemplate)
                     {
-                    	propsVal = dbprops.getProperty(attrName.toLowerCase());
+                    	propsVal = dbprops.getProperty(attrName);
                     }
                     else
                     {
-                    	propsVal = values.get(attrName.toLowerCase());
+                    	propsVal = values.get(attrName);
                     	if(propsVal == null)
-                    		propsVal = dbprops.getProperty(attrName.toLowerCase());
+                    		propsVal = dbprops.getProperty(attrName);
                     		
                     }
 

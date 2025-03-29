@@ -1650,7 +1650,7 @@ public class ValueObjectUtil {
 	public static Boolean toBoolean(Object obj)
 	{
 		if(obj == null)
-			return new Boolean(false);
+			return false;
 		if(obj instanceof Boolean)
 		{
 			return ((Boolean)obj);
@@ -1659,9 +1659,9 @@ public class ValueObjectUtil {
 		{
 			String ret = obj.toString();
 			if (ret.equals("1") || ret.equals("true")) {
-				return new Boolean(true);
+				return true;
 			} else if (ret.equals("0") || ret.equals("false")) {
-				return new Boolean(false);
+				return false;
 			}
 			else
 				return false;
@@ -1771,7 +1771,7 @@ public class ValueObjectUtil {
 			return Double.parseDouble(obj.toString());
 		}
 		if (toType == char.class || toType == Character.class)
-			return new Character(obj.toString().charAt(0));
+			return obj.toString().charAt(0);
 
 		if (toType == boolean.class || toType == Boolean.class) {
 //			String ret = obj.toString();
@@ -1913,7 +1913,7 @@ public class ValueObjectUtil {
 			return Double.parseDouble(obj.toString());
 		}
 		if (toType == char.class || toType == Character.class)
-			return new Character(obj.toString().charAt(0));
+			return obj.toString().charAt(0);
 
 		if (toType == boolean.class || toType == Boolean.class) {
 //			String ret = obj.toString();
@@ -2586,7 +2586,7 @@ public class ValueObjectUtil {
 			String[] values = (String[]) obj;
 			Character[] ret = new Character[values.length];
 			for (int i = 0; i < values.length; i++) {
-				ret[i] = new Character(values[i].charAt(0));
+				ret[i] = values[i].charAt(0);
 			}
 			return ret;
 		}

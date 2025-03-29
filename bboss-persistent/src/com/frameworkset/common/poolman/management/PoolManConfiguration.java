@@ -176,7 +176,7 @@ public class PoolManConfiguration   {
 			return builder.toString();
 		}
 		catch (Exception e){
-			e.printStackTrace();
+			log.error("",e);
 			return "";
 		}
 	}
@@ -350,7 +350,8 @@ public class PoolManConfiguration   {
 
 		String readOnly = (String)context.get("readOnly");
 		datasource.put("readOnly".toLowerCase(),readOnly);
-
+        
+        /**
 		String skimmerFrequency = (String)context.get("skimmerFrequency");
 		datasource.put("skimmerFrequency".toLowerCase(),skimmerFrequency);
 
@@ -359,6 +360,16 @@ public class PoolManConfiguration   {
 
 		String shrinkBy = (String)context.get("shrinkBy");
 		datasource.put("shrinkBy".toLowerCase(),shrinkBy);
+         */
+        //废弃老版本变量，使用新版本变量
+        String timeBetweenEvictionRunsMillis = (String)context.get("timeBetweenEvictionRunsMillis");
+        datasource.put("timeBetweenEvictionRunsMillis".toLowerCase(),timeBetweenEvictionRunsMillis);
+
+        String minEvictableIdleTimeMilli = (String)context.get("minEvictableIdleTimeMilli");
+        datasource.put("minEvictableIdleTimeMilli".toLowerCase(),minEvictableIdleTimeMilli);
+
+        String numTestsPerEvictionRun = (String)context.get("numTestsPerEvictionRun");
+        datasource.put("numTestsPerEvictionRun".toLowerCase(),numTestsPerEvictionRun);
 
 		String testWhileidle = (String)context.get("testWhileidle");
 		datasource.put("testWhileidle".toLowerCase(),testWhileidle);
