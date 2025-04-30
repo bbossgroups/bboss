@@ -57,6 +57,10 @@ public class DBFactory
     public static final String  DBMariaDB = "mariadb";
     public static final String  DBOracle = "oracle";
     public static final String  DBPostgres = "postgresql";
+    /**
+     * org.panweidb.Driver
+     */
+    public static final String DBPanwei = "panweidb";
     public static final String  DBSapDB = "sapdb";
     public static final String  DBSybase = "sybase";
     public static final String  DBWeblogic = "weblogic";
@@ -76,6 +80,8 @@ public class DBFactory
     public static final String  yandex_clickhouse = "yandex_clickhouse";
     public static final String  druid = "druid";
     public static final String  avatica = "avatica";
+    
+    
  
 
     
@@ -115,6 +121,7 @@ public class DBFactory
         adapters.put("oracle.jdbc.driver.OracleDriver", DBOracle.class);
         adapters.put("oracle.jdbc.OracleDriver", DBOracle.class);
         adapters.put("org.postgresql.Driver", DBPostgres.class);
+        adapters.put("org.panweidb.Driver", DBPanwei.class);
         adapters.put("com.sap.dbtech.jdbc.DriverSapDB", DBSapDB.class);
         adapters.put("com.sybase.jdbc.SybDriver", DBSybase.class);
         adapters.put("com.sybase.jdbc2.jdbc.SybDriver", DBSybase.class);
@@ -147,6 +154,7 @@ public class DBFactory
         adapters.put("mariadb", DBMariaDB.class);
         adapters.put("oracle", DBOracle.class);
         adapters.put("postgresql", DBPostgres.class);
+        adapters.put(DBPanwei, DBPanwei.class);
         adapters.put("sapdb", DBSapDB.class);
         adapters.put("sybase", DBSybase.class);
         adapters.put("weblogic", DBWeblogic.class);
@@ -197,7 +205,7 @@ public class DBFactory
 
 			adapterClass = adapters.get("");
 			if(log.isWarnEnabled()){
-				log.warn("Unknown JDBC driver: {}: Adapter DBNonewill be used or define one and resitry it to bboss.",driver);
+				log.warn("Unknown JDBC driver: {}: Adapter DBNone will be used or define one and resitry it to bboss.",driver);
 			}
 		}
         if (adapterClass != null)
