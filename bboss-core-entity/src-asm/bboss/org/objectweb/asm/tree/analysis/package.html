@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <!--
  * ASM: a very small and fast Java bytecode manipulation framework
  * Copyright (c) 2000-2011 INRIA, France Telecom
@@ -28,6 +29,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
 -->
+<head>
+  <title>Package org.objectweb.asm.tree.analysis</title>
+</head>
 <body>
 
 <p>
@@ -39,23 +43,21 @@ Basic usage:
 </p>
 
 <pre>
-ClassReader cr = new ClassReader(bytecode);
-ClassNode cn = new ClassNode();
-cr.accept(cn, ClassReader.SKIP_DEBUG);
+ClassReader classReader = new ClassReader(bytecode);
+ClassNode classNode = new ClassNode();
+classReader.accept(classNode, ClassReader.SKIP_DEBUG);
 
-List methods = cn.methods;
-for (int i = 0; i < methods.size(); ++i) {
-    MethodNode method = (MethodNode) methods.get(i);
-    if (method.instructions.size() > 0) {
-        Analyzer a = new Analyzer(new BasicInterpreter());
-        a.analyze(cn.name, method);
-        Frame[] frames = a.getFrames();
-        // Elements of the frames arrray now contains info for each instruction
-        // from the analyzed method. BasicInterpreter creates BasicValue, that
-        // is using simplified type system that distinguishes the UNINITIALZED,
-        // INT, FLOAT, LONG, DOUBLE, REFERENCE and RETURNADDRESS types.
-        ...
-    }
+for (MethodNode method : classNode.methods) {
+  if (method.instructions.size() > 0) {
+    Analyzer analyzer = new Analyzer(new BasicInterpreter());
+    analyzer.analyze(classNode.name, method);
+    Frame[] frames = analyzer.getFrames();
+    // Elements of the frames array now contains info for each instruction
+    // from the analyzed method. BasicInterpreter creates BasicValue, that
+    // is using simplified type system that distinguishes the UNINITIALZED,
+    // INT, FLOAT, LONG, DOUBLE, REFERENCE and RETURNADDRESS types.
+    ...
+  }
 }
 </pre>
 

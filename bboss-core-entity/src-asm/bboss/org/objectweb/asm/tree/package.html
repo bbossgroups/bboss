@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <!--
  * ASM: a very small and fast Java bytecode manipulation framework
  * Copyright (c) 2000-2011 INRIA, France Telecom
@@ -28,6 +29,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
 -->
+<head>
+  <title>Package org.objectweb.asm.tree</title>
+</head>
 <body>
 
 <p>
@@ -43,10 +47,10 @@ However, this class adapter has a cost: it makes ASM bigger and slower. Indeed
 it requires more than twenty new classes, and multiplies the time needed to
 transform a class by almost two (it is almost two times faster to read, "modify"
 and write a class with a ClassVisitor than with a ClassNode). This is why
-this package is bundled in an optional <tt>asm-tree.jar</tt> library that
-is separated from (but requires) the <tt>asm.jar</tt> library, which contains
-the core ASM framework. This is also why <i><font color="red">it is recommended
-not to use this class adapter when it is possible</font></i>.
+this package is bundled in an optional <code>asm-tree.jar</code> library that
+is separated from (but requires) the <code>asm.jar</code> library, which contains
+the core ASM framework. This is also why <em>it is recommended not to use this
+class adapter when it is possible</em>.
 </p>
 
 <p>
@@ -54,9 +58,9 @@ The root class is the ClassNode, that can be created from existing bytecode. For
 </p>
 
 <pre>
-  ClassReader cr = new ClassReader(source);
-  ClassNode cn = new ClassNode();
-  cr.accept(cn, true);
+  ClassReader classReader = new ClassReader(source);
+  ClassNode classNode = new ClassNode();
+  classReader.accept(classNode, 0);
 </pre>
 
 <p>
@@ -65,8 +69,8 @@ serialized back into bytecode:
 </p>
 
 <pre>
-  ClassWriter cw = new ClassWriter(true);
-  cn.accept(cw);
+  ClassWriter classWriter = new ClassWriter(0);
+  classNode.accept(classWriter);
 </pre>
 
 <p>
@@ -75,21 +79,22 @@ In this example MethodNode is acting as a buffer that is flushed out at visitEnd
 </p>
 
 <pre>
-  ClassReader cr = new ClassReader(source);
-  ClassWriter cw = new ClassWriter();
-  ClassVisitor cv = new ClassVisitor(cw) {
+  ClassReader classReader = new ClassReader(source);
+  ClassWriter classWriter = new ClassWriter(0);
+  ClassVisitor classVisitor = new ClassVisitor(ASM7, classWriter) {
     public MethodVisitor visitMethod(int access, String name,
         String desc, String signature, String[] exceptions) {
-      final MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
-      MethodNode mn = new MethodNode(access, name, desc, signature, exceptions) {
+      final MethodVisitor methodVisitor = 
+          super.visitMethod(access, name, desc, signature, exceptions);
+      MethodNode methodNode = new MethodNode(access, name, desc, signature, exceptions) {
         public void visitEnd() {
           // transform or analyze method code using tree API
-          accept(mv);
+          accept(methodVisitor);
         }
       };
     }
   };
-  cr.accept(cv, true);
+  classReader.accept(classVisitor, 0);
 </pre>
 
 <p>
@@ -99,8 +104,8 @@ add them to the instructions list:
 </p>
 
 <pre>
-MethodNode m = new MethodNode(...);
-m.instructions.add(new VarInsnNode(ALOAD, 0));
+MethodNode methodNode = new MethodNode(...);
+methodNode.instructions.add(new VarInsnNode(ALOAD, 0));
 ...
 </pre>
 
@@ -111,8 +116,8 @@ the standard MethodVisitor methods:
 </p>
 
 <pre>
-MethodNode m = new MethodNode(...);
-m.visitVarInsn(ALOAD, 0);
+MethodNode methodNode = new MethodNode(...);
+methodNode.visitVarInsn(ALOAD, 0);
 ...
 </pre>
 
@@ -124,12 +129,12 @@ methods insert() and insertBefore() to insert instructions at a saved pointer.
 </p>
 
 <pre>
-MethodNode m = new MethodNode(...);
-m.visitVarInsn(ALOAD, 0);
-AbstractInsnNode ptr = m.instructions.getLast();
-m.visitVarInsn(ALOAD, 1);
+MethodNode methodNode = new MethodNode(...);
+methodNode.visitVarInsn(ALOAD, 0);
+AbstractInsnNode ptr = methodNode.instructions.getLast();
+methodNode.visitVarInsn(ALOAD, 1);
 // inserts an instruction between ALOAD 0 and ALOAD 1
-m.instructions.insert(ptr, new VarInsnNode(ALOAD, 0));
+methodNode.instructions.insert(ptr, new VarInsnNode(ALOAD, 0));
 ...
 </pre>
 
@@ -140,9 +145,9 @@ ListIterator over the instruction list:
 </p>
 
 <pre>
-ListIterator it = m.instructions.iterator();
+ListIterator it = methodNode.instructions.iterator();
 while (it.hasNext()) {
-    AbstractInsnNode n = (AbstractInsnNode) it.next();
+    AbstractInsnNode insnNode = (AbstractInsnNode) it.next();
     if (...) {
         it.add(new VarInsnNode(ALOAD, 0));
     }
@@ -150,16 +155,16 @@ while (it.hasNext()) {
 </pre>
 
 <p>
-It is also possible to convert an instruction list into an array and iterate trough
+It is also possible to convert an instruction list into an array and iterate through
 array elements:
 </p>
 
 <pre>
-AbstractInsnNode[] insns = m.instructions.toArray();
+AbstractInsnNode[] insns = methodNode.instructions.toArray();
 for(int i = 0; i&lt;insns.length; i++) {
-    AbstractInsnNode n = insns[i];
+    AbstractInsnNode insn = insns[i];
     if (...) {
-        m.instructions.insert(n, new VarInsnNode(ALOAD, 0));
+        methodNode.instructions.insert(insn, new VarInsnNode(ALOAD, 0));
     }
 }
 </pre>
@@ -172,14 +177,14 @@ For example:
 </p>
 
 <pre>
-AbstractInsnNode[] insns = m.instructions.toArray();
+AbstractInsnNode[] insns = methodNode.instructions.toArray();
 for(int i = 0; i&lt;insns.length; i++) {
-    AbstractInsnNode n = insns[i];
+    AbstractInsnNode insn = insns[i];
     if (...) {
-        MethodNode mn = new MethodNode();
-        mn.visitVarInsn(ALOAD, 0);
-        mn.visitVarInsn(ALOAD, 1);
-        m.instructions.insert(n, mn.instructions);
+        MethodNode toInsert = new MethodNode();
+        toInsert.visitVarInsn(ALOAD, 0);
+        toInsert.visitVarInsn(ALOAD, 1);
+        m.instructions.insert(insn, toInsert.instructions);
     }
 }
 </pre>
