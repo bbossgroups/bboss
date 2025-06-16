@@ -19,23 +19,14 @@ package com.frameworkset.common.poolman.sql;
 
 // The JDK and Extensions
 
-import com.frameworkset.common.poolman.util.DatasourceUtil;
-import com.frameworkset.common.poolman.util.SQLManager;
-import com.frameworkset.orm.transaction.TXDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.naming.*;
-import javax.naming.spi.ObjectFactory;
-import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
-import javax.sql.PooledConnection;
 import java.io.PrintWriter;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
-import java.util.Hashtable;
 
 /**
  * 
@@ -113,8 +104,8 @@ public class ExtenerDataSource
 
     public void close() {
 
-		 
-		
+
+        log.info("Ignore close ExtenerDataSource.");
 	}
 
 

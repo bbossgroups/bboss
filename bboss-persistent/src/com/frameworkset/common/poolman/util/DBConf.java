@@ -136,6 +136,7 @@ public class DBConf implements Serializable {
 
     /**
      * 配置外部数据源，这时候需要指定dbtype，以便识别数据库类型
+     * 外部datasource不能被关闭
      */
     private DataSource datasource; 
     /**
