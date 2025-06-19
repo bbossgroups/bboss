@@ -1476,7 +1476,6 @@ public abstract class BaseSPIManager2 {
      * @param context
      * @param providerManagerInfo
      * @param defaultValue
-     * @param serviceID
      * @return
      */
     public static Object getBeanObject(CallContext context, Pro providerManagerInfo, Object defaultValue)

@@ -38,7 +38,7 @@ public interface BeanNameAware {
 	 * Note that this name is the actual bean name used in the factory, which may
 	 * differ from the originally specified name: in particular for inner bean
 	 * names, the actual bean name might have been made unique through appending
-	 * "#..." suffixes. Use the {@link BeanFactoryUtils#originalBeanName(String)}
+	 * "#..." suffixes. Use the  BeanFactoryUtils#originalBeanName(String)
 	 * method to extract the original bean name (without suffix), if desired.
 	 */
 	void setBeanName(String name);

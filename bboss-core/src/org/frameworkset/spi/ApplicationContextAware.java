@@ -40,7 +40,6 @@ public interface ApplicationContextAware {
 	 * <p>Invoked after population of normal bean properties but before an init callback such
 	 * as {@link InitializingBean#afterPropertiesSet()}
 	 * or a custom init-method. Invoked after {@link ResourceLoaderAware#setResourceLoader},
-	 * {@link ApplicationEventPublisherAware#setApplicationEventPublisher} and
 	 * {@link MessageSourceAware}, if applicable.
 	 * @param applicationContext the ApplicationContext object to be used by this object
 	 * @throws ApplicationContextException in case of context initialization errors

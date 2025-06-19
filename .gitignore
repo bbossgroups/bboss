@@ -40,3 +40,4 @@ bboss-taglib/.project
 *.class
 /gradle/
 bboss-core-entity/.project
+/bboss-core-entity/src-asmold/

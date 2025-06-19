@@ -2006,11 +2006,6 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 * You can also pass in a full ResourcePatternResolver, which will be
 	 * autodetected by the context and used for <code>getResources</code> calls
 	 * as well. Else, default resource pattern matching will apply.
-	 * 
-	 * @see #getResource
-	 * @see #DefaultResourceLoader
-
-	 * @see #getResources
 	 */
 	public void setResourceLoader(ResourceLoader resourceLoader) {
 		this.resourceLoader = resourceLoader;

@@ -17,7 +17,6 @@ package org.frameworkset.util.concurrent;
 
 /**
  * <p>Description: 多线程安全计数器</p>
- * <p></p>
  * <p>Copyright (c) 2020</p>
  * @Date 2022/1/10 10:17
  * @author biaoping.yin
@@ -25,8 +24,13 @@ package org.frameworkset.util.concurrent;
  */
 public class IntegerCount {
 	private volatile int count;
+    /**
+     * 自增计数器
+     */
+    private volatile int totalCount;
 	public synchronized int increament(){
 		count ++;
+        totalCount ++;
 		return count;
 	}
     public synchronized int decreament(int incr){
@@ -39,6 +43,7 @@ public class IntegerCount {
     }
 	public synchronized int increament(int incr){
 		count = count + incr;
+        totalCount = totalCount + incr;
 		return count;
 	}
 	public synchronized int getCount(){
@@ -66,4 +71,15 @@ public class IntegerCount {
         return count;
     }
 
+    public synchronized int getTotalCount() {
+        return totalCount;
+    }
+
+    public  int getTotalCountUnSynchronized() {
+        return totalCount;
+    }
+    public synchronized void reset(){
+        this.totalCount = 0;
+        this.count = 0;
+    }
 }
