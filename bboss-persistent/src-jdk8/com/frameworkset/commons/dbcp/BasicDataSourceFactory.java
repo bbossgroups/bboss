@@ -24,9 +24,9 @@ import com.frameworkset.commons.dbcp2.BasicDataSource;
 import com.frameworkset.commons.dbcp2.NativeDataSource;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.util.SimpleStringUtil;
-import org.frameworkset.persitent.datasource.BalanceDatasource;
-import org.frameworkset.persitent.datasource.RandomBalanceDatasource;
-import org.frameworkset.persitent.datasource.RoundbinBalanceDatasource;
+import org.frameworkset.persitent.datasource.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
@@ -46,6 +46,7 @@ import java.util.*;
  */
 public class BasicDataSourceFactory  {
 
+    private static Logger logger = LoggerFactory.getLogger(BasicDataSourceFactory.class);
     private final static String PROP_DEFAULTAUTOCOMMIT = "defaultAutoCommit";
     private final static String PROP_DEFAULTREADONLY = "defaultReadOnly";
     private final static String PROP_DEFAULTTRANSACTIONISOLATION = "defaultTransactionIsolation";
@@ -141,46 +142,44 @@ public class BasicDataSourceFactory  {
      */
     public static DataSource createDBCP2DataSource(Properties properties, DB db,JDBCPoolMetaData jdbcPoolMetaData) throws Exception {
         String url =  properties.getProperty(PROP_URL);
-        
-        if(!jdbcPoolMetaData.isEnableBalance()) {
-
-            Map<String,Object> urlParams = db.getUrlParams(url);
-            if(urlParams != null){
-                String balance = (String)urlParams.get("b.balance");
-                String enableBalance = (String)urlParams.get("b.enableBalance");
-                if(enableBalance != null && enableBalance.equals("true")){
-                    if(SimpleStringUtil.isEmpty(balance) || balance.equals(DBConf.BALANCE_RANDOM)){
-                        BalanceDatasource balanceDatasource = new RandomBalanceDatasource(url,db,properties);
-                        balanceDatasource.init();
-                        return balanceDatasource;
-                    }
-                    else{
-                        BalanceDatasource balanceDatasource =  new RoundbinBalanceDatasource(url,db,properties);
-                        balanceDatasource.init();
-                        return balanceDatasource;
-                    }
-                }
-                else {
-                    return createDBCP2DataSource(url, properties);
-                }
-            }
-            else {
-                return createDBCP2DataSource(url, properties);
+        boolean isEnableBalance = jdbcPoolMetaData.isEnableBalance();
+        String balance = jdbcPoolMetaData.getBalance();
+        BalanceDatasourceConfig balanceDatasourceConfig = null;
+        if(!isEnableBalance){
+            balanceDatasourceConfig = db.getBalanceDatasourceConfig(url);
+            if(balanceDatasourceConfig != null) {
+                balance = balanceDatasourceConfig.getBalance();
+                isEnableBalance = balanceDatasourceConfig.isEnabaleBalance();
             }
         }
         else{
-            String balance = jdbcPoolMetaData.getBalance();
+            balanceDatasourceConfig = db.getBalanceDatasourceConfig(url);
+            if(balanceDatasourceConfig == null){
+                logger.warn("balanceDatasourceConfig is null and reset enableBalance to false.");
+                isEnableBalance = false;
+            }
+        }
+            
+        if(isEnableBalance){
             if(SimpleStringUtil.isEmpty(balance) || balance.equals(DBConf.BALANCE_RANDOM)){
-                BalanceDatasource balanceDatasource = new RandomBalanceDatasource(url,db,properties);
+                BalanceDatasource balanceDatasource = new RandomBalanceDatasource(  balanceDatasourceConfig,url,db,properties);
                 balanceDatasource.init();
+                if(logger.isInfoEnabled())
+                    logger.info("Create RandomBalanceDatasource:balance={}",balance);
                 return balanceDatasource;
             }
             else{
-                BalanceDatasource balanceDatasource =  new RoundbinBalanceDatasource(url,db,properties);
+                BalanceDatasource balanceDatasource =  new RoundbinBalanceDatasource(  balanceDatasourceConfig,url,db,properties);
                 balanceDatasource.init();
+                if(logger.isInfoEnabled())
+                    logger.info("Create RoundbinBalanceDatasource:balance={}",balance);
                 return balanceDatasource;
             }
         }
+        else {
+            return createDBCP2DataSource(url, properties);
+        }
+            
     }
 
     public static DataSource createDBCP2DataSource(String url,Properties properties) throws Exception {

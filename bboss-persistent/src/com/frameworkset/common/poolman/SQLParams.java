@@ -1065,9 +1065,9 @@ public class SQLParams
 									if(type == int.class)
 										value = (int)_value;
 									else  if(type == Integer.class)
-										value = new Integer((int)_value);
+										value = (int)_value;
 									else if(type == Long.class)
-										value = new Long(_value);
+										value = _value;
 									else 
 										value = _value;
 								}
@@ -1450,7 +1450,7 @@ public class SQLParams
         {
         	if(!type.equals(OBJECT))
         	{
-	            data_ = new Integer(this.converttypeToSqltype(type));
+	            data_ = this.converttypeToSqltype(type);
 	            type = NULL;            
         	}
         }
@@ -1506,7 +1506,7 @@ public class SQLParams
         {
         	if(!type.equals(OBJECT))
         	{
-	            data_ = new Integer(this.converttypeToSqltype(type));
+	            data_ = this.converttypeToSqltype(type);
 	            type = NULL;            
         	}
         }

@@ -119,16 +119,13 @@ public class PrimaryKey
 	/**
 	 * 构造函数，构建表的基本信息
 	 * 
-	 * @param Connection con 由biaoping.yin添加
 	 * @param dbname
 	 *            表所属的数据库链接池
 	 * @param tableName
 	 *            表的名称
 	 * @param primaryKeyName
 	 *            表的主键名称
-	 * @param increment
 	 *            表主键自增值
-	 * @param curValue
 	 *            表主键当前值
 	 */
 	public PrimaryKey(String dbname, String tableName, String primaryKeyName,
@@ -499,14 +496,14 @@ public class PrimaryKey
 						|| this.metaType.equals("java.lang.integer")
 						|| this.metaType.equalsIgnoreCase("integer"))
 				{
-					sequence.setPrimaryKey(new Long(curValue));
+					sequence.setPrimaryKey(curValue);
 					sequence.setSequence(curValue);
 					return sequence;
 				}
 				if (this.metaType.equals("java.lang.Long") || this.metaType.equals("java.lang.long")
 						|| this.metaType.equalsIgnoreCase("long"))
 				{
-					sequence.setPrimaryKey(new Long(curValue));
+					sequence.setPrimaryKey(curValue);
 					sequence.setSequence(curValue);
 					return sequence;
 				}
@@ -556,14 +553,14 @@ public class PrimaryKey
 							|| this.metaType.equals("java.lang.integer")
 							|| this.metaType.equalsIgnoreCase("integer"))
 					{
-						sequence.setPrimaryKey(new Long(curValue));
+						sequence.setPrimaryKey(curValue);
 						sequence.setSequence(curValue);
 						return sequence;
 					}
 					if (this.metaType.equals("java.lang.Long") || this.metaType.equals("java.lang.long")
 							|| this.metaType.equalsIgnoreCase("long"))
 					{
-						sequence.setPrimaryKey(new Long(curValue));
+						sequence.setPrimaryKey(curValue);
 						sequence.setSequence(curValue);
 						return sequence;
 					}
@@ -643,14 +640,14 @@ public class PrimaryKey
 						|| this.metaType.equals("java.lang.integer")
 						|| this.metaType.equalsIgnoreCase("integer"))
 				{
-					sequence.setPrimaryKey(new Long(curValue));
+					sequence.setPrimaryKey(curValue);
 					sequence.setSequence(curValue);
 					return sequence;
 				}
 				if (this.metaType.equals("java.lang.Long") || this.metaType.equals("java.lang.long")
 						|| this.metaType.equalsIgnoreCase("long"))
 				{
-					sequence.setPrimaryKey(new Long(curValue));
+					sequence.setPrimaryKey(curValue);
 					sequence.setSequence(curValue);
 					return sequence;
 				}
@@ -696,14 +693,14 @@ public class PrimaryKey
 							|| this.metaType.equals("java.lang.integer")
 							|| this.metaType.equalsIgnoreCase("integer"))
 					{
-						sequence.setPrimaryKey(new Long(curValue));
+						sequence.setPrimaryKey(curValue);
 						sequence.setSequence(curValue);
 						return sequence;
 					}
 					if (this.metaType.equals("java.lang.Long") || this.metaType.equals("java.lang.long")
 							|| this.metaType.equalsIgnoreCase("long"))
 					{
-						sequence.setPrimaryKey(new Long(curValue));
+						sequence.setPrimaryKey(curValue);
 						sequence.setSequence(curValue);
 						return sequence;
 					}

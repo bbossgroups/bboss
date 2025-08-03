@@ -31,15 +31,10 @@ package com.frameworkset.orm.adapter;
  * limitations under the License.
  */
 
-import com.frameworkset.common.poolman.PreparedDBUtil;
-import com.frameworkset.common.poolman.SQLExecutor;
-import com.frameworkset.common.poolman.handle.NullRowHandler;
-import com.frameworkset.orm.platform.PlatformMysqlImpl;
-import com.frameworkset.util.SimpleStringUtil;
+import org.frameworkset.persitent.datasource.BalanceDatasourceConfig;
+import org.frameworkset.persitent.datasource.BalanceDatasourceUtil;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * This is used in order to connect to a MySQL database using the MM
@@ -70,5 +65,23 @@ public class DBYandexClickhouse extends DBMM
     {
     	super();
     }
-        
+
+    public static final String[] JDBC_CLICKHOUSE_PREFIXS = {"jdbc:clickhouse://","jdbc:clickhouse:http://","jdbc:clickhouse:https://","jdbc:ch:http://","jdbc:ch:https://"};
+
+
+    /**
+     * jdbc:clickhouse://101.13.6.4:29000,101.13.6.7:29000,101.13.6.6:29000/visualops
+     * jdbc:clickhouse:http://192.168.137.1:28123,192.168.137.1:28125,192.168.137.1:28126/visualops?ssl=false&connect_timeout=60000&socket_timeout=60000&query_timeout=60000&keep_alive_timeout=60000&clickhouse.jdbc.v1=false
+     * @param url
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public BalanceDatasourceConfig getBalanceDatasourceConfig(String url) throws SQLException{
+        return BalanceDatasourceUtil.getBalanceDatasourceConfig(JDBC_CLICKHOUSE_PREFIXS,url,false);
+    }
+    @Override
+    public ResultSet getImportedKeys(DatabaseMetaData metaData, String catalog, String schemaName, String tableName) throws SQLException {
+        return null;
+    }     
 }

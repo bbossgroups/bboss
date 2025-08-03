@@ -37,8 +37,8 @@ import java.util.logging.Logger;
 public class RandomBalanceDatasource  extends BalanceDatasource {
 
     private final ThreadLocal<Random> randomThreadLocal = new ThreadLocal<>();
-    public RandomBalanceDatasource(String url, DB db, Properties properties)  {
-        super(  url,   db,   properties);
+    public RandomBalanceDatasource(BalanceDatasourceConfig balanceDatasourceConfig,String url, DB db, Properties properties)  {
+        super(   balanceDatasourceConfig, url,   db,   properties);
     }
     @Override
     protected void buildAddress() throws Exception{

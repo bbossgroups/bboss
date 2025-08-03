@@ -38,8 +38,8 @@ public class RoundbinBalanceDatasource extends BalanceDatasource {
      
     private RoundRobinList<DBNode> roundRobinList;
      
-    public RoundbinBalanceDatasource(String url, DB db, Properties properties)  {
-        super(  url,   db,   properties);
+    public RoundbinBalanceDatasource(BalanceDatasourceConfig balanceDatasourceConfig,String url, DB db, Properties properties)  {
+        super(    balanceDatasourceConfig,url,   db,   properties);
     }
     @Override
     protected void buildAddress() throws Exception{

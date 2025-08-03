@@ -505,7 +505,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 				int updatecount = statement.getUpdateCount();
 				if(result == null)
 				{
-					result = new Integer(updatecount);
+					result = updatecount;
 				}
 				GetCUDResult CUDResult = null;
 				if(getCUDResult)
@@ -689,7 +689,6 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 	 **************************************************************************/
 	/**
 	 * 执行预编译批出理操作,支持事务
-	 * @return
 	 * @throws SQLException
 	 */
 	public void executePreparedBatch(DBOptions dbOptions) throws SQLException
@@ -1024,7 +1023,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 	public void setPrimaryKey(int i, long keyvalue) throws SQLException {
 		try {
 //			this.statement.setLong(i, keyvalue);
-			this.addParam(i, new Long(keyvalue), Param.setLong_int_long);
+			this.addParam(i, keyvalue, Param.setLong_int_long);
 			if (Params.updateKeyInfo == null)
 				Params.updateKeyInfo = new PreparedDBUtil.UpdateKeyInfo();
 			Params.updateKeyInfo.keyValue = keyvalue + "";
@@ -1047,7 +1046,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 			throws SQLException {
 		try {
 //			this.statement.setLong(i, keyvalue);
-			this.addParam(i, new Long(keyvalue), Param.setLong_int_long);
+			this.addParam(i, keyvalue, Param.setLong_int_long);
 			if (Params.updateKeyInfo == null)
 				Params.updateKeyInfo = new PreparedDBUtil.UpdateKeyInfo();
 
@@ -1076,7 +1075,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 		this.initConditions();
 		PreparedDBUtil.BigData condition = new PreparedDBUtil.BigData();
 		condition.bigdataField = filedname;
-		condition.bigdata = new Integer(value);
+		condition.bigdata = value;
 		condition.type = PreparedDBUtil.BigData.TEXT;
 		condition.index = i;
 
@@ -1100,7 +1099,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 		initConditions();
 		PreparedDBUtil.BigData condition = new PreparedDBUtil.BigData();
 		condition.bigdataField = filedname;
-		condition.bigdata = new Integer(value);
+		condition.bigdata = value;
 		condition.type = PreparedDBUtil.BigData.NUMERIC;
 		condition.index = i;
 
@@ -1119,7 +1118,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 	public void setPrimaryKey(int i, int keyvalue) throws SQLException {
 		try {
 //			this.statement.setInt(i, keyvalue);
-			this.addParam(i, new Integer(keyvalue), Param.setInt_int_int);
+			this.addParam(i, keyvalue, Param.setInt_int_int);
 			if (Params.updateKeyInfo == null)
 				Params.updateKeyInfo = new PreparedDBUtil.UpdateKeyInfo();
 			Params.updateKeyInfo.keyValue = keyvalue + "";
@@ -1142,7 +1141,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 			throws SQLException {
 		try {
 //			this.statement.setInt(i, keyvalue);
-			this.addParam(i, new Integer(keyvalue), Param.setInt_int_int);
+			this.addParam(i, keyvalue, Param.setInt_int_int);
 			if (Params.updateKeyInfo == null)
 				Params.updateKeyInfo = new PreparedDBUtil.UpdateKeyInfo();
 //			if (updateKeyInfo != null) {
@@ -2641,7 +2640,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //				this.statement_count.setAsciiStream(i, x, length);
 //			this.statement.setAsciiStream(i, x, length);
 
-			this.addParam(i, new Object[] {x,new Integer(length)}, Param.SET_AsciiStream_INT_InputStream_INT);
+			this.addParam(i, new Object[] {x,length}, Param.SET_AsciiStream_INT_InputStream_INT);
 		} catch (Exception e) {
 			this.resetFromSetMethod(e);
 		}
@@ -2667,7 +2666,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			this.statement.setBinaryStream(i, x, length);
 
 
-			this.addParam(i, new Object[]{x,new Integer(length)}, Param.setBinaryStream_int_InputStream_int);
+			this.addParam(i, new Object[]{x,length}, Param.setBinaryStream_int_InputStream_int);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3075,7 +3074,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //				this.statement_count.setBoolean(i, x);
 //			this.statement.setBoolean(i, x);
 
-			this.addParam(i, new Boolean(x), Param.setBoolean_int_boolean);
+			this.addParam(i, x, Param.setBoolean_int_boolean);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3086,7 +3085,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			if (this.action == SELECT)
 //				this.statement_count.setByte(i, b);
 //			this.statement.setByte(i, b);
-			this.addParam(i, new Byte(b), Param.setByte_int_byte);
+			this.addParam(i, b, Param.setByte_int_byte);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3109,7 +3108,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			if (this.action == SELECT)
 //				this.statement_count.setCharacterStream(i, reader, length);
 //			this.statement.setCharacterStream(i, reader, length);
-			this.addParam(i, new Object[] {reader,new Integer(length)}, Param.setCharacterStream_int_Reader_int);
+			this.addParam(i, new Object[] {reader,length}, Param.setCharacterStream_int_Reader_int);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3222,7 +3221,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //				if (this.action == SELECT)
 //					this.statement_count.setNull(i, Types.NULL);
 //				this.statement.setNull(i, Types.NULL);
-				this.addParam(i, new Integer(Types.DATE), Param.setNull_int_int);
+				this.addParam(i, Types.DATE, Param.setNull_int_int);
 			}
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
@@ -3260,7 +3259,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			if (this.action == SELECT)
 //				this.statement_count.setDouble(i, d);
 //			this.statement.setDouble(i, d);
-			this.addParam(i, new Double(d),Param.setDouble_int_double);
+			this.addParam(i, d,Param.setDouble_int_double);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3277,7 +3276,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			if (this.action == SELECT)
 //				this.statement_count.setFloat(i, f);
 //			this.statement.setFloat(i, f);
-			this.addParam(i, new Float(f), Param.setFloat_int_float);
+			this.addParam(i, f, Param.setFloat_int_float);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3327,7 +3326,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			if (this.action == SELECT)
 //				this.statement_count.setInt(i, x);
 //			this.statement.setInt(i, x);
-			this.addParam(i, new Integer(x), Param.setInt_int_int);
+			this.addParam(i, x, Param.setInt_int_int);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3344,7 +3343,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			if (this.action == SELECT)
 //				this.statement_count.setLong(i, l);
 //			this.statement.setLong(i, l);
-			this.addParam(i, new Long(l), Param.setLong_int_long);
+			this.addParam(i, l, Param.setLong_int_long);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3361,7 +3360,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			if (this.action == SELECT)
 //				this.statement_count.setNull(i, sqlType);
 //			this.statement.setNull(i, sqlType);
-			this.addParam(i, new Integer(sqlType), Param.setNull_int_int);
+			this.addParam(i, sqlType, Param.setNull_int_int);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3373,7 +3372,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			if (this.action == SELECT)
 //				this.statement_count.setNull(i, sqlType, typeName);
 //			this.statement.setNull(i, sqlType, typeName);
-			this.addParam(i, new Object[] {new Integer(sqlType),typeName}, Param.setNull_int_int_String);
+			this.addParam(i, new Object[] {sqlType,typeName}, Param.setNull_int_int_String);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3409,7 +3408,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			if (this.action == SELECT)
 //				this.statement_count.setObject(i, o, targetType);
 //			this.statement.setObject(i, o, targetType);
-			this.addParam(i, new Object[]{o,new Integer(targetType)}, Param.setObject_int_Object_int);
+			this.addParam(i, new Object[]{o,targetType}, Param.setObject_int_Object_int);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3421,7 +3420,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			if (this.action == SELECT)
 //				this.statement_count.setObject(i, o, targetType, scale);
 //			this.statement.setObject(i, o, targetType, scale);
-			this.addParam(i, new Object[]{o,new Integer(targetType),new Integer(scale)}, Param.setObject_int_Object_int_int);
+			this.addParam(i, new Object[]{o,targetType,scale}, Param.setObject_int_Object_int_int);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3443,7 +3442,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			if (this.action == SELECT)
 //				this.statement_count.setShort(i, s);
 //			this.statement.setShort(i, s);
-			this.addParam(i, new Short(s), Param.setShort_int_short);
+			this.addParam(i, s, Param.setShort_int_short);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3523,7 +3522,7 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 //			if (this.action == SELECT)
 //				this.statement_count.setAsciiStream(i, x, length);
 //			this.statement.setUnicodeStream(i, x, length);
-			this.addParam(i, new Object[]{x,new Integer(length)}, Param.setUnicodeStream_int_InputStream_int);
+			this.addParam(i, new Object[]{x,length}, Param.setUnicodeStream_int_InputStream_int);
 		} catch (SQLException e) {
 			this.resetFromSetMethod(e);
 		}
@@ -3678,7 +3677,6 @@ public class DBOptionsPreparedDBUtil extends DBUtil {
 	 * 数据库名称
 	 * @param con_ 外部传入的数据库链接
 	 * @param CUDResult 是否返回处理结果：批处理数据的处理情况，比如更新记录数，自动产生的主键信息
-	 * @return
 	 * @throws SQLException
 	 */
 	public void executePreparedBatch(DBOptions dbOptions,Connection con_,GetCUDResult CUDResult) throws SQLException

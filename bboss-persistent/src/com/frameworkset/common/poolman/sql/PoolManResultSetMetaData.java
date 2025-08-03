@@ -90,7 +90,7 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
 //        int i = 0;
         private String columnName;
         public String getColumnName(int index) {
-            return (String)indexs.get(new Integer(index));
+            return (String)indexs.get(index);
         }
 
         Map indexs = new HashMap();
@@ -99,14 +99,14 @@ public class PoolManResultSetMetaData implements java.sql.ResultSetMetaData, jav
         {
             this.count = count;
             
-            indexs.put(new Integer(index),columnName);
+            indexs.put(index,columnName);
             this.columnName = columnName;
         }
        
         public void increament(int index)
         {
             count ++;
-            indexs.put(new Integer(index),buildUUColname(columnName,index));;
+            indexs.put(index,buildUUColname(columnName,index));;
         }
         
         public boolean containsamecol()

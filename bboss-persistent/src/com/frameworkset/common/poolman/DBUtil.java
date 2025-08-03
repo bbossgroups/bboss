@@ -1321,7 +1321,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 				} else {
 					int i = s.executeUpdate(stmtInfo.getSql());
 					stmtInfo.commit();
-					return new Integer(i);
+					return i;
 				}
 			}
 			else
@@ -1332,7 +1332,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 				}
 				int i = s.executeUpdate(stmtInfo.getSql());
 				stmtInfo.commit();
-				return new Integer(i);
+				return i;
 			}
 		} catch (SQLException e) {
 			try{
@@ -2447,7 +2447,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 					ret_keys = new Object[ret.length];
 					for(int i = 0;  i < ret.length; i ++)
 					{
-						ret_keys[i] = new Integer(ret[i]);
+						ret_keys[i] = ret[i];
 					}
 				}
 			}

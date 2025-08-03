@@ -48,16 +48,17 @@ public abstract class BalanceDatasource implements DataSource {
     protected List<String> nodes;
     private boolean closed;
     private Object closeLock = new Object();
+    protected BalanceDatasourceConfig balanceDatasourceConfig;
      
-    public BalanceDatasource(String url, DB db, Properties properties)  {
+    public BalanceDatasource(BalanceDatasourceConfig balanceDatasourceConfig,String url, DB db, Properties properties)  {
         this.url = url;
         this.db = db;
         this.properties = properties;
+        this.balanceDatasourceConfig = balanceDatasourceConfig;
+        this.nodes = balanceDatasourceConfig.getNodes();
     }
     protected abstract void buildAddress() throws Exception;
     public void init()throws Exception {
-        List<String> nodes = db.getBalanceUrls(url);
-        this.nodes = nodes;
         if (nodes == null || nodes.size() == 1) {
             DataSource currentDatasource = BasicDataSourceFactory.createDBCP2DataSource(url, properties);
             this.currentDatasource = currentDatasource;

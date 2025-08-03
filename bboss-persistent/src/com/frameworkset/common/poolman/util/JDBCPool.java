@@ -1680,88 +1680,101 @@ public class JDBCPool {
 				/**
 				 * 构建外键信息
 				 */
-				foreignrs = metaData.getImportedKeys(catalog, schemaName, tableName);
-				while (foreignrs.next()) {
-					ForeignKeyMetaData foreignKeyMetaData = new ForeignKeyMetaData(
-							this.getDbAdapter());
-					try {
-						foreignKeyMetaData.setPKTABLE_NAME(foreignrs
-								.getString("PKTABLE_NAME"));
-					} catch (Exception e) {
-	
-					}
-					try {
-						foreignKeyMetaData.setPKCOLUMN_NAME(foreignrs
-								.getString("PKCOLUMN_NAME"));
-					} catch (Exception e) {
-	
-					}
-					try {
-						foreignKeyMetaData.setFKTABLE_NAME(foreignrs
-								.getString("FKTABLE_NAME"));
-					} catch (Exception e) {
-	
-					}
-					try {
-						foreignKeyMetaData.setFKCOLUMN_NAME(foreignrs
-								.getString("FKCOLUMN_NAME"));
-					} catch (Exception e) {
-	
-					}
-					try {
-						foreignKeyMetaData.setColumnName(foreignrs
-								.getString("FKCOLUMN_NAME"));
-					} catch (Exception e) {
-	
-					}
-					try {
-						foreignKeyMetaData.setKEY_SEQ(foreignrs
-								.getString("KEY_SEQ"));
-					} catch (Exception e) {
-	
-					}
-					try {
-						foreignKeyMetaData.setUPDATE_RULE(foreignrs
-								.getInt("UPDATE_RULE"));
-					} catch (Exception e) {
-	
-					}
-					try {
-						foreignKeyMetaData.setDELETE_RULE(foreignrs
-								.getInt("DELETE_RULE"));
-					} catch (Exception e) {
-	
-					}
-					try {
-						foreignKeyMetaData.setFK_NAME(foreignrs
-								.getString("FK_NAME"));
-					} catch (Exception e) {
-	
-					}
-					try {
-						foreignKeyMetaData.setPK_NAME(foreignrs
-								.getString("PK_NAME"));
-					} catch (Exception e) {
-	
-					}
-					try {
-						foreignKeyMetaData.setDEFERRABILITY(foreignrs
-								.getString("DEFERRABILITY"));
-					} catch (Exception e) {
-	
-					}
-	
-					foreignKeyMetaData.setColumn(tableMetaData
-							.getColumnMetaData(foreignKeyMetaData
-									.getColumnName().toLowerCase()));
-					tableMetaData.addForeignKey(foreignKeyMetaData);
-	
-				}
-				foreignrs.close();
+                DB adaptor = this.getDbAdapter();
+				foreignrs = adaptor.getImportedKeys(metaData,catalog, schemaName, tableName);
+                if(foreignrs != null) {
+                    while (foreignrs.next()) {
+                        ForeignKeyMetaData foreignKeyMetaData = new ForeignKeyMetaData(
+                                this.getDbAdapter());
+                        try {
+                            foreignKeyMetaData.setPKTABLE_NAME(foreignrs
+                                    .getString("PKTABLE_NAME"));
+                        } catch (Exception e) {
+
+                        }
+                        try {
+                            foreignKeyMetaData.setPKCOLUMN_NAME(foreignrs
+                                    .getString("PKCOLUMN_NAME"));
+                        } catch (Exception e) {
+
+                        }
+                        try {
+                            foreignKeyMetaData.setFKTABLE_NAME(foreignrs
+                                    .getString("FKTABLE_NAME"));
+                        } catch (Exception e) {
+
+                        }
+                        try {
+                            foreignKeyMetaData.setFKCOLUMN_NAME(foreignrs
+                                    .getString("FKCOLUMN_NAME"));
+                        } catch (Exception e) {
+
+                        }
+                        try {
+                            foreignKeyMetaData.setColumnName(foreignrs
+                                    .getString("FKCOLUMN_NAME"));
+                        } catch (Exception e) {
+
+                        }
+                        try {
+                            foreignKeyMetaData.setKEY_SEQ(foreignrs
+                                    .getString("KEY_SEQ"));
+                        } catch (Exception e) {
+
+                        }
+                        try {
+                            foreignKeyMetaData.setUPDATE_RULE(foreignrs
+                                    .getInt("UPDATE_RULE"));
+                        } catch (Exception e) {
+
+                        }
+                        try {
+                            foreignKeyMetaData.setDELETE_RULE(foreignrs
+                                    .getInt("DELETE_RULE"));
+                        } catch (Exception e) {
+
+                        }
+                        try {
+                            foreignKeyMetaData.setFK_NAME(foreignrs
+                                    .getString("FK_NAME"));
+                        } catch (Exception e) {
+
+                        }
+                        try {
+                            foreignKeyMetaData.setPK_NAME(foreignrs
+                                    .getString("PK_NAME"));
+                        } catch (Exception e) {
+
+                        }
+                        if (foreignKeyMetaData.getFK_NAME() == null) {
+                            continue;
+                        }
+                        try {
+                            foreignKeyMetaData.setDEFERRABILITY(foreignrs
+                                    .getString("DEFERRABILITY"));
+                        } catch (Exception e) {
+
+                        }
+
+                        if (foreignKeyMetaData
+                                .getColumnName() != null) {
+                            foreignKeyMetaData.setColumn(tableMetaData
+                                    .getColumnMetaData(foreignKeyMetaData
+                                            .getColumnName().toLowerCase()));
+
+                        }
+
+                        tableMetaData.addForeignKey(foreignKeyMetaData);
+
+                    }
+                    foreignrs.close();
+                }
 			} catch (Exception e) {
 	
-				foreignrs.close();
-				foreignrs = null;
+                if(foreignrs != null) {
+                    foreignrs.close();
+                    foreignrs = null;
+                }
 				log.warn("",e);
 			}
 		}

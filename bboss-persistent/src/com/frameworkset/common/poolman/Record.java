@@ -736,7 +736,7 @@ public class Record extends DBHashtable{
     	}
     	else
     	{ 
-    	    return get(new Integer(parameterIndex));
+    	    return get(parameterIndex);
     	
     	}
 
@@ -1577,7 +1577,6 @@ public class Record extends DBHashtable{
      * @param map the mapping from SQL type names to Java classes
      * @return a <code>java.lang.Object</code> holding the OUT parameter value
      * @exception SQLException if a database access error occurs
-     * @see #setObject
      * @since 1.4
      */
     public Object  getObject (String parameterName, java.util.Map map) throws SQLException

@@ -694,7 +694,7 @@ public class ResultMap {
 										_param.index, _param.sqlType, stmtInfo
 												.getDbname());
 						object = ValueExchange.changeLob2String(object);
-						data.put(new Integer(_param.index), object);
+						data.put(_param.index, object);
 					}
 				} else {
 					throw new SQLException(new StringBuilder("Param[").append(
@@ -729,7 +729,7 @@ public class ResultMap {
 								.getValueFromCallableStatement(cstmt,
 										_param.index, _param.sqlType, stmtInfo
 												.getDbname());
-						data.put(new Integer(_param.index), object);
+						data.put(_param.index, object);
 					}
 				} else {
 					throw new SQLException(new StringBuilder("Param[").append(

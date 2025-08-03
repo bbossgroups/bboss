@@ -449,7 +449,7 @@ public class StatementParser
         //定义表的主键名称变量
         String idName = primaryKey.getPrimaryKeyName();
         boolean contain = containKey(fields,idName);
-        ret[4] = new Integer(0);
+        ret[4] = 0;
         ret[5] = StatementParser.parseField(fields);
 
         if(contain)
@@ -464,7 +464,7 @@ public class StatementParser
             								primaryKey.getPrimaryKeyName(),
             								keyValue,con);
             ret[3] = t_p;
-            ret[4] = new Integer(1);            
+            ret[4] = 1;            
             return ret;
         }
         //将表的主键字段属性插入到insert语句中
@@ -494,9 +494,9 @@ public class StatementParser
         ret[1] = idValue.getPrimaryKey();
         //设置更新tableinfo的语句
         List datas = new ArrayList();
-        datas.add(new Long(idValue.getSequence()));
+        datas.add(idValue.getSequence());
         datas.add(tableName.toLowerCase());
-        datas.add(new Long(idValue.getSequence()));
+        datas.add(idValue.getSequence());
         
         UpdateSQL preparedUpdate = new UpdateSQL(dbname,tableName,UpdateSQL.TABLE_INFO_UPDATE,  datas);
 //        ret[2] = "update tableinfo set table_id_value=" + idValue.getSequence() +" where table_name='"+ tableName.toLowerCase() + "' and table_id_value <" + idValue.getSequence()  ;

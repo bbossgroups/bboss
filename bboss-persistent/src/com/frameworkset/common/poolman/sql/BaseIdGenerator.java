@@ -33,9 +33,9 @@ public abstract class BaseIdGenerator implements IdGenerator{
 			if (type == int.class)
 				value = (int) _value;
 			else if (type == Integer.class)
-				value = new Integer((int) _value);
+				value = (int) _value;
 			else if (type == Long.class)
-				value = new Long(_value);
+				value = _value;
 			else
 				value = _value;
 			return value;
@@ -90,7 +90,7 @@ public abstract class BaseIdGenerator implements IdGenerator{
 			dbUtil.preparedSelect(dbname, sql.toString());
 			Long currentPk = dbUtil.executePreparedForObject(Long.class);
 			if(currentPk == null)
-				currentPk = new Long(0);
+				currentPk = 0l;
 			return currentPk;
 		}
 		catch (Exception e){
@@ -141,7 +141,7 @@ public abstract class BaseIdGenerator implements IdGenerator{
 		if (type == int.class)
 			value =  _value.intValue();
 		else if (type == Integer.class)
-			value = new Integer( _value.intValue());
+			value = _value.intValue();
 		else if (type == Long.class)
 			value = _value;
 		else

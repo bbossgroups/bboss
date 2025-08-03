@@ -1032,7 +1032,7 @@ public class CallableDBUtil extends PreparedDBUtil {
     public void setNull(String parameterName, int sqlType) throws SQLException
     {
     	this.addCallableParam(parameterName, 
-    						  new Integer(sqlType), 
+    						  sqlType, 
     						  CallableParam.setNull_String_parameterName_int_sqlType);
     }
 
@@ -1049,7 +1049,7 @@ public class CallableDBUtil extends PreparedDBUtil {
      */
     public void setBoolean(String parameterName, boolean x) throws SQLException
     {
-    	this.addCallableParam(parameterName, new Boolean(x), CallableParam.setBoolean_String_parameterName_boolean_x);
+    	this.addCallableParam(parameterName, x, CallableParam.setBoolean_String_parameterName_boolean_x);
     }
 
     /**
@@ -1065,7 +1065,7 @@ public class CallableDBUtil extends PreparedDBUtil {
      */
     public void setByte(String parameterName, byte x) throws SQLException
     {
-    	this.addCallableParam(parameterName, new Byte(x), CallableParam.setByte_String_parameterName_byte_x);
+    	this.addCallableParam(parameterName, x, CallableParam.setByte_String_parameterName_byte_x);
     }
 
     /**
@@ -1081,7 +1081,7 @@ public class CallableDBUtil extends PreparedDBUtil {
      */
     public void setShort(String parameterName, short x) throws SQLException
     {
-    	this.addCallableParam(parameterName, new Short(x), CallableParam.setShort_String_parameterName_short_x);
+    	this.addCallableParam(parameterName, x, CallableParam.setShort_String_parameterName_short_x);
     }
 
     /**
@@ -1097,7 +1097,7 @@ public class CallableDBUtil extends PreparedDBUtil {
      */
     public void setInt(String parameterName, int x) throws SQLException
     {
-    	this.addCallableParam(parameterName, new Integer(x), CallableParam.setInt_String_parameterName_int_x);
+    	this.addCallableParam(parameterName, x, CallableParam.setInt_String_parameterName_int_x);
     }
 
     /**
@@ -1113,7 +1113,7 @@ public class CallableDBUtil extends PreparedDBUtil {
      */
     public void setLong(String parameterName, long x) throws SQLException
     {
-    	this.addCallableParam(parameterName, new Long(x), CallableParam.setLong_String_parameterName_long_x);
+    	this.addCallableParam(parameterName, x, CallableParam.setLong_String_parameterName_long_x);
     }
 
     /**
@@ -1129,7 +1129,7 @@ public class CallableDBUtil extends PreparedDBUtil {
      */
     public void setFloat(String parameterName, float x) throws SQLException
     {
-    	this.addCallableParam(parameterName, new Float(x), CallableParam.setFloat_String_parameterName_float_x);
+    	this.addCallableParam(parameterName, x, CallableParam.setFloat_String_parameterName_float_x);
     }
     /**
      * Sets the designated parameter to the given Java <code>double</code> value.  
@@ -1144,7 +1144,7 @@ public class CallableDBUtil extends PreparedDBUtil {
      */
     public void setDouble(String parameterName, double x) throws SQLException
     {
-    	this.addCallableParam(parameterName, new Double(x), CallableParam.setDouble_String_parameterName_double_x);
+    	this.addCallableParam(parameterName, x, CallableParam.setDouble_String_parameterName_double_x);
     }
 
     /**
@@ -1274,7 +1274,7 @@ public class CallableDBUtil extends PreparedDBUtil {
     public void setAsciiStream(String parameterName, java.io.InputStream x, int length)
 	throws SQLException
     {
-    	this.addCallableParam(parameterName, new Object[] {x,new Integer(length)}, CallableParam.setAsciiStream_String_parameterName_InputStream_x_int_length);
+    	this.addCallableParam(parameterName, new Object[] {x,length}, CallableParam.setAsciiStream_String_parameterName_InputStream_x_int_length);
     }
 
     /**
@@ -1298,7 +1298,7 @@ public class CallableDBUtil extends PreparedDBUtil {
     public void setBinaryStream(String parameterName, java.io.InputStream x, 
 			 int length) throws SQLException
     {
-    	this.addCallableParam(parameterName, new Object[] {x,new Integer(length)}, CallableParam.setBinaryStream_String_parameterName_InputStream_x_int_length);
+    	this.addCallableParam(parameterName, new Object[] {x,length}, CallableParam.setBinaryStream_String_parameterName_InputStream_x_int_length);
     }
 
     /**
@@ -1420,7 +1420,7 @@ public class CallableDBUtil extends PreparedDBUtil {
 			    java.io.Reader reader,
 			    int length) throws SQLException
     {
-    	this.addCallableParam(parameterName, new Object[] {reader,new Integer(length)}, CallableParam.setCharacterStream_String_parameterName_Reader_reader_int_length);
+    	this.addCallableParam(parameterName, new Object[] {reader,length}, CallableParam.setCharacterStream_String_parameterName_Reader_reader_int_length);
     }
 
     /**
@@ -1527,7 +1527,7 @@ public class CallableDBUtil extends PreparedDBUtil {
     public void setNull (String parameterName, int sqlType, String typeName) 
 	throws SQLException
     {
-    	this.addCallableParam(parameterName, new Object[] {new Integer(sqlType), typeName},CallableParam.setNull_String_parameterName_int_sqlType_String_typeName);
+    	this.addCallableParam(parameterName, new Object[] {sqlType, typeName},CallableParam.setNull_String_parameterName_int_sqlType_String_typeName);
     }
 
     /**
@@ -2182,7 +2182,6 @@ public class CallableDBUtil extends PreparedDBUtil {
 	
 	/**
 	 * 外部链接
-	 * @param con
 	 * @throws java.sql.SQLException
 	 */
 	protected void executeCallable(Connection con_,Class objectclass,RowHandler rowHander) throws java.sql.SQLException

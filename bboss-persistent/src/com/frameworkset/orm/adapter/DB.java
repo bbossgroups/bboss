@@ -43,6 +43,7 @@ import com.frameworkset.orm.engine.model.SchemaType;
 import com.frameworkset.orm.platform.Platform;
 import com.frameworkset.orm.platform.PlatformDefaultImpl;
 import com.frameworkset.util.SimpleStringUtil;
+import org.frameworkset.persitent.datasource.BalanceDatasourceConfig;
 import org.frameworkset.util.annotations.DateFormateMeta;
 
 import java.io.File;
@@ -55,7 +56,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <code>DB</code> defines the interface for a Torque database
@@ -1154,8 +1154,12 @@ public abstract class DB implements IDMethod, Platform {
 		return ;
 	}
 
+    public ResultSet getImportedKeys(DatabaseMetaData metaData, String catalog, String schemaName, String tableName) throws SQLException {
+        return metaData.getImportedKeys(catalog,schemaName,tableName);
+    }
 
-	public static class PagineSql {
+
+    public static class PagineSql {
 		private long offset;
 		private int maxsize;
 		private String sql;
@@ -1245,14 +1249,16 @@ public abstract class DB implements IDMethod, Platform {
         
         return stmt;
     }
-    public List<String> getBalanceUrls(String url) throws SQLException{
+    public BalanceDatasourceConfig getBalanceDatasourceConfig(String url) throws SQLException{
         List<String> nodes = new ArrayList<>();
         nodes.add(url);
-        return nodes;
+        BalanceDatasourceConfig balanceDatasourceConfig = new BalanceDatasourceConfig();
+        balanceDatasourceConfig.setNodes(nodes);
+        return balanceDatasourceConfig;
     }
 
-    public Map<String,Object> getUrlParams(String url) throws SQLException{
-       return null;
-    }
+//    public Map<String,Object> getUrlParams(String url) throws SQLException{
+//       return null;
+//    }
     
 }

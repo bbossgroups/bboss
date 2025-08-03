@@ -1187,7 +1187,7 @@ public class ValueExchange {
 //				Object temp = res.getObject(i);
 //				value = new Object[] { temp, reader };
 				long temp = res.getLong(i);
-				value = new Long(temp);				
+				value = temp;				
 				break;
 			case Types.TIMESTAMP:
 				value = res.getTimestamp(i);
@@ -1319,7 +1319,7 @@ public class ValueExchange {
 //				Object temp = res.getObject(i);
 //				value = new Object[] { temp, reader };
 				long temp = res.getLong(i);
-				value = new Long(temp);				
+				value = temp;				
 				break;
 			case Types.TIMESTAMP:
 				value = res.getTimestamp(i);
