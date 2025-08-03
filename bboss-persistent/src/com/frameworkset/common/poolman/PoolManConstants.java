@@ -41,7 +41,7 @@ public interface PoolManConstants extends Serializable{
 
     /* DEFAULT OBJECT POOL VALUES */
     public static final int DEFAULT_INITIAL_SIZE = 1;             // 1 object
-    public static final int DEFAULT_TIMEOUT = 1200 ;               // 20 minutes
+    public static final int DEFAULT_TIMEOUT = 1800000 ;               // 30 minutes
     public static final int DEFAULT_SKIMMER_SLEEP = 60 ;	      // 60秒
     public static final int DEFAULT_MAX_SIZE = Integer.MAX_VALUE; // System's max
     public static final int DEFAULT_MIN_SIZE = 0;                 // shrinks to 0

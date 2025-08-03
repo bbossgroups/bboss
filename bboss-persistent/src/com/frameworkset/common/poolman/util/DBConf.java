@@ -48,7 +48,7 @@ public class DBConf implements Serializable {
      * 	use minEvictableIdleTimeMilli
 	 */
     
-    private int minEvictableIdleTimeMilli = 5000;
+    private int minEvictableIdleTimeMilli = 1800000;
 
 
     /**
