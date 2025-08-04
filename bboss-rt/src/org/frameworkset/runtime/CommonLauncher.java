@@ -298,7 +298,9 @@ public class CommonLauncher {
 		System.out.println("os info:" + OSInfo.getOS());
 		appDir = computeApplicationDir(location, new File("."));
 		loadConfig(appDir);
-		if (!shutdown && !restart) {
+        boolean isStartup = !shutdown && !restart;
+//        System.out.println("isStartup:"+isStartup + ",shutdown: "+shutdown + ",restart: "+restart);
+		if (isStartup) {
 			startup();
 		} else if(shutdown){
 			shutdown();
