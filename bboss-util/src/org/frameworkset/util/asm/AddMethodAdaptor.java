@@ -40,7 +40,7 @@ public class AddMethodAdaptor  extends ClassVisitor {
 	  private boolean isMethodPresent;
 
 	  public AddMethodAdaptor(ClassVisitor cv) {
-	    super(Opcodes.ASM5,cv);
+	    super(Opcodes.ASM9,cv);
 	  }
 
 	  @Override

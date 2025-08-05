@@ -40,13 +40,13 @@ public class ASMPUTGETFieldAdapter extends ClassVisitor{
 	private List<PropertieDescription> propertieDescriptionies;
 	
 	public ASMPUTGETFieldAdapter(Class beanType,List<PropertieDescription> propertieDescriptionies) {
-		super(Opcodes.ASM5);
+		super(Opcodes.ASM9);
 		init( beanType, propertieDescriptionies);
 		
 	}
 
 	public ASMPUTGETFieldAdapter(ClassVisitor cv,Class beanType,List<PropertieDescription> propertieDescriptionies) {
-		super( Opcodes.ASM5,cv);
+		super( Opcodes.ASM9,cv);
 		init( beanType, propertieDescriptionies);
 	}
 	

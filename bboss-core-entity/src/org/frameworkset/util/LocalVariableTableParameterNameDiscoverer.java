@@ -205,7 +205,7 @@ public class LocalVariableTableParameterNameDiscoverer implements ParameterNameD
 		private String[] parameterNames;
 		
 		public ParameterNameDiscoveringVisitor(String name, boolean isStatic, Class[] paramTypes) {
-			super(Opcodes.ASM5);
+			super(Opcodes.ASM9);
 			this.methodNameToMatch = name;
 			this.numParamsExpected = paramTypes.length;
 			computeLvtSlotIndices(isStatic, paramTypes);
@@ -286,7 +286,7 @@ public class LocalVariableTableParameterNameDiscoverer implements ParameterNameD
 		private boolean hasLvtInfo = false;
 
 		public LocalVariableTableVisitor(ParameterNameDiscoveringVisitor memberVisitor, boolean isStatic) {
-			super(Opcodes.ASM5);
+			super(Opcodes.ASM9);
 			this.memberVisitor = memberVisitor;
 			this.isStatic = isStatic;
 			this.parameterNames = new String[memberVisitor.numParamsExpected];
