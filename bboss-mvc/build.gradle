@@ -47,9 +47,9 @@ dependencies {
             [group: 'org.ow2.asm', name: 'asm-commons', version: "${asm}", transitive: false],
             [group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4', transitive: false],
             [group: 'commons-fileupload', name: 'commons-fileupload', version: '1.5', transitive: false],
-            [group: 'commons-io', name: 'commons-io', version: '2.15.1', transitive: false],
+            [group: 'commons-io', name: 'commons-io', version: '2.18.0', transitive: false],
             [group: 'xml-resolver', name: 'xml-resolver', version: '1.2', transitive: false],
-            [group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '5.2.0', transitive: false],
+            [group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '5.3.0', transitive: false],
             [group: 'org.apache.ws.xmlschema', name: 'xmlschema-core', version: '2.3.1', transitive: false],
                 
             //[group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],
