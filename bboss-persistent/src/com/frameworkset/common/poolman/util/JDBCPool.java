@@ -1622,10 +1622,20 @@ public class JDBCPool {
 				}
 				columnrs.close();
 			} catch (Exception e) {
-				columnrs.close();
-				columnrs = null;
+				
 				log.warn("",e);
 			}
+            finally {
+                if(columnrs != null) {
+                    try {
+                        columnrs.close();
+                    }
+                    catch (Exception e){
+                        
+                    }
+                }
+                columnrs = null;
+            }
 	
 			/**
 			 * 构建主键信息
@@ -1671,10 +1681,19 @@ public class JDBCPool {
 				primaryKeysrs.close();
 				primaryKeysrs = null;
 			} catch (Exception e) {
-				primaryKeysrs.close();
-				primaryKeysrs = null;
 				log.warn("",e);
 			}
+            finally {
+                if(primaryKeysrs != null) {
+                    try {
+                        primaryKeysrs.close();
+                    }
+                    catch (Exception e){
+
+                    }
+                }
+                primaryKeysrs = null;
+            }
 	
 			try {
 				/**
@@ -1771,12 +1790,20 @@ public class JDBCPool {
                 }
 			} catch (Exception e) {
 	
-                if(foreignrs != null) {
-                    foreignrs.close();
-                    foreignrs = null;
-                }
+                
 				log.warn("",e);
 			}
+            finally {
+                if(foreignrs != null) {
+                    try {
+                        foreignrs.close();
+                    }
+                    catch (Exception e){
+
+                    }
+                }
+                foreignrs = null;
+            }
 		}
 		return tableMetaData;
 	}
