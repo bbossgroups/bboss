@@ -4,6 +4,7 @@ import com.frameworkset.util.StringUtil;
 import org.frameworkset.schedule.ThreadPoolTaskScheduler;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
+import org.frameworkset.web.servlet.context.WebApplicationContext;
 import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
 import org.frameworkset.web.socket.handler.HandshakeInterceptor;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
@@ -36,7 +37,7 @@ public class WebSocketLoader {
 //					.getApplicationContext("org/frameworkset/spi/ws/webserivce-modules.xml");
 			Class clas = Class.forName("org.frameworkset.web.servlet.support.WebApplicationContextUtils");
 			Method m = clas.getMethod("getWebApplicationContext");
-			org.frameworkset.spi.BaseApplicationContext context = (BaseApplicationContext)m.invoke(null);
+			WebApplicationContext context = (WebApplicationContext)m.invoke(null);
 			 
 			loadWebSocketService(context,classLoader, mapping);
 		} catch (Exception e) {
@@ -51,7 +52,7 @@ public class WebSocketLoader {
 		return scheduler;
 	}
 	
-	private static  void registerWebSocketHandlers(BaseApplicationContext context,Pro wspro,WebSocketHandlerRegistry registry) {
+	private static  void registerWebSocketHandlers(WebApplicationContext context,Pro wspro,WebSocketHandlerRegistry registry) {
 		WebSocketRegistryMeta webSocketRegistryMeta  = context.getTBeanObject(wspro.getName(), WebSocketRegistryMeta.class);
 		WebSocketHandler handler = webSocketRegistryMeta.getWebsocketHandler();
 		String url = webSocketRegistryMeta.getWebsocketUrl();
@@ -74,7 +75,7 @@ public class WebSocketLoader {
 	    	temp.setAllowedOrigins(allowedOrigins_);
 	    }
 	}
-	public static void loadWebSocketService(BaseApplicationContext context,ClassLoader classLoader,HandlerMappingsTable mapping)
+	public static void loadWebSocketService(WebApplicationContext context,ClassLoader classLoader,HandlerMappingsTable mapping)
 	{
 		if(context == null)
 			return;

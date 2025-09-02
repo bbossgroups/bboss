@@ -39,14 +39,12 @@ public abstract class ExecutorConfigurationSupport extends CustomizableThreadFac
 	 * consider specifying a JNDI-located ManagedThreadFactory: by default, to
 	 * be found at "java:comp/DefaultManagedThreadFactory". Use the
 	 * "jee:jndi-lookup" namespace element in XML or the programmatic
-	 * {@link org.frameworkset.jndi.JndiLocatorDelegate} for convenient
+	 *   org.frameworkset.jndi.JndiLocatorDelegate} for convenient
 	 * lookup. Alternatively, consider using Spring's
-	 * {@link DefaultManagedAwareThreadFactory} with its fallback to local
+	 *   DefaultManagedAwareThreadFactory} with its fallback to local
 	 * threads in case of no managed thread factory found.
 	 * 
 	 * @see java.util.concurrent.Executors#defaultThreadFactory()
-	 * @see javax.enterprise.concurrent.ManagedThreadFactory
-	 * @see DefaultManagedAwareThreadFactory
 	 */
 	public void setThreadFactory(ThreadFactory threadFactory) {
 		this.threadFactory = (threadFactory != null ? threadFactory : this);

@@ -39,7 +39,7 @@ public interface WebSocketHandler {
 	 * then a large WebSocket message, or one of an unknown size may be split and
 	 * maybe received over multiple calls to
 	 * {@link #handleMessage(WebSocketSession, WebSocketMessage)}. The flag
-	 * {@link org.frameworkset.web.socket.WebSocketMessage#isLast()} indicates if
+	 * org.frameworkset.web.socket.WebSocketMessage#isLast()} indicates if
 	 * the message is partial and whether it is the last part.
 	 */
 	boolean supportsPartialMessages();

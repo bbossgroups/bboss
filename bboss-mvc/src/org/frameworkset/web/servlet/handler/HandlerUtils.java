@@ -97,7 +97,7 @@ public abstract class HandlerUtils {
 	 */
 	public static final String DEFAULT_COMMAND_NAME = "command";
 	public static final String USE_MVC_DENCODE_KEY = "org.frameworkset.web.servlet.handler.HandlerUtils.USE_MVC_DENCODE_KEY";
-	public static final Boolean TRUE = new Boolean(true);
+	public static final Boolean TRUE = true;
 	public static final PathMatcher pathMatcher = new AntPathMatcher();
 	/**
 	 * Log category to use when no mapped handler is found for a request.

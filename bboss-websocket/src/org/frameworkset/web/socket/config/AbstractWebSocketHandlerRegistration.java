@@ -9,6 +9,10 @@ import org.frameworkset.util.Assert;
 import org.frameworkset.util.LinkedMultiValueMap;
 import org.frameworkset.util.MultiValueMap;
 import org.frameworkset.util.ObjectUtils;
+import org.frameworkset.web.servlet.HandlerMapping;
+import org.frameworkset.web.servlet.context.ServletContextAware;
+import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
+import org.frameworkset.web.servlet.handler.annotations.DefaultAnnotationHandlerMapping;
 import org.frameworkset.web.socket.handler.DefaultHandshakeHandler;
 import org.frameworkset.web.socket.handler.HandshakeHandler;
 import org.frameworkset.web.socket.handler.HandshakeInterceptor;
@@ -96,19 +100,25 @@ public abstract class AbstractWebSocketHandlerRegistration<M>   implements WebSo
 		return interceptors.toArray(new HandshakeInterceptor[interceptors.size()]);
 	}
 
-	protected final M getMappings() {
+	protected final M getMappings(HandlerMappingsTable mapping) {
 		M mappings = createMappings();
 		if (this.sockJsServiceRegistration != null) {
 			SockJsService sockJsService = this.sockJsServiceRegistration.getSockJsService();
 			for (WebSocketHandler wsHandler : this.handlerMap.keySet()) {
 				for (String path : this.handlerMap.get(wsHandler)) {
 					String pathPattern = path.endsWith("/") ? path + "**" : path + "/**";
-					addSockJsServiceMapping(mappings, sockJsService, wsHandler, pathPattern);
+					addSockJsServiceMapping(mappings, sockJsService, wsHandler, pathPattern,mapping);
 				}
 			}
 		}
 		else {
+            HandlerMapping handlerMapping = mapping.getHandlerMapping();
 			HandshakeHandler handshakeHandler = getOrCreateHandshakeHandler();
+            if(handshakeHandler instanceof ServletContextAware){
+                if(handlerMapping instanceof DefaultAnnotationHandlerMapping) {
+                    ((ServletContextAware) handshakeHandler).setServletContext(((DefaultAnnotationHandlerMapping)handlerMapping).getServletContext());
+                }
+            }
 			HandshakeInterceptor[] interceptors = getInterceptors();
 			for (WebSocketHandler wsHandler : this.handlerMap.keySet()) {
 				for (String path : this.handlerMap.get(wsHandler)) {
@@ -127,7 +137,7 @@ public abstract class AbstractWebSocketHandlerRegistration<M>   implements WebSo
 	protected abstract M createMappings();
 
 	protected abstract void addSockJsServiceMapping(M mappings, SockJsService sockJsService,
-			WebSocketHandler handler, String pathPattern);
+			WebSocketHandler handler, String pathPattern,HandlerMappingsTable mapping);
 
 	protected abstract void addWebSocketHandlerMapping(M mappings, WebSocketHandler wsHandler,
 			HandshakeHandler handshakeHandler, HandshakeInterceptor[] interceptors, String path);

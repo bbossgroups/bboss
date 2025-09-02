@@ -12,7 +12,6 @@ import java.util.Map;
 public class WebSocketHandlerMapping  extends AbstractUrlHandlerMapping  implements SmartLifecycle {
 	private volatile boolean running = false;
 	public WebSocketHandlerMapping() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -34,11 +33,19 @@ public class WebSocketHandlerMapping  extends AbstractUrlHandlerMapping  impleme
 	public void start() {
 		if (!isRunning()) {
 			this.running = true;
-			for (HandlerMeta handler : getUrlMap().values()) {
-				if (handler.getHandler() instanceof Lifecycle) {
-					((Lifecycle) handler.getHandler()).start();
-				}
-			}
+//			for (HandlerMeta handler : getUrlMap().values()) {
+//				if (handler.getHandler() instanceof Lifecycle) {
+//					((Lifecycle) handler.getHandler()).start();
+//				}
+//			}
+
+            for (Map.Entry<String, HandlerMeta> entry : getUrlMap().entrySet()) {
+                HandlerMeta handlerMeta = entry.getValue();
+                String key = entry.getKey();
+                if (handlerMeta.getHandler() instanceof Lifecycle) {
+                    ((Lifecycle) handlerMeta.getHandler()).start(key);
+                }
+            }
 		}
 	}
 

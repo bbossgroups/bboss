@@ -48,7 +48,7 @@ public abstract class NotifiableFactory implements java.io.Serializable {
 	/**
 	 * Description 注册监听器方法
 	 * @param listener 需要注册的监听器
-	 * @param List<ResourceChangeEventType> 监听器需要监听的消息类型
+	 * @param eventtypes 监听器需要监听的消息类型
 	 * void
 	 */
 	public static void addListener(Listener listener,List eventtypes)

@@ -22,7 +22,7 @@ import java.util.Map;
  * all versions of Tomcat that support JSR-356, i.e. Tomcat 7.0.47+ and higher.
  *
  * <p>To modify properties of the underlying {@link javax.websocket.server.ServerContainer}
- * you can use {@link  } in XML configuration or,
+ * you can use {  } in XML configuration or,
  * when using Java configuration, access the container instance through the
  * "javax.websocket.server.ServerContainer" ServletContext attribute.
  *

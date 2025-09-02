@@ -323,8 +323,7 @@ public class EventHandle  implements Notifiable {
 	/**
 	 * Description:
 	 * 
-	 * @param source
-	 * @see .authorization.ACLNotifiable#change(java.lang.Object)
+	 * @param event
 	 */
 	public void change(Event event) {
 		change(event, true);

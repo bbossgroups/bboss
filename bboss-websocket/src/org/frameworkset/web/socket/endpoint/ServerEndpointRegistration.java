@@ -21,7 +21,7 @@ import org.frameworkset.web.socket.handler.BeanCreatingHandlerProvider;
 /**
  * An implementation of {@link javax.websocket.server.ServerEndpointConfig} for use in
  * Spring applications. A {@link ServerEndpointRegistration} bean is detected by
- * {@link ServerEndpointExporter} and registered with a Java WebSocket runtime at startup.
+ * ServerEndpointExporter and registered with a Java WebSocket runtime at startup.
  *
  * <p>Class constructors accept a singleton {@link javax.websocket.Endpoint} instance
  * or an Endpoint specified by type {@link Class}. When specified by type, the endpoint
@@ -34,7 +34,6 @@ import org.frameworkset.web.socket.handler.BeanCreatingHandlerProvider;
  *
  * @author Rossen Stoyanchev
  * @since 4.0
- * @see ServerEndpointExporter
  */
 public class ServerEndpointRegistration extends ServerEndpointConfig.Configurator
 		implements ServerEndpointConfig,   ApplicationContextAware  {

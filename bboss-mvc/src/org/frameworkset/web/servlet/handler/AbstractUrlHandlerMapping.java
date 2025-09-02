@@ -153,7 +153,18 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 		this.lazyInitHandlers = lazyInitHandlers;
 	}
 
+     /**
+     * 获取请求的查找路径
+     * 
+     * @param request HTTP请求对象，用于获取请求路径信息
+     * @return 返回请求的查找路径字符串
+     */
+    public String getLookupPathForRequest(HttpServletRequest request)
+	{
+		return this.urlPathHelper.getLookupPathForRequest(request);
+	}
 
+ 
 	/**
 	 * Look up a handler for the URL path of the given request.
 	 * @param request current HTTP request
@@ -181,10 +192,7 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 			if(logger.isDebugEnabled())
 				logger.debug("Mapping [" + lookupPath + "] to handler '" + handler.getHandler().getHandlerName() + "'");
 		}
-		else if (handler == null) {
-			if(logger.isInfoEnabled())
-				logger.info("No handler mapping found for [" + lookupPath + "]");
-		}
+		
 		return handler;
 	}
 

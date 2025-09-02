@@ -46,6 +46,8 @@ public class HandlerMappingsTable implements DisposableBean{
 	public  HandlerMapping getHandlerMapping() {
 		return handlerMapping;
 	}
+    
+    
 
 	public void setHandlerMapping(HandlerMapping handlerMapping) {
 		
@@ -80,6 +82,12 @@ public class HandlerMappingsTable implements DisposableBean{
 		HandlerExecutionChain handler = handlerMapping.getHandler(request);
 		if(handler == null && websocketHandlerMapping != null)
 			handler = this.websocketHandlerMapping.getHandler(request);
+        if (handler == null) {
+            if(logger.isInfoEnabled()) {
+                String lookupPath = this.handlerMapping.getLookupPathForRequest(request);
+                logger.info("No handler mapping found for [" + lookupPath + "]");
+            }
+        }
 		return handler;
 	}
 

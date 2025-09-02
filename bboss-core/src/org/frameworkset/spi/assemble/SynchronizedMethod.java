@@ -582,7 +582,7 @@ public class SynchronizedMethod implements java.io.Serializable {
 						|| throwable instanceof java.lang.RuntimeException
 						|| throwable instanceof java.lang.Error)
 				{
-					t = new Boolean( true);
+					t = true;
 					rollbackExceptionIndexs.put(key, t);
 					return true;
 				}
@@ -596,7 +596,7 @@ public class SynchronizedMethod implements java.io.Serializable {
 						{
 							if(throwable.getClass() == re.getExceptionClass())
 							{
-								t = new Boolean( true);
+								t = true;
 								rollbackExceptionIndexs.put(key, t);
 								return true;
 							}
@@ -606,21 +606,21 @@ public class SynchronizedMethod implements java.io.Serializable {
 							if(re.getExceptionClass() != null && 
 									re.getExceptionClass().isAssignableFrom(throwable.getClass()))
 							{
-								t = new Boolean( true);
+								t = true;
 								rollbackExceptionIndexs.put(key, t);
 								return true;
 							}
 						}
 							
 					}
-					t = new Boolean( false);
+					t = false;
 					rollbackExceptionIndexs.put(key, t);
 					return false;
 				}
 				//如果不是系统异常，并且没有声明回滚事务的异常，则默认为回滚事务异常
 				else
 				{
-					t = new Boolean( true);
+					t = true;
 					rollbackExceptionIndexs.put(key, t);
 					return true;
 				}
@@ -629,7 +629,7 @@ public class SynchronizedMethod implements java.io.Serializable {
 			{
 				
 				
-				t = new Boolean( true);
+				t = true;
 				rollbackExceptionIndexs.put(key, t);
 				log.error(e.getMessage(),e);
 				return true;

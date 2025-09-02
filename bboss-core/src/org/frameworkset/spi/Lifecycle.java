@@ -26,7 +26,6 @@ package org.frameworkset.spi;
  * @author Juergen Hoeller
  * @since 2.0
  * @see SmartLifecycle
- * @see ConfigurableApplicationContext
 
  */
 public interface Lifecycle {
@@ -38,9 +37,15 @@ public interface Lifecycle {
 	 * components that apply.
 	 * @see SmartLifecycle#isAutoStartup()
 	 */
-	void start();
+	default void start(){
+        
+    }
 
-	/**
+    default void start(String path){
+        start();
+    }
+
+    /**
 	 * Stop this component, typically in a synchronous fashion, such that the component is
 	 * fully stopped upon return of this method. Consider implementing {@link SmartLifecycle}
 	 * and its {@code stop(Runnable)} variant when asynchronous stop behavior is necessary.

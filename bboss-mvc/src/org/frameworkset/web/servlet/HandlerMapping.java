@@ -68,7 +68,15 @@ public interface HandlerMapping {
 	 */
 	HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception;
 
-
+    /**
+     * 获取请求的查找路径
+     *
+     * @param request HTTP请求对象，用于获取请求路径信息
+     * @return 返回请求的查找路径字符串
+     */
+    default String getLookupPathForRequest(HttpServletRequest request){
+        return null;
+    }
 	void destroy();
 
 

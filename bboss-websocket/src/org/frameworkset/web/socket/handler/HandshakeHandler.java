@@ -12,7 +12,7 @@ public interface HandshakeHandler {
 	 * @param request the current request
 	 * @param response the current response
 	 * @param wsHandler the handler to process WebSocket messages; see
-	 * {@link PerConnectionWebSocketHandler} for providing a handler with
+	 *   for providing a handler with
 	 * per-connection lifecycle.
 	 * @param attributes attributes from the HTTP handshake to associate with the WebSocket
 	 * session; the provided attributes are copied, the original map is not used.

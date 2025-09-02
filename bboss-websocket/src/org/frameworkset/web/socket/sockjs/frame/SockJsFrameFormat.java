@@ -10,7 +10,7 @@ package org.frameworkset.web.socket.sockjs.frame;
  * surrounding script tags, and more.
  *
  * <p>For the various SockJS frame formats in use, see implementations of
- * {@link  org.frameworkset.web.socket.sockjs.transport.handler.AbstractHttpSendingTransportHandler#getFrameFormat(org.frameworkset.http.server.ServerHttpRequest) AbstractHttpSendingTransportHandler.getFrameFormat}
+ * { org.frameworkset.web.socket.sockjs.transport.handler.AbstractHttpSendingTransportHandler#getFrameFormat(org.frameworkset.http.server.ServerHttpRequest) AbstractHttpSendingTransportHandler.getFrameFormat}
  *
  * @author Rossen Stoyanchev
  * @since 4.0

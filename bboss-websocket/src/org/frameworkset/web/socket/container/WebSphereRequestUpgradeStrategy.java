@@ -19,7 +19,7 @@ import java.util.Map;
  * WebSphere support for upgrading an {@link HttpServletRequest} during a
  * WebSocket handshake. To modify properties of the underlying
  * {@link javax.websocket.server.ServerContainer} you can use
- * {@link  } in XML configuration or, when using
+ * {  } in XML configuration or, when using
  * Java configuration, access the container instance through the
  * "javax.websocket.server.ServerContainer" ServletContext attribute.
  *

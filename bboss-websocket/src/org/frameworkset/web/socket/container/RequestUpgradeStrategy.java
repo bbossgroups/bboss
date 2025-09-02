@@ -31,8 +31,8 @@ public interface RequestUpgradeStrategy {
 	 * @param user the user to associate with the WebSocket session
 	 * @param wsHandler the handler for WebSocket messages
 	 * @param attributes handshake request specific attributes to be set on the WebSocket
-	 * session via {@link org.frameworkset.web.socket.server.HandshakeInterceptor} and
-	 * thus made available to the {@link org.frameworkset.web.socket.WebSocketHandler}
+	 * session via  org.frameworkset.web.socket.server.HandshakeInterceptor} and
+	 * thus made available to the  org.frameworkset.web.socket.WebSocketHandler}
 	 * @throws HandshakeFailureException thrown when handshake processing failed to
 	 * complete due to an internal, unrecoverable error, i.e. a server error as
 	 * opposed to a failure to successfully negotiate the requirements of the

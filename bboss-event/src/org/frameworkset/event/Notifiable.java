@@ -39,13 +39,11 @@ public interface Notifiable {
 	 *         如果系统中没有启动集群或多实例功能时
 	 * void
 	 * @deprecated
-	 * @see addListener(Listener listener);
 	 */
 	public void addListener(Listener listener,boolean remote);
 	/**
 	 * Description 注册监听器方法
 	 * @param listener 需要注册的监听器
-	 * @param List<ResourceChangeEventType> 监听器需要监听的消息类型
 	 * void
 	 */
 	public void addListener(Listener listener,EventType eventtypes);
@@ -53,14 +51,14 @@ public interface Notifiable {
 	/**
 	 * Description 注册监听器方法
 	 * @param listener 需要注册的监听器
-	 * @param List<ResourceChangeEventType> 监听器需要监听的消息类型
+	 * @param eventtypes 监听器需要监听的消息类型
 	 * void
 	 */
 	public void addListener(Listener listener,List eventtypes);
 	/**
 	 * Description 注册监听器方法
 	 * @param listener 需要注册的监听器
-	 * @param List<ResourceChangeEventType> 监听器需要监听的消息类型
+	 * @param eventtypes 监听器需要监听的消息类型
 	 * @parema boolean remote 区分监听器是否监听远程事件，
 	 * 					true-监听本地和远程事件
 	 * 					false-不监听，只监听本地事件

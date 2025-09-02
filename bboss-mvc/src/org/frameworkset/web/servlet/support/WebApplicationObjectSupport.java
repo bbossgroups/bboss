@@ -80,7 +80,6 @@ public abstract class WebApplicationObjectSupport extends ApplicationObjectSuppo
 	 * Subclasses may override this for custom initialization based
 	 * on the ServletContext that this application object runs in.
 	 * <p>The default implementation is empty. Called by
-	 * {@link #initApplicationContext(org.frameworkset.spi.ApplicationContext)}
 	 * as well as {@link #setServletContext(javax.servlet.ServletContext)}.
 	 * @param servletContext the ServletContext that this application object runs in
 	 * (never <code>null</code>)
@@ -115,7 +114,7 @@ public abstract class WebApplicationObjectSupport extends ApplicationObjectSuppo
 	 * Return the current ServletContext.
 	 * @throws IllegalStateException if not running within a ServletContext
 	 */
-	protected final ServletContext getServletContext() throws IllegalStateException {
+	public final ServletContext getServletContext() throws IllegalStateException {
 		if (this.servletContext != null) {
 			return this.servletContext;
 		}

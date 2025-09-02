@@ -3,7 +3,7 @@ package org.frameworkset.web.socket.inf;
 import org.frameworkset.http.HttpHeaders;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.net.URI;
 import java.security.Principal;
 import java.util.List;
@@ -46,12 +46,12 @@ public interface WebSocketSession {
 	/**
 	 * Return the address on which the request was received.
 	 */
-	InetSocketAddress getLocalAddress();
+	SocketAddress getLocalAddress();
 
 	/**
 	 * Return the address of the remote client.
 	 */
-	InetSocketAddress getRemoteAddress();
+    SocketAddress getRemoteAddress();
 
 	/**
 	 * Return the negotiated sub-protocol or {@code null} if none was specified or

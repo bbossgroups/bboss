@@ -142,8 +142,8 @@ public class ProviderManagerInfo extends BaseTXManager implements UNmodify {
 //    {
 //    	this.txs = txs;
 //    }
-    public static final Boolean TRUE = new Boolean(true);
-    public static final Boolean FALSE = new Boolean(false);
+    public static final Boolean TRUE = true;
+    public static final Boolean FALSE = false;
     
     /**
      * 判断方法是否包含同步方法，如果包含则返回true，否则返回false

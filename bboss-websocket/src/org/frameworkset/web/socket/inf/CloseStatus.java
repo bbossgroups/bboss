@@ -162,7 +162,7 @@ public class CloseStatus {
 	/**
 	 * Crate a new {@link CloseStatus} from this one with the specified reason.
 	 * @param reason the reason
-	 * @return a new {@link StatusCode} instance
+	 * @return a new  StatusCode instance
 	 */
 	public CloseStatus withReason(String reason) {
 		Assert.hasText(reason, "Reason must not be empty");

@@ -1,16 +1,5 @@
 package org.frameworkset.web.socket.container;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.eclipse.jetty.websocket.api.UpgradeRequest;
 import org.eclipse.jetty.websocket.api.UpgradeResponse;
 import org.eclipse.jetty.websocket.api.WebSocketPolicy;
@@ -36,6 +25,18 @@ import org.frameworkset.web.socket.handler.jetty.JettyWebSocketSession;
 import org.frameworkset.web.socket.handler.jetty.WebSocketToJettyExtensionConfigAdapter;
 import org.frameworkset.web.socket.inf.WebSocketExtension;
 import org.frameworkset.web.socket.inf.WebSocketHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A {@link RequestUpgradeStrategy} for use with Jetty 9.0-9.3. Based on Jetty's
@@ -47,6 +48,7 @@ import org.frameworkset.web.socket.inf.WebSocketHandler;
  */
 public class JettyRequestUpgradeStrategy implements RequestUpgradeStrategy, Lifecycle, ServletContextAware {
 
+    private static Logger log = LoggerFactory.getLogger(JettyRequestUpgradeStrategy.class);
 	// Pre-Jetty 9.3 init method without ServletContext
 	private static final Method webSocketFactoryInitMethod =
 			ClassUtils.getMethodIfAvailable(WebSocketServerFactory.class, "init");
@@ -55,7 +57,7 @@ public class JettyRequestUpgradeStrategy implements RequestUpgradeStrategy, Life
 			new NamedThreadLocal<WebSocketHandlerContainer>("WebSocket Handler Container");
 
 
-	private final WebSocketServerFactory factory;
+	private WebSocketServerFactory factory;
 
 	private volatile List<WebSocketExtension> supportedExtensions;
 
@@ -69,7 +71,7 @@ public class JettyRequestUpgradeStrategy implements RequestUpgradeStrategy, Life
 	 * its default constructor thus using a default {@link WebSocketPolicy}.
 	 */
 	public JettyRequestUpgradeStrategy() {
-		this(new WebSocketServerFactory());
+//		this(new WebSocketServerFactory());
 	}
 
 	/**
@@ -77,10 +79,11 @@ public class JettyRequestUpgradeStrategy implements RequestUpgradeStrategy, Life
 	 * This may be useful for modifying the factory's {@link WebSocketPolicy}
 	 * via {@link WebSocketServerFactory#getPolicy()}.
 	 */
-	public JettyRequestUpgradeStrategy(WebSocketServerFactory factory) {
+	 void initJettyRequestUpgradeStrategy() {
 		Assert.notNull(factory, "WebSocketServerFactory must not be null");
-		this.factory = factory;
-		this.factory.setCreator(new WebSocketCreator() {
+         WebSocketServerFactory factory = new WebSocketServerFactory(this.servletContext);
+         
+         factory.setCreator(new WebSocketCreator() {
 			@Override
 			public Object createWebSocket(ServletUpgradeRequest request, ServletUpgradeResponse response) {
 				// Cast to avoid infinite recursion
@@ -135,12 +138,14 @@ public class JettyRequestUpgradeStrategy implements RequestUpgradeStrategy, Life
 		if (!isRunning()) {
 			this.running = true;
 			try {
-				if (webSocketFactoryInitMethod != null) {
-					webSocketFactoryInitMethod.invoke(this.factory);
-				}
-				else {
-					this.factory.init(this.servletContext);
-				}
+                initJettyRequestUpgradeStrategy();
+//				if (webSocketFactoryInitMethod != null) {
+//					webSocketFactoryInitMethod.invoke(this.factory);
+//				}
+//				else {
+//					this.factory.init(this.servletContext);
+//				}
+                this.factory.start();
 			}
 			catch (Exception ex) {
 				throw new IllegalStateException("Unable to initialize Jetty WebSocketServerFactory", ex);
@@ -152,8 +157,12 @@ public class JettyRequestUpgradeStrategy implements RequestUpgradeStrategy, Life
 	public void stop() {
 		if (isRunning()) {
 			this.running = false;
-			this.factory.cleanup();
-		}
+            try {
+                this.factory.stop();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
 	}
 
 	@Override

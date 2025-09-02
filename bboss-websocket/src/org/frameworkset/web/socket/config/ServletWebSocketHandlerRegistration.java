@@ -6,7 +6,11 @@ import org.frameworkset.schedule.TaskScheduler;
 import org.frameworkset.util.LinkedMultiValueMap;
 import org.frameworkset.util.MultiValueMap;
 import org.frameworkset.util.ObjectUtils;
+import org.frameworkset.web.servlet.HandlerMapping;
+import org.frameworkset.web.servlet.context.ServletContextAware;
+import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
 import org.frameworkset.web.servlet.handler.HandlerMeta;
+import org.frameworkset.web.servlet.handler.annotations.DefaultAnnotationHandlerMapping;
 import org.frameworkset.web.socket.handler.HandshakeHandler;
 import org.frameworkset.web.socket.handler.HandshakeInterceptor;
 import org.frameworkset.web.socket.handler.SockJsHttpRequestHandler;
@@ -28,9 +32,15 @@ public class ServletWebSocketHandlerRegistration extends AbstractWebSocketHandle
 
 	@Override
 	protected void addSockJsServiceMapping(MultiValueMap<HandlerMeta, String> mappings,
-			SockJsService sockJsService, WebSocketHandler handler, String pathPattern) {
+                                           SockJsService sockJsService, WebSocketHandler handler, String pathPattern, HandlerMappingsTable mapping) {
 
 		SockJsHttpRequestHandler httpHandler = new SockJsHttpRequestHandler(sockJsService, handler);
+        HandlerMapping handlerMapping = mapping.getHandlerMapping();
+        if(httpHandler instanceof ServletContextAware){
+            if(handlerMapping instanceof DefaultAnnotationHandlerMapping) {
+                ((ServletContextAware) httpHandler).setServletContext(((DefaultAnnotationHandlerMapping)handlerMapping).getServletContext());
+            }
+        }
 		HandlerMeta handlerMeta = new HandlerMeta();
 		handlerMeta.setHandler(httpHandler);
 		handlerMeta.setWebsocket(true);

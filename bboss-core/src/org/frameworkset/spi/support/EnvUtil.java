@@ -134,7 +134,6 @@ public abstract class EnvUtil {
 	/**
 	 * 首先从配置文件中查找属性值，然后从jvm系统熟悉和系统环境变量中查找属性值
 	 * @param property
-	 * @return
 	 */
 	public static void getSystemEnv(StringBuilder propertiesValue, VariableHandler.Variable variable ,String property, String parentName, Map properties){
 		 getSystemEnv((Map)null,  propertiesValue,   variable ,  property,   parentName,   properties);
@@ -142,7 +141,6 @@ public abstract class EnvUtil {
 	/**
 	 * 首先从配置文件中查找属性值，然后从jvm系统熟悉和系统环境变量中查找属性值
 	 * @param property
-	 * @return
 	 */
 	public static void getSystemEnv(Map parent,StringBuilder propertiesValue, VariableHandler.Variable variable ,String property, String parentName, Map properties)
 	{

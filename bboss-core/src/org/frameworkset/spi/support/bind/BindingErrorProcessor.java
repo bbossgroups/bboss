@@ -44,8 +44,6 @@ public interface BindingErrorProcessor {
 	 * You can add more than just one error or maybe even ignore it.
 	 * The <code>BindingResult</code> object features convenience utils such as
 	 * a <code>resolveMessageCodes</code> method to resolve an error code.
-	 * @see BeanPropertyBindingResult#addError
-	 * @see BeanPropertyBindingResult#resolveMessageCodes
 	 */
 	void processMissingFieldError(String missingField, BindingResult bindingResult);
 
@@ -64,8 +62,6 @@ public interface BindingErrorProcessor {
 	 * @see FieldError
 	 * @see ObjectError
 	 * @see MessageCodesResolver
-	 * @see BeanPropertyBindingResult#addError
-	 * @see BeanPropertyBindingResult#resolveMessageCodes
 	 */
 	void processPropertyAccessException(PropertyAccessException ex, BindingResult bindingResult);
 

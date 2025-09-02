@@ -334,13 +334,15 @@ public class DispatchServlet extends BaseServlet {
 			HandlerExecutionChain mappedHandler = getHandler(request, true);
 			if (mappedHandler == null || mappedHandler.getHandler() == null || mappedHandler.getHandler().getHandler() == null) {
 				// Ignore -> will reappear on doService.
-				logger.debug("No handler found in getLastModified");
+                if (logger.isDebugEnabled()) {
+                    logger.debug("No handler found in getLastModified");
+                }
 				return -1;
 			}
 
 			HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
 			long lastModified = ha.getLastModified(request, mappedHandler.getHandler());
-			if (logger.isInfoEnabled()) {
+			if (logger.isDebugEnabled()) {
 				String requestUri = urlPathHelper.getRequestUri(request);
 				logger.debug("Last-Modified value for [" + requestUri + "] is: " + lastModified);
 			}
@@ -521,9 +523,9 @@ public class DispatchServlet extends BaseServlet {
 	 */
 	protected final void initServletBean(ServletConfig config) throws Exception {
 		getServletContext().log("Initializing Bboss MVC FrameworkServlet '" + getServletName() + "'");
-//		if (this.logger.isInfoEnabled()) {
-			this.logger.debug("FrameworkServlet '" + getServletName() + "': initialization started");
-//		}
+        if (logger.isDebugEnabled()) {
+            this.logger.debug("FrameworkServlet '" + getServletName() + "': initialization started");
+		}
 		long startTime = System.currentTimeMillis();
 
 		try {
@@ -539,11 +541,12 @@ public class DispatchServlet extends BaseServlet {
 			throw ex;
 		}
 
-//		if (this.logger.isInfoEnabled()) {
-			long elapsedTime = System.currentTimeMillis() - startTime;
+        if (logger.isDebugEnabled()) {
+
+            long elapsedTime = System.currentTimeMillis() - startTime;
 			this.logger.debug("FrameworkServlet '" + getServletName() + "': initialization completed in " +
 					elapsedTime + " ms");
-//		}
+		}
 	}
 	
 	protected final void publishWebService(ServletConfig config)
@@ -559,18 +562,28 @@ public class DispatchServlet extends BaseServlet {
 //			WSLoader.publishAllWebService(this.getClass().getClassLoader(),config);
 			
 		} catch (Throwable e) {
-			logger.debug(" Not found "+wsloadclass + " or "+e.getMessage()+" in classpath,Ignore publish mvc webservices.");
+            if (logger.isDebugEnabled()) {
+
+                logger.debug(" Not found " + wsloadclass + " or " + e.getMessage() + " in classpath,Ignore publish mvc webservices.");
+            }
 		}
 		
 		try {
 			if(publishAllWebService != null)
 			{
-				logger.debug("Publish MVC webservice start.");
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Publish MVC webservice start.");
+                }
 				publishAllWebService.invoke(null, this.getClass().getClassLoader(),config);
-				logger.debug("Publish MVC webservice finished.");
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Publish MVC webservice finished.");
+                }
 			}
 		} catch (Exception e) {
-			logger.debug("Publish mvc webservices failed:",e);
+            if (logger.isDebugEnabled()) {
+
+                logger.debug("Publish mvc webservices failed:", e);
+            }
 		} 
 		
 	}
@@ -857,7 +870,9 @@ public class DispatchServlet extends BaseServlet {
 
 		if (exception != null) {
 			if (exception instanceof ModelAndViewDefiningException) {
-				logger.debug("ModelAndViewDefiningException encountered", exception);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("ModelAndViewDefiningException encountered", exception);
+                }
 				mv = ((ModelAndViewDefiningException) exception).getModelAndView();
 			}
 			else {
@@ -1253,7 +1268,7 @@ public class DispatchServlet extends BaseServlet {
 			{
 				return HandlerUtils.handleNoSuchRequestHandlingMethod(ex1, request, response);
 			}
-//			if (logger.isDebugEnabled()) 
+			if (logger.isDebugEnabled()) 
 			{
 				logger.debug("Handler execution resulted in exception - forwarding to resolved error view: " + exMv, ex);
 			}
@@ -1324,8 +1339,10 @@ public class DispatchServlet extends BaseServlet {
 	protected HttpServletRequest checkMultipart(HttpServletRequest request) throws MultipartException {
 		if (this.multipartResolver != null && this.multipartResolver.isMultipart(request)) {
 			if (request instanceof MultipartHttpServletRequest) {
-				logger.debug("Request is already a MultipartHttpServletRequest - if not in a forward, " +
-						"this typically results from an additional MultipartFilter in web.xml");
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Request is already a MultipartHttpServletRequest - if not in a forward, " +
+                            "this typically results from an additional MultipartFilter in web.xml");
+                }
 			}
 			else {
 				return this.multipartResolver.resolveMultipart(request);
@@ -1448,23 +1465,31 @@ public class DispatchServlet extends BaseServlet {
 //			WSLoader.publishAllWebService(this.getClass().getClassLoader(),config);
 			
 		} catch (Exception e) {
-			logger.debug(" Not found "+WebSocketLoader + " or "+e.getMessage()+" in classpath,Ignore publish  WebSocket Services.");
+            if (logger.isDebugEnabled()) {
+                logger.debug(" Not found " + WebSocketLoader + " or " + e.getMessage() + " in classpath,Ignore publish  WebSocket Services.");
+            }
 		}
 		
 		try {
 			if(publishAllWebService != null)
 			{
-				logger.debug("Publish WebSocket Services start.");
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Publish WebSocket Services start.");
+                }
 				publishAllWebService.invoke(null, this.getClass().getClassLoader(),this.handlerMappings,config);
 				if(handlerMappings.getWebsocketLifecycleProcessor() != null)
 				{
 					this.lifeCycleProcessorExecutor = new LifeCycleProcessorExecutor();
 					this.lifeCycleProcessorExecutor.setLifecycleProcessor(handlerMappings.getWebsocketLifecycleProcessor());
 				}
-				logger.debug("Publish WebSocket Services  finished.");
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Publish WebSocket Services  finished.");
+                }
 			}
 		} catch (Exception e) {
-			logger.debug("Publish WebSocket Services failed:",e);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Publish WebSocket Services failed:", e);
+            }
 		} 
 		
 	}

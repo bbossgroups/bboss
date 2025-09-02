@@ -210,11 +210,11 @@ public class UndertowRequestUpgradeStrategy extends AbstractStandardUpgradeStrat
 		endpointRegistration.setSubprotocols(Arrays.asList(selectedProtocol));
 		endpointRegistration.setExtensions(selectedExtensions);
 
-		EncodingFactory encodingFactory = new EncodingFactory(
-				Collections.<Class<?>, List<InstanceFactory<? extends Encoder>>>emptyMap(),
-				Collections.<Class<?>, List<InstanceFactory<? extends Decoder>>>emptyMap(),
-				Collections.<Class<?>, List<InstanceFactory<? extends Encoder>>>emptyMap(),
-				Collections.<Class<?>, List<InstanceFactory<? extends Decoder>>>emptyMap());
+        EncodingFactory encodingFactory = new EncodingFactory(
+                Collections.<Class<?>, List<InstanceFactory<? extends Encoder>>>emptyMap(),
+                Collections.<Class<?>, List<InstanceFactory<? extends Decoder>>>emptyMap(),
+                Collections.<Class<?>, List<InstanceFactory<? extends Encoder>>>emptyMap(),
+                Collections.<Class<?>, List<InstanceFactory<? extends Decoder>>>emptyMap());
 		try {
 			return (endpointConstructorWithEndpointFactory ?
 					endpointConstructor.newInstance(endpointRegistration,

@@ -1029,7 +1029,6 @@ public class CGLibUtil {
 	 * 获取组件实例
 	 * @param <T>
 	 * @param rettype
-	 * @param beanType
 	 * @param proxy
 	 * @return
 	 */
@@ -1046,7 +1045,6 @@ public class CGLibUtil {
 	 * 获取组件实例
 	 * @param <T>
 	 * @param rettype
-	 * @param beanType
 	 * @param proxy
 	 * @return
 	 */

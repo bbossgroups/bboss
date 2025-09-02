@@ -122,11 +122,11 @@ public class TreeIterator implements Iterator{
     			switch(num)
     			{
     				case '0':
-    					Boolean f = new Boolean(false);
+    					Boolean f = false;
     					indentationProfile.add(f);
     					break;
     				case '1':
-    					Boolean t = new Boolean(true);
+    					Boolean t = true;
     					indentationProfile.add(t);
     					break;
     				
@@ -192,8 +192,8 @@ public class TreeIterator implements Iterator{
         if(element.isLastChild())
         {
         	
-        		indentationProfile.add(new Boolean(true));
-        		indentationProfile.add(new Boolean(true));
+        		indentationProfile.add(true);
+        		indentationProfile.add(true);
         	
         }
         List children           = element.getNode().getChildren();

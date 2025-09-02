@@ -30,7 +30,6 @@ public class EventRemoteServiceImpl implements EventRemoteService {
     
     /**
      * 处理远程事件接口
-     * @param eventfqn
      * @return
      * @throws Exception
      */

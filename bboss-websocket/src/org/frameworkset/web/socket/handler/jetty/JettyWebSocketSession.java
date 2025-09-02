@@ -2,6 +2,7 @@ package org.frameworkset.web.socket.handler.jetty;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.net.URI;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -103,13 +104,13 @@ public class JettyWebSocketSession extends AbstractWebSocketSession<Session> {
 	}
 
 	@Override
-	public InetSocketAddress getLocalAddress() {
+	public SocketAddress getLocalAddress() {
 		checkNativeSessionInitialized();
 		return getNativeSession().getLocalAddress();
 	}
 
 	@Override
-	public InetSocketAddress getRemoteAddress() {
+	public SocketAddress getRemoteAddress() {
 		checkNativeSessionInitialized();
 		return getNativeSession().getRemoteAddress();
 	}

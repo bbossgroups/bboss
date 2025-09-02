@@ -93,11 +93,11 @@ public class WebSocketHttpRequestHandler  implements HttpRequestHandler, Lifecyc
 	}
 
 	@Override
-	public void start() {
+	public void start(String path) {
 		if (!isRunning()) {
 			this.running = true;
 			if (this.handshakeHandler instanceof Lifecycle) {
-				((Lifecycle) this.handshakeHandler).start();
+				((Lifecycle) this.handshakeHandler).start(path);
 			}
 		}
 	}

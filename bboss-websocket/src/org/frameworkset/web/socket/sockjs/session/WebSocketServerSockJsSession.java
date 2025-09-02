@@ -2,6 +2,7 @@ package org.frameworkset.web.socket.sockjs.session;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.net.URI;
 import java.security.Principal;
 import java.util.List;
@@ -62,13 +63,13 @@ public class WebSocketServerSockJsSession  extends AbstractSockJsSession impleme
 	}
 
 	@Override
-	public InetSocketAddress getLocalAddress() {
+	public SocketAddress getLocalAddress() {
 		checkDelegateSessionInitialized();
 		return this.webSocketSession.getLocalAddress();
 	}
 
 	@Override
-	public InetSocketAddress getRemoteAddress() {
+	public SocketAddress getRemoteAddress() {
 		checkDelegateSessionInitialized();
 		return this.webSocketSession.getRemoteAddress();
 	}

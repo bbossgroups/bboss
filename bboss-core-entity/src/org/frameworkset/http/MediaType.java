@@ -196,8 +196,30 @@ public class MediaType extends MimeType implements Serializable {
 
 
 	private static final String PARAM_QUALITY_FACTOR = "q";
+    /**
+     * Public constant media type for {@code text/event-stream}.
+     * @since 4.3.6
+     * @see <a href="https://html.spec.whatwg.org/multipage/server-sent-events.html">Server-Sent Events</a>
+     */
+    public static final MediaType TEXT_EVENT_STREAM;
 
+    /**
+     * A String equivalent of {@link MediaType#TEXT_EVENT_STREAM}.
+     * @since 4.3.6
+     */
+    public static final String TEXT_EVENT_STREAM_VALUE = "text/event-stream";
 
+    /**
+     * Public constant media type for {@code text/markdown}.
+     * @since 4.3
+     */
+    public static final MediaType TEXT_MARKDOWN;
+
+    /**
+     * A String equivalent of {@link MediaType#TEXT_MARKDOWN}.
+     * @since 4.3
+     */
+    public static final String TEXT_MARKDOWN_VALUE = "text/markdown";
 	static {
 		ALL = valueOf(ALL_VALUE);
 		APPLICATION_ATOM_XML = valueOf(APPLICATION_ATOM_XML_VALUE);
@@ -215,6 +237,9 @@ public class MediaType extends MimeType implements Serializable {
 		TEXT_HTML = valueOf(TEXT_HTML_VALUE);
 		TEXT_PLAIN = valueOf(TEXT_PLAIN_VALUE);
 		TEXT_XML = valueOf(TEXT_XML_VALUE);
+        TEXT_EVENT_STREAM = new MediaType("text", "event-stream");
+
+        TEXT_MARKDOWN = new MediaType("text", "markdown");
 	}
 
 

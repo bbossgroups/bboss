@@ -36,6 +36,9 @@ public class AbstractHandshakeHandler  implements HandshakeHandler, Lifecycle {
 
 	private static final boolean jettyWsPresent = ClassUtils.isPresent(
 			"org.eclipse.jetty.websocket.server.WebSocketServerFactory", classLoader);
+    private static final boolean jetty10WsPresent = ClassUtils.isPresent(
+            "org.eclipse.jetty.websocket.server.JettyWebSocketServletFactory", classLoader);
+    
 
 	private static final boolean tomcatWsPresent = ClassUtils.isPresent(
 			"org.apache.tomcat.websocket.server.WsHttpUpgradeHandler", classLoader);
@@ -89,6 +92,9 @@ public class AbstractHandshakeHandler  implements HandshakeHandler, Lifecycle {
 		else if (jettyWsPresent) {
 			className = "org.frameworkset.web.socket.container.JettyRequestUpgradeStrategy";
 		}
+        else if (jetty10WsPresent) {
+            className = "org.frameworkset.boot.socket.Jetty10RequestUpgradeStrategy";
+        }
 		else if (undertowWsPresent) {
 			className = "org.frameworkset.web.socket.container.UndertowRequestUpgradeStrategy";
 		}
@@ -154,16 +160,16 @@ public class AbstractHandshakeHandler  implements HandshakeHandler, Lifecycle {
 	}
 
 	@Override
-	public void start() {
+	public void start(String path) {
 		if (!isRunning()) {
 			this.running = true;
-			doStart();
+			doStart(  path);
 		}
 	}
 
-	protected void doStart() {
+	protected void doStart(String path) {
 		if (this.requestUpgradeStrategy instanceof Lifecycle) {
-			((Lifecycle) this.requestUpgradeStrategy).start();
+			((Lifecycle) this.requestUpgradeStrategy).start(  path);
 		}
 	}
 
