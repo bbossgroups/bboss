@@ -79,7 +79,7 @@ public class SynchronizedMethod implements java.io.Serializable {
      * 如果一个异常是事务性异常，则以异常的名字为索引键，Boolean(true)为索引值
      * 如果一个异常不是事务性异常，则以异常的名字为索引键，Boolean(false)为索引值
      * 下次系统再判别该异常时，直接以该索引为准，不在进行复杂的逻辑判断
-     * Map<exceptionClass,Boolean>
+     * Map exceptionClass,Boolean 
      */
     private Map<String,Boolean> rollbackExceptionIndexs;
     

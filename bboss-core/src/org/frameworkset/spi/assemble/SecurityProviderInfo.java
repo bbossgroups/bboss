@@ -444,24 +444,24 @@ public class SecurityProviderInfo implements java.io.Serializable,BeanInf
     //    	
     // }
 
-    /**
-     * 为服务提供者注入其他服务提供者的引用实例 如果相应refid和reftype对应的服务提供者不存在，或者参数对应的服务提供者没有提供
-     * 引用的注入方法，则该引用将被忽略掉
-     * 
-     * @param context
-     *            检测是否有循环注入的上下文变量
-     * @param provider
-     * @throws ClassNotFoundException
-     * @throws IllegalAccessException
-     * @throws InstantiationException
-     * @throws NoSuchMethodException
-     * @throws SecurityException
-     * @throws InvocationTargetException
-     * @throws IllegalArgumentException
-     * @throws IntrospectionException
-     * @throws IntrospectionException
-     * @throws NoSupportTypeCastException
-     */
+//    /**
+//     * 为服务提供者注入其他服务提供者的引用实例 如果相应refid和reftype对应的服务提供者不存在，或者参数对应的服务提供者没有提供
+//     * 引用的注入方法，则该引用将被忽略掉
+//     * 
+//     * @param context
+//     *            检测是否有循环注入的上下文变量
+//     * @param provider
+//     * @throws ClassNotFoundException
+//     * @throws IllegalAccessException
+//     * @throws InstantiationException
+//     * @throws NoSuchMethodException
+//     * @throws SecurityException
+//     * @throws InvocationTargetException
+//     * @throws IllegalArgumentException
+//     * @throws IntrospectionException
+//     * @throws IntrospectionException
+//     * @throws NoSupportTypeCastException
+//     */
     // private Object injectConstruction(Context context,
     // List params) throws CurrentlyInCreationException,
     // ClassNotFoundException, InstantiationException, IllegalAccessException,

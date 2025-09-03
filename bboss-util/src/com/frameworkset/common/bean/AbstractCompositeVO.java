@@ -90,7 +90,7 @@ public abstract class AbstractCompositeVO implements Serializable
 
 		}
 		maxId ++;
-		return new Long(maxId);
+		return maxId;
 	}
 
 	/**
@@ -176,7 +176,7 @@ public abstract class AbstractCompositeVO implements Serializable
 		Map map = this.getMap(clazz);
 		if(map == null)
 			return null;
-		DecoratorVO dec = (DecoratorVO)map.get(new Long(key));
+		DecoratorVO dec = (DecoratorVO)map.get(key);
 		if(dec != null)
 			return (ValueObject)dec.vo;
 		return null;

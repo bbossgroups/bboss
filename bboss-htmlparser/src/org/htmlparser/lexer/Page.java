@@ -954,7 +954,6 @@ public class Page
      * (exclusive, i.e. the character at the ending position is not included),
      * zero based.
      * @return The text from <code>start</code> to <code>end</code>.
-     * @see #getText(StringBuffer, int, int)
      * @exception IllegalArgumentException If an attempt is made to get
      * characters ahead of the current source offset (character position).
      */

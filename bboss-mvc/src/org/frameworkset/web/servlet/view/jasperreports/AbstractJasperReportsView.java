@@ -201,7 +201,6 @@ public abstract class AbstractJasperReportsView extends AbstractUrlBasedView {
 	 * @param subReports mapping between model keys and resource paths
 	 * (Bboss resource locations)
 	 * @see #setUrl
-	 * @see ApplicationContext#getResource
 	 */
 	public void setSubReportUrls(Properties subReports) {
 		this.subReportUrls = subReports;
@@ -384,7 +383,7 @@ public abstract class AbstractJasperReportsView extends AbstractUrlBasedView {
 			else if (str.length() > 0 && Character.isDigit(str.charAt(0))) {
 				// Looks like a number... let's try.
 				try {
-					return new Integer(str);
+					return Integer.parseInt(str);
 				}
 				catch (NumberFormatException ex) {
 					// OK, then let's keep it as a String value.
@@ -572,12 +571,10 @@ public abstract class AbstractJasperReportsView extends AbstractUrlBasedView {
 	 * <p>Default implementation exposes the Bboss RequestContext Locale and a
 	 * MessageSourceResourceBundle adapter for the Bboss ApplicationContext,
 	 * analogous to the <code>JstlUtils.exposeLocalizationContext</code> method.
-	 * @see support.RequestContextUtils#getLocale
 	 * @see MessageSourceResourceBundle
 	 * @see #getApplicationContext()
 	 * @see net.sf.jasperreports.engine.JRParameter#REPORT_LOCALE
 	 * @see net.sf.jasperreports.engine.JRParameter#REPORT_RESOURCE_BUNDLE
-	 * @see support.JstlUtils#exposeLocalizationContext
 	 */
 	protected void exposeLocalizationContext(Map<String, Object> model, HttpServletRequest request) {
 		RequestContext rc = new RequestContext(request, getServletContext());

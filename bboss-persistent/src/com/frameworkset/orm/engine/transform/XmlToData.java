@@ -34,7 +34,7 @@ package com.frameworkset.orm.engine.transform;
 import com.frameworkset.orm.engine.model.Column;
 import com.frameworkset.orm.engine.model.Database;
 import com.frameworkset.orm.engine.model.Table;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;

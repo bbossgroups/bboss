@@ -82,7 +82,7 @@ import org.frameworkset.web.servlet.view.AbstractView;
  *
  *   // Write a range of numbers.
  *   HSSFRow sheetRow = sheet.createRow(3);
- *   for (short i = 0; i < 10; i++) {
+ *   for (short i = 0; i  小于10; i++) {
  *     sheetRow.createCell(i).setCellValue(i * 10);
  *   }
  * }</pre>

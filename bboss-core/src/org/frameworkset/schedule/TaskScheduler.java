@@ -11,14 +11,12 @@ public interface TaskScheduler {
 	 * {@link ScheduledFuture} gets cancelled.
 	 * @param task the Runnable to execute whenever the trigger fires
 	 * @param trigger an implementation of the {@link Trigger} interface,
-	 * e.g. a {@link org.frameworkset.scheduling.support.CronTrigger} object
+	 * e.g. a {  org.frameworkset.scheduling.support.CronTrigger} object
 	 * wrapping a cron expression
 	 * @return a {@link ScheduledFuture} representing pending completion of the task,
 	 * or {@code null} if the given Trigger object never fires (i.e. returns
 	 * {@code null} from {@link Trigger#nextExecutionTime})
-	 * @throws org.frameworkset.core.task.TaskRejectedException if the given task was not accepted
 	 * for internal reasons (e.g. a pool overload handling policy or a pool shutdown in progress)
-	 * @see org.frameworkset.scheduling.support.CronTrigger
 	 */
 	ScheduledFuture<?> schedule(Runnable task, Trigger trigger);
 

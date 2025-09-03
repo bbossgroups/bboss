@@ -34,7 +34,7 @@ package com.frameworkset.orm.engine.model;
 import com.frameworkset.orm.engine.EngineException;
 import com.frameworkset.orm.platform.Platform;
 import com.frameworkset.orm.platform.PlatformDefaultImpl;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;

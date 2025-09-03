@@ -59,7 +59,7 @@ public class Pro extends BaseTXManager implements Comparable, BeanInf {
 	/**
 	 * 指定元素的ioc依赖注入插件
 	 * 插件必须实现接口
-	 * org.frameworkset.spi.assemble.plugin.IocPlugin<T,R>
+	 * org.frameworkset.spi.assemble.plugin.IocPlugin T,R 
 	 */
 	protected String iocplugin;
 	

@@ -41,7 +41,7 @@ import bboss.org.apache.velocity.util.RuntimeServicesAware;
 import bboss.org.apache.velocity.util.StringUtils;
 import bboss.org.apache.velocity.util.introspection.*;
 import org.apache.commons.collections.ExtendedProperties;
-import org.apache.commons.lang.text.StrBuilder;
+import org.apache.commons.lang3.text.StrBuilder;
 
 import java.io.*;
 import java.util.*;

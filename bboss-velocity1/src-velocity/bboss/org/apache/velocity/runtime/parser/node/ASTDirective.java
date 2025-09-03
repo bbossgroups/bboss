@@ -22,7 +22,7 @@ package bboss.org.apache.velocity.runtime.parser.node;
 import java.io.IOException;
 import java.io.Writer;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import bboss.org.apache.velocity.context.InternalContextAdapter;
 import bboss.org.apache.velocity.exception.MethodInvocationException;
 import bboss.org.apache.velocity.exception.ParseErrorException;

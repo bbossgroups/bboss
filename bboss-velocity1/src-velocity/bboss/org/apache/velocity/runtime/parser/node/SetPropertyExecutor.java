@@ -21,8 +21,8 @@ package bboss.org.apache.velocity.runtime.parser.node;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.text.StrBuilder;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.StrBuilder;
 import bboss.org.apache.velocity.exception.VelocityException;
 import bboss.org.apache.velocity.runtime.log.Log;
 import bboss.org.apache.velocity.util.introspection.Introspector;

@@ -19,7 +19,7 @@ package bboss.org.apache.velocity.runtime.parser.node;
  * under the License.    
  */
 
-import org.apache.commons.lang.text.StrBuilder;
+import org.apache.commons.lang3.text.StrBuilder;
 import bboss.org.apache.velocity.context.Context;
 import bboss.org.apache.velocity.exception.MethodInvocationException;
 import bboss.org.apache.velocity.runtime.parser.ParserConstants;

@@ -40,7 +40,6 @@ package org.frameworkset.spi;
  * @author Mark Fisher
  * @since 3.0
  * @see LifecycleProcessor
- * @see ConfigurableApplicationContext
  */
 public interface SmartLifecycle extends Lifecycle, Phased {
 
@@ -54,7 +53,6 @@ public interface SmartLifecycle extends Lifecycle, Phased {
 	 * @see #start()
 	 * @see #getPhase()
 	 * @see LifecycleProcessor#onRefresh()
-	 * @see ConfigurableApplicationContext#refresh()
 	 */
 	boolean isAutoStartup();
 

@@ -26,7 +26,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import org.apache.commons.collections.ExtendedProperties;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import bboss.org.apache.velocity.exception.VelocityException;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 import bboss.org.apache.velocity.runtime.resource.Resource;

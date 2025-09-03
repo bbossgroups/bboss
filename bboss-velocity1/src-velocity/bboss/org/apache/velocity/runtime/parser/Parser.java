@@ -10,7 +10,7 @@ import bboss.org.apache.velocity.runtime.directive.Directive;
 import bboss.org.apache.velocity.runtime.directive.Macro;
 import bboss.org.apache.velocity.runtime.directive.MacroParseException;
 import bboss.org.apache.velocity.util.StringUtils;
-import org.apache.commons.lang.text.StrBuilder;
+import org.apache.commons.lang3.text.StrBuilder;
 import bboss.org.apache.velocity.runtime.RuntimeConstants;
 
 /**

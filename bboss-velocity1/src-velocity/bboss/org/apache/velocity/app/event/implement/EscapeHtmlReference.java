@@ -19,7 +19,8 @@ package bboss.org.apache.velocity.app.event.implement;
  * under the License.    
  */
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+
 
 /**
  * Escape all HTML entities.
@@ -39,7 +40,7 @@ public class EscapeHtmlReference extends EscapeReference
      */
     protected String escape(Object text)
     {
-        return StringEscapeUtils.escapeHtml(text.toString());
+        return StringEscapeUtils.escapeHtml4(text.toString());
     }
 
     /**

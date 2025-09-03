@@ -32,7 +32,7 @@ package com.frameworkset.orm.engine.model;
  */
 
 import com.frameworkset.orm.platform.Platform;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.Attributes;
 
 import java.io.Serializable;

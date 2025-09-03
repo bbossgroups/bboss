@@ -90,7 +90,7 @@ public class HessianHandlerFactory {
 		return service;
 	}
 	/**
-	 * http://localhost/hession?container=xx.xx.xx&service=ss
+	 * http://localhost/hession?container=xx.xx.xx service=ss
 	 * @param request
 	 * @param response
 	 * @return

@@ -24,9 +24,6 @@ import org.frameworkset.util.CustomizableThreadCreator;
  * @author Juergen Hoeller
  * @since 2.0
  * @see #setConcurrencyLimit
- * @see SyncTaskExecutor
- * @see org.frameworkset.scheduling.concurrent.ThreadPoolTaskExecutor
- * @see org.frameworkset.scheduling.commonj.WorkManagerTaskExecutor
  */
 @SuppressWarnings("serial")
 public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator implements AsyncListenableTaskExecutor, Serializable {

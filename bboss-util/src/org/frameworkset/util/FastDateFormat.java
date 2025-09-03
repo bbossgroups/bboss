@@ -260,7 +260,7 @@ public class FastDateFormat extends Format {
      *  pattern defined
      */
     public static synchronized FastDateFormat getDateInstance(int style, TimeZone timeZone, Locale locale) {
-        Object key = new Integer(style);
+        Object key = style;
         if (timeZone != null) {
             key = new Pair(key, timeZone);
         }
@@ -345,7 +345,7 @@ public class FastDateFormat extends Format {
      *  pattern defined
      */
     public static synchronized FastDateFormat getTimeInstance(int style, TimeZone timeZone, Locale locale) {
-        Object key = new Integer(style);
+        Object key = style;
         if (timeZone != null) {
             key = new Pair(key, timeZone);
         }
@@ -439,7 +439,7 @@ public class FastDateFormat extends Format {
     public static synchronized FastDateFormat getDateTimeInstance(int dateStyle, int timeStyle, TimeZone timeZone,
             Locale locale) {
 
-        Object key = new Pair(new Integer(dateStyle), new Integer(timeStyle));
+        Object key = new Pair(dateStyle, timeStyle);
         if (timeZone != null) {
             key = new Pair(key, timeZone);
         }

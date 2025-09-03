@@ -111,7 +111,6 @@ public abstract class ValidationUtils {
 	 * @param errors the <code>Errors</code> instance to register errors on
 	 * @param field the field name to check
 	 * @param errorCode the error code, interpretable as message key
-	 * @param errorArgs the error arguments, for argument binding via MessageFormat
 	 * (can be <code>null</code>)
 	 */
 	public static void rejectIfEmpty(Errors errors, String field, String errorCode) {
@@ -129,7 +128,6 @@ public abstract class ValidationUtils {
 	 * @param errors the <code>Errors</code> instance to register errors on
 	 * @param field the field name to check
 	 * @param errorCode the error code, interpretable as message key
-	 * @param errorArgs the error arguments, for argument binding via MessageFormat
 	 * (can be <code>null</code>)
 	 * @param defaultMessage fallback default message
 	 */

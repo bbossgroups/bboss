@@ -19,7 +19,7 @@ package bboss.org.apache.velocity.app.event.implement;
  * under the License.    
  */
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  * Escape all XML entities.

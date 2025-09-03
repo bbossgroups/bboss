@@ -22,7 +22,7 @@ package bboss.org.apache.velocity.runtime.resource.loader;
 import java.io.InputStream;
 
 import org.apache.commons.collections.ExtendedProperties;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import bboss.org.apache.velocity.exception.ResourceNotFoundException;
 import bboss.org.apache.velocity.runtime.resource.Resource;
 import bboss.org.apache.velocity.util.ClassUtils;

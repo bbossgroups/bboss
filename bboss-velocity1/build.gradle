@@ -22,13 +22,14 @@ dependencies {
     api (
 	 //  [group: 'avalon-logkit', name: 'avalon-logkit', version: '2.1', transitive: false],
 	    [group: 'commons-collections', name: 'commons-collections', version: '3.2.2', transitive: false],
-	    [group: 'commons-lang', name: 'commons-lang', version: '2.6', transitive: false],
 	    [group: 'jdom', name: 'jdom', version: '1.0', transitive: false],
 	    [group: 'oro', name: 'oro', version: '2.0.8', transitive: false],
 	  // [group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25', transitive: false],
 //           	[group: 'org.slf4j', name: 'slf4j-log4j12', version: "${slf4jlog4j12}", transitive: true],
 	    [group: 'werken-xpath', name: 'werken-xpath', version: '0.9.4', transitive: false],
 	   )
+
+    api 'org.apache.commons:commons-lang3:3.18.0'
     compileOnly (
     		 [group: 'javax.servlet', name: 'javax.servlet-api', version: "3.0.1", transitive: false],
              [group: 'javax.servlet', name: 'jsp-api', version: '2.0', transitive: false],

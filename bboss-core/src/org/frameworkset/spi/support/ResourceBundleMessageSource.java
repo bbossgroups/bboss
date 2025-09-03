@@ -254,7 +254,6 @@ public class ResourceBundleMessageSource  extends AbstractMessageSource implemen
 	 * The holder can be <code>null</code> if not cached before, or a timed-out cache entry
 	 * (potentially getting re-validated against the current last-modified timestamp).
 	 * @param filename the bundle filename (basename + Locale)
-	 * @param propHolder the current PropertiesHolder for the bundle
 	 * 
 	 */
 	protected ResourceBundle doGetDefaultBundle(String filename) {

@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import org.apache.commons.lang.text.StrBuilder;
+import org.apache.commons.lang3.text.StrBuilder;
 import bboss.org.apache.velocity.context.InternalContextAdapter;
 import bboss.org.apache.velocity.exception.TemplateInitException;
 import bboss.org.apache.velocity.exception.VelocityException;

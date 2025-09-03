@@ -1236,7 +1236,6 @@ public class ServiceProviderManager implements AOPValueHandler{
 	/**
 	 * 处理回车换行符，
 	 * @param value
-	 * @return
 	 */
 	public void escapeRN(String value,StringBuilder builder){
 		builder.append(value);

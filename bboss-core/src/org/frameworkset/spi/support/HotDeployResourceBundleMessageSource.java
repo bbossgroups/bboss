@@ -298,7 +298,7 @@ public class HotDeployResourceBundleMessageSource extends AbstractMessageSource
 	 * the holder from the cache or freshly loads it.
 	 * <p>
 	 * Only used when caching resource bundle contents forever, i.e. with
-	 * cacheSeconds < 0. Therefore, merged properties are always cached forever.
+	 * cacheSeconds 小于 0. Therefore, merged properties are always cached forever.
 	 */
 	protected PropertiesHolder getMergedProperties(Locale locale) {
 		PropertiesHolder mergedHolder = (PropertiesHolder) this.cachedMergedProperties

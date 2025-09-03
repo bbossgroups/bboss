@@ -45,7 +45,7 @@ public class AOPMethods  implements java.io.Serializable,UNmodify
     private List<SynchronizedMethod> aopMethods;
 
     /**
-     * 标识方法是否是声明式事务方法 Map<methoduuid,SynchronizedMethod>
+     * 标识方法是否是声明式事务方法 Map methoduuid,SynchronizedMethod 
      */
     private Map aopMethodInfoIDX;
 

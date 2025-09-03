@@ -272,7 +272,7 @@ public class ReloadableResourceBundleMessageSource extends AbstractMessageSource
 	 * for a Locale, after merging all specified resource bundles.
 	 * Either fetches the holder from the cache or freshly loads it.
 	 * <p>Only used when caching resource bundle contents forever, i.e.
-	 * with cacheSeconds < 0. Therefore, merged properties are always
+	 * with cacheSeconds 小于 0. Therefore, merged properties are always
 	 * cached forever.
 	 */
 	protected PropertiesHolder getMergedProperties(Locale locale) {

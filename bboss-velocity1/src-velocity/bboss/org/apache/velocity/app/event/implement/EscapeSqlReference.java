@@ -19,7 +19,7 @@ package bboss.org.apache.velocity.app.event.implement;
  * under the License.    
  */
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  * Escapes the characters in a String to be suitable to pass to an SQL query.
@@ -39,7 +39,7 @@ public class EscapeSqlReference extends EscapeReference
      */
     protected String escape(Object text)
     {
-        return StringEscapeUtils.escapeSql(text.toString());
+        return StringEscapeUtils.escapeJava(text.toString());
     }
 
     /**
