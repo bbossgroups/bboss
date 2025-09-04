@@ -282,13 +282,7 @@ public class DBPostgres extends DB {
 	@Override
 	public void setObject(PreparedStatement statement, PreparedStatement statement_count, int parameterIndex, Object x) throws SQLException {
 		if (x != null) {
-			if (x instanceof Date) {
-				Timestamp timestamp = new Timestamp(((Date) x).getTime());
-				statement.setTimestamp(parameterIndex, timestamp);
-				if (statement_count != null) {
-					statement_count.setTimestamp(parameterIndex, timestamp);
-				}
-			} else if (x instanceof java.sql.Date) {
+			if (x instanceof java.sql.Date) {
 				statement.setDate(parameterIndex, (java.sql.Date) x);
 				if (statement_count != null) {
 					statement_count.setDate(parameterIndex, (java.sql.Date) x);
@@ -298,7 +292,15 @@ public class DBPostgres extends DB {
 				if (statement_count != null) {
 					statement_count.setTimestamp(parameterIndex, (Timestamp) x);
 				}
-			} else if (x instanceof Short) {
+			} 
+            else if (x instanceof Date) {
+                Timestamp timestamp = new Timestamp(((Date) x).getTime());
+                statement.setTimestamp(parameterIndex, timestamp);
+                if (statement_count != null) {
+                    statement_count.setTimestamp(parameterIndex, timestamp);
+                }
+            }
+            else if (x instanceof Short) {
 				statement.setShort(parameterIndex, (Short) x);
 				if (statement_count != null) {
 					statement_count.setShort(parameterIndex, (Short) x);
@@ -334,17 +336,17 @@ public class DBPostgres extends DB {
             if (x instanceof String ) {
                 dbutil.setString(parameterIndex, (String) x);
 
-            } else if (x instanceof Date) {
-				Timestamp timestamp = new Timestamp(((Date) x).getTime());
-				dbutil.setTimestamp(parameterIndex, timestamp);
-
-			} else if (x instanceof java.sql.Date) {
+            }  else if (x instanceof java.sql.Date) {
 				dbutil.setDate(parameterIndex, (java.sql.Date) x);
 
 			} else if (x instanceof Timestamp) {
 				dbutil.setTimestamp(parameterIndex, (Timestamp) x);
 
-			} else if (x instanceof Short) {
+			} else if (x instanceof Date) {
+                Timestamp timestamp = new Timestamp(((Date) x).getTime());
+                dbutil.setTimestamp(parameterIndex, timestamp);
+
+            }else if (x instanceof Short) {
 				dbutil.setShort(parameterIndex, (Short) x);
 
 			} else if (x instanceof Double) {
