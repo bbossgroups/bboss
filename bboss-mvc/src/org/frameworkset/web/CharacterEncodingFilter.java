@@ -221,7 +221,7 @@ public class CharacterEncodingFilter implements Filter {
 	 * GenericServlet's <code>getServletName()</code>.
 	 * <p>
 	 * Takes the FilterConfig's filter name by default. If initialized as bean
-	 * in a Spring application context, it falls back to the bean name as
+	 * in a bboss application context, it falls back to the bean name as
 	 * defined in the bean factory.
 	 * 
 	 * @return the filter name, or <code>null</code> if none available
@@ -239,7 +239,7 @@ public class CharacterEncodingFilter implements Filter {
 	 * to GenericServlet's <code>getServletContext()</code>.
 	 * <p>
 	 * Takes the FilterConfig's ServletContext by default. If initialized as
-	 * bean in a Spring application context, it falls back to the ServletContext
+	 * bean in a bboss application context, it falls back to the ServletContext
 	 * that the bean factory runs in.
 	 * 
 	 * @return the ServletContext instance, or <code>null</code> if none

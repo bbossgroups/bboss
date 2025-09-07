@@ -28,7 +28,7 @@ import java.net.URL;
 /**
  * JBoss VFS based {@link Resource} implementation.
  *
- * <p>As of Spring 4.0, this class supports VFS 3.x on JBoss AS 6+
+ * <p>As of bboss 4.0, this class supports VFS 3.x on JBoss AS 6+
  * (package {@code org.jboss.vfs}) and is in particular compatible with
  * JBoss AS 7 and WildFly 8+.
  *

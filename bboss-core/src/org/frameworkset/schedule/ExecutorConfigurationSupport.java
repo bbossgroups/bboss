@@ -40,7 +40,7 @@ public abstract class ExecutorConfigurationSupport extends CustomizableThreadFac
 	 * be found at "java:comp/DefaultManagedThreadFactory". Use the
 	 * "jee:jndi-lookup" namespace element in XML or the programmatic
 	 *   org.frameworkset.jndi.JndiLocatorDelegate} for convenient
-	 * lookup. Alternatively, consider using Spring's
+	 * lookup. Alternatively, consider using bboss's
 	 *   DefaultManagedAwareThreadFactory} with its fallback to local
 	 * threads in case of no managed thread factory found.
 	 * 
@@ -75,7 +75,7 @@ public abstract class ExecutorConfigurationSupport extends CustomizableThreadFac
 	 * ongoing tasks and clearing the queue. Switch this flag to "true" if you
 	 * prefer fully completed tasks at the expense of a longer shutdown phase.
 	 * <p>
-	 * Note that Spring's container shutdown continues while ongoing tasks are
+	 * Note that bboss's container shutdown continues while ongoing tasks are
 	 * being completed. If you want this executor to block and wait for the
 	 * termination of tasks before the rest of the container continues to shut
 	 * down - e.g. in order to keep up other resources that your tasks may need

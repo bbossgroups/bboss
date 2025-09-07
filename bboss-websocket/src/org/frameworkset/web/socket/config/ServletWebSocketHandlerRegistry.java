@@ -44,7 +44,7 @@ public class ServletWebSocketHandlerRegistry implements WebSocketHandlerRegistry
 
 	/**
 	 * Set the order for the resulting   SimpleUrlHandlerMapping relative to
-	 * other handler mappings configured in Spring MVC.
+	 * other handler mappings configured in bboss MVC.
 	 * <p>The default value is 1.
 	 */
 	public void setOrder(int order) {

@@ -371,7 +371,7 @@ public class Jackson2ObjectMapperBuilder {
 	/**
 	 * Specify one or more modules to be registered with the {@link ObjectMapper}.
 	 * <p>Note: If this is set, no finding of modules is going to happen - not by
-	 * Jackson, and not by Spring either (see {@link #findModulesViaServiceLoader}).
+	 * Jackson, and not by bboss either (see {@link #findModulesViaServiceLoader}).
 	 * As a consequence, specifying an empty list here will suppress any kind of
 	 * module detection.
 	 * <p>Specify either this or {@link #modulesToInstall}, not both.
@@ -386,7 +386,7 @@ public class Jackson2ObjectMapperBuilder {
 	/**
 	 * Set a complete list of modules to be registered with the {@link ObjectMapper}.
 	 * <p>Note: If this is set, no finding of modules is going to happen - not by
-	 * Jackson, and not by Spring either (see {@link #findModulesViaServiceLoader}).
+	 * Jackson, and not by bboss either (see {@link #findModulesViaServiceLoader}).
 	 * As a consequence, specifying an empty list here will suppress any kind of
 	 * module detection.
 	 * <p>Specify either this or {@link #modulesToInstall}, not both.
@@ -403,7 +403,7 @@ public class Jackson2ObjectMapperBuilder {
 	/**
 	 * Specify one or more modules to be registered with the {@link ObjectMapper}.
 	 * <p>Modules specified here will be registered after
-	 * Spring's autodetection of JSR-310 and Joda-Time, or Jackson's
+	 * bboss's autodetection of JSR-310 and Joda-Time, or Jackson's
 	 * finding of modules (see {@link #findModulesViaServiceLoader}),
 	 * allowing to eventually override their configuration.
 	 * <p>Specify either this or {@link #modules}, not both.
@@ -420,7 +420,7 @@ public class Jackson2ObjectMapperBuilder {
 	 * Specify one or more modules by class to be registered with
 	 * the {@link ObjectMapper}.
 	 * <p>Modules specified here will be registered after
-	 * Spring's autodetection of JSR-310 and Joda-Time, or Jackson's
+	 * bboss's autodetection of JSR-310 and Joda-Time, or Jackson's
 	 * finding of modules (see {@link #findModulesViaServiceLoader}),
 	 * allowing to eventually override their configuration.
 	 * <p>Specify either this or {@link #modules}, not both.
@@ -437,7 +437,7 @@ public class Jackson2ObjectMapperBuilder {
 	/**
 	 * Set whether to let Jackson find available modules via the JDK ServiceLoader,
 	 * based on META-INF metadata in the classpath. Requires Jackson 2.2 or higher.
-	 * <p>If this mode is not set, Spring's Jackson2ObjectMapperBuilder itself
+	 * <p>If this mode is not set, bboss's Jackson2ObjectMapperBuilder itself
 	 * will try to find the JSR-310 and Joda-Time support modules on the classpath -
 	 * provided that Java 8 and Joda-Time themselves are available, respectively.
 	 * @see com.fasterxml.jackson.databind.ObjectMapper#findModules()
@@ -466,7 +466,7 @@ public class Jackson2ObjectMapperBuilder {
 	}
 
 	/**
-	 * Set the Spring {@link ApplicationContext} in order to autowire Jackson handlers ({@link JsonSerializer},
+	 * Set the bboss {@link ApplicationContext} in order to autowire Jackson handlers ({@link JsonSerializer},
 	 * {@link JsonDeserializer}, {@link KeyDeserializer}, {@code TypeResolverBuilder} and {@code TypeIdResolver}).
 	 * @since 4.1.3
 	 */
@@ -580,7 +580,7 @@ public class Jackson2ObjectMapperBuilder {
 	}
 
 
-	// Any change to this method should be also applied to spring-jms and spring-messaging
+	// Any change to this method should be also applied to bboss-jms and bboss-messaging
 	// MappingJackson2MessageConverter default constructors
 	private void customizeDefaultFeatures(ObjectMapper objectMapper) {
 		if (!this.features.containsKey(MapperFeature.DEFAULT_VIEW_INCLUSION)) {

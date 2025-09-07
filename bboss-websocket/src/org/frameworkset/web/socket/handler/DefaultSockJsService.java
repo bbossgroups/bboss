@@ -27,7 +27,7 @@ public class DefaultSockJsService  extends TransportHandlingSockJsService implem
 	 * Create a DefaultSockJsService with default {@link TransportHandler handler} types.
 	 * @param scheduler a task scheduler for heart-beat messages and removing
 	 * timed-out sessions; the provided TaskScheduler should be declared as a
-	 * Spring bean to ensure it is initialized at start up and shut down when the
+	 * bboss bean to ensure it is initialized at start up and shut down when the
 	 * application stops.
 	 */
 	public DefaultSockJsService(TaskScheduler scheduler) {
@@ -38,7 +38,7 @@ public class DefaultSockJsService  extends TransportHandlingSockJsService implem
 	 * Create a DefaultSockJsService with overridden {@link TransportHandler handler} types
 	 * replacing the corresponding default handler implementation.
 	 * @param scheduler a task scheduler for heart-beat messages and removing timed-out sessions;
-	 * the provided TaskScheduler should be declared as a Spring bean to ensure it gets
+	 * the provided TaskScheduler should be declared as a bboss bean to ensure it gets
 	 * initialized at start-up and shuts down when the application stops
 	 * @param handlerOverrides zero or more overrides to the default transport handler types
 	 */
@@ -50,7 +50,7 @@ public class DefaultSockJsService  extends TransportHandlingSockJsService implem
 	 * Create a DefaultSockJsService with overridden {@link TransportHandler handler} types
 	 * replacing the corresponding default handler implementation.
 	 * @param scheduler a task scheduler for heart-beat messages and removing timed-out sessions;
-	 * the provided TaskScheduler should be declared as a Spring bean to ensure it gets
+	 * the provided TaskScheduler should be declared as a bboss bean to ensure it gets
 	 * initialized at start-up and shuts down when the application stops
 	 * @param handlerOverrides zero or more overrides to the default transport handler types
 	 */

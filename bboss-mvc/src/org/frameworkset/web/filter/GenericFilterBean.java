@@ -32,10 +32,10 @@ import org.slf4j.LoggerFactory;
  * <p>This filter leaves actual filtering to subclasses, which have to
  * implement the {@link javax.servlet.Filter#doFilter} method.
  *
- * <p>This generic filter base class has no dependency on the Spring
+ * <p>This generic filter base class has no dependency on the bboss
  * {@link org.frameworkset.context.ApplicationContext} concept.
  * Filters usually don't load their own context but rather access service
- * beans from the Spring root application context, accessible via the
+ * beans from the bboss root application context, accessible via the
  * filter's {@link #getServletContext() ServletContext} (see
  * {@link org.frameworkset.web.context.support.WebApplicationContextUtils}).
  *
@@ -67,7 +67,7 @@ public abstract class GenericFilterBean implements
 
 
 	/**
-	 * Stores the bean name as defined in the Spring bean factory.
+	 * Stores the bean name as defined in the bboss bean factory.
 	 * <p>Only relevant in case of initialization as bean, to have a name as
 	 * fallback to the filter name usually provided by a FilterConfig instance.
 	 * @see org.frameworkset.beans.factory.BeanNameAware
@@ -189,7 +189,7 @@ public abstract class GenericFilterBean implements
 	 * Make the name of this filter available to subclasses.
 	 * Analogous to GenericServlet's {@code getServletName()}.
 	 * <p>Takes the FilterConfig's filter name by default.
-	 * If initialized as bean in a Spring application context,
+	 * If initialized as bean in a bboss application context,
 	 * it falls back to the bean name as defined in the bean factory.
 	 * @return the filter name, or {@code null} if none available
 	 * @see javax.servlet.GenericServlet#getServletName()
@@ -204,7 +204,7 @@ public abstract class GenericFilterBean implements
 	 * Make the ServletContext of this filter available to subclasses.
 	 * Analogous to GenericServlet's {@code getServletContext()}.
 	 * <p>Takes the FilterConfig's ServletContext by default.
-	 * If initialized as bean in a Spring application context,
+	 * If initialized as bean in a bboss application context,
 	 * it falls back to the ServletContext that the bean factory runs in.
 	 * @return the ServletContext instance, or {@code null} if none available
 	 * @see javax.servlet.GenericServlet#getServletContext()
@@ -221,7 +221,7 @@ public abstract class GenericFilterBean implements
 	 * All bean properties of this filter will have been set before this
 	 * method is invoked.
 	 * <p>Note: This method will be called from standard filter initialization
-	 * as well as filter bean initialization in a Spring application context.
+	 * as well as filter bean initialization in a bboss application context.
 	 * Filter name and ServletContext will be available in both cases.
 	 * <p>This default implementation is empty.
 	 * @throws ServletException if subclass initialization fails
@@ -234,7 +234,7 @@ public abstract class GenericFilterBean implements
 	/**
 	 * Subclasses may override this to perform custom filter shutdown.
 	 * <p>Note: This method will be called from standard filter destruction
-	 * as well as filter bean destruction in a Spring application context.
+	 * as well as filter bean destruction in a bboss application context.
 	 * <p>This default implementation is empty.
 	 */
 	@Override

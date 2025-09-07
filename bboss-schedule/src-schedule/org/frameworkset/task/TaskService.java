@@ -438,7 +438,7 @@ public class TaskService implements Service {
 //			mergedProps.put(StdSchedulerFactory.PROP_JOB_STORE_CLASS, LocalDataSourceJobStore.class.getName());
 //		}
 //
-//		// Make sure to set the scheduler name as configured in the Spring configuration.
+//		// Make sure to set the scheduler name as configured in the bboss configuration.
 //		if (this.schedulerName != null) {
 //			mergedProps.put(StdSchedulerFactory.PROP_SCHED_INSTANCE_NAME, this.schedulerName);
 //		}

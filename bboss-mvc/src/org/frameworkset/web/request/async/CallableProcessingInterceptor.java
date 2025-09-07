@@ -39,7 +39,7 @@ public interface CallableProcessingInterceptor {
 	 * invoking the {@link Callable}. Once the state is captured, it can then be
 	 * transferred to the new {@link Thread} in
 	 * {@link #preProcess(NativeWebRequest, Callable)}. Capturing the state of
-	 * Spring Security's SecurityContextHolder and migrating it to the new Thread
+	 * bboss Security's SecurityContextHolder and migrating it to the new Thread
 	 * is a concrete example of where this is useful.
 	 * @param request the current request
 	 * @param task the task for the current async request

@@ -114,7 +114,7 @@ public class CloseStatus {
 	 * a message) and extra care should be exercised while closing the session in
 	 * order to avoid locking additional threads.
 	 *
-	 * <p><strong>NOTE:</strong> Spring Framework specific status code.
+	 * <p><strong>NOTE:</strong> bboss Framework specific status code.
 	 */
 	public static final CloseStatus SESSION_NOT_RELIABLE = new CloseStatus(4500);
 

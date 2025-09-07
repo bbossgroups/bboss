@@ -4,12 +4,12 @@ import org.frameworkset.util.ClassUtil.ClassInfo;
 import org.frameworkset.util.beans.BeanWrapper;
 
 /**
- * {@link ConfigurablePropertyAccessor} implementation that directly accesses
+ * { ConfigurablePropertyAccessor} implementation that directly accesses
  * instance fields. Allows for direct binding to fields instead of going through
  * JavaBean setters.
  *
- * <p>As of Spring 4.2, the vast majority of the {@link BeanWrapper} features have
- * been merged to {@link AbstractPropertyAccessor}, which means that property
+ * <p>As of bboss 4.2, the vast majority of the {@link BeanWrapper} features have
+ * been merged to { AbstractPropertyAccessor}, which means that property
  * traversal as well as collections and map access is now supported here as well.
  *
  * <p>A DirectFieldAccessor's default for the "extractOldValueForEditor" setting
@@ -18,7 +18,6 @@ import org.frameworkset.util.beans.BeanWrapper;
  * @author Juergen Hoeller
  * @author Stephane Nicoll
  * @since 2.0
- * @see #setExtractOldValueForEditor
  * @see BeanWrapper
  
  */

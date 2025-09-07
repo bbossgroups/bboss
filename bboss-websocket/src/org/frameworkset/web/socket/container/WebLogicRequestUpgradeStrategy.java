@@ -26,7 +26,7 @@ import org.glassfish.tyrus.spi.Writer;
 
 /**
  * A WebSocket {@code RequestUpgradeStrategy} for Oracle's WebLogic.
- * Supports 12.1.3 as well as 12.2.1, as of Spring Framework 4.2.3.
+ * Supports 12.1.3 as well as 12.2.1, as of bboss Framework 4.2.3.
  *
  * @author Rossen Stoyanchev
  * @since 4.1

@@ -20,7 +20,7 @@ public class BBossHandlerInstantiator  extends HandlerInstantiator {
 
 
 	/**
-	 * Create a new SpringHandlerInstantiator for the given BeanFactory.
+	 * Create a new bbossHandlerInstantiator for the given BeanFactory.
 	 * @param beanFactory the target BeanFactory
 	 */
 	public BBossHandlerInstantiator(BaseApplicationContext  beanFactory) {

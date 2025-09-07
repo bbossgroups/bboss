@@ -95,7 +95,7 @@ public class WebAsyncTask<V> implements ApplicationContextAware {
 	/**
 	 * A {@link BeanFactory} to use for resolving an executor name.
 	 * <p>This factory reference will automatically be set when
-	 * {@code WebAsyncTask} is used within a Spring MVC controller.
+	 * {@code WebAsyncTask} is used within a bboss MVC controller.
 	 */
 	public void setApplicationContext(BaseApplicationContext beanFactory) {
 		this.beanFactory = beanFactory;

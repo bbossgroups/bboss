@@ -66,7 +66,7 @@ public class PathMatchingResourcePatternResolverTests {
 	@Test
 	public void singleResourceOnFileSystem() throws IOException {
 		Resource[] resources =
-				resolver.getResources("org/springframework/core/io/support/PathMatchingResourcePatternResolverTests.class");
+				resolver.getResources("org/frameworkset/util/PathMatchingResourcePatternResolverTests.class");
 		assertThat(resources.length).isEqualTo(1);
 		assertProtocolAndFilenames(resources, "file", "PathMatchingResourcePatternResolverTests.class");
 	}

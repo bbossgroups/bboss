@@ -6,8 +6,8 @@ package org.frameworkset.spi;
  * <b>NOTE: This interface does not imply specific auto-startup semantics.
  * Consider implementing {@link SmartLifecycle} for that purpose.</b>
  *
- * <p>Can be implemented by both components (typically a Spring bean defined in a
- * Spring context) and containers  (typically a Spring {@link ApplicationContext}
+ * <p>Can be implemented by both components (typically a bboss bean defined in a
+ * bboss context) and containers  (typically a bboss {@link ApplicationContext}
  * itself). Containers will propagate start/stop signals to all components that
  * apply within each container, e.g. for a stop/restart scenario at runtime.
  *

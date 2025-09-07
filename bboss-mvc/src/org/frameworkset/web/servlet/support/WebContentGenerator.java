@@ -342,7 +342,7 @@ public abstract class WebContentGenerator extends WebApplicationObjectSupport
 	protected final void applyCacheSeconds(HttpServletResponse response, int cacheSeconds) {
 		if (!response.containsHeader(HEADER_CACHE_CONTROL)) {
 			if (this.useExpiresHeader || !this.useCacheControlHeader) {
-				// Deprecated HTTP 1.0 cache behavior, as in previous Spring versions
+				// Deprecated HTTP 1.0 cache behavior, as in previous bboss versions
 				if (cacheSeconds > 0) {
 					cacheForSeconds(response, cacheSeconds);
 				}

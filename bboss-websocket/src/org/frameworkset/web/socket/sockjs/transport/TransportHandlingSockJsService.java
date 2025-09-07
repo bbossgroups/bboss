@@ -57,7 +57,7 @@ public class TransportHandlingSockJsService  extends AbstractSockJsService imple
 	/**
 	 * Create a TransportHandlingSockJsService with given {@link TransportHandler handler} types.
 	 * @param scheduler a task scheduler for heart-beat messages and removing timed-out sessions;
-	 * the provided TaskScheduler should be declared as a Spring bean to ensure it gets
+	 * the provided TaskScheduler should be declared as a bboss bean to ensure it gets
 	 * initialized at start-up and shuts down when the application stops
 	 * @param handlers one or more {@link TransportHandler} implementations to use
 	 */
@@ -68,7 +68,7 @@ public class TransportHandlingSockJsService  extends AbstractSockJsService imple
 	/**
 	 * Create a TransportHandlingSockJsService with given {@link TransportHandler handler} types.
 	 * @param scheduler a task scheduler for heart-beat messages and removing timed-out sessions;
-	 * the provided TaskScheduler should be declared as a Spring bean to ensure it gets
+	 * the provided TaskScheduler should be declared as a bboss bean to ensure it gets
 	 * initialized at start-up and shuts down when the application stops
 	 * @param handlers one or more {@link TransportHandler} implementations to use
 	 */

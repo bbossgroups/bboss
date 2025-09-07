@@ -49,7 +49,7 @@ public abstract class BaseServlet extends HttpServlet{
 	 */
 	@Override
 	public void destroy() {
-//		getServletContext().log("Destroying Spring FrameworkServlet '" + getServletName() + "'");
+//		getServletContext().log("Destroying bboss FrameworkServlet '" + getServletName() + "'");
 //		// Only call close() on WebApplicationContext if locally managed...
 //		if (this.webApplicationContext instanceof ConfigurableApplicationContext && !this.webApplicationContextInjected) {
 //			((ConfigurableApplicationContext) this.webApplicationContext).close();

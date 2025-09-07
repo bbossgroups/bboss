@@ -410,7 +410,7 @@ public class PathMatchingResourcePatternResolver implements ResourcePatternResol
 	/**
 	 * Resolve the specified resource for path matching.
 	 * <p>By default, Equinox OSGi "bundleresource:" / "bundleentry:" URL will be
-	 * resolved into a standard jar file URL that be traversed using Spring's
+	 * resolved into a standard jar file URL that be traversed using bboss's
 	 * standard jar file traversal algorithm. For any preceding custom resolution,
 	 * override this method and replace the resource handle accordingly.
 	 * @param original the resource to resolve

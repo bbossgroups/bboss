@@ -34,10 +34,10 @@ import java.util.regex.Pattern;
  * <p>Some examples:<br> <ul> <li>{@code com/t?st.jsp} - matches {@code com/test.jsp} but also
  * {@code com/tast.jsp} or {@code com/txst.jsp}</li> <li>{@code com/*.jsp} - matches all
  * {@code .jsp} files in the {@code com} directory</li> <li>{@code com/&#42;&#42;/test.jsp} - matches all
- * {@code test.jsp} files underneath the {@code com} path</li> <li>{@code org/springframework/&#42;&#42;/*.jsp}
- * - matches all {@code .jsp} files underneath the {@code org/springframework} path</li>
- * <li>{@code org/&#42;&#42;/servlet/bla.jsp} - matches {@code org/springframework/servlet/bla.jsp} but also
- * {@code org/springframework/testing/servlet/bla.jsp} and {@code org/servlet/bla.jsp}</li> </ul>
+ * {@code test.jsp} files underneath the {@code com} path</li> <li>{@code org/framework/&#42;&#42;/*.jsp}
+ * - matches all {@code .jsp} files underneath the {@code org/framework} path</li>
+ * <li>{@code org/&#42;&#42;/servlet/bla.jsp} - matches {@code org/framework/servlet/bla.jsp} but also
+ * {@code org/framework/testing/servlet/bla.jsp} and {@code org/servlet/bla.jsp}</li> </ul>
  *
  * @author Alef Arendsen
  * @author Juergen Hoeller

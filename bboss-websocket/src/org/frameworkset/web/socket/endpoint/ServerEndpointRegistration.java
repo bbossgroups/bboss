@@ -20,12 +20,12 @@ import org.frameworkset.web.socket.handler.BeanCreatingHandlerProvider;
 
 /**
  * An implementation of {@link javax.websocket.server.ServerEndpointConfig} for use in
- * Spring applications. A {@link ServerEndpointRegistration} bean is detected by
+ * bboss applications. A {@link ServerEndpointRegistration} bean is detected by
  * ServerEndpointExporter and registered with a Java WebSocket runtime at startup.
  *
  * <p>Class constructors accept a singleton {@link javax.websocket.Endpoint} instance
  * or an Endpoint specified by type {@link Class}. When specified by type, the endpoint
- * will be instantiated and initialized through the Spring ApplicationContext before
+ * will be instantiated and initialized through the bboss ApplicationContext before
  * each client WebSocket connection.
  *
  * <p>This class also extends
