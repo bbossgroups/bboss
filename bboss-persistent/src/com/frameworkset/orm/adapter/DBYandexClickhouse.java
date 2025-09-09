@@ -31,6 +31,7 @@ package com.frameworkset.orm.adapter;
  * limitations under the License.
  */
 
+import com.frameworkset.common.poolman.PreparedDBUtil;
 import org.frameworkset.persitent.datasource.BalanceDatasourceConfig;
 import org.frameworkset.persitent.datasource.BalanceDatasourceUtil;
 
@@ -83,5 +84,6 @@ public class DBYandexClickhouse extends DBMM
     @Override
     public ResultSet getImportedKeys(DatabaseMetaData metaData, String catalog, String schemaName, String tableName) throws SQLException {
         return null;
-    }     
+    }
+
 }

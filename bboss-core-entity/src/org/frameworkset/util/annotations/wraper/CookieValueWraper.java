@@ -93,7 +93,7 @@ public class CookieValueWraper extends BaseWraper{
 	 * in case the header is missing in the request. Switch this to
 	 * <code>false</code> if you prefer a <code>null</value> in case of the
 	 * missing header.
-	 * <p>Alternatively, provide a {@link #defaultValue() defaultValue},
+	 * <p>Alternatively, provide a {defaultValue() defaultValue},
 	 * which implicitly sets this flag to <code>false</code>.
 	 */
 	public boolean required(){

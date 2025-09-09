@@ -156,7 +156,6 @@ public class Record extends DBHashtable{
      *         the result 
      *         is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setString
      */
     public String getString(int parameterIndex) throws SQLException
     {
@@ -174,7 +173,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, 
      *         the result is <code>false</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setBoolean
      */
     public boolean getBoolean(int parameterIndex) throws SQLException
     {
@@ -196,7 +194,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>0</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setByte
      */
     public byte getByte(int parameterIndex) throws SQLException
     {
@@ -215,7 +212,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>0</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setShort
      */
     public short getShort(int parameterIndex) throws SQLException
     {
@@ -433,7 +429,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>0</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setInt
      */
     public int getInt(int parameterIndex) throws SQLException
     {
@@ -453,7 +448,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>0</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setLong
      */
     public long getLong(int parameterIndex) throws SQLException
     {
@@ -524,7 +518,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>0</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setFloat
      */
     public float getFloat(int parameterIndex) throws SQLException
     {
@@ -540,7 +533,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>0</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setDouble
      */
     public double getDouble(int parameterIndex) throws SQLException
     {
@@ -565,7 +557,6 @@ public class Record extends DBHashtable{
      * @exception SQLException if a database access error occurs
      * @deprecated use <code>getBigDecimal(int parameterIndex)</code>
      *             or <code>getBigDecimal(String parameterName)</code>
-     * @see #setBigDecimal
      */
     public BigDecimal getBigDecimal(int parameterIndex, int scale)
 	throws SQLException
@@ -585,7 +576,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setBytes
      */
     public byte[] getBytes(int parameterIndex) throws SQLException
 
@@ -608,7 +598,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setDate
      */
     public java.sql.Date getDate(int parameterIndex) throws SQLException
     {
@@ -636,7 +625,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setTime
      */
     public java.sql.Time getTime(int parameterIndex) throws SQLException
     {
@@ -662,7 +650,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setTimestamp
      */
     public java.sql.Timestamp getTimestamp(int parameterIndex) 
 	throws SQLException
@@ -723,7 +710,6 @@ public class Record extends DBHashtable{
      * @return A <code>java.lang.Object</code> holding the OUT parameter value
      * @exception SQLException if a database access error occurs
      * @see Types 
-     * @see #setObject
      */
     public Object getObject(int parameterIndex) throws SQLException
     {
@@ -754,7 +740,6 @@ public class Record extends DBHashtable{
      * @return the parameter value in full precision.  If the value is 
      * SQL <code>NULL</code>, the result is <code>null</code>. 
      * @exception SQLException if a database access error occurs
-     * @see #setBigDecimal
      * @since 1.2
      */
     public BigDecimal getBigDecimal(int parameterIndex) throws SQLException
@@ -776,7 +761,6 @@ public class Record extends DBHashtable{
      * @param map the mapping from SQL type names to Java classes
      * @return a <code>java.lang.Object</code> holding the OUT parameter value
      * @exception SQLException if a database access error occurs
-     * @see #setObject
      * @since 1.2
      */
     public Object  getObject (int i, java.util.Map map) throws SQLException
@@ -821,8 +805,6 @@ public class Record extends DBHashtable{
 	 * when the method <code>InputStream.available</code> is called whether
 	 * there is data available or not.
 	 * 
-	 * @param rowid
-	 *            the first row is 0, the second is 1
 	 * @param columnIndex
 	 *            the first column is 0, the second is 1, ...
 	 * @return a Java input stream that delivers the database column value as a
@@ -924,8 +906,6 @@ public class Record extends DBHashtable{
 	 * when the method <code>InputStream.available</code> is called, whether
 	 * there is data available or not.
 	 * 
-	 * @param rowid
-	 *            the first row is 0, the second is 1
 	 * @param columnIndex
 	 *            the first column is 0, the second is 1, ...
 	 * @return a Java input stream that delivers the database column value as a
@@ -971,8 +951,6 @@ public class Record extends DBHashtable{
 	 * when the method <code>InputStream.available</code> is called whether
 	 * there is data available or not.
 	 * 
-	 * @param rowid
-	 *            the first row is 0, the second is 1
 	 * @param columnIndex
 	 *            the first column is 0, the second is 1, ...
 	 * @return a Java input stream that delivers the database column value as a
@@ -1041,10 +1019,6 @@ public class Record extends DBHashtable{
 	 * when the method <code>InputStream.available</code> is called, whether
 	 * there is data available or not.
 	 * 
-	 * @param rowid
-	 *            the first row is 0, the second is 1
-	 * @param columnIndex
-	 *            the first column is 0, the second is 1, ...
 	 * @return a Java input stream that delivers the database column value as a
 	 *         stream of two-byte Unicode characters; if the value is SQL
 	 *         <code>NULL</code>, the value returned is <code>null</code>
@@ -1155,7 +1129,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setDate
      * @since 1.2
      */
     public java.sql.Date getDate(int parameterIndex, Calendar cal) 
@@ -1191,7 +1164,6 @@ public class Record extends DBHashtable{
      * @return the parameter value; if the value is SQL <code>NULL</code>, the result 
      *         is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setTime
      * @since 1.2
      */
     public java.sql.Time getTime(int parameterIndex, Calendar cal) 
@@ -1225,7 +1197,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      *         is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setTimestamp
      * @since 1.2
      */
     public java.sql.Timestamp getTimestamp(int parameterIndex, Calendar cal) 
@@ -1253,7 +1224,6 @@ public class Record extends DBHashtable{
      * @exception SQLException if a database access error occurs,
      *            or if the URL being returned is
      *            not a valid URL on the Java platform
-     * @see #setURL
      * @since 1.4
      */
     public java.net.URL getURL(int parameterIndex) throws SQLException
@@ -1277,7 +1247,6 @@ public class Record extends DBHashtable{
      * @return the parameter value. If the value is SQL <code>NULL</code>, the result 
      * is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setString
      * @since 1.4
      */
     public String getString(String parameterName) throws SQLException
@@ -1293,7 +1262,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>false</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setBoolean
      * @since 1.4
      */
     public boolean getBoolean(String parameterName) throws SQLException
@@ -1314,7 +1282,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>0</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setByte
      * @since 1.4
      */
     public byte getByte(String parameterName) throws SQLException
@@ -1332,7 +1299,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>0</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setShort
      * @since 1.4
      */
     public short getShort(String parameterName) throws SQLException
@@ -1349,7 +1315,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, 
      *         the result is <code>0</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setInt
      * @since 1.4
      */
     public int getInt(String parameterName) throws SQLException
@@ -1372,7 +1337,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, 
      *         the result is <code>0</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setLong
      * @since 1.4
      */
     public long getLong(String parameterName) throws SQLException
@@ -1394,7 +1358,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, 
      *         the result is <code>0</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setFloat
      * @since 1.4
      */
     public float getFloat(String parameterName) throws SQLException
@@ -1410,7 +1373,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, 
      *         the result is <code>0</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setDouble
      * @since 1.4
      */
     public double getDouble(String parameterName) throws SQLException
@@ -1427,7 +1389,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result is 
      *  <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setBytes
      * @since 1.4
      */
     public byte[] getBytes(String parameterName) throws SQLException
@@ -1448,7 +1409,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setDate
      * @since 1.4
      */
     public java.sql.Date getDate(String parameterName) throws SQLException
@@ -1475,7 +1435,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setTime
      * @since 1.4
      */
     public java.sql.Time getTime(String parameterName) throws SQLException
@@ -1501,7 +1460,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result 
      * is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setTimestamp
      * @since 1.4
      */
     public java.sql.Timestamp getTimestamp(String parameterName) throws SQLException
@@ -1669,7 +1627,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, 
      * the result is <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setDate
      * @since 1.4
      */
     public java.sql.Date getDate(String parameterName, Calendar cal) 
@@ -1704,7 +1661,6 @@ public class Record extends DBHashtable{
      * @return the parameter value; if the value is SQL <code>NULL</code>, the result is 
      * <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setTime
      * @since 1.4
      */
     public java.sql.Time getTime(String parameterName, Calendar cal) 
@@ -1737,7 +1693,6 @@ public class Record extends DBHashtable{
      * @return the parameter value.  If the value is SQL <code>NULL</code>, the result is 
      * <code>null</code>.
      * @exception SQLException if a database access error occurs
-     * @see #setTimestamp
      * @since 1.4
      */
     public java.sql.Timestamp getTimestamp(String parameterName, Calendar cal) 
@@ -1763,7 +1718,6 @@ public class Record extends DBHashtable{
      * value <code>null</code> is returned.
      * @exception SQLException if a database access error occurs,
      *            or if there is a problem with the URL
-     * @see #setURL
      * @since 1.4
      */
     public java.net.URL getURL(String parameterName) throws SQLException

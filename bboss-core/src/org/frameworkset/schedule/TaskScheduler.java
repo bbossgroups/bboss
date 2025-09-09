@@ -28,7 +28,6 @@ public interface TaskScheduler {
 	 * @param startTime the desired execution time for the task
 	 * (if this is in the past, the task will be executed immediately, i.e. as soon as possible)
 	 * @return a {@link ScheduledFuture} representing pending completion of the task
-	 * @throws org.frameworkset.core.task.TaskRejectedException if the given task was not accepted
 	 * for internal reasons (e.g. a pool overload handling policy or a pool shutdown in progress)
 	 */
 	ScheduledFuture<?> schedule(Runnable task, Date startTime);
@@ -43,7 +42,6 @@ public interface TaskScheduler {
 	 * (if this is in the past, the task will be executed immediately, i.e. as soon as possible)
 	 * @param period the interval between successive executions of the task (in milliseconds)
 	 * @return a {@link ScheduledFuture} representing pending completion of the task
-	 * @throws org.frameworkset.core.task.TaskRejectedException if the given task was not accepted
 	 * for internal reasons (e.g. a pool overload handling policy or a pool shutdown in progress)
 	 */
 	ScheduledFuture<?> scheduleAtFixedRate(Runnable task, Date startTime, long period);
@@ -56,7 +54,6 @@ public interface TaskScheduler {
 	 * @param task the Runnable to execute whenever the trigger fires
 	 * @param period the interval between successive executions of the task (in milliseconds)
 	 * @return a {@link ScheduledFuture} representing pending completion of the task
-	 * @throws org.frameworkset.core.task.TaskRejectedException if the given task was not accepted
 	 * for internal reasons (e.g. a pool overload handling policy or a pool shutdown in progress)
 	 */
 	ScheduledFuture<?> scheduleAtFixedRate(Runnable task, long period);
@@ -73,7 +70,6 @@ public interface TaskScheduler {
 	 * @param delay the delay between the completion of one execution and the start
 	 * of the next (in milliseconds)
 	 * @return a {@link ScheduledFuture} representing pending completion of the task
-	 * @throws org.frameworkset.core.task.TaskRejectedException if the given task was not accepted
 	 * for internal reasons (e.g. a pool overload handling policy or a pool shutdown in progress)
 	 */
 	ScheduledFuture<?> scheduleWithFixedDelay(Runnable task, Date startTime, long delay);
@@ -87,7 +83,6 @@ public interface TaskScheduler {
 	 * @param task the Runnable to execute whenever the trigger fires
 	 * @param delay the interval between successive executions of the task (in milliseconds)
 	 * @return a {@link ScheduledFuture} representing pending completion of the task
-	 * @throws org.frameworkset.core.task.TaskRejectedException if the given task was not accepted
 	 * for internal reasons (e.g. a pool overload handling policy or a pool shutdown in progress)
 	 */
 	ScheduledFuture<?> scheduleWithFixedDelay(Runnable task, long delay);

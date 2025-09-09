@@ -19,7 +19,6 @@ public interface AsyncTaskExecutor  extends TaskExecutor {
 	 * supposed to start. This is intended as a hint to the executor, allowing for
 	 * preferred handling of immediate tasks. Typical values are {@link #TIMEOUT_IMMEDIATE}
 	 * or {@link #TIMEOUT_INDEFINITE} (the default as used by {@link #execute(Runnable)}).
-	 * @throws TaskTimeoutException in case of the task being rejected because
 	 * of the timeout (i.e. it cannot be started in time)
 	 * @throws TaskRejectedException if the given task was not accepted
 	 */

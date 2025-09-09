@@ -168,7 +168,7 @@ public class Tokenizer {
     private int lookupSymbol(char b) throws IOException {
         int result = -1;
 
-        Character c = new Character(b);
+        Character c = b;
         int index = Collections.binarySearch(symbols, c);
 
         if (index >= 0) {

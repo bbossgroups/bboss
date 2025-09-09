@@ -47,7 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * This is used in order to connect to a MySQL database using the MM
+ * This is used in order to connect to a clickhouse database using the clickhouse
  * drivers.  Simply comment the above and uncomment this code below and
  * fill in the appropriate values for DB_NAME, DB_HOST, DB_USER,
  * DB_PASS.
@@ -780,4 +780,6 @@ public class DBClickhouse extends DBMM
     public ResultSet getImportedKeys(DatabaseMetaData metaData, String catalog, String schemaName, String tableName) throws SQLException {
         return null;
     }
+
+    
 }

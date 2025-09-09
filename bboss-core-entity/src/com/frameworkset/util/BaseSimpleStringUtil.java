@@ -95,7 +95,7 @@ public class BaseSimpleStringUtil {
 	}
 
 	/**
-	 * A constant passed to the {@link # split()}methods indicating that
+	 * A constant passed to the {  split()}methods indicating that
 	 * all occurrences of a pattern should be used to split a string.
 	 */
 	public static final int SPLIT_ALL = 0;

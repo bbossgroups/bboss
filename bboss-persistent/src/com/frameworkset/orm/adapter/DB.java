@@ -1070,28 +1070,7 @@ public abstract class DB implements IDMethod, Platform {
 		return sqlbuilder.toString();
 	}
 
-	public void setObject(PreparedDBUtil dbutil, int i, Object o) throws SQLException {
-		dbutil._setObject(i, o);
-//			  if(o == null || o instanceof java.sql.Timestamp)
-//			  {
-//				  dbutil._setObject(i, o, Param.setObject_int_Object);
-//			  }
-//			  else if(o instanceof java.sql.Date)
-//			  {
-//				  o = new java.sql.Timestamp(((java.sql.Date)o).getTime());
-//				  dbutil.addParam(i, o, Param.setObject_int_Object);
-//			  }
-//			  else if(o instanceof java.util.Date)
-//			  {
-//				  o = new java.sql.Timestamp(((java.util.Date)o).getTime());
-//				  dbutil.addParam(i, o, Param.setObject_int_Object);
-//			  }
-//			  else
-//			  {
-//				  dbutil.addParam(i, o, Param.setObject_int_Object);
-//			  }
-
-	}
+	
 
 	public PagineSql getDBPagineSql(String sql, long offset, int maxsize, boolean prepared, String orderby) {
 
@@ -1135,12 +1114,91 @@ public abstract class DB implements IDMethod, Platform {
 		return other.isDefinitelyWritable(rc);
 	}
 
-	public void setObject(PreparedStatement statement, PreparedStatement statement_count, int parameterIndex, Object x) throws SQLException {
-		statement.setObject(parameterIndex, x);
-		if (statement_count != null) {
-			statement_count.setObject(parameterIndex, x);
-		}
-	}
+    public void setObject(PreparedStatement statement, PreparedStatement statement_count, int parameterIndex, Object x) throws SQLException {
+        if (x != null) {
+            if (x instanceof java.sql.Date) {
+                statement.setDate(parameterIndex, (java.sql.Date) x);
+                if (statement_count != null) {
+                    statement_count.setDate(parameterIndex, (java.sql.Date) x);
+                }
+            } else if (x instanceof Timestamp) {
+                statement.setTimestamp(parameterIndex, (Timestamp) x);
+                if (statement_count != null) {
+                    statement_count.setTimestamp(parameterIndex, (Timestamp) x);
+                }
+            }
+            else if (x instanceof Date) {
+                Timestamp timestamp = new Timestamp(((Date) x).getTime());
+                statement.setTimestamp(parameterIndex, timestamp);
+                if (statement_count != null) {
+                    statement_count.setTimestamp(parameterIndex, timestamp);
+                }
+            }
+            else if (x instanceof Short) {
+                statement.setShort(parameterIndex, (Short) x);
+                if (statement_count != null) {
+                    statement_count.setShort(parameterIndex, (Short) x);
+                }
+            } else if (x instanceof Double) {
+                statement.setDouble(parameterIndex, (Double) x);
+                if (statement_count != null) {
+                    statement_count.setDouble(parameterIndex, (Double) x);
+                }
+            } else if (x instanceof Float) {
+                statement.setFloat(parameterIndex, (Float) x);
+                if (statement_count != null) {
+                    statement_count.setFloat(parameterIndex, (Float) x);
+                }
+            } else {
+                statement.setObject(parameterIndex, x);
+                if (statement_count != null) {
+                    statement_count.setObject(parameterIndex, x);
+                }
+
+            }
+        } else {
+            statement.setNull(parameterIndex, Types.NULL);
+            if (statement_count != null) {
+                statement_count.setNull(parameterIndex, Types.NULL);
+            }
+        }
+    }
+
+    public void setObject(PreparedDBUtil dbutil, int parameterIndex, Object x) throws SQLException {
+        if (x != null) {
+            if (x instanceof String ) {
+                dbutil.setString(parameterIndex, (String) x);
+
+            }  else if (x instanceof java.sql.Date) {
+                dbutil.setDate(parameterIndex, (java.sql.Date) x);
+
+            } else if (x instanceof Timestamp) {
+                dbutil.setTimestamp(parameterIndex, (Timestamp) x);
+
+            } else if (x instanceof Date) {
+                Timestamp timestamp = new Timestamp(((Date) x).getTime());
+                dbutil.setTimestamp(parameterIndex, timestamp);
+
+            }else if (x instanceof Short) {
+                dbutil.setShort(parameterIndex, (Short) x);
+
+            } else if (x instanceof Double) {
+                dbutil.setDouble(parameterIndex, (Double) x);
+
+            } else if (x instanceof Float) {
+                dbutil.setFloat(parameterIndex, (Float) x);
+
+            } else {
+                dbutil._setObject(parameterIndex, x);
+
+
+            }
+        } else {
+            dbutil.setNull(parameterIndex, Types.NULL);
+
+        }
+
+    }
 
 	public  boolean isOracleTimestamp(int sqlType){
 		return false;

@@ -1785,7 +1785,7 @@ public class ValueObjectUtil {
 		}
 
 		if (toType == byte.class || toType == Byte.class)
-			return new Byte(obj.toString());
+			return Byte.parseByte(obj.toString());
 		if(toType == BigDecimal.class)
 		{
 			return converObjToBigDecimal(obj);
@@ -1927,7 +1927,7 @@ public class ValueObjectUtil {
 		}
 
 		if (toType == byte.class || toType == Byte.class)
-			return new Byte(obj.toString());
+			return Byte.parseByte(obj.toString());
 		if(toType == BigDecimal.class)
 		{
 			return converObjToBigDecimal(obj);
@@ -2415,7 +2415,7 @@ public class ValueObjectUtil {
 					String[] values = (String[]) obj;
 					Long[] ret = new Long[values.length];
 					for (int i = 0; i < values.length; i++) {
-						ret[i] = new Long(values[i]);
+						ret[i] = Long.parseLong(values[i]);
 					}
 
 					return ret;
@@ -2460,7 +2460,7 @@ public class ValueObjectUtil {
 				String[] values = (String[]) obj;
 				Integer[] ret = new Integer[values.length];
 				for (int i = 0; i < values.length; i++) {
-					ret[i] = new Integer(values[i]);
+					ret[i] = Integer.parseInt(values[i]);
 				}
 				return ret;
 			}
@@ -2490,7 +2490,7 @@ public class ValueObjectUtil {
 				String[] values = (String[]) obj;
 				Float[] ret = new Float[values.length];
 				for (int i = 0; i < values.length; i++) {
-					ret[i] = new Float(values[i]);
+					ret[i] = Float.valueOf(values[i]);
 				}
 				return ret;
 			}
@@ -2520,7 +2520,7 @@ public class ValueObjectUtil {
 				String[] values = (String[]) obj;
 				Short[] ret = new Short[values.length];
 				for (int i = 0; i < values.length; i++) {
-					ret[i] = new Short(values[i]);
+					ret[i] = Short.parseShort(values[i]);
 				}
 				return ret;
 			}
@@ -2550,7 +2550,7 @@ public class ValueObjectUtil {
 				String[] values = (String[]) obj;
 				Double[] ret = new Double[values.length];
 				for (int i = 0; i < values.length; i++) {
-					ret[i] = new Double(values[i]);
+					ret[i] = Double.parseDouble(values[i]);
 				}
 				return ret;
 			}
@@ -2611,7 +2611,7 @@ public class ValueObjectUtil {
 			String[] values = (String[]) obj;
 			byte[] ret = new byte[values.length];
 			for (int i = 0; i < values.length; i++) {
-				ret[i] = new Byte(values[i]).byteValue();
+				ret[i] = Byte.parseByte(values[i]);
 			}
 			return ret;
 		}
@@ -2619,7 +2619,7 @@ public class ValueObjectUtil {
 			String[] values = (String[]) obj;
 			Byte[] ret = new Byte[values.length];
 			for (int i = 0; i < values.length; i++) {
-				ret[i] = new Byte(values[i]);
+				ret[i] = Byte.parseByte(values[i]);
 			}
 			return ret;
 		}
@@ -3118,7 +3118,7 @@ public class ValueObjectUtil {
 			return (byte) 0;
 
 		if (toType == Byte.class)
-			return new Byte((byte) 0);
+			return (byte) 0;
 
 
 		return null;
@@ -3151,7 +3151,7 @@ public class ValueObjectUtil {
 //	}
 
 	/**
-	 * 对象比较功能，value1 > value2 返回1，value1 < value2 返回-1，value1 == value2 返回0
+	 * 对象比较功能，value1 大于 value2 返回1，value1 小于 value2 返回-1，value1 == value2 返回0
 	 * 比较之前首先将value2转换为value1的类型
 	 * 目前只支持数字和String，日期类型的比较，复杂类型不能使用改方法进行比较
 	 */
@@ -4162,7 +4162,7 @@ public class ValueObjectUtil {
 			int[] values = (int[]) value;
 			ret = new Integer[values.length];
 			for (int i = 0; i < values.length; i++) {
-				ret[i] = new Integer(values[i]);
+				ret[i] = values[i];
 			}
 			return ret;
 
@@ -4387,7 +4387,7 @@ public class ValueObjectUtil {
 			int[] values = (int[]) value;
 			ret = new Long[values.length];
 			for (int i = 0; i < values.length; i++) {
-				ret[i] = new Long(values[i]);
+				ret[i] = (long)values[i];
 			}
 			return ret;
 
@@ -4611,7 +4611,7 @@ public class ValueObjectUtil {
 			int[] values = (int[]) value;
 			ret = new Float[values.length];
 			for (int i = 0; i < values.length; i++) {
-				ret[i] = new Float(values[i]);
+				ret[i] = (float)values[i];
 			}
 			return ret;
 
@@ -4876,7 +4876,7 @@ public class ValueObjectUtil {
 			int[] values = (int[]) value;
 			ret = new Double[values.length];
 			for (int i = 0; i < values.length; i++) {
-				ret[i] = new Double(values[i]);
+				ret[i] = (double)values[i];
 			}
 			return ret;
 
@@ -4904,7 +4904,7 @@ public class ValueObjectUtil {
 			long[] values = (long[]) value;
 			ret = new Double[values.length];
 			for (int i = 0; i < values.length; i++) {
-				ret[i] = new Double(values[i]);
+				ret[i] = (double)values[i];
 			}
 			return ret;
 		}
@@ -4914,7 +4914,7 @@ public class ValueObjectUtil {
 			double[] values = (double[]) value;
 			ret = new Double[values.length];
 			for (int i = 0; i < values.length; i++) {
-				ret[i] = (double) values[i];
+				ret[i] =  values[i];
 			}
 			return ret;
 

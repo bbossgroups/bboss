@@ -226,7 +226,7 @@ public class SQLExecutor extends DBOPtionsSQLExecutor
 	public static Object insert(String sql, Object... fields) throws SQLException {
 //		return execute(null, sql,PreparedDBUtil.INSERT, fields);
 
-		return insert((DBOptions) null, sql,(DBOptions) null, fields) ;
+		return insert((DBOptions) null, sql, fields) ;
 	}
 	
 	public static Object updateWithDBName(String dbname, String sql, Object... fields) throws SQLException {
