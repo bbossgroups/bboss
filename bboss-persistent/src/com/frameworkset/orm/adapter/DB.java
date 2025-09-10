@@ -1116,7 +1116,24 @@ public abstract class DB implements IDMethod, Platform {
 
     public void setObject(PreparedStatement statement, PreparedStatement statement_count, int parameterIndex, Object x) throws SQLException {
         if (x != null) {
-            if (x instanceof java.sql.Date) {
+            if (x instanceof String ) {
+                statement.setString(parameterIndex, (String) x);
+                if (statement_count != null) {
+                    statement_count.setString(parameterIndex, (String) x);
+                }
+            }
+            else if (x instanceof Integer) {
+                statement.setInt(parameterIndex, (Integer) x);
+                if (statement_count != null) {
+                    statement_count.setInt(parameterIndex, (Integer) x);
+                }
+            }
+            else if (x instanceof Long) {
+                statement.setLong(parameterIndex, (Long) x);
+                if (statement_count != null) {
+                    statement_count.setLong(parameterIndex, (Long) x);
+                }
+            } else if (x instanceof java.sql.Date) {
                 statement.setDate(parameterIndex, (java.sql.Date) x);
                 if (statement_count != null) {
                     statement_count.setDate(parameterIndex, (java.sql.Date) x);
@@ -1134,12 +1151,7 @@ public abstract class DB implements IDMethod, Platform {
                     statement_count.setTimestamp(parameterIndex, timestamp);
                 }
             }
-            else if (x instanceof Short) {
-                statement.setShort(parameterIndex, (Short) x);
-                if (statement_count != null) {
-                    statement_count.setShort(parameterIndex, (Short) x);
-                }
-            } else if (x instanceof Double) {
+            else if (x instanceof Double) {
                 statement.setDouble(parameterIndex, (Double) x);
                 if (statement_count != null) {
                     statement_count.setDouble(parameterIndex, (Double) x);
@@ -1149,7 +1161,12 @@ public abstract class DB implements IDMethod, Platform {
                 if (statement_count != null) {
                     statement_count.setFloat(parameterIndex, (Float) x);
                 }
-            } else {
+            }else if (x instanceof Short) {
+                statement.setShort(parameterIndex, (Short) x);
+                if (statement_count != null) {
+                    statement_count.setShort(parameterIndex, (Short) x);
+                }
+            }  else {
                 statement.setObject(parameterIndex, x);
                 if (statement_count != null) {
                     statement_count.setObject(parameterIndex, x);
@@ -1169,7 +1186,13 @@ public abstract class DB implements IDMethod, Platform {
             if (x instanceof String ) {
                 dbutil.setString(parameterIndex, (String) x);
 
-            }  else if (x instanceof java.sql.Date) {
+            }
+            else if (x instanceof Integer) {
+                dbutil.setInt(parameterIndex, (Integer) x);                 
+            }else if (x instanceof Long) {
+                dbutil.setLong(parameterIndex, (Long) x);
+
+            }else if (x instanceof java.sql.Date) {
                 dbutil.setDate(parameterIndex, (java.sql.Date) x);
 
             } else if (x instanceof Timestamp) {
@@ -1179,14 +1202,14 @@ public abstract class DB implements IDMethod, Platform {
                 Timestamp timestamp = new Timestamp(((Date) x).getTime());
                 dbutil.setTimestamp(parameterIndex, timestamp);
 
-            }else if (x instanceof Short) {
-                dbutil.setShort(parameterIndex, (Short) x);
-
             } else if (x instanceof Double) {
                 dbutil.setDouble(parameterIndex, (Double) x);
 
             } else if (x instanceof Float) {
                 dbutil.setFloat(parameterIndex, (Float) x);
+
+            } else if (x instanceof Short) {
+                dbutil.setShort(parameterIndex, (Short) x);
 
             } else {
                 dbutil._setObject(parameterIndex, x);

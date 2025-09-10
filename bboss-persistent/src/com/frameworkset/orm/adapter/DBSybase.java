@@ -174,17 +174,17 @@ public class DBSybase extends DB
         char delim = getStringDelimiter();
         return (delim + new SimpleDateFormat(DATE_FORMAT).format(date) + delim);
     }
-    
-    public void setObject(PreparedDBUtil dbutil,int i, Object o) throws SQLException
-	  {
-    	if(o == null )
-    	{
-    		 dbutil.setObject(i, o, 12);//fixed sysbase null exception.
-    	}
-    	else
-    	{
-    		super.setObject(dbutil, i, o);
-    	}
-		  
-	  }
+//    
+//    public void setObject(PreparedDBUtil dbutil,int i, Object o) throws SQLException
+//	  {
+//    	if(o == null )
+//    	{
+//    		 dbutil.setObject(i, o, 12);//fixed sysbase null exception.
+//    	}
+//    	else
+//    	{
+//    		super.setObject(dbutil, i, o);
+//    	}
+//		  
+//	  }
 }
