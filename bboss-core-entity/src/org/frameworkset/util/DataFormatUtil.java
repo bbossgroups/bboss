@@ -312,6 +312,12 @@ public class DataFormatUtil {
 			return temp;
 		}
 	}
+    
+    public static String formatDate(Date date,String format)
+    {
+    	SimpleDateFormat sdf = getSimpleDateFormat(format);
+    	return sdf.format(date);
+    }
 	public static SimpleDateFormat getSimpleDateFormat( String dateFormat,String locale,String timeZone)
 	{
 		DataFormat dataFormatUtil = getDateformatThreadLocal();
