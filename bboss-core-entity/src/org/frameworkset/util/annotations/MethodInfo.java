@@ -44,6 +44,10 @@ import java.util.Map;
  */
 public class MethodInfo {
 	private Method method;
+    /**
+	 * 是否是异步响应式方法
+	 */
+    private boolean reactor;
 	
 	/**
 	 * 是否是分页方法
@@ -70,9 +74,16 @@ public class MethodInfo {
 	private String[] paths;
 	private String[] pathPattern;
 	private PathVariableInfo[] pathVariables;
-//	private Integer[] pathVariablePositions;
 	private boolean[] databind;
 	private String[] baseurls ;
+    public static Class reactorType;
+    static {
+        try {
+            reactorType = Class.forName("reactor.core.publisher.Flux");
+        } catch (ClassNotFoundException e) {
+//            throw new RuntimeException(e);
+        }
+    }
 	/**
 	 * 用来标注mvc控制器方法强制要求进行动态令牌校验，如果客户端请求没有附带令牌或者令牌已经作废，那么直接拒绝
 	 * 请求 
@@ -88,30 +99,16 @@ public class MethodInfo {
 	 */
 	private boolean requiredDToken = false;
 	
-	/**
-	 * 存放控制方法参数的泛型数据类型
-	 * 以便进行方便的List<Object>类型的参数的数据绑定
-	 * ParameterizedType
-	 * 数组的索引直接和方法的参数位置索引对应：0,1,...,n
-	 * 如果对应位置上的有List<Object>类型的数据，那么存放的值就是Object的具体类型
-	 * 否则存放null
-	 */
-//	private Class[] genericParameterTypes;
-	
-	
-	
-//	public MethodInfo(Method method, MethodParameter[] paramNames) {
-//		super();
-//		this.method = method;
-////		this.editors = editors;
-//		this.paramNames = paramNames;
-//		mapping = method.getAnnotation(HandlerMapping.class);
-//		this.requestMethods = mapping.method();
-//	}
-	
 	public MethodInfo(Method method, HandlerMapping typeLevelMapping) {
 		super();
 		this.method = method;
+        if(reactorType != null) {
+            Class clazz = method.getReturnType();
+
+            if (reactorType.isAssignableFrom(clazz)) {
+                this.reactor = true;
+            }
+        }
 		this.assertDToken = method.getAnnotation(AssertDToken.class);		
 		this.requiredDToken = assertDToken != null;
 		this.assertTicket = method.getAnnotation(AssertTicket.class);
@@ -143,6 +140,13 @@ public class MethodInfo {
 	public MethodInfo(Method method, String[] baseurls) {
 		super();
 		this.method = method;
+        if(reactorType != null) {
+            Class clazz = method.getReturnType();
+
+            if (clazz.isAssignableFrom(reactorType)) {
+                this.reactor = true;
+            }
+        }
 		mapping = method.getAnnotation(HandlerMapping.class);
 		this.assertDToken = method.getAnnotation(AssertDToken.class);
 		this.requiredDToken = assertDToken != null;
@@ -180,6 +184,7 @@ public class MethodInfo {
 		else
 			return super.toString();
 	}
+    
 	private MediaType convertMediaType()
 	{
 		MediaType temp = null;
@@ -545,6 +550,13 @@ public class MethodInfo {
 	public MethodInfo(Method method) {
 		super();
 		this.method = method;
+        if(reactorType != null) {
+            Class clazz = method.getReturnType();
+
+            if (clazz.isAssignableFrom(reactorType)) {
+                this.reactor = true;
+            }
+        }
 		this.assertDToken = method.getAnnotation(AssertDToken.class);
 		this.requiredDToken = assertDToken != null;
 		
@@ -1073,4 +1085,11 @@ public class MethodInfo {
 		
 	}
 
+    /**
+     * 判断控制器方法是否是reactor方法
+     * @return
+     */
+    public boolean isReactor() {
+        return reactor;
+    }
 }

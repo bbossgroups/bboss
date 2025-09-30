@@ -92,18 +92,9 @@ public class HandlerMethodInvoker {
 	public HandlerMethodInvoker(HttpMessageConverter[] messageConverters,
 //			,
 			HandlerMethodResolver methodResolver
-//			,
-//			WebBindingInitializer bindingInitializer,
-//			SessionAttributeStore sessionAttributeStore,
-//			ParameterNameDiscoverer parameterNameDiscoverer,
-//			WebArgumentResolver... customArgumentResolvers
 			) {
 
 		this.methodResolver = methodResolver;
-//		this.bindingInitializer = bindingInitializer;
-//		this.sessionAttributeStore = sessionAttributeStore;
-//		this.parameterNameDiscoverer = parameterNameDiscoverer;
-//		this.customArgumentResolvers = customArgumentResolvers;
 		this.messageConverters = messageConverters;
 	}
 

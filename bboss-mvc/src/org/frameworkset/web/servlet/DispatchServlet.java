@@ -379,21 +379,7 @@ public class DispatchServlet extends BaseServlet {
 			}
 			return handler;
 		}
-//		Iterator it = this.handlerMappings.iterator();
-//		while (it.hasNext()) {
-//			HandlerMapping hm = (HandlerMapping) it.next();
-//			if (logger.isTraceEnabled()) {
-//				logger.trace("Testing handler map [" + hm  + "] in DispatcherServlet with name '" +
-//						getServletName() + "'");
-//			}
-//			handler = hm.getHandler(request);
-//			if (handler != null) {
-//				if (cache) {
-//					request.setAttribute(HANDLER_EXECUTION_CHAIN_ATTRIBUTE, handler);
-//				}
-//				return handler;
-//			}
-//		}
+
 		return null;
 	}
 	
@@ -404,14 +390,7 @@ public class DispatchServlet extends BaseServlet {
 	 * This is a fatal error.
 	 */
 	protected HandlerAdapter getHandlerAdapter(HandlerMeta handler) throws ServletException {
-//		Iterator it = this.handlerAdapters.iterator();
-//		while (it.hasNext()) {
-//			HandlerAdapter ha = (HandlerAdapter) it.next();
-//		
-//			if (ha.supports(handler)) {
-//				return ha;
-//			}
-//		}
+
 		if(this.annotationMethodHandlerAdapter.supports(handler))
 			return this.annotationMethodHandlerAdapter;
 		else if(this.simpleControllerHandlerAdapter.supports(handler))
@@ -422,52 +401,7 @@ public class DispatchServlet extends BaseServlet {
 				"]: Does your handler implement a supported interface like Controller?");
 	}
 	
-//	/**
-//	 * Process this request, publishing an event regardless of the outcome.
-//	 * <p>The actual event handling is performed by the abstract
-//	 * {@link #doService} template method.
-//	 */
-//	protected final void processRequest(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//
-//		long startTime = System.currentTimeMillis();
-//		Throwable failureCause = null;
-//
-//		try {
-//			doService(request, response);
-//		}
-//		catch (ServletException ex) {
-//			failureCause = ex;
-//			throw ex;
-//		}
-//		catch (IOException ex) {
-//			failureCause = ex;
-//			throw ex;
-//		}
-//		catch (Throwable ex) {
-//			failureCause = ex;
-//			throw new NestedServletException("Request processing failed", ex);
-//		}
-//
-//		finally {
-//			if (failureCause != null) {
-////				this.logger.debug("Could not complete request", failureCause);
-//			}
-//			else {
-//				this.logger.debug("Successfully completed request");
-//			}
-////			if (this.publishEvents) {
-////				// Whether or not we succeeded, publish an event.
-////				long processingTime = System.currentTimeMillis() - startTime;
-////				this.webApplicationContext.publishEvent(
-////						new ServletRequestHandledEvent(this,
-////								request.getRequestURI(), request.getRemoteAddr(),
-////								request.getMethod(), getServletConfig().getServletName(),
-////								WebUtils.getSessionId(request), getUsernameForRequest(request),
-////								processingTime, failureCause));
-////			}
-//		}
-//	}
+
 	
 	/**
 	 * No handler found -> set appropriate HTTP response status.
@@ -728,14 +662,14 @@ public class DispatchServlet extends BaseServlet {
 			
 		}
 		finally {
-			
-			if (!WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) {
-				DataFormatUtil.releaseDateformatThreadLocal();
+            DataFormatUtil.releaseDateformatThreadLocal();
+//			if (!request.isAsyncStarted()) {
+				
 				// Restore the original attribute snapshot, in case of an include.
 				if (attributesSnapshot != null) {
 					restoreAttributesAfterInclude(request, attributesSnapshot);
 				}
-			}
+//			}
 		}
 	}
 
@@ -756,7 +690,7 @@ public class DispatchServlet extends BaseServlet {
 		HandlerExecutionChain mappedHandler = null;
 		boolean multipartRequestParsed = false;
 
-		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
+//		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
 
 		try {
 			ModelAndView mv = null;
@@ -792,13 +726,15 @@ public class DispatchServlet extends BaseServlet {
 				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
 					return;
 				}
-
 				// Actually invoke the handler.
 				mv = ha.handle(processedRequest, response,pageContext, mappedHandler);
 
-				if (asyncManager.isConcurrentHandlingStarted()) {
-					return;
-				}
+                if(request.isAsyncSupported() && request.isAsyncStarted()){
+                    return;
+                }
+//				if (asyncManager.isConcurrentHandlingStarted()) {
+//					return;
+//				}
 
 				applyDefaultViewName(processedRequest, mv);
 				mappedHandler.applyPostHandle(processedRequest, response, mv);
@@ -806,6 +742,9 @@ public class DispatchServlet extends BaseServlet {
 			catch (Exception ex) {
 				dispatchException = ex;
 			}
+            if(request.isAsyncSupported() && request.isAsyncStarted()){
+                return;
+            }
 			processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
 		}
 		catch (Exception ex) {
@@ -815,18 +754,18 @@ public class DispatchServlet extends BaseServlet {
 			triggerAfterCompletionWithError(processedRequest, response, mappedHandler, err);
 		}
 		finally {
-			if (asyncManager.isConcurrentHandlingStarted()) {
-				// Instead of postHandle and afterCompletion
-				if (mappedHandler != null) {
-					mappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);
-				}
-			}
-			else {
+//			if (asyncManager.isConcurrentHandlingStarted()) {
+//				// Instead of postHandle and afterCompletion
+//				if (mappedHandler != null) {
+//					mappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);
+//				}
+//			}
+//			else {
 				// Clean up any resources used by a multipart request.
 				if (multipartRequestParsed) {
 					cleanupMultipart(processedRequest);
 				}
-			}
+//			}
 		}
 	}
 	
@@ -897,7 +836,7 @@ public class DispatchServlet extends BaseServlet {
 			}
 		}
 
-		if (WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) {
+		if (request.isAsyncStarted()) {
 			// Concurrent handling started during a forward
 			return;
 		}

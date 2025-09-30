@@ -54,6 +54,9 @@ public interface JacksonObjectMapper {
 
 	void object2json(Object object, OutputStream writer, boolean ALLOW_SINGLE_QUOTES);
 
+    void object2jsonDisableCloseAndFlush(Object object,OutputStream writer) ;
+    void object2jsonDisableCloseAndFlush(Object object,OutputStream writer,boolean ALLOW_SINGLE_QUOTES);
+
 	void object2json(Object object, Writer writer);
 
 	void object2json(Object object, Writer writer, boolean ALLOW_SINGLE_QUOTES);

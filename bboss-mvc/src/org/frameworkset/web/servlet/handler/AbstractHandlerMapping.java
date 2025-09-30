@@ -95,7 +95,6 @@ public abstract class AbstractHandlerMapping  extends WebApplicationObjectSuppor
 	 * @param interceptors array of handler interceptors, or <code>null</code> if none
 	 * @see #adaptInterceptor
 	 * @see HandlerInterceptor
-	 * @see WebRequestInterceptor
 	 */
 	public void setInterceptors(Object[] interceptors) {
 		this.interceptors.addAll(Arrays.asList(interceptors));
@@ -152,8 +151,6 @@ public abstract class AbstractHandlerMapping  extends WebApplicationObjectSuppor
 	 * @param interceptor the specified interceptor object
 	 * @return the interceptor wrapped as HandlerInterceptor
 	 * @see HandlerInterceptor
-	 * @see WebRequestInterceptor
-	 * @see WebRequestHandlerInterceptorAdapter
 	 */
 	protected HandlerInterceptor adaptInterceptor(Object interceptor) {
 		if (interceptor instanceof HandlerInterceptor) {

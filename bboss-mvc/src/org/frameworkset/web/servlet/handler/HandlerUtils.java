@@ -26,6 +26,7 @@ import org.frameworkset.spi.support.validate.Validator;
 import org.frameworkset.util.*;
 import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.*;
+import org.frameworkset.util.annotations.HandlerMapping;
 import org.frameworkset.util.annotations.wraper.*;
 import org.frameworkset.web.HttpMediaTypeNotAcceptableException;
 import org.frameworkset.web.HttpSessionRequiredException;
@@ -35,10 +36,7 @@ import org.frameworkset.web.bind.WebDataBinder.CallHolder;
 import org.frameworkset.web.multipart.IgnoreFieldNameMultipartFile;
 import org.frameworkset.web.multipart.MultipartFile;
 import org.frameworkset.web.multipart.MultipartHttpServletRequest;
-import org.frameworkset.web.servlet.HandlerExecutionChain;
-import org.frameworkset.web.servlet.HandlerInterceptor;
-import org.frameworkset.web.servlet.ModelAndView;
-import org.frameworkset.web.servlet.ModelMap;
+import org.frameworkset.web.servlet.*;
 import org.frameworkset.web.servlet.handler.annotations.ExcludeMethod;
 import org.frameworkset.web.servlet.handler.annotations.HandlerMethodInvoker;
 import org.frameworkset.web.servlet.handler.annotations.HandlerMethodResolver;
@@ -55,10 +53,9 @@ import org.frameworkset.web.util.UrlPathHelper;
 import org.frameworkset.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Flux;
 
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,6 +67,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -204,11 +202,15 @@ public abstract class HandlerUtils {
 		if (ModelAndView.class.equals(returnType)
 				|| Map.class.equals(returnType)
 				|| String.class.equals(returnType)
-				|| void.class.equals(returnType)) {
+				|| void.class.equals(returnType)
+        ) {
 			flag = true;
 
 			return flag;
 		}
+        if(MethodInfo.reactorType != null && MethodInfo.reactorType.isAssignableFrom(returnType)){
+            return true;
+        }
 		return false;
 	}
 
@@ -2329,6 +2331,107 @@ public abstract class HandlerUtils {
 		return urls;
 
 	}
+    
+    private static void asynInvokeHandlerMethod(HttpServletRequest request,
+                                                HttpServletResponse response, PageContext pageContext,
+                                                HandlerExecutionChain mappedHandler,
+                                                HandlerMeta handlerMeta,
+                                                MethodData handlerMethod) throws Exception {
+        boolean checkResult = true;
+        if (mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0) {
+
+            for (HandlerInterceptor handlerInterceptor : mappedHandler.getInterceptors()) {
+                if (!checkResult) {
+                    handlerInterceptor.invokerHandle(request, response, handlerMeta, handlerMethod);
+                } else {
+                    checkResult = handlerInterceptor.invokerHandle(request, response, handlerMeta, handlerMethod);
+                }
+
+            }
+        }
+        if (!checkResult) {
+            return ;
+        }
+//        BaseServlet.processRequestStream(request,response);
+//        if(true){
+//            return;
+//        }
+        // 启动异步上下文
+        AsyncContext asyncContext_ = null;
+        if(request.isAsyncStarted()){
+            asyncContext_ = request.getAsyncContext();
+        }
+        else{
+            asyncContext_ = request.startAsync();
+            asyncContext_.setTimeout(300000L);
+        }
+        
+       
+        final AsyncContext asyncContext = asyncContext_;
+
+        // 设置响应头
+        response.setContentType("text/event-stream");
+        response.setCharacterEncoding("UTF-8");
+
+        // 获取输出流
+        ServletOutputStream outputStream = response.getOutputStream();
+        ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker();
+    
+        ModelMap implicitModel = new ModelMap();
+
+        Flux<?> flux = (Flux) methodInvoker.invokeHandlerMethod(handlerMethod,
+                handlerMeta, request, response, pageContext, implicitModel);
+        // 订阅并写入数据
+        flux.subscribe(
+                data -> {
+                    try {
+                        logger.info("{}",data);
+                        if(data instanceof String) {
+                            outputStream.write(((String)data).getBytes(StandardCharsets.UTF_8));
+                        }
+                        else{                            
+                            SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+                        }
+                        outputStream.flush();
+                    } catch (IOException e) {
+                        asyncContext.complete();
+                    }
+                },
+                error -> {
+                    asyncContext.complete();
+//                    if (mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0) {
+//
+//                        for (HandlerInterceptor handlerInterceptor : mappedHandler.getInterceptors()) {
+//
+//                            try {
+//                                handlerInterceptor.invokerHandleComplete(request, response, handlerMeta, handlerMethod, error);
+//                            } catch (Exception e) {
+//                                logger.warn("",e);
+//                            }
+//
+//                        }
+//                    }
+                },
+                () -> {
+                    asyncContext.complete();
+//                    if (mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0) {
+//
+//                        for (HandlerInterceptor handlerInterceptor : mappedHandler.getInterceptors()) {
+//
+//                            try {
+//                                handlerInterceptor.invokerHandleComplete(request, response, handlerMeta, handlerMethod, null);
+//                            } catch (Exception e) {
+//                                logger.warn("",e);
+//                            }
+//
+//                        }
+//                    }
+                }
+        );
+
+        
+        
+    }
 
 	public static ModelAndView invokeHandlerMethod(HttpServletRequest request,
 												   HttpServletResponse response, PageContext pageContext,
@@ -2348,43 +2451,54 @@ public abstract class HandlerUtils {
 					}
 				}
 			}
-			boolean checkResult = true;
-			if(mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0){
+            if(!handlerMethod.getMethodInfo().isReactor()) {
 
-				for(HandlerInterceptor handlerInterceptor :mappedHandler.getInterceptors()){
-					if(!checkResult) {
-						handlerInterceptor.invokerHandle(request, response, handlerMeta,handlerMethod);
-					}
-					else{
-						checkResult = handlerInterceptor.invokerHandle(request,response,handlerMeta,handlerMethod);
-					}
 
-				}
-			}
-			if(!checkResult){
-				return null;
-			}
-			ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker(
-					methodResolver, messageConverters);
-			ServletWebRequest webRequest = new ServletWebRequest(request,
-					response);
-			ModelMap implicitModel = new ModelMap();
+                boolean checkResult = true;
+                if (mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0) {
 
-			Object result = methodInvoker.invokeHandlerMethod(handlerMethod,
-					handlerMeta, request, response, pageContext, implicitModel);
+                    for (HandlerInterceptor handlerInterceptor : mappedHandler.getInterceptors()) {
+                        if (!checkResult) {
+                            handlerInterceptor.invokerHandle(request, response, handlerMeta, handlerMethod);
+                        } else {
+                            checkResult = handlerInterceptor.invokerHandle(request, response, handlerMeta, handlerMethod);
+                        }
 
-			if(mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0){
+                    }
+                }
+                if (!checkResult) {
+                    return null;
+                }
+                ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker(
+                        methodResolver, messageConverters);
+                ServletWebRequest webRequest = new ServletWebRequest(request,
+                        response);
+                ModelMap implicitModel = new ModelMap();
 
-				for(HandlerInterceptor handlerInterceptor :mappedHandler.getInterceptors()){
+                Object result = methodInvoker.invokeHandlerMethod(handlerMethod,
+                        handlerMeta, request, response, pageContext, implicitModel);
 
-					result = handlerInterceptor.invokerHandleComplete(request,response,handlerMeta,handlerMethod,result);
+                if (mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0) {
 
-				}
-			}
-			ModelAndView mav = methodInvoker.getModelAndView(
-					handlerMethod.getMethodInfo(), handlerMeta, result,
-					implicitModel, webRequest);
-			return mav;
+                    for (HandlerInterceptor handlerInterceptor : mappedHandler.getInterceptors()) {
+
+                        result = handlerInterceptor.invokerHandleComplete(request, response, handlerMeta, handlerMethod, result);
+
+                    }
+                }
+                ModelAndView mav = methodInvoker.getModelAndView(
+                        handlerMethod.getMethodInfo(), handlerMeta, result,
+                        implicitModel, webRequest);
+                return mav;
+            }
+            else{
+                asynInvokeHandlerMethod( request,
+                         response,  pageContext,
+                         mappedHandler,
+                         handlerMeta,
+                         handlerMethod);
+                return null;
+            }
 		} catch (PathURLNotSetException ex) {
 			return handleNoSuchRequestHandlingMethod(ex, request, response);
 		} catch (NoSuchRequestHandlingMethodException ex) {
@@ -2630,6 +2744,12 @@ public abstract class HandlerUtils {
 					// null, null, null, null
 			);
 		}
+
+        public ServletHandlerMethodInvoker() {
+            super(null, null
+                    // null, null, null, null
+            );
+        }
 
 		@Override
 		protected void raiseMissingParameterException(String paramName,

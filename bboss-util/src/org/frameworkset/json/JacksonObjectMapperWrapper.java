@@ -242,7 +242,14 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 	public  void object2json(Object object,OutputStream writer) {
 		jacksonObjectMapper.object2json(object,writer,true) ;
 	}
-	  
+    @Override
+    public  void object2jsonDisableCloseAndFlush(Object object,OutputStream writer) {
+        jacksonObjectMapper.object2jsonDisableCloseAndFlush(object,writer) ;
+    }
+    @Override
+    public   void object2jsonDisableCloseAndFlush(Object object,OutputStream writer,boolean ALLOW_SINGLE_QUOTES) {
+        jacksonObjectMapper.object2jsonDisableCloseAndFlush(  object,  writer,  ALLOW_SINGLE_QUOTES);
+    }  
 	  /* (non-Javadoc)
 	 * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, java.io.OutputStream, boolean)
 	 */

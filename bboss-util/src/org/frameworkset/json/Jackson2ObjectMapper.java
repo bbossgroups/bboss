@@ -1,5 +1,6 @@
 package org.frameworkset.json;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.frameworkset.util.BeanUtils;
@@ -23,7 +24,9 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
     static ClassLoader moduleClassLoader = Jackson2ObjectMapper.class.getClassLoader();
 	protected ObjectMapper mapper = null;
 	protected ObjectMapper ALLOW_SINGLE_QUOTES_mapper = null;
+    protected ObjectMapper ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper = null;
 	protected ObjectMapper NOT_ALLOW_SINGLE_QUOTES_mapper = null;
+    protected ObjectMapper NOT_ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper = null;
 
 	private String dateFormat;
 
@@ -96,6 +99,22 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 		NOT_ALLOW_SINGLE_QUOTES_mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
         NOT_ALLOW_SINGLE_QUOTES_mapper.configure(ALLOW_SINGLE_QUOTES, false);
         registerWellKnownModulesIfAvailable(NOT_ALLOW_SINGLE_QUOTES_mapper);
+
+        this.NOT_ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper = new ObjectMapper();
+        //反序列化时，属性不存在时忽略属性
+        NOT_ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+        NOT_ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper.configure(ALLOW_SINGLE_QUOTES, false);
+        NOT_ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper.configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false);
+        NOT_ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper.configure(JsonGenerator.Feature.FLUSH_PASSED_TO_STREAM, false);
+        registerWellKnownModulesIfAvailable(NOT_ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper);
+
+        this.ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper = new ObjectMapper();
+        //反序列化时，属性不存在时忽略属性
+        ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+        ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper.configure(ALLOW_SINGLE_QUOTES, false);
+        ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper.configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false);
+        ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper.configure(JsonGenerator.Feature.FLUSH_PASSED_TO_STREAM, false);
+        registerWellKnownModulesIfAvailable(ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper);
 	}
 
 
@@ -430,6 +449,34 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			
 		
 		}
+    /* (non-Javadoc)
+     * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, java.io.OutputStream)
+     */
+    @Override
+    public  void object2jsonDisableCloseAndFlush(Object object,OutputStream writer) {
+        object2jsonDisableCloseAndFlush(object,writer,false) ;
+    }
+    @Override
+    public   void object2jsonDisableCloseAndFlush(Object object,OutputStream writer,boolean ALLOW_SINGLE_QUOTES) {
+//	    	ObjectMapper mapper = new ObjectMapper();
+//			mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+        try {
+            if(ALLOW_SINGLE_QUOTES) {
+                ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper.writeValue(writer,object);
+            }
+            else{
+                NOT_ALLOW_SINGLE_QUOTES_disableCloseAndFlushMapper.writeValue(writer,object);
+            }
+
+
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException("错误的json序列化操作",e);
+        }
+
+
+
+    }
 	  
 	  /* (non-Javadoc)
 	 * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, java.io.Writer)

@@ -34,10 +34,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Rossen Stoyanchev
  * @since 3.2
- * @see org.frameworkset.web.context.request.AsyncWebRequestInterceptor
- * @see org.frameworkset.web.servlet.AsyncHandlerInterceptor
- * @see org.frameworkset.web.filter.OncePerRequestFilter#shouldNotFilterAsyncDispatch
- * @see org.frameworkset.web.filter.OncePerRequestFilter#isAsyncDispatch
  */
 public final class WebAsyncManager {
 
@@ -72,7 +68,6 @@ public final class WebAsyncManager {
 	/**
 	 * Package-private constructor.
 	 * @see WebAsyncUtils#getAsyncManager(javax.servlet.ServletRequest)
-	 * @see WebAsyncUtils#getAsyncManager(org.frameworkset.web.context.request.WebRequest)
 	 */
 	WebAsyncManager() {
 	}

@@ -763,6 +763,15 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
     public static void object2json(Object object,OutputStream writer) {
     	getJacksonObjectMapper().object2json(object,writer,true) ;
 	}
+
+
+    public static void object2jsonDisableCloseAndFlush(Object object,OutputStream writer) {
+        getJacksonObjectMapper().object2jsonDisableCloseAndFlush(object,writer,true); ;
+    }
+
+    public  static void object2jsonDisableCloseAndFlush(Object object,OutputStream writer,boolean ALLOW_SINGLE_QUOTES) {
+        getJacksonObjectMapper().object2jsonDisableCloseAndFlush(  object,  writer,  ALLOW_SINGLE_QUOTES);
+    }
     
     public static void object2json(Object object,File writer,boolean ALLOW_SINGLE_QUOTES) {
 //    	ObjectMapper mapper = new ObjectMapper();

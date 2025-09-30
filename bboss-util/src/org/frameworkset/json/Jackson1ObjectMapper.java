@@ -7,6 +7,7 @@ import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.type.TypeReference;
 import org.frameworkset.util.annotations.DateFormateMeta;
 
+import javax.naming.OperationNotSupportedException;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -275,8 +276,15 @@ public class Jackson1ObjectMapper implements JacksonObjectMapper {
 				
 			
 			}
-		  
-		  /* (non-Javadoc)
+    @Override
+    public  void object2jsonDisableCloseAndFlush(Object object,OutputStream writer) {
+        throw new RuntimeException("not support object2jsonDisableCloseAndFlush");
+    }
+    @Override
+    public   void object2jsonDisableCloseAndFlush(Object object,OutputStream writer,boolean ALLOW_SINGLE_QUOTES) {
+        throw new RuntimeException("not support object2jsonDisableCloseAndFlush");
+    }
+    /* (non-Javadoc)
 		 * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, java.io.OutputStream)
 		 */
 		@Override

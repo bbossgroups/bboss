@@ -7,13 +7,9 @@ import org.frameworkset.spi.support.LocaleContextHolder;
 import org.frameworkset.spi.support.SimpleLocaleContext;
 import org.frameworkset.util.ClassUtils;
 import org.frameworkset.util.annotations.HttpMethod;
-import org.frameworkset.web.request.async.CallableProcessingInterceptorAdapter;
-import org.frameworkset.web.request.async.WebAsyncManager;
-import org.frameworkset.web.request.async.WebAsyncUtils;
 import org.frameworkset.web.servlet.context.RequestAttributes;
 import org.frameworkset.web.servlet.context.RequestContextHolder;
 import org.frameworkset.web.servlet.context.ServletRequestAttributes;
-import org.frameworkset.web.servlet.mvc.NativeWebRequest;
 import org.frameworkset.web.util.UrlPathHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +25,6 @@ import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Locale;
-import java.util.concurrent.Callable;
 
 public abstract class BaseServlet extends HttpServlet{
 	/** Checking for Servlet 3.0+ HttpServletResponse.getStatus() */
@@ -85,6 +80,7 @@ public abstract class BaseServlet extends HttpServlet{
 
 		processRequest(request, response);
 	}
+    
 
 	/**
 	 * Delegate POST requests to {@link #processRequest}.
@@ -92,8 +88,7 @@ public abstract class BaseServlet extends HttpServlet{
 	 */
 	@Override
 	protected final void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+			throws ServletException, IOException {        
 		processRequest(request, response);
 	}
 
@@ -245,7 +240,6 @@ public abstract class BaseServlet extends HttpServlet{
 	protected final void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		long startTime = System.currentTimeMillis();
 		Throwable failureCause = null;
 //		LocaleContextHolder.setLocaleContext(buildLocaleContext(request), this.threadContextInheritable);
 //		setLocaleContext(  request);
@@ -268,8 +262,8 @@ public abstract class BaseServlet extends HttpServlet{
 		RequestAttributes previousAttributes = RequestContextHolder.getRequestAttributes();
 		ServletRequestAttributes requestAttributes = buildRequestAttributes(request, response, pageContext,previousAttributes);
 
-		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
-		asyncManager.registerCallableInterceptor(BaseServlet.class.getName(), new RequestBindingInterceptor(pageContext));
+//		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
+//		asyncManager.registerCallableInterceptor(BaseServlet.class.getName(), new RequestBindingInterceptor(pageContext));
 
 		initContextHolders(request, localeContext, requestAttributes);
 
@@ -294,31 +288,31 @@ public abstract class BaseServlet extends HttpServlet{
 		}
 
 		finally {
-			resetContextHolders(request, previousLocaleContext, previousAttributes);
-			if (requestAttributes != null) {
-				requestAttributes.requestCompleted();
-			}
+//            if(!request.isAsyncStarted()) {
+                resetContextHolders(request, previousLocaleContext, previousAttributes);
+                if (requestAttributes != null) {
+                    requestAttributes.requestCompleted();
+                }
 
 
-			if (failureCause != null) {
-				if (logger.isErrorEnabled()) {
-					this.logger.error("Could not complete request", failureCause);
-				}
-			}
-			else {
-				if(logger.isDebugEnabled()) {
-					if (asyncManager.isConcurrentHandlingStarted()) {
-						logger.debug("Leaving response open for concurrent processing");
-					} else {
-						this.logger.debug("Successfully completed request");
-					}
-				}
-			}
+                if (failureCause != null) {
+                    if (logger.isErrorEnabled()) {
+                        this.logger.error("Could not complete request", failureCause);
+                    }
+                } else {
+//				if(logger.isDebugEnabled()) {
+//					if (asyncManager.isConcurrentHandlingStarted()) {
+//						logger.debug("Leaving response open for concurrent processing");
+//					} else {
+//						this.logger.debug("Successfully completed request");
+//					}
+//				}
+                }
 
-			if(fac != null && pageContext != null)
-			{
-				fac.releasePageContext(pageContext);
-			}
+                if (fac != null && pageContext != null) {
+                    fac.releasePageContext(pageContext);
+                }
+//            }
 
 //			publishRequestHandledEvent(request, response, startTime, failureCause);
 		}
@@ -373,31 +367,31 @@ public abstract class BaseServlet extends HttpServlet{
 
 	
 
-	/**
-	 * CallableProcessingInterceptor implementation that initializes and resets
-	 * FrameworkServlet's context holders, i.e. LocaleContextHolder and RequestContextHolder.
-	 */
-	private class RequestBindingInterceptor extends CallableProcessingInterceptorAdapter {
-		private PageContext pageContext;
-		public RequestBindingInterceptor(PageContext pageContext)
-		{
-			this.pageContext =  pageContext;
-		}
-		@Override
-		public <T> void preProcess(NativeWebRequest webRequest, Callable<T> task) {
-			HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-			if (request != null) {
-				HttpServletResponse response = webRequest.getNativeRequest(HttpServletResponse.class);
-				initContextHolders(request, buildLocaleContext(request), buildRequestAttributes(request, response,pageContext, null));
-			}
-		}
-		@Override
-		public <T> void postProcess(NativeWebRequest webRequest, Callable<T> task, Object concurrentResult) {
-			HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-			if (request != null) {
-				resetContextHolders(request, null, null);
-			}
-		}
-	}
+//	/**
+//	 * CallableProcessingInterceptor implementation that initializes and resets
+//	 * FrameworkServlet's context holders, i.e. LocaleContextHolder and RequestContextHolder.
+//	 */
+//	private class RequestBindingInterceptor extends CallableProcessingInterceptorAdapter {
+//		private PageContext pageContext;
+//		public RequestBindingInterceptor(PageContext pageContext)
+//		{
+//			this.pageContext =  pageContext;
+//		}
+//		@Override
+//		public <T> void preProcess(NativeWebRequest webRequest, Callable<T> task) {
+//			HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
+//			if (request != null) {
+//				HttpServletResponse response = webRequest.getNativeRequest(HttpServletResponse.class);
+//				initContextHolders(request, buildLocaleContext(request), buildRequestAttributes(request, response,pageContext, null));
+//			}
+//		}
+//		@Override
+//		public <T> void postProcess(NativeWebRequest webRequest, Callable<T> task, Object concurrentResult) {
+//			HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
+//			if (request != null) {
+//				resetContextHolders(request, null, null);
+//			}
+//		}
+//	}
 
 }
