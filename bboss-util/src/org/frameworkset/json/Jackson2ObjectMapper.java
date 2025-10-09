@@ -223,7 +223,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 				
 				
 			} catch (Exception e) {
-				throw new IllegalArgumentException(jsonString,e);
+				throw new IllegalArgumentException(e.getMessage(),e);
 			}
 			
 			
@@ -252,7 +252,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 				}
 				
 			} catch (Exception e) {
-				throw new IllegalArgumentException("",e);
+				throw new IllegalArgumentException(e.getMessage(),e);
 			}
 			
 			
@@ -307,7 +307,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			
 			
 		} catch (Exception e) {
-			throw new IllegalArgumentException(e);
+			throw new IllegalArgumentException(e.getMessage(),e);
 		}
 	}
 	public   <T> T json2ObjectWithType(String jsonString,final JsonTypeReference<T> ref,boolean ALLOW_SINGLE_QUOTES) {
@@ -336,7 +336,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			
 			
 		} catch (Exception e) {
-			throw new IllegalArgumentException(jsonString,e);
+			throw new IllegalArgumentException(e.getMessage(),e);
 		}
 		
 		
@@ -376,7 +376,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 				}
 				
 			} catch (Exception e) {
-				throw new IllegalArgumentException("错误的json序列化操作",e);
+				throw new IllegalArgumentException(e.getMessage(),e);
 			}
 			
 			
@@ -410,7 +410,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 				
 				
 			} catch (Exception e) {
-				throw new IllegalArgumentException("错误的json序列化操作",e);
+				throw new IllegalArgumentException(e.getMessage(),e);
 			}
 			
 			
@@ -443,7 +443,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 				
 				
 			} catch (Exception e) {
-				throw new IllegalArgumentException("错误的json序列化操作",e);
+				throw new IllegalArgumentException(e.getMessage(),e);
 			}
 			
 			
@@ -471,7 +471,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 
 
         } catch (Exception e) {
-            throw new IllegalArgumentException("错误的json序列化操作",e);
+            throw new IllegalArgumentException(e.getMessage(),e);
         }
 
 
@@ -504,7 +504,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 				
 				
 			} catch (Exception e) {
-				throw new IllegalArgumentException("错误的json序列化操作",e);
+				throw new IllegalArgumentException(e.getMessage(),e);
 			}
 			
 			
@@ -537,7 +537,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 				
 				
 			} catch (Exception e) {
-				throw new IllegalArgumentException("错误的json序列化操作",e);
+				throw new IllegalArgumentException(e.getMessage(),e);
 			}
 			
 			
