@@ -2382,10 +2382,16 @@ public abstract class HandlerUtils {
         Flux<?> flux = (Flux) methodInvoker.invokeHandlerMethod(handlerMethod,
                 handlerMeta, request, response, pageContext, implicitModel);
         // 订阅并写入数据
-        flux.doOnSubscribe(subscription -> logger.debug("开始订阅流..."))
+        flux.doOnSubscribe(subscription -> {
+                if(logger.isDebugEnabled()) {
+                    logger.debug("开始订阅流...");
+                }
+            })
             .doOnNext(data -> {
                 try {
-                    logger.debug("{}",data);
+                    if(logger.isDebugEnabled()) {
+                        logger.debug("{}", data);
+                    }
                     if(data instanceof String) {
                         outputStream.write(((String)data).getBytes(StandardCharsets.UTF_8));
                     }
@@ -2398,11 +2404,15 @@ public abstract class HandlerUtils {
                 }
             })
             .doOnComplete(() -> {
-                logger.debug("\n=== 流完成 ===");
+                if(logger.isDebugEnabled()) {
+                    logger.debug("\n=== 流完成 ===");
+                }
                 asyncContext.complete();
             })
             .doOnError(error -> {
-                logger.error("错误: " + error.getMessage(),error);
+                if(logger.isErrorEnabled()) {
+                    logger.error("错误: " + error.getMessage(), error);
+                }
                 asyncContext.complete();
             }).subscribe();
         
