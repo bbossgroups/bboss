@@ -2382,54 +2382,29 @@ public abstract class HandlerUtils {
         Flux<?> flux = (Flux) methodInvoker.invokeHandlerMethod(handlerMethod,
                 handlerMeta, request, response, pageContext, implicitModel);
         // 订阅并写入数据
-        flux.subscribe(
-                data -> {
-                    try {
-                        logger.info("{}",data);
-                        if(data instanceof String) {
-                            outputStream.write(((String)data).getBytes(StandardCharsets.UTF_8));
-                        }
-                        else{                            
-                            SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
-                        }
-                        outputStream.flush();
-                    } catch (IOException e) {
-                        asyncContext.complete();
+        flux.doOnSubscribe(subscription -> logger.debug("开始订阅流..."))
+            .doOnNext(data -> {
+                try {
+                    logger.debug("{}",data);
+                    if(data instanceof String) {
+                        outputStream.write(((String)data).getBytes(StandardCharsets.UTF_8));
                     }
-                },
-                error -> {
+                    else{
+                        SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+                    }
+                    outputStream.flush();
+                } catch (IOException e) {
                     asyncContext.complete();
-//                    if (mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0) {
-//
-//                        for (HandlerInterceptor handlerInterceptor : mappedHandler.getInterceptors()) {
-//
-//                            try {
-//                                handlerInterceptor.invokerHandleComplete(request, response, handlerMeta, handlerMethod, error);
-//                            } catch (Exception e) {
-//                                logger.warn("",e);
-//                            }
-//
-//                        }
-//                    }
-                },
-                () -> {
-                    asyncContext.complete();
-//                    if (mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0) {
-//
-//                        for (HandlerInterceptor handlerInterceptor : mappedHandler.getInterceptors()) {
-//
-//                            try {
-//                                handlerInterceptor.invokerHandleComplete(request, response, handlerMeta, handlerMethod, null);
-//                            } catch (Exception e) {
-//                                logger.warn("",e);
-//                            }
-//
-//                        }
-//                    }
                 }
-        );
-
-        
+            })
+            .doOnComplete(() -> {
+                logger.debug("\n=== 流完成 ===");
+                asyncContext.complete();
+            })
+            .doOnError(error -> {
+                logger.error("错误: " + error.getMessage(),error);
+                asyncContext.complete();
+            }).subscribe();
         
     }
 
