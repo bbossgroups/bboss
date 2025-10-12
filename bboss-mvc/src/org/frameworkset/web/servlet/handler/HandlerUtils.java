@@ -2368,53 +2368,68 @@ public abstract class HandlerUtils {
         
        
         final AsyncContext asyncContext = asyncContext_;
+        try {
+            // 设置响应头
+            response.setContentType("text/event-stream");
+            response.setCharacterEncoding("UTF-8");
 
-        // 设置响应头
-        response.setContentType("text/event-stream");
-        response.setCharacterEncoding("UTF-8");
+            // 获取输出流
+            ServletOutputStream outputStream = response.getOutputStream();
+            ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker();
 
-        // 获取输出流
-        ServletOutputStream outputStream = response.getOutputStream();
-        ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker();
-    
-        ModelMap implicitModel = new ModelMap();
+            ModelMap implicitModel = new ModelMap();
 
-        Flux<?> flux = (Flux) methodInvoker.invokeHandlerMethod(handlerMethod,
-                handlerMeta, request, response, pageContext, implicitModel);
-        // 订阅并写入数据
-        flux.doOnSubscribe(subscription -> {
-                if(logger.isDebugEnabled()) {
-                    logger.debug("开始订阅流...");
-                }
-            })
-            .doOnNext(data -> {
-                try {
-                    if(logger.isDebugEnabled()) {
-                        logger.debug("{}", data);
-                    }
-                    if(data instanceof String) {
-                        outputStream.write(((String)data).getBytes(StandardCharsets.UTF_8));
-                    }
-                    else{
-                        SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
-                    }
-                    outputStream.flush();
-                } catch (IOException e) {
-                    asyncContext.complete();
-                }
-            })
-            .doOnComplete(() -> {
-                if(logger.isDebugEnabled()) {
-                    logger.debug("\n=== 流完成 ===");
-                }
-                asyncContext.complete();
-            })
-            .doOnError(error -> {
-                if(logger.isErrorEnabled()) {
-                    logger.error("错误: " + error.getMessage(), error);
-                }
-                asyncContext.complete();
-            }).subscribe();
+
+            Flux<?> flux = (Flux) methodInvoker.invokeHandlerMethod(handlerMethod,
+                    handlerMeta, request, response, pageContext, implicitModel);
+            // 订阅并写入数据
+            flux.doOnSubscribe(subscription -> {
+                        if(logger.isDebugEnabled()) {
+                            logger.debug("开始订阅流...");
+                        }
+                    })
+                    .doOnNext(data -> {
+                        try {
+                            if(logger.isDebugEnabled()) {
+                                logger.debug("{}", data);
+                            }
+                            if(data instanceof String) {
+                                outputStream.write(((String)data).getBytes(StandardCharsets.UTF_8));
+                            }
+                            else{
+                                SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+                            }
+                            outputStream.flush();
+                        } catch (Exception e) {
+                            asyncContext.complete();
+                            // 重新抛出异常，让 doOnError 处理
+                            throw new FluxException("Failed to write data", e);
+                        }
+                    })
+                    .doOnComplete(() -> {
+                        if(logger.isDebugEnabled()) {
+                            logger.debug("\n=== 流完成 ===");
+                        }
+                        asyncContext.complete();
+                    })
+                    .doOnError(error -> {
+                        if(logger.isErrorEnabled()) {
+                            logger.error("错误: " + error.getMessage(), error);
+                        }
+                        
+                        asyncContext.complete();
+                    }).subscribe();
+        }
+        catch (Exception e){
+            asyncContext.complete();
+            throw e;
+        }
+        catch (Throwable e){
+            asyncContext.complete();
+            throw e;
+        }
+
+        
         
     }
 
