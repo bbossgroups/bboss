@@ -39,7 +39,11 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface PermissionToken {
-//	String appid() default "appid";
+    /**
+     * 应用编码,用于识别权限码所属的应用，默认为空串
+     * @return 
+     */
+	String appCode() default "";
 //	String secret() default "secret";
 //	String token() default "_dt_token_";
 //	String tokentype() default "tt";

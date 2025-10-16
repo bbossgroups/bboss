@@ -5902,5 +5902,14 @@ public class ValueObjectUtil {
 		
 	}
 
+    /**
+     * 获取value对应的字符串值
+     * @param value
+     * @return
+     */
+    public static String getString(Object value){
+        return value == null?null:value.toString();
+    }
+
 	
 }
