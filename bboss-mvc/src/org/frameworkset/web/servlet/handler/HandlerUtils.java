@@ -28,6 +28,8 @@ import org.frameworkset.util.ClassUtil.PropertieDescription;
 import org.frameworkset.util.annotations.*;
 import org.frameworkset.util.annotations.HandlerMapping;
 import org.frameworkset.util.annotations.wraper.*;
+import org.frameworkset.util.concurrent.BooleanWrapper;
+import org.frameworkset.util.concurrent.IntegerCount;
 import org.frameworkset.web.HttpMediaTypeNotAcceptableException;
 import org.frameworkset.web.HttpSessionRequiredException;
 import org.frameworkset.web.bind.MissingServletRequestParameterException;
@@ -70,6 +72,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * <p>
@@ -2336,7 +2339,9 @@ public abstract class HandlerUtils {
                                                 HttpServletResponse response, PageContext pageContext,
                                                 HandlerExecutionChain mappedHandler,
                                                 HandlerMeta handlerMeta,
-                                                MethodData handlerMethod) throws Exception {
+                                                MethodData handlerMethod,
+												   ServletHandlerMethodResolver methodResolver,
+                                                HttpMessageConverter[] messageConverters) throws Exception {
         boolean checkResult = true;
         if (mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0) {
 
@@ -2365,17 +2370,54 @@ public abstract class HandlerUtils {
             asyncContext_ = request.startAsync();
             asyncContext_.setTimeout(300000L);
         }
-        
-       
+
         final AsyncContext asyncContext = asyncContext_;
+        final BooleanWrapper completed = new BooleanWrapper(false);
         try {
+           
+            // 设置监听器来跟踪状态
+            asyncContext.addListener(new AsyncListener() {
+                @Override
+                public void onComplete(AsyncEvent event) {
+                    completed.set(true);
+
+                    if(logger.isDebugEnabled()) {
+                        logger.debug("AsyncContext 已完成");
+                    }
+                }
+
+                @Override
+                public void onTimeout(AsyncEvent event) {
+//                    completed = true;
+//                    System.out.println("AsyncContext 超时");
+                    if(!completed.get()) {
+                        completed.set(true);
+                        asynContextComplete( asyncContext);
+                    }
+                }
+
+                @Override
+                public void onError(AsyncEvent event) {
+//                    completed = true;
+//                    System.out.println("AsyncContext 发生错误");
+                    if(!completed.get()) {
+                        completed.set(true);
+                        asynContextComplete( asyncContext);
+                    }
+                }
+
+                @Override
+                public void onStartAsync(AsyncEvent event) {
+//                    System.out.println("AsyncContext 开始");
+                }
+            });
             // 设置响应头
             response.setContentType("text/event-stream");
             response.setCharacterEncoding("UTF-8");
 
             // 获取输出流
             ServletOutputStream outputStream = response.getOutputStream();
-            ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker();
+            ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker(methodResolver, messageConverters);
 
             ModelMap implicitModel = new ModelMap();
 
@@ -2389,6 +2431,10 @@ public abstract class HandlerUtils {
                         }
                     })
                     .doOnNext(data -> {
+                        if(completed.get()){
+                            // 重新抛出异常，让 doOnError 处理
+                            throw new FluxException("Failed to write data:asyncContext completed.");
+                        }
                         try {
                             if(logger.isDebugEnabled()) {
                                 logger.debug("{}", data);
@@ -2401,36 +2447,68 @@ public abstract class HandlerUtils {
                             }
                             outputStream.flush();
                         } catch (Exception e) {
-                            asyncContext.complete();
+                            if(!completed.get()) {
+                                asynContextComplete( asyncContext);
+                            }
                             // 重新抛出异常，让 doOnError 处理
                             throw new FluxException("Failed to write data", e);
+                        }
+                    })
+                    .doOnCancel(() -> {
+                        if(logger.isDebugEnabled()) {
+                            logger.debug("客户端取消连接");
+                        }
+                        if(!completed.get()) {
+                            asynContextComplete( asyncContext);
                         }
                     })
                     .doOnComplete(() -> {
                         if(logger.isDebugEnabled()) {
                             logger.debug("\n=== 流完成 ===");
                         }
-                        asyncContext.complete();
+                        if(!completed.get()) {
+                            asynContextComplete( asyncContext);
+                        }
                     })
                     .doOnError(error -> {
                         if(logger.isErrorEnabled()) {
                             logger.error("错误: " + error.getMessage(), error);
                         }
-                        
-                        asyncContext.complete();
+                        try {
+                            if(!completed.get()) {
+                                outputStream.write(ReactorConstant.SERVER_TERMINAL_BYTES);
+                            }
+                        } catch (IOException e) {
+//                            throw new RuntimeException(e);
+                        }
+                        if(!completed.get()) {
+                            asynContextComplete( asyncContext);
+                        }
                     }).subscribe();
         }
         catch (Exception e){
-            asyncContext.complete();
+            if(!completed.get()) {
+                asynContextComplete(asyncContext);
+            }
             throw e;
         }
         catch (Throwable e){
-            asyncContext.complete();
+            if(!completed.get()) {
+                asynContextComplete( asyncContext);
+            }
             throw e;
         }
 
         
         
+    }
+    private static void asynContextComplete(AsyncContext asyncContext){
+        try {
+            asyncContext.complete();
+        }
+        catch (Throwable t){
+
+        }
     }
 
 	public static ModelAndView invokeHandlerMethod(HttpServletRequest request,
@@ -2496,7 +2574,7 @@ public abstract class HandlerUtils {
                          response,  pageContext,
                          mappedHandler,
                          handlerMeta,
-                         handlerMethod);
+                         handlerMethod,methodResolver, messageConverters);
                 return null;
             }
 		} catch (PathURLNotSetException ex) {
