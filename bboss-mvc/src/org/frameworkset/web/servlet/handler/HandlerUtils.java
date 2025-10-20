@@ -20,6 +20,7 @@ import org.frameworkset.http.*;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.BaseApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
+import org.frameworkset.spi.remote.http.reactor.ServerEvent;
 import org.frameworkset.spi.support.validate.BindingResult;
 import org.frameworkset.spi.support.validate.ValidationUtils;
 import org.frameworkset.spi.support.validate.Validator;
@@ -2424,13 +2425,9 @@ public abstract class HandlerUtils {
 
             Flux<?> flux = (Flux) methodInvoker.invokeHandlerMethod(handlerMethod,
                     handlerMeta, request, response, pageContext, implicitModel);
+
             // 订阅并写入数据
-            flux.doOnSubscribe(subscription -> {
-                        if(logger.isDebugEnabled()) {
-                            logger.debug("开始订阅流...");
-                        }
-                    })
-                    .doOnNext(data -> {
+            flux.doOnNext(data -> {
                         if(completed.get()){
                             // 重新抛出异常，让 doOnError 处理
                             throw new FluxException("Failed to write data:asyncContext completed.");
@@ -2442,6 +2439,15 @@ public abstract class HandlerUtils {
                             if(data instanceof String) {
                                 outputStream.write(((String)data).getBytes(StandardCharsets.UTF_8));
                             }
+                            else if(data instanceof ServerEvent){
+                                ServerEvent serverEvent = (ServerEvent)data;
+                                if(!serverEvent.isDone()) {
+                                    SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+                                    outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
+//                                    outputStream.write(serverEvent.getData().getBytes(StandardCharsets.UTF_8));
+                                }
+//                                SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+                            }
                             else{
                                 SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
                             }
@@ -2452,6 +2458,11 @@ public abstract class HandlerUtils {
                             }
                             // 重新抛出异常，让 doOnError 处理
                             throw new FluxException("Failed to write data", e);
+                        }
+                    })
+                    .doOnSubscribe(subscription -> {
+                        if(logger.isDebugEnabled()) {
+                            logger.debug("开始订阅流...");
                         }
                     })
                     .doOnCancel(() -> {
