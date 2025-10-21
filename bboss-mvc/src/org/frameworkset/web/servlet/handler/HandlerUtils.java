@@ -2378,110 +2378,112 @@ public abstract class HandlerUtils {
 
         final AsyncContext asyncContext = asyncContext_;
         final BooleanWrapper completed = new BooleanWrapper(false);
-        try {
-           
-            // 设置监听器来跟踪状态
-            asyncContext.addListener(new AsyncListener() {
-                @Override
-                public void onComplete(AsyncEvent event) {
-                    completed.set(true);
+        // 设置监听器来跟踪状态
+        asyncContext.addListener(new AsyncListener() {
+            @Override
+            public void onComplete(AsyncEvent event) {
+                completed.set(true);
 
-                    if(logger.isDebugEnabled()) {
-                        logger.debug("AsyncContext 已完成");
-                    }
+                if (logger.isDebugEnabled()) {
+                    logger.debug("AsyncContext 已完成");
                 }
+            }
 
-                @Override
-                public void onTimeout(AsyncEvent event) {
+            @Override
+            public void onTimeout(AsyncEvent event) {
 //                    completed = true;
 //                    System.out.println("AsyncContext 超时");
-                    if(!completed.get()) {
-                        completed.set(true);
-                        asynContextComplete( asyncContext);
-                    }
+                if (!completed.get()) {
+                    completed.set(true);
+                    asynContextComplete(asyncContext);
                 }
+            }
 
-                @Override
-                public void onError(AsyncEvent event) {
+            @Override
+            public void onError(AsyncEvent event) {
 //                    completed = true;
 //                    System.out.println("AsyncContext 发生错误");
-                    if(!completed.get()) {
-                        completed.set(true);
-                        asynContextComplete( asyncContext);
-                    }
+                if (!completed.get()) {
+                    completed.set(true);
+                    asynContextComplete(asyncContext);
                 }
+            }
 
-                @Override
-                public void onStartAsync(AsyncEvent event) {
+            @Override
+            public void onStartAsync(AsyncEvent event) {
 //                    System.out.println("AsyncContext 开始");
-                }
-            });
-            // 设置响应头
-            response.setContentType("text/event-stream");
-            response.setCharacterEncoding("UTF-8");
+            }
+        });
+        // 设置响应头
+        response.setContentType("text/event-stream");
+        response.setCharacterEncoding("UTF-8");
+        Flux<?> flux = null;
+        // 获取输出流
+        ServletOutputStream outputStream = response.getOutputStream();
+        try {
 
-            // 获取输出流
-            ServletOutputStream outputStream = response.getOutputStream();
+
             ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker(methodResolver, messageConverters);
 
             ModelMap implicitModel = new ModelMap();
 
 
-            Flux<?> flux = (Flux) methodInvoker.invokeHandlerMethod(handlerMethod,
+            flux = (Flux) methodInvoker.invokeHandlerMethod(handlerMethod,
                     handlerMeta, request, response, pageContext, implicitModel);
-
+        }
+        catch (Throwable e) {
+            //将异常转换为String，构造一个flux，将异常String作为flux响应异步输出
+            flux = Flux.just(SimpleStringUtil.exceptionToString(e));
+        }
+        try{
             // 订阅并写入数据
             flux.doOnNext(data -> {
-                        if(completed.get()){
+                        if (completed.get()) {
                             // 重新抛出异常，让 doOnError 处理
                             throw new ReactorHandlerException("Failed to write data:asyncContext completed.");
                         }
                         try {
-                            if(logger.isDebugEnabled()) {
+                            if (logger.isDebugEnabled()) {
                                 logger.debug("{}", data);
                             }
-                            if(data instanceof String) {
-                                outputStream.write(((String)data).getBytes(StandardCharsets.UTF_8));
-                            }
-                            else if(data instanceof ServerEvent){
-                                ServerEvent serverEvent = (ServerEvent)data;
-                                if(!serverEvent.isDone()) {
-                                    SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+                            if (data instanceof String) {
+                                outputStream.write(((String) data).getBytes(StandardCharsets.UTF_8));
+                            } else if (data instanceof ServerEvent) {
+                                ServerEvent serverEvent = (ServerEvent) data;
+                                if (!serverEvent.isDone()) {
+                                    SimpleStringUtil.object2jsonDisableCloseAndFlush(data, outputStream);
                                     outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
 //                                    outputStream.write(serverEvent.getData().getBytes(StandardCharsets.UTF_8));
                                 }
 //                                SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
                             }
                             //判断data为List<ServerEvent>类型
-                            else if(data instanceof List){
-                                List datas = (List)data;
-                                if(datas.size() > 0 && datas.get(0) instanceof ServerEvent){
+                            else if (data instanceof List) {
+                                List datas = (List) data;
+                                if (datas.size() > 0 && datas.get(0) instanceof ServerEvent) {
                                     //获取datas最后一个元素
-                                    ServerEvent serverEvent = (ServerEvent)datas.get(datas.size()-1);
-                                    if(!serverEvent.isDone()){
-                                        SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+                                    ServerEvent serverEvent = (ServerEvent) datas.get(datas.size() - 1);
+                                    if (!serverEvent.isDone()) {
+                                        SimpleStringUtil.object2jsonDisableCloseAndFlush(data, outputStream);
+                                        outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
+                                    } else if (datas.size() > 1) {
+                                        datas = datas.subList(0, datas.size() - 1);
+                                        SimpleStringUtil.object2jsonDisableCloseAndFlush(datas, outputStream);
                                         outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
                                     }
-                                    else if(datas.size() > 1){
-                                        datas = datas.subList(0,datas.size()-1);
-                                        SimpleStringUtil.object2jsonDisableCloseAndFlush(datas,outputStream);
-                                        outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
-                                    }
-                                     
-                                }
-                                else{
-                                    SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+
+                                } else {
+                                    SimpleStringUtil.object2jsonDisableCloseAndFlush(data, outputStream);
                                     outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
                                 }
-                            }
-                            else{
-                                SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+                            } else {
+                                SimpleStringUtil.object2jsonDisableCloseAndFlush(data, outputStream);
                                 outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
                             }
                             outputStream.flush();
                         } catch (Exception e) {
-                            if(!completed.get()) {
-                                asynContextComplete( asyncContext);
+                            if (!completed.get()) {
+                                asynContextComplete(asyncContext);
                                 completed.set(true);
                             }
                             // 重新抛出异常，让 doOnError 处理
@@ -2489,59 +2491,58 @@ public abstract class HandlerUtils {
                         }
                     })
                     .doOnSubscribe(subscription -> {
-                        if(logger.isDebugEnabled()) {
+                        if (logger.isDebugEnabled()) {
                             logger.debug("开始订阅流...");
                         }
                     })
                     .doOnCancel(() -> {
-                        if(logger.isDebugEnabled()) {
+                        if (logger.isDebugEnabled()) {
                             logger.debug("客户端取消连接");
                         }
-                        if(!completed.get()) {
-                            asynContextComplete( asyncContext);
+                        if (!completed.get()) {
+                            asynContextComplete(asyncContext);
                             completed.set(true);
                         }
                     })
                     .doOnComplete(() -> {
-                        if(logger.isDebugEnabled()) {
+                        if (logger.isDebugEnabled()) {
                             logger.debug("\n=== 流完成 ===");
                         }
-                        if(!completed.get()) {
-                            asynContextComplete( asyncContext);
+                        if (!completed.get()) {
+                            asynContextComplete(asyncContext);
                             completed.set(true);
                         }
                     })
                     .doOnError(error -> {
-                        if(logger.isErrorEnabled()) {
+                        if (logger.isErrorEnabled()) {
                             logger.error("错误: " + error.getMessage(), error);
                         }
                         try {
-                            if(!completed.get()) {
+                            if (!completed.get()) {
                                 outputStream.write(SimpleStringUtil.exceptionToString(error).getBytes(StandardCharsets.UTF_8));
                             }
                         } catch (IOException e) {
 //                            throw new RuntimeException(e);
                         }
-                        if(!completed.get()) {
-                            asynContextComplete( asyncContext);
+                        if (!completed.get()) {
+                            asynContextComplete(asyncContext);
                             completed.set(true);
                         }
                     }).subscribe();
-        }
-        catch (Exception e){
-            if(!completed.get()) {
+        } catch (Exception e) {
+            if (!completed.get()) {
+                asynContextComplete(asyncContext);
+                completed.set(true);
+            }
+            throw e;
+        } catch (Throwable e) {
+            if (!completed.get()) {
                 asynContextComplete(asyncContext);
                 completed.set(true);
             }
             throw e;
         }
-        catch (Throwable e){
-            if(!completed.get()) {
-                asynContextComplete( asyncContext);
-                completed.set(true);
-            }
-            throw e;
-        }
+        
 
         
         
@@ -2585,58 +2586,69 @@ public abstract class HandlerUtils {
 
         final AsyncContext asyncContext = asyncContext_;
         final BooleanWrapper completed = new BooleanWrapper(false);
-        try {
+        // 设置监听器来跟踪状态
+        asyncContext.addListener(new AsyncListener() {
+            @Override
+            public void onComplete(AsyncEvent event) {
+                completed.set(true);
 
-            // 设置监听器来跟踪状态
-            asyncContext.addListener(new AsyncListener() {
-                @Override
-                public void onComplete(AsyncEvent event) {
-                    completed.set(true);
-
-                    if(logger.isDebugEnabled()) {
-                        logger.debug("AsyncContext 已完成");
-                    }
+                if(logger.isDebugEnabled()) {
+                    logger.debug("AsyncContext 已完成");
                 }
+            }
 
-                @Override
-                public void onTimeout(AsyncEvent event) {
+            @Override
+            public void onTimeout(AsyncEvent event) {
 //                    completed = true;
 //                    System.out.println("AsyncContext 超时");
-                    if(!completed.get()) {
-                        completed.set(true);
-                        asynContextComplete( asyncContext);
-                    }
+                if(!completed.get()) {
+                    completed.set(true);
+                    asynContextComplete( asyncContext);
                 }
+            }
 
-                @Override
-                public void onError(AsyncEvent event) {
+            @Override
+            public void onError(AsyncEvent event) {
 //                    completed = true;
 //                    System.out.println("AsyncContext 发生错误");
-                    if(!completed.get()) {
-                        completed.set(true);
-                        asynContextComplete( asyncContext);
-                    }
+                if(!completed.get()) {
+                    completed.set(true);
+                    asynContextComplete( asyncContext);
                 }
+            }
 
-                @Override
-                public void onStartAsync(AsyncEvent event) {
+            @Override
+            public void onStartAsync(AsyncEvent event) {
 //                    System.out.println("AsyncContext 开始");
-                }
-            });
-            // 设置响应头
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
+            }
+        });
+        // 设置响应头
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 
-            // 获取输出流
-            ServletOutputStream outputStream = response.getOutputStream();
+        // 获取输出流
+        ServletOutputStream outputStream = response.getOutputStream();
+        Mono<?> mono = null;
+        try {
+
+
             ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker(methodResolver, messageConverters);
 
             ModelMap implicitModel = new ModelMap();
 
 
-            Mono<?> mono = (Mono<?>) methodInvoker.invokeHandlerMethod(handlerMethod,
+            mono = (Mono<?>) methodInvoker.invokeHandlerMethod(handlerMethod,
                     handlerMeta, request, response, pageContext, implicitModel);
-
+        }
+        catch (Throwable e) { 
+            //将异常转换为String，并构建一个Mono，通过mono输出进行
+            
+            response.setStatus(500);
+            Map errorMap = new HashMap();
+            errorMap.put("error", SimpleStringUtil.exceptionToString(e));
+            mono = Mono.just(errorMap);
+        }
+        try {
             // 订阅并写入数据
             mono.doOnNext(data -> {
                         if(completed.get()){
