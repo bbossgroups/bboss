@@ -45,10 +45,13 @@ import java.util.Map;
 public class MethodInfo {
 	private Method method;
     /**
-	 * 是否是异步响应式方法
+	 * 是否是Flux异步响应式方法
 	 */
-    private boolean reactor;
-	
+    private boolean reactorFlux;
+
+
+
+    private boolean reactorMono;
 	/**
 	 * 是否是分页方法
 	 */
@@ -76,10 +79,17 @@ public class MethodInfo {
 	private PathVariableInfo[] pathVariables;
 	private boolean[] databind;
 	private String[] baseurls ;
-    public static Class reactorType;
+    public static Class reactorTypeFlux;
+
+    public static Class reactorTypeMono;
     static {
         try {
-            reactorType = Class.forName("reactor.core.publisher.Flux");
+            reactorTypeFlux = Class.forName("reactor.core.publisher.Flux");
+        } catch (ClassNotFoundException e) {
+//            throw new RuntimeException(e);
+        }
+        try {
+            reactorTypeMono = Class.forName("reactor.core.publisher.Mono");
         } catch (ClassNotFoundException e) {
 //            throw new RuntimeException(e);
         }
@@ -102,11 +112,19 @@ public class MethodInfo {
 	public MethodInfo(Method method, HandlerMapping typeLevelMapping) {
 		super();
 		this.method = method;
-        if(reactorType != null) {
+        if(reactorTypeFlux != null) {
             Class clazz = method.getReturnType();
 
-            if (reactorType.isAssignableFrom(clazz)) {
-                this.reactor = true;
+            if (reactorTypeFlux.isAssignableFrom(clazz)) {
+                this.reactorFlux = true;
+            }
+        }
+
+        if(reactorTypeMono != null) {
+            Class clazz = method.getReturnType();
+
+            if (reactorTypeMono.isAssignableFrom(clazz)) {
+                this.reactorMono = true;
             }
         }
 		this.assertDToken = method.getAnnotation(AssertDToken.class);		
@@ -140,11 +158,19 @@ public class MethodInfo {
 	public MethodInfo(Method method, String[] baseurls) {
 		super();
 		this.method = method;
-        if(reactorType != null) {
+        if(reactorTypeFlux != null) {
             Class clazz = method.getReturnType();
 
-            if (clazz.isAssignableFrom(reactorType)) {
-                this.reactor = true;
+            if (clazz.isAssignableFrom(reactorTypeFlux)) {
+                this.reactorFlux = true;
+            }
+        }
+
+        if(reactorTypeMono != null) {
+            Class clazz = method.getReturnType();
+
+            if (reactorTypeMono.isAssignableFrom(clazz)) {
+                this.reactorMono = true;
             }
         }
 		mapping = method.getAnnotation(HandlerMapping.class);
@@ -550,11 +576,19 @@ public class MethodInfo {
 	public MethodInfo(Method method) {
 		super();
 		this.method = method;
-        if(reactorType != null) {
+        if(reactorTypeFlux != null) {
             Class clazz = method.getReturnType();
 
-            if (clazz.isAssignableFrom(reactorType)) {
-                this.reactor = true;
+            if (clazz.isAssignableFrom(reactorTypeFlux)) {
+                this.reactorFlux = true;
+            }
+        }
+
+        if(reactorTypeMono != null) {
+            Class clazz = method.getReturnType();
+
+            if (reactorTypeMono.isAssignableFrom(clazz)) {
+                this.reactorMono = true;
             }
         }
 		this.assertDToken = method.getAnnotation(AssertDToken.class);
@@ -1086,10 +1120,19 @@ public class MethodInfo {
 	}
 
     /**
-     * 判断控制器方法是否是reactor方法
+     * 判断控制器方法是否是reactor Flux方法
      * @return
      */
-    public boolean isReactor() {
-        return reactor;
+    public boolean isReactorFlux() {
+        return reactorFlux;
     }
+
+    /**
+     * 判断控制器方法是否是reactor Mono方法
+     * @return
+     */
+    public boolean isReactorMono() {
+        return reactorMono;
+    }
+
 }

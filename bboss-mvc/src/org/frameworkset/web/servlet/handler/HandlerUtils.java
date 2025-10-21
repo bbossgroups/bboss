@@ -30,7 +30,6 @@ import org.frameworkset.util.annotations.*;
 import org.frameworkset.util.annotations.HandlerMapping;
 import org.frameworkset.util.annotations.wraper.*;
 import org.frameworkset.util.concurrent.BooleanWrapper;
-import org.frameworkset.util.concurrent.IntegerCount;
 import org.frameworkset.web.HttpMediaTypeNotAcceptableException;
 import org.frameworkset.web.HttpSessionRequiredException;
 import org.frameworkset.web.bind.MissingServletRequestParameterException;
@@ -57,6 +56,7 @@ import org.frameworkset.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
@@ -73,7 +73,6 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * <p>
@@ -212,10 +211,15 @@ public abstract class HandlerUtils {
 
 			return flag;
 		}
-        if(MethodInfo.reactorType != null && MethodInfo.reactorType.isAssignableFrom(returnType)){
+        if(MethodInfo.reactorTypeFlux != null && MethodInfo.reactorTypeFlux.isAssignableFrom(returnType)){
             return true;
         }
-		return false;
+        else if(MethodInfo.reactorTypeMono != null && MethodInfo.reactorTypeMono.isAssignableFrom(returnType)){
+            return true;
+        }
+        else {
+            return false;
+        }
 	}
 
 	public static boolean containHandleAnnotations(Method method) {
@@ -2336,13 +2340,13 @@ public abstract class HandlerUtils {
 
 	}
     
-    private static void asynInvokeHandlerMethod(HttpServletRequest request,
-                                                HttpServletResponse response, PageContext pageContext,
-                                                HandlerExecutionChain mappedHandler,
-                                                HandlerMeta handlerMeta,
-                                                MethodData handlerMethod,
-												   ServletHandlerMethodResolver methodResolver,
-                                                HttpMessageConverter[] messageConverters) throws Exception {
+    private static void asynInvokeFluxHandlerMethod(HttpServletRequest request,
+                                                    HttpServletResponse response, PageContext pageContext,
+                                                    HandlerExecutionChain mappedHandler,
+                                                    HandlerMeta handlerMeta,
+                                                    MethodData handlerMethod,
+                                                    ServletHandlerMethodResolver methodResolver,
+                                                    HttpMessageConverter[] messageConverters) throws Exception {
         boolean checkResult = true;
         if (mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0) {
 
@@ -2430,7 +2434,7 @@ public abstract class HandlerUtils {
             flux.doOnNext(data -> {
                         if(completed.get()){
                             // 重新抛出异常，让 doOnError 处理
-                            throw new FluxException("Failed to write data:asyncContext completed.");
+                            throw new ReactorHandlerException("Failed to write data:asyncContext completed.");
                         }
                         try {
                             if(logger.isDebugEnabled()) {
@@ -2448,16 +2452,40 @@ public abstract class HandlerUtils {
                                 }
 //                                SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
                             }
+                            //判断data为List<ServerEvent>类型
+                            else if(data instanceof List){
+                                List datas = (List)data;
+                                if(datas.size() > 0 && datas.get(0) instanceof ServerEvent){
+                                    //获取datas最后一个元素
+                                    ServerEvent serverEvent = (ServerEvent)datas.get(datas.size()-1);
+                                    if(!serverEvent.isDone()){
+                                        SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+                                        outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
+                                    }
+                                    else if(datas.size() > 1){
+                                        datas = datas.subList(0,datas.size()-1);
+                                        SimpleStringUtil.object2jsonDisableCloseAndFlush(datas,outputStream);
+                                        outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
+                                    }
+                                     
+                                }
+                                else{
+                                    SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+                                    outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
+                                }
+                            }
                             else{
                                 SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+                                outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
                             }
                             outputStream.flush();
                         } catch (Exception e) {
                             if(!completed.get()) {
                                 asynContextComplete( asyncContext);
+                                completed.set(true);
                             }
                             // 重新抛出异常，让 doOnError 处理
-                            throw new FluxException("Failed to write data", e);
+                            throw new ReactorHandlerException("Failed to write data", e);
                         }
                     })
                     .doOnSubscribe(subscription -> {
@@ -2471,6 +2499,7 @@ public abstract class HandlerUtils {
                         }
                         if(!completed.get()) {
                             asynContextComplete( asyncContext);
+                            completed.set(true);
                         }
                     })
                     .doOnComplete(() -> {
@@ -2479,6 +2508,7 @@ public abstract class HandlerUtils {
                         }
                         if(!completed.get()) {
                             asynContextComplete( asyncContext);
+                            completed.set(true);
                         }
                     })
                     .doOnError(error -> {
@@ -2487,31 +2517,222 @@ public abstract class HandlerUtils {
                         }
                         try {
                             if(!completed.get()) {
-                                outputStream.write(ReactorConstant.SERVER_TERMINAL_BYTES);
+                                outputStream.write(SimpleStringUtil.exceptionToString(error).getBytes(StandardCharsets.UTF_8));
                             }
                         } catch (IOException e) {
 //                            throw new RuntimeException(e);
                         }
                         if(!completed.get()) {
                             asynContextComplete( asyncContext);
+                            completed.set(true);
                         }
                     }).subscribe();
         }
         catch (Exception e){
             if(!completed.get()) {
                 asynContextComplete(asyncContext);
+                completed.set(true);
             }
             throw e;
         }
         catch (Throwable e){
             if(!completed.get()) {
                 asynContextComplete( asyncContext);
+                completed.set(true);
             }
             throw e;
         }
 
         
         
+    }
+
+    private static void asynInvokeMonoHandlerMethod(HttpServletRequest request,
+                                                    HttpServletResponse response, PageContext pageContext,
+                                                    HandlerExecutionChain mappedHandler,
+                                                    HandlerMeta handlerMeta,
+                                                    MethodData handlerMethod,
+                                                    ServletHandlerMethodResolver methodResolver,
+                                                    HttpMessageConverter[] messageConverters) throws Exception {
+        boolean checkResult = true;
+        if (mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0) {
+
+            for (HandlerInterceptor handlerInterceptor : mappedHandler.getInterceptors()) {
+                if (!checkResult) {
+                    handlerInterceptor.invokerHandle(request, response, handlerMeta, handlerMethod);
+                } else {
+                    checkResult = handlerInterceptor.invokerHandle(request, response, handlerMeta, handlerMethod);
+                }
+
+            }
+        }
+        if (!checkResult) {
+            return ;
+        }
+//        BaseServlet.processRequestStream(request,response);
+//        if(true){
+//            return;
+//        }
+        // 启动异步上下文
+        AsyncContext asyncContext_ = null;
+        if(request.isAsyncStarted()){
+            asyncContext_ = request.getAsyncContext();
+        }
+        else{
+            asyncContext_ = request.startAsync();
+            asyncContext_.setTimeout(300000L);
+        }
+
+        final AsyncContext asyncContext = asyncContext_;
+        final BooleanWrapper completed = new BooleanWrapper(false);
+        try {
+
+            // 设置监听器来跟踪状态
+            asyncContext.addListener(new AsyncListener() {
+                @Override
+                public void onComplete(AsyncEvent event) {
+                    completed.set(true);
+
+                    if(logger.isDebugEnabled()) {
+                        logger.debug("AsyncContext 已完成");
+                    }
+                }
+
+                @Override
+                public void onTimeout(AsyncEvent event) {
+//                    completed = true;
+//                    System.out.println("AsyncContext 超时");
+                    if(!completed.get()) {
+                        completed.set(true);
+                        asynContextComplete( asyncContext);
+                    }
+                }
+
+                @Override
+                public void onError(AsyncEvent event) {
+//                    completed = true;
+//                    System.out.println("AsyncContext 发生错误");
+                    if(!completed.get()) {
+                        completed.set(true);
+                        asynContextComplete( asyncContext);
+                    }
+                }
+
+                @Override
+                public void onStartAsync(AsyncEvent event) {
+//                    System.out.println("AsyncContext 开始");
+                }
+            });
+            // 设置响应头
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            // 获取输出流
+            ServletOutputStream outputStream = response.getOutputStream();
+            ServletHandlerMethodInvoker methodInvoker = new ServletHandlerMethodInvoker(methodResolver, messageConverters);
+
+            ModelMap implicitModel = new ModelMap();
+
+
+            Mono<?> mono = (Mono<?>) methodInvoker.invokeHandlerMethod(handlerMethod,
+                    handlerMeta, request, response, pageContext, implicitModel);
+
+            // 订阅并写入数据
+            mono.doOnNext(data -> {
+                        if(completed.get()){
+                            // 重新抛出异常，让 doOnError 处理
+                            throw new ReactorHandlerException("Failed to write data:asyncContext completed.");
+                        }
+                        try {
+                            if(logger.isDebugEnabled()) {
+                                logger.debug("{}", data);
+                            }
+                            if(data instanceof String) {
+                                outputStream.write(((String)data).getBytes(StandardCharsets.UTF_8));
+                            }
+                            else if(data instanceof ServerEvent){
+                                ServerEvent serverEvent = (ServerEvent)data;
+                                if(!serverEvent.isDone()) {
+                                    SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+//                                    outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
+//                                    outputStream.write(serverEvent.getData().getBytes(StandardCharsets.UTF_8));
+                                }
+//                                SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+                            }
+                            else{
+                                SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
+//                                outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
+                            }
+                            outputStream.flush();
+                        } catch (Exception e) {
+                            if(!completed.get()) {
+                                asynContextComplete( asyncContext);
+                                completed.set(true);
+                            }
+                            // 重新抛出异常，让 doOnError 处理
+                            throw new ReactorHandlerException("Failed to write data", e);
+                        }
+                        finally {
+                            if(!completed.get()) {
+                                asynContextComplete( asyncContext);
+                                completed.set(true);
+                            }
+                        }
+                    })
+                    .doOnSubscribe(subscription -> {
+                        if(logger.isDebugEnabled()) {
+                            logger.debug("开始订阅流...");
+                        }
+                    })
+                    .doOnCancel(() -> {
+                        if(logger.isDebugEnabled()) {
+                            logger.debug("客户端取消连接");
+                        }
+                        if(!completed.get()) {
+                            
+                            asynContextComplete( asyncContext);
+                            completed.set(true);
+                        }
+                    })
+                    
+                    .doOnError(error -> {
+                        if(logger.isErrorEnabled()) {
+                            logger.error("错误: " + error.getMessage(), error);
+                        }
+                        try {
+                            if(!completed.get()) {
+                                response.setStatus(500);
+                                Map errorMap = new HashMap();
+                                errorMap.put("error", SimpleStringUtil.exceptionToString(error));
+                                outputStream.write(SimpleStringUtil.object2jsonAsbyte(errorMap));
+                            }
+                        } catch (IOException e) {
+//                            throw new RuntimeException(e);
+                        }
+                        if(!completed.get()) {
+                            
+                            asynContextComplete( asyncContext);
+                            completed.set(true);
+                        }
+                    }).subscribe();
+        }
+        catch (Exception e){
+            if(!completed.get()) {
+                asynContextComplete(asyncContext);
+                completed.set(true);
+            }
+            throw e;
+        }
+        catch (Throwable e){
+            if(!completed.get()) {
+                asynContextComplete( asyncContext);
+                completed.set(true);
+            }
+            throw e;
+        }
+
+
+
     }
     private static void asynContextComplete(AsyncContext asyncContext){
         try {
@@ -2540,8 +2761,25 @@ public abstract class HandlerUtils {
 					}
 				}
 			}
-            if(!handlerMethod.getMethodInfo().isReactor()) {
+            MethodInfo methodInfo = handlerMethod.getMethodInfo();
+            if(methodInfo.isReactorFlux() ) {
 
+                asynInvokeFluxHandlerMethod( request,
+                        response,  pageContext,
+                        mappedHandler,
+                        handlerMeta,
+                        handlerMethod,methodResolver, messageConverters);
+                return null;
+            }
+            else if(methodInfo.isReactorMono()){
+                asynInvokeMonoHandlerMethod( request,
+                         response,  pageContext,
+                         mappedHandler,
+                         handlerMeta,
+                         handlerMethod,methodResolver, messageConverters);
+                return null;
+            }
+            else{
 
                 boolean checkResult = true;
                 if (mappedHandler.getInterceptors() != null || mappedHandler.getInterceptors().length > 0) {
@@ -2578,15 +2816,7 @@ public abstract class HandlerUtils {
                 ModelAndView mav = methodInvoker.getModelAndView(
                         handlerMethod.getMethodInfo(), handlerMeta, result,
                         implicitModel, webRequest);
-                return mav;
-            }
-            else{
-                asynInvokeHandlerMethod( request,
-                         response,  pageContext,
-                         mappedHandler,
-                         handlerMeta,
-                         handlerMethod,methodResolver, messageConverters);
-                return null;
+                return mav;                
             }
 		} catch (PathURLNotSetException ex) {
 			return handleNoSuchRequestHandlingMethod(ex, request, response);

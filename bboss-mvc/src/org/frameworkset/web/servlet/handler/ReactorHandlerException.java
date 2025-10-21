@@ -19,13 +19,13 @@ package org.frameworkset.web.servlet.handler;
  * @author biaoping.yin
  * @Date 2025/10/12
  */
-public class FluxException extends RuntimeException{
+public class ReactorHandlerException extends RuntimeException{
     /**
      * Constructs a new runtime exception with {@code null} as its
      * detail message.  The cause is not initialized, and may subsequently be
      * initialized by a call to {@link #initCause}.
      */
-    public FluxException() {
+    public ReactorHandlerException() {
     }
 
     /**
@@ -36,7 +36,7 @@ public class FluxException extends RuntimeException{
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public FluxException(String message) {
+    public ReactorHandlerException(String message) {
         super(message);
     }
 
@@ -54,7 +54,7 @@ public class FluxException extends RuntimeException{
      *                unknown.)
      * @since 1.4
      */
-    public FluxException(String message, Throwable cause) {
+    public ReactorHandlerException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -71,7 +71,7 @@ public class FluxException extends RuntimeException{
      *              unknown.)
      * @since 1.4
      */
-    public FluxException(Throwable cause) {
+    public ReactorHandlerException(Throwable cause) {
         super(cause);
     }
 
@@ -89,7 +89,7 @@ public class FluxException extends RuntimeException{
      *                           be writable
      * @since 1.7
      */
-    public FluxException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public ReactorHandlerException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
