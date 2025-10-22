@@ -2460,21 +2460,29 @@ public abstract class HandlerUtils {
                             //判断data为List<ServerEvent>类型
                             else if (data instanceof List) {
                                 List datas = (List) data;
-                                if (datas.size() > 0 && datas.get(0) instanceof ServerEvent) {
-                                    //获取datas最后一个元素
-                                    ServerEvent serverEvent = (ServerEvent) datas.get(datas.size() - 1);
-                                    if (!serverEvent.isDone()) {
+                                if (datas.size() > 0 ) {
+                                    Object first = datas.get(0);
+                                    if (first instanceof ServerEvent) {
+                                        //获取datas最后一个元素
+                                        ServerEvent serverEvent = (ServerEvent) datas.get(datas.size() - 1);
+                                        if (!serverEvent.isDone()) {
+                                            SimpleStringUtil.object2jsonDisableCloseAndFlush(data, outputStream);
+                                            outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
+                                        } else if (datas.size() > 1) {
+                                            datas = datas.subList(0, datas.size() - 1);
+                                            SimpleStringUtil.object2jsonDisableCloseAndFlush(datas, outputStream);
+                                            outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
+                                        }
+                                    } else if (first instanceof String) {
+                                        StringBuilder builder = new StringBuilder();
+                                        for(Object d:datas){
+                                            builder.append((String)d);
+                                        }
+                                        outputStream.write((builder.toString()).getBytes(StandardCharsets.UTF_8));
+                                    } else {
                                         SimpleStringUtil.object2jsonDisableCloseAndFlush(data, outputStream);
                                         outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
-                                    } else if (datas.size() > 1) {
-                                        datas = datas.subList(0, datas.size() - 1);
-                                        SimpleStringUtil.object2jsonDisableCloseAndFlush(datas, outputStream);
-                                        outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
                                     }
-
-                                } else {
-                                    SimpleStringUtil.object2jsonDisableCloseAndFlush(data, outputStream);
-                                    outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
                                 }
                             } else {
                                 SimpleStringUtil.object2jsonDisableCloseAndFlush(data, outputStream);
