@@ -2522,8 +2522,8 @@ public abstract class HandlerUtils {
                         }
                     })
                     .doOnError(error -> {
-                        if (logger.isErrorEnabled()) {
-                            logger.error("错误: " + error.getMessage(), error);
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("错误: " + error.getMessage(), error);
                         }
                         try {
                             if (!completed.get()) {
@@ -2536,7 +2536,12 @@ public abstract class HandlerUtils {
                             asynContextComplete(asyncContext);
                             completed.set(true);
                         }
-                    }).subscribe();
+                    }).subscribe(null, error -> {
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("错误: " + error.getMessage(), error);
+                        }
+//                        error.printStackTrace();
+                    },null);
         } catch (Exception e) {
             if (!completed.get()) {
                 asynContextComplete(asyncContext);
@@ -2716,8 +2721,8 @@ public abstract class HandlerUtils {
                     })
                     
                     .doOnError(error -> {
-                        if(logger.isErrorEnabled()) {
-                            logger.error("错误: " + error.getMessage(), error);
+                        if(logger.isDebugEnabled()) {
+                            logger.debug("错误: " + error.getMessage(), error);
                         }
                         try {
                             if(!completed.get()) {
@@ -2734,7 +2739,11 @@ public abstract class HandlerUtils {
                             asynContextComplete( asyncContext);
                             completed.set(true);
                         }
-                    }).subscribe();
+                    }).subscribe(null, error -> {
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("错误: " + error.getMessage(), error);
+                        }
+                    },null);
         }
         catch (Exception e){
             if(!completed.get()) {
