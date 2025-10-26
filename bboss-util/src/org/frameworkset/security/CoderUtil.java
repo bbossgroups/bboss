@@ -19,7 +19,7 @@ public class CoderUtil {
 	/**
      * 将参数字节数组转换为16进制值表示组合而成的字符串。
      * 
-     * @param byte[] 需要转换的byte数组
+     * @param arrB 需要转换的byte数组
      * @return String 转换后的字符串
      * @throws Exception
      *             JAVA异常
@@ -43,7 +43,7 @@ public class CoderUtil {
     /**
      * 将参数16进制值表示组合而成的字符串转换为字节数组。
      * 
-     * @param String
+     * @param strIn
      *            需要转换的字符串
      * @return byte[] 转换后的byte数组
      * @throws Exception

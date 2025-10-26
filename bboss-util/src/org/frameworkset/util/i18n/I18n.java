@@ -66,15 +66,12 @@ public interface I18n {
 	 * 根据code从mvc的国际化配置文件中获取对应语言的代码值,如果代码值为空，则返回defaultMessage
 	 * @param code
 	 * @param defaultMessage
-	 * @param request
 	 * @return
 	 */
 	public  String getI18nMessage(String code,String defaultMessage);
 	/**
 	 * 根据code从mvc的国际化配置文件中获取对应语言的代码值,如果代码值为空，则返回defaultMessage
 	 * @param code
-	 * @param defaultMessage
-	 * @param request
 	 * @return
 	 */
 	public  String getI18nMessage(String code);

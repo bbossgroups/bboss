@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 * @see #setConcurrencyLimit
 * @see #beforeAccess()
 * @see #afterAccess()
-* @see org.frameworkset.aop.interceptor.ConcurrencyThrottleInterceptor
 * @see java.io.Serializable
 */
 @SuppressWarnings("serial")

@@ -2464,6 +2464,7 @@ public abstract class HandlerUtils {
                                     Object first = datas.get(0);
                                     if (first instanceof ServerEvent) {
                                         //获取datas最后一个元素
+                                        /**
                                         ServerEvent serverEvent = (ServerEvent) datas.get(datas.size() - 1);
                                         if (!serverEvent.isDone()) {
                                             SimpleStringUtil.object2jsonDisableCloseAndFlush(data, outputStream);
@@ -2473,6 +2474,9 @@ public abstract class HandlerUtils {
                                             SimpleStringUtil.object2jsonDisableCloseAndFlush(datas, outputStream);
                                             outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
                                         }
+                                         */
+                                        SimpleStringUtil.object2jsonDisableCloseAndFlush(data, outputStream);
+                                        outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
                                     } else if (first instanceof String) {
                                         StringBuilder builder = new StringBuilder();
                                         for(Object d:datas){

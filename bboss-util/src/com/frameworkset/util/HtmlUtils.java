@@ -67,7 +67,7 @@ public abstract class HtmlUtils {
 	 * Turn special characters into HTML character references.
 	 * Handles complete character set defined in HTML 4.01 recommendation.
 	 * <p>Escapes all special characters to their corresponding numeric
-	 * reference in decimal format (&#<i>Decimal</i>;).
+	 * reference in decimal format ( Decimal ).
 	 * <p>Reference:
 	 * <a href="http://www.w3.org/TR/html4/sgml/entities.html">
 	 * http://www.w3.org/TR/html4/sgml/entities.html
@@ -98,7 +98,7 @@ public abstract class HtmlUtils {
 	 * Turn special characters into HTML character references.
 	 * Handles complete character set defined in HTML 4.01 recommendation.
 	 * <p>Escapes all special characters to their corresponding numeric
-	 * reference in hex format (&#x<i>Hex</i>;).
+	 * reference in hex format (Hex).
 	 * <p>Reference:
 	 * <a href="http://www.w3.org/TR/html4/sgml/entities.html">
 	 * http://www.w3.org/TR/html4/sgml/entities.html

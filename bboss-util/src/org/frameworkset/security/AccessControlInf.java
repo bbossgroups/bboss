@@ -102,9 +102,7 @@ public interface AccessControlInf {
 	/**
 	 * 检测当前系统用户是否拥有访问资源的权限
 	 * 
-	 * @param resourceID
-	 * @param action
-	 * @param resourceType
+	 * @param uri
 	 * @return
 	 */
 	public boolean checkURLPermission(String uri) ;

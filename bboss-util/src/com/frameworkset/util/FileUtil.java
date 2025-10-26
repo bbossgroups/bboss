@@ -999,11 +999,9 @@ public class FileUtil
      * 
      * @param sourceFileName
      * @param destPath
-     * @return
      * @throws ZipException
      * @throws IOException
      *             FileUtil.java
-     * @author: ge.tao
      */
 
     public static void unzip(String sourceFileName, String destPath) throws ZipException, IOException

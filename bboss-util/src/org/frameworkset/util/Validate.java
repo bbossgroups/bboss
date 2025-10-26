@@ -279,8 +279,6 @@ public class Validate {
      * empty&quot;.</p>
      * 
      * @param map the map to check
-     * @throws IllegalArgumentException if the map is empty
-     * @see #notEmpty(Map, String, Object...)
      */
     public static void notEmpty(Map map) {
         notEmpty(map, "The validated map is empty");
@@ -362,7 +360,7 @@ public class Validate {
      * 
      * <p>If the array has a <code>null</code> element, then the message in the
      * exception is &quot;The validated array contains null element at index: 
-     * &quot followed by the index.</p>
+     *  followed by the index.</p>
      *
      * @param array the array to check
      * @throws IllegalArgumentException if the array is <code>null</code> or
@@ -417,7 +415,7 @@ public class Validate {
      * 
      * <p>If the collection has a <code>null</code> element, then the message in the
      * exception is &quot;The validated collection contains null element at index: 
-     * &quot followed by the index.</p>
+     *   followed by the index.</p>
      *
      * @param collection  the collection to check
      * @throws IllegalArgumentException if the collection is <code>null</code> or

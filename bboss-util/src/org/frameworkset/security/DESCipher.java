@@ -83,7 +83,7 @@ public class DESCipher {
     /**
      * 加密字节数组
      * 
-     * @param byte[] 需加密的字节数组
+     * @param arrB 需加密的字节数组
      * @return byte[] 加密后的字节数组
      * @throws Exception
      *             JAVA异常
@@ -96,7 +96,7 @@ public class DESCipher {
      * 加密字符串
      * 将字符串转换为字节数组后重用encrypt(byte[])方法进行加密，并将得到字节数组转换为字符串返回
      * 
-     * @param String
+     * @param strIn
      *            需加密的字符串
      * @return String 加密后的字符串
      * @throws Exception
@@ -109,7 +109,7 @@ public class DESCipher {
     /**
      * 解密字节数组
      * 
-     * @param byte[] 需解密的字节数组
+     * @param arrB 需解密的字节数组
      * @return byte[] 解密后的字节数组
      * @throws Exception
      *             JAVA异常
@@ -122,7 +122,7 @@ public class DESCipher {
      * 解密字符串
      * 将参数字符串转换为字节数组后重用decrypt(String)方法进行解密，并将得到的解密字符数组转换为字符串后返回。
      * 
-     * @param String
+     * @param strIn
      *            需解密的字符串
      * @return String 解密后的字符串
      * @throws Exception

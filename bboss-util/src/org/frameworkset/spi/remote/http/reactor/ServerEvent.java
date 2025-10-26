@@ -17,6 +17,7 @@ package org.frameworkset.spi.remote.http.reactor;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -81,6 +82,33 @@ public class ServerEvent {
      */
     public void setExtendDatas(Map<String, Object> extendDatas) {
         this.extendDatas = extendDatas;
+    }
+    
+    /**
+     * 添加扩展数据
+     * @param name
+     * @param value
+     * @return
+     */
+    public ServerEvent addExtendData(String name,Object value){
+        if(extendDatas == null){
+            extendDatas = new LinkedHashMap<>();            
+        }
+        extendDatas.put(name,value);
+        return this;
+    }
+
+    /**
+     * 添加扩展数据
+     * @param extendDatas
+     * @return
+     */
+    public ServerEvent addExtendDatas(Map<String, Object> extendDatas){
+        if(extendDatas == null){
+            extendDatas = new LinkedHashMap<>();
+        }
+        extendDatas.putAll(extendDatas);
+        return this;
     }
 
     /**

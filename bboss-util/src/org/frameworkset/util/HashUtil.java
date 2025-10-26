@@ -69,8 +69,6 @@ public class HashUtil {
 	 * 
 	 * @param key
 	 *            输入字节数组
-	 * @param level
-	 *            初始hash常量
 	 * @return 结果hash
 	 */
 	public static int bernstein(String key) {

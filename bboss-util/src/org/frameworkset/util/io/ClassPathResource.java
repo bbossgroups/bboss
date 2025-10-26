@@ -194,7 +194,6 @@ public class ClassPathResource extends AbstractResource {
 	/**
 	 * This implementation creates a ClassPathResource, applying the given path
 	 * relative to the path of the underlying resource of this descriptor.
-	 * @see StringUtils#applyRelativePath(String, String)
 	 */
 	public Resource createRelative(String relativePath) {
 		String pathToUse = SimpleStringUtil.applyRelativePath(this.path, relativePath);
@@ -204,7 +203,6 @@ public class ClassPathResource extends AbstractResource {
 	/**
 	 * This implementation returns the name of the file that this class path
 	 * resource refers to.
-	 * @see StringUtils#getFilename(String)
 	 */
 	public String getFilename() {
 		return SimpleStringUtil.getFilename(this.path);

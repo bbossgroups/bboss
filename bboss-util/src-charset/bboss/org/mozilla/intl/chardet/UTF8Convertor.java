@@ -249,7 +249,7 @@ public class UTF8Convertor {
 	
 	/**
 	 * 获取文件内容字符集
-	 * @param f
+	 * @param url
 	 * @return
 	 * @throws Exception
 	 */

@@ -88,7 +88,7 @@ public class JdkVersion {
 
 	/**
 	 * Get the major version code. This means we can do things like
-	 * <code>if (getMajorJavaVersion() < JAVA_14)</code>.
+	 * <code>if (getMajorJavaVersion() 小于 JAVA_14)</code>.
 	 * @return a code comparable to the JAVA_XX codes in this class
 	 * @see #JAVA_13
 	 * @see #JAVA_14

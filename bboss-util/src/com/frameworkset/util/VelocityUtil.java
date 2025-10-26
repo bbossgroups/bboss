@@ -332,7 +332,6 @@ public class VelocityUtil{
      * @param context
      * @param templateName
      * @param template
-     * @return
      */
     public static void evaluate(VelocityContext context,  Writer out,String templateName, String template)
     {
@@ -449,7 +448,6 @@ public class VelocityUtil{
      * @param context
      * @param templateName
      * @param template
-     * @return
      */
     public static void evaluate(VelocityContext context,  Writer out,String templateName, Reader template)
     {
@@ -525,7 +523,6 @@ public class VelocityUtil{
      * @param context
      * @param templateName
      * @param template
-     * @return
      */
     public static void evaluate(Map context,  Writer out,String templateName, String template)
     {
@@ -642,7 +639,6 @@ public class VelocityUtil{
      * @param context
      * @param templateName
      * @param template
-     * @return
      */
     public static void evaluate(Map context,  Writer out,String templateName, Reader template)
     {

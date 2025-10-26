@@ -103,8 +103,8 @@ public class ProxyFactory {
     }
     /**
      * 获取类的所有接口，包括父类的接口
+     * @param totals 
      * @param clazz
-     * @return
      */
     public static void getAllInterfaces(List totals,Class clazz)
     {
