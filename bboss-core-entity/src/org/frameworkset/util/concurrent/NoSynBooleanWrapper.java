@@ -19,15 +19,15 @@ package org.frameworkset.util.concurrent;
  * @author biaoping.yin
  * @version 1.0
  */
-public class BooleanWrapper implements BooleanWrapperInf{
-	private volatile boolean value;
-    public BooleanWrapper(boolean value){
+public class NoSynBooleanWrapper  implements BooleanWrapperInf{
+	private boolean value;
+    public NoSynBooleanWrapper(boolean value){
     	this.value = value;
     }
-    public synchronized boolean get(){
+    public boolean get(){
         return value;
     }
-    public synchronized boolean set(boolean value){
+    public boolean set(boolean value){
         this.value = value;
         return value;
     }

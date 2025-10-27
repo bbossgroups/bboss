@@ -16,19 +16,14 @@ package org.frameworkset.util.concurrent;
  */
 
 /**
+ * <p>Description: 多线程安全计数器</p>
+ * <p>Copyright (c) 2020</p>
+ * @Date 2022/1/10 10:17
  * @author biaoping.yin
  * @version 1.0
  */
-public class BooleanWrapper implements BooleanWrapperInf{
-	private volatile boolean value;
-    public BooleanWrapper(boolean value){
-    	this.value = value;
-    }
-    public synchronized boolean get(){
-        return value;
-    }
-    public synchronized boolean set(boolean value){
-        this.value = value;
-        return value;
-    }
+public interface BooleanWrapperInf {
+ 
+    public  boolean get();
+    public  boolean set(boolean value);
 }

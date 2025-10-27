@@ -50,6 +50,13 @@ public class ServerEvent {
      */
     private boolean done;
 
+
+
+    /**
+     * 是否是第一个数据报文
+     */
+    private boolean first;
+
     /**
      * 获取数据报文类型，0表示数据报文，1表示错误报文
      */
@@ -126,4 +133,19 @@ public class ServerEvent {
     public void setDone(boolean done) {
         this.done = done;
     }
+    /**
+     * 是否是第一个数据报文
+     * @return
+     */
+    public boolean isFirst() {
+        return first;
+    }
+    /**
+     * 设置是否是第一个数据报文
+     * @param first
+     */
+    public void setFirst(boolean first) {
+        this.first = first;
+    }
+    
 }
