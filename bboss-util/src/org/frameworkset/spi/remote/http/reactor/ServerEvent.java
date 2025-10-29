@@ -32,6 +32,8 @@ import java.util.Map;
 public class ServerEvent {
     public static final int DATA = 0;
     public static final int ERROR = 1;
+    public static final int CONTENT = 0;
+    public static final int REASONING_CONTENT = 1;
     /**
      * 字段包含数据内容，当type为0时，data字段包含数据内容，当type为1时，data字段包含错误信息
      */
@@ -44,6 +46,11 @@ public class ServerEvent {
      * 字段表示数据报文类型，0表示数据报文，1表示错误报文,默认值为0
      */
     private int type = DATA;
+
+    /**
+     * 字段表示数据报文类型，0表示答案内容，1表示思维链内容,默认值为0
+     */
+    private int contentType = CONTENT;
     
     /**
      * 标记数据获取是否完成
@@ -147,5 +154,21 @@ public class ServerEvent {
     public void setFirst(boolean first) {
         this.first = first;
     }
-    
+
+
+    /**
+     * 获取数据报文类型，0表示答案内容，1表示思维链内容,默认值为0
+     * @return
+     */
+    public int getContentType() {
+        return contentType;
+    }
+
+    /**
+     * 设置数据报文类型，0表示答案内容，1表示思维链内容,默认值为0
+     * @param contentType
+     */
+    public void setContentType(int contentType) {
+        this.contentType = contentType;
+    }
 }
