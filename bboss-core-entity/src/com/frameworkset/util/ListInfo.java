@@ -58,6 +58,11 @@ public class ListInfo implements Serializable{
 	 * 提升性能，同时前台标签库也会做响应的调整
 	 */
     private boolean more = false;
+
+    /**
+     * 数据库查询结果字段列表
+     */
+    private List<String> columnList;
    
     
     /**
@@ -249,4 +254,12 @@ public class ListInfo implements Serializable{
 			totopages = totopages + 1;
 		return totopages;
 	}
+
+    public List<String> getColumnList() {
+        return columnList;
+    }
+
+    public void setColumnList(List<String> columnList) {
+        this.columnList = columnList;
+    }
 }

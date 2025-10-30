@@ -292,7 +292,7 @@ public class PagerContext
 	/**
 	 * 设置排序关键字
 	 * 
-	 * @param string
+	 * @param sortKey
 	 */
 	public void setSortKey(String sortKey) {
 		this.sortKey = sortKey;
@@ -344,7 +344,7 @@ public class PagerContext
 	}
 
 	/**
-	 * @param string
+	 * @param isList
 	 */
 	public void setIsList(boolean isList) {
 		this.isList = isList;
@@ -709,7 +709,6 @@ public class PagerContext
 	/**
 	 * 获取第i页的页面url
 	 * 
-	 * @param i
 	 * @return String
 	 */
 	final String getTruePageUrl() {
@@ -749,8 +748,8 @@ public class PagerContext
 	/**
 	 * 获取带pageOffset、sortKey参数的url
 	 * 
-	 * @param pageOffset
 	 * @param sortKey
+	 * @param desc
 	 *            added by biaoping.yin on 2005-02-03
 	 * @return String
 	 */
@@ -776,7 +775,7 @@ public class PagerContext
 	 * @return Integer
 	 */
 	public final Long getOffsetPageNumber(long pageOffset) {
-		return new Long(1 + pageNumber(pageOffset));
+		return  1l + pageNumber(pageOffset);
 	}
 
 	/**
@@ -926,8 +925,8 @@ public class PagerContext
 	 * 从request中获取参数值， 并且添加到参数串中 Description:
 	 * 
 	 * @param name
-	 * @param type
-	 *            void
+	 * @param encode
+     * @param encodecount
 	 */
 	public final void addParamsByRequest(String name, boolean encode,int encodecount) {
 		
@@ -961,8 +960,9 @@ public class PagerContext
 	 * 从request中获取参数值， 并且添加到参数串中 Description:
 	 * 
 	 * @param name
-	 * @param type
-	 *            void
+     * @param encode
+     * @param scope
+     * @param encodecount
 	 */
 	public final void addBeanParams(String name, boolean encode,String scope,int encodecount) {
 		
@@ -1381,13 +1381,18 @@ public class PagerContext
 	public final int getMaxPageItems() {
 		return maxPageItems;
 	}
-	
+    /**
+     * 返回查询字段列表
+     */
+    public List<String> getColumnList() {
+
+        
+        return dataInfo.getColumnList();
+    }
 
 	/**
 	 * 初始化数据获取接口
 	 * 
-	 * @param dataType
-	 *            接口在配置文件对应的名称属性
 	 */
 	public void setDataInfo() throws LoadDataException {
 	

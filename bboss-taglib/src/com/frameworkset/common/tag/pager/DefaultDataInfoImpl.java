@@ -31,9 +31,12 @@
  *****************************************************************************/
 package com.frameworkset.common.tag.pager;
 
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -149,9 +152,27 @@ public class DefaultDataInfoImpl implements DataInfo {
         first = true;
 
     }
-    
-    
 
+
+    /**
+     * 返回查询字段列表
+     * @see com.frameworkset.common.tag.pager.DataInfo#getColumnList()
+     */
+    @Override
+    public List<String> getColumnList() {
+
+        if(first)
+        {
+            if(!listMode)
+                listInfo = getDataFromDB(sql,dbName,offSet,pageItemsize);
+            else
+                listInfo = getListItemsFromDB(sql,dbName);
+            first = false;
+        }
+        if(listInfo == null)
+            return null;
+        return listInfo.getColumnList();
+    }
 
     /**
      * 从数据库中获取分页页面数据
@@ -226,6 +247,22 @@ public class DefaultDataInfoImpl implements DataInfo {
         return listInfo.getResultSize();
     }
 
+    private void buildColumnNames(ListInfo listInfo,DBUtil dbUtil) throws SQLException {
+        ResultSetMetaData resultMeta = dbUtil.getMeta();
+//存取列名
+        List<String> columnList = null ;
+        if(resultMeta != null)
+        {
+            columnList = new ArrayList();
+            int size =resultMeta.getColumnCount();
+            for(int i=1; i<=size; i++)
+            {
+                String columnName = resultMeta.getColumnLabel(i);
+                columnList.add(columnName);
+            }
+            listInfo.setColumnList(columnList);
+        }
+    }
     /**
 	* 分页显示时从数据库获取每页的数据项，完成实际访问数据库的操作
 	* sql:查询语句
@@ -252,6 +289,7 @@ public class DefaultDataInfoImpl implements DataInfo {
                 listInfo.setArrayDatas(tables);
                 listInfo.setTotalSize(dbUtil.getLongTotalSize());
                 listInfo.setResultSize(dbUtil.size());
+                buildColumnNames(  listInfo,  dbUtil);
                 return listInfo;
 	        }
 	        else
@@ -262,6 +300,7 @@ public class DefaultDataInfoImpl implements DataInfo {
                 listInfo.setArrayDatas(tables);
                 listInfo.setTotalSize(dbUtil.getLongTotalSize());
                 listInfo.setResultSize(dbUtil.size());
+                buildColumnNames(  listInfo,  dbUtil);
                 return listInfo;
 	        }
         } catch (SQLException e) {
@@ -291,6 +330,7 @@ public class DefaultDataInfoImpl implements DataInfo {
 	            HashMap[] tables = (HashMap[])dbUtil.executeSelectForObjectArray(dbName,sql,Record.class);
                 listInfo.setArrayDatas(tables);
                 listInfo.setResultSize(dbUtil.size());
+                buildColumnNames(  listInfo,  dbUtil);
                 return listInfo;
             }
 	        else
@@ -303,6 +343,7 @@ public class DefaultDataInfoImpl implements DataInfo {
                 listInfo.setArrayDatas(tables);
                 listInfo.setMore(this.moreQuery);
                 listInfo.setResultSize(dbUtil.size());
+                buildColumnNames(  listInfo,  dbUtil);
                 return listInfo;
 	        }
         } catch (SQLException e) {

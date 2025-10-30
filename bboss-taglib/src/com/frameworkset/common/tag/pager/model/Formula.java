@@ -408,7 +408,7 @@ public class Formula implements ModelObject
                 	        oldstatus = status;
                 	        status = STATUS_OPERATION_END;
                 	        //检测如果是sum操作                	        
-                	        obj[0] = new Integer(code);
+                	        obj[0] = code;
                 	        if(curChar == OPER_LP)
                 	            push(curChar,curpos);
                 	        return obj;
@@ -426,8 +426,8 @@ public class Formula implements ModelObject
                 	    number = curChar - '0' ;
                 	    if(this.curpos == this.formulaChars.length -1)
                 	    {
-                	        obj[1] = new Integer(new Double(number).intValue());
-                	        obj[2] = new Integer(OPT_TYPE_INTEGER) ;
+                	        obj[1] = new Double(number).intValue();
+                	        obj[2] = OPT_TYPE_INTEGER ;
                 	        return obj;
                 	    } 
                 	    
@@ -492,7 +492,7 @@ public class Formula implements ModelObject
                 	            pop(curChar,curpos);
                 	            
                 	        }
-                	        obj[0] = new Integer(code);
+                	        obj[0] = code;
                 	        return obj;
                 	    }
                 	    else //否则抛出异常信息
@@ -1437,12 +1437,12 @@ public class Formula implements ModelObject
 	        	    int ret_i = 1;
 	        	    for(int i = 0; i < (int)rv; i ++)
 	        	        ret_i *= lv;
-	        	    ret[1] = new Integer(ret_i);
-	        	    ret[2] = new Integer(OPT_TYPE_INTEGER);
+	        	    ret[1] = ret_i;
+	        	    ret[2] = OPT_TYPE_INTEGER;
 	        	    return ret;
 	        	case CODE_SUB:
-	        	    ret[1] = new Integer(lv - rv);
-	        	    ret[2] = new Integer(OPT_TYPE_INTEGER);
+	        	    ret[1] = lv - rv;
+	        	    ret[2] = OPT_TYPE_INTEGER;
 	        	    return ret;     	        	  
 	        }
 	    }

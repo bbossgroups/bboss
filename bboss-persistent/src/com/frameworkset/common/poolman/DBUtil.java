@@ -875,7 +875,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 //			s = stmtInfo.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 //					ResultSet.CONCUR_UPDATABLE);
 			
-			s = stmtInfo.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+			s = stmtInfo.createStatement(stmtInfo.getScrollType(stmtInfo.getDbname()),
 			                             stmtInfo.getCursorType(stmtInfo.getDbname()));
 
 
@@ -883,7 +883,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 			String count = stmtInfo.countSql();
 //			s1 = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 //					ResultSet.CONCUR_UPDATABLE);
-			s1 = stmtInfo.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+			s1 = stmtInfo.createStatement(stmtInfo.getScrollType(stmtInfo.getDbname()),
 					stmtInfo.getCursorType(stmtInfo.getDbname()));
 			rs = s1.executeQuery(count);
 			stmtInfo.addResultSet(rs);

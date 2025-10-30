@@ -33,6 +33,7 @@
 package com.frameworkset.common.tag.pager.tags;
 
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Stack;
 
 import javax.servlet.http.HttpServletRequest;
@@ -347,6 +348,8 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	public final String getExport() {
 		return export;
 	}
+    
+    
 
 	public final void setScope(String val) throws JspException {
 		if (!(val == null || PAGE.equals(val) || REQUEST.equals(val))) {
@@ -1081,6 +1084,15 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 	public void setMoreQuery(boolean moreQuery) {
 		this.moreQuery = moreQuery;
 	}
+
+    /**
+     * 返回查询字段列表
+     */
+    public List<String> getColumnList() {
+
+        
+        return pagerContext.getColumnList();
+    }
 
  
 }

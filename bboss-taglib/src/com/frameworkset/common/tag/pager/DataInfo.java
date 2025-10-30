@@ -36,6 +36,7 @@ package com.frameworkset.common.tag.pager;
 import com.frameworkset.common.poolman.SQLParams;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -63,6 +64,14 @@ public interface DataInfo
 							int pageItemsize,
 							boolean isList,
 							HttpServletRequest request);
+
+    /**
+     * 返回查询字段列表
+     * @see com.frameworkset.common.tag.pager.DataInfo#getColumnList()
+     */
+    default List<String> getColumnList(){
+        return null;
+    }
 
 	/**
      * 初始化获取分页/列表数据的必要参数
