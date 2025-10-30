@@ -1,4 +1,4 @@
-package org.frameworkset.spi.remote.http.reactor;
+package org.frameworkset.spi.ai.model;
 /**
  * Copyright 2025 bboss
  * <p>
@@ -29,7 +29,7 @@ import java.util.Map;
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ServerEvent {
+public class ServerEvent extends MultimodalGeneration{
     public static final int DATA = 0;
     public static final int ERROR = 1;
     public static final int CONTENT = 0;

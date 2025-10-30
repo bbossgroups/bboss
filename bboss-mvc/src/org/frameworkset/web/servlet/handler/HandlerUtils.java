@@ -19,8 +19,8 @@ import com.frameworkset.util.*;
 import org.frameworkset.http.*;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.ai.model.ServerEvent;
 import org.frameworkset.spi.assemble.Pro;
-import org.frameworkset.spi.remote.http.reactor.ServerEvent;
 import org.frameworkset.spi.support.validate.BindingResult;
 import org.frameworkset.spi.support.validate.ValidationUtils;
 import org.frameworkset.spi.support.validate.Validator;
@@ -2443,9 +2443,7 @@ public abstract class HandlerUtils {
                             throw new ReactorHandlerException("Failed to write data:asyncContext completed.");
                         }
                         try {
-                            if (logger.isDebugEnabled()) {
-                                logger.debug("{}", data);
-                            }
+                     
                             if (data instanceof String) {
                                 outputStream.write(((String) data).getBytes(StandardCharsets.UTF_8));
                             } else if (data instanceof ServerEvent) {
@@ -2673,9 +2671,7 @@ public abstract class HandlerUtils {
                             throw new ReactorHandlerException("Failed to write data:asyncContext completed.");
                         }
                         try {
-                            if(logger.isDebugEnabled()) {
-                                logger.debug("{}", data);
-                            }
+            
                             if(data instanceof String) {
                                 outputStream.write(((String)data).getBytes(StandardCharsets.UTF_8));
                             }
