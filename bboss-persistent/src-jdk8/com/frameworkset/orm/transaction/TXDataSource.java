@@ -47,9 +47,9 @@ public class TXDataSource implements DataSource{
 		this.pool = pool;
     }
 	
-	public String getDatabaseSchema(DatabaseMetaData databaseMetaData) throws Throwable
+	public String getDatabaseSchema(DatabaseMetaData databaseMetaData,Connection connection) throws Throwable
 	{
-		return this.pool.getDatabaseSchema(databaseMetaData);
+		return this.pool.getDatabaseSchema(databaseMetaData,connection);
 	}
 
 	public Connection getConnection() throws SQLException {

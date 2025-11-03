@@ -20,6 +20,7 @@ import com.frameworkset.common.poolman.StatementInfo;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Date;
 import java.util.List;
 
@@ -36,17 +37,23 @@ public class DateUtilDateTypeMethod extends BaseTypeMethod{
 	public void action(StatementInfo stmtInfo, Param param, PreparedStatement statement, PreparedStatement statement_count, List resources) throws SQLException {
 		Date date = (Date)param.getData();
 		java.sql.Date sqldate = null;
-		if(date instanceof java.sql.Date){
-			sqldate = (java.sql.Date)date;
-		}
-		else{
-			sqldate = new java.sql.Date(date.getTime());
-		}
-		statement.setDate(param.getIndex(),sqldate );
-		if(statement_count != null)
-		{
-			statement_count.setDate(param.getIndex(),sqldate);
-		}
+        if(date == null){
+            statement.setNull(param.getIndex(), Types.DATE);
+            if (statement_count != null) {
+                statement_count.setNull(param.getIndex(), Types.DATE);
+            }
+        }
+        else {
+            if (date instanceof java.sql.Date) {
+                sqldate = (java.sql.Date) date;
+            } else {
+                sqldate = new java.sql.Date(date.getTime());
+            }
+            statement.setDate(param.getIndex(), sqldate);
+            if (statement_count != null) {
+                statement_count.setDate(param.getIndex(), sqldate);
+            }
+        }
 
 	}
 }

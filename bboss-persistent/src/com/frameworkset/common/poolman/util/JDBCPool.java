@@ -1117,9 +1117,9 @@ public class JDBCPool {
             pool.updateTableMetaData(tableName);
 		}
 	}
-	public String getDatabaseSchema(DatabaseMetaData databaseMetaData) throws Throwable
+	public String getDatabaseSchema(DatabaseMetaData databaseMetaData,Connection connection) throws Throwable
 	{
-		return getSchemaName_( databaseMetaData,this.getDbAdapter().getSchema(info,null));
+		return getSchemaName_( databaseMetaData,this.getDbAdapter().getSchema(info,connection));
 	}
 	public Set<TableMetaData> refreshDatabaseMetaData(){
 		return refreshDatabaseMetaData(-1);

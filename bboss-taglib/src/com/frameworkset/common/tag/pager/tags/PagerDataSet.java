@@ -928,7 +928,6 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * @param rowid
 	 * @param colName
 	 * @return java.lang.String
 	 */
@@ -1638,9 +1637,11 @@ public class PagerDataSet extends PagerTagSupport {
 	protected void loadClassData(DataInfo dataInfo, boolean isList)
 			throws LoadDataException {
 		// List list;
-		if (dataInfo == null)
-			throw new LoadDataException(
-					"load list Data error in loadClassData(DataInfo dataInfo, boolean isList):数据对象为空");
+		if (dataInfo == null) {
+            return;
+//            throw new LoadDataException(
+//                    "load list Data error in loadClassData(DataInfo dataInfo, boolean isList):数据对象为空");
+        }
 		// log.info();
 		// Class voClass = dataInfo.getVOClass();
 		/**
@@ -1870,9 +1871,11 @@ public class PagerDataSet extends PagerTagSupport {
 	 */
 	protected void loadClassData(Iterator dataInfo, Class voClazz)
 			throws LoadDataException {
-		if (dataInfo == null)
-			throw new LoadDataException(
-					"load list Data error loadClassData(Iterator dataInfo, Class voClazz):数据对象为空");
+		if (dataInfo == null) {
+//            throw new LoadDataException(
+//                    "load list Data error loadClassData(Iterator dataInfo, Class voClazz):数据对象为空");
+            return;
+        }
 		// log.info();
 		if(this.softparsered())
 			return;
@@ -2008,9 +2011,11 @@ public class PagerDataSet extends PagerTagSupport {
 	 * @param dataInfo
 	 */
 	protected void loadClassData(Collection dataInfo) throws LoadDataException {
-		if (dataInfo == null)
-			throw new LoadDataException(
-					"load list Data error loadClassData(Collection dataInfo):数据对象为空");
+		if (dataInfo == null) {
+//            throw new LoadDataException(
+//                    "load list Data error loadClassData(Collection dataInfo):数据对象为空");
+            return;
+        }
 		
 		
 			
@@ -2113,9 +2118,11 @@ public class PagerDataSet extends PagerTagSupport {
 	 */
 	protected void loadClassData(Object dataInfo, Class voClazz)
 			throws LoadDataException {
-		if (dataInfo == null)
-			throw new LoadDataException(
-					"load list Data error in loadClassData(Object dataInfo, Class voClazz):数据对象为空");
+		if (dataInfo == null) {
+//            throw new LoadDataException(
+//                    "load list Data error in loadClassData(Object dataInfo, Class voClazz):数据对象为空");
+            return;
+        }
 		// log.info();
 //		Field[] fields = voClazz == null ? null : voClazz.getFields();
 //		Method[] methods = voClazz == null ? null : voClazz.getMethods();
@@ -2542,23 +2549,9 @@ public class PagerDataSet extends PagerTagSupport {
 		 * 支持内容管理系统得发布的需要
 		 */
 		if (this.pagerContext == null) {
-			try {
 				init();
 				
-			} catch (LoadDataException e) {
-				if(e.getCause() == null)
-					log.debug(e.getMessage());
-				else
-					log.debug(e.getCause().getMessage());
-				return SKIP_BODY;
-			}
-			catch (Throwable e) {
-				if(e.getCause() == null)
-					log.debug(e.getMessage());
-				else
-					log.debug(e.getCause().getMessage());
-				return SKIP_BODY;
-			}
+			 
 		}
 		
 		
@@ -2658,10 +2651,11 @@ public class PagerDataSet extends PagerTagSupport {
 			// sortKey = pagerContext.getSortKey();
 
 		}  catch (LoadDataException e) {
-			if(e.getCause() == null)
-				log.warn(e.getMessage());
-			else
-				log.warn(e.getCause().getMessage());
+//			if(e.getCause() == null)
+//				log.warn(e.getMessage());
+//			else
+//				log.warn(e.getCause().getMessage());
+            throw e;
 //			return SKIP_BODY;
 		}
 		

@@ -1316,7 +1316,7 @@ public class PagerContext
 				itemCount = offset;
 
 			} catch (NumberFormatException ignore) {
-				ignore.printStackTrace();
+				log.warn("",ignore);
 			}
 		} else {
 			setDataInfo();
@@ -1531,46 +1531,7 @@ public class PagerContext
 				CMSCallBack callback = CMSCallBackUtil.getCMSCallBack();
 				this.dataInfo = callback.getCMSDataInfo(tag,request,getSortKey(), this.desc, getOffset(),
 						getMaxPageItems(), this.ListMode());
-//				CMSListTag cmsListTag = (CMSListTag) tag;
-//				CMSBaseListData dataInfo = CMSTagUtil
-//						.getCMSBaseListData(cmsListTag.getDatatype());
-//				/**
-//				* 最新cms需要放开注释的代码 
-//				* https://github.com/bbossgroups/bboss-cms.git
-//				* */
-//				Map<String,Object> params = cmsListTag.getParams();
-//				if(params != null)
-//				{
-//					if(!params.containsKey("doctype") && cmsListTag.getDocType() != null)
-//					{
-//						params.put("doctype", cmsListTag.getDocType() );
-//					}
-//					else 
-//					{
-//						
-//					}
-//					dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
-//							.getChannel(), cmsListTag.getCount(), params);
-//
-//				
-//				}
-//				else
-//				{
-//					dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
-//							.getChannel(), cmsListTag.getCount(), cmsListTag.getDocType());
-//				}
-//				/**
-//				* 旧的cms使用以下代码，后续需要屏蔽dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
-//						.getChannel(), cmsListTag.getCount());
-//				
-//				dataInfo.setOutlineInfo(cmsListTag.getSite(), cmsListTag
-//						.getChannel(), cmsListTag.getCount());*/
-//				if (cmsListTag.getDocumentid() != null)
-//					dataInfo.setDocumentid(cmsListTag.getDocumentid());
-//
-//				dataInfo.initial(getSortKey(), this.desc, getOffset(),
-//						getMaxPageItems(), this.ListMode(), request);
-//				this.dataInfo = dataInfo;
+
 				// 如果是分页模式设置记录总数
 				if (!ListMode()) {
 					setItems(dataInfo.getItemCount());
@@ -1595,21 +1556,7 @@ public class PagerContext
 		return null;
 	}
 
-	// protected PagerDataSet searchDataSet(Tag obj,Class clazz) {
-	// PagerDataSet dataSet = null;
-	//		
-	// if (this.getIndex() < 0) {
-	// dataSet =
-	// (PagerDataSet)BaseTag.findAncestorWithClass(obj, clazz);
-	// } else {
-	// //int idx = index();
-	// java.util.Stack stack =
-	// (java.util.Stack) request.getAttribute(
-	// PagerDataSet.PAGERDATASET_STACK);
-	// dataSet = (PagerDataSet) stack.elementAt(this.getIndex());
-	// }
-	// return dataSet;
-	// }
+	
 
 	public static Object getCOLUMNValue(Tag tag,String colName,String property)
 	{
@@ -1617,8 +1564,6 @@ public class PagerContext
 		PagerDataSet dataSet = ((PagerDataSet) tag).searchDataSet(tag,
 				PagerDataSet.class);
 
-		// System.out.println("dataSet:" + dataSet);
-		// System.out.println("dataSet.getRowid():" + dataSet.getRowid());
 		/**
 		 * 根据调用getProperty()方法返回值判断当前列是否为bean 如果为空,表示字段为collection
 		 * 
@@ -1681,26 +1626,6 @@ public class PagerContext
 			data = pageContext.getAttribute(pageContextKey);
 		} else if (scope.equals(COLUMN_SCOPE)) {
 
-//			PagerDataSet dataSet = ((PagerDataSet) tag).searchDataSet(tag,
-//					PagerDataSet.class);
-//
-//			// System.out.println("dataSet:" + dataSet);
-//			// System.out.println("dataSet.getRowid():" + dataSet.getRowid());
-//			/**
-//			 * 根据调用getProperty()方法返回值判断当前列是否为bean 如果为空,表示字段为collection
-//			 * 
-//			 * 否则表示字段是一个javabean,getProperty()返回的值为该对象的一个属性，类型为collection
-//			 */
-//
-//			if (getProperty() == null) {
-//
-//				data = dataSet.getValue(dataSet.getRowid(), getColName());
-//
-//				// System.out.println("dataInfo.size:" + dataInfo.size());
-//			} else {
-//				data = dataSet.getValue(dataSet.getRowid(), getColName(),
-//						getProperty());
-//			}
 			data = getCOLUMNValue(tag,getColName(),getProperty());
 
 		} else if (scope.equals(CELL_SCOPE)) {
@@ -1711,21 +1636,6 @@ public class PagerContext
 				CMSCallBack callback = CMSCallBackUtil.getCMSCallBack(cmsRequest);
 				data = callback.getCMSCellData();
 						
-//				// CMSDetailDataLoader dataLoader =
-//				// (CMSDetailDataLoader)request.getAttribute("dataset."
-//				// + cmsRequest.getContext().getID());
-//	
-//				CMSDetailDataLoader dataLoader = cmsRequest.getContext()
-//						.getCMSDetailDataLoader();
-//				try {
-//					if (dataLoader == null)
-//						return;
-//					data = dataLoader.getContent((ContentContext) cmsRequest
-//							.getContext());
-//				} catch (CMSDataLoadException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
 			}
 			else
 			{
@@ -1738,27 +1648,11 @@ public class PagerContext
 		else
 			throw new LoadDataException("load data from " + scope + " error");
 
-		if (data == null)
-			throw new LoadDataException("load data from " + scope
+		if (data == null){
+            log.warn("load data from " + scope
 					+ " :dataInfo == null or dataInfo.size() == 0");
-		// try {
-		// if(data instanceof Collection)
-		// loadClassData((Collection)data);
-		// else if(data instanceof Iterator)
-		// loadClassData((Iterator)data);
-		// else if(data instanceof Object[])
-		// {
-		// loadClassData((Object[])data);
-		// }
-		// else if(data instanceof DefaultDataInfoImpl)
-		// loadClassData(data);
-
-		// } catch (LoadDataException e) {
-		// log.info(e.getMessage());
-		// //e.printStackTrace();
-		// }
-		
-//		boolean islistinfo = (data instanceof ListInfo);
+            return;
+        }
 		if(!PagerContext.isPagerMehtod(request))
 		{
 			this.dataInfo = new ObjectDataInfoImpl(data);

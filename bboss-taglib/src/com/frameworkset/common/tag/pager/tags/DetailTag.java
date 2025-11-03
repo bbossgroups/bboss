@@ -39,6 +39,7 @@ import java.util.Map;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
+import com.frameworkset.common.tag.exception.TagDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -198,24 +199,10 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 			setVariable();
 			if(this.pagerContext == null)
 			{
-				try {
+				 
 					init();
 					
-				} catch (LoadDataException e) {
-					if(e.getCause() == null)
-						log.debug(e.getMessage());
-					else
-						log.debug(e.getCause().getMessage());
-//					return SKIP_BODY;
-				}
-				catch (Throwable e) {
-//					if(e.getCause() == null)
-//						log.debug(e.getMessage());
-//					else
-//						log.debug(e.getCause().getMessage());
-					log.debug(e.getMessage(),e);
-//					return SKIP_BODY;
-				}
+				 
 			}
 		    /**
 		     * 设置对象的原模型
@@ -230,7 +217,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 			 * 得到页面上要显示的值对象中字段
 			 *
 			 */
-			try { 
+			 
 				DataInfo dataInfo = pagerContext.getDataInfo();
 				if (dataInfo == null)
 				{
@@ -269,21 +256,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	//			 */
 	//			sortKey = pagerContext.getSortKey();
 	
-			} catch (LoadDataException e) {
-				if(e.getCause() == null)
-					log.info(e.getMessage());
-				else
-					log.info(e.getCause().getMessage());
-	//			e.printStackTrace();
-			}
-			catch (Throwable e) {
-				
-				if(e.getCause() == null)
-					log.info(e.getMessage());
-				else
-					log.info(e.getCause().getMessage());
-	//			e.printStackTrace();
-			}
+			 
 	
 	//		super.fields = getFields();
 	//		String scope = null;
@@ -326,12 +299,38 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	
 			return EVAL_BODY_INCLUDE;
 		}
-		catch(Exception e)
-		{
-			log.debug("",e);
-			return EVAL_BODY_INCLUDE;
-//			throw new JspException(e);
-		}
+        catch (LoadDataException e) {
+//			if(e.getCause() == null)
+//				log.info(e.getMessage());
+//			else
+//				log.info(e.getCause().getMessage());
+            throw e;
+//			return SKIP_BODY;
+        }
+        catch (TagDataException e) {
+//			if(e.getCause() == null)
+//				log.info(e.getMessage());
+//			else
+//				log.info(e.getCause().getMessage());
+            throw e;
+//			return SKIP_BODY;
+        }
+        catch (RuntimeException e) {
+//			if(e.getCause() == null)
+//				log.info(e.getMessage());
+//			else
+//				log.info(e.getCause().getMessage());
+            throw e;
+//			return SKIP_BODY;
+        }
+        catch (Throwable e) {
+//			if(e.getCause() == null)
+//				log.info(e.getMessage());
+//			else
+//				log.info(e.getCause().getMessage());
+            throw new JspException(e);
+//			return SKIP_BODY;
+        }
 		//return SKIP_BODY;
 	}
 

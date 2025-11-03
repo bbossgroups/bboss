@@ -74,13 +74,13 @@ public abstract class PageTagSupport extends PagerTagSupport {
 
 			if ((name = pageTagExport.getFirstItem()) != null) {
 				long firstItem = (page * maxPageItems) + 1;
-				pageContext.setAttribute(name, new Long(firstItem));
+				pageContext.setAttribute(name, firstItem);
 			}
 
 			if ((name = pageTagExport.getLastItem()) != null) {
 				long lastItem = Math.min((page + 1) * maxPageItems,
 						pagerContext.getItemCount());
-				pageContext.setAttribute(name, new Long(lastItem));
+				pageContext.setAttribute(name, lastItem);
 			}
 		}
 	}
@@ -105,13 +105,13 @@ public abstract class PageTagSupport extends PagerTagSupport {
 
 			if ((name = pageTagExport.getFirstItem()) != null) {
 				long firstItem = offset + 1;
-				pageContext.setAttribute(name, new Long(firstItem));
+				pageContext.setAttribute(name, firstItem);
 			}
 
 			if ((name = pageTagExport.getLastItem()) != null) {
 				long lastItem = Math.min(offset + maxPageItems,
 						pagerContext.getItemCount());
-				pageContext.setAttribute(name, new Long(lastItem));
+				pageContext.setAttribute(name, lastItem);
 			}
 		}
 	}

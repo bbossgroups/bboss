@@ -32,12 +32,12 @@
  *****************************************************************************/
 package com.frameworkset.common.tag.pager.tags;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URLEncoder;
+import com.frameworkset.common.tag.exception.TagDataException;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 
 /**
  * 
@@ -81,10 +81,39 @@ public class QueryStringTag  extends PagerTagSupport
 			else
 				out.print(queryString);
 		}
-		catch (IOException e)
-		{			
-			e.printStackTrace();
-		}
+
+        catch (LoadDataException e) {
+//			if(e.getCause() == null)
+//				log.info(e.getMessage());
+//			else
+//				log.info(e.getCause().getMessage());
+            throw e;
+//			return SKIP_BODY;
+        }
+        catch (TagDataException e) {
+//			if(e.getCause() == null)
+//				log.info(e.getMessage());
+//			else
+//				log.info(e.getCause().getMessage());
+            throw e;
+//			return SKIP_BODY;
+        }
+        catch (RuntimeException e) {
+//			if(e.getCause() == null)
+//				log.info(e.getMessage());
+//			else
+//				log.info(e.getCause().getMessage());
+            throw e;
+//			return SKIP_BODY;
+        }
+        catch (Throwable e) {
+//			if(e.getCause() == null)
+//				log.info(e.getMessage());
+//			else
+//				log.info(e.getCause().getMessage());
+            throw new JspException(e);
+//			return SKIP_BODY;
+        }
 
 		return  SKIP_BODY;
 	}

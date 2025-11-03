@@ -41,6 +41,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.JspTag;
 import javax.servlet.jsp.tagext.TagSupport;
 import javax.servlet.jsp.tagext.TryCatchFinally;
 
@@ -49,7 +50,6 @@ import org.slf4j.LoggerFactory;
 
 import com.frameworkset.common.tag.contextmenu.ContextMenu;
 
-
 /**
  * 一个从javax.servlet.jsp.tagext.TagSupport继承、实现TagOutput接口的抽象类。
  * 子类必须实现抽象方法writer(OutputStream),客户程序调用write方法将tag的内容输出到
@@ -57,7 +57,7 @@ import com.frameworkset.common.tag.contextmenu.ContextMenu;
  * 子类必须实现抽象方法generateContent(),提供各自产生输出内容的机制
  * @author biaoping.yin
  */
-public abstract class BaseTag extends TagSupport implements TryCatchFinally
+public abstract class BaseTag extends TagSupport implements TryCatchFinally, JspTag
 {
 	public void doCatch(Throwable throwable) throws Throwable {
 		

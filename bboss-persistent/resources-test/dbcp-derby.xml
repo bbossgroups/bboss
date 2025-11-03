@@ -1,7 +1,7 @@
 <property name="datasource" class="com.frameworkset.commons.dbcp2.BasicDataSource">
  	<property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/>  
 <!-- 	<property name="url" value="jdbc:derby:/opt/tool/derby/database/cimdb"/>   -->
-	<property name="url" value="jdbc:derby:E:/workspace/bbossgroups/bboss-document/database/cimdb"/>
+	<property name="url" value="jdbc:derby:C:/data/database/cimdb"/>
 	<property name="username" value=""/>  
 	<property name="password" value=""/>  
 	<!--initialSize: 初始化连接-->  

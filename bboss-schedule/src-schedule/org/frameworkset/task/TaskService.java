@@ -33,7 +33,6 @@ public class TaskService implements Service {
 	private Scheduler scheduler = null;
 	private static ScheduleRepository scheduleRepository = new ScheduleRepository();
 	private boolean exposeSchedulerInRepository = false;
-//	private static TaskService taskService = null;
 	
 
 	private BaseApplicationContext taskContext;
@@ -51,15 +50,11 @@ public class TaskService implements Service {
 		ShutdownUtil.addShutdownHook(new ShutdownThread(),1000);
 	}
 	static class ShutdownThread extends Thread {
-//		TaskService taskService;
 
 		public ShutdownThread() {
-//			this.taskService = taskService;
 		}
 
 		public void run() {
-//			if (taskService != null)
-//				taskService.stopService();
 			if(scheduleRepository != null)
 			{
 				scheduleRepository.stopTaskServices();
@@ -71,25 +66,9 @@ public class TaskService implements Service {
 	static Object lock = new Object();
 
 	public static TaskService getTaskService() {
-//		if (taskService != null)
-//			return taskService;
-//		synchronized (lock) {
-//			if (taskService != null)
-//				return taskService;
-//			taskService = new TaskService();
-//		}
-//		return taskService;configfile
 		return getTaskService(null);
 	}
 	public static TaskService getTaskService(String configfile) {
-//		if (taskService != null)
-//			return taskService;
-//		synchronized (lock) {
-//			if (taskService != null)
-//				return taskService;
-//			taskService = new TaskService();
-//		}
-//		return taskService;
 		if(configfile == null || configfile.trim().equals(""))
 			configfile = scheduleRepository.taskconfig;
 		TaskService taskService = scheduleRepository.getTaskService(configfile);
@@ -121,19 +100,6 @@ public class TaskService implements Service {
 	}
 
 	private ScheduleServiceInfo getScheduleServiceInfo(Pro pro) {
-		// private String name;
-		// private String id;
-		// private String clazz;
-		// private boolean used = true;
-		//		
-		// /**
-		// * Map<String,SchedulejobInfo>
-		// */
-		// private Map jobsbyIds = new HashMap();
-		// /**
-		// * List<SchedulejobInfo>
-		// */
-		// private List jobs = new ArrayList();
 		ScheduleServiceInfo scheduleServiceInfo = new ScheduleServiceInfo();
 		scheduleServiceInfo.setName(pro.getName());
 		scheduleServiceInfo.setId(pro.getStringExtendAttribute("taskid"));
@@ -148,9 +114,6 @@ public class TaskService implements Service {
 	private void setSchedulejobInfos(Pro pro,
 			ScheduleServiceInfo scheduleServiceInfo) {
 		ProList<Pro> pm = pro.getList();
-//		Set<Map.Entry<String, Pro>> set = pm.entrySet();
-//		Iterator<Map.Entry<String, Pro>> it = set.iterator();
-//		Map<String, SchedulejobInfo> jobsbyIds = new HashMap<String, SchedulejobInfo>();
 		if(pm != null && pm.size() > 0){
 			for (Pro jobPro : pm) {
 				SchedulejobInfo jobinfo = getSchedulejobInfo(jobPro);
@@ -160,13 +123,6 @@ public class TaskService implements Service {
 	}
 
 	private SchedulejobInfo getSchedulejobInfo(Pro jobPro) {
-		// private ScheduleServiceInfo parent;
-		//		
-		// private String name;
-		// private String id;
-		// private String clazz;
-		// private boolean used = true;
-		// private String cronb_time ;
 		// /**
 		// * Map<String,String>
 		// */
@@ -396,52 +352,7 @@ public class TaskService implements Service {
 	private void initSchedulerFactory(SchedulerFactory schedulerFactory,ProMap quartz)
 			throws SchedulerException, IOException {
 
-//		if (!(schedulerFactory instanceof StdSchedulerFactory)) {
-//			if (this.configLocation != null || this.quartzProperties != null ||
-//					this.taskExecutor != null || this.dataSource != null) {
-//				throw new IllegalArgumentException(
-//						"StdSchedulerFactory required for applying Quartz properties: " + schedulerFactory);
-//			}
-//			// Otherwise assume that no initialization is necessary...
-//			return;
-//		}
-//
-//		Properties mergedProps = new Properties();
-//		
-//
-//		if (this.resourceLoader != null) {
-//			mergedProps.setProperty(StdSchedulerFactory.PROP_SCHED_CLASS_LOAD_HELPER_CLASS,
-//					ResourceLoaderClassLoadHelper.class.getName());
-//		}
-//
-//		if (this.taskExecutor != null) {
-//			mergedProps.setProperty(StdSchedulerFactory.PROP_THREAD_POOL_CLASS,
-//					LocalTaskExecutorThreadPool.class.getName());
-//		}
-//		else {
-//			// Set necessary default properties here, as Quartz will not apply
-//			// its default configuration when explicitly given properties.
-//			mergedProps.setProperty(StdSchedulerFactory.PROP_THREAD_POOL_CLASS, SimpleThreadPool.class.getName());
-//			mergedProps.setProperty(PROP_THREAD_COUNT, Integer.toString(DEFAULT_THREAD_COUNT));
-//		}
-//
-//		if (this.configLocation != null) {
-//			if (logger.isInfoEnabled()) {
-//				logger.info("Loading Quartz config from [" + this.configLocation + "]");
-//			}
-//			PropertiesLoaderUtils.fillProperties(mergedProps, this.configLocation);
-//		}
-//
-//		CollectionUtils.mergePropertiesIntoMap(this.quartzProperties, mergedProps);
-//
-//		if (this.dataSource != null) {
-//			mergedProps.put(StdSchedulerFactory.PROP_JOB_STORE_CLASS, LocalDataSourceJobStore.class.getName());
-//		}
-//
-//		// Make sure to set the scheduler name as configured in the bboss configuration.
-//		if (this.schedulerName != null) {
-//			mergedProps.put(StdSchedulerFactory.PROP_SCHED_INSTANCE_NAME, this.schedulerName);
-//		}
+ 
 		Properties mergedProps = new Properties();
 		Set<String> keys = quartz.keySet();
 		if(keys.size() <= 0)
@@ -474,14 +385,6 @@ public class TaskService implements Service {
 	protected Scheduler createScheduler(SchedulerFactory schedulerFactory, String schedulerName)
 			throws SchedulerException {
 
-//		// Override thread context ClassLoader to work around naive Quartz ClassLoadHelper loading.
-//		Thread currentThread = Thread.currentThread();
-//		ClassLoader threadContextClassLoader = currentThread.getContextClassLoader();
-//		boolean overrideClassLoader = (this.resourceLoader != null &&
-//				!this.resourceLoader.getClassLoader().equals(threadContextClassLoader));
-//		if (overrideClassLoader) {
-//			currentThread.setContextClassLoader(this.resourceLoader.getClassLoader());
-//		}
 		if(schedulerName == null)
 			return schedulerFactory.getScheduler();
 		try {
@@ -658,8 +561,7 @@ public class TaskService implements Service {
 			scheduler.resumeAll();
 			
 		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            log.error("",e);
 		}
 	}
 	
@@ -670,23 +572,12 @@ public class TaskService implements Service {
         }
         catch (SchedulerException e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("",e);
             return null;
         }
 	}
 	
 	public String[] getJobNames(String jgroupId){
-//	    try
-//        {
-//            return scheduler.getJobNames(jgroupId);
-//        }
-//        catch (SchedulerException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//            return null;
-//        }
 		return null;
 	}
 	
@@ -697,8 +588,7 @@ public class TaskService implements Service {
         }
         catch (SchedulerException e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("",e);
             return null;
         }
 	}
@@ -722,8 +612,7 @@ public class TaskService implements Service {
 			try {
 				scheduler.resumeJob(new JobKey(name, groupid));
 			} catch (SchedulerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+                log.error("",e);
 			}
 		}
 	}
@@ -741,8 +630,7 @@ public class TaskService implements Service {
 		try {
 			scheduler.pauseAll();
 		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            log.error("",e);
 		}
 	}
 
@@ -767,7 +655,7 @@ public class TaskService implements Service {
 				scheduler.deleteJob(new JobKey(jobname, groupid));
 //				schedulerServiceIndex.remove(groupid);
 			} catch (SchedulerException ex) {
-				ex.printStackTrace();
+                log.error("",ex);
 			}
 		}
 	}
@@ -791,8 +679,7 @@ public class TaskService implements Service {
 			try {
 				scheduler.pauseJob(new JobKey(jobname, groupid));
 			} catch (SchedulerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+                log.error("",e);
 			}
 		}
 	}
@@ -815,8 +702,7 @@ public class TaskService implements Service {
 			try {
 				scheduler.unscheduleJob(new TriggerKey(triggerName, triggerGroup));
 			} catch (SchedulerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+                log.error("",e);
 			}
 		}
 	}
@@ -834,8 +720,7 @@ public class TaskService implements Service {
 		try {
 			scheduler.standby();
 		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            log.error("",e);
 		}
 	}
 
@@ -857,8 +742,7 @@ public class TaskService implements Service {
 			try {
 				scheduler.triggerJob(new JobKey(jobName, groupName));
 			} catch (SchedulerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+                log.error("",e);
 			}
 		}
 	}
@@ -883,8 +767,7 @@ public class TaskService implements Service {
 			taskContext = null;
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            log.error("",e);
 		}
 	}
 
@@ -921,7 +804,7 @@ public class TaskService implements Service {
 						.getJobDataMap());
 
 			} catch (SchedulerException e) {
-				e.printStackTrace();
+                log.error("",e);
 			}
 		}
 	}

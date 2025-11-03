@@ -20,6 +20,7 @@ import com.frameworkset.common.poolman.StatementInfo;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Calendar;
 import java.util.List;
 
@@ -36,18 +37,33 @@ public class DateIntDateCalandorTypeMethod extends BaseTypeMethod{
 	public void action(StatementInfo stmtInfo, Param param, PreparedStatement statement, PreparedStatement statement_count, List resources) throws SQLException {
 
 		Object[] data = (Object[])param.getData();
-		java.util.Date date = (java.util.Date)data[0];
-		java.sql.Date sqldate = null;
-		if(date instanceof java.sql.Date){
-			sqldate = (java.sql.Date)date;
-		}
-		else{
-			sqldate = new java.sql.Date(date.getTime());
-		}
-		statement.setDate(param.getIndex(), sqldate,(Calendar)data[1]);
-		if(statement_count != null)
-		{
-			statement_count.setDate(param.getIndex(), sqldate,(Calendar)data[1]);
-		}
+        if(data == null || data.length == 0){
+            statement.setNull(param.getIndex(), Types.DATE);
+            if (statement_count != null) {
+                statement_count.setNull(param.getIndex(), Types.DATE);
+            }
+        }
+        else {
+            
+            java.util.Date date = (java.util.Date) data[0];
+            if(date == null){
+                statement.setNull(param.getIndex(), Types.DATE);
+                if (statement_count != null) {
+                    statement_count.setNull(param.getIndex(), Types.DATE);
+                }
+            }
+            else {
+                java.sql.Date sqldate = null;
+                if (date instanceof java.sql.Date) {
+                    sqldate = (java.sql.Date) date;
+                } else {
+                    sqldate = new java.sql.Date(date.getTime());
+                }
+                statement.setDate(param.getIndex(), sqldate, (Calendar) data[1]);
+                if (statement_count != null) {
+                    statement_count.setDate(param.getIndex(), sqldate, (Calendar) data[1]);
+                }
+            }
+        }
 	}
 }

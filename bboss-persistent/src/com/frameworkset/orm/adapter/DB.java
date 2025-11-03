@@ -523,15 +523,12 @@ public abstract class DB implements IDMethod, Platform {
 	}
 
 	public String getSchema(JDBCPoolMetaData info,Connection con) throws SQLException {
-        return con.getSchema();
-//		if (info.getUserName() == null || info.getUserName().equals("")) {
-//			return null;
-//		}
-//		if (info.getDbInfoEncrypt()  == null)
-//			return info.getUserName().toUpperCase();
-//		else {
-//			return info.getDbInfoEncrypt() .decryptDBUser(info.getUserName()).toUpperCase();
-//		}
+        if(con != null) {
+            return con.getSchema();
+        }
+        else {
+            return null;
+        }
 	}
 
 	public String getDBCatalog(Connection con) throws SQLException {
