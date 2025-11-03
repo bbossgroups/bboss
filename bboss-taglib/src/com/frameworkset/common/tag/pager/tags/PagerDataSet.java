@@ -594,8 +594,6 @@ public class PagerDataSet extends PagerTagSupport {
 	 * 
 	 * @param rowid -
 	 *            值对象行号
-	 * @param colName -
-	 *            属性名称
 	 * @return Object
 	 */
 	public Object getValue(int rowid) {
@@ -634,8 +632,6 @@ public class PagerDataSet extends PagerTagSupport {
 	 * 
 	 * @param rowid -
 	 *            值对象行号
-	 * @param colName -
-	 *            属性名称
 	 * @return Object
 	 */
 	public ClassData getClassDataValue(int rowid) {
@@ -746,7 +742,6 @@ public class PagerDataSet extends PagerTagSupport {
 	
 	/**
 	 * 获取当前行原始对象数据类型
-	 * @param rowid
 	 * @return
 	 */
 	public Object getOrigineObject()
@@ -815,7 +810,6 @@ public class PagerDataSet extends PagerTagSupport {
 	 * 从data中获取属性值
 	 * 
 	 * @param data
-	 * @param colName
 	 * @return Object
 	 */
 	public Object getValue(ClassData data) {
@@ -892,7 +886,6 @@ public class PagerDataSet extends PagerTagSupport {
 	
 	/**
 	 * @param rowid
-	 * @param colName
 	 * @return java.lang.String
 	 */
 	public String getString(int rowid) {
@@ -902,7 +895,6 @@ public class PagerDataSet extends PagerTagSupport {
 	
 	/**
 	 * @param rowid
-	 * @param colName
 	 * @return java.lang.String
 	 */
 	public Object getObject(int rowid) {
@@ -912,8 +904,6 @@ public class PagerDataSet extends PagerTagSupport {
 	
 	
 	/**
-	 * @param rowid
-	 * @param colName
 	 * @return java.lang.String
 	 */
 	public Object getObject() {
@@ -951,7 +941,6 @@ public class PagerDataSet extends PagerTagSupport {
 	/**
 	 * 根据索引获取对应的父值
 	 * 
-	 * @param rowid
 	 * @param colName
 	 * @param index
 	 * @return
@@ -983,7 +972,6 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * @param rowid
 	 * @param colName
 	 * @return java.lang.String
 	 */
@@ -994,7 +982,6 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * @param rowid
 	 * @param colName
 	 * @return java.lang.String
 	 */
@@ -1221,7 +1208,6 @@ public class PagerDataSet extends PagerTagSupport {
 	/**
 	 * 根据字段名称,获取整形字段的值
 	 * 
-	 * @param rowid
 	 * @param colName
 	 * @return java.lang.String
 	 */
@@ -1239,7 +1225,6 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * @param rowid
 	 * @param columnid
 	 * @return Date
 	 */
@@ -1363,7 +1348,6 @@ public class PagerDataSet extends PagerTagSupport {
 	
 	/**
 	 * @param rowid
-	 * @param colName
 	 * @return Date
 	 */
 	public String getFormatDate(int rowid,  String format,String locale,boolean userRequestLocale,String timeZone) {
@@ -1510,8 +1494,8 @@ public class PagerDataSet extends PagerTagSupport {
 	
 	/**
 	 * @param rowid
-	 * @param colName
-	 * @return double
+	 * @param format
+	 * @return 
 	 */
 	public String getFormatData(int rowid, String format) {
 		Object data = getValue(rowid);
@@ -1550,7 +1534,6 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * @param rowid
 	 * @param columnid
 	 * @return double
 	 */
@@ -1568,7 +1551,6 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * @param rowid
 	 * @param colName
 	 * @return double
 	 */
@@ -1622,7 +1604,6 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * @param rowid
 	 * @param colName
 	 * @return boolean
 	 */
@@ -1640,7 +1621,6 @@ public class PagerDataSet extends PagerTagSupport {
 	}
 
 	/**
-	 * @param rowid
 	 * @param columnid
 	 * @return boolean
 	 */
@@ -1759,7 +1739,7 @@ public class PagerDataSet extends PagerTagSupport {
 	/**
 	 * 装载map中的数据，并且通过属性获取时不会对属性进行大写置换
 	 * 
-	 * @param datas
+	 * @param data
 	 * @param voClazz
 	 */
 	protected void loadClassData(Map data, Class voClazz) {
@@ -1829,7 +1809,6 @@ public class PagerDataSet extends PagerTagSupport {
 	 * 装载对象数组数组中的数据
 	 * 
 	 * @param datas
-	 * @param voClazz
 	 */
 	protected void loadClassData(Object[] datas) {
 		// modified by biaoping.yin on 2005.03.28
@@ -1866,7 +1845,7 @@ public class PagerDataSet extends PagerTagSupport {
 	 * 装载对象数组数组中的数据
 	 * 
 	 * @param datas
-	 * @param voClazz
+	 * @param clazz
 	 */
 	protected void loadClassData(Object[] datas,Class clazz) {
 		loadClassData(datas);
@@ -3181,15 +3160,15 @@ public class PagerDataSet extends PagerTagSupport {
 
 		switch (type) {
 		case 0:
-			return new Integer(value_i);
+			return value_i;
 		case 1:
-			return new Short(value_s);
+			return value_s;
 		case 2:
-			return new Long(value_l);
+			return value_l;
 		case 3:
-			return new Double(value_d);
+			return value_d;
 		case 4:
-			return new Float(value_f);
+			return value_f;
 		default:
 			throw new FormulaException("attribute '" + colName
 					+ "' must be a number!");
@@ -3262,15 +3241,15 @@ public class PagerDataSet extends PagerTagSupport {
 
 		switch (type) {
 		case 0:
-			return new Integer(value_i);
+			return value_i;
 		case 1:
-			return new Short(value_s);
+			return value_s;
 		case 2:
-			return new Long(value_l);
+			return value_l;
 		case 3:
-			return new Double(value_d);
+			return value_d;
 		case 4:
-			return new Float(value_f);
+			return value_f;
 		default:
 			throw new FormulaException("attribute '" + colName + "." + property
 					+ "' must be a number!");

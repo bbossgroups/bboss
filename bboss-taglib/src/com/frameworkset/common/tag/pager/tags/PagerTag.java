@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 
+import com.frameworkset.common.tag.exception.TagDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -491,35 +492,39 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 		try {
 			pagerContext.init();
 		}  catch (LoadDataException e) {
-			if(e.getCause() == null)
-				log.info(e.getMessage());
-			else
-				log.info(e.getCause().getMessage());
+//			if(e.getCause() == null)
+//				log.info(e.getMessage());
+//			else
+//				log.info(e.getCause().getMessage());
+            throw e;
 //			return SKIP_BODY;
 		}
+        catch (TagDataException e) {
+//			if(e.getCause() == null)
+//				log.info(e.getMessage());
+//			else
+//				log.info(e.getCause().getMessage());
+            throw e;
+//			return SKIP_BODY;
+        }
+        catch (RuntimeException e) {
+//			if(e.getCause() == null)
+//				log.info(e.getMessage());
+//			else
+//				log.info(e.getCause().getMessage());
+            throw e;
+//			return SKIP_BODY;
+        }
 		catch (Throwable e) {
-			if(e.getCause() == null)
-				log.info(e.getMessage());
-			else
-				log.info(e.getCause().getMessage());
+//			if(e.getCause() == null)
+//				log.info(e.getMessage());
+//			else
+//				log.info(e.getCause().getMessage());
 			throw new JspException(e);
 //			return SKIP_BODY;
 		}
 
-		// //addParam("sortKey",getSortKey());
-		// //:log
-		// if(!pagerContext.ListMode())//:log如果是分页模式，初始化上下文
-		// {
-		// pagerContext.initContext();
-		// }
-		//
-		// else//:log如果是列表模式，直接设置dataInfo信息即可
-		// pagerContext.setDataInfo(pagerContext.getData());
 
-		// /**
-		// * 如果需要导出数据到文件，调用本方法进行初始化
-		// */
-		// this.setMeta();
 
 		return EVAL_BODY_INCLUDE;
 	}
@@ -529,42 +534,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 			this.metaDatas = new MetaDatas();
 	}
 
-	// /**
-	// * Movied to PagerContext
-	// * @return
-	// */
-	// public String getUri()
-	// {
-	// return uri.toString();
-	// }
-
-	// /**
-	// * Moved to PagerContext
-	// */
-	// private static void restoreAttribute(ServletRequest request, String name,
-	// Object oldValue)
-	// {
-	// if (oldValue != null)
-	// request.setAttribute(name, oldValue);
-	// else
-	// request.removeAttribute(name);
-	// }
-	//
-	// /**
-	// * Moved to PagerContext
-	// * @param pageContext
-	// * @param name
-	// * @param oldValue
-	// */
-	// private static void restoreAttribute(PageContext pageContext, String
-	// name,
-	// Object oldValue)
-	// {
-	// if (oldValue != null)
-	// pageContext.setAttribute(name, oldValue);
-	// else
-	// pageContext.removeAttribute(name);
-	// }
+	
 
 	/**
 	 * 获取数据获取类在request中的存放名称
@@ -589,63 +559,7 @@ public class PagerTag extends BaseTag implements FieldHelper, PagerInfo {
 //        endtoken= null;
 			sqlparamskey = "sql.params.key";
       
-			//		
-			// if (REQUEST.equals(scope)) {
-			//			
-			// PagerContext.restoreAttribute(request, id, oldPager);
-			//			
-			// request.removeAttribute(getData());
-			// oldPager = null;
-			//
-			// // if (pagerTagExport != null) {
-			// // String name;
-			// // if ((name = pagerTagExport.getPageOffset()) != null) {
-			// // PagerContext.restoreAttribute(request, name, oldOffset);
-			// // oldOffset = null;
-			// // }
-			// //
-			// // if ((name = pagerTagExport.getPageNumber()) != null) {
-			// // PagerContext.restoreAttribute(request, name, oldPageNumber);
-			// // oldPageNumber = null;
-			// // }
-			// // }
-			//			
-			// } else {
-			// if (pagerTagExport != null) {
-			// String name;
-			// if ((name = pagerTagExport.getPageOffset()) != null) {
-			// PagerContext.restoreAttribute(pageContext, name, oldOffset);
-			// oldOffset = null;
-			// }
-			//
-			// if ((name = pagerTagExport.getPageNumber()) != null) {
-			// PagerContext.restoreAttribute(pageContext, name, oldPageNumber);
-			// oldPageNumber = null;
-			// }
-			// }
-			// }
-
-			//
-			// // limit size of re-usable StringBuilder
-			// if (uri.capacity() > 1024)
-			// uri = null;
-			//
-			// // indexs = null;
-			// pageNumberInteger = null;
-
-			/**
-			 * return EVAL_PAGE:继续分析结束标签后的页面代码
-			 */
-			// try
-			// {
-			// pageContext.getOut().print("<table width=\"100%\">");
-			// }
-			// catch(Exception e)
-			// {
-			// throw new JspException(e.getMessage());
-			// }
-			// release();
-     //begin clear some field by biaoping.yin on 2015.3.8
+		
 			scope = null;
 			this.containerid = null;
 			this.selector = null;

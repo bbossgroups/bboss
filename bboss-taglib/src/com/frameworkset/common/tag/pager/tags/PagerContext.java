@@ -1325,7 +1325,7 @@ public class PagerContext
 
 		pageNumber = pageNumber(offset);
 
-		pageNumberInteger = new Long(1 + pageNumber);
+		pageNumberInteger = 1L + pageNumber;
 
 		if (REQUEST.equals(scope)) {
 			/*
@@ -1338,7 +1338,7 @@ public class PagerContext
 				String name;
 				if ((name = pagerTagExport.getPageOffset()) != null) {
 					oldOffset = request.getAttribute(name);
-					request.setAttribute(name, new Long(offset));
+					request.setAttribute(name, offset);
 				}
 				if ((name = pagerTagExport.getPageNumber()) != null) {
 					oldPageNumber = request.getAttribute(name);
@@ -1353,7 +1353,7 @@ public class PagerContext
 					 * offset：当前页面第一条记录id值, 例如offset=80表示当前页面第一条记录id值为80
 					 */
 					oldOffset = pageContext.getAttribute(name);
-					pageContext.setAttribute(name, new Long(offset));
+					pageContext.setAttribute(name, offset);
 				}
 				if ((name = pagerTagExport.getPageNumber()) != null) {
 					/**
@@ -1861,7 +1861,7 @@ public class PagerContext
 	final Long getPageNumber(long i) {
 		if (i == pageNumber)
 			return pageNumberInteger;
-		return new Long(1 + i);
+		return 1L + i;
 	}
 
 	public void setScope(String scope) {

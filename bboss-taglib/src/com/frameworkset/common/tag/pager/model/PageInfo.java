@@ -214,7 +214,7 @@ public class PageInfo implements ModelObject{
 		/**
 		 * 当前页码，从1开始
 		 */
-		pageNumberInteger = new Long(1+pageNumber);
+		pageNumberInteger = 1L+pageNumber;
 	}
 	/**
 	 * @return Returns the pageNumber.

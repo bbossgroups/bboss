@@ -508,8 +508,8 @@ public class Formula implements ModelObject
                 	    number = curChar - '0' ;
                 	    if(this.curpos == this.formulaChars.length -1)
                 	    {
-                	        obj[1] = new Integer(new Double(number).intValue());
-                	        obj[2] = new Integer(OPT_TYPE_INTEGER) ;
+                	        obj[1] = new Double(number).intValue();
+                	        obj[2] = OPT_TYPE_INTEGER ;
                 	        return obj;
                 	    } 
                 	}
@@ -528,7 +528,7 @@ public class Formula implements ModelObject
                 	        oldstatus = status;
                 	        status = STATUS_VARIABLE_END;
                 	        obj[1] = token;
-                	        obj[2] = new Integer(OPT_TYPE_VARIABLE);
+                            obj[2] = OPT_TYPE_INTEGER;
                 	        pop(curChar,curpos);
                 	        return obj;	                	        
                 	    }
@@ -560,8 +560,8 @@ public class Formula implements ModelObject
             	        integerNum ++;
             	        if(this.curpos == this.formulaChars.length -1)
                 	    {
-                	        obj[1] = new Integer(new Double(number).intValue());
-                	        obj[2] = new Integer(OPT_TYPE_INTEGER) ;
+                	        obj[1] = new Double(number).intValue();
+                	        obj[2] = OPT_TYPE_INTEGER ;
                 	        return obj;
                 	    } 
             	    }
@@ -583,8 +583,8 @@ public class Formula implements ModelObject
             	        
             	        curpos --;
             	        
-            	        obj[1] = new Integer(new Double(number).intValue());
-            	        obj[2] = new Integer(OPT_TYPE_INTEGER) ;
+            	        obj[1] = new Double(number).intValue();
+            	        obj[2] = OPT_TYPE_DOUBLE ;
             	        return obj;
             	    }
             	    continue;
@@ -609,8 +609,8 @@ public class Formula implements ModelObject
                  	         }
                  	         DecimalFormat formart = new DecimalFormat(formats);
                  	         number = Double.parseDouble(formart.format(number));
-                	         obj[1] = new Double(number);
-                 	         obj[2] = new Integer(OPT_TYPE_DOUBLE);
+                	         obj[1] = number;
+                 	         obj[2] = OPT_TYPE_DOUBLE;
                  	         return obj;
                  	    } 
             	         continue;
@@ -641,8 +641,8 @@ public class Formula implements ModelObject
              	         }
              	         DecimalFormat formart = new DecimalFormat(formats);
              	         number = Double.parseDouble(formart.format(number));
-            	         obj[1] = new Double(number);
-             	         obj[2] = new Integer(OPT_TYPE_DOUBLE);   
+            	         obj[1] = number;
+             	         obj[2] = OPT_TYPE_DOUBLE;   
              	         
              	         
              	         curpos --;
@@ -655,7 +655,7 @@ public class Formula implements ModelObject
             	         this.oldstatus = status;
             	         this.status = STATUS_STRCONST_END;
             	         obj[1] = token;
-            	         obj[2] = new Integer(OPT_TYPE_STRING);
+            	         obj[2] = OPT_TYPE_STRING;
             	         pop(curChar,curpos);
             	         return obj;            	         
             	     }
@@ -681,7 +681,7 @@ public class Formula implements ModelObject
             	      )
             	     {
             	         int code = getOperCode(curChar);
-            	         obj[0] = new Integer(code);
+            	         obj[0] = code;
             	         oldstatus = status;
             	         this.status = STATUS_OPERATION_END;
             	         if(curChar == OPER_RP)
@@ -978,7 +978,7 @@ public class Formula implements ModelObject
     private Object evalVariableValue(int oper,String variableName,PagerDataSet dataSet) throws FormulaException
     {        
 //        if(true)
-//            return new Object[] {null, new Double(50),new Integer(OPT_TYPE_DOUBLE)};
+//            return new Object[] {null, new Double(50),OPT_TYPE_DOUBLE};
         if(this.dataSet == null || dataSet.size() == 0)
             throw new FormulaException("evaluate variablevalue exception:dataSet=null or dataSet.size=0,[" + variableName + "]");
         String[] variables =  parseVariable(variableName);
@@ -1011,30 +1011,30 @@ public class Formula implements ModelObject
         	case OPER_SUM:
         	    if(variables.length == 1)
                 {        	        
-        	        return new Object[] {null, new Double(dataSet.sum(variables[0]).toString()),new Integer(OPT_TYPE_DOUBLE)};        	        
+        	        return new Object[] {null, new Double(dataSet.sum(variables[0]).toString()),OPT_TYPE_DOUBLE};        	        
                 }
         	    else
         	    {   
-        	        return new Object[] {null, new Double(dataSet.sum(variables[0],variables[1]).toString()),new Integer(OPT_TYPE_DOUBLE)};        	        
+        	        return new Object[] {null, new Double(dataSet.sum(variables[0],variables[1]).toString()),OPT_TYPE_DOUBLE};        	        
         	    }
         	case OPER_AVG:
         	    if(variables.length == 1)
                 {
-        	        return new Object[] {null, new Double(dataSet.avg(variables[0])),new Integer(OPT_TYPE_DOUBLE)};        	        
+        	        return new Object[] {null, new Double(dataSet.avg(variables[0])),OPT_TYPE_DOUBLE};        	        
                 }
         	    else
         	    {        	        
-        	        return new Object[] {null,new Float(dataSet.avg(variables[0],variables[1])),new Integer(OPT_TYPE_DOUBLE)};        	        
+        	        return new Object[] {null,dataSet.avg(variables[0],variables[1]),OPT_TYPE_DOUBLE};        	        
         	    }
         	    
         	case OPER_COUNT:
         	    if(variables.length == 1)
                 {        	         
-        	        return new Object[] {null,new Integer(dataSet.count(variables[0])),new Integer(OPT_TYPE_INTEGER)};
+        	        return new Object[] {null,dataSet.count(variables[0]),OPT_TYPE_INTEGER};
                 }
         	    else
         	    {
-        	        return new Object[] {null,new Integer(dataSet.count(variables[0],variables[1])),new Integer(OPT_TYPE_INTEGER)};        	        
+        	        return new Object[] {null,dataSet.count(variables[0],variables[1]),OPT_TYPE_INTEGER};        	        
         	    }
         }
         throw new FormulaException("error operation code:" + oper + ",attribute["+ variableName +"]");
@@ -1058,11 +1058,11 @@ public class Formula implements ModelObject
         {
         	if(variables[0].equals("rowid"))
             {
-            	return new Integer(dataSet.getOuterRowid(true,0));
+            	return dataSet.getOuterRowid(true,0);
             }
         	else if(variables[0].equals("offset"))
         	{
-        		return new Integer(dataSet.getOffset());
+        		return dataSet.getOffset();
         	}
         	else if(variables[0].equals("rowcount"))
         	{
@@ -1104,11 +1104,11 @@ public class Formula implements ModelObject
                  */
                 if(variables[1].equals("rowid"))
                 {
-                	return new Integer(dataSet_t.getOuterRowid(true,0));
+                	return dataSet_t.getOuterRowid(true,0);
                 }
                 else if(variables[1].equals("offset"))
             	{
-            		return new Integer(dataSet_t.getOffset());
+            		return dataSet_t.getOffset();
             	}
                 else if(variables[1].equals("rowcount"))
             	{
@@ -1169,11 +1169,11 @@ public class Formula implements ModelObject
                  */
                 if(variables[0].equals("rowid"))
                 {
-                	return new Integer(dataSet.getOuterRowid(true,0));
+                	return dataSet.getOuterRowid(true,0);
                 }
                 else if(variables[0].equals("offset"))
             	{
-            		return new Integer(dataSet.getOffset());
+            		return dataSet.getOffset();
             	}
                 else if(variables[0].equals("rowcount"))
             	{
@@ -1288,7 +1288,7 @@ public class Formula implements ModelObject
 	        {
 	        	case CODE_ADD:
 	        	    ret[1] = lv + rv;
-	        	    ret[2] = new Integer(OPT_TYPE_STRING);
+	        	    ret[2] = OPT_TYPE_STRING;
 	        	    return ret;
 	        	case CODE_DIV:
 	        	case CODE_MOD:
@@ -1305,33 +1305,33 @@ public class Formula implements ModelObject
 	        switch(oper)
 	        {
 	        	case CODE_ADD:
-	        	    ret[1] = new Double(lv + rv);
-	        	    ret[2] = new Integer(OPT_TYPE_DOUBLE);
+	        	    ret[1] = lv + rv;
+	        	    ret[2] = OPT_TYPE_DOUBLE;
 	        	    return ret;
 	        	case CODE_DIV:
-	        	    ret[1] = new Double(lv/rv);
-	        	    ret[2] = new Integer(OPT_TYPE_DOUBLE);
+	        	    ret[1] = lv/rv;
+	        	    ret[2] = OPT_TYPE_DOUBLE;
 	        	    return ret;
 	        	case CODE_MOD:
-	        	    ret[1] = new Double(lv%rv);
-	        	    ret[2] = new Integer(OPT_TYPE_DOUBLE);
+	        	    ret[1] = lv%rv;
+	        	    ret[2] = OPT_TYPE_DOUBLE;
 	        	    return ret;
 	        	    
 	        	case CODE_MUL:
-	        	    ret[1] = new Double(lv*rv);
-	        	    ret[2] = new Integer(OPT_TYPE_DOUBLE);
+	        	    ret[1] = lv*rv;
+	        	    ret[2] = OPT_TYPE_DOUBLE;
 	        	    return ret;
 	        	    
 	        	case CODE_POW:
 	        	    float ret_f = 1.0f;
 	        	    for(int i = 0; i < (int)rv; i ++)
 	        	        ret_f *= lv;
-	        	    ret[1] = new Double(ret_f);
-	        	    ret[2] = new Integer(OPT_TYPE_DOUBLE);
+	        	    ret[1] = ret_f;
+	        	    ret[2] = OPT_TYPE_DOUBLE;
 	        	    return ret;        	        	    
 	        	case CODE_SUB:
-	        	    ret[1] = new Double(lv - rv);
-	        	    ret[2] = new Integer(OPT_TYPE_DOUBLE);
+	        	    ret[1] = lv - rv;
+	        	    ret[2] = OPT_TYPE_DOUBLE;
 	        	    return ret;	        	    
 	        }
 	        
@@ -1344,31 +1344,31 @@ public class Formula implements ModelObject
 	        switch(oper)
 	        {
 	        	case CODE_ADD:
-	        	    ret[1] = new Double(lv + rv);
-	        	    ret[2] = new Integer(OPT_TYPE_DOUBLE);
+	        	    ret[1] = lv + rv;
+	        	    ret[2] = OPT_TYPE_DOUBLE;
 	        	    return ret;
 	        	case CODE_DIV:
-	        	    ret[1] = new Double(lv / rv);
-	        	    ret[2] = new Integer(OPT_TYPE_DOUBLE);
+	        	    ret[1] = lv / rv;
+	        	    ret[2] = OPT_TYPE_DOUBLE;
 	        	    return ret;
 	        	case CODE_MOD:
-	        	    ret[1] = new Double(lv % rv);
-	        	    ret[2] = new Integer(OPT_TYPE_DOUBLE);
+	        	    ret[1] = lv % rv;
+	        	    ret[2] = OPT_TYPE_DOUBLE;
 	        	    return ret;
 	        	case CODE_MUL:
-	        	    ret[1] = new Double(lv * rv);
-	        	    ret[2] = new Integer(OPT_TYPE_DOUBLE);
+	        	    ret[1] = lv * rv;
+	        	    ret[2] = OPT_TYPE_DOUBLE;
 	        	    return ret;
 	        	case CODE_POW:
 	        	    double ret_d = 1.0d;
 	        	    for(int i = 0; i < (int)rv; i ++)
 	        	        ret_d *= lv;
-	        	    ret[1] = new Double(ret_d);
-	        	    ret[2] = new Integer(OPT_TYPE_DOUBLE);
+	        	    ret[1] = ret_d;
+	        	    ret[2] = OPT_TYPE_DOUBLE;
 	        	    return ret;
 	        	case CODE_SUB:
-	        	    ret[1] = new Double(lv - rv);
-	        	    ret[2] = new Integer(OPT_TYPE_DOUBLE);
+	        	    ret[1] = lv - rv;
+	        	    ret[2] = OPT_TYPE_DOUBLE;
 	        	    return ret;        	        	  
 	        }
 	        
@@ -1381,31 +1381,31 @@ public class Formula implements ModelObject
 	        switch(oper)
 	        {
 	        	case CODE_ADD:
-	        	    ret[1] = new Long(lv + rv);
-	        	    ret[2] = new Integer(OPT_TYPE_LONG);
+	        	    ret[1] = lv + rv;
+	        	    ret[2] = OPT_TYPE_LONG;
 	        	    return ret;
 	        	case CODE_DIV:
-	        	    ret[1] = new Long(lv / rv);
-	        	    ret[2] = new Integer(OPT_TYPE_LONG);
+	        	    ret[1] = lv / rv;
+	        	    ret[2] = OPT_TYPE_LONG;
 	        	    return ret;
 	        	case CODE_MOD:
-	        	    ret[1] = new Long(lv % rv);
-	        	    ret[2] = new Integer(OPT_TYPE_LONG);
+	        	    ret[1] = lv % rv;
+	        	    ret[2] = OPT_TYPE_LONG;
 	        	    return ret;
 	        	case CODE_MUL:
-	        	    ret[1] = new Long(lv * rv);
-	        	    ret[2] = new Integer(OPT_TYPE_LONG);
+	        	    ret[1] = lv * rv;
+	        	    ret[2] = OPT_TYPE_LONG;
 	        	    return ret;
 	        	case CODE_POW:
 	        		long ret_d = 1;
 	        	    for(int i = 0; i < (int)rv; i ++)
 	        	        ret_d *= lv;
-	        	    ret[1] = new Long(ret_d);
-	        	    ret[2] = new Integer(OPT_TYPE_LONG);
+	        	    ret[1] = ret_d;
+	        	    ret[2] = OPT_TYPE_LONG;
 	        	    return ret;
 	        	case CODE_SUB:
-	        	    ret[1] = new Long(lv - rv);
-	        	    ret[2] = new Integer(OPT_TYPE_LONG);
+	        	    ret[1] = lv - rv;
+	        	    ret[2] = OPT_TYPE_LONG;
 	        	    return ret;        	        	  
 	        }
 	        
@@ -1418,20 +1418,20 @@ public class Formula implements ModelObject
 	        switch(oper)
 	        {
 	        	case CODE_ADD:
-	        	    ret[1] = new Integer(lv + rv);
-	        	    ret[2] = new Integer(OPT_TYPE_INTEGER);
+	        	    ret[1] = lv + rv;
+	        	    ret[2] = OPT_TYPE_INTEGER;
 	        	    return ret;
 	        	case CODE_DIV:
-	        	    ret[1] = new Integer(lv / rv);
-	        	    ret[2] = new Integer(OPT_TYPE_INTEGER);
+	        	    ret[1] = lv / rv;
+	        	    ret[2] = OPT_TYPE_INTEGER;
 	        	    return ret;
 	        	case CODE_MOD:
-	        	    ret[1] = new Integer(lv % rv);
-	        	    ret[2] = new Integer(OPT_TYPE_INTEGER);
+	        	    ret[1] = lv % rv;
+	        	    ret[2] = OPT_TYPE_INTEGER;
 	        	    return ret;
 	        	case CODE_MUL:
-	        	    ret[1] = new Integer(lv * rv);
-	        	    ret[2] = new Integer(OPT_TYPE_INTEGER);
+	        	    ret[1] = lv * rv;
+	        	    ret[2] = OPT_TYPE_INTEGER;
 	        	    return ret;
 	        	case CODE_POW:
 	        	    int ret_i = 1;

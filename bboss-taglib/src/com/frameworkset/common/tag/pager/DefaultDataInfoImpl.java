@@ -41,6 +41,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.frameworkset.common.tag.exception.TagDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -304,8 +305,9 @@ public class DefaultDataInfoImpl implements DataInfo {
                 return listInfo;
 	        }
         } catch (SQLException e) {
-            log.error("",e);
-	        return null;
+//            log.error("",e);
+//	        return null;
+            throw new TagDataException("GetDataFromDB error:",e);
         }
 
 	}
@@ -347,8 +349,7 @@ public class DefaultDataInfoImpl implements DataInfo {
                 return listInfo;
 	        }
         } catch (SQLException e) {
-            log.error("",e);
-	        return null;
+            throw new TagDataException("GetDataFromDB error:",e);
         }
 	}
 

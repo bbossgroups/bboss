@@ -59,9 +59,9 @@ import com.frameworkset.common.tag.contextmenu.ContextMenu;
  */
 public abstract class BaseTag extends TagSupport implements TryCatchFinally
 {
-	public void doCatch(Throwable arg0) throws Throwable {
+	public void doCatch(Throwable throwable) throws Throwable {
 		
-		throw arg0;
+		throw throwable;
 		
 	}
 

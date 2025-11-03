@@ -37,7 +37,7 @@ package com.frameworkset.common.tag.pager.tags;
  * @version 1.0
  * 2004-9-11
  */
-public class LoadDataException extends Exception {
+public class LoadDataException extends RuntimeException {
 	public LoadDataException(String msg)
 		{
 			super(msg);

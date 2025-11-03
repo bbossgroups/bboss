@@ -924,26 +924,12 @@ public class DBUtil extends SQLUtil implements Serializable {
 			
 
 		} catch (SQLException sqle) {
-			try{
-				
-				log.error(sqle.getMessage(),sqle);
-			}
-			catch(Exception ei)
-			{
-				
-			}
+			
 			if(stmtInfo != null)
 				stmtInfo.errorHandle(sqle);
 			throw sqle;
 		} catch (Exception e) {
-			try{
-				
-				log.error(e.getMessage(),e);
-			}
-			catch(Exception ei)
-			{
-				
-			}
+			
 			if(stmtInfo != null)
 				stmtInfo.errorHandle(e);
 			throw new NestedSQLException(e.getMessage(),e);
@@ -1335,28 +1321,14 @@ public class DBUtil extends SQLUtil implements Serializable {
 				return i;
 			}
 		} catch (SQLException e) {
-			try{
-				
-				log.error(stmtInfo.getSql(), e);
-			}
-			catch(Exception ei)
-			{
-				
-			}
+			
 			if(stmtInfo != null)
 				stmtInfo.errorHandle(e);
 			// e.printStackTrace();
 			
 			throw e;
 		} catch (Exception e) {
-			try{
-				
-				log.error(stmtInfo.getSql(), e);
-			}
-			catch(Exception ei)
-			{
-				
-			}
+			
 			if(stmtInfo != null)
 				stmtInfo.errorHandle(e);
 			throw new NestedSQLException(e.getMessage(),e);
@@ -2458,14 +2430,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 		} 
 		catch(java.sql.BatchUpdateException e)
 		{
-			try{
-				
-				log.error("success batch update statements:" + e.getUpdateCounts(),e);
-			}
-			catch(Exception ei)
-			{
-				
-			}
+			 
 			
 			if(stmtInfo != null)
 				stmtInfo.errorHandle(e);
@@ -2473,14 +2438,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 			throw e;
 		}
 		catch (SQLException e) {
-			try{
-				
-				log.error(e.getMessage(),e);
-			}
-			catch(Exception ei)
-			{
-				
-			}
+			 
 			
 			if(stmtInfo != null)
 				stmtInfo.errorHandle(e);
@@ -2489,14 +2447,7 @@ public class DBUtil extends SQLUtil implements Serializable {
 		
 			// return ret;
 		} catch (Exception e) {
-			try{
-				
-				log.error(e.getMessage(),e);
-			}
-			catch(Exception ei)
-			{
-				
-			}
+			
 			if(stmtInfo != null)
 				stmtInfo.errorHandle(e);			
 //			log.error(e.getMessage(),e);
@@ -3495,7 +3446,6 @@ public class DBUtil extends SQLUtil implements Serializable {
 			//primaryKey.updateTableinfo(con);
 			return key;
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new NestedSQLException(
 					"Get Next String PrimaryKey error for dbName=" + dbName
 							+ ",tableName=" + tableName+ ":" + e.getMessage(),e);
