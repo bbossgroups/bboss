@@ -2297,7 +2297,7 @@ public class PagerDataSet extends PagerTagSupport {
 	// }
 
 	public PagerDataSet pop() {
-		PagerDataSet obj = (PagerDataSet) stack.pop();
+		PagerDataSet obj =  stack.pop();
 		HttpServletRequest request = this.getHttpServletRequest();
 		if (stack.size() == 0)
 			request.removeAttribute(PAGERDATASET_STACK);
@@ -2311,7 +2311,7 @@ public class PagerDataSet extends PagerTagSupport {
 	 */
 	protected void recoverParentDataSet() {
 		if (stack.size() > 0) {
-			PagerDataSet dataSet = (PagerDataSet) stack.peek();
+			PagerDataSet dataSet =  stack.peek();
 			this.pageContext.setAttribute(dataSet.getDataSetName(), dataSet);
 			this.pageContext.setAttribute(dataSet.getRowidName(), dataSet.getRowid() + "");
 		}
@@ -2927,6 +2927,10 @@ public class PagerDataSet extends PagerTagSupport {
 		rowid = 0;
 	}
 
+    /**
+     * 如果已经pop，则无需pop
+     */
+    protected boolean poped = false;
 	/**
 	 * 
 	 * Description:重置对象theClassDataList和行号rowid 否则嵌套使用情况下会出错 void
@@ -2937,8 +2941,10 @@ public class PagerDataSet extends PagerTagSupport {
 		position = -1;
 		rowid = 0;
 		start = 0;
-//		if(flag)
-		pop();
+        if(!poped) {
+            pop();
+            poped = true;
+        }
 		HttpServletRequest request = this.getHttpServletRequest();
 		HttpSession session = request.getSession(false);
 		
@@ -3732,6 +3738,7 @@ public class PagerDataSet extends PagerTagSupport {
 		
 		
 		super.doFinally();
+        poped = false;
 	}
 	
 	public int getPosition() {

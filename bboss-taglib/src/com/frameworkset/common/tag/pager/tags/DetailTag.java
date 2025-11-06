@@ -111,86 +111,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	    return StringUtil.split(width,",");
     }
 
-//    public void init() throws LoadDataException
-//    {
-//    	this.pagerContext = new PagerContext(this.request, this.response,
-//				this.pageContext,this);
-//
-//		// /*
-//		// * id的值为“pager“,备份先前的页面得上下文环境，然后再将当前得上下文设置到request或pageContext中
-//		// */
-//		// if(REQUEST.equals(scope))
-//		// {
-//		// this.oldPager = (PagerContext)request.getAttribute(id);
-//		// request.setAttribute(id,pagerContext);
-//		// }
-//
-//		// }
-//		// else
-//		// {
-//		// log.debug("DoStartTag pager_info_" + id);
-//		// pageContext.setAttribute("pager_info_" + id,this);
-//		// }
-//		
-//		pagerContext.setIsList(this.isList);
-//
-//		pagerContext.setField(this.field);
-////		pagerContext.setForm(this.form);
-//		pagerContext.setId(this.getId());
-////		pagerContext.setNavindex(this.navindex);
-////		pagerContext.setPromotion(this.promotion);
-////		pagerContext.setScope(this.scope);
-//		pagerContext.setTitle(this.title);
-////		pagerContext.setMaxIndexPages(this.maxIndexPages);
-////		pagerContext.setMaxItems(this.maxItems);
-////		pagerContext.setMaxPageItems(this.maxPageItems);
-//		pagerContext.setWapflag(this.wapflag);
-//		pagerContext.setWidth(this.width);
-////		pagerContext.setIsOffset(this.isOffset);
-//		pagerContext.setDbname(this.dbname);
-//		pagerContext.setStatement(this.statement);
-//		pagerContext.setColName(this.colName);
-//		pagerContext.setProperty(this.property);
-//		pagerContext.setRequestKey(this.requestKey);
-//		pagerContext.setSessionKey(this.sessionKey);
-//		pagerContext.setPageContextKey(this.pageContextKey);
-////		pagerContext.setData(this.data);
-////		pagerContext.setUrl(url);
-//
-////		pagerContext.setUri();
-//		
-//		// params = 0;
-//		// offset = 0;
-//		// itemCount = 0;
-//
-////		// 设置是否是升序还是降序
-////		String desc_key = pagerContext.getKey("desc");
-////
-////		String t_desc = request.getParameter(desc_key);
-////		boolean desc = false;
-////		if (t_desc != null && t_desc.equals("false"))
-////			desc = false;
-////		else if (t_desc != null && t_desc.equals("true"))
-////			desc = true;
-////
-////		pagerContext.setDesc(desc);
-////		// 设置排序关键字，首先通过request.getParameter获取
-////
-////		String sortKey_key = pagerContext.getKey("sortKey");
-////
-////		String t_sortKey = request.getParameter(sortKey_key);
-////		// 如果获取到的sortKey为空时，通过request.getAttribute获取
-////		if (t_sortKey == null)
-////			t_sortKey = (String) request.getAttribute(sortKey_key);
-////		// 如果上面获取到的sortKey不为null时，设置sortKey
-////		if (t_sortKey != null)
-////			pagerContext.setSortKey(t_sortKey);
-//
-//		
-////		pagerContext.setDataInfo();
-//
-//		pagerContext.init();
-//    }
+
     
 	public int doStartTag() throws JspException{
 		try
@@ -349,90 +270,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 		}
 	}
 
-//	/**
-//	 * 根据不同的范围获取数据对象
-//	 * @param scope
-//	 * @throws LoadDataException
-//	 */
-//	protected void loadObject(String scope)
-//			throws LoadDataException
-//	{
-//		Object dataInfo = null;
-//		if(scope.equals(DB_SCOPE))
-//		    dataInfo = new DefaultDataInfoImpl();
-//		else if(scope.equals(REQUEST_SCOPE))
-//		{
-//			dataInfo = request.getAttribute(requestKey);
-//		}
-//		else if(scope.equals(SESSION_SCOPE))
-//		{
-//			dataInfo = session.getAttribute(sessionKey);
-//		}
-//		else if(scope.equals(PAGECONTEXT_SCOPE))
-//		{
-//			dataInfo = pageContext.getAttribute(pageContextKey);
-//		}
-//		else if(scope.equals(COLUMN_SCOPE))
-//		{
-//			PagerDataSet dataSet =
-//				searchDataSet(this, PagerDataSet.class);
-//
-//			//System.out.println("dataSet:" + dataSet);
-//			//System.out.println("dataSet.getRowid():" + dataSet.getRowid());
-//			/**
-//			 * 根据调用getProperty()方法返回值判断当前列是否为bean
-//			 * 如果为空,表示字段为collection
-//			 *
-//			 * 否则表示字段是一个javabean,getProperty()返回的值为该对象的一个属性，类型为collection
-//			 */
-//
-//			if (getProperty() == null) {
-//
-//				dataInfo =
-//					dataSet.getValue(
-//						dataSet.getRowid(),
-//						getColName());
-//
-//				//System.out.println("dataInfo.size:" + dataInfo.size());
-//			} else {
-//				dataInfo =
-//					dataSet.getValue(
-//						dataSet.getRowid(),
-//						getColName(),
-//						getProperty());
-//			}
-//
-//		}
-//		else
-//			throw new LoadDataException("load from "+ scope +" error: this scope not support!");
-////notified by biaoping.yin on 2005.10.9 8:29
-////		if (dataInfo == null)
-////			throw new LoadDataException("load "+ scope +" error:dataInfo == null || dataInfo.size() == 0");
-//		try {
-//			loadClassData(dataInfo);
-//		} catch (LoadDataException e) {
-//
-//			log.info(e.getMessage());
-//			e.printStackTrace();
-//		}
-//	}
 
-
-
-
-
-//	private void clear()
-//	{
-//		if(getNeedClear().equals("true"))
-//		{
-//			if(requestKey != null)
-//				request.removeAttribute(requestKey);
-//			else if(sessionKey != null)
-//				session.removeAttribute(sessionKey);
-//			else if(pageContextKey != null)
-//				pageContext.removeAttribute(pageContextKey);
-//		}
-//	}
 	public int doEndTag() throws JspException
 	{
 
@@ -479,15 +317,7 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
 	}
 	public void removeVariable()
 	{
-//	    if(id != null && !id.trim().equals(""))
-//		{
-//		    pageContext.removeAttribute("beaninfo_" + id);
-//
-//		}
-//		else
-		{
-		    pageContext.removeAttribute(this.getBeaninfoName(),PageContext.PAGE_SCOPE);
-		}
+        pageContext.removeAttribute(this.getBeaninfoName(),PageContext.PAGE_SCOPE);
 		super.removeVariable();
 	}
 
@@ -561,22 +391,9 @@ public class DetailTag extends PagerDataSet implements FieldHelper{
     }
     
     public int doAfterBody() {
-//		if (this.rowid < this.size() - 1) {
-//			rowid++;
-//			if(id != null && !id.trim().equals(""))
-//			{
-//				pageContext.setAttribute("rowid_" + id,rowid + "");
-//			}
-//			else
-//			{
-//				pageContext.setAttribute("rowid",rowid + "");
-//			}
-//			return EVAL_BODY_AGAIN;
-//		} else 
-		{
+
 			this.currentValueObject = null;
 			return SKIP_BODY;
-		}
 	}
 
     /**
