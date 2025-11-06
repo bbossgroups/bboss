@@ -3738,7 +3738,7 @@ public class PagerDataSet extends PagerTagSupport {
 		
 		
 		super.doFinally();
-        poped = false;
+//        poped = false;
 	}
 	
 	public int getPosition() {
