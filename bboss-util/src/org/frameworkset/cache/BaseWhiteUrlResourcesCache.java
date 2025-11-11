@@ -60,7 +60,9 @@ public abstract class BaseWhiteUrlResourcesCache extends BaseResourcesCache<Stri
         String urls = resourceCacheEntity.getResource();
         
         if(urls == null || urls.trim().length() == 0){
-            this.whiteUrlLists = new ArrayList<>();
+            synchronized (lock) {
+                this.whiteUrlLists = new ArrayList<>();
+            }
             return;
         }
         String[] urlsArray = urls.split(",");
