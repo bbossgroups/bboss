@@ -29,8 +29,17 @@ public class BaseWhiteUrlResourcesCacheWrapper extends ResourcesCacheWrapper<Str
         super(resourcesCache);
         this.baseWhiteUrlResourcesCache = resourcesCache;
     }
-    public boolean isWhiteUrl(String url){
-        return baseWhiteUrlResourcesCache.isWhiteUrl(url);
+    public boolean isPermissionWhiteUrl(String url){
+        return baseWhiteUrlResourcesCache.isPermissionWhiteUrl(url);
     }
+
+    public boolean isAuthenticationWhiteUrls(String url){
+        return baseWhiteUrlResourcesCache.isAuthenticationWhiteUrls(url);
+    }
+    public BaseWhiteUrlResourcesCache setPaSplit(String paSplit) {
+        baseWhiteUrlResourcesCache.setPaSplit(paSplit);
+        return baseWhiteUrlResourcesCache;
+    }
+    
  
 }

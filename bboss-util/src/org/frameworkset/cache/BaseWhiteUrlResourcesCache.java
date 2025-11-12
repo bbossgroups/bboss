@@ -27,8 +27,13 @@ import java.util.List;
  * @Date 2025/11/11
  */
 public abstract class BaseWhiteUrlResourcesCache extends BaseResourcesCache<String>{
-    private List<String> whiteUrlLists;
+    private List<String> permissionWhiteUrlLists;
+    /**
+     * 认证白名单和鉴权白名单url分隔符
+     */
+    private String paSplit = "------";
 
+    private List<String> authenticationWhiteUrlLists;
     private PathMatcher pathMatcher = new AntPathMatcher();
     private Object lock = new Object();
 
@@ -45,6 +50,16 @@ public abstract class BaseWhiteUrlResourcesCache extends BaseResourcesCache<Stri
     }
 
     /**
+     * 设置认证白名单和鉴权白名单url分隔符
+     * @param paSplit
+     * @return
+     */
+    public BaseWhiteUrlResourcesCache setPaSplit(String paSplit) {
+        this.paSplit = paSplit;
+        return this;
+    }
+
+    /**
      * 初始化
      */
     @Override
@@ -54,6 +69,7 @@ public abstract class BaseWhiteUrlResourcesCache extends BaseResourcesCache<Stri
 
     /**
      * 加载资源
+     * @param resourceCacheEntity
      */
     @Override
     public void loadResources(ResourceCacheEntity<String> resourceCacheEntity) {
@@ -61,23 +77,59 @@ public abstract class BaseWhiteUrlResourcesCache extends BaseResourcesCache<Stri
         
         if(urls == null || urls.trim().length() == 0){
             synchronized (lock) {
-                this.whiteUrlLists = new ArrayList<>();
+                this.permissionWhiteUrlLists = new ArrayList<>();
+                this.authenticationWhiteUrlLists = new ArrayList<>();
             }
             return;
         }
-        String[] urlsArray = urls.split(",");
-        List whiteUrlLists = new ArrayList();
-        for(String url:urlsArray){
-            whiteUrlLists.add(url.trim());
+        int paSplitIdex = urls.indexOf(paSplit);
+       
+        //如果没有区分免认证和免鉴权的url，则默认所有url都为免认证和免鉴权
+        if(paSplitIdex > 0){
+            String authenticationUrls = null;
+            String permissionUrls = null;
+
+            String[] tmp = urls.split(paSplit);
+            authenticationUrls = tmp[0];
+            permissionUrls = tmp[1];
+            List<String> authenticationWhiteUrlLists = new ArrayList<>();
+            buildWhiteUrlLists(authenticationUrls,authenticationWhiteUrlLists);
+            List<String> permissionWhiteUrlLists = new ArrayList<>();
+            if(authenticationWhiteUrlLists != null && authenticationWhiteUrlLists.size() > 0){
+                permissionWhiteUrlLists.addAll(authenticationWhiteUrlLists);
+            }
+
+            buildWhiteUrlLists(permissionUrls,permissionWhiteUrlLists);
+            synchronized (lock) {
+                this.permissionWhiteUrlLists = permissionWhiteUrlLists;
+                this.authenticationWhiteUrlLists = authenticationWhiteUrlLists;
+            }
         }
-        synchronized (lock) {
-            this.whiteUrlLists = whiteUrlLists;
+        else{
+            List<String> authenticationWhiteUrlLists = new ArrayList<>();
+            buildWhiteUrlLists(urls,authenticationWhiteUrlLists);
+            synchronized (lock) {
+                this.permissionWhiteUrlLists = authenticationWhiteUrlLists;
+                this.authenticationWhiteUrlLists = authenticationWhiteUrlLists;
+            }
+        }
+       
+    }
+    
+ 
+
+    public static void buildWhiteUrlLists(String urls,List<String> whiteUrlLists) {
+        String[] urlsArray = urls.split(",");
+        for (String url : urlsArray) {
+            url = url.trim();
+            if(!whiteUrlLists.contains( url))
+                whiteUrlLists.add(url);
         }
     }
-    public boolean isWhiteUrl(String url){
+    public boolean isPermissionWhiteUrl(String url){
         List<String> whiteUrlLists = null;
         synchronized ( lock) {
-            whiteUrlLists = this.whiteUrlLists;
+            whiteUrlLists = this.permissionWhiteUrlLists;
         }
         if(whiteUrlLists == null)
             return false;
@@ -89,12 +141,30 @@ public abstract class BaseWhiteUrlResourcesCache extends BaseResourcesCache<Stri
         return false;
     }
 
+    public boolean isAuthenticationWhiteUrls(String url){
+        List<String> whiteUrlLists = null;
+        synchronized ( lock) {
+            whiteUrlLists = this.authenticationWhiteUrlLists;
+        }
+        if(whiteUrlLists == null)
+            return false;
+        for(String whiteUrl:whiteUrlLists){
+            if(pathMatcher.match(whiteUrl,url)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
+
     /**
      * 销毁
      */
     @Override
     public void destroy() {
-        whiteUrlLists = null;
+        permissionWhiteUrlLists = null;
+        authenticationWhiteUrlLists = null;
     }
 
  
