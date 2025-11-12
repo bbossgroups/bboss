@@ -127,13 +127,17 @@ public class ResourcesCacheWrapper<T> implements ResourcesCache<T> ,Runnable{
                         break;
                     }
                     long start = System.currentTimeMillis();
-                    logger.info("ResourcesCacheWrapper[{}] refresh resources start:", this.getName());
+                    if(logger.isDebugEnabled()) {
+                        logger.debug("ResourcesCacheWrapper[{}] refresh resources start:", this.getName());
+                    }
                     ResourceCacheEntity<T> resourceCacheEntity = resourcesCache.getResourceCacheEntity(lastModifiedTime);
                     long lastModifiedTime = resourceCacheEntity.getLastModifiedTime();
                     if(lastModifiedTime > this.lastModifiedTime){
                         
-                        try {                            
-                            resourcesCache.loadResources(resourceCacheEntity);                            
+                        try {                     
+                            logger.info("ResourcesCache[{}] loadResources(resourceCacheEntity) begin.", this.getName());
+                            resourcesCache.loadResources(resourceCacheEntity);
+                            logger.info("ResourcesCache[{}] loadResources(resourceCacheEntity) complete.", this.getName());
                         }
                         catch (Exception e){
                             logger.warn("load resources error:",e);
@@ -141,7 +145,9 @@ public class ResourcesCacheWrapper<T> implements ResourcesCache<T> ,Runnable{
                         
                     }
                     this.lastModifiedTime = lastModifiedTime;
-                    logger.info("ResourcesCacheWrapper[{}] refresh resources complete:{}ms", this.getName(),System.currentTimeMillis()-start);
+                    if(logger.isDebugEnabled()) {
+                        logger.debug("ResourcesCacheWrapper[{}] refresh resources complete:{}ms", this.getName(), System.currentTimeMillis() - start);
+                    }
                     
                 } catch (InterruptedException e) {
                    break;
