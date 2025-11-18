@@ -84,18 +84,26 @@ public class DaemonThread extends java.lang.Thread
     	return f;
     	
     }
-
+    /**
+     *
+     * @param file 触发文件更新的文件句柄
+     * @param fileName  实际的文件，有可能和file不一致（file可能为jar或者其他合法的压缩包文件，包含多个需要刷新的file）
+     * @param init
+     */
+    public  void addFile(File file,String fileName,ResourceInitial init){
+        addFile(  file,  fileName,  init,false);
+    }
 	/**
 	 *
 	 * @param file 触发文件更新的文件句柄
 	 * @param fileName  实际的文件，有可能和file不一致（file可能为jar或者其他合法的压缩包文件，包含多个需要刷新的file）
 	 * @param init
 	 */
-    public  void addFile(File file,String fileName,ResourceInitial init)
+    public  void addFile(File file,String fileName,ResourceInitial init,boolean monitorNotExistFile)
     {   
     	if(this.stopped || file == null )
     		return;
-    	if( !file.exists())
+    	if( !monitorNotExistFile && !file.exists())
     	{
     		if(log.isInfoEnabled() )
     			log.info(fileName+"@"+file.getAbsolutePath()+" 对应的文件不存在，忽略修改检测.");
@@ -156,6 +164,20 @@ public class DaemonThread extends java.lang.Thread
 		String fileName = file.getAbsolutePath();
 		addFile(  file, fileName, init);
 	}
+
+
+    /**
+     *
+     * @param file 触发文件更新的文件句柄
+     * @param init
+     */
+    public  void addFile(File file,ResourceInitial init,boolean monitorNotExistFile)
+    {
+        if(this.stopped || file == null)
+            return;
+        String fileName = file.getAbsolutePath();
+        addFile(  file, fileName, init,monitorNotExistFile);
+    }
 
 	public void addFile(URL fileURL,String fileName,ResourceInitial init)
 	{
