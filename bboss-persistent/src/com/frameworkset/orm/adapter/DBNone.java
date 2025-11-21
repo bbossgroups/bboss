@@ -48,7 +48,7 @@ public class DBNone extends DB
     /**
      * Empty protected constructor.
      */
-    protected DBNone()
+    public DBNone()
     {
     	super();
     }

@@ -15,6 +15,8 @@
  */
 package com.frameworkset.orm.transaction;
 
+import org.slf4j.Logger;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -39,6 +41,7 @@ import javax.transaction.SystemException;
  * @version 1.0
  */
 public class TXConnection extends InnerConnection implements Connection {
+    private static Logger logger = org.slf4j.LoggerFactory.getLogger(TXConnection.class);
 
 	public TXConnection(Connection con) {
 		super(con);
@@ -82,14 +85,14 @@ public class TXConnection extends InnerConnection implements Connection {
 				tx.setRollbackOnly();
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn("",e);
 		} catch (SystemException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+            logger.warn("",e);
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+            logger.warn("",e);
 		}
 
 	}

@@ -797,13 +797,12 @@ public class SQLUtil{
 				try {
 					tx.setRollbackOnly();
 				} catch (IllegalStateException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					log.warn("tx.setRollbackOnly() failed:"+dbName,e1);
 				} catch (SystemException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+                    log.warn("tx.setRollbackOnly() failed:"+dbName,e1);
 				}
-				throw new SQLException(e.getMessage());
+				throw new SQLException(e.getMessage(),e);
 			}
 		}
 	}
@@ -821,6 +820,7 @@ public class SQLUtil{
 //			return datab.requestConnection(datasource.getPoolName());
 			return datasource.getConnection();
 		} else {
+            String dbName = null;
 			try {
 				/*
 				 * 数据源如果是bboss 数据源则直接从根据数据源名称获取事务链接
@@ -828,7 +828,8 @@ public class SQLUtil{
 				 */
 				if(datasource instanceof PoolManDataSource)
 				{
-					return new TXConnection(tx.getConnection(((PoolManDataSource)datasource).getPoolName()));
+                    dbName = ((PoolManDataSource)datasource).getPoolName();
+					return new TXConnection(tx.getConnection(dbName));
 				}
 				else
 				{
@@ -842,12 +843,12 @@ public class SQLUtil{
 					tx.setRollbackOnly();
 				} catch (IllegalStateException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					log.warn("tx.setRollbackOnly() failed:"+dbName,e1);
 				} catch (SystemException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+                    log.warn("tx.setRollbackOnly() failed:"+dbName,e1);
 				}
-				throw new SQLException(e.getMessage());
+				throw new SQLException(e.getMessage(),e);
 			}
 		}
 	}
@@ -1088,7 +1089,7 @@ public class SQLUtil{
 			}
 			catch(Exception e)
 			{
-				throw new SQLException(e.getMessage());
+				throw new SQLException(e.getMessage(),e);
 			}
 		}
 		else 

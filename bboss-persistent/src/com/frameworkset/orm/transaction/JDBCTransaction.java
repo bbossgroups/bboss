@@ -32,6 +32,8 @@ package com.frameworkset.orm.transaction;
 
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.util.SQLManager;
+import com.frameworkset.orm.adapter.DB;
+import com.frameworkset.orm.adapter.DBNone;
 import com.frameworkset.orm.annotation.TransactionType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,14 +125,20 @@ public class JDBCTransaction {
     	private boolean toggleAutoCommit = true;
     	private int count;
     	boolean errorflag = false;
+        private String dbName;
+        private DB dbAdapter;
     	
     	private static final String info = "Transaction Entity created on ";
-    	TransactionEntity(Connection originecon) throws SQLException
+    	TransactionEntity(Connection originecon, String dbName, DB dbAdapter) throws SQLException
     	{
-    		
+    		this.dbAdapter = dbAdapter;
+            if(dbAdapter == null){
+                this.dbAdapter = new DBNone();
+            }
+            this.dbName = dbName;
 //    		this.con = new InnerConnection(originecon);
     		this.con = originecon;
-    		createBy = new Exception(info + new Date());
+    		createBy = new Exception("dbName:"+dbName+","+info + new Date());
     		
     		try
     		{
@@ -143,14 +151,14 @@ public class JDBCTransaction {
     		}
     		if(toggleAutoCommit && currenttxtype != TransactionType.RW_TRANSACTION)
     		{
-    			con.setAutoCommit(false);
+                dbAdapter.setAutoCommit(con,false);//dbAdapter.setAutoCommit(con,false);
     		}
     		
     	}    
 
         public void printStackTrace()
         {
-        	createBy.printStackTrace();
+        	logger.error("",createBy);
         }
     	protected void increament()
     	{
@@ -179,7 +187,7 @@ public class JDBCTransaction {
     	{
     		try {
     			if(con != null && currenttxtype != TransactionType.RW_TRANSACTION)
-    				this.con.commit();
+                    dbAdapter.commit(this.con);
 //				this.status = Status.STATUS_COMMITTED;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -195,8 +203,8 @@ public class JDBCTransaction {
 			finally
 			{
 	    		try {
-	    			if(con != null && currenttxtype != TransactionType.RW_TRANSACTION) 
-	    				this.con.setAutoCommit(this.toggleAutoCommit);
+	    			if(con != null && currenttxtype != TransactionType.RW_TRANSACTION)
+                        dbAdapter.setAutoCommit(con,this.toggleAutoCommit);//this.con.setAutoCommit(this.toggleAutoCommit);
 				} catch (SQLException e) {
 					logger.error("this.con.setAutoCommit("+toggleAutoCommit+") failed:",e);
 				}
@@ -236,17 +244,17 @@ public class JDBCTransaction {
 				this.count = 0;
 				try {
 					if(con != null && currenttxtype != TransactionType.RW_TRANSACTION)
-						this.con.setAutoCommit(this.toggleAutoCommit);
+                        dbAdapter.setAutoCommit(con,this.toggleAutoCommit);//this.con.setAutoCommit(this.toggleAutoCommit);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error("this.con.setAutoCommit("+toggleAutoCommit+") failed:",e);
 				}
 				try {
 					if(con != null)
 						this.con.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error("this.con.close() failed:",e);
 				}
 				con = null;
 				this.status = Status.STATUS_ROLLEDBACK;
@@ -261,7 +269,7 @@ public class JDBCTransaction {
     				try {
     				    if(currenttxtype != TransactionType.RW_TRANSACTION)
     				    {
-    				        this.con.setAutoCommit(this.toggleAutoCommit);
+                            dbAdapter.setAutoCommit(con,this.toggleAutoCommit);//this.con.setAutoCommit(this.toggleAutoCommit);
     				    }
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
@@ -343,7 +351,7 @@ public class JDBCTransaction {
 	    		con = datasource.getConnection();
 	    		if(con == null)
 	    			throw new TransactionException(new SQLException("JDBCTransaction.getConnectionFromDS：Request connection  from datasource return null!"));
-	    		txentity = new TransactionEntity(con);
+	    		txentity = new TransactionEntity(con,null,null);
 	    		txentity.increament();
 	    		txentity.setStatus(Status.STATUS_ACTIVE);
 	    		txentities.put(datasource,txentity);
@@ -417,6 +425,7 @@ public class JDBCTransaction {
     	try
     	{
 //    		String t_dbName = (dbName == null ?"NULL":dbName);
+            DB dbAdapter = SQLManager.getInstance().getDBAdapter(t_dbName);
     		t_dbName = SQLManager.getRealDBNameFromExternalDBName(t_dbName);
     		txentity = txentities.get(t_dbName);
     		if(this.status != Status.STATUS_ACTIVE)
@@ -427,7 +436,7 @@ public class JDBCTransaction {
 	    		con = SQLManager.getInstance().requestConnection(t_dbName);
 	    		if(con == null)
 	    			throw new TransactionException(new SQLException("JDBCTransaction.getConnection(dbName="+ dbName +")：Request connection  from pool return null!"));
-	    		txentity = new TransactionEntity(con);
+	    		txentity = new TransactionEntity(con,t_dbName,dbAdapter);
 	    		txentity.increament();
 	    		txentity.setStatus(Status.STATUS_ACTIVE);
 	    		txentities.put(t_dbName,txentity);

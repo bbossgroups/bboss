@@ -85,5 +85,21 @@ public class DBYandexClickhouse extends DBMM
     public ResultSet getImportedKeys(DatabaseMetaData metaData, String catalog, String schemaName, String tableName) throws SQLException {
         return null;
     }
+    
+    @Override
+    public void setAutoCommit(Connection con, boolean autoCommit) throws SQLException
+    { 
+        
+    }
+    @Override
+    public void commit(Connection con) throws SQLException {
+    }
+
+    @Override
+    public void rollback(Connection con) throws SQLException {
+    }
+    @Override
+    public void rollback(Connection con,Savepoint savepoint) throws SQLException {
+    }
 
 }

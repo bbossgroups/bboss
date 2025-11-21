@@ -1237,6 +1237,7 @@ public abstract class DB implements IDMethod, Platform {
     }
 
 
+
     public static class PagineSql {
 		private long offset;
 		private int maxsize;
@@ -1338,5 +1339,22 @@ public abstract class DB implements IDMethod, Platform {
 //    public Map<String,Object> getUrlParams(String url) throws SQLException{
 //       return null;
 //    }
-    
+
+
+    public void setAutoCommit(Connection connection,boolean autoCommit) throws SQLException{
+        connection.setAutoCommit(autoCommit);
+    }
+    public void commit(Connection con) throws SQLException {
+        con.commit();
+    }
+
+
+    public void rollback(Connection con) throws SQLException {
+        con.rollback();
+    }
+
+    public void rollback(Connection con,Savepoint savepoint) throws SQLException {
+        con.rollback(  savepoint);
+    }
+
 }
