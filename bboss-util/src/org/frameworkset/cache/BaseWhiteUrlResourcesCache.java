@@ -122,8 +122,12 @@ public abstract class BaseWhiteUrlResourcesCache extends BaseResourcesCache<Stri
         String[] urlsArray = urls.split(",");
         for (String url : urlsArray) {
             url = url.trim();
-            if(!whiteUrlLists.contains( url))
-                whiteUrlLists.add(url);
+            String[] urlArray = url.split("\n");
+            for(String tmp:urlArray) {
+                tmp = tmp.trim();
+                if (!whiteUrlLists.contains(tmp))
+                    whiteUrlLists.add(tmp);
+            }
         }
     }
     public boolean isPermissionWhiteUrl(String url){
