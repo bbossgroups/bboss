@@ -61,6 +61,7 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 
 	static
 	{
+        BBOSSVersion.getVersion();
 		try {
 //			Class r = Runtime.getRuntime().getClass();
 //			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
@@ -86,6 +87,9 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			log.error(e.getMessage(),e);
 		}
 	}
+
+ 
+  
 	private static Long resourcefileRefreshInterval;
 	/**
 	 * 定义5种组件容器的类型代码
