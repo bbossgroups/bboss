@@ -3,8 +3,6 @@ package org.frameworkset.spi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
-
 public class BBOSSVersion {
 	public static final String description="6.3.5";
     public static final short version=635;
@@ -27,7 +25,7 @@ public class BBOSSVersion {
      * @return String with description
      */
     public static String getVersionDescription() {
-        return "bboss framework Version: \t" + description + ",Release Date:\t" + releaseDate ;
+        return "bboss framework Version: " + description + ",Release Date: " + releaseDate ;
     }
 
  
