@@ -34,9 +34,9 @@ public class TestCache {
         int i = 0;
         do {
             
-            logger.info("/metrics/indext.html is white url:" + resourcesCache.isWhiteUrl("/metrics/indext.html"));
-            logger.info("cancelOrder.api is white url:" + resourcesCache.isWhiteUrl("cancelOrder.api"));
-            logger.info("cancelOrder is white url:" + resourcesCache.isWhiteUrl("cancelOrder"));
+            logger.info("/metrics/indext.html is white url:" + resourcesCache.isAuthenticationWhiteUrls("/metrics/indext.html"));
+            logger.info("cancelOrder.api is white url:" + resourcesCache.isPermissionWhiteUrl("cancelOrder.api"));
+            logger.info("cancelOrder is white url:" + resourcesCache.isPermissionWhiteUrl("cancelOrder"));
             i ++;
             try {
                 sleep(1000);

@@ -125,12 +125,7 @@ public class CommonBulkProcessor {
 			flush = new Flush(bulkConfig.getBulkProcessorName() + "-flush-thread");
 			flush.start();
 		}
-//		ShutdownUtil.addShutdownHook(new Runnable() {
-//			@Override
-//			public void run() {
-//				shutDown();
-//			}
-//		});
+
 	}
 
 	private boolean touchBatchSize(){

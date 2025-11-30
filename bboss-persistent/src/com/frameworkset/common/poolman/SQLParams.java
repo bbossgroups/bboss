@@ -231,33 +231,25 @@ public class SQLParams
     {
         if(realParams != null)
             return;
-//        if(sqlparams == null || this.sqlparams.size() <=0)
-//        {
-//            this.newsql = new NewSQLInfo(sql);
-//            newsql.setNewtotalsizesql(totalsizesql);
-//            return;
-//        }
-//        if(realParams == null)
+
+        if(totalsizesql == null)
         {
-        	if(totalsizesql == null)
-        	{
-        		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);
-	        	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
-	        		buildParamsByVariableParser(sqlinfo,null,dbname,(NewSQLInfo)null);
-	        	else
-	        		buildParamsByRegex( sqlinfo,null,dbname);
-        	}
-        	else
-        	{
-        		SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);
-        		SQLInfo totalsizesqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(totalsizesql,true,true);
-        		if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
-	        		buildParamsByVariableParser(sqlinfo,totalsizesqlinfo,dbname,(NewSQLInfo)null);
-	        	else
-	        		buildParamsByRegex( sqlinfo,totalsizesqlinfo,dbname);
-        	}
-            
+            SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);
+            if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
+                buildParamsByVariableParser(sqlinfo,null,dbname,(NewSQLInfo)null);
+            else
+                buildParamsByRegex( sqlinfo,null,dbname);
         }
+        else
+        {
+            SQLInfo sqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(sql,true,true);
+            SQLInfo totalsizesqlinfo = SQLUtil.getGlobalSQLUtil().getSQLInfo(totalsizesql,true,true);
+            if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
+                buildParamsByVariableParser(sqlinfo,totalsizesqlinfo,dbname,(NewSQLInfo)null);
+            else
+                buildParamsByRegex( sqlinfo,totalsizesqlinfo,dbname);
+        }
+            
         
     }
     
@@ -265,85 +257,16 @@ public class SQLParams
     {
         if(realParams != null)
             return;
-//        if(sqlparams == null || this.sqlparams.size() <=0)
-//        {
-//            this.newsql = new NewSQLInfo(sql.getSql());
-//            this.newsql .setNewtotalsizesql(totalsizesql.getSql());
-//            this.newsql.setOldsql(sql);
-//            this.newsql.setOldtotalsizesql(totalsizesql);
-//            return;
-//        }
-//        if(realParams == null)
-        {
-        	if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
-        		buildParamsByVariableParser(sql,totalsizesql,dbname,(NewSQLInfo)null);
-        	else
-        		buildParamsByRegex( sql,totalsizesql,dbname);
+ 
+        if(this.pretoken.equals("#\\[") && this.endtoken.equals("\\]"))
+            buildParamsByVariableParser(sql,totalsizesql,dbname,(NewSQLInfo)null);
+        else
+            buildParamsByRegex( sql,totalsizesql,dbname);
             
-        }
         
     }
     
-//    private void buildParamsByRegex(String sql,String totalsizesql,String dbname) throws SetSQLParamException
-//    {
-//    	List<Param> _realParams = new ArrayList<Param>();   
-//    	VelocityContext vcontext = buildVelocityContext();
-//        sql = this.evaluateSqlTemplate(vcontext,sql);
-//        String[][] args =  parserResults.get(sql);
-//        if(args == null)
-//        {
-//            synchronized(lock)
-//            {
-//            	args =  parserResults.get(sql);
-//                if(args == null)
-//                {
-//                    args = VariableHandler.parser2ndSubstitution(sql, this.pretoken,this.endtoken, "?");
-//                    parserResults.put(sql,args);
-//                }
-//            }
-//        }            
-//        newsql = args[0][0];
-//        if(totalsizesql != null)
-//        {
-//        	totalsizesql = this.evaluateSqlTemplate(vcontext,totalsizesql);
-//	        String[][] totalsizesqlargs =  parserResults.get(totalsizesql);
-//	        if(totalsizesqlargs == null)
-//	        {
-//	            synchronized(lock)
-//	            {
-//	            	totalsizesqlargs =  parserResults.get(totalsizesql);
-//	                if(totalsizesqlargs == null)
-//	                {
-//	                	totalsizesqlargs = VariableHandler.parser2ndSubstitution(totalsizesql, this.pretoken,this.endtoken, "?");
-//	                    parserResults.put(totalsizesql,totalsizesqlargs);
-//	                }
-//	            }
-//	        }            
-//	        newtotalsizesql = totalsizesqlargs[0][0];
-//        }
-//        String vars[] = args[1];  
-//        if(vars.length == 0 )
-//        {
-//        	log.debug("预编译sql语句提示：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
-////            throw new SetSQLParamException("预编译sql语句非法：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
-//        }
-//        Param temp = null;
-//        for(int i = 0;i < vars.length; i ++)
-//        {
-//            temp = this.sqlparams.get(vars[i]);
-//            if(temp == null)
-//                throw new SetSQLParamException("未指定绑定变量的值：" 
-//                                                + vars[i] 
-//                                                + "\r\n" 
-//                                                + this);
-//            Param newparam = temp.clone();
-//            //绑定变量索引从1开始
-//            newparam.index = i + 1;
-//            _realParams.add(newparam);
-//        }
-//        
-//        this.realParams = new Params(_realParams);
-//    }
+
     
     private void buildParamsByRegex(SQLInfo sqlinfo,SQLInfo totalsizesqlinfo,String dbname) throws SetSQLParamException
     {
@@ -436,12 +359,14 @@ public class SQLParams
 //            throw new SetSQLParamException("预编译sql语句非法：指定了预编译参数,sql语句中没有包含符合要求的预编译变量，" + this);
         }
         Param temp = null;
+        String varName = null;
         for(int i = 0;i < vars.length; i ++)
         {
-            temp = this.sqlparams.get(vars[i]);
-            if(temp == null)
+            varName = vars[i];
+            temp = this.sqlparams.get(varName);
+            if(temp == null && !this.sqlparams.containsKey(varName))
                 throw new SetSQLParamException("未指定绑定变量的值：" 
-                                                + vars[i] 
+                                                + varName 
                                                 + "\r\n" 
                                                 + this);
             Param newparam = temp.clone();
@@ -552,13 +477,15 @@ public class SQLParams
         {
 	        Param temp = null;
 	        List<Variable> vars = sqlstruction.getVariables();
+            String varName = null;
 	        for(int i = 0;i < vars.size(); i ++)
 	        {
 	        	Variable var = vars.get(i);
-	            temp = this.sqlparams.get(var.getVariableName());
-	            if(temp == null)
+                varName = var.getVariableName();
+	            temp = this.sqlparams.get(varName);
+	            if(temp == null && !this.sqlparams.containsKey(varName))
 	                throw new SetSQLParamException(new StringBuilder().append("未指定绑定变量的值：" )
-													.append( var.getVariableName() )
+													.append( varName )
 												    .append( "\r\n" )
 													.append( this.toString()).toString());
 	            Param newparam = temp.clone(var);

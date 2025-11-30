@@ -45,10 +45,10 @@ public class TaskService implements Service {
 	private TaskService(String taskconfig) {
 		this.taskconfig = taskconfig == null?ScheduleRepository.taskconfig:taskconfig;
 	}
-	static 
-	{
-		ShutdownUtil.addShutdownHook(new ShutdownThread(),1000);
-	}
+//	static 
+//	{
+//		ShutdownUtil.addShutdownHook(new ShutdownThread(),1000);
+//	}
 	static class ShutdownThread extends Thread {
 
 		public ShutdownThread() {

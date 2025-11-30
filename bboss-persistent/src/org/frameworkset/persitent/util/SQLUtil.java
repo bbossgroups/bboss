@@ -422,19 +422,19 @@ public class SQLUtil {
 		return this.sqlcontext.getConfigfile();
 		
 	}
-	static
-	{
-		ShutdownUtil.addShutdownHook(new Runnable(){
-
-			public void run() {
-				SQLUtil.stopmonitor();
-				destory();
-				if(globalSQLUtil != null) {
-					globalSQLUtil._destroy();
-					globalSQLUtil = null;
-				}
-			}});
-	}
+//	static
+//	{
+//		ShutdownUtil.addShutdownHook(new Runnable(){
+//
+//			public void run() {
+//				SQLUtil.stopmonitor();
+//				destory();
+//				if(globalSQLUtil != null) {
+//					globalSQLUtil._destroy();
+//					globalSQLUtil = null;
+//				}
+//			}});
+//	}
 	private static Object lock = new Object();
 	private static void checkSQLUtil(URL sqlfileURL,String sqlfile, SQLUtil sqlutil){
 		
@@ -524,8 +524,9 @@ public class SQLUtil {
 	}
 
 	
-	static void destory()
+	public static void destory()
 	{
+        stopmonitor();
 		if(sqlutils != null)
 		{
 			Iterator<Map.Entry<String,SQLUtil>> it = sqlutils.entrySet().iterator();
@@ -537,6 +538,10 @@ public class SQLUtil {
 			sqlutils.clear();
 			sqlutils = null;
 		}
+        if(globalSQLUtil != null) {
+            globalSQLUtil._destroy();
+            globalSQLUtil = null;
+        }
 	}
 	
 	private SQLInfo getReferSQLInfo(String dbname, String sqlname)

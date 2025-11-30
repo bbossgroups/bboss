@@ -60,7 +60,7 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 			if (instance != null)
 				return instance;
 			instance = new DefaultApplicationContext(configfile);
-			ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
+//			ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 			applicationContexts.put(configfile, instance);
 			
 
@@ -90,7 +90,7 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 					instance.destroy(true);
 				}
 				instance = new DefaultApplicationContext(configfile);
-				ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
+//				ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 				applicationContexts.put(configfile, instance);
 			}
 
@@ -105,7 +105,7 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 				if (instance != null)
 					return instance;
 				instance = new DefaultApplicationContext(configfile);
-				ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
+//				ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 				applicationContexts.put(configfile, instance);
 
 
@@ -133,7 +133,7 @@ public class DefaultApplicationContext extends BaseApplicationContext {
 			if (instance != null)
 				return instance;
 			instance = new DefaultApplicationContext(configfile);
-			ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
+//			ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 			applicationContexts.put(conf, instance);
 			
 

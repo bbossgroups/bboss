@@ -15,11 +15,7 @@
  */
 package org.frameworkset.spi;
 
-import org.frameworkset.spi.assemble.Pro;
-import org.frameworkset.spi.assemble.ProList;
-import org.frameworkset.spi.assemble.ProMap;
-import org.frameworkset.spi.assemble.ProSet;
-import org.frameworkset.spi.assemble.ServiceProviderManager;
+import org.frameworkset.spi.assemble.*;
 
 
 /**
@@ -88,7 +84,7 @@ public abstract class BaseSPIManager
      * 
      * @param destroyVMHook
      */
-    public static void addShutdownHook(Runnable destroyVMHook)
+    public static void addShutdownHook(String id,Runnable destroyVMHook)
     {
 //        try
 //        {
@@ -102,7 +98,7 @@ public abstract class BaseSPIManager
 //        {
 //            e.printStackTrace();
 //        }
-        ApplicationContext.addShutdownHook(destroyVMHook);
+        ApplicationContext.addShutdownHook(id,destroyVMHook);
     }
 
 

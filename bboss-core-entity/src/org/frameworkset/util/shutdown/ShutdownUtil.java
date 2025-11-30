@@ -18,10 +18,7 @@ package org.frameworkset.util.shutdown;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>Description: </p>
@@ -49,12 +46,14 @@ public class ShutdownUtil {
 	}
 	public static class WrapperRunnable implements Runnable
 	{
+        private String id;
 		private final Runnable executor;
 		private int proir;
-		WrapperRunnable(Runnable executor,int proir)
+		WrapperRunnable(String id,Runnable executor,int proir)
 		{
 			this.executor = executor;
 			this.proir = proir;
+            this.id = id;
 		}
 		private boolean executed = false;
 		public void run()
@@ -72,24 +71,32 @@ public class ShutdownUtil {
 			this.proir = proir;
 		}
 
-	}
-
-	public static List<WrapperRunnable> getShutdownHooks(){
-        List<WrapperRunnable> shutdownHooks_ = null;
-        synchronized (ShutdownUtil.class){
-            if(shutdownHooks != null){
-                shutdownHooks_ = new ArrayList<>(shutdownHooks.size());
-                shutdownHooks_.addAll(shutdownHooks);
-
-            }
+        public String getId() {
+            return id;
         }
-        if(shutdownHooks_ == null){
-            shutdownHooks_ = new ArrayList<>(0);
+
+        public void setId(String id) {
+            this.id = id;
         }
-		return shutdownHooks_;
-	}
+    }
+
+//	public static List<WrapperRunnable> getShutdownHooks(){
+//        List<WrapperRunnable> shutdownHooks_ = null;
+//        synchronized (ShutdownUtil.class){
+//            if(shutdownHooks != null){
+//                shutdownHooks_ = new ArrayList<>(shutdownHooks.size());
+//                shutdownHooks_.addAll(shutdownHooks);
+//
+//            }
+//        }
+//        if(shutdownHooks_ == null){
+//            shutdownHooks_ = new ArrayList<>(0);
+//        }
+//		return shutdownHooks_;
+//	}
 	private static final Logger log = LoggerFactory.getLogger(ShutdownUtil.class);
-	private static List<WrapperRunnable> shutdownHooks = new ArrayList<WrapperRunnable>();
+	private static List<WrapperRunnable> shutdownHooks = new ArrayList<>();
+
 	private static synchronized void addShutdownHook_(WrapperRunnable destroyVMHook)
 	{
         if(shutdownHooks != null) {
@@ -133,11 +140,11 @@ public class ShutdownUtil {
 	 *
 	 * @param destroyVMHook
 	 */
-	public static void addShutdownHook(Runnable destroyVMHook,int proir) {
+	public static void addShutdownHook(String id,Runnable destroyVMHook,int proir) {
 		try {
 			// use reflection and catch the Exception to allow PoolMan to work
 			// with 1.2 VM's
-			destroyVMHook = new WrapperRunnable(destroyVMHook,proir);
+			destroyVMHook = new WrapperRunnable(id,destroyVMHook,proir);
 			addShutdownHook_((WrapperRunnable)destroyVMHook);
 //			Class r = Runtime.getRuntime().getClass();
 //			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
@@ -149,14 +156,30 @@ public class ShutdownUtil {
 		}
 
 	}
-
+    /**
+     * 清理系统中停止时的回调程序
+     *
+     * @param id
+     */
+    public static synchronized void removeShutdownHook(String id) {
+        if(shutdownHooks != null) {
+            List tmp = new ArrayList();
+            for(WrapperRunnable destroyVMHook:shutdownHooks){
+                if(!destroyVMHook.getId().equals(id)){
+                    tmp.add(destroyVMHook);
+                }
+            }
+            shutdownHooks =  tmp;
+            
+        }
+    }
 	/**
 	 * 添加系统中停止时的回调程序
 	 *
 	 * @param destroyVMHook
 	 */
-	public static void addShutdownHook(Runnable destroyVMHook) {
-		addShutdownHook(destroyVMHook,-1);
+	public static void addShutdownHook(String id,Runnable destroyVMHook) {
+		addShutdownHook(id,destroyVMHook,-1);
 	}
 	static PriorComparator priorComparator = new PriorComparator();
 	private static Thread shutdownHook;
@@ -192,7 +215,7 @@ public class ShutdownUtil {
         List<WrapperRunnable> shutdownHooks_ = null;
         synchronized (ShutdownUtil.class){
             if(shutdownHooks != null){
-                shutdownHooks_ = new ArrayList<>(shutdownHooks.size());
+                shutdownHooks_ = new ArrayList<>();
                 shutdownHooks_.addAll(shutdownHooks);
                 shutdownHooks.clear();
                 shutdownHooks = null;
@@ -205,19 +228,10 @@ public class ShutdownUtil {
 
                 for(int i = shutdownHooks_.size()-1; i >= 0; i --)
                 {
-                    try {
 
                         WrapperRunnable destroyVMHook = shutdownHooks_.get(i);
                         destroyVMHook.run();
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-
-                    }
-                    catch (Exception e) {
-                        if(log.isWarnEnabled()){
-                            log.warn("",e);
-                        }
-                    }
+//                      Thread.sleep(1000);
                 }
 
             }

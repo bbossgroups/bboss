@@ -110,29 +110,7 @@ public class FileContentCache
 	{
 		damon = new DaemonThread(refreshInterval,"FileContentCache Refresh Monitor Worker for "+ name); 
 		damon.start();
-
-		ShutdownUtil.addShutdownHook(new Runnable(){
-
-			@Override
-			public void run() {
-				try {
-					destroy();
-				} catch(RuntimeException e)
-				{
-					log.warn("",e);
-				}
-				catch(Exception e)
-				{
-					log.warn("",e);
-				}
-				catch(Throwable e)
-				{
-					log.warn("",e);
-				}
-
-			}
-
-		},Integer.MAX_VALUE - 9);
+        
 		
 	}
 	public void start() throws Exception
@@ -153,7 +131,14 @@ public class FileContentCache
 	
 		this.refreshInterval = refreshInterval;
 	}
-	 
+    private void _destroy() throws Exception {
+        if(damon != null)
+        {
+            damon.stopped();
+            damon = null;
+        }
+
+    }
 	public void destroy() throws Exception {
 		if(damon != null)
 		{

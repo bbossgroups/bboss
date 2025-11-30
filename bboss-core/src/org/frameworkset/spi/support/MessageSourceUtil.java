@@ -35,24 +35,22 @@ import java.util.Map.Entry;
  */
 public abstract class MessageSourceUtil {
 	protected static  Map<String,HotDeployResourceBundleMessageSource> messageSources = new HashMap<String,HotDeployResourceBundleMessageSource>();
-	static
+	public static void destory()
 	{
-		ShutdownUtil.addShutdownHook(new Runnable(){
-
-			public void run() {
-				HotDeployResourceBundleMessageSource.stopmonitor();	
-				if(messageSources != null)
-				{
-					Iterator<Entry<String, HotDeployResourceBundleMessageSource>> it = messageSources.entrySet().iterator();
-					while(it.hasNext())
-					{
-						Entry<String, HotDeployResourceBundleMessageSource> entry = it.next();
-						entry.getValue().destroy();
-					}
-					messageSources.clear();
-					messageSources = null;
-				}
-			}});
+		 
+        HotDeployResourceBundleMessageSource.stopmonitor();	
+        if(messageSources != null)
+        {
+            Iterator<Entry<String, HotDeployResourceBundleMessageSource>> it = messageSources.entrySet().iterator();
+            while(it.hasNext())
+            {
+                Entry<String, HotDeployResourceBundleMessageSource> entry = it.next();
+                entry.getValue().destroy();
+            }
+            messageSources.clear();
+            messageSources = null;
+        }
+			 
 	}
 	public static MessageSource getMessageSource(String basenames)
 	{

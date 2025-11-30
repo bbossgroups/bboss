@@ -76,13 +76,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 //
 //					});
 //			m.invoke(Runtime.getRuntime(), shutdownHook);
-			ShutdownUtil.addShutdownHook(new Runnable(){
-						public void run() {
-							_shutdown();
-
-						}
-
-					},Integer.MAX_VALUE - 10);
+//			ShutdownUtil.addShutdownHook(SimpleStringUtil.getUUID(),new Runnable(){
+//						public void run() {
+//							_shutdown();
+//
+//						}
+//
+//					},Integer.MAX_VALUE - 10);
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
 		}
@@ -801,13 +801,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 							entry.getValue().destroy();
 						} catch(Exception e)
 						{
-							e.printStackTrace();
+                            log.error(e.getMessage(),e);
 							//log.warn("execute shutdown hook error:", e);
 						}
 						catch(Throwable e)
 						{
 //							log.warn("execute shutdown hook error:", e);
-							e.printStackTrace();
+                            log.error(e.getMessage(),e);
 						}
 					}
 					applicationContexts.clear();
@@ -822,13 +822,13 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 			}
 			catch(Exception e)
 			{
-				e.printStackTrace();
+                log.error(e.getMessage(),e);
 //				log.warn("",e);
 			}
 			catch(Throwable e)
 			{
 //				log.warn("",e);
-				e.printStackTrace();
+                log.error(e.getMessage(),e);
 			}
 			finally
 			{
@@ -848,8 +848,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 * should use addShutdownHook(Runnable destroyVMHook,int proir)
 	 */
 	@Deprecated
-	public static void addShutdownHook(Runnable destroyVMHook,int proir) {
-		ShutdownUtil.addShutdownHook(destroyVMHook,proir);
+	public static void addShutdownHook(String id,Runnable destroyVMHook,int proir) {
+		ShutdownUtil.addShutdownHook(id,destroyVMHook,proir);
 		
 	}
 	
@@ -862,8 +862,8 @@ public abstract class  BaseApplicationContext extends DefaultResourceLoader impl
 	 * should use addShutdownHook(Runnable destroyVMHook)
 	 */
 	@Deprecated
-	public static void addShutdownHook(Runnable destroyVMHook) {
-		addShutdownHook(destroyVMHook,-1);
+	public static void addShutdownHook(String id,Runnable destroyVMHook) {
+		addShutdownHook( id,destroyVMHook,-1);
 	}
 
 	public synchronized void destroySingleBeans() {

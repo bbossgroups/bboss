@@ -236,7 +236,7 @@ public class WebApplicationContext extends DefaultApplicationContext implements 
 				instance = new WebApplicationContext(AssembleCallback.webprex,"",configfile);
 
 
-				ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
+//				ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 				applicationContexts.put(BaseApplicationContext.mvccontainer_identifier, instance);
 				applicationContexts.put(configfile, instance);
 			}

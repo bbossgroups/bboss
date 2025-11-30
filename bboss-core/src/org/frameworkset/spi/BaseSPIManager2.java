@@ -3,6 +3,7 @@
  */
 package org.frameworkset.spi;
 
+import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.spi.assemble.*;
 import org.frameworkset.util.shutdown.ShutdownUtil;
 import org.slf4j.Logger;
@@ -68,7 +69,7 @@ public abstract class BaseSPIManager2 {
      * 
      * @param destroyVMHook
      */
-    public static void addShutdownHook(Runnable destroyVMHook)
+    public static void addShutdownHook(String id,Runnable destroyVMHook)
     {
 //        try
 //        {
@@ -82,7 +83,7 @@ public abstract class BaseSPIManager2 {
 //        {
 //            e.printStackTrace();
 //        }
-        ShutdownUtil.addShutdownHook(destroyVMHook);
+        ShutdownUtil.addShutdownHook(id,destroyVMHook);
     }
 
 //    public static void destroySingleBeans()

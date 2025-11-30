@@ -101,7 +101,7 @@ public class ApplicationContext extends BaseApplicationContext {
 				if (instance != null)
 					return instance;
 				instance = new ApplicationContext(configfile);
-				ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
+//				ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 				applicationContexts.put(configfile, instance);
 				
 

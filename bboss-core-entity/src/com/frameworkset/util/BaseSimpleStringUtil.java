@@ -2326,7 +2326,7 @@ public class BaseSimpleStringUtil {
 	{
 		if(data == null )
 		{
-			return ;
+            ret.append("null");
 		}
 		else if(!data.getClass().isArray())
 		{
@@ -2338,12 +2338,7 @@ public class BaseSimpleStringUtil {
 			ret.append("{");
 			for(int i = 0; i < size; i ++)
 			{
-				if(i == 0)
-				{
-					
-					
-				}
-				else
+				if(i > 0)
 				{
 					ret.append(",");
 				}

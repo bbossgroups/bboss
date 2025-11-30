@@ -34,33 +34,33 @@ import java.util.Properties;
 public class LocalPoolDeployer extends BaseTableManager implements PoolManDeployer,Serializable {
 	public static boolean addShutdownHook = false;
 	private static Logger logger = LoggerFactory.getLogger(LocalPoolDeployer.class);
-	public static void shutdownHandle()
-	{
-		if(addShutdownHook)
-			return;
-		// add VM shutdown event handler
-        try {
-        	 
-            // use reflection and catch the Exception to allow PoolMan to work with 1.2 VM's
-            ShutdownUtil.addShutdownHook(new Runnable(){
-
-				public void run() {
-					 try {
-						 updateTableInfo();
-				            SQLManager.destroy(false);
-				           // GenericPoolManager.getInstance().destroyPools();
-				        } catch (Exception e) {
-				           logger.warn("Unable to properly shutdown: ", e);
-				        }
-					
-				}
-            	
-            },Integer.MAX_VALUE - 9);
-            addShutdownHook = true;
-        } catch (Exception e) {
-        	addShutdownHook = true;
-        }
-	}
+//	public static void shutdownHandle()
+//	{
+//		if(addShutdownHook)
+//			return;
+//		// add VM shutdown event handler
+//        try {
+//        	 
+//            // use reflection and catch the Exception to allow PoolMan to work with 1.2 VM's
+//            ShutdownUtil.addShutdownHook(new Runnable(){
+//
+//				public void run() {
+//					 try {
+//						 updateTableInfo();
+//				            SQLManager.destroy(false);
+//				           // GenericPoolManager.getInstance().destroyPools();
+//				        } catch (Exception e) {
+//				           logger.warn("Unable to properly shutdown: ", e);
+//				        }
+//					
+//				}
+//            	
+//            },Integer.MAX_VALUE - 9);
+//            addShutdownHook = true;
+//        } catch (Exception e) {
+//        	addShutdownHook = true;
+//        }
+//	}
 	
     public DBStartResult deployConfiguration(PoolManConfiguration config) throws Exception {
 
@@ -70,14 +70,14 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
         // Note: there is no admin for the non-JMX PoolMan
 
         // add VM shutdown event handler
-        	shutdownHandle();
+//        	shutdownHandle();
         return dbStartResult;
     }
     
     public DBStartResult deployConfiguration(PoolManConfiguration config,String dbname) throws Exception {
 
 		DBStartResult dbStartResult = startDataSources(config.getDataSources(),config.getConnectionProperties());
-			shutdownHandle();
+//			shutdownHandle();
 //        startGenericPools(config.getGenericPools());
 		return dbStartResult;
         
@@ -87,7 +87,7 @@ public class LocalPoolDeployer extends BaseTableManager implements PoolManDeploy
 	throws Exception {
 // TODO Auto-generated method stub
 		DBStartResult dbStartResult = startDataSource(config.getDataSources(),values,config.getConnectionProperties(),config);
-			shutdownHandle();
+//			shutdownHandle();
 		return dbStartResult;
 	}
 

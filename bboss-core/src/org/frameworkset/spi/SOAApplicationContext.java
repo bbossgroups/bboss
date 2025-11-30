@@ -112,7 +112,7 @@ public class SOAApplicationContext extends DefaultApplicationContext {
 			if (instance != null)
 				return instance;
 			instance = new SOAApplicationContext(configfile);
-			ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
+//			ShutdownUtil.addShutdownHook(new BeanDestroyHook(instance));
 			applicationContexts.put(configfile, instance);
 			
 
