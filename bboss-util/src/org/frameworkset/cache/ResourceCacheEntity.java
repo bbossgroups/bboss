@@ -28,6 +28,7 @@ public class ResourceCacheEntity<T> implements Serializable {
 	 */
     private T resource;
     private long lastModifiedTime;
+    private Boolean enableCheck; 
     public ResourceCacheEntity() {
     }
     
@@ -47,5 +48,13 @@ public class ResourceCacheEntity<T> implements Serializable {
     public void setLastModifiedTime(long lastModifiedTime) {
         this.lastModifiedTime = lastModifiedTime;
     }
+    
+    public Boolean getEnableCheck() {
+		return enableCheck;
+	}
+    
+    public void setEnableCheck(Boolean enableCheck) {
+		this.enableCheck = enableCheck;
+	}
 
 }
