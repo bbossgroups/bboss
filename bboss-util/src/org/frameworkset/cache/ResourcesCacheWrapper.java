@@ -134,10 +134,14 @@ public class ResourcesCacheWrapper<T> implements ResourcesCache<T> ,Runnable{
                     long lastModifiedTime = resourceCacheEntity.getLastModifiedTime();
                     if(lastModifiedTime > this.lastModifiedTime){
                         
-                        try {                     
-                            logger.info("ResourcesCache[{}] loadResources(resourceCacheEntity) begin.", this.getName());
+                        try {
+                            if(logger.isInfoEnabled()) {
+                                logger.info("ResourcesCache[{}] loadResources(resourceCacheEntity) begin.", this.getName());
+                            }
                             resourcesCache.loadResources(resourceCacheEntity);
-                            logger.info("ResourcesCache[{}] loadResources(resourceCacheEntity) complete.", this.getName());
+                            if(logger.isInfoEnabled()) {
+                                logger.info("ResourcesCache[{}] loadResources(resourceCacheEntity) complete.", this.getName());
+                            }
                         }
                         catch (Exception e){
                             logger.warn("load resources error:",e);
