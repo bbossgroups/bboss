@@ -80,11 +80,15 @@ public class DBFactory
     public static final String  yandex_clickhouse = "yandex_clickhouse";
     public static final String  druid = "druid";
     public static final String  avatica = "avatica";
-    
-    
+    /**
+     * com.oceanbase.jdbc.Driver
+     */
+    public static final String  OCEANBASE = "oceanbase";
+
  
 
-    
+
+
 
     /**
      * Initialize the JDBC driver to Torque Adapter map.
@@ -180,7 +184,10 @@ public class DBFactory
         adapters.put("org.apache.calcite.avatica.remote.Driver", DruidAdapter.class);
 
         adapters.put(DBTDEngine, DBTDEngine.class);
-        adapters.put("com.taosdata.jdbc.TSDBDriver", DBTDEngine.class);
+        adapters.put("com.taosdata.jdbc.TSDBDriver", DBTDEngine.class); 
+        adapters.put("com.oceanbase.jdbc.Driver", DBOceanbase.class);
+
+        adapters.put(OCEANBASE, DBOceanbase.class);
 
 	}
 
