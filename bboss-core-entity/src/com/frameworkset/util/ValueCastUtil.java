@@ -65,6 +65,25 @@ public abstract class ValueCastUtil {
 		}
 	}
 
+    public static double toDouble(Object value,double defaultValue) throws Exception {
+        if(value == null)
+            return defaultValue;
+        try {
+            if(value instanceof Double){
+                return (Double)value;
+            }
+            else if(value instanceof Number){
+                    return ((Number)value).doubleValue();
+            }
+            else {
+                return Double.parseDouble(String.valueOf(value));
+            }
+        }
+        catch (Exception e){
+            throw e;
+        }
+    }
+
 	public static boolean toBoolean(Object value,boolean defaultValue)  {
 		if(value == null)
 			return defaultValue;

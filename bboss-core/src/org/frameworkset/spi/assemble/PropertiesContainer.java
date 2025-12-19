@@ -1503,6 +1503,53 @@ public class PropertiesContainer extends AbstractGetProperties{
 	}
 
 
+    public double getDoubleSystemEnvProperty(String property,double defaultValue) {
+        String value = getSystemEnvProperty(  property);
+        if(value == null)
+            return defaultValue;
+        try {
+            return Double.parseDouble(value);
+        }
+        catch (Exception e){
+            throw new java.lang.IllegalArgumentException(new StringBuilder()
+                    .append("getDoubleSystemEnvProperty failed:").append(property)
+                    .append("=").append(value).toString());
+        }
+
+    }
+
+    public Double getDoubleSystemEnvProperty(String property) {
+        String value = getSystemEnvProperty(  property);
+        if(value == null)
+            return null;
+        try {
+            return Double.parseDouble(value);
+        }
+        catch (Exception e){
+            throw new java.lang.IllegalArgumentException(new StringBuilder()
+                    .append("getDoubleSystemEnvProperty failed:").append(property)
+                    .append("=").append(value).toString());
+        }
+
+    }
+
+    public double getDoubleProperty(String property,double defaultValue) {
+        if(allProperties == null)
+            return defaultValue;
+        Object value = allProperties.get(property);
+
+        try {
+            return ValueCastUtil.toDouble(value,defaultValue);
+        }
+        catch (Exception e){
+            throw new java.lang.IllegalArgumentException(new StringBuilder()
+                    .append("getDoubleProperty failed:").append(property)
+                    .append("=").append(value).toString());
+        }
+
+    }
+
+
 
 
 	public String getPropertyFromSelf2ndSons(String property)
