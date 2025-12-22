@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,16 +16,15 @@
  */
 package com.frameworkset.commons.pool2.proxy;
 
-import com.frameworkset.commons.pool2.UsageTracking;
-
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
+
+import com.frameworkset.commons.pool2.UsageTracking;
 
 /**
  * Provides proxy objects using Java reflection.
  *
  * @param <T> type of the pooled object to be proxied
- *
  * @since 2.0
  */
 public class JdkProxySource<T> implements ProxySource<T> {
@@ -33,9 +32,8 @@ public class JdkProxySource<T> implements ProxySource<T> {
     private final ClassLoader classLoader;
     private final Class<?>[] interfaces;
 
-
     /**
-     * Create a new proxy source for the given interfaces.
+     * Constructs a new proxy source for the given interfaces.
      *
      * @param classLoader The class loader with which to create the proxy
      * @param interfaces  The interfaces to proxy
@@ -43,31 +41,21 @@ public class JdkProxySource<T> implements ProxySource<T> {
     public JdkProxySource(final ClassLoader classLoader, final Class<?>[] interfaces) {
         this.classLoader = classLoader;
         // Defensive copy
-        this.interfaces = new Class<?>[interfaces.length];
-        System.arraycopy(interfaces, 0, this.interfaces, 0, interfaces.length);
+        this.interfaces = Arrays.copyOf(interfaces, interfaces.length);
     }
 
-
+    @SuppressWarnings("unchecked") // Cast to T on return.
     @Override
     public T createProxy(final T pooledObject, final UsageTracking<T> usageTracking) {
-        @SuppressWarnings("unchecked")
-        final
-        T proxy = (T) Proxy.newProxyInstance(classLoader, interfaces,
-                new JdkProxyHandler<T>(pooledObject, usageTracking));
-        return proxy;
+        return (T) Proxy.newProxyInstance(classLoader, interfaces,
+                new JdkProxyHandler<>(pooledObject, usageTracking));
     }
 
-
+    @SuppressWarnings("unchecked")
     @Override
     public T resolveProxy(final T proxy) {
-        @SuppressWarnings("unchecked")
-        final
-        JdkProxyHandler<T> jdkProxyHandler =
-                (JdkProxyHandler<T>) Proxy.getInvocationHandler(proxy);
-        final T pooledObject = jdkProxyHandler.disableProxy();
-        return pooledObject;
+        return ((JdkProxyHandler<T>) Proxy.getInvocationHandler(proxy)).disableProxy();
     }
-
 
     /**
      * @since 2.4.3

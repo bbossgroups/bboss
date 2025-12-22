@@ -21,7 +21,6 @@ import com.frameworkset.common.poolman.PoolManConstants;
 import com.frameworkset.common.poolman.util.DBConf;
 import com.frameworkset.common.poolman.util.JDBCPoolMetaData;
 import com.frameworkset.commons.dbcp2.BasicDataSource;
-import com.frameworkset.commons.dbcp2.NativeDataSource;
 import com.frameworkset.orm.adapter.DB;
 import com.frameworkset.util.SimpleStringUtil;
 import org.frameworkset.persitent.datasource.*;
@@ -183,7 +182,7 @@ public class BasicDataSourceFactory  {
     }
 
     public static DataSource createDBCP2DataSource(String url,Properties properties) throws Exception {
-        com.frameworkset.commons.dbcp2.BasicDataSource dataSource = new com.frameworkset.commons.dbcp2.BasicDataSource();
+        BasicDataSource dataSource = new BasicDataSource();
         String value = null;
         boolean usepool = Boolean.parseBoolean((String)properties.get(PoolManConstants.PROP_USEPOOL));
         if(usepool)
@@ -295,7 +294,7 @@ public class BasicDataSourceFactory  {
             }
             value = properties.getProperty(PROP_validateDatasourceWhenCreate);
             if (value != null) {
-                dataSource.setValidateDatasourceWhenCreate(Boolean.valueOf(value).booleanValue());
+                dataSource.setFastFailValidation(Boolean.valueOf(value).booleanValue());
             }
 
 

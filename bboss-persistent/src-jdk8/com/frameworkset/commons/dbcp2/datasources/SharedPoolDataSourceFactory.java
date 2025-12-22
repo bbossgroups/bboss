@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,23 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.frameworkset.commons.dbcp2.datasources;
 
 import javax.naming.RefAddr;
 import javax.naming.Reference;
 
 /**
- * A JNDI ObjectFactory which creates <code>SharedPoolDataSource</code>s
+ * A JNDI ObjectFactory which creates {@link SharedPoolDataSource}s
  *
  * @since 2.0
  */
 public class SharedPoolDataSourceFactory extends InstanceKeyDataSourceFactory {
+
     private static final String SHARED_POOL_CLASSNAME = SharedPoolDataSource.class.getName();
 
-    @Override
-    protected boolean isCorrectClass(final String className) {
-        return SHARED_POOL_CLASSNAME.equals(className);
+    /**
+     * Constructs a new instance.
+     */
+    public SharedPoolDataSourceFactory() {
+        // empty
     }
 
     @Override
@@ -41,5 +43,10 @@ public class SharedPoolDataSourceFactory extends InstanceKeyDataSourceFactory {
             spds.setMaxTotal(Integer.parseInt(ra.getContent().toString()));
         }
         return spds;
+    }
+
+    @Override
+    protected boolean isCorrectClass(final String className) {
+        return SHARED_POOL_CLASSNAME.equals(className);
     }
 }

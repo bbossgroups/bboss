@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 package com.frameworkset.commons.dbcp2;
-
-import com.frameworkset.common.poolman.NestedSQLException;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -39,12 +37,9 @@ public class DriverConnectionFactory implements ConnectionFactory {
     /**
      * Constructs a connection factory for a given Driver.
      *
-     * @param driver
-     *            The Driver.
-     * @param connectString
-     *            The connection string.
-     * @param properties
-     *            The connection properties.
+     * @param driver The Driver.
+     * @param connectString The connection string.
+     * @param properties The connection properties.
      */
     public DriverConnectionFactory(final Driver driver, final String connectString, final Properties properties) {
         this.driver = driver;
@@ -54,19 +49,12 @@ public class DriverConnectionFactory implements ConnectionFactory {
 
     @Override
     public Connection createConnection() throws SQLException {
-        try {
-            //mark modify 20230609
-            return driver.connect(connectionString, properties);
-        }
-        catch (SQLException sqlException){
-            throw new NestedSQLException(connectionString,sqlException);
-        }
-        catch (Exception sqlException){
-            throw new NestedSQLException(connectionString,sqlException);
-        }
+        return driver.connect(connectionString, properties);
     }
 
     /**
+     * Gets the connection String.
+     *
      * @return The connection String.
      * @since 2.6.0
      */
@@ -75,7 +63,9 @@ public class DriverConnectionFactory implements ConnectionFactory {
     }
 
     /**
-     * @return The Driver.
+     * Gets the JDBC Driver.
+     *
+     * @return The JDBC Driver.
      * @since 2.6.0
      */
     public Driver getDriver() {
@@ -83,7 +73,9 @@ public class DriverConnectionFactory implements ConnectionFactory {
     }
 
     /**
-     * @return The Properties.
+     * Gets the properties.
+     *
+     * @return The properties.
      * @since 2.6.0
      */
     public Properties getProperties() {
@@ -92,7 +84,7 @@ public class DriverConnectionFactory implements ConnectionFactory {
 
     @Override
     public String toString() {
-        return this.getClass().getName() + " [" + String.valueOf(driver) + ";" + String.valueOf(connectionString) + ";"
-                + String.valueOf(properties) + "]";
+        return this.getClass().getName() + " [" + driver + ";" + connectionString + ";"
+                + Utils.cloneWithoutCredentials(properties) + "]";
     }
 }

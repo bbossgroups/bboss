@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,17 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.frameworkset.commons.dbcp2;
 
 import com.frameworkset.commons.pool2.KeyedObjectPool;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A {@link DelegatingCallableStatement} that cooperates with {@link PoolingConnection} to implement a pool of
@@ -48,7 +44,7 @@ public class PoolableCallableStatement extends DelegatingCallableStatement {
     private final PStmtKey key;
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param callableStatement
      *            the underlying {@link CallableStatement}
@@ -68,26 +64,7 @@ public class PoolableCallableStatement extends DelegatingCallableStatement {
 
         // Remove from trace now because this statement will be
         // added by the activate method.
-        removeThisTrace(getConnectionInternal());
-    }
-
-    /**
-     * Returns the CallableStatement to the pool. If {{@link #isClosed()}, this is a No-op.
-     */
-    @Override
-    public void close() throws SQLException {
-        // calling close twice should have no effect
-        if (!isClosed()) {
-            try {
-                pool.returnObject(key, this);
-            } catch (final SQLException e) {
-                throw e;
-            } catch (final RuntimeException e) {
-                throw e;
-            } catch (final Exception e) {
-                throw new SQLException("Cannot close CallableStatement (return to pool failed)", e);
-            }
-        }
+        removeThisTrace(connection);
     }
 
     /**
@@ -99,10 +76,25 @@ public class PoolableCallableStatement extends DelegatingCallableStatement {
     @Override
     public void activate() throws SQLException {
         setClosedInternal(false);
-        if (getConnectionInternal() != null) {
-            getConnectionInternal().addTrace(this);
-        }
+        add(getConnectionInternal(), this);
         super.activate();
+    }
+
+    /**
+     * Returns the CallableStatement to the pool. If {{@link #isClosed()}, this is a No-op.
+     */
+    @Override
+    public void close() throws SQLException {
+        // calling close twice should have no effect
+        if (!isClosed()) {
+            try {
+                pool.returnObject(key, this);
+            } catch (final SQLException | RuntimeException e) {
+                throw e;
+            } catch (final Exception e) {
+                throw new SQLException("Cannot close CallableStatement (return to pool failed)", e);
+            }
+        }
     }
 
     /**
@@ -113,33 +105,7 @@ public class PoolableCallableStatement extends DelegatingCallableStatement {
      */
     @Override
     public void passivate() throws SQLException {
-        setClosedInternal(true);
-        removeThisTrace(getConnectionInternal());
-
-        // The JDBC spec requires that a statement close any open
-        // ResultSet's when it is closed.
-        // FIXME The PreparedStatement we're wrapping should handle this for us.
-        // See DBCP-10 for what could happen when ResultSets are closed twice.
-        final List<AbandonedTrace> resultSetList = getTrace();
-        if (resultSetList != null) {
-            final List<Exception> thrown = new ArrayList<Exception>();
-            final ResultSet[] resultSets = resultSetList.toArray(new ResultSet[resultSetList.size()]);
-            for (final ResultSet resultSet : resultSets) {
-                if (resultSet != null) {
-                    try {
-                        resultSet.close();
-                    } catch (Exception e) {
-                        thrown.add(e);
-                    }
-                }
-            }
-            clearTrace();
-            if (!thrown.isEmpty()) {
-                throw new SQLExceptionList(thrown);
-            }
-        }
-
-        super.passivate();
+        prepareToReturn();
     }
 
 }

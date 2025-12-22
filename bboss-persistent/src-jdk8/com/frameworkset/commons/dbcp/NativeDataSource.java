@@ -13,10 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.frameworkset.commons.dbcp2;
+package com.frameworkset.commons.dbcp;
 
 import com.frameworkset.common.poolman.NestedSQLException;
 import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
+import com.frameworkset.commons.dbcp2.DriverConnectionFactory;
 import com.frameworkset.commons.pool2.impl.AbandonedConfig;
 
 import javax.sql.DataSource;

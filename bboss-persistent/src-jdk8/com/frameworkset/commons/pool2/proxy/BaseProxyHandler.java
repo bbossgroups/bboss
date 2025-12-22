@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,16 +16,15 @@
  */
 package com.frameworkset.commons.pool2.proxy;
 
-import com.frameworkset.commons.pool2.UsageTracking;
-
 import java.lang.reflect.Method;
+
+import com.frameworkset.commons.pool2.UsageTracking;
 
 /**
  * Base implementation for object wrappers when using a
  * {@link ProxiedObjectPool}.
  *
  * @param <T> type of the wrapped pooled object
- *
  * @since 2.0
  */
 class BaseProxyHandler<T> {
@@ -33,9 +32,8 @@ class BaseProxyHandler<T> {
     private volatile T pooledObject;
     private final UsageTracking<T> usageTracking;
 
-
     /**
-     * Create a new wrapper for the given pooled object.
+     * Constructs a new wrapper for the given pooled object.
      *
      * @param pooledObject  The object to wrap
      * @param usageTracking The instance, if any (usually the object pool) to
@@ -46,17 +44,6 @@ class BaseProxyHandler<T> {
         this.pooledObject = pooledObject;
         this.usageTracking = usageTracking;
     }
-
-
-    /**
-     * Obtain the wrapped, pooled object.
-     *
-     * @return the underlying pooled object
-     */
-    T getPooledObject() {
-        return pooledObject;
-    }
-
 
     /**
      * Disable the proxy wrapper. Called when the object has been returned to
@@ -70,21 +57,6 @@ class BaseProxyHandler<T> {
         pooledObject = null;
         return result;
     }
-
-
-    /**
-     * Check that the proxy is still valid (i.e. that {@link #disableProxy()}
-     * has not been called).
-     *
-     * @throws IllegalStateException if {@link #disableProxy()} has been called
-     */
-    void validateProxiedObject() {
-        if (pooledObject == null) {
-            throw new IllegalStateException("This object may no longer be " +
-                    "used as it has been returned to the Object Pool.");
-        }
-    }
-
 
     /**
      * Invoke the given method on the wrapped object.
@@ -103,6 +75,14 @@ class BaseProxyHandler<T> {
         return method.invoke(object, args);
     }
 
+    /**
+     * Gets the wrapped, pooled object.
+     *
+     * @return the underlying pooled object
+     */
+    T getPooledObject() {
+        return pooledObject;
+    }
 
     /**
      * @since 2.4.3
@@ -117,5 +97,18 @@ class BaseProxyHandler<T> {
         builder.append(usageTracking);
         builder.append("]");
         return builder.toString();
+    }
+
+    /**
+     * Check that the proxy is still valid (i.e. that {@link #disableProxy()}
+     * has not been called).
+     *
+     * @throws IllegalStateException if {@link #disableProxy()} has been called
+     */
+    void validateProxiedObject() {
+        if (pooledObject == null) {
+            throw new IllegalStateException("This object may no longer be " +
+                    "used as it has been returned to the Object Pool.");
+        }
     }
 }

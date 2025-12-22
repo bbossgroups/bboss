@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.frameworkset.commons.dbcp2.datasources;
 
-import com.frameworkset.commons.dbcp2.Utils;
+import com.frameworkset.commons.dbcp2.PoolableConnection;
 import com.frameworkset.commons.pool2.KeyedObjectPool;
 import com.frameworkset.commons.pool2.KeyedPooledObjectFactory;
 import com.frameworkset.commons.pool2.PooledObject;
@@ -28,46 +27,22 @@ import javax.sql.ConnectionEventListener;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.PooledConnection;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.time.Duration;
 
 /**
- * A {@link KeyedPooledObjectFactory} that creates {@link com.frameworkset.commons.dbcp2.PoolableConnection
- * PoolableConnection}s.
+ * A {@link KeyedPooledObjectFactory} that creates {@link PoolableConnection}s.
  *
  * @since 2.0
  */
-class KeyedCPDSConnectionFactory implements KeyedPooledObjectFactory<UserPassKey, PooledConnectionAndInfo>,
-        ConnectionEventListener, PooledConnectionManager {
+final class KeyedCPDSConnectionFactory extends AbstractConnectionFactory
+        implements KeyedPooledObjectFactory<UserPassKey, PooledConnectionAndInfo>, ConnectionEventListener, PooledConnectionManager {
 
-    private static final String NO_KEY_MESSAGE = "close() was called on a Connection, but "
-            + "I have no record of the underlying PooledConnection.";
-
-    private final ConnectionPoolDataSource cpds;
-    private final String validationQuery;
-    private final int validationQueryTimeoutSeconds;
-    private final boolean rollbackAfterValidation;
+    private static final String NO_KEY_MESSAGE = "close() was called on a Connection, but I have no record of the underlying PooledConnection.";
     private KeyedObjectPool<UserPassKey, PooledConnectionAndInfo> pool;
-    private long maxConnLifetimeMillis = -1;
 
     /**
-     * Map of PooledConnections for which close events are ignored. Connections are muted when they are being validated.
-     */
-    private final Set<PooledConnection> validatingSet = Collections
-            .newSetFromMap(new ConcurrentHashMap<PooledConnection, Boolean>());
-
-    /**
-     * Map of PooledConnectionAndInfo instances
-     */
-    private final Map<PooledConnection, PooledConnectionAndInfo> pcMap = new ConcurrentHashMap<PooledConnection, PooledConnectionAndInfo>();
-
-    /**
-     * Create a new {@code KeyedPoolableConnectionFactory}.
+     * Creates a new {@code KeyedCPDSConnectionFactory}.
      *
      * @param cpds
      *            the ConnectionPoolDataSource from which to obtain PooledConnections
@@ -75,157 +50,34 @@ class KeyedCPDSConnectionFactory implements KeyedPooledObjectFactory<UserPassKey
      *            a query to use to {@link #validateObject validate} {@link Connection}s. Should return at least one
      *            row. May be {@code null} in which case3 {@link Connection#isValid(int)} will be used to validate
      *            connections.
-     * @param validationQueryTimeoutSeconds
-     *            The time, in seconds, to allow for the validation query to complete
+     * @param validationQueryTimeoutDuration
+     *            The Duration to allow for the validation query to complete
      * @param rollbackAfterValidation
      *            whether a rollback should be issued after {@link #validateObject validating} {@link Connection}s.
+     * @since 2.10.0
      */
-    public KeyedCPDSConnectionFactory(final ConnectionPoolDataSource cpds, final String validationQuery,
-            final int validationQueryTimeoutSeconds, final boolean rollbackAfterValidation) {
-        this.cpds = cpds;
-        this.validationQuery = validationQuery;
-        this.validationQueryTimeoutSeconds = validationQueryTimeoutSeconds;
-        this.rollbackAfterValidation = rollbackAfterValidation;
+    KeyedCPDSConnectionFactory(final ConnectionPoolDataSource cpds, final String validationQuery, final Duration validationQueryTimeoutDuration,
+            final boolean rollbackAfterValidation) {
+        super(cpds, validationQuery, validationQueryTimeoutDuration, rollbackAfterValidation);
     }
 
-    public void setPool(final KeyedObjectPool<UserPassKey, PooledConnectionAndInfo> pool) {
-        this.pool = pool;
+    @Override
+    public void activateObject(final UserPassKey ignored, final PooledObject<PooledConnectionAndInfo> pooledObject) throws SQLException {
+        validateLifetime(pooledObject);
     }
 
     /**
-     * Returns the keyed object pool used to pool connections created by this factory.
-     *
-     * @return KeyedObjectPool managing pooled connections
-     */
-    public KeyedObjectPool<UserPassKey, PooledConnectionAndInfo> getPool() {
-        return pool;
-    }
-
-    /**
-     * Creates a new {@link PooledConnectionAndInfo} from the given {@link UserPassKey}.
-     *
-     * @param upkey
-     *            {@link UserPassKey} containing user credentials
-     * @throws SQLException
-     *             if the connection could not be created.
-     * @see com.frameworkset.commons.pool2.KeyedPooledObjectFactory#makeObject(Object)
+     * This implementation does not fully close the KeyedObjectPool, as this would affect all users. Instead, it clears
+     * the pool associated with the given user. This method is not currently used.
      */
     @Override
-    public synchronized PooledObject<PooledConnectionAndInfo> makeObject(final UserPassKey upkey) throws Exception {
-        PooledConnectionAndInfo pci = null;
-
-        PooledConnection pc = null;
-        final String userName = upkey.getUsername();
-        final String password = upkey.getPassword();
-        if (userName == null) {
-            pc = cpds.getPooledConnection();
-        } else {
-            pc = cpds.getPooledConnection(userName, password);
-        }
-
-        if (pc == null) {
-            throw new IllegalStateException("Connection pool data source returned null from getPooledConnection");
-        }
-
-        // should we add this object as a listener or the pool.
-        // consider the validateObject method in decision
-        pc.addConnectionEventListener(this);
-        pci = new PooledConnectionAndInfo(pc, userName, upkey.getPasswordCharArray());
-        pcMap.put(pc, pci);
-
-        return new DefaultPooledObject<PooledConnectionAndInfo>(pci);
-    }
-
-    /**
-     * Closes the PooledConnection and stops listening for events from it.
-     */
-    @Override
-    public void destroyObject(final UserPassKey key, final PooledObject<PooledConnectionAndInfo> p) throws Exception {
-        final PooledConnection pc = p.getObject().getPooledConnection();
-        pc.removeConnectionEventListener(this);
-        pcMap.remove(pc);
-        pc.close();
-    }
-
-    /**
-     * Validates a pooled connection.
-     *
-     * @param key
-     *            ignored
-     * @param pooledObject
-     *            wrapped {@link PooledConnectionAndInfo} containing the connection to validate
-     * @return true if validation succeeds
-     */
-    @Override
-    public boolean validateObject(final UserPassKey key, final PooledObject<PooledConnectionAndInfo> pooledObject) {
+    public void closePool(final String userName) throws SQLException {
         try {
-            validateLifetime(pooledObject);
-        } catch (final Exception e) {
-            return false;
+            pool.clear(new UserPassKey(userName));
+        } catch (final Exception ex) {
+            throw new SQLException("Error closing connection pool", ex);
         }
-        boolean valid = false;
-        final PooledConnection pconn = pooledObject.getObject().getPooledConnection();
-        Connection conn = null;
-        validatingSet.add(pconn);
-        if (null == validationQuery) {
-            int timeoutSeconds = validationQueryTimeoutSeconds;
-            if (timeoutSeconds < 0) {
-                timeoutSeconds = 0;
-            }
-            try {
-                conn = pconn.getConnection();
-                valid = conn.isValid(timeoutSeconds);
-            } catch (final SQLException e) {
-                valid = false;
-            } finally {
-                Utils.closeQuietly(conn);
-                validatingSet.remove(pconn);
-            }
-        } else {
-            Statement stmt = null;
-            ResultSet rset = null;
-            // logical Connection from the PooledConnection must be closed
-            // before another one can be requested and closing it will
-            // generate an event. Keep track so we know not to return
-            // the PooledConnection
-            validatingSet.add(pconn);
-            try {
-                conn = pconn.getConnection();
-                stmt = conn.createStatement();
-                rset = stmt.executeQuery(validationQuery);
-                if (rset.next()) {
-                    valid = true;
-                } else {
-                    valid = false;
-                }
-                if (rollbackAfterValidation) {
-                    conn.rollback();
-                }
-            } catch (final Exception e) {
-                valid = false;
-            } finally {
-                Utils.closeQuietly(rset);
-                Utils.closeQuietly(stmt);
-                Utils.closeQuietly(conn);
-                validatingSet.remove(pconn);
-            }
-        }
-        return valid;
     }
-
-    @Override
-    public void passivateObject(final UserPassKey key, final PooledObject<PooledConnectionAndInfo> p) throws Exception {
-        validateLifetime(p);
-    }
-
-    @Override
-    public void activateObject(final UserPassKey key, final PooledObject<PooledConnectionAndInfo> p) throws Exception {
-        validateLifetime(p);
-    }
-
-    // ***********************************************************************
-    // java.sql.ConnectionEventListener implementation
-    // ***********************************************************************
 
     /**
      * This will be called if the Connection returned by the getConnection method came from a PooledConnection, and the
@@ -246,7 +98,7 @@ class KeyedCPDSConnectionFactory implements KeyedPooledObjectFactory<UserPassKey
             try {
                 pool.returnObject(pci.getUserPassKey(), pci);
             } catch (final Exception e) {
-                System.err.println("CLOSING DOWN CONNECTION AS IT COULD " + "NOT BE RETURNED TO THE POOL");
+                System.err.println("CLOSING DOWN CONNECTION AS IT COULD NOT BE RETURNED TO THE POOL");
                 pc.removeConnectionEventListener(this);
                 try {
                     pool.invalidateObject(pci.getUserPassKey(), pci);
@@ -281,14 +133,30 @@ class KeyedCPDSConnectionFactory implements KeyedPooledObjectFactory<UserPassKey
         }
     }
 
-    // ***********************************************************************
-    // PooledConnectionManager implementation
-    // ***********************************************************************
+    /**
+     * Closes the PooledConnection and stops listening for events from it.
+     */
+    @Override
+    public void destroyObject(final UserPassKey ignored, final PooledObject<PooledConnectionAndInfo> pooledObject) throws SQLException {
+        final PooledConnection pooledConnection = pooledObject.getObject().getPooledConnection();
+        pooledConnection.removeConnectionEventListener(this);
+        pcMap.remove(pooledConnection);
+        pooledConnection.close();
+    }
+
+    /**
+     * Returns the keyed object pool used to pool connections created by this factory.
+     *
+     * @return KeyedObjectPool managing pooled connections
+     */
+    public KeyedObjectPool<UserPassKey, PooledConnectionAndInfo> getPool() {
+        return pool;
+    }
 
     /**
      * Invalidates the PooledConnection in the pool. The KeyedCPDSConnectionFactory closes the connection and pool
      * counters are updated appropriately. Also clears any idle instances associated with the user name that was used to
-     * create the PooledConnection. Connections associated with this user are not affected and they will not be
+     * create the PooledConnection. Connections associated with this user are not affected, and they will not be
      * automatically closed on return to the pool.
      */
     @Override
@@ -307,6 +175,49 @@ class KeyedCPDSConnectionFactory implements KeyedPooledObjectFactory<UserPassKey
     }
 
     /**
+     * Creates a new {@code PooledConnectionAndInfo} from the given {@code UserPassKey}.
+     *
+     * @param userPassKey
+     *            {@code UserPassKey} containing user credentials
+     * @throws SQLException
+     *             if the connection could not be created.
+     * @see com.frameworkset.commons.pool2.KeyedPooledObjectFactory#makeObject(Object)
+     */
+    @Override
+    public synchronized PooledObject<PooledConnectionAndInfo> makeObject(final UserPassKey userPassKey) throws SQLException {
+        PooledConnection pooledConnection = null;
+        final String userName = userPassKey.getUserName();
+        final String password = userPassKey.getPassword();
+        if (userName == null) {
+            pooledConnection = cpds.getPooledConnection();
+        } else {
+            pooledConnection = cpds.getPooledConnection(userName, password);
+        }
+        if (pooledConnection == null) {
+            throw new IllegalStateException("Connection pool data source returned null from getPooledConnection");
+        }
+        // should we add this object as a listener or the pool.
+        // consider the validateObject method in decision
+        pooledConnection.addConnectionEventListener(this);
+        final PooledConnectionAndInfo pci = new PooledConnectionAndInfo(pooledConnection, userPassKey);
+        pcMap.put(pooledConnection, pci);
+        return new DefaultPooledObject<>(pci);
+    }
+
+    @Override
+    public void passivateObject(final UserPassKey ignored, final PooledObject<PooledConnectionAndInfo> pooledObject) throws SQLException {
+        validateLifetime(pooledObject);
+    }
+
+    /**
+     * Does nothing. This factory does not cache user credentials.
+     */
+    @Override
+    public void setPassword(final char[] password) {
+        // Does nothing. This factory does not cache user credentials.
+    }
+
+    /**
      * Does nothing. This factory does not cache user credentials.
      */
     @Override
@@ -314,37 +225,25 @@ class KeyedCPDSConnectionFactory implements KeyedPooledObjectFactory<UserPassKey
         // Does nothing. This factory does not cache user credentials.
     }
 
-    /**
-     * Sets the maximum lifetime in milliseconds of a connection after which the connection will always fail activation,
-     * passivation and validation.
-     *
-     * @param maxConnLifetimeMillis
-     *            A value of zero or less indicates an infinite lifetime. The default value is -1.
-     */
-    public void setMaxConnLifetimeMillis(final long maxConnLifetimeMillis) {
-        this.maxConnLifetimeMillis = maxConnLifetimeMillis;
+    public void setPool(final KeyedObjectPool<UserPassKey, PooledConnectionAndInfo> pool) {
+        this.pool = pool;
     }
 
     /**
-     * This implementation does not fully close the KeyedObjectPool, as this would affect all users. Instead, it clears
-     * the pool associated with the given user. This method is not currently used.
+     * Validates a pooled connection.
+     * <p>
+     * A query validation timeout greater than 0 and less than 1 second is converted to 1 second.
+     * </p>
+     *
+     * @param ignored
+     *            ignored
+     * @param pooledObject
+     *            wrapped {@code PooledConnectionAndInfo} containing the connection to validate
+     * @return true if validation succeeds
+     * @throws ArithmeticException if the query validation timeout does not fit as seconds in an int.
      */
     @Override
-    public void closePool(final String userName) throws SQLException {
-        try {
-            pool.clear(new UserPassKey(userName));
-        } catch (final Exception ex) {
-            throw new SQLException("Error closing connection pool", ex);
-        }
-    }
-
-    private void validateLifetime(final PooledObject<PooledConnectionAndInfo> p) throws Exception {
-        if (maxConnLifetimeMillis > 0) {
-            final long lifetime = System.currentTimeMillis() - p.getCreateTime();
-            if (lifetime > maxConnLifetimeMillis) {
-                throw new Exception(Utils.getMessage("connectionFactory.lifetimeExceeded", Long.valueOf(lifetime),
-                        Long.valueOf(maxConnLifetimeMillis)));
-            }
-        }
+    public boolean validateObject(final UserPassKey ignored, final PooledObject<PooledConnectionAndInfo> pooledObject) {
+        return super.validateObject(pooledObject);
     }
 }

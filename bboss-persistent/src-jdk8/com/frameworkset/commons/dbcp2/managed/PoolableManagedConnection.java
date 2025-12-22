@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.frameworkset.commons.dbcp2.managed;
 
 import com.frameworkset.commons.dbcp2.PoolableConnection;
@@ -34,7 +33,7 @@ public class PoolableManagedConnection extends PoolableConnection {
     private final TransactionRegistry transactionRegistry;
 
     /**
-     * Create a PoolableManagedConnection.
+     * Creates a PoolableManagedConnection.
      *
      * @param transactionRegistry
      *            transaction registry
@@ -43,13 +42,12 @@ public class PoolableManagedConnection extends PoolableConnection {
      * @param pool
      *            connection pool
      */
-    public PoolableManagedConnection(final TransactionRegistry transactionRegistry, final Connection conn,
-            final ObjectPool<PoolableConnection> pool) {
+    public PoolableManagedConnection(final TransactionRegistry transactionRegistry, final Connection conn, final ObjectPool<PoolableConnection> pool) {
         this(transactionRegistry, conn, pool, null, true);
     }
 
     /**
-     * Create a PoolableManagedConnection.
+     * Creates a PoolableManagedConnection.
      *
      * @param transactionRegistry
      *            transaction registry
@@ -58,19 +56,43 @@ public class PoolableManagedConnection extends PoolableConnection {
      * @param pool
      *            connection pool
      * @param disconnectSqlCodes
-     *            SQL_STATE codes considered fatal disconnection errors
+     *            SQL State codes considered fatal disconnection errors
      * @param fastFailValidation
      *            true means fatal disconnection errors cause subsequent validations to fail immediately (no attempt to
      *            run query or isValid)
      */
-    public PoolableManagedConnection(final TransactionRegistry transactionRegistry, final Connection conn,
-            final ObjectPool<PoolableConnection> pool, final Collection<String> disconnectSqlCodes,
-            final boolean fastFailValidation) {
-        super(conn, pool, null, disconnectSqlCodes, fastFailValidation);
+    public PoolableManagedConnection(final TransactionRegistry transactionRegistry, final Connection conn, final ObjectPool<PoolableConnection> pool,
+            final Collection<String> disconnectSqlCodes, final boolean fastFailValidation) {
+        this(transactionRegistry, conn, pool, disconnectSqlCodes, null, fastFailValidation);
+    }
+
+    /**
+     * Creates a PoolableManagedConnection.
+     *
+     * @param transactionRegistry
+     *            transaction registry
+     * @param conn
+     *            underlying connection
+     * @param pool
+     *            connection pool
+     * @param disconnectSqlCodes
+     *            SQL State codes considered fatal disconnection errors
+     * @param disconnectionIgnoreSqlCodes
+     *            SQL State codes considered fatal disconnection errors
+     * @param fastFailValidation
+     *            true means fatal disconnection errors cause subsequent validations to fail immediately (no attempt to
+     *            run query or isValid)
+     * @since 2.13.0
+     */
+    public PoolableManagedConnection(final TransactionRegistry transactionRegistry, final Connection conn, final ObjectPool<PoolableConnection> pool,
+            final Collection<String> disconnectSqlCodes, final Collection<String> disconnectionIgnoreSqlCodes, final boolean fastFailValidation) {
+        super(conn, pool, null, disconnectSqlCodes, disconnectionIgnoreSqlCodes, fastFailValidation);
         this.transactionRegistry = transactionRegistry;
     }
 
     /**
+     * Gets the transaction registry.
+     *
      * @return The transaction registry.
      * @since 2.6.0
      */

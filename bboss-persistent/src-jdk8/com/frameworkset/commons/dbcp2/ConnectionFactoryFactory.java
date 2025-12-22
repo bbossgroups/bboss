@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.frameworkset.commons.dbcp2;
 
 import java.sql.Driver;
@@ -26,7 +25,7 @@ import java.util.Properties;
  *
  * @since 2.7.0
  */
-class ConnectionFactoryFactory {
+final class ConnectionFactoryFactory {
 
     /**
      * Creates a new {@link DriverConnectionFactory} allowing for an override through
@@ -43,18 +42,18 @@ class ConnectionFactoryFactory {
         final Properties connectionProperties = basicDataSource.getConnectionProperties();
         final String url = basicDataSource.getUrl();
         // Set up the driver connection factory we will use
-        final String user = basicDataSource.getUsername();
+        final String user = basicDataSource.getUserName();
         if (user != null) {
-            connectionProperties.put("user", user);
+            connectionProperties.put(Constants.KEY_USER, user);
         } else {
-            basicDataSource.log("DBCP DataSource configured without a 'username'");
+            basicDataSource.log(String.format("DBCP DataSource configured without a '%s'", Constants.KEY_USER));
         }
 
         final String pwd = basicDataSource.getPassword();
         if (pwd != null) {
-            connectionProperties.put("password", pwd);
+            connectionProperties.put(Constants.KEY_PASSWORD, pwd);
         } else {
-            basicDataSource.log("DBCP DataSource configured without a 'password'");
+            basicDataSource.log(String.format("DBCP DataSource configured without a '%s'", Constants.KEY_PASSWORD));
         }
         final String connectionFactoryClassName = basicDataSource.getConnectionFactoryClassName();
         if (connectionFactoryClassName != null) {

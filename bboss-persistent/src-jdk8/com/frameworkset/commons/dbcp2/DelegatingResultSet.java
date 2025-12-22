@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,29 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.frameworkset.commons.dbcp2;
 
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.NClob;
-import java.sql.Ref;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.RowId;
-import java.sql.SQLException;
-import java.sql.SQLType;
-import java.sql.SQLWarning;
-import java.sql.SQLXML;
-import java.sql.Statement;
-import java.sql.Time;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -98,20 +81,20 @@ public final class DelegatingResultSet extends AbandonedTrace implements ResultS
 
     /**
      * Creates a wrapper for the ResultSet which traces this ResultSet to the Connection which created it (via, for
-     * example DatabaseMetadata, and the code which created it.
+     * example DatabaseMetadata), and the code which created it.
      * <p>
      * Private to ensure all construction is {@link #wrapResultSet(Connection, ResultSet)}
      * </p>
      *
-     * @param conn
+     * @param connection
      *            Connection which created this ResultSet
-     * @param res
+     * @param resultSet
      *            ResultSet to wrap
      */
-    private DelegatingResultSet(final Connection conn, final ResultSet res) {
-        super((AbandonedTrace) conn);
-        this.connection = conn;
-        this.resultSet = res;
+    private DelegatingResultSet(final Connection connection, final ResultSet resultSet) {
+        super((AbandonedTrace) connection);
+        this.connection = connection;
+        this.resultSet = resultSet;
     }
 
     /**
@@ -592,14 +575,14 @@ public final class DelegatingResultSet extends AbandonedTrace implements ResultS
     }
 
     /**
-     * If my underlying {@link ResultSet} is not a {@code DelegatingResultSet}, returns it, otherwise recursively
+     * If my underlying {@link ResultSet} is not a {@link DelegatingResultSet}, returns it, otherwise recursively
      * invokes this method on my delegate.
      * <p>
-     * Hence this method will return the first delegate that is not a {@code DelegatingResultSet}, or {@code null} when
-     * no non-{@code DelegatingResultSet} delegate can be found by traversing this chain.
+     * Hence this method will return the first delegate that is not a {@link DelegatingResultSet}, or {@code null} when
+     * no non-{@link DelegatingResultSet} delegate can be found by traversing this chain.
      * </p>
      * <p>
-     * This method is useful when you may have nested {@code DelegatingResultSet}s, and you want to make sure to obtain
+     * This method is useful when you may have nested {@link DelegatingResultSet}s, and you want to make sure to obtain
      * a "genuine" {@link ResultSet}.
      * </p>
      *
@@ -608,7 +591,7 @@ public final class DelegatingResultSet extends AbandonedTrace implements ResultS
     @SuppressWarnings("resource")
     public ResultSet getInnermostDelegate() {
         ResultSet r = resultSet;
-        while (r != null && r instanceof DelegatingResultSet) {
+        while (r instanceof DelegatingResultSet) {
             r = ((DelegatingResultSet) r).getDelegate();
             if (this == r) {
                 return null;
@@ -1046,10 +1029,16 @@ public final class DelegatingResultSet extends AbandonedTrace implements ResultS
         }
     }
 
+    /**
+     * Handles a SQL exception by delegating to a DelegatingStatement or DelegatingConnection.
+     *
+     * @param e The exception to handle.
+     * @throws SQLException Throws the given exception if not handled.
+     */
     protected void handleException(final SQLException e) throws SQLException {
-        if (statement != null && statement instanceof DelegatingStatement) {
+        if (statement instanceof DelegatingStatement) {
             ((DelegatingStatement) statement).handleException(e);
-        } else if (connection != null && connection instanceof DelegatingConnection) {
+        } else if (connection instanceof DelegatingConnection) {
             ((DelegatingConnection<?>) connection).handleException(e);
         } else {
             throw e;
@@ -1117,13 +1106,10 @@ public final class DelegatingResultSet extends AbandonedTrace implements ResultS
 
     @Override
     public boolean isWrapperFor(final Class<?> iface) throws SQLException {
-        if (iface.isAssignableFrom(getClass())) {
+        if (iface.isAssignableFrom(getClass()) || iface.isAssignableFrom(resultSet.getClass())) {
             return true;
-        } else if (iface.isAssignableFrom(resultSet.getClass())) {
-            return true;
-        } else {
-            return resultSet.isWrapperFor(iface);
         }
+        return resultSet.isWrapperFor(iface);
     }
 
     @Override
@@ -1250,11 +1236,11 @@ public final class DelegatingResultSet extends AbandonedTrace implements ResultS
     public <T> T unwrap(final Class<T> iface) throws SQLException {
         if (iface.isAssignableFrom(getClass())) {
             return iface.cast(this);
-        } else if (iface.isAssignableFrom(resultSet.getClass())) {
-            return iface.cast(resultSet);
-        } else {
-            return resultSet.unwrap(iface);
         }
+        if (iface.isAssignableFrom(resultSet.getClass())) {
+            return iface.cast(resultSet);
+        }
+        return resultSet.unwrap(iface);
     }
 
     @Override

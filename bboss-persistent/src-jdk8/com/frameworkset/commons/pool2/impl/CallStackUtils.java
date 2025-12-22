@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,7 +26,7 @@ import java.security.AccessControlException;
 public final class CallStackUtils {
 
     /**
-     * Returns whether the caller can create a security manager in the current environment.
+     * Tests whether the caller can create a security manager in the current environment.
      *
      * @return {@code true} if it is able to create a security manager in the current environment, {@code false}
      *         otherwise.
@@ -51,7 +51,7 @@ public final class CallStackUtils {
      * @param useTimestamp  if true, interpret message as a SimpleDateFormat and print the created timestamp; otherwise,
      *                      print message format literally
      * @return a new CallStack
-     * @deprecated use {@link #newCallStack(String, boolean, boolean)}
+     * @deprecated Use {@link #newCallStack(String, boolean, boolean)}
      */
     @Deprecated
     public static CallStack newCallStack(final String messageFormat, final boolean useTimestamp) {

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,29 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.frameworkset.commons.dbcp2;
 
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.Date;
-import java.sql.NClob;
-import java.sql.PreparedStatement;
-import java.sql.Ref;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.RowId;
-import java.sql.SQLException;
-import java.sql.SQLType;
-import java.sql.SQLXML;
-import java.sql.Statement;
-import java.sql.Time;
-import java.sql.Timestamp;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * A base delegating implementation of {@link PreparedStatement}.
@@ -164,6 +151,30 @@ public class DelegatingPreparedStatement extends DelegatingStatement implements 
             handleException(e);
             throw new AssertionError();
         }
+    }
+
+    /**
+     * Prepares internal states before calling {@link #passivate()}.
+     *
+     * @throws SQLException Thrown closing a traced resource or calling {@link #passivate()}.
+     */
+    protected void prepareToReturn() throws SQLException {
+        setClosedInternal(true);
+        removeThisTrace(getConnectionInternal());
+        // The JDBC spec requires that a statement close any open
+        // ResultSet's when it is closed.
+        // FIXME The PreparedStatement we're wrapping should handle this for us.
+        // See DBCP-10 for what could happen when ResultSets are closed twice.
+        final List<AbandonedTrace> traceList = getTrace();
+        if (traceList != null) {
+            final List<Exception> thrownList = new ArrayList<>();
+            traceList.forEach(trace -> trace.close(thrownList::add));
+            clearTrace();
+            if (!thrownList.isEmpty()) {
+                throw new SQLExceptionList(thrownList);
+            }
+        }
+        super.passivate();
     }
 
     @Override
@@ -689,7 +700,6 @@ public class DelegatingPreparedStatement extends DelegatingStatement implements 
     @SuppressWarnings("resource")
     @Override
     public synchronized String toString() {
-        final Statement statement = getDelegate();
-        return statement == null ? "NULL" : statement.toString();
+        return Objects.toString(getDelegate(), "NULL");
     }
 }

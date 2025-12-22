@@ -18,7 +18,6 @@ package org.frameworkset.persitent.datasource;
 import com.frameworkset.common.poolman.util.DatasourceUtil;
 import com.frameworkset.commons.dbcp.BasicDataSourceFactory;
 import com.frameworkset.orm.adapter.DB;
-import org.frameworkset.balance.RoundRobinList;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
@@ -26,7 +25,9 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 

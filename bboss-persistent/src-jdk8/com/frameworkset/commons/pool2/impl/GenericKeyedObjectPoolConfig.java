@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,7 @@
 package com.frameworkset.commons.pool2.impl;
 
 /**
- * A simple "struct" encapsulating the configuration for a
+ * A simple structure encapsulating the configuration for a
  * {@link GenericKeyedObjectPool}.
  *
  * <p>
@@ -31,29 +31,48 @@ package com.frameworkset.commons.pool2.impl;
 public class GenericKeyedObjectPoolConfig<T> extends BaseObjectPoolConfig<T> {
 
     /**
-     * The default value for the {@code maxTotalPerKey} configuration attribute.
+     * The default value for the {@code maxTotalPerKey} configuration attribute: {@value}.
+     *
      * @see GenericKeyedObjectPool#getMaxTotalPerKey()
      */
     public static final int DEFAULT_MAX_TOTAL_PER_KEY = 8;
 
     /**
-     * The default value for the {@code maxTotal} configuration attribute.
+     * The default value for the {@code maxTotal} configuration attribute: {@value}.
+     *
      * @see GenericKeyedObjectPool#getMaxTotal()
      */
     public static final int DEFAULT_MAX_TOTAL = -1;
 
     /**
-     * The default value for the {@code minIdlePerKey} configuration attribute.
+     * The default value for the {@code minIdlePerKey} configuration attribute: {@value}.
+     *
      * @see GenericKeyedObjectPool#getMinIdlePerKey()
      */
     public static final int DEFAULT_MIN_IDLE_PER_KEY = 0;
 
     /**
-     * The default value for the {@code maxIdlePerKey} configuration attribute.
+     * The default value for the {@code maxIdlePerKey} configuration attribute: {@value}.
+     *
      * @see GenericKeyedObjectPool#getMaxIdlePerKey()
      */
     public static final int DEFAULT_MAX_IDLE_PER_KEY = 8;
 
+    /**
+     * The default value for the {@code reuseCapacityOnReturn} configuration attribute: {@value}.
+     *
+     * @see GenericKeyedObjectPool#getReuseCapacityOnReturn()
+     * @since 2.13.0
+     */
+    public static final boolean DEFAULT_REUSE_CAPACITY_ON_RETURN = true;
+
+    /**
+     * The default value for the {@code reuseCapacityOnMaintenance} configuration attribute: {@value}.
+     *
+     * @see GenericKeyedObjectPool#getReuseCapacityOnMaintenance()
+     * @since 2.13.0
+     */
+    public static final boolean DEFAULT_REUSE_CAPACITY_ON_MAINTENANCE = false;
 
     private int minIdlePerKey = DEFAULT_MIN_IDLE_PER_KEY;
 
@@ -63,92 +82,28 @@ public class GenericKeyedObjectPoolConfig<T> extends BaseObjectPoolConfig<T> {
 
     private int maxTotal = DEFAULT_MAX_TOTAL;
 
+    private boolean reuseCapacityOnReturn = DEFAULT_REUSE_CAPACITY_ON_RETURN;
+
+    private boolean reuseCapacityOnMaintenance = DEFAULT_REUSE_CAPACITY_ON_MAINTENANCE;
+
     /**
-     * Create a new configuration with default settings.
+     * Constructs a new configuration with default settings.
      */
     public GenericKeyedObjectPoolConfig() {
     }
 
-    /**
-     * Get the value for the {@code maxTotal} configuration attribute
-     * for pools created with this configuration instance.
-     *
-     * @return  The current setting of {@code maxTotal} for this
-     *          configuration instance
-     *
-     * @see GenericKeyedObjectPool#getMaxTotal()
-     */
-    public int getMaxTotal() {
-        return maxTotal;
+    @SuppressWarnings("unchecked")
+    @Override
+    public GenericKeyedObjectPoolConfig<T> clone() {
+        try {
+            return (GenericKeyedObjectPoolConfig<T>) super.clone();
+        } catch (final CloneNotSupportedException e) {
+            throw new AssertionError(); // Can't happen
+        }
     }
 
     /**
-     * Set the value for the {@code maxTotal} configuration attribute for
-     * pools created with this configuration instance.
-     *
-     * @param maxTotal The new setting of {@code maxTotal}
-     *        for this configuration instance
-     *
-     * @see GenericKeyedObjectPool#setMaxTotal(int)
-     */
-    public void setMaxTotal(final int maxTotal) {
-        this.maxTotal = maxTotal;
-    }
-
-    /**
-     * Get the value for the {@code maxTotalPerKey} configuration attribute
-     * for pools created with this configuration instance.
-     *
-     * @return  The current setting of {@code maxTotalPerKey} for this
-     *          configuration instance
-     *
-     * @see GenericKeyedObjectPool#getMaxTotalPerKey()
-     */
-    public int getMaxTotalPerKey() {
-        return maxTotalPerKey;
-    }
-
-    /**
-     * Set the value for the {@code maxTotalPerKey} configuration attribute for
-     * pools created with this configuration instance.
-     *
-     * @param maxTotalPerKey The new setting of {@code maxTotalPerKey}
-     *        for this configuration instance
-     *
-     * @see GenericKeyedObjectPool#setMaxTotalPerKey(int)
-     */
-    public void setMaxTotalPerKey(final int maxTotalPerKey) {
-        this.maxTotalPerKey = maxTotalPerKey;
-    }
-
-    /**
-     * Get the value for the {@code minIdlePerKey} configuration attribute
-     * for pools created with this configuration instance.
-     *
-     * @return  The current setting of {@code minIdlePerKey} for this
-     *          configuration instance
-     *
-     * @see GenericKeyedObjectPool#getMinIdlePerKey()
-     */
-    public int getMinIdlePerKey() {
-        return minIdlePerKey;
-    }
-
-    /**
-     * Set the value for the {@code minIdlePerKey} configuration attribute for
-     * pools created with this configuration instance.
-     *
-     * @param minIdlePerKey The new setting of {@code minIdlePerKey}
-     *        for this configuration instance
-     *
-     * @see GenericKeyedObjectPool#setMinIdlePerKey(int)
-     */
-    public void setMinIdlePerKey(final int minIdlePerKey) {
-        this.minIdlePerKey = minIdlePerKey;
-    }
-
-    /**
-     * Get the value for the {@code maxIdlePerKey} configuration attribute
+     * Gets the value for the {@code maxIdlePerKey} configuration attribute
      * for pools created with this configuration instance.
      *
      * @return  The current setting of {@code maxIdlePerKey} for this
@@ -161,7 +116,74 @@ public class GenericKeyedObjectPoolConfig<T> extends BaseObjectPoolConfig<T> {
     }
 
     /**
-     * Set the value for the {@code maxIdlePerKey} configuration attribute for
+     * Gets the value for the {@code maxTotal} configuration attribute
+     * for pools created with this configuration instance.
+     *
+     * @return  The current setting of {@code maxTotal} for this
+     *          configuration instance
+     *
+     * @see GenericKeyedObjectPool#getMaxTotal()
+     */
+    public int getMaxTotal() {
+        return maxTotal;
+    }
+
+    /**
+     * Gets the value for the {@code maxTotalPerKey} configuration attribute
+     * for pools created with this configuration instance.
+     *
+     * @return  The current setting of {@code maxTotalPerKey} for this
+     *          configuration instance
+     *
+     * @see GenericKeyedObjectPool#getMaxTotalPerKey()
+     */
+    public int getMaxTotalPerKey() {
+        return maxTotalPerKey;
+    }
+
+    /**
+     * Gets the value for the {@code minIdlePerKey} configuration attribute
+     * for pools created with this configuration instance.
+     *
+     * @return  The current setting of {@code minIdlePerKey} for this
+     *          configuration instance
+     *
+     * @see GenericKeyedObjectPool#getMinIdlePerKey()
+     */
+    public int getMinIdlePerKey() {
+        return minIdlePerKey;
+    }
+
+    /**
+     * Gets the value for the {@code reuseCapacityOnMaintenance} configuration attribute
+     * for pools created with this configuration instance.
+     *
+     * @return  The current setting of {@code reuseCapacityOnMaintenance} for this
+     *          configuration instance
+     *
+     * @see GenericKeyedObjectPool#getReuseCapacityOnMaintenance()
+     * @since 2.13.0
+     */
+    public boolean getReuseCapacityOnMaintenance() {
+        return reuseCapacityOnMaintenance;
+    }
+
+    /**
+     * Gets the value for the {@code reuseCapacityOnReturn} configuration attribute
+     * for pools created with this configuration instance.
+     *
+     * @return  The current setting of {@code reuseCapacityOnReturn} for this
+     *          configuration instance
+     *
+     * @see GenericKeyedObjectPool#getReuseCapacityOnReturn()
+     * @since 2.13.0
+     */
+    public boolean getReuseCapacityOnReturn() {
+        return reuseCapacityOnReturn;
+    }
+
+    /**
+     * Sets the value for the {@code maxIdlePerKey} configuration attribute for
      * pools created with this configuration instance.
      *
      * @param maxIdlePerKey The new setting of {@code maxIdlePerKey}
@@ -173,14 +195,71 @@ public class GenericKeyedObjectPoolConfig<T> extends BaseObjectPoolConfig<T> {
         this.maxIdlePerKey = maxIdlePerKey;
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public GenericKeyedObjectPoolConfig<T> clone() {
-        try {
-            return (GenericKeyedObjectPoolConfig<T>) super.clone();
-        } catch (final CloneNotSupportedException e) {
-            throw new AssertionError(); // Can't happen
-        }
+    /**
+     * Sets the value for the {@code maxTotal} configuration attribute for
+     * pools created with this configuration instance.
+     *
+     * @param maxTotal The new setting of {@code maxTotal}
+     *        for this configuration instance
+     *
+     * @see GenericKeyedObjectPool#setMaxTotal(int)
+     */
+    public void setMaxTotal(final int maxTotal) {
+        this.maxTotal = maxTotal;
+    }
+
+    /**
+     * Sets the value for the {@code maxTotalPerKey} configuration attribute for
+     * pools created with this configuration instance.
+     *
+     * @param maxTotalPerKey The new setting of {@code maxTotalPerKey}
+     *        for this configuration instance
+     *
+     * @see GenericKeyedObjectPool#setMaxTotalPerKey(int)
+     */
+    public void setMaxTotalPerKey(final int maxTotalPerKey) {
+        this.maxTotalPerKey = maxTotalPerKey;
+    }
+
+    /**
+     * Sets the value for the {@code minIdlePerKey} configuration attribute for
+     * pools created with this configuration instance.
+     *
+     * @param minIdlePerKey The new setting of {@code minIdlePerKey}
+     *        for this configuration instance
+     *
+     * @see GenericKeyedObjectPool#setMinIdlePerKey(int)
+     */
+    public void setMinIdlePerKey(final int minIdlePerKey) {
+        this.minIdlePerKey = minIdlePerKey;
+    }
+
+    /**
+     * Sets the value for the {@code reuseCapacityOnMaintenance} configuration attribute for
+     * pools created with this configuration instance.
+     *
+     * @param reuseCapacityOnMaintenance The new setting of {@code reuseCapacityOnMaintenance}
+     *        for this configuration instance
+     *
+     * @see GenericKeyedObjectPool#setReuseCapacityOnMaintenance(boolean)
+     * @since 2.13.0
+     */
+    public void setReuseCapacityOnMaintenance(final boolean reuseCapacityOnMaintenance) {
+        this.reuseCapacityOnMaintenance = reuseCapacityOnMaintenance;
+    }
+
+    /**
+     * Sets the value for the {@code reuseCapacityOnReturn} configuration attribute for
+     * pools created with this configuration instance.
+     *
+     * @param reuseCapacityOnReturn The new setting of {@code reuseCapacityOnReturn}
+     *        for this configuration instance
+     *
+     * @see GenericKeyedObjectPool#setReuseCapacityOnReturn(boolean)
+     * @since 2.13.0
+     */
+    public void setReuseCapacityOnReturn(final boolean reuseCapacityOnReturn) {
+        this.reuseCapacityOnReturn = reuseCapacityOnReturn;
     }
 
     @Override
@@ -194,5 +273,9 @@ public class GenericKeyedObjectPoolConfig<T> extends BaseObjectPoolConfig<T> {
         builder.append(maxTotalPerKey);
         builder.append(", maxTotal=");
         builder.append(maxTotal);
+        builder.append(", reuseCapacityOnReturn=");
+        builder.append(reuseCapacityOnReturn);
+        builder.append(", reuseCapacityOnMaintenance=");
+        builder.append(reuseCapacityOnMaintenance);
     }
 }

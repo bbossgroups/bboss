@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,39 +28,41 @@ import java.sql.SQLException;
 interface PooledConnectionManager {
 
     /**
+     * Closes the connection pool associated with the given user.
+     *
+     * @param userName
+     *            user name.
+     * @throws SQLException
+     *             if an error occurs closing idle connections in the pool.
+     */
+    void closePool(String userName) throws SQLException;
+
+     /**
      * Closes the PooledConnection and remove it from the connection pool to which it belongs, adjusting pool counters.
      *
      * @param pc
-     *            PooledConnection to be invalidated
+     *            PooledConnection to be invalidated.
      * @throws SQLException
-     *             if an SQL error occurs closing the connection
+     *             if an SQL error occurs closing the connection.
      */
     void invalidate(PooledConnection pc) throws SQLException;
 
-    // /**
-    // * Sets the database password used when creating connections.
-    // *
-    // * @param password password used when authenticating to the database
-    // * @since 3.0.0
-    // */
-    // void setPassword(char[] password);
+    /**
+     * Sets the database password used when creating connections.
+     *
+     * @param password password used when authenticating to the database.
+     * @since 2.14.0
+     */
+    default void setPassword(final char[] password) {
+        setPassword(String.copyValueOf(password));
+    }
 
     /**
      * Sets the database password used when creating connections.
      *
      * @param password
-     *            password used when authenticating to the database
+     *            password used when authenticating to the database.
      */
     void setPassword(String password);
-
-    /**
-     * Closes the connection pool associated with the given user.
-     *
-     * @param userName
-     *            user name
-     * @throws SQLException
-     *             if an error occurs closing idle connections in the pool
-     */
-    void closePool(String userName) throws SQLException;
 
 }

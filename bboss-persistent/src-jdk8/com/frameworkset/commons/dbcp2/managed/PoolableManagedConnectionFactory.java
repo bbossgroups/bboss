@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.frameworkset.commons.dbcp2.managed;
 
 import com.frameworkset.commons.dbcp2.*;
@@ -26,6 +25,8 @@ import com.frameworkset.commons.pool2.impl.GenericKeyedObjectPoolConfig;
 
 import javax.management.ObjectName;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.time.Duration;
 
 /**
  * A {@link PoolableConnectionFactory} that creates {@link PoolableManagedConnection}s.
@@ -51,6 +52,8 @@ public class PoolableManagedConnectionFactory extends PoolableConnectionFactory 
     }
 
     /**
+     * Gets the transaction registry.
+     *
      * @return The transaction registry.
      * @since 2.6.0
      */
@@ -60,23 +63,31 @@ public class PoolableManagedConnectionFactory extends PoolableConnectionFactory 
 
     /**
      * Uses the configured XAConnectionFactory to create a {@link PoolableManagedConnection}. Throws
-     * <code>IllegalStateException</code> if the connection factory returns null. Also initializes the connection using
+     * {@code IllegalStateException} if the connection factory returns null. Also initializes the connection using
      * configured initialization SQL (if provided) and sets up a prepared statement pool associated with the
      * PoolableManagedConnection if statement pooling is enabled.
      */
+    @SuppressWarnings("resource") // Connection is released elsewhere.
     @Override
-    public synchronized PooledObject<PoolableConnection> makeObject() throws Exception {
+    public synchronized PooledObject<PoolableConnection> makeObject() throws SQLException {
         Connection conn = getConnectionFactory().createConnection();
         if (conn == null) {
             throw new IllegalStateException("Connection factory returned null from createConnection");
         }
-        initializeConnection(conn);
+        try {
+            initializeConnection(conn);
+        } catch (final SQLException e) {
+            // Make sure the connection is closed
+            Utils.closeQuietly((AutoCloseable) conn);
+            // Rethrow original exception so it is visible to caller
+            throw e;
+        }
         if (getPoolStatements()) {
             conn = new PoolingConnection(conn);
-            final GenericKeyedObjectPoolConfig<DelegatingPreparedStatement> config = new GenericKeyedObjectPoolConfig<DelegatingPreparedStatement>();
+            final GenericKeyedObjectPoolConfig<DelegatingPreparedStatement> config = new GenericKeyedObjectPoolConfig<>();
             config.setMaxTotalPerKey(-1);
             config.setBlockWhenExhausted(false);
-            config.setMaxWaitMillis(0);
+            config.setMaxWait(Duration.ZERO);
             config.setMaxIdlePerKey(1);
             config.setMaxTotal(getMaxOpenPreparedStatements());
             final ObjectName dataSourceJmxName = getDataSourceJmxName();
@@ -84,20 +95,20 @@ public class PoolableManagedConnectionFactory extends PoolableConnectionFactory 
             if (dataSourceJmxName != null) {
                 final StringBuilder base = new StringBuilder(dataSourceJmxName.toString());
                 base.append(Constants.JMX_CONNECTION_BASE_EXT);
-                base.append(Long.toString(connIndex));
+                base.append(connIndex);
                 config.setJmxNameBase(base.toString());
                 config.setJmxNamePrefix(Constants.JMX_STATEMENT_POOL_PREFIX);
             } else {
                 config.setJmxEnabled(false);
             }
-            final KeyedObjectPool<PStmtKey, DelegatingPreparedStatement> stmtPool = new GenericKeyedObjectPool<PStmtKey, DelegatingPreparedStatement>(
+            final KeyedObjectPool<PStmtKey, DelegatingPreparedStatement> stmtPool = new GenericKeyedObjectPool<>(
                     (PoolingConnection) conn, config);
             ((PoolingConnection) conn).setStatementPool(stmtPool);
             ((PoolingConnection) conn).setCacheState(getCacheState());
         }
         final PoolableManagedConnection pmc = new PoolableManagedConnection(transactionRegistry, conn, getPool(),
-                getDisconnectionSqlCodes(), isFastFailValidation());
+                getDisconnectionSqlCodes(), getDisconnectionIgnoreSqlCodes(), isFastFailValidation());
         pmc.setCacheState(getCacheState());
-        return new DefaultPooledObject<PoolableConnection>(pmc);
+        return new DefaultPooledObject<>(pmc);
     }
 }

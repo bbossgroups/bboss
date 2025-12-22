@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.frameworkset.commons.dbcp2;
+package com.frameworkset.commons.dbcp;
 
 import com.frameworkset.common.poolman.monitor.AbandonedTraceExt;
-import com.frameworkset.commons.dbcp2.NativeDataSource.StaticCount;
+import com.frameworkset.commons.dbcp.NativeDataSource.StaticCount;
 import com.frameworkset.util.SimpleStringUtil;
 
 import java.sql.*;

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,8 +19,6 @@ package com.frameworkset.commons.pool2.proxy;
 import com.frameworkset.commons.pool2.ObjectPool;
 import com.frameworkset.commons.pool2.UsageTracking;
 
-import java.util.NoSuchElementException;
-
 /**
  * Create a new object pool where the pooled objects are wrapped in proxies
  * allowing better control of pooled objects and in particular the prevention
@@ -28,7 +26,6 @@ import java.util.NoSuchElementException;
  * object to the pool.
  *
  * @param <T> type of the pooled object
- *
  * @since 2.0
  */
 public class ProxiedObjectPool<T> implements ObjectPool<T> {
@@ -36,13 +33,8 @@ public class ProxiedObjectPool<T> implements ObjectPool<T> {
     private final ObjectPool<T> pool;
     private final ProxySource<T> proxySource;
 
-    public void addObjects(final int count) throws Exception {
-        for (int i = 0; i < count; i++) {
-            addObject();
-        }
-    }
     /**
-     * Create a new proxied object pool.
+     * Constructs a new proxied object pool.
      *
      * @param pool  The object pool to wrap
      * @param proxySource The source of the proxy objects
@@ -52,67 +44,50 @@ public class ProxiedObjectPool<T> implements ObjectPool<T> {
         this.proxySource = proxySource;
     }
 
-
-    // --------------------------------------------------- ObjectPool<T> methods
+    @Override
+    public void addObject() throws Exception {
+        pool.addObject();
+    }
 
     @SuppressWarnings("unchecked")
     @Override
-    public T borrowObject() throws Exception, NoSuchElementException,
-            IllegalStateException {
+    public T borrowObject() throws Exception {
         UsageTracking<T> usageTracking = null;
         if (pool instanceof UsageTracking) {
             usageTracking = (UsageTracking<T>) pool;
         }
-        final T pooledObject = pool.borrowObject();
-        final T proxy = proxySource.createProxy(pooledObject, usageTracking);
-        return proxy;
+        return proxySource.createProxy(pool.borrowObject(), usageTracking);
     }
 
-
     @Override
-    public void returnObject(final T proxy) throws Exception {
-        final T pooledObject = proxySource.resolveProxy(proxy);
-        pool.returnObject(pooledObject);
-    }
-
-
-    @Override
-    public void invalidateObject(final T proxy) throws Exception {
-        final T pooledObject = proxySource.resolveProxy(proxy);
-        pool.invalidateObject(pooledObject);
-    }
-
-
-    @Override
-    public void addObject() throws Exception, IllegalStateException,
-            UnsupportedOperationException {
-        pool.addObject();
-    }
-
-
-    @Override
-    public int getNumIdle() {
-        return pool.getNumIdle();
-    }
-
-
-    @Override
-    public int getNumActive() {
-        return pool.getNumActive();
-    }
-
-
-    @Override
-    public void clear() throws Exception, UnsupportedOperationException {
+    public void clear() throws Exception {
         pool.clear();
     }
-
 
     @Override
     public void close() {
         pool.close();
     }
 
+    @Override
+    public int getNumActive() {
+        return pool.getNumActive();
+    }
+
+    @Override
+    public int getNumIdle() {
+        return pool.getNumIdle();
+    }
+
+    @Override
+    public void invalidateObject(final T proxy) throws Exception {
+        pool.invalidateObject(proxySource.resolveProxy(proxy));
+    }
+
+    @Override
+    public void returnObject(final T proxy) throws Exception {
+        pool.returnObject(proxySource.resolveProxy(proxy));
+    }
 
     /**
      * @since 2.4.3

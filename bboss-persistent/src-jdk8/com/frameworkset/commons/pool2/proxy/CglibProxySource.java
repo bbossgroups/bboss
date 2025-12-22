@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,16 +16,18 @@
  */
 package com.frameworkset.commons.pool2.proxy;
 
+import com.frameworkset.commons.pool2.UsageTracking;
+
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.Factory;
 
-import com.frameworkset.commons.pool2.UsageTracking;
-
 /**
+ * cglib is unmaintained and does not work well (or possibly at all?) in newer JDKs, particularly JDK17+; see https://github.com/cglib/cglib
+ * <p>
  * Provides proxy objects using CGLib.
+ * </p>
  *
  * @param <T> type of the pooled object to be proxied
- *
  * @since 2.0
  */
 public class CglibProxySource<T> implements ProxySource<T> {
@@ -33,7 +35,7 @@ public class CglibProxySource<T> implements ProxySource<T> {
     private final Class<? extends T> superclass;
 
     /**
-     * Create a new proxy source for the given class.
+     * Constructs a new proxy source for the given class.
      *
      * @param superclass The class to proxy
      */
@@ -41,22 +43,18 @@ public class CglibProxySource<T> implements ProxySource<T> {
         this.superclass = superclass;
     }
 
+    @SuppressWarnings("unchecked") // Case to T on return
     @Override
     public T createProxy(final T pooledObject, final UsageTracking<T> usageTracking) {
         final Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(superclass);
 
         final CglibProxyHandler<T> proxyInterceptor =
-                new CglibProxyHandler<T>(pooledObject, usageTracking);
+                new CglibProxyHandler<>(pooledObject, usageTracking);
         enhancer.setCallback(proxyInterceptor);
 
-        @SuppressWarnings("unchecked")
-        final
-        T proxy = (T) enhancer.create();
-
-        return proxy;
+        return (T) enhancer.create();
     }
-
 
     @Override
     public T resolveProxy(final T proxy) {
@@ -64,8 +62,7 @@ public class CglibProxySource<T> implements ProxySource<T> {
         final
         CglibProxyHandler<T> cglibProxyHandler =
                 (CglibProxyHandler<T>) ((Factory) proxy).getCallback(0);
-        final T pooledObject = cglibProxyHandler.disableProxy();
-        return pooledObject;
+        return cglibProxyHandler.disableProxy();
     }
 
     /**

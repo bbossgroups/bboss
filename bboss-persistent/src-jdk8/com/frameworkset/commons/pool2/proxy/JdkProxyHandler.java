@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,23 +16,22 @@
  */
 package com.frameworkset.commons.pool2.proxy;
 
-import com.frameworkset.commons.pool2.UsageTracking;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+
+import com.frameworkset.commons.pool2.UsageTracking;
 
 /**
  * Java reflection implementation of the proxy handler.
  *
  * @param <T> type of the wrapped pooled object
- *
  * @since 2.0
  */
-class JdkProxyHandler<T> extends BaseProxyHandler<T>
+final class JdkProxyHandler<T> extends BaseProxyHandler<T>
         implements InvocationHandler {
 
     /**
-     * Create a Java reflection proxy instance.
+     * Constructs a Java reflection proxy instance.
      *
      * @param pooledObject  The object to wrap
      * @param usageTracking The instance, if any (usually the object pool) to
@@ -42,7 +41,6 @@ class JdkProxyHandler<T> extends BaseProxyHandler<T>
     JdkProxyHandler(final T pooledObject, final UsageTracking<T> usageTracking) {
         super(pooledObject, usageTracking);
     }
-
 
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args)

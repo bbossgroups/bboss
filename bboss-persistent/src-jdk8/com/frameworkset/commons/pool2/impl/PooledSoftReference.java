@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -44,10 +44,11 @@ public class PooledSoftReference<T> extends DefaultPooledObject<T> {
     }
 
     /**
-     * Returns the object that the wrapped SoftReference refers to.
+     * Gets the object that the wrapped SoftReference refers to.
      * <p>
      * Note that if the reference has been cleared, this method will return
      * null.
+     * </p>
      *
      * @return Object referred to by the SoftReference
      */
@@ -57,24 +58,7 @@ public class PooledSoftReference<T> extends DefaultPooledObject<T> {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        final StringBuilder result = new StringBuilder();
-        result.append("Referenced Object: ");
-        result.append(getObject().toString());
-        result.append(", State: ");
-        synchronized (this) {
-            result.append(getState().toString());
-        }
-        return result.toString();
-        // TODO add other attributes
-        // TODO encapsulate state and other attribute display in parent
-    }
-
-    /**
-     * Returns the SoftReference wrapped by this object.
+     * Gets the SoftReference wrapped by this object.
      *
      * @return underlying SoftReference
      */
@@ -94,5 +78,19 @@ public class PooledSoftReference<T> extends DefaultPooledObject<T> {
      */
     public synchronized void setReference(final SoftReference<T> reference) {
         this.reference = reference;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder result = new StringBuilder();
+        result.append("Referenced Object: ");
+        result.append(getObject().toString());
+        result.append(", State: ");
+        synchronized (this) {
+            result.append(getState().toString());
+        }
+        return result.toString();
+        // TODO add other attributes
+        // TODO encapsulate state and other attribute display in parent
     }
 }

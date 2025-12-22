@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,13 +16,10 @@
  */
 package com.frameworkset.commons.pool2.proxy;
 
-import com.frameworkset.commons.pool2.KeyedObjectPool;
-import com.frameworkset.commons.pool2.PoolUtils;
-import com.frameworkset.commons.pool2.UsageTracking;
+import java.util.List;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import com.frameworkset.commons.pool2.KeyedObjectPool;
+import com.frameworkset.commons.pool2.UsageTracking;
 
 /**
  * Create a new keyed object pool where the pooled objects are wrapped in
@@ -32,65 +29,15 @@ import java.util.NoSuchElementException;
  *
  * @param <K> type of the key
  * @param <V> type of the pooled object
- *
  * @since 2.0
  */
 public class ProxiedKeyedObjectPool<K, V> implements KeyedObjectPool<K, V> {
 
     private final KeyedObjectPool<K, V> pool;
     private final ProxySource<V> proxySource;
-    /**
-     * Calls {@link KeyedObjectPool#addObject(Object)} with each
-     * key in <code>keys</code> for <code>count</code> number of times. This has
-     * the same effect as calling {@link #addObjects(Object, int)}
-     * for each key in the <code>keys</code> collection.
-     *
-     * @param keys
-     *            {@link Collection} of keys to add objects for.
-     * @param count
-     *            the number of idle objects to add for each <code>key</code>.
-     * @throws Exception
-     *             when {@link KeyedObjectPool#addObject(Object)} fails.
-     * @throws IllegalArgumentException
-     *             when <code>keyedPool</code>, <code>keys</code>, or any value
-     *             in <code>keys</code> is <code>null</code>.
-     * @see #addObjects(Object, int)
-     */
-    public void addObjects(final Collection<K> keys, final int count) throws Exception, IllegalArgumentException {
-        if (keys == null) {
-            throw new IllegalArgumentException(PoolUtils.MSG_NULL_KEYS);
-        }
-        final Iterator<K> iter = keys.iterator();
-        while (iter.hasNext()) {
-            addObjects(iter.next(), count);
-        }
-    }
 
     /**
-     * Calls {@link KeyedObjectPool#addObject(Object)}
-     * <code>key</code> <code>count</code> number of times.
-     *
-     * @param key
-     *            the key to add objects for.
-     * @param count
-     *            the number of idle objects to add for <code>key</code>.
-     * @throws Exception
-     *             when {@link KeyedObjectPool#addObject(Object)} fails.
-     * @throws IllegalArgumentException
-     *             when <code>key</code> is <code>null</code>.
-     * @since 2.8.0
-     */
-    public void addObjects(final K key, final int count) throws Exception, IllegalArgumentException {
-        if (key == null) {
-            throw new IllegalArgumentException(PoolUtils.MSG_NULL_KEY);
-        }
-        for (int i = 0; i < count; i++) {
-            addObject(key);
-        }
-    }
-
-    /**
-     * Create a new proxied object pool.
+     * Constructs a new proxied object pool.
      *
      * @param pool  The object pool to wrap
      * @param proxySource The source of the proxy objects
@@ -101,41 +48,50 @@ public class ProxiedKeyedObjectPool<K, V> implements KeyedObjectPool<K, V> {
         this.proxySource = proxySource;
     }
 
+    @Override
+    public void addObject(final K key) throws Exception {
+        pool.addObject(key);
+    }
 
     @SuppressWarnings("unchecked")
     @Override
-    public V borrowObject(final K key) throws Exception, NoSuchElementException,
-            IllegalStateException {
+    public V borrowObject(final K key) throws Exception {
         UsageTracking<V> usageTracking = null;
         if (pool instanceof UsageTracking) {
             usageTracking = (UsageTracking<V>) pool;
         }
-        final V pooledObject = pool.borrowObject(key);
-        final V proxy = proxySource.createProxy(pooledObject, usageTracking);
-        return proxy;
+        return proxySource.createProxy(pool.borrowObject(key), usageTracking);
     }
 
     @Override
-    public void returnObject(final K key, final V proxy) throws Exception {
-        final V pooledObject = proxySource.resolveProxy(proxy);
-        pool.returnObject(key, pooledObject);
+    public void clear() throws Exception {
+        pool.clear();
     }
 
     @Override
-    public void invalidateObject(final K key, final V proxy) throws Exception {
-        final V pooledObject = proxySource.resolveProxy(proxy);
-        pool.invalidateObject(key, pooledObject);
+    public void clear(final K key) throws Exception {
+        pool.clear(key);
     }
 
     @Override
-    public void addObject(final K key) throws Exception, IllegalStateException,
-            UnsupportedOperationException {
-        pool.addObject(key);
+    public void close() {
+        pool.close();
+    }
+
+    /**
+     * Gets a copy of the pool key list.
+     *
+     * @return a copy of the pool key list.
+     * @since 2.12.0
+     */
+    @Override
+    public List<K> getKeys() {
+        return pool.getKeys();
     }
 
     @Override
-    public int getNumIdle(final K key) {
-        return pool.getNumIdle(key);
+    public int getNumActive() {
+        return pool.getNumActive();
     }
 
     @Override
@@ -149,25 +105,19 @@ public class ProxiedKeyedObjectPool<K, V> implements KeyedObjectPool<K, V> {
     }
 
     @Override
-    public int getNumActive() {
-        return pool.getNumActive();
+    public int getNumIdle(final K key) {
+        return pool.getNumIdle(key);
     }
 
     @Override
-    public void clear() throws Exception, UnsupportedOperationException {
-        pool.clear();
+    public void invalidateObject(final K key, final V proxy) throws Exception {
+        pool.invalidateObject(key, proxySource.resolveProxy(proxy));
     }
 
     @Override
-    public void clear(final K key) throws Exception, UnsupportedOperationException {
-        pool.clear(key);
+    public void returnObject(final K key, final V proxy) throws Exception {
+        pool.returnObject(key, proxySource.resolveProxy(proxy));
     }
-
-    @Override
-    public void close() {
-        pool.close();
-    }
-
 
     /**
      * @since 2.4.3

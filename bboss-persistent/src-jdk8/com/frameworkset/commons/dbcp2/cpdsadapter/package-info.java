@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,8 +18,8 @@
 /**
  * <p>
  * This package contains one public class which is a
- * <code>ConnectionPoolDataSource</code> (CPDS) implementation that can be used to
- * adapt older <code>Driver</code> based JDBC implementations. Below is an
+ * {@code ConnectionPoolDataSource} (CPDS) implementation that can be used to
+ * adapt older {@code Driver} based JDBC implementations. Below is an
  * example of setting up the CPDS to be available via JNDI in the
  * catalina servlet container.
  * </p>
@@ -35,15 +35,15 @@
  *       &lt;name&gt;factory&lt;/name&gt;
  *       &lt;value&gt;com.frameworkset.commons.dbcp2.cpdsadapter.DriverAdapterCPDS&lt;/value&gt;
  *     &lt;/parameter&gt;
- *         &lt;parameter&gt;&lt;name&gt;user&lt;/name&gt;&lt;value&gt;root&lt;/value&gt;&lt;/parameter&gt;
- *         &lt;parameter&gt;&lt;name&gt;password&lt;/name&gt;&lt;value&gt;&lt;/value&gt;&lt;/parameter&gt;
- *         &lt;parameter&gt;
- *             &lt;name&gt;driver&lt;/name&gt;
- *             &lt;value&gt;org.gjt.mm.mysql.Driver&lt;/value&gt;&lt;/parameter&gt;
- *         &lt;parameter&gt;
- *              &lt;name&gt;url&lt;/name&gt;
- *              &lt;value&gt;jdbc:mysql://localhost:3306/bookstore&lt;/value&gt;
- *         &lt;/parameter&gt;
+ *     &lt;parameter&gt;&lt;name&gt;user&lt;/name&gt;&lt;value&gt;root&lt;/value&gt;&lt;/parameter&gt;
+ *     &lt;parameter&gt;&lt;name&gt;password&lt;/name&gt;&lt;value&gt;&lt;/value&gt;&lt;/parameter&gt;
+ *     &lt;parameter&gt;
+ *       &lt;name&gt;driver&lt;/name&gt;
+ *       &lt;value&gt;org.gjt.mm.mysql.Driver&lt;/value&gt;&lt;/parameter&gt;
+ *     &lt;parameter&gt;
+ *       &lt;name&gt;url&lt;/name&gt;
+ *       &lt;value&gt;jdbc:mysql://localhost:3306/bookstore&lt;/value&gt;
+ *     &lt;/parameter&gt;
  *   &lt;/ResourceParams&gt;
  * </pre>
  *

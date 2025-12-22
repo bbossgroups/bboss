@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,25 +16,27 @@
  */
 package com.frameworkset.commons.pool2.proxy;
 
+import java.lang.reflect.Method;
+
 import com.frameworkset.commons.pool2.UsageTracking;
+
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
-import java.lang.reflect.Method;
-
 /**
+ * cglib is unmaintained and does not work well (or possibly at all?) in newer JDKs, particularly JDK17+; see https://github.com/cglib/cglib
+ * <p>
  * CGLib implementation of the proxy handler.
+ * </p>
  *
  * @param <T> type of the wrapped pooled object
- *
  * @since 2.0
  */
-class CglibProxyHandler<T> extends BaseProxyHandler<T>
+final class CglibProxyHandler<T> extends BaseProxyHandler<T>
         implements MethodInterceptor {
 
-
     /**
-     * Create a CGLib proxy instance.
+     * Constructs a CGLib proxy instance.
      *
      * @param pooledObject  The object to wrap
      * @param usageTracking The instance, if any (usually the object pool) to

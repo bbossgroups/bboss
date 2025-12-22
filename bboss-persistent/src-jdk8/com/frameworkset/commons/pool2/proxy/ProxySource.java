@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,13 +23,12 @@ import com.frameworkset.commons.pool2.UsageTracking;
  * {@link ProxiedObjectPool} to create proxies as required.
  *
  * @param <T> type of the pooled object to be proxied
- *
  * @since 2.0
  */
 interface ProxySource<T> {
 
     /**
-     * Create a new proxy object, wrapping the given pooled object.
+     * Creates a new proxy object, wrapping the given pooled object.
      *
      * @param pooledObject  The object to wrap
      * @param usageTracking The instance, if any (usually the object pool) to
@@ -41,10 +40,9 @@ interface ProxySource<T> {
     T createProxy(T pooledObject, UsageTracking<T> usageTracking);
 
     /**
-     * Obtain the wrapped object from the given proxy.
+     * Resolves the wrapped object from the given proxy.
      *
      * @param proxy The proxy object
-     *
      * @return The pooled object wrapped by the given proxy
      */
     T resolveProxy(T proxy);
