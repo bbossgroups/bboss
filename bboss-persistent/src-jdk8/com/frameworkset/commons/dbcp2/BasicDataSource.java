@@ -542,11 +542,15 @@ public class BasicDataSource implements DataSource, BasicDataSourceMXBean, MBean
                 startPoolMaintenance();
                 dataSource = newDataSource;
             } catch (final SQLException | RuntimeException se) {
-                closeConnectionPool();
-                throw se;
+                //mark modify 20251223
+//                closeConnectionPool();
+//                throw se;
+                log.warn("Error preloading the connection pool", se);
             } catch (final Exception ex) {
-                closeConnectionPool();
-                throw new SQLException("Error creating connection factory", ex);
+                //mark modify 20251223
+//                closeConnectionPool();
+//                throw new SQLException("Error creating connection factory", ex);
+                log.warn("Error preloading the connection pool",ex);
             }
 
             return dataSource;

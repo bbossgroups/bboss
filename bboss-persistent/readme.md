@@ -3,6 +3,7 @@ jdbcFetchSize设置建议：
 因为postgresql的jdbcFetchSize机制需要再数据库连接上开启数据库事务，如果设置全局jdbcFetchSize会导致所有的链接被自动设置为启用事务。
 
 内置连接池升级状况，并完成jdk 1.6兼容性改造
+集成dbcp2和pool2版本号：
 commons-pool2-2.13.0
 commons-dbcp2-2.14.0
 

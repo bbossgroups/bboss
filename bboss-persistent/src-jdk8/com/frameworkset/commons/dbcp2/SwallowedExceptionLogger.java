@@ -55,7 +55,10 @@ public class SwallowedExceptionLogger implements SwallowedExceptionListener {
     @Override
     public void onSwallowException(final Exception e) {
         if (logExpiredConnections || !(e instanceof LifetimeExceededException)) {
-            log.warn(Utils.getMessage("swallowedExceptionLogger.onSwallowedException"), e);
+            //mark modify 20251223
+            if(log.isDebugEnabled()) {
+                log.debug(Utils.getMessage("swallowedExceptionLogger.onSwallowedException"), e);
+            }
         }
     }
 }
