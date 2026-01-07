@@ -2,13 +2,13 @@ sourceSets {
     main {
         java {
             srcDirs 'src' exclude 'log4j.properties'
-            srcDirs 'src-asm'
+//            srcDirs 'src-asm'
             srcDirs 'src-charset'
         }
         resources{
             srcDir 'resources'
             srcDir 'src' exclude '**/*.java'
-            srcDir 'src-asm'  exclude '**/*.java'
+//            srcDir 'src-asm'  exclude '**/*.java'
             srcDir 'src-charset'  exclude '**/*.java'
         }
 
