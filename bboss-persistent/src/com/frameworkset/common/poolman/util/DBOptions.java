@@ -25,6 +25,10 @@ package com.frameworkset.common.poolman.util;
  */
 public class DBOptions {
 	private Integer fetchSize;
+    /**
+     * 允许返回的最大记录行数
+     */
+    private Integer maxRows;
 
 	public Integer getFetchSize() {
 		return fetchSize;
@@ -37,5 +41,12 @@ public class DBOptions {
 	public boolean hasFetchSize(){
 		return getFetchSize() != null && getFetchSize() != 0;
 	}
+    
+    public Integer getMaxRows() {
+        return maxRows;
+    }
 
+    public void setMaxRows(Integer maxRows) {
+        this.maxRows = maxRows;
+    }
 }

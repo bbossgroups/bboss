@@ -179,7 +179,13 @@ public abstract class SQLBaseCache {
 
 	}
 
-	protected SQLStruction evalSQLStruction(String newsql){
+    /**
+     * 模版sql解析语句
+     * @param newsql
+     * @return
+     */
+    
+	public static SQLStruction evalSQLStruction(String newsql){
 		return (SQLStruction) VariableHandler._parserStruction(newsql,persistentSQLStructionBuilder);
 	}
 	protected SQLStruction _getSQLStruction(Map<String,SQLStruction> parserSQLStructions ,SQLInfo sqlinfo, String newsql)

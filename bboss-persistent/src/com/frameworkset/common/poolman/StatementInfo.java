@@ -848,17 +848,36 @@ public class StatementInfo {
 		
 		boolean ismap = Map.class.isAssignableFrom(objectType);
 		ClassInfo beanInfo = ClassUtil.getClassInfo(objectType);
-		while (go) {
-			T record = ResultMap.buildValueObject(res, objectType, this,
-					rowHandler,ismap,beanInfo);
-			results.add(record);
-			rowcount++;
-			if (ispagine)
-				go = res.next() && rowcount < getMaxsize();
-			else
-				go = res.next();
+        Integer maxRows = dbOptions != null?dbOptions.getMaxRows():null;
+        if(maxRows == null) {
+            while (go) {
+                T record = ResultMap.buildValueObject(res, objectType, this,
+                        rowHandler, ismap, beanInfo);
+                results.add(record);
+                rowcount++;
+                if (ispagine)
+                    go = res.next() && rowcount < getMaxsize();
+                else
+                    go = res.next();
 
-		}
+            }
+        }
+        else{
+            while (go) {
+                T record = ResultMap.buildValueObject(res, objectType, this,
+                        rowHandler, ismap, beanInfo);
+                results.add(record);
+                rowcount++;
+                if(rowcount >= maxRows){
+                    break;
+                }
+                if (ispagine)
+                    go = res.next() && rowcount < getMaxsize();
+                else
+                    go = res.next();
+
+            }
+        }
 
 		return results;
 	}
@@ -878,17 +897,36 @@ public class StatementInfo {
 				go = res.next() && rowcount < getMaxsize();
 			else
 				go = res.next();
+            Integer maxRows = dbOptions != null?dbOptions.getMaxRows():null;
 			// 从结果集中获取当前游标后maxsize条记录
-			while (go) {
-				ResultMap.buildRecord(res, this,
-						rowHandler, this.dbadapter);
-				rowcount++;
-				if (ispagine)
-					go = res.next() && rowcount < getMaxsize();
-				else
-					go = res.next();
+            if(maxRows == null) {
+                while (go) {
+                    ResultMap.buildRecord(res, this,
+                            rowHandler, this.dbadapter);
+                    rowcount++;
+                     
+                    if (ispagine)
+                        go = res.next() && rowcount < getMaxsize();
+                    else
+                        go = res.next();
 
-			}
+                }
+            }
+            else{
+                while (go) {
+                    ResultMap.buildRecord(res, this,
+                            rowHandler, this.dbadapter);
+                    rowcount++;
+                    if (rowcount >= maxRows) {
+                        break;
+                    }
+                    if (ispagine)
+                        go = res.next() && rowcount < getMaxsize();
+                    else
+                        go = res.next();
+
+                }
+            }
 		}
 		else{
         	try {
