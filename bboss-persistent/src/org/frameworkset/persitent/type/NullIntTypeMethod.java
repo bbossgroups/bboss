@@ -31,6 +31,9 @@ import java.util.List;
  * @version 1.0
  */
 public class NullIntTypeMethod extends BaseTypeMethod{
+    public NullIntTypeMethod(){
+        super(true);
+    }
 	@Override
 	public void action(StatementInfo stmtInfo, Param param, PreparedStatement statement, PreparedStatement statement_count, List resources) throws SQLException {
 

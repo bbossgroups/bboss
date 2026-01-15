@@ -34,7 +34,19 @@ import java.util.List;
  * @version 1.0
  */
 public class BaseTypeMethod implements RegisterOutMethod {
-	@Override
+    private boolean nullable;
+    public BaseTypeMethod(){
+        
+    }
+    public BaseTypeMethod(boolean nullable){
+        this.nullable = nullable;
+    }
+
+    public boolean isNullable() {
+        return nullable;
+    }
+
+    @Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
 
 	}

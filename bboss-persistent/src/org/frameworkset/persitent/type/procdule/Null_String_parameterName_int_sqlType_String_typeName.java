@@ -31,6 +31,9 @@ import java.sql.SQLException;
  * @version 1.0
  */
 public class Null_String_parameterName_int_sqlType_String_typeName  extends BaseTypeMethod {
+    public Null_String_parameterName_int_sqlType_String_typeName(){
+        super(true);
+    }
 	@Override
 	public void action(StatementInfo stmtInfo, CallableParam param, CallableStatement cstmt) throws SQLException {
 		Object[] value = (Object[])param.getData();

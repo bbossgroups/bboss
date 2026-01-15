@@ -15,6 +15,7 @@ package com.frameworkset.persistent;
  * limitations under the License.
  */
 
+import com.frameworkset.util.ValueObjectUtil;
 import com.frameworkset.util.VariableHandler;
 
 /**
@@ -25,11 +26,8 @@ import com.frameworkset.util.VariableHandler;
  * @author biaoping.yin
  * @version 1.0
  */
-public class SQLVariable extends VariableHandler.Variable {
-	/**
-	 * sql 类型
-	 */
-	protected String type ;
+public class SQLVariable extends VariableHandler.TypeDefaultValueVariable {
+ 
 	@Override
 	public void after() {
 		super.after();
@@ -39,16 +37,18 @@ public class SQLVariable extends VariableHandler.Variable {
 
 			for (int i = 0; i < ts.length; i++) {
 				String t = ts[i];
-				if (t.startsWith("type=")) {
-					String q = t.substring("type=".length()).trim();
-					if(!q.equals(""))
-						type = q;
-				}
+				super.parserTypeAndDefaultObjectValue(t);
 			}
+            super.evalDefaultObjectValue();
+             
 		}
 	}
 
-	public String getType() {
+    public Object getDefaultObjectValue() {
+        return defaultObjectValue;
+    }
+
+    public String getType() {
 		return type;
 	}
 }

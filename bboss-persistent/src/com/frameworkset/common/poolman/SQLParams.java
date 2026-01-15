@@ -24,6 +24,7 @@ import com.frameworkset.util.*;
 import com.frameworkset.util.VariableHandler.SQLStruction;
 import com.frameworkset.util.VariableHandler.Variable;
 import org.frameworkset.persitent.type.BaseTypeMethod;
+import org.frameworkset.persitent.util.PersistentSQLVariable;
 import org.frameworkset.persitent.util.SQLInfo;
 import org.frameworkset.persitent.util.SQLUtil;
 import org.frameworkset.soa.BBossStringWriter;
@@ -165,8 +166,10 @@ public class SQLParams
     			Entry<String, Param> entry = it.next();
     			temp = entry.getValue();
 
-    			if(!temp.getType().equals(NULL))
-    				context_.put(entry.getKey(), temp.getData());
+    			if(!temp.getType().equals(NULL)) {
+                    context_.put(entry.getKey(), temp.getData());
+                }
+                 
     		}
         }
     	return context_;
@@ -480,15 +483,26 @@ public class SQLParams
             String varName = null;
 	        for(int i = 0;i < vars.size(); i ++)
 	        {
-	        	Variable var = vars.get(i);
+	        	PersistentSQLVariable var = (PersistentSQLVariable)vars.get(i);
                 varName = var.getVariableName();
-	            temp = this.sqlparams.get(varName);
-	            if(temp == null && !this.sqlparams.containsKey(varName))
-	                throw new SetSQLParamException(new StringBuilder().append("未指定绑定变量的值：" )
-													.append( varName )
-												    .append( "\r\n" )
-													.append( this.toString()).toString());
-	            Param newparam = temp.clone(var);
+                boolean hasParams = sqlparams != null;
+	            temp = hasParams?this.sqlparams.get(varName):null;
+                
+                Param newparam = null;
+	            if(temp == null ) {
+                     
+                    if (var.getDefaultObjectValue() != null) {
+                        newparam = Param.build(var);
+                    } else {
+                        throw new SetSQLParamException(new StringBuilder().append("未指定绑定变量的值：")
+                                .append(varName)
+                                .append("\r\n")
+                                .append(this.toString()).toString());
+                    }
+                }
+                else {
+                    newparam = temp.clone(var);
+                }
 	            //绑定变量索引从1开始
 	            newparam.index = i + 1;
 	            _realParams.add(newparam);
@@ -1377,7 +1391,7 @@ public class SQLParams
         {
         	if(!type.equals(OBJECT))
         	{
-	            data_ = this.converttypeToSqltype(type);
+	            data_ = this.converttypeToSqltype(type);//type为NULL时，data_值代表原始数据对应的sqlType
 	            type = NULL;            
         	}
         }

@@ -172,6 +172,7 @@ public class Param
         newparam.method = this.method;
         newparam.type = this.type;
         newparam.charset = this.charset;
+        newparam.defaultValue = this.defaultValue;
         
         return newparam;
     }
@@ -187,21 +188,74 @@ public class Param
         newparam.dataformat = this.dataformat;
         newparam.index = this.index;
 		PersistentSQLVariable sqlVariable = (PersistentSQLVariable)variable;
-        if(sqlVariable.getMethod() != null)
-			newparam.method = sqlVariable.getMethod();
-        else
-        	newparam.method = this.method;
+        if(sqlVariable.getMethod() != null) {
+            if(method.isNullable()){
+                if(sqlVariable.getDefaultObjectValue() != null){
+                    newparam.data = sqlVariable.getDefaultObjectValue();
+                    newparam.defaultValue = sqlVariable.getDefaultObjectValue();
+                    if(sqlVariable.getMethod() != null) {
+                        newparam.method = sqlVariable.getMethod();
+                    }
+                    else{
+                        newparam.method = setObject_int_Object;
+                    }
+                }
+                else{
+                    newparam.method = this.method;
+                }
+            }
+            else{
+                newparam.method = sqlVariable.getMethod();
+            }
+                         
+        }
+        else {
+            newparam.method = this.method;
+        }
         newparam.type = this.type;
         newparam.charset = this.charset;
-        newparam.variable = variable; 
+        newparam.variable = variable;
+        newparam.defaultValue = defaultValue;
+        return newparam;
+    }
+
+    public static Param build(PersistentSQLVariable variable)
+    {
+         
+        Param newparam = new Param();
+        newparam.data = variable.getDefaultObjectValue();
+        newparam.name = variable.getVariableName();
+        newparam.index = variable.getPosition();
+        if(variable.getMethod() != null)
+            newparam.method = variable.getMethod();
+        else{
+            newparam.method = setObject_int_Object;
+        }
+       
+        newparam.type = variable.getType();
+        newparam.variable = variable;
+        newparam.defaultValue = variable.getDefaultObjectValue();
         return newparam;
     }
     int index;
+    /**
+     * 说明：当type为NULL时，data_值代表原始数据对应的sqlType
+     */
 	Object data;
 	String dataformat;
 	String name;
+    
+    Object defaultValue;
 
-	public Variable getVariable() {
+    public void setDefaultValue(Object defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    public Object getDefaultValue() {
+        return defaultValue;
+    }
+
+    public Variable getVariable() {
 		return variable;
 	}
 
@@ -223,7 +277,9 @@ public class Param
 			.append(",index=").append(index)
 			.append(",value=");
 			SimpleStringUtil.tostring(ret,data);
+            
 			ret.append(",dataformat=").append(dataformat)
+            .append(",defaultValue=").append(this.defaultValue)
 			.append(",charset=").append(this.charset== null?"":charset)
 			.append(",method=").append(method).append("]");
 			return ret.toString();
@@ -236,6 +292,7 @@ public class Param
 			.append(",value=");
 			SimpleStringUtil.tostring(ret,data);
 			ret.append(",variable=").append(variable.toString())
+                    .append(",defaultValue=").append(this.defaultValue)
 			.append(",dataformat=").append(dataformat)
 			.append(",charset=").append(this.charset== null?"":charset)
 			.append(",method=").append(method).append("]");
@@ -244,67 +301,6 @@ public class Param
 	}
 	
 	
-//
-//	public static String getParamType(int sqltype,boolean isnull)
-//	{
-//	    if(isnull)
-//	        return Param.setNull_int_int;
-//	    switch(sqltype)
-//	    {
-//
-////	        case java.sql.Types.
-////    	    /**setAsciiStream(int i, InputStream x, int length)*/
-////    	    static final String SET_AsciiStream_INT_InputStream_INT = "setAsciiStream(int, InputStream, int)";
-//	        case java.sql.Types.BIGINT:
-//	            return SET_BigDecimal_INT_BigDecimal ;
-//
-//	        case java.sql.Types.BOOLEAN:
-//                return setBoolean_int_boolean ;
-//	        case java.sql.Types.BIT:
-//	            return setByte_int_byte ;
-//
-//
-//
-//
-//
-//	        case java.sql.Types.DATE:
-//	            return setDate_int_sqlDate ;
-//
-//
-//	        case java.sql.Types.DOUBLE:
-//	            return setDouble_int_double ;
-//	        case java.sql.Types.FLOAT:
-//	            return setFloat_int_float ;
-//	        case java.sql.Types.INTEGER:
-//	            return setInt_int_int ;
-//
-//
-//	        case java.sql.Types.NUMERIC:
-//	            return setLong_int_long;
-//
-//
-//
-//
-//
-//
-//
-//	        case java.sql.Types.SMALLINT:
-//	            return setShort_int_short ;
-//	        case java.sql.Types.VARCHAR:
-//	            return setString_int_String ;
-//	        case java.sql.Types.TIME:
-//	            return setTime_int_Time ;
-//
-//	        case java.sql.Types.TIMESTAMP:
-//	            return setTimestamp_int_Timestamp ;
-//	        default:
-//                return setObject_int_Object ;
-//
-//
-//
-//
-//	    }
-//	}
 
 	public String getDataformat() {
 		return dataformat;

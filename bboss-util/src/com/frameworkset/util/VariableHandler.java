@@ -16,6 +16,7 @@
 
 package com.frameworkset.util;
 
+import com.frameworkset.persistent.SQLTypeMap;
 import com.frameworkset.persistent.SQLVariable;
 import com.frameworkset.util.variable.DefaultvalueVariableStructionBuiler;
 import org.frameworkset.util.ClassUtil;
@@ -284,6 +285,40 @@ public class VariableHandler
 		}
     	
 	}
+    public static class TypeDefaultValueVariable extends Variable { 
+        protected String type;
+        protected Object defaultObjectValue;
+ 
+        protected void parserTypeAndDefaultObjectValue(String t) {
+            if (t.startsWith("type=")) {
+                String q = t.substring("type=".length()).trim();
+                if(!q.equals(""))
+                    type = q.toLowerCase();
+
+            }
+            else if(t.startsWith("default=")){
+                String q = t.substring("default=".length());
+                defaultValue = q;
+            }
+        }
+
+        protected void evalDefaultObjectValue() {
+            //指定了默认值，必须指定类型
+            if (defaultValue != null && type != null) {
+                defaultObjectValue = ValueObjectUtil.typeCast(defaultValue, SQLTypeMap.fromTypeName(type).getClazz());
+            }
+        }
+     
+
+        public Object getDefaultObjectValue() {
+            return defaultObjectValue;
+        }
+
+        public String getType() {
+            return type;
+        }
+    }
+    
 
 	public static class Variable {
 		protected String defaultValue ;
