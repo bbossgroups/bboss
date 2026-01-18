@@ -15,6 +15,7 @@ package org.frameworkset.util.shutdown;
  * limitations under the License.
  */
 
+import com.frameworkset.util.BaseSimpleStringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,6 +136,22 @@ public class ShutdownUtil {
 
 		return value != null? value:defaultValue;
 	}
+    /**
+     * 添加系统中停止时的回调程序
+     *
+     * @param destroyVMHook
+     */
+    public static void addShutdownHook( Runnable destroyVMHook,int proir) {
+        addShutdownHook(BaseSimpleStringUtil.getUUID32(),destroyVMHook,  proir);
+    }
+    /**
+     * 添加系统中停止时的回调程序
+     *
+     * @param destroyVMHook
+     */
+    public static void addShutdownHook( Runnable destroyVMHook) {
+        addShutdownHook(BaseSimpleStringUtil.getUUID32(),destroyVMHook);
+    }
 	/**
 	 * 添加系统中停止时的回调程序
 	 *
@@ -146,11 +163,6 @@ public class ShutdownUtil {
 			// with 1.2 VM's
 			destroyVMHook = new WrapperRunnable(id,destroyVMHook,proir);
 			addShutdownHook_((WrapperRunnable)destroyVMHook);
-//			Class r = Runtime.getRuntime().getClass();
-//			java.lang.reflect.Method m = r.getDeclaredMethod("addShutdownHook",
-//					new Class[] { Thread.class });
-//			m.invoke(Runtime.getRuntime(), new Object[] { new Thread(
-//					destroyVMHook) });
 		} catch (Exception e) {
 			log.warn("addShutdownHook failed:",e);
 		}

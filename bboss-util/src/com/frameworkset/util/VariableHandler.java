@@ -288,6 +288,7 @@ public class VariableHandler
     public static class TypeDefaultValueVariable extends Variable { 
         protected String type;
         protected Object defaultObjectValue;
+        protected boolean required;
  
         protected void parserTypeAndDefaultObjectValue(String t) {
             if (t.startsWith("type=")) {
@@ -299,6 +300,10 @@ public class VariableHandler
             else if(t.startsWith("default=")){
                 String q = t.substring("default=".length());
                 defaultValue = q;
+            }
+            else if(t.startsWith("required=")){
+                String q = t.substring("required=".length());
+                required = q.equals("true");
             }
         }
 
@@ -316,6 +321,10 @@ public class VariableHandler
 
         public String getType() {
             return type;
+        }
+
+        public boolean isRequired() {
+            return required;
         }
     }
     

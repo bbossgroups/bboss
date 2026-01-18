@@ -25,6 +25,7 @@ package com.frameworkset.common.poolman.util;
  */
 public class DBOptions {
 	private Integer fetchSize;
+    private Boolean triggerSecurityConfLimit;
     /**
      * 允许返回的最大记录行数
      */
@@ -48,5 +49,13 @@ public class DBOptions {
 
     public void setMaxRows(Integer maxRows) {
         this.maxRows = maxRows;
+    }
+
+    public void setTriggerSecurityConfLimit(Boolean triggerSecurityConfLimit) {
+        this.triggerSecurityConfLimit = triggerSecurityConfLimit;
+    }
+
+    public Boolean getTriggerSecurityConfLimit() {
+        return triggerSecurityConfLimit;
     }
 }

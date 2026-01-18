@@ -869,6 +869,12 @@ public class StatementInfo {
                 results.add(record);
                 rowcount++;
                 if(rowcount >= maxRows){
+                    if(res.next()){
+                        dbOptions.setTriggerSecurityConfLimit(true);
+                    }
+                    else{
+                        dbOptions.setTriggerSecurityConfLimit(false);
+                    }
                     break;
                 }
                 if (ispagine)
@@ -918,6 +924,12 @@ public class StatementInfo {
                             rowHandler, this.dbadapter);
                     rowcount++;
                     if (rowcount >= maxRows) {
+                        if(res.next()){
+                            dbOptions.setTriggerSecurityConfLimit(true);
+                        }
+                        else{
+                            dbOptions.setTriggerSecurityConfLimit(false);
+                        }
                         break;
                     }
                     if (ispagine)
