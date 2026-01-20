@@ -44,11 +44,5 @@ public class SQLVariable extends VariableHandler.TypeDefaultValueVariable {
 		}
 	}
 
-    public Object getDefaultObjectValue() {
-        return defaultObjectValue;
-    }
-
-    public String getType() {
-		return type;
-	}
+ 
 }

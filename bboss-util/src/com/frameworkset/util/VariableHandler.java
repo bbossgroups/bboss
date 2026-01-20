@@ -289,6 +289,7 @@ public class VariableHandler
         protected String type;
         protected Object defaultObjectValue;
         protected boolean required;
+        protected String description;
  
         protected void parserTypeAndDefaultObjectValue(String t) {
             if (t.startsWith("type=")) {
@@ -304,6 +305,10 @@ public class VariableHandler
             else if(t.startsWith("required=")){
                 String q = t.substring("required=".length());
                 required = q.equals("true");
+            }
+            else if(t.startsWith("description=")){
+                String q = t.substring("description=".length());
+                description = q;
             }
         }
 
@@ -325,6 +330,10 @@ public class VariableHandler
 
         public boolean isRequired() {
             return required;
+        }
+
+        public String getDescription() {
+            return description;
         }
     }
     
