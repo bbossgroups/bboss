@@ -158,6 +158,8 @@ public abstract class SQLBaseCache {
 
 	}
 	public final static PersistentSQLStructionBuilder persistentSQLStructionBuilder = new PersistentSQLStructionBuilder();
+
+    public final static APISQLStructionBuilder apiSQLStructionBuilder = new APISQLStructionBuilder();
 	public SQLStruction getSQLStruction(SQLInfo sqlinfo,String newsql)
 	{
 
@@ -188,6 +190,16 @@ public abstract class SQLBaseCache {
 	public static SQLStruction evalSQLStruction(String newsql){
 		return (SQLStruction) VariableHandler._parserStruction(newsql,persistentSQLStructionBuilder);
 	}
+
+    /**
+     * 模版sql解析语句
+     * @param newsql
+     * @return
+     */
+
+    public static APISQLStruction evalAPISQLStruction(String newsql){
+        return (APISQLStruction) VariableHandler._parserStruction(newsql,apiSQLStructionBuilder);
+    }
 	protected SQLStruction _getSQLStruction(Map<String,SQLStruction> parserSQLStructions ,SQLInfo sqlinfo, String newsql)
 	{
 

@@ -1,6 +1,6 @@
-package com.frameworkset.persistent;
+package org.frameworkset.persitent.util;
 /**
- * Copyright 2020 bboss
+ * Copyright 2022 bboss
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,34 +18,28 @@ package com.frameworkset.persistent;
 import com.frameworkset.util.VariableHandler;
 
 /**
- * <p>Description: 扩展解析提取sql类型</p>
+ * <p>Description: </p>
  * <p></p>
  * <p>Copyright (c) 2020</p>
- * @Date 2022/3/2 9:15
+ * @Date 2022/3/3
  * @author biaoping.yin
  * @version 1.0
  */
-public class SQLVariable extends VariableHandler.TypeDefaultValueVariable {
- 
+public class APISQLStructionBuilder implements VariableHandler.StructionBuiler{
 
-    
-    @Override
-    /**
-     * 变量属性解析完毕后，对变量属性信息进行额外处理
-     */
-    public void afterSetAttribute(){
-        if(this.attributes != null) {
-//				int pos = this.attributes.indexOf(",");
-            String[] ts = attributes.split(",");
+		@Override
+		public VariableHandler.URLStruction buildStruction() {
+			return new APISQLStruction();
+		}
 
-            for (int i = 0; i < ts.length; i++) {
-                String t = ts[i];
-                parserTypeAndDefaultObjectValue(t);
-            }
-            evalDefaultObjectValue();
+		@Override
+		public VariableHandler.URLStruction buildStruction(String token) {
+			return  new APISQLStruction(token);
+		}
 
-        }
-    }
+		@Override
+		public VariableHandler.Variable buildVariable() {
+			return new APISQLVariable();
+		}
 
- 
 }

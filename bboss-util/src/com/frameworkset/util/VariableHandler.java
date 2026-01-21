@@ -228,7 +228,7 @@ public class VariableHandler
 	}
     
     public static class SQLStruction extends URLStruction{
-    	private String sql;
+    	protected String sql;
 
     	public SQLStruction()
     	{
@@ -305,6 +305,10 @@ public class VariableHandler
             else if(t.startsWith("required=")){
                 String q = t.substring("required=".length());
                 required = q.equals("true");
+            }
+            else if(t.startsWith("desc=")){
+                String q = t.substring("desc=".length());
+                description = q;
             }
             else if(t.startsWith("description=")){
                 String q = t.substring("description=".length());
@@ -419,10 +423,38 @@ public class VariableHandler
 			{
 				ret.append("->").append(next.toString());
 			}
-			if(this.parent == null)
-				ret.append(",position=").append(this.position);
+			if(this.parent == null) {
+                if(attributes != null)
+                    ret.append(",").append(attributes);
+                ret.append(",position=").append(this.position);
+            }
 			return ret.toString();
 		}
+
+        public void toSQLString(StringBuilder sql)
+        {
+            if(this.parent == null) {
+                sql.append("#[");
+            }
+            sql.append(this.variableName);
+            if(this.indexs != null && this.indexs.size() >0)
+            {
+                for(Index idx :indexs)
+                {
+                    sql.append("[").append(idx.toString()).append("]");
+                }
+            }
+            if(next != null)
+            {
+                sql.append("->").append(next.toString());
+            }
+            if(this.parent == null) {
+                if(attributes != null)
+                    sql.append(",").append(attributes);
+                sql.append("]");
+            }
+            
+        }
 
 		/**
 		 * 变量解析完毕后，对变量定义信息进行额外处理
@@ -430,6 +462,13 @@ public class VariableHandler
 		public void after(){
 			this.originVariableName = variableName;
 		}
+
+        /**
+         * 变量属性解析完毕后，对变量属性信息进行额外处理
+         */
+        public void afterSetAttribute(){
+             
+        }
 		
 
 		
@@ -851,7 +890,7 @@ public class VariableHandler
 								}
 								else{
 									hh.setAttributes(var.toString());
-									hh.after();
+									hh.afterSetAttribute();
 									var.setLength(0);
 									attr_start = false;
 									varstart = false;

@@ -29,13 +29,19 @@ import org.frameworkset.persitent.type.BaseTypeMethod;
  */
 public class PersistentSQLVariable extends SQLVariable {
 	private BaseTypeMethod method;
-	@Override
-	public void after() {
-		super.after();
-		if(type != null && !type.equals("")){
-			method = SQLParams.converttypeToMethod(type,false);
-		}
-	}
+
+
+    
+    /**
+     * 变量属性解析完毕后，对变量属性信息进行额外处理
+     */
+    @Override
+    public void afterSetAttribute(){
+        super.afterSetAttribute();
+        if(type != null && !type.equals("")){
+            method = SQLParams.converttypeToMethod(type,false);
+        }
+    }
 
 	public BaseTypeMethod getMethod() {
 		return method;

@@ -1,3 +1,11 @@
+select
+#[api_id,alias=apiId,desc=应用id,selectColumn=true],
+#[api_code,alias=apiCode,desc=应用编码,selectColumn=true],
+#[api_name,alias=apiName,desc=应用名称,selectColumn=true],
+#[api_url,alias=apiUrl,desc=应用地址,selectColumn=true]
+from api_config
+where api_type=#[apiType,type=string,default=1,required=false,desc=接口类型]
+
 jdbcFetchSize设置建议：
 一般可以全局设置jdbcFetchSize，但是postgresql禁用全局设置，必须在每次查询时通过DBOption设置jdbcFetchSize，
 因为postgresql的jdbcFetchSize机制需要再数据库连接上开启数据库事务，如果设置全局jdbcFetchSize会导致所有的链接被自动设置为启用事务。
