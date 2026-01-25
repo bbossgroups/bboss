@@ -38,6 +38,15 @@ public class ServerEvent extends MultimodalGeneration{
      * 字段包含数据内容，当type为0时，data字段包含数据内容，当type为1时，data字段包含错误信息
      */
     private String data;
+
+    /**
+     * 加工后的url地址
+     */
+    private String url; 
+    /**
+     * 获取模型生成的url地址
+     */
+    private String genUrl;
     /**
      * 扩展数据
      */
@@ -170,5 +179,21 @@ public class ServerEvent extends MultimodalGeneration{
      */
     public void setContentType(int contentType) {
         this.contentType = contentType;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getGenUrl() {
+        return genUrl;
+    }
+
+    public void setGenUrl(String genUrl) {
+        this.genUrl = genUrl;
     }
 }
