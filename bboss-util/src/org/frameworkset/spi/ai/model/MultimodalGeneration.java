@@ -29,6 +29,12 @@ public abstract class MultimodalGeneration implements Serializable {
 
 
     protected long expiresAt;
+    
+    protected int code = 200;
+
+
+
+    private String errorMessage;
 
     public String getFinishReason() {
         return finishReason;
@@ -46,4 +52,21 @@ public abstract class MultimodalGeneration implements Serializable {
         this.expiresAt = expiresAt;
     }
 
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
 }
