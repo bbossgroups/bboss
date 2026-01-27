@@ -514,6 +514,70 @@ public class FileUtil
     {
     	return getFileContent(new File( filePath),charSet);
     }
+    /**
+     * 获取文件内容
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static byte[] getBytes(File file) throws IOException
+    {
+        ByteArrayOutputStream swriter = null;
+        OutputStream temp = null;
+        InputStream reader = null;
+        try
+        {
+            reader = new FileInputStream(file);
+            swriter = new ByteArrayOutputStream();
+            temp = new BufferedOutputStream(swriter);
+
+            int len = 0;
+            byte[] buffer = new byte[1024];
+            while ((len = reader.read(buffer)) > 0)
+            {
+                temp.write(buffer, 0, len);
+            }
+            temp.flush();
+            return swriter.toByteArray();
+        }
+        catch (FileNotFoundException e)
+        {
+            log.error("Get File Content Error:", e);
+            throw e;
+        }
+        catch (IOException e)
+        {
+            log.error("Get File Content Error:", e);
+            throw e;
+        }
+        finally
+        {
+            if (reader != null)
+                try
+                {
+                    reader.close();
+                }
+                catch (IOException e)
+                {
+                }
+            if (swriter != null)
+                try
+                {
+                    swriter.close();
+                }
+                catch (IOException e)
+                {
+                }
+            if (temp != null)
+                try
+                {
+                    temp.close();
+                }
+                catch (IOException e)
+                {
+                }
+        }
+    }
 
 
     /**
