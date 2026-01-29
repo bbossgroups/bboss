@@ -226,6 +226,8 @@ public class Jackson1ObjectMapper implements JacksonObjectMapper {
 				
 			
 			}
+            
+            
 		  
 		  /* (non-Javadoc)
 		 * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, boolean)
@@ -247,7 +249,31 @@ public class Jackson1ObjectMapper implements JacksonObjectMapper {
 				
 			
 			}
-		  
+    /**
+     * 转换为格式化json串
+     * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, boolean)
+     */
+    @Override
+    public   String object2jsonPretty(Object object) {
+        return object2jsonPretty(object,false);
+    }
+    /**
+     * 转换为格式化json串
+     * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, boolean)
+     */
+    @Override
+    public   String object2jsonPretty(Object object,boolean ALLOW_SINGLE_QUOTES) {
+        try {
+            String value = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+
+            return value;
+
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException("错误的json序列化操作",e);
+        }
+
+    }
 		  /* (non-Javadoc)
 		 * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, java.io.File)
 		 */

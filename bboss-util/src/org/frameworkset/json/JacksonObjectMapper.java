@@ -10,9 +10,20 @@ import java.io.Writer;
 
 public interface JacksonObjectMapper {
 
-	public ObjectMapper getObjectMapper();
-	public JavaType getJavaType(Class containerType, Class ... beanClass);
-	public JavaType getJavaMapType(Class containerType, Class keyClass,Class valueClass);
+	ObjectMapper getObjectMapper();
+	JavaType getJavaType(Class containerType, Class ... beanClass);
+	JavaType getJavaMapType(Class containerType, Class keyClass,Class valueClass);
+    /**
+     * 转换为格式化json串
+     * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, boolean)
+     */
+    String object2jsonPretty(Object object);
+    /**
+     * 转换为格式化json串
+     * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, boolean)
+     */
+     
+    String object2jsonPretty(Object object,boolean ALLOW_SINGLE_QUOTES);
 	<T> T json2Object(String jsonString, Class<T> toclass);
 
 	<T> T json2Object(String jsonString, Class<T> toclass, boolean ALLOW_SINGLE_QUOTES);

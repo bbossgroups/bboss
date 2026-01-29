@@ -382,6 +382,43 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			
 		
 		}
+    /**
+     * 转换为格式化json串
+     * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, boolean)
+     */
+    @Override
+    public   String object2jsonPretty(Object object) {
+        return object2jsonPretty(object,false);
+    }
+    /**
+     * 转换为格式化json串
+     * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, boolean)
+     */
+    @Override
+    public   String object2jsonPretty(Object object,boolean ALLOW_SINGLE_QUOTES) {
+//	    	ObjectMapper mapper = new ObjectMapper();
+//			mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
+
+        try {
+
+            if(ALLOW_SINGLE_QUOTES) {
+                String value = ALLOW_SINGLE_QUOTES_mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+
+                return value;
+            }
+            else{
+                String value = NOT_ALLOW_SINGLE_QUOTES_mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+
+                return value;
+            }
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage(),e);
+        }
+
+
+
+    }
 	  
 	  /* (non-Javadoc)
 	 * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, java.io.File)

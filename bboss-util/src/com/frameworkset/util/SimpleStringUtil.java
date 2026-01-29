@@ -695,29 +695,30 @@ outStr = "2010年02月07日11时许，周灵颖报警：在2路公交车上被�
 	}
     
     public static String object2json(Object object,boolean ALLOW_SINGLE_QUOTES) {
-//    	ObjectMapper mapper = new ObjectMapper();
-//		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 
-//		try {
-//			String value = mapper.writeValueAsString(object);
-//			
-//			return value;
-//			
-//			
-//		} catch (Exception e) {
-//			throw new IllegalArgumentException("错误的json序列化操作",e);
-//		}
+
     	return getJacksonObjectMapper().object2json(  object,  ALLOW_SINGLE_QUOTES);
 		
 	
 	}
     
     public static String object2json(Object object) {
-    	return object2json(object,true) ;
-		
-		
+    	return object2json(object,true) ;	
 	
 	}
-    
+
+    public static String object2jsonPretty(Object object,boolean ALLOW_SINGLE_QUOTES) {
+
+        return getJacksonObjectMapper().object2jsonPretty(  object,  ALLOW_SINGLE_QUOTES);
+
+
+    }
+
+    public static String object2jsonPretty(Object object) {
+        return object2jsonPretty(object,true) ;
+
+    }
+
+
     public static void object2json(Object object,Writer writer,boolean ALLOW_SINGLE_QUOTES) {
 //    	ObjectMapper mapper = new ObjectMapper();
 //		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES); 

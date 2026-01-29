@@ -207,6 +207,24 @@ public class JacksonObjectMapperWrapper implements JacksonObjectMapper {
 			
 		
 		}
+
+    /**
+     * 转换为格式化json串
+     * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, boolean)
+     */
+    @Override
+    public   String object2jsonPretty(Object object) {
+        return object2jsonPretty(object,false);
+    }
+    /**
+     * 转换为格式化json串
+     * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, boolean)
+     */
+    @Override
+    public   String object2jsonPretty(Object object,boolean ALLOW_SINGLE_QUOTES) {
+        return jacksonObjectMapper.object2jsonPretty(  object,  ALLOW_SINGLE_QUOTES);
+
+    }
 	  
 	  /* (non-Javadoc)
 	 * @see org.frameworkset.json.JacksonObjectMapper#object2json(java.lang.Object, boolean)
