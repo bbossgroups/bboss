@@ -578,6 +578,73 @@ public class FileUtil
                 }
         }
     }
+    public static String getBase64Video(String video) throws IOException{
+        return getBase64Video(new File( video));
+    }
+    /**
+     * 根据视频文件类型，生成可以直接播放的base64视频编码串
+     * @param video 视频文件
+     * @return 包含MIME类型的base64编码字符串，格式为 "data:video/[type];base64,[base64data]"
+     * @throws IOException
+     */
+    public static String getBase64Video(File video) throws IOException {
+        // 获取文件扩展名
+        String fileExtension = getFileExtByFileName(video.getName());
+        
+        // 获取对应的MIME类型
+        String mimeType = getMimeType(fileExtension);
+        
+        // 如果不是视频类型，默认使用video/mp4，或者可以根据扩展名映射具体的MIME类型
+        if (mimeType == null || !mimeType.startsWith("video/")) {
+            mimeType = getVideoMimeType(fileExtension);
+        }
+        
+        // 获取文件字节数组
+        byte[] bytes = getBytes(video);
+        
+        // 生成base64编码
+        String base64Data = java.util.Base64.getEncoder().encodeToString(bytes);
+        StringBuilder builder = new StringBuilder();
+        // 返回完整的可播放数据URL
+        builder.append("data:").append(mimeType ) .append( ";base64,").append(base64Data) ;
+        return builder.toString();
+    }
+    
+    /**
+     * 根据文件扩展名获取视频MIME类型
+     * @param extension 文件扩展名
+     * @return MIME类型字符串
+     */
+    private static String getVideoMimeType(String extension) {
+        if (extension == null) {
+            return "video/mp4"; // 默认返回mp4类型
+        }
+        
+        switch (extension.toLowerCase()) {
+            case "mp4":
+                return "video/mp4";
+            case "webm":
+                return "video/webm";
+            case "ogg":
+                return "video/ogg";
+            case "mov":
+                return "video/quicktime";
+            case "avi":
+                return "video/x-msvideo";
+            case "wmv":
+                return "video/x-ms-wmv";
+            case "flv":
+                return "video/x-flv";
+            case "m4v":
+                return "video/x-m4v";
+            case "3gp":
+                return "video/3gpp";
+            case "mkv":
+                return "video/x-matroska";
+            default:
+                return "video/mp4"; // 默认返回mp4类型
+        }
+    }
 
 
     /**
