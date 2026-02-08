@@ -239,14 +239,12 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 
 
 	public boolean supports(HandlerMeta handler) {
-		return !handler.isWebsocket() && getMethodResolver(handler.getHandlerClass()).hasHandlerMethods();
+		return !handler.isWebsocket() && getMethodResolver(handler,handler.getHandlerClass()).hasHandlerMethods();
 	}
 	
 	
 	
-	public boolean hasHandlerMethods(Class handler) {
-		return getMethodResolver(handler).hasHandlerMethods();
-	}
+ 
 
 	@Override
 	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response, PageContext pageContext, HandlerExecutionChain mappedHandler)
@@ -254,12 +252,12 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 
 		if (mappedHandler.getHandler().getHandlerClass().getAnnotation(SessionAttributes.class) != null) {
 			// Always prevent caching in case of session attribute management.
-			checkAndPrepare(request, response, this.cacheSecondsForSessionAttributeHandlers, true);
+			checkAndPrepare(request, response, this.cacheSecondsForSessionAttributeHandlers, true,mappedHandler.getHandler());
 			// Prepare cached set of session attributes names.
 		}
 		else {
 			// Uses configured default cacheSeconds setting.
-			checkAndPrepare(request, response, true);
+			checkAndPrepare(request, response, true,mappedHandler.getHandler());
 		}
 
 		// Execute invokeHandlerMethod in synchronized block if required.
@@ -280,7 +278,7 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 			HttpServletRequest request, HttpServletResponse response,  PageContext pageContext,HandlerExecutionChain mappedHandler) throws Exception {
 
 
-		ServletHandlerMethodResolver methodResolver = getMethodResolver(mappedHandler.getHandler().getHandlerClass());
+		ServletHandlerMethodResolver methodResolver = getMethodResolver(mappedHandler.getHandler(),mappedHandler.getHandler().getHandlerClass());
 		return HandlerUtils.invokeHandlerMethod(request, response, pageContext, mappedHandler,
 				methodResolver,messageConverters);
 	}
@@ -288,12 +286,12 @@ public class AnnotationMethodHandlerAdapter  extends WebContentGenerator impleme
 	/**
 	 * Build a HandlerMethodResolver for the given handler type.
 	 */
-	public  ServletHandlerMethodResolver getMethodResolver(Class handlerClass) {
+	public  ServletHandlerMethodResolver getMethodResolver(HandlerMeta handler,Class handlerClass) {
 //		Class handlerClass = ClassUtils.getUserClass(handler);
 		
 		ServletHandlerMethodResolver resolver = (org.frameworkset.web.servlet.handler.HandlerUtils.ServletHandlerMethodResolver) methodResolverCache.get(handlerClass);
 		if (resolver == null) {
-			resolver = new ServletHandlerMethodResolver(handlerClass, urlPathHelper, pathMatcher, methodNameResolver);
+			resolver = new ServletHandlerMethodResolver(handler,handlerClass, urlPathHelper, pathMatcher, methodNameResolver);
 			methodResolverCache.put(handlerClass, resolver);
 		}
 		return resolver;

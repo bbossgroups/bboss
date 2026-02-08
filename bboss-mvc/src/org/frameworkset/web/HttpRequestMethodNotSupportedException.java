@@ -15,6 +15,8 @@
  */
 package org.frameworkset.web;
 
+import com.frameworkset.util.StringUtil;
+
 import javax.servlet.ServletException;
 
 /**
@@ -47,17 +49,10 @@ public class HttpRequestMethodNotSupportedException  extends ServletException {
 	 * @param supportedMethods the actually supported HTTP methods
 	 */
 	public HttpRequestMethodNotSupportedException(String method, String[] supportedMethods) {
-		this(method, supportedMethods, "Request method '" + method + "' not supported");
+		this(method, supportedMethods, "Request method '" + method + "' not supported,please use:" + StringUtil.arrayToDelimitedString(supportedMethods, ", "));
 	}
 
-	/**
-	 * Create a new HttpRequestMethodNotSupportedException.
-	 * @param method the unsupported HTTP request method
-	 * @param msg the detail message
-	 */
-	public HttpRequestMethodNotSupportedException(String method, String msg) {
-		this(method, null, msg);
-	}
+ 
 
 	/**
 	 * Create a new HttpRequestMethodNotSupportedException.

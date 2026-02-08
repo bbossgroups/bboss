@@ -6,6 +6,7 @@ import org.frameworkset.schedule.TaskScheduler;
 import org.frameworkset.util.LinkedMultiValueMap;
 import org.frameworkset.util.MultiValueMap;
 import org.frameworkset.util.ObjectUtils;
+import org.frameworkset.util.annotations.HttpMethod;
 import org.frameworkset.web.servlet.HandlerMapping;
 import org.frameworkset.web.servlet.context.ServletContextAware;
 import org.frameworkset.web.servlet.handler.HandlerMappingsTable;
@@ -42,6 +43,14 @@ public class ServletWebSocketHandlerRegistration extends AbstractWebSocketHandle
             }
         }
 		HandlerMeta handlerMeta = new HandlerMeta();
+        String gloableHttpMethods = mapping.getApplicationContext().getProperty("gloableHttpMethods");
+        HttpMethod[] gloableMethods = null;
+        if(gloableHttpMethods != null && gloableHttpMethods.trim().length() > 0){
+            gloableMethods = HttpMethod.resolveHttpMethods(gloableHttpMethods.trim());
+        }
+        if(gloableMethods != null && gloableMethods.length > 0){
+            handlerMeta.setHttpMethods(gloableMethods);
+        }
 		handlerMeta.setHandler(httpHandler);
 		handlerMeta.setWebsocket(true);
 		mappings.add(handlerMeta, pathPattern);
@@ -50,13 +59,21 @@ public class ServletWebSocketHandlerRegistration extends AbstractWebSocketHandle
 	@Override
 	protected void addWebSocketHandlerMapping(MultiValueMap<HandlerMeta, String> mappings,
 			WebSocketHandler wsHandler, HandshakeHandler handshakeHandler,
-			HandshakeInterceptor[] interceptors, String path) {
+			HandshakeInterceptor[] interceptors, String path,HandlerMappingsTable handlerMappingsTable) {
 
 		HandlerMeta handlerMeta = new HandlerMeta();
 		WebSocketHttpRequestHandler httpHandler = new WebSocketHttpRequestHandler(wsHandler, handshakeHandler);
 		if (!ObjectUtils.isEmpty(interceptors)) {
 			httpHandler.setHandshakeInterceptors(Arrays.asList(interceptors));
 		}
+        String gloableHttpMethods = handlerMappingsTable.getApplicationContext().getProperty("gloableHttpMethods");
+        HttpMethod[] gloableMethods = null;
+        if(gloableHttpMethods != null && gloableHttpMethods.trim().length() > 0){
+            gloableMethods = HttpMethod.resolveHttpMethods(gloableHttpMethods.trim());
+        }
+        if(gloableMethods != null && gloableMethods.length > 0){
+            handlerMeta.setHttpMethods(gloableMethods);
+        }
 		handlerMeta.setHandler(httpHandler);
 		handlerMeta.setWebsocket(true);
 		mappings.add(handlerMeta, path);

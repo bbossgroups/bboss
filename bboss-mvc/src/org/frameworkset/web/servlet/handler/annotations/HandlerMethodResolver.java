@@ -35,6 +35,7 @@ import org.frameworkset.util.annotations.ModelAttribute;
 import org.frameworkset.util.annotations.SessionAttributes;
 import org.frameworkset.web.servlet.ModelAndView;
 import org.frameworkset.web.servlet.handler.HandlerUtils;
+import org.frameworkset.http.HttpMethodsContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,7 +124,7 @@ public class HandlerMethodResolver {
 	 * Create a new HandlerMethodResolver for the specified handler type.
 	 * @param handlerType the handler class to introspect
 	 */
-	public HandlerMethodResolver(final Class<?> handlerType) {
+	public HandlerMethodResolver(HttpMethodsContainer handler, final Class<?> handlerType) {
 		this.typeLevelMapping = handlerType.getAnnotation(HandlerMapping.class);
 		Method[] methods = handlerType.getMethods();
 		
@@ -132,7 +133,8 @@ public class HandlerMethodResolver {
 				registerExceptionHandlerMethod(method);
 			}
 			else	if (HandlerUtils.isHandlerMethod(handlerType,method)) {
-					handlerMethods.add(new MethodInfo(ClassUtils.getMostSpecificMethod(method, handlerType),typeLevelMapping ));
+					handlerMethods.add(new MethodInfo(ClassUtils.getMostSpecificMethod(method, handlerType),typeLevelMapping )
+                            .setRequestMethods(handler));
 				}
 //				else if (method.isAnnotationPresent(InitBinder.class)) {
 //					initBinderMethods.add(ClassUtils.getMostSpecificMethod(method, handlerType));
@@ -155,7 +157,7 @@ public class HandlerMethodResolver {
 	 * Create a new HandlerMethodResolver for the specified handler type.
 	 * @param handlerType the handler class to introspect
 	 */
-	public HandlerMethodResolver(final Class<?> handlerType,final String baseurls[]) {
+	public HandlerMethodResolver(HttpMethodsContainer handler, final Class<?> handlerType, final String baseurls[]) {
 		this.typeLevelMapping = handlerType.getAnnotation(HandlerMapping.class);
 		Method[] methods = handlerType.getMethods();
 		for(Method method:methods)
@@ -163,7 +165,7 @@ public class HandlerMethodResolver {
 				
 				if (HandlerUtils.isHandlerMethod(handlerType,method)) {
 					//System.out.println(method);
-					handlerMethods.add(new MethodInfo(ClassUtils.getMostSpecificMethod(method, handlerType),baseurls));
+					handlerMethods.add(new MethodInfo(ClassUtils.getMostSpecificMethod(method, handlerType),baseurls).setRequestMethods(handler));
 				}
 //				else if (method.isAnnotationPresent(InitBinder.class)) {
 //					initBinderMethods.add(ClassUtils.getMostSpecificMethod(method, handlerType));

@@ -122,7 +122,7 @@ public abstract class AbstractWebSocketHandlerRegistration<M>   implements WebSo
 			HandshakeInterceptor[] interceptors = getInterceptors();
 			for (WebSocketHandler wsHandler : this.handlerMap.keySet()) {
 				for (String path : this.handlerMap.get(wsHandler)) {
-					addWebSocketHandlerMapping(mappings, wsHandler, handshakeHandler, interceptors, path);
+					addWebSocketHandlerMapping(mappings, wsHandler, handshakeHandler, interceptors, path,mapping);
 				}
 			}
 		}
@@ -140,6 +140,6 @@ public abstract class AbstractWebSocketHandlerRegistration<M>   implements WebSo
 			WebSocketHandler handler, String pathPattern,HandlerMappingsTable mapping);
 
 	protected abstract void addWebSocketHandlerMapping(M mappings, WebSocketHandler wsHandler,
-			HandshakeHandler handshakeHandler, HandshakeInterceptor[] interceptors, String path);
+			HandshakeHandler handshakeHandler, HandshakeInterceptor[] interceptors, String path,HandlerMappingsTable handlerMappingsTable);
 
 }

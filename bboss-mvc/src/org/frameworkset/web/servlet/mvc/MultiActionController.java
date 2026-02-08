@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * @author biaoping.yin
  * @version 1.0
  */
-public class MultiActionController  extends AbstractController implements LastModified,BeanNameAware  {
+public class MultiActionController  extends AbstractController implements LastModified  {
 	private static Logger logger = LoggerFactory.getLogger(MultiActionController.class);
 	private ServletHandlerMethodResolver handlerMethodResolver =
 		null;
@@ -366,7 +366,7 @@ public class MultiActionController  extends AbstractController implements LastMo
 			{
 				if(handlerMethodResolver == null)
 					
-					handlerMethodResolver = new ServletHandlerMethodResolver(this.getClass(),
+					handlerMethodResolver = new ServletHandlerMethodResolver(getSupportedMethods(),this.getClass(),
 									((AbstractUrlMethodNameResolver)methodNameResolver).getUrlPathHelper(),
 									pathMatcher,methodNameResolver,baseurls);
 			}

@@ -40,8 +40,9 @@ public abstract class ServletAnnotationMappingUtils {
 	public static boolean checkRequestMethod(HttpMethod[] methods, HttpServletRequest request) {
 		if (!ObjectUtils.isEmpty(methods)) {
 			boolean match = false;
+            String requestMethod = request.getMethod();
 			for (HttpMethod method : methods) {
-				if (method.name().equals(request.getMethod())) {
+				if (method.name().equals(requestMethod)) {
 					match = true;
 				}
 			}
@@ -55,7 +56,6 @@ public abstract class ServletAnnotationMappingUtils {
 	/**
 	 * Check whether the given request matches the specified parameter conditions.
 	 * @param params the parameter conditions, following
-	 * {@link org.frameworkset.web.servlet.handler.annotations.HandlerMapping#params()}
 	 * @param request the current HTTP request to check
 	 */
 	public static boolean checkParameters(String[] params, HttpServletRequest request) {

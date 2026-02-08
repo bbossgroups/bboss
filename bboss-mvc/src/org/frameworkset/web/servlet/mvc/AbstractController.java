@@ -20,9 +20,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
+import org.frameworkset.spi.BaseApplicationContext;
+import org.frameworkset.spi.BeanNameAware;
+import org.frameworkset.spi.InitializingBean;
+import org.frameworkset.spi.assemble.Pro;
+import org.frameworkset.util.annotations.HttpMethod;
 import org.frameworkset.web.servlet.Controller;
 import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.ModelAndView;
+import org.frameworkset.http.HttpMethodsContainer;
 import org.frameworkset.web.servlet.handler.annotations.ExcludeMethod;
 import org.frameworkset.web.servlet.support.WebContentGenerator;
 import org.frameworkset.web.util.WebUtils;
@@ -36,14 +42,32 @@ import org.frameworkset.web.util.WebUtils;
  * @author biaoping.yin
  * @version 1.0
  */
-public abstract class AbstractController  extends WebContentGenerator implements Controller{
+public abstract class AbstractController  extends WebContentGenerator implements Controller, BeanNameAware, InitializingBean {
 
 	private boolean synchronizeOnSession = false;
-	
-	
+    private String beanName;
+    private HttpMethodsContainer supportedMethods;
+    /**
+     * Set the name of the bean in the bean factory that created this bean.
+     * <p>Invoked after population of normal bean properties but before an
+     * init callback such as {@link InitializingBean#afterPropertiesSet()}
+     * or a custom init-method.
+     * @param name the name of the bean in the factory.
+     * Note that this name is the actual bean name used in the factory, which may
+     * differ from the originally specified name: in particular for inner bean
+     * names, the actual bean name might have been made unique through appending
+     * "#..." suffixes. Use the  BeanFactoryUtils#originalBeanName(String)
+     * method to extract the original bean name (without suffix), if desired.
+     */
+    public void setBeanName(String name){
+        this.beanName = name;
+    }
 
+    public HttpMethodsContainer getSupportedMethods() {
+        return supportedMethods;
+    }
 
-	/**
+    /**
 	 * Set if controller execution should be synchronized on the session,
 	 * to serialize parallel invocations from the same client.
 	 * <p>More specifically, the execution of the <code>handleRequestInternal</code>
@@ -70,6 +94,39 @@ public abstract class AbstractController  extends WebContentGenerator implements
 	public final boolean isSynchronizeOnSession() {
 		return this.synchronizeOnSession;
 	}
+    /**
+     * Invoked by a BeanFactory after it has set all bean properties supplied
+     * (and satisfied BeanFactoryAware and ApplicationContextAware).
+     * <p>This method allows the bean instance to perform initialization only
+     * possible when all bean properties have been set and to throw an
+     * exception in the event of misconfiguration.
+     * @throws Exception in the event of misconfiguration (such
+     * as failure to set an essential property) or if initialization fails.
+     */
+    public void afterPropertiesSet() throws Exception{
+        supportedMethods = new HttpMethodsContainer();
+        BaseApplicationContext applicationContext = getApplicationContext();
+        String gloableHttpMethods = applicationContext.getProperty("gloableHttpMethods");
+        Pro pro = applicationContext.getProBean(this.beanName);
+        String httpMethods = pro.getStringExtendAttribute("httpMethods");
+        HttpMethod[] gloableMethods = null;
+        HttpMethod[] methods = null;
+       
+        if(gloableHttpMethods != null && gloableHttpMethods.trim().length() > 0){
+            gloableMethods = HttpMethod.resolveHttpMethods(gloableHttpMethods.trim());
+        }
+        if(httpMethods != null && httpMethods.trim().length() > 0){
+            methods = HttpMethod.resolveHttpMethods(httpMethods.trim());
+        }
+        if(methods ==  null && methods.length == 0){
+            methods = gloableMethods;
+        }
+        if(methods != null && methods.length > 0){
+            
+            supportedMethods.setHttpMethods(methods);
+            
+        }
+    }
 
 
 	@ExcludeMethod
@@ -78,7 +135,7 @@ public abstract class AbstractController  extends WebContentGenerator implements
 			throws Exception {
 
 		// Delegate to WebContentGenerator for checking and preparing.
-		checkAndPrepare(request, response, this instanceof LastModified);
+		checkAndPrepare(request, response, this instanceof LastModified,this.supportedMethods);
 
 		// Execute handleRequestInternal in synchronized block if required.
 		if (this.synchronizeOnSession) {
@@ -100,7 +157,7 @@ public abstract class AbstractController  extends WebContentGenerator implements
 			throws Exception {
 
 		// Delegate to WebContentGenerator for checking and preparing.
-		checkAndPrepare(request, response, this instanceof LastModified);
+		checkAndPrepare(request, response, this instanceof LastModified,this.getSupportedMethods());
 
 		// Execute handleRequestInternal in synchronized block if required.
 		if (this.synchronizeOnSession) {

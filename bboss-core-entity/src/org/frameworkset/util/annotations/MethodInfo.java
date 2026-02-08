@@ -20,6 +20,7 @@ package org.frameworkset.util.annotations;
 import com.frameworkset.util.BeanUtils;
 import com.frameworkset.util.EditorInf;
 import com.frameworkset.util.ValueObjectUtil;
+import org.frameworkset.http.HttpMethodsContainer;
 import org.frameworkset.http.MediaType;
 import org.frameworkset.util.*;
 import org.frameworkset.util.annotations.wraper.*;
@@ -42,7 +43,7 @@ import java.util.Map;
  * @author biaoping.yin
  * @version 1.0
  */
-public class MethodInfo {
+public class MethodInfo extends HttpMethodsContainer {
 	private Method method;
     /**
 	 * 是否是Flux异步响应式方法
@@ -73,7 +74,6 @@ public class MethodInfo {
 	private boolean responsebody = false;
 	private ResponseBodyWraper responsebodyAnno ;
 	
-	private HttpMethod[] requestMethods;
 	private String[] paths;
 	private String[] pathPattern;
 	private PathVariableInfo[] pathVariables;
@@ -142,9 +142,22 @@ public class MethodInfo {
 			responsebody = true;
 //			this.responseMediaType = convertMediaType();
 		}
-		if(mapping != null)
-			this.requestMethods = mapping.method();
-		this.typeLevelMapping = typeLevelMapping;
+        HttpMethod[] requestMethods = null;
+        this.typeLevelMapping = typeLevelMapping;
+        if(mapping != null) {
+            requestMethods = mapping.method();
+            if(requestMethods == null || requestMethods.length == 0) {
+                if(typeLevelMapping != null ){
+                    requestMethods = typeLevelMapping.method();
+                }
+               
+            }
+            
+        }
+        if(requestMethods != null && requestMethods.length > 0) {
+            super.setHttpMethods(requestMethods);
+        }
+		
 		this.baseurls = typeLevelMapping != null?typeLevelMapping.value():null;
 		
 		this.paths = mapping != null?mapping.value():null;
@@ -188,7 +201,7 @@ public class MethodInfo {
 //			this.responseMediaType = convertMediaType();
 		}
 		if(mapping != null)
-			this.requestMethods = mapping.method();
+            super.setHttpMethods(mapping.method());
 		this.baseurls = baseurls;
 		this.paths = mapping != null?mapping.value():null;
 		this.pathPattern = buildPathPatterns();
@@ -197,9 +210,18 @@ public class MethodInfo {
 //		genericParameterTypes();
 		
 	}
-	
-	
-	public boolean isResponseBody()
+
+    public MethodInfo setRequestMethods(HttpMethodsContainer httpMethodsContainer) {
+        if(httpMethodsContainer == null || !httpMethodsContainer.containMethods()){
+            return this;
+        }        
+        if(this.httpMethods == null || this.httpMethods.length == 0) {
+            setHttpMethods(httpMethodsContainer);
+        }
+        return this;
+    }
+
+    public boolean isResponseBody()
 	{
 		return this.responsebody;
 	}
@@ -999,9 +1021,7 @@ public class MethodInfo {
 	}
 	
 	
-	public HttpMethod[] getRequestMethods() {
-		return requestMethods;
-	}
+ 
 
 	public HandlerMapping getMethodMapping() {
 		return mapping;

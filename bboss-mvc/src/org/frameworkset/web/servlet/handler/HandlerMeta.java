@@ -15,6 +15,7 @@
  */
 package org.frameworkset.web.servlet.handler;
 
+import org.frameworkset.http.HttpMethodsContainer;
 import org.frameworkset.util.ClassUtil;
 import org.frameworkset.web.servlet.view.UrlBasedViewResolver;
 
@@ -33,10 +34,11 @@ import java.util.Map;
  * @version 1.0
  */
 
-public  class HandlerMeta
+public  class HandlerMeta extends HttpMethodsContainer
 {
 	private boolean websocket = false;
 	private String beanName;
+ 
 	public String getBeanName() {
 		return beanName;
 	}
@@ -187,4 +189,6 @@ public  class HandlerMeta
 		
 		return tmp;
 	}
+
+ 
 }

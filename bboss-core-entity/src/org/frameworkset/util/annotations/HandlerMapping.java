@@ -49,9 +49,7 @@ public @interface HandlerMapping {
 	 * <p>In case of Servlet-based handler methods, the method names are
 	 * taken into account for narrowing if no path was specified explicitly,
 	 * according to the specified
-	 * {@link MethodNameResolver}
 	 * (by default an
-	 * {@link InternalPathMethodNameResolver}).
 	 * Note that this only applies in case of ambiguous annotation mappings
 	 * that do not specify a path mapping explicitly. In other words,
 	 * the method name is only used for narrowing among a set of matching

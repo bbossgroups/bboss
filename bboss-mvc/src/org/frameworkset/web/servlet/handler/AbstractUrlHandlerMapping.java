@@ -18,6 +18,7 @@ package org.frameworkset.web.servlet.handler;
 import org.frameworkset.util.AntPathMatcher;
 import org.frameworkset.util.Assert;
 import org.frameworkset.util.PathMatcher;
+import org.frameworkset.util.annotations.HttpMethod;
 import org.frameworkset.util.beans.BeansException;
 import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.HandlerMapping;
@@ -261,6 +262,14 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping{
 		if (rawHandler.getHandler() instanceof String) {
 			String handlerName = (String) rawHandler.getHandler();
 			ret = new HandlerMeta();
+            String gloableHttpMethods = getApplicationContext().getProperty("gloableHttpMethods");
+            HttpMethod[] gloableMethods = null;
+            if(gloableHttpMethods != null && gloableHttpMethods.trim().length() > 0){
+                gloableMethods = HttpMethod.resolveHttpMethods(gloableHttpMethods.trim());
+            }
+            if(gloableMethods != null && gloableMethods.length > 0){
+                ret.setHttpMethods(gloableMethods);
+            }
 			ret.setPathNames(rawHandler.getPathNames());
 			ret.setHandler(getApplicationContext().getBeanObject(handlerName));
 		}

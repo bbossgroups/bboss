@@ -22,6 +22,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.frameworkset.util.Assert;
+import org.frameworkset.util.annotations.HttpMethod;
 import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.HandlerInterceptor;
 import org.frameworkset.web.servlet.HandlerMapping;
@@ -216,6 +217,14 @@ public abstract class AbstractHandlerMapping  extends WebApplicationObjectSuppor
 			{
 				String handlerName = (String)temp.getHandler();
 				HandlerMeta meta = new HandlerMeta();
+                String gloableHttpMethods = getApplicationContext().getProperty("gloableHttpMethods");
+                HttpMethod[] gloableMethods = null;
+                if(gloableHttpMethods != null && gloableHttpMethods.trim().length() > 0){
+                    gloableMethods = HttpMethod.resolveHttpMethods(gloableHttpMethods.trim());
+                }
+                if(gloableMethods != null && gloableMethods.length > 0){
+                    meta.setHttpMethods(gloableMethods);
+                }
 				meta.setPathNames(temp.getPathNames());
 				meta.setHandler(getApplicationContext().getBeanObject(handlerName));
 				handler = meta;

@@ -18,7 +18,9 @@ package org.frameworkset.web.servlet.handler;
 
 
 import com.frameworkset.spi.assemble.BeanInstanceException;
+import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.util.ObjectUtils;
+import org.frameworkset.util.annotations.HttpMethod;
 import org.frameworkset.util.beans.BeansException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,6 +82,11 @@ public abstract class AbstractDetectingUrlHandlerMapping extends AbstractUrlHand
 		if (logger.isDebugEnabled()) {
 			logger.debug("Looking for URL mappings in application context: " + getApplicationContext());
 		}
+        String gloableHttpMethods = getApplicationContext().getProperty("gloableHttpMethods");
+        HttpMethod[] gloableMethods = null;
+        if(gloableHttpMethods != null && gloableHttpMethods.trim().length() > 0){
+            gloableMethods = HttpMethod.resolveHttpMethods(gloableHttpMethods.trim());
+        }
 		Set<String> beanNames = this.getApplicationContext().getPropertyKeys();
 		if(beanNames == null || beanNames.size() == 0) {
 			if (logger.isInfoEnabled()) {
@@ -98,7 +105,20 @@ public abstract class AbstractDetectingUrlHandlerMapping extends AbstractUrlHand
 					// URL paths found: Let's consider it a handler.
 					HandlerMeta meta = new HandlerMeta();
 					meta.setHandler(beanName);
-					meta.setPathNames(getApplicationContext().getProBean(beanName).getMvcpaths());
+                    Pro pro = getApplicationContext().getProBean(beanName);
+                    String httpMethods = pro.getStringExtendAttribute("httpMethods");
+                    HttpMethod[] methods = null;
+                    if(httpMethods != null && httpMethods.trim().length() > 0){
+                        methods = HttpMethod.resolveHttpMethods(httpMethods.trim());
+                        
+                    }
+                    if(methods != null && methods.length > 0){
+                        meta.setHttpMethods(methods);
+                    }
+                    else if(gloableMethods != null && gloableMethods.length > 0){
+                        meta.setHttpMethods(gloableMethods);
+                    }
+					meta.setPathNames(pro.getMvcpaths());
 					registerHandler(urls, meta);
 				}
 				else {

@@ -15,6 +15,8 @@ package org.frameworkset.web.token;
  * limitations under the License.
  */
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
@@ -27,10 +29,14 @@ import java.util.Map;
  * @author biaoping.yin
  * @version 1.0
  */
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AuthResponse implements Serializable {
 	public static final String code_200 = "200";
 	public static final String code_404 = "404";
 	public static final String code_403 = "403";
+
+    public static final String code_405 = "405";
 	public static final String code_500 = "500";
 	/**
 	 * ok
@@ -43,7 +49,7 @@ public class AuthResponse implements Serializable {
 	private String language;
 	private String defaultmodulename;
 	private String clientIP;
-	private boolean fromsso;
+	private Boolean fromsso;
 	private String sessionId;
 
 
@@ -115,11 +121,11 @@ public class AuthResponse implements Serializable {
 		this.clientIP = clientIP;
 	}
 
-	public boolean isFromsso() {
+	public Boolean isFromsso() {
 		return fromsso;
 	}
 
-	public void setFromsso(boolean fromsso) {
+	public void setFromsso(Boolean fromsso) {
 		this.fromsso = fromsso;
 	}
 

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.frameworkset.spi.DisposableBean;
 import org.frameworkset.spi.LifecycleProcessor;
+import org.frameworkset.spi.support.ApplicationObjectSupport;
 import org.frameworkset.web.servlet.HandlerExecutionChain;
 import org.frameworkset.web.servlet.HandlerMapping;
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author biaoping.yin
  * @version 1.0
  */
-public class HandlerMappingsTable implements DisposableBean{
+public class HandlerMappingsTable extends ApplicationObjectSupport implements DisposableBean{
 //	private List<HandlerMapping> handlerMappings;
 	HandlerMapping handlerMapping;
 	

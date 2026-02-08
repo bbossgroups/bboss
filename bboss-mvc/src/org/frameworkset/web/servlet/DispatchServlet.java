@@ -775,7 +775,8 @@ public class DispatchServlet extends BaseServlet {
 		if (mappedHandler != null) {
 			mappedHandler.triggerAfterCompletion(request, response, ex);
 		}
-		throw ex;
+        if(!response.isCommitted())
+		    throw ex;
 	}
 
 	private void triggerAfterCompletionWithError(HttpServletRequest request, HttpServletResponse response,
@@ -785,7 +786,8 @@ public class DispatchServlet extends BaseServlet {
 		if (mappedHandler != null) {
 			mappedHandler.triggerAfterCompletion(request, response, ex);
 		}
-		throw ex;
+        if(!response.isCommitted())
+            throw ex;
 	}
 
 
@@ -1216,14 +1218,14 @@ public class DispatchServlet extends BaseServlet {
 		}
 
 		// Send default responses for well-known exceptions, if possible.
-		if (ex instanceof HttpRequestMethodNotSupportedException && !response.isCommitted()) {
-			String[] supportedMethods = ((HttpRequestMethodNotSupportedException) ex).getSupportedMethods();
-			if (supportedMethods != null) {
-				response.setHeader("Allow", StringUtil.arrayToDelimitedString(supportedMethods, ", "));
-			}
-			response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getMessage());
-			return null;
-		}
+//		if (ex instanceof HttpRequestMethodNotSupportedException && !response.isCommitted()) {
+//			String[] supportedMethods = ((HttpRequestMethodNotSupportedException) ex).getSupportedMethods();
+//			if (supportedMethods != null) {
+//				response.setHeader("Allow", StringUtil.arrayToDelimitedString(supportedMethods, ", "));
+//			}
+//			response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getMessage());
+//			return null;
+//		}
 
 		throw ex;
 	}

@@ -31,6 +31,7 @@ import org.frameworkset.util.annotations.HandlerMapping;
 import org.frameworkset.util.annotations.wraper.*;
 import org.frameworkset.util.concurrent.BooleanWrapper;
 import org.frameworkset.web.HttpMediaTypeNotAcceptableException;
+import org.frameworkset.web.HttpRequestMethodNotSupportedException;
 import org.frameworkset.web.HttpSessionRequiredException;
 import org.frameworkset.web.bind.MissingServletRequestParameterException;
 import org.frameworkset.web.bind.ServletRequestDataBinder;
@@ -2896,24 +2897,25 @@ public abstract class HandlerUtils {
 		private MethodNameResolver methodNameResolver = new InternalPathMethodNameResolver();
 		private PathMatcher pathMatcher = new AntPathMatcher();
 
-		public ServletHandlerMethodResolver(Class<?> handlerType,
+		public ServletHandlerMethodResolver(HttpMethodsContainer handler,Class<?> handlerType,
 											UrlPathHelper urlPathHelper, PathMatcher pathMatcher,
 											MethodNameResolver methodNameResolver) {
-			super(handlerType);
+			super(  handler,handlerType);
 			this.urlPathHelper = urlPathHelper;
 			this.methodNameResolver = methodNameResolver;
 			this.pathMatcher = pathMatcher;
 		}
 
-		public ServletHandlerMethodResolver(Class<?> handlerType,
+		public ServletHandlerMethodResolver(HttpMethodsContainer handler,Class<?> handlerType,
 											UrlPathHelper urlPathHelper, PathMatcher pathMatcher,
 											MethodNameResolver methodNameResolver, String baseurls[]) {
-			super(handlerType, baseurls);
+			super(  handler,handlerType, baseurls);
 			this.urlPathHelper = urlPathHelper;
 			this.methodNameResolver = methodNameResolver;
 			this.pathMatcher = pathMatcher;
 		}
 
+         
 		public MethodData resolveHandlerMethod(HttpServletRequest request)
 				throws ServletException {
 			String lookupPath = urlPathHelper.getLookupPathForRequest(request);
@@ -2929,6 +2931,11 @@ public abstract class HandlerUtils {
 				if (mapping == null) {
 					if (resolvedMethodName.equals(handlerMethod.getMethod()
 							.getName())) {
+                        String httpMethod = request.getMethod();
+                        if (!handlerMethod.contains(httpMethod)) {
+                            throw new HttpRequestMethodNotSupportedException(
+                                    httpMethod, handlerMethod.getHttpMethodNames());
+                        }
 						String path_ = RequestContext
 								.getHandlerMappingPath(request);
 						Map pathdatas = AnnotationUtils.resolvePathDatas(
@@ -2943,11 +2950,12 @@ public abstract class HandlerUtils {
 				}
 				HandlerMappingInfo mappingInfo = new HandlerMappingInfo();
 				mappingInfo.paths = handlerMethod.getPathPattern();
-				if (!hasTypeLevelMapping()
-						|| !Arrays.equals(mapping.method(),
-						getTypeLevelMapping().method())) {
-					mappingInfo.methods = mapping.method();
-				}
+                mappingInfo.methods = handlerMethod.getHttpMethods();
+//				if (!hasTypeLevelMapping()
+//						|| !Arrays.equals(mapping.method(),
+//						getTypeLevelMapping().method())) {
+//					mappingInfo.methods = mapping.method();
+//				}
 				if (!hasTypeLevelMapping()
 						|| !Arrays.equals(mapping.params(),
 						getTypeLevelMapping().params())) {

@@ -43,7 +43,17 @@ dependencies {
     )
 
     compileOnly group: 'io.projectreactor', name: 'reactor-core', version: reactor
-    
-    
+
+    compileOnly(
+
+ 
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonannotationversion,transitive: false],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonversion}",transitive: false],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksondatabaindversion}",transitive: false],
+
+            [group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: "${jacksonversion}",transitive: false],
+            [group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: "${jacksonversion}",transitive: false],
+ 
+    )
 }
 

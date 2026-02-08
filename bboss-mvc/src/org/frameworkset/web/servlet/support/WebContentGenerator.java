@@ -15,21 +15,15 @@
  */
 package org.frameworkset.web.servlet.support;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import org.frameworkset.http.CacheControl;
+import org.frameworkset.web.HttpRequestMethodNotSupportedException;
+import org.frameworkset.web.HttpSessionRequiredException;
+import org.frameworkset.http.HttpMethodsContainer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.frameworkset.http.CacheControl;
-import org.frameworkset.web.HttpRequestMethodNotSupportedException;
-import org.frameworkset.web.HttpSessionRequiredException;
-
-import com.frameworkset.util.StringUtil;
-import org.frameworkset.web.servlet.handler.annotations.ExcludeMethod;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -58,9 +52,7 @@ public abstract class WebContentGenerator extends WebApplicationObjectSupport
 
 	private static final String HEADER_CACHE_CONTROL = "Cache-Control";
 
-
-	/** Set of supported HTTP methods */
-	private Set<String> supportedMethods;
+ 
 
 	private boolean requireSession = false;
 
@@ -95,44 +87,12 @@ public abstract class WebContentGenerator extends WebApplicationObjectSupport
 	 * or {@code false} if it should be unrestricted
 	 */
 	public WebContentGenerator(boolean restrictDefaultSupportedMethods) {
-		if (restrictDefaultSupportedMethods) {
-			this.supportedMethods = new HashSet<String>(4);
-			this.supportedMethods.add(METHOD_GET);
-			this.supportedMethods.add(METHOD_HEAD);
-			this.supportedMethods.add(METHOD_POST);
-		}
+		 
 	}
 
-	/**
-	 * Create a new WebContentGenerator.
-	 * @param supportedMethods the supported HTTP methods for this content generator
-	 */
-	public WebContentGenerator(String... supportedMethods) {
-		this.supportedMethods = new HashSet<String>(Arrays.asList(supportedMethods));
-	}
+	 
 
-
-	/**
-	 * Set the HTTP methods that this content generator should support.
-	 * <p>Default is GET, HEAD and POST for simple form controller types;
-	 * unrestricted for general controllers and interceptors.
-	 */
-	@ExcludeMethod
-	public final void setSupportedMethods(String... methods) {
-		if (methods != null) {
-			this.supportedMethods = new HashSet<String>(Arrays.asList(methods));
-		}
-		else {
-			this.supportedMethods = null;
-		}
-	}
-
-	/**
-	 * Return the HTTP methods that this content generator supports.
-	 */
-	public final String[] getSupportedMethods() {
-		return StringUtil.toStringArray(this.supportedMethods);
-	}
+  
 
 	/**
 	 * Set whether a session should be required to handle requests.
@@ -279,12 +239,13 @@ public abstract class WebContentGenerator extends WebApplicationObjectSupport
 	 * @throws ServletException if the request cannot be handled because a check failed
 	 * @since 4.2
 	 */
-	protected final void checkRequest(HttpServletRequest request) throws ServletException {
+	protected final void checkRequest(HttpServletRequest request, HttpMethodsContainer supportedMethods) throws ServletException {
 		// Check whether we should support the request method.
 		String method = request.getMethod();
-		if (this.supportedMethods != null && !this.supportedMethods.contains(method)) {
+        
+		if (!supportedMethods.contains(method)) {
 			throw new HttpRequestMethodNotSupportedException(
-					method, StringUtil.toStringArray(this.supportedMethods));
+					method, supportedMethods.getHttpMethodNames());
 		}
 
 		// Check whether a session is required.
@@ -371,31 +332,31 @@ public abstract class WebContentGenerator extends WebApplicationObjectSupport
 
 
 	/**
-	 * @see #checkRequest(HttpServletRequest)
+	 * @see  HttpServletRequest
 	 * @see #prepareResponse(HttpServletResponse)
 	 * @deprecated as of 4.2, since the {@code lastModified} flag is effectively ignored,
 	 * with a must-revalidate header only generated if explicitly configured
 	 */
 	@Deprecated
 	protected final void checkAndPrepare(
-			HttpServletRequest request, HttpServletResponse response, boolean lastModified) throws ServletException {
+			HttpServletRequest request, HttpServletResponse response, boolean lastModified, HttpMethodsContainer supportedMethods) throws ServletException {
 
-		checkRequest(request);
+		checkRequest(request,   supportedMethods);
 		prepareResponse(response);
 	}
 
 	/**
-	 * @see #checkRequest(HttpServletRequest)
+	 * @see HttpServletRequest
 	 * @see #applyCacheSeconds(HttpServletResponse, int)
 	 * @deprecated as of 4.2, since the {@code lastModified} flag is effectively ignored,
 	 * with a must-revalidate header only generated if explicitly configured
 	 */
 	@Deprecated
 	protected final void checkAndPrepare(
-			HttpServletRequest request, HttpServletResponse response, int cacheSeconds, boolean lastModified)
+			HttpServletRequest request, HttpServletResponse response, int cacheSeconds, boolean lastModified, HttpMethodsContainer supportedMethods)
 			throws ServletException {
 
-		checkRequest(request);
+		checkRequest(request, supportedMethods  );
 		applyCacheSeconds(response, cacheSeconds);
 	}
 
