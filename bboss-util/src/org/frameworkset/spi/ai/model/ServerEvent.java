@@ -18,6 +18,7 @@ package org.frameworkset.spi.ai.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,8 +33,14 @@ import java.util.Map;
 public class ServerEvent extends MultimodalGeneration{
     public static final int DATA = 0;
     public static final int ERROR = 1;
+
+    /**
+     * 数据类型，0表示答案内容，1表示思维链内容, 2 表示工具调用，3 表示mcp服务调用，默认值为0
+     */
     public static final int CONTENT = 0;
     public static final int REASONING_CONTENT = 1;
+    public static final int TOOL_CALLS = 2;
+    public static final int MCP_TOOL_CALLS = 3;
     /**
      * 字段包含数据内容，当type为0时，data字段包含数据内容，当type为1时，data字段包含错误信息
      */
@@ -51,6 +58,18 @@ public class ServerEvent extends MultimodalGeneration{
      * 扩展数据
      */
     private Map<String,Object> extendDatas ;
+    
+    private List<FunctionTool> functionTools;
+
+    /**
+     * 工具返回数据：角色
+     */
+    private String role;
+    /**
+     * 工具返回数据：内容
+     */
+    private String content;
+
     /**
      * 字段表示数据报文类型，0表示数据报文，1表示错误报文,默认值为0
      */
@@ -195,5 +214,27 @@ public class ServerEvent extends MultimodalGeneration{
 
     public void setGenUrl(String genUrl) {
         this.genUrl = genUrl;
+    }
+    public List<FunctionTool> getFunctionTools() {
+        return functionTools;
+    }
+    public void setFunctionTools(List<FunctionTool> functionTools) {
+        this.functionTools = functionTools;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getRole() {
+        return role;
     }
 }
