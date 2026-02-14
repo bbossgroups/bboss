@@ -15,16 +15,20 @@ package org.frameworkset.spi.ai.model;
  * limitations under the License.
  */
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author biaoping.yin
  * @Date 2026/2/10
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Parameters {
     private String type = "object";
     private Map<String,Property> properties;
-    private String[] required;
+    private List<String> required;
 
     public String getType() {
         return type;
@@ -42,17 +46,58 @@ public class Parameters {
         this.properties = properties;
     }
 
-    public String[] getRequired() {
+    public List<String> getRequired() {
         return required;
     }
 
-    public void setRequired(String[] required) {
+    public void setRequired(List<String> required) {
         this.required = required;
+    }
+    
+    public Parameters addRequired(String name) {
+        if (required == null)
+            required = new java.util.ArrayList<String>();
+        required.add(name);
+        return this;
     }
 
     public void addParameter(String name, String type, String desc) {
         if (properties == null)
             properties = new java.util.LinkedHashMap<String, Property>();
         properties.put(name, new Property(type, desc));
+    }
+
+    /**
+     * 添加复合参数条件
+     * @param name
+     * @param key
+     * @param type
+     * @param desc
+     */
+    public void addSubParameter(String name,String key, String type, String desc) {
+        if (properties == null)
+            properties = new java.util.LinkedHashMap<String, Property>();
+//        Map<String,Property> map = properties.get( name);
+        Property property = properties.get(name);
+        if(property == null){
+            property = new Property("object",null);
+            properties.put(name,property);
+        }
+        property.addParameter(key,type,desc);
+        
+    }
+
+    /**
+     * 添加复合参数条件
+     * @param name 
+     */
+    public void addParameter(String name,Property property) {
+        if (properties == null)
+            properties = new java.util.LinkedHashMap<String, Property>();
+        
+       
+        properties.put(name,property);
+         
+
     }
 }

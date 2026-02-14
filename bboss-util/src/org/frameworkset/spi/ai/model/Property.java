@@ -15,6 +15,10 @@ package org.frameworkset.spi.ai.model;
  * limitations under the License.
  */
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.Map;
+
 /**
  *  "location": {
  *  *                                                 "type": "string",
@@ -23,12 +27,15 @@ package org.frameworkset.spi.ai.model;
  * @author biaoping.yin
  * @Date 2026/2/10
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Property {
-    private String type;
+    private String type = "object";
     private String description;
+    private Map<String,Property> properties;
 
     public Property() {
     }
+    
     public Property(String type, String desc) {
         this.type = type;
         this.description = desc;
@@ -48,5 +55,27 @@ public class Property {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Property addParameter(String name, String type, String desc) {
+        if (properties == null)
+            properties = new java.util.LinkedHashMap<>();
+        properties.put(name, new Property(type, desc));
+        return this;
+    }
+
+    public Property addParameter(String name, Property property) {
+        if (properties == null)
+            properties = new java.util.LinkedHashMap<>();
+        properties.put(name, property);
+        return this;
+    }
+
+    public Map<String, Property> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Map<String, Property> properties) {
+        this.properties = properties;
     }
 }

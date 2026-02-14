@@ -63,7 +63,7 @@ public class FunctionToolDefine {
         this.function = function;
     }
     
-    public FunctionToolDefine putFuntionName(String functionName){
+    public FunctionToolDefine funtionName(String functionName){
         if(function == null){
             function = new Function();
         }
@@ -71,7 +71,7 @@ public class FunctionToolDefine {
     	return this;
     }
 
-    public FunctionToolDefine putFuntionName2ndDescription(String functionName, String desc) {
+    public FunctionToolDefine funtionName2ndDescription(String functionName, String desc) {
         if(function == null){
             function = new Function();
         }
@@ -80,19 +80,27 @@ public class FunctionToolDefine {
         return this;
     }
 
-    public FunctionToolDefine putParametersType(String type) {
+    public FunctionToolDefine parametersType(String type) {
         if (function == null) {
             function = new Function();
         }
-        function.putParametersType(type);
+        function.parametersType(type);
         return this;
     }
     
-    public FunctionToolDefine putRequiredParameters(String ... required) {
+    public FunctionToolDefine requiredParameters(String ... requireds) {
         if (function == null) {
             function = new Function();
         }
-        function.putParametersRequired(required);
+        function.parametersRequired(requireds);
+        return this;
+    }
+
+    public FunctionToolDefine addRequiredParameter(String required) {
+        if (function == null) {
+            function = new Function();
+        }
+        function.addRequiredParameter(required);
         return this;
     }
 
@@ -104,6 +112,26 @@ public class FunctionToolDefine {
         return this;
     }
 
+    public FunctionToolDefine addSubParameter(String name,String key, String type, String desc) {
+        if (function == null) {
+            function = new Function();
+        }
+        function.addSubParameter(name,key,type,desc);
+        return this;
+    }
+
+    /**
+     * 添加复合参数条件
+     * @param name
+     */
+    public FunctionToolDefine addParameter(String name,Property property) {
+        if (function == null) {
+            function = new Function();
+        }
+        function.addParameter(name,property);
+        return this;
+    }
+
     public FunctionToolDefine setFunctionCall(FunctionCall functionCall) {
         this.functionCall = functionCall;
         return this;
@@ -111,5 +139,8 @@ public class FunctionToolDefine {
 
     public FunctionCall getFunctionCall() {
         return functionCall;
+    }
+    public Parameters parameters(){
+        return function.getParameters();
     }
 }

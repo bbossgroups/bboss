@@ -15,8 +15,9 @@ package org.frameworkset.util;
  * limitations under the License.
  */
 
-import com.frameworkset.util.SimpleStringUtil;
+import com.frameworkset.util.JsonUtil;
 import org.frameworkset.spi.ai.model.FunctionToolDefine;
+import org.frameworkset.spi.ai.model.Property;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,13 +58,59 @@ public class AITool {
         List<FunctionToolDefine> fuctionToolDescription = new ArrayList<>();
         FunctionToolDefine functionToolDefine = new FunctionToolDefine();
 //        functionToolDefine.setType("function");
-        functionToolDefine.putFuntionName2ndDescription("get_weather","根据用户提供的城市信息，查询对应城市的天气预报")                            
-//                            .putParametersType("object")
-                            .putRequiredParameters("location")
+        functionToolDefine.funtionName2ndDescription("get_weather","根据用户提供的城市信息，查询对应城市的天气预报")                            
+//                            .parametersType("object")
+                            .requiredParameters("location")
                             .addParameter("location","string","城市或者地州, 例如：上海市")
         ;
         fuctionToolDescription.add(functionToolDefine);
-        logger.info("工具描述：{}", SimpleStringUtil.object2jsonPretty(fuctionToolDescription));
+
+        functionToolDefine = new FunctionToolDefine();
+//        functionToolDefine.setType("function");
+        functionToolDefine.funtionName2ndDescription("log4jtest","根据用户账号查询登录日志数据")
+//                            .parametersType("object")
+                .requiredParameters("subuser")
+                .addSubParameter("params","subuser","string","登录账号，例如：admin")
+        ;
+        fuctionToolDescription.add(functionToolDefine);
+
+        functionToolDefine = new FunctionToolDefine();
+//        functionToolDefine.setType("function");
+        functionToolDefine.funtionName2ndDescription("log4jtestpage","根据用户账号查询登录日志数据,进行分页查询")
+//                            .parametersType("object")
+                .requiredParameters("pageNum","pageSize")
+                .addSubParameter("params","subuser","string","登录账号，例如：admin")
+                .addParameter("pageNum","integer","分页页码，从1开始，例如：1")
+                .addParameter("pageSize","integer","分页大小，例如：10")
+        ;
+        fuctionToolDescription.add(functionToolDefine);
+
+        functionToolDefine = new FunctionToolDefine();
+//        functionToolDefine.setType("function");
+        functionToolDefine.funtionName2ndDescription("innerproperties","根据用户账号查询登录日志数据,进行分页查询")
+//                            .parametersType("object")
+                .requiredParameters("pageNum","pageSize")
+                .addSubParameter("params","subuser","string","登录账号，例如：admin")
+                .addParameter("pageNum","integer","分页页码，从1开始，例如：1")
+                .addParameter("pageSize","integer","分页大小，例如：10")
+                
+        ;
+        Property property = new Property();
+        property.addParameter("name","string","用户姓名");
+        property.addParameter("age","integer","用户年龄");
+        property.addParameter("sex","string","用户性别");
+        property.addParameter("birthday","date","用户生日");
+        
+        property.addParameter("address","string","用户地址");
+
+        Property property_ = new Property();
+        property_.addParameter("weather","string","天气");
+        property_.addParameter("temperature","double","温度");
+        property.addParameter("weather_info",property_);
+        functionToolDefine.addParameter("userandwether",property);
+        fuctionToolDescription.add(functionToolDefine);
+        logger.info("functionToolDefine：{}", JsonUtil.object2jsonPretty(functionToolDefine));
+        logger.info("工具描述：{}", JsonUtil.object2jsonPretty(fuctionToolDescription));
     }
 
 }

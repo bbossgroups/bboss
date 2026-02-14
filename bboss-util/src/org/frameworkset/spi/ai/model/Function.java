@@ -48,7 +48,7 @@ public class Function {
         this.parameters = parameters;
     }
 
-    public Function putParametersType(String type) {
+    public Function parametersType(String type) {
         if(parameters == null){
             parameters = new Parameters();
         }
@@ -56,11 +56,21 @@ public class Function {
         return this;
     }
 
-    public Function putParametersRequired(String[] required) {
+    public Function parametersRequired(String[] requireds) {
         if(parameters == null){
             parameters = new Parameters();
         }
-        parameters.setRequired(required);
+        for(String required:requireds) {
+            parameters.addRequired(required);
+        }
+        return this;
+    }
+
+    public Function addRequiredParameter(String required) {
+        if(parameters == null){
+            parameters = new Parameters();
+        }
+        parameters.addRequired(required);
         return this;
     }
 
@@ -71,4 +81,26 @@ public class Function {
         parameters.addParameter(name,type,desc);
         return this;
     }
+
+    public Function addSubParameter(String name,String key, String type, String desc) {
+        if(parameters == null){
+            parameters = new Parameters();
+        }
+        parameters.addSubParameter(name,key,type,desc);
+        return this;
+    }
+
+    /**
+     * 添加复合参数条件
+     * @param name
+     */
+    public Function addParameter(String name,Property property) {
+        if(parameters == null){
+            parameters = new Parameters();
+        }
+        parameters.addParameter(name,property);
+        return this;
+    }
+
+
 }
