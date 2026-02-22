@@ -15,13 +15,11 @@ package org.frameworkset.spi.ai.model;
  * limitations under the License.
  */
 
-import java.util.Map;
-
 /**
  * @author biaoping.yin
  * @Date 2026/2/10
  */
 public interface FunctionCall<T> {
-    T call(Map parameters) throws Exception;
+    T call(FunctionTool functionTool) throws FunctionCallException;
 
 }

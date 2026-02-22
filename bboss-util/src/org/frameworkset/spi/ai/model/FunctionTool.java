@@ -15,6 +15,7 @@ package org.frameworkset.spi.ai.model;
  * limitations under the License.
  */
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +28,8 @@ public class FunctionTool {
     private String type;
     private String functionName;
     private Map arguments;
+    
+    private List<Map> toolcalls;
 
     public int getIndex() {
         return index;
@@ -66,5 +69,13 @@ public class FunctionTool {
 
     public void setArguments(Map arguments) {
         this.arguments = arguments;
+    }
+
+    public List<Map> getToolcalls() {
+        return toolcalls;
+    }
+
+    public void setToolcalls(List<Map> toolcalls) {
+        this.toolcalls = toolcalls;
     }
 }

@@ -61,6 +61,13 @@ public class ServerEvent extends MultimodalGeneration{
     
     private List<FunctionTool> functionTools;
 
+   
+
+    /**
+     * 原始工具调用数据：工具调用列表
+     */
+    private List<Map> toolCalls;
+
     /**
      * 工具返回数据：角色
      */
@@ -69,6 +76,12 @@ public class ServerEvent extends MultimodalGeneration{
      * 工具返回数据：内容
      */
     private String content;
+
+    /**
+     * 工具返回数据：推理内容
+     */
+
+    private String reasoningContent;
 
     /**
      * 字段表示数据报文类型，0表示数据报文，1表示错误报文,默认值为0
@@ -236,5 +249,21 @@ public class ServerEvent extends MultimodalGeneration{
 
     public String getRole() {
         return role;
+    }
+
+    public List<Map> getToolCalls() {
+        return toolCalls;
+    }
+
+    public void setToolCalls(List<Map> toolCalls) {
+        this.toolCalls = toolCalls;
+    }
+
+    public String getReasoningContent() {
+        return reasoningContent;
+    }
+
+    public void setReasoningContent(String reasoningContent) {
+        this.reasoningContent = reasoningContent;
     }
 }
