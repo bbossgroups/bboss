@@ -266,4 +266,9 @@ public class ServerEvent extends MultimodalGeneration{
     public void setReasoningContent(String reasoningContent) {
         this.reasoningContent = reasoningContent;
     }
+    
+    public boolean finished(){
+        return finishReason != null && finishReason.toLowerCase().equals("stop");
+    }
+    
 }
