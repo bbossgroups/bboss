@@ -19,7 +19,7 @@ import com.frameworkset.util.*;
 import org.frameworkset.http.*;
 import org.frameworkset.http.converter.HttpMessageConverter;
 import org.frameworkset.spi.BaseApplicationContext;
-import org.frameworkset.spi.ai.model.ServerEvent;
+import org.frameworkset.spi.ai.model.AIEvent;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.support.validate.BindingResult;
 import org.frameworkset.spi.support.validate.ValidationUtils;
@@ -2447,8 +2447,8 @@ public abstract class HandlerUtils {
                      
                             if (data instanceof String) {
                                 outputStream.write(((String) data).getBytes(StandardCharsets.UTF_8));
-                            } else if (data instanceof ServerEvent) {
-                                ServerEvent serverEvent = (ServerEvent) data;
+                            } else if (data instanceof AIEvent) {
+                                AIEvent serverEvent = (AIEvent) data;
                                 if (!serverEvent.isDone()) {
                                     SimpleStringUtil.object2jsonDisableCloseAndFlush(data, outputStream);
                                     outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
@@ -2456,15 +2456,15 @@ public abstract class HandlerUtils {
                                 }
 //                                SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
                             }
-                            //判断data为List<ServerEvent>类型
+                            //判断data为List<AIEvent>类型
                             else if (data instanceof List) {
                                 List datas = (List) data;
                                 if (datas.size() > 0 ) {
                                     Object first = datas.get(0);
-                                    if (first instanceof ServerEvent) {
+                                    if (first instanceof AIEvent) {
                                         //获取datas最后一个元素
                                         /**
-                                        ServerEvent serverEvent = (ServerEvent) datas.get(datas.size() - 1);
+                                         AIEvent serverEvent = (AIEvent) datas.get(datas.size() - 1);
                                         if (!serverEvent.isDone()) {
                                             SimpleStringUtil.object2jsonDisableCloseAndFlush(data, outputStream);
                                             outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
@@ -2676,8 +2676,8 @@ public abstract class HandlerUtils {
                             if(data instanceof String) {
                                 outputStream.write(((String)data).getBytes(StandardCharsets.UTF_8));
                             }
-                            else if(data instanceof ServerEvent){
-                                ServerEvent serverEvent = (ServerEvent)data;
+                            else if(data instanceof AIEvent){
+                                AIEvent serverEvent = (AIEvent)data;
                                 if(!serverEvent.isDone()) {
                                     SimpleStringUtil.object2jsonDisableCloseAndFlush(data,outputStream);
 //                                    outputStream.write(("\n").getBytes(StandardCharsets.UTF_8));//添加换行符
