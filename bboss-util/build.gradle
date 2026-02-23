@@ -34,6 +34,8 @@ dependencies {
     api project(":bboss-core-entity")
 	api project(":bboss-velocity")
 
+    api group: 'com.bbossgroups', name: 'bboss-ai-model', version: BBOSS_AI_VERSION
+
     api(
     				
 //            [group: 'com.bbossgroups', name: 'bboss-velocity', version: "${version}", transitive: false],
