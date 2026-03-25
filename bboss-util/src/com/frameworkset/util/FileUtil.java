@@ -578,7 +578,7 @@ public class FileUtil
                 }
         }
     }
-    public static String getBase64Video(String video) throws IOException{
+    public static String getBase64Video(String video) {
         return getBase64Video(new File( video));
     }
     /**
@@ -587,7 +587,7 @@ public class FileUtil
      * @return 包含MIME类型的base64编码字符串，格式为 "data:video/[type];base64,[base64data]"
      * @throws IOException
      */
-    public static String getBase64Video(File video) throws IOException {
+    public static String getBase64Video(File video)  {
         // 获取文件扩展名
         String fileExtension = getFileExtByFileName(video.getName());
         
@@ -599,15 +599,56 @@ public class FileUtil
             mimeType = getVideoMimeType(fileExtension);
         }
         
+       return getBase64Content(video,  mimeType);
+    }
+    /**
+     * 获取文件base64编码内容
+     * @param file 多媒体文件
+     * @return 包含MIME类型的base64编码字符串，格式为 "data:video/[type];base64,[base64data]"
+     * @throws IOException
+     */
+    public static String getBase64Content(String file)  {
+     
+        return getBase64Content(new File(file));
+    }
+
+    /**
+     * 获取文件base64编码内容
+     * @param file 多媒体文件
+     * @return 包含MIME类型的base64编码字符串，格式为 "data:video/[type];base64,[base64data]"
+     * @throws IOException
+     */
+    public static String getBase64Content(File file)  {
+        // 获取文件扩展名
+        String fileExtension = getFileExtByFileName(file.getName());
+
+        // 获取对应的MIME类型
+        String mimeType = getMimeType(fileExtension);
+        return getBase64Content(file,mimeType);
+    }
+    /**
+     * 获取文件base64编码内容
+     * @param file 多媒体文件
+     * @return 包含MIME类型的base64编码字符串，格式为 "data:video/[type];base64,[base64data]"
+     * @throws IOException
+     */
+    public static String getBase64Content(File file,String mimeType)  {
+
         // 获取文件字节数组
-        byte[] bytes = getBytes(video);
-        
-        // 生成base64编码
-        String base64Data = java.util.Base64.getEncoder().encodeToString(bytes);
-        StringBuilder builder = new StringBuilder();
-        // 返回完整的可播放数据URL
-        builder.append("data:").append(mimeType ) .append( ";base64,").append(base64Data) ;
-        return builder.toString();
+        byte[] bytes = null;
+        try {
+            bytes = getBytes(file);
+
+
+            // 生成base64编码
+            String base64Data = java.util.Base64.getEncoder().encodeToString(bytes);
+            StringBuilder builder = new StringBuilder();
+            // 返回完整的可播放数据URL
+            builder.append("data:").append(mimeType ) .append( ";base64,").append(base64Data) ;
+            return builder.toString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
     
     /**
