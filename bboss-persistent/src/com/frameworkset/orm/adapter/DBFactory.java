@@ -72,6 +72,12 @@ public class DBFactory
     public static final String  DBDerby =  "derby";
     public static final String  DBHive =  "hive";
 
+
+    public static final String  DBGoldenDBMysql =  "goldendb";
+
+
+    public static final String  DBGoldenDBOracle =  "goldendb-oracle";
+
     public static final String  DBNone = "";
     public static final String  SQLITEX = "sqlitex";
     public static final String  DBTDEngine = "tdengine";
@@ -186,6 +192,10 @@ public class DBFactory
         adapters.put(DBTDEngine, DBTDEngine.class);
         adapters.put("com.taosdata.jdbc.TSDBDriver", DBTDEngine.class); 
         adapters.put("com.oceanbase.jdbc.Driver", DBOceanbase.class);
+        
+        adapters.put(DBGoldenDBMysql, com.frameworkset.orm.adapter.DBGoldenDBMysql.class);
+        adapters.put(DBGoldenDBOracle, com.frameworkset.orm.adapter.DBGoldenDBOracle.class);
+        adapters.put("com.goldendb.jdbc.Driver",DBGoldenDBMysql.class);
 
         adapters.put(OCEANBASE, DBOceanbase.class);
 
