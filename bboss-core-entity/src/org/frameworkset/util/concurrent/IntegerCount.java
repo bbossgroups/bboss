@@ -82,4 +82,7 @@ public class IntegerCount {
         this.totalCount = 0;
         this.count = 0;
     }
+    public synchronized void setStartValue(int startValue){
+        this.count = startValue;
+    }
 }
