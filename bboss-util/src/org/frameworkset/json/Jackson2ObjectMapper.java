@@ -223,7 +223,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 				
 				
 			} catch (Exception e) {
-				throw new IllegalArgumentException(e.getMessage(),e);
+				throw new IllegalArgumentException(jsonString,e);
 			}
 			
 			
@@ -336,7 +336,7 @@ public class Jackson2ObjectMapper implements JacksonObjectMapper {
 			
 			
 		} catch (Exception e) {
-			throw new IllegalArgumentException(e.getMessage(),e);
+			throw new IllegalArgumentException(jsonString,e);
 		}
 		
 		
