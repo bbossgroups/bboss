@@ -115,6 +115,12 @@ public abstract class ResourceNameSpace implements Serializable {
 
 	public boolean checkChanged() {
 		long lastModifiedTime = this.getLastModifyTimestamp();
+        if(lastModifiedTime <= 0l){
+            if(this.modifyTimestamp > 0){
+                return true;
+            }            
+            return false;
+        }
 		if(lastModifiedTime == this.modifyTimestamp){
 			return false;
 		}
