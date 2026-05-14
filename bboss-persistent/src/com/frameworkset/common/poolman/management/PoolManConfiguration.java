@@ -154,7 +154,7 @@ public class PoolManConfiguration   {
 //					+ configFile );
 //			log.warn("Load datasource Configuration failed from "
 //					+ configFile ,e);
-			Exception ex = new ParserException("Load datasource Configuration from default bboss persistent config file, please config and start datasource follow document：https://doc.bbossgroups.com/#/persistent/PersistenceLayer1",e);
+			Exception ex = new ParserException("Load datasource Configuration from default bboss persistent config file, please config and start datasource follow document：https://doc.bbossgroups.com/#/persistent/PersistenceLayer1");
 			log.error("",ex);
 		}
 		return false;
