@@ -5,7 +5,6 @@ import org.frameworkset.spi.DefaultApplicationContext;
 import org.frameworkset.spi.assemble.Pro;
 import org.frameworkset.spi.assemble.ProList;
 import org.frameworkset.spi.assemble.ProMap;
-import org.frameworkset.util.shutdown.ShutdownUtil;
 import org.quartz.Calendar;
 import org.quartz.*;
 import org.quartz.impl.SchedulerRepository;
