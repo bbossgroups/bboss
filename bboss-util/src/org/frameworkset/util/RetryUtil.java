@@ -26,10 +26,14 @@ public class RetryUtil {
     public static <T> T retry(int retry, long retryInterval, RetryCallback<T> retryCallback) throws RetryException {
         Exception exception = null;
         T ret = null;
+        int i = 0;
+        int max = retry;
         do {
             try{
                 if(exception != null){
-                    logger.warn("Retry times:{} ,retryInterval:{}ms,reason:{}",retry,retryInterval, exception.getMessage());
+                    i ++;
+                    logger.warn("Retry times:{}/{} ,retryInterval:{}ms",i,max,retryInterval);
+                    logger.warn("",exception);
                     if(retryInterval > 0L)
                         Thread.sleep(retryInterval);
                 }
