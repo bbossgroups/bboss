@@ -2040,14 +2040,15 @@ public class ValueObjectUtil {
 	public static Object convertObjToDateWithDateformat(Object obj,Class toType,DateFormat dateformat)
 	{
 
+        Class type = obj.getClass();
 		/**
 		 * 字符串向java.util.Date和java.sql.Date 类型转换
 		 */
 		if (toType == java.util.Date.class) {
 
-			if (java.util.Date.class.isAssignableFrom(obj.getClass()))
+			if (java.util.Date.class.isAssignableFrom(type))
 				return obj;
-			if(obj.getClass() == long.class || obj.getClass() == Long.class)
+			if(type == long.class || type == Long.class)
 			{
 				return new java.util.Date((Long)obj);
 			}
@@ -2110,13 +2111,13 @@ public class ValueObjectUtil {
 			// if(obj instanceof java.sql.Date
 			// || obj instanceof java.sql.Time
 			// || obj instanceof java.sql.Timestamp)
-			if (java.util.Date.class.isAssignableFrom(obj.getClass()))
+			if (java.util.Date.class.isAssignableFrom(type))
 				return new Date(((java.util.Date) obj).getTime());
-			if(obj.getClass() == long.class || obj.getClass() == Long.class)
+			if(type == long.class || type == Long.class)
 			{
 				return new Date((Long)obj);
 			}
-			else if(obj.getClass() == int.class || obj.getClass() == Integer.class){
+			else if(type == int.class || type == Integer.class){
 				return new Date(((Integer)obj).longValue());
 			}
 			String data_str = obj.toString();
@@ -2175,15 +2176,14 @@ public class ValueObjectUtil {
 
 
 		}
-
-		if (toType == java.sql.Timestamp.class) {
+		else if (toType == java.sql.Timestamp.class) {
 
 			// if(obj instanceof java.sql.Date
 			// || obj instanceof java.sql.Time
 			// || obj instanceof java.sql.Timestamp)
-			if (java.util.Date.class.isAssignableFrom(obj.getClass()))
+			if (java.util.Date.class.isAssignableFrom(type))
 				return new java.sql.Timestamp(((java.util.Date) obj).getTime());
-			if(obj.getClass() == long.class || obj.getClass() == Long.class)
+			if(type == long.class || type == Long.class)
 			{
 				return new java.sql.Timestamp((Long)obj);
 			}
@@ -2239,6 +2239,12 @@ public class ValueObjectUtil {
 
 			//return date;
 		}
+        else if (toType == java.time.LocalDateTime.class) {
+            if(java.util.Date.class.isInstance(obj)){
+                java.util.Date date_ = (java.util.Date)obj;
+                return date_.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime();
+            }
+        }
 
 		return null;
 	}
