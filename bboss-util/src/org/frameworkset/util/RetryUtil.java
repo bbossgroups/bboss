@@ -41,6 +41,10 @@ public class RetryUtil {
                 exception = null;
                 break;
             }
+            catch (InterruptedException ex) {
+                logger.warn("Retry times:{}/{} interrupted:",ex);
+                break;
+            }
             catch (Exception ex) {
                 exception = ex;
                 retry --;
