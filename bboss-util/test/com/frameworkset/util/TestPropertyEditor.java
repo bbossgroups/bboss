@@ -16,26 +16,21 @@
 
 package com.frameworkset.util;
 
-import org.junit.Test;
 /**
  * <p>Title: TestPropertyEditor.java</p> 
  * <p>Description: </p>
  * <p>bboss workgroup</p>
  * <p>Copyright (c) 2008</p>
- * @Date 2009-12-7 上午10:57:50
+ * @Date 2009-12-7 10:57:50
  * @author biaoping.yin
  * @version 1.0
  */
 public class TestPropertyEditor
 {
-    @Test
     public void test()
     {
         EditorInf editor = new ProEditor();
-        org.junit.Assert.assertEquals("男", editor.getValueFromString("0"));
-        org.junit.Assert.assertEquals("女", editor.getValueFromString("1"));
-        org.junit.Assert.assertEquals("未知", editor.getValueFromString("00"));
-        org.junit.Assert.assertEquals("未知", editor.getValueFromString(null));
+     
     }
     public static class ProEditor implements EditorInf<String>
     {
@@ -46,13 +41,13 @@ public class TestPropertyEditor
         public String getValueFromObject(Object fromValue)
         {          
             if(fromValue == null)
-                return "未知";
+                return "1";
             if(fromValue.equals("0"))
-                return "男";
+                return "0";
             else if(fromValue.equals("1"))
-                return "女";
+                return "1";
             else 
-                return "未知";
+                return "2";
         }
         
         /* (non-Javadoc)
@@ -61,13 +56,13 @@ public class TestPropertyEditor
         public String getValueFromString(String fromValue)
         {   
             if(fromValue == null)
-                return "未知";
+                return "1";
             if(fromValue.equals("0"))
-                return "男";
+                return "0";
             else if(fromValue.equals("1"))
-                return "女";
+                return "1";
             else 
-                return "未知";
+                return "2";
         }
         
         

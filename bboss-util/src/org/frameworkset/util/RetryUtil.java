@@ -24,16 +24,31 @@ import org.slf4j.Logger;
 public class RetryUtil {
     private static Logger logger = org.slf4j.LoggerFactory.getLogger(RetryUtil.class);
     public static <T> T retry(int retry, long retryInterval, RetryCallback<T> retryCallback) throws RetryException {
+        
+        return executeWithRetry( retry,   retryInterval,  retryCallback);
+    }
+
+    public static <T> T executeWithRetry(int retry, long retryInterval, RetryCallback<T> retryCallback) throws RetryException {
+
+        return executeWithRetry( null, retry,   retryInterval,  retryCallback);
+    }
+
+    public static <T> T executeWithRetry(String label,int retry, long retryInterval, RetryCallback<T> retryCallback) throws RetryException {
         Exception exception = null;
         T ret = null;
         int i = 0;
         int max = retry;
+        
         do {
             try{
                 if(exception != null){
                     i ++;
-                    logger.warn("Retry times:{}/{} ,retryInterval:{}ms",i,max,retryInterval);
-                    logger.warn("",exception);
+                    if(label == null) {
+                        logger.warn("Retry times:{}/{} ,retryInterval:{}ms",i,max,retryInterval,exception);
+                    }
+                    else{
+                        logger.warn("{} retry times:{}/{} ,retryInterval:{}ms",label,i,max,retryInterval,exception);
+                    }
                     if(retryInterval > 0L)
                         Thread.sleep(retryInterval);
                 }
@@ -42,7 +57,14 @@ public class RetryUtil {
                 break;
             }
             catch (InterruptedException ex) {
-                logger.warn("Retry times:{}/{} interrupted:",ex);
+                Thread.currentThread().interrupt();
+                if(label == null) {
+                    logger.warn("Retry times:{}/{} ,retryInterval:{}ms",i,max,retryInterval,ex);
+                }
+                else{
+                    logger.warn("{} retry times:{}/{} ,retryInterval:{}ms",label,i,max,retryInterval,ex);
+                }
+                
                 break;
             }
             catch (Exception ex) {
@@ -61,5 +83,4 @@ public class RetryUtil {
         }
         return ret;
     }
-
 }

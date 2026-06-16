@@ -53,10 +53,12 @@ configure(allprojects) { project ->
 	}
 
 
-	dependencies {
-		testImplementation 'junit:junit:4.13'
-		testImplementation 'org.assertj:assertj-core:3.16.1'
-	}
+    dependencies {
+        testImplementation 'junit:junit:4.13'
+        testImplementation 'org.assertj:assertj-core:3.16.1'
+        compileOnly 'junit:junit:4.13'
+        compileOnly 'org.assertj:assertj-core:3.16.1'
+    }
 
 	repositories {
 		mavenLocal()
