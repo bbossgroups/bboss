@@ -1072,7 +1072,10 @@ public class BasicDataSource implements DataSource, BasicDataSourceMXBean, MBean
      */
     @Override
     public PrintWriter getLogWriter() throws SQLException {
-        return createDataSource().getLogWriter();
+		DataSource dataSource = createDataSource();
+		if(dataSource != null)
+			return dataSource.getLogWriter();
+        return null;
     }
 
     /**
