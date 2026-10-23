@@ -50,6 +50,9 @@ public class JDBCPoolMetaData implements Serializable{
 //    private boolean neadGetGenerateKeys;
     
     private String databaseProductName;
+	
+
+	private String databaseSchema;
     private String driverName;
     private String databaseProductVersion;
     private String driverVersion;
@@ -832,6 +835,7 @@ public class JDBCPoolMetaData implements Serializable{
 			setCachequerymetadata(extenalInfo.cachequerymetadata());
 			
 			setDatabaseProductName(extenalInfo.getDatabaseProductName());
+			setDatabaseSchema(extenalInfo.getDatabaseSchema());
 			
 			setDatabaseProductVersion(extenalInfo.getDatabaseProductVersion());
 			
@@ -1171,8 +1175,15 @@ public class JDBCPoolMetaData implements Serializable{
     public String getDbInfoEncryptClass() {
         return dbInfoEncryptClass;
     }
-
-    public void setDbInfoEncryptClass(String dbInfoEncryptClass) {
+	public String getDatabaseSchema() {
+		return databaseSchema;
+	}
+	
+	public void setDatabaseSchema(String databaseSchema) {
+		this.databaseSchema = databaseSchema;
+	}
+	
+	public void setDbInfoEncryptClass(String dbInfoEncryptClass) {
         this.dbInfoEncryptClass = dbInfoEncryptClass;
         if(this.dbInfoEncryptClass != null && !this.dbInfoEncryptClass.equals("")){
             try {

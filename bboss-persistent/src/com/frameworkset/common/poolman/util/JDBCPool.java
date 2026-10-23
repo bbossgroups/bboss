@@ -784,6 +784,7 @@ public class JDBCPool {
 
                 
 
+				this.info.setDatabaseSchema(conn.getSchema());
                 this.info.setDatabaseProductName(md.getDatabaseProductName());
                 this.info.setDatabaseProductVersion(md.getDatabaseProductVersion());
                 this.info.setDriverName(md.getDriverName());
