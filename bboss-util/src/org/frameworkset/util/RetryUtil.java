@@ -34,7 +34,7 @@ public class RetryUtil {
     }
 
     public static <T> T executeWithRetry(String label,int retry, long retryInterval, RetryCallback<T> retryCallback) throws RetryException {
-        Exception exception = null;
+		Throwable exception = null;
         T ret = null;
         int i = 0;
         int max = retry;
@@ -42,6 +42,7 @@ public class RetryUtil {
         do {
             try{
                 if(exception != null){
+					
                     i ++;
                     if(label == null) {
                         logger.warn("Retry times:{}/{} ,retryInterval:{}ms",i,max,retryInterval,exception);
@@ -52,7 +53,7 @@ public class RetryUtil {
                     if(retryInterval > 0L)
                         Thread.sleep(retryInterval);
                 }
-                ret = retryCallback.doRetry();
+                ret = retryCallback.doRetry(exception,i);
                 exception = null;
                 break;
             }
@@ -69,8 +70,18 @@ public class RetryUtil {
             }
             catch (Exception ex) {
                 exception = ex;
-                retry --;
+				if(!retryCallback.assertRetryException(exception)){
+					break;
+				}
+				retry --;
             }
+			catch (Throwable ex) {
+				exception = ex;
+				if(!retryCallback.assertRetryException(exception)){
+					break;
+				}
+				retry --;
+			}
 
         }while (retry > 0);
         if(exception != null) {

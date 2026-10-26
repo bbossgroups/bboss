@@ -950,7 +950,6 @@ public class FileUtil
      * 
      * @param path
      *            文件绝对路径
-     * @author da.wei200710171007
      */
     public static void deleteFileOnly(String path)
     {

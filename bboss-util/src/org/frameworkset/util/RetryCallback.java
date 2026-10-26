@@ -20,5 +20,20 @@ package org.frameworkset.util;
  * @Date 2026/6/3
  */
 public interface RetryCallback<T> {
-    T doRetry();
+	/**
+	 * 执行和重试处理逻辑，需先调用assertRetryException判断异常是否需要重试，如果无需重试则直接抛出异常
+	 * @param throwable 第一次正常执行为null，后续为异常对象
+	 * @param retryCount 0 表示第一次正常执行，> 0 表示重试执行
+	 * @return
+	 */
+    T doRetry(Throwable throwable,int retryCount);
+	
+	/**
+	 * 判断异常是否需要重试，无需重试时，返回false，需要重试时返回true， 默认所有异常都重试
+	 * @param throwable
+	 * @return
+	 */
+	default boolean assertRetryException(Throwable throwable){
+		return true;
+	}
 }
