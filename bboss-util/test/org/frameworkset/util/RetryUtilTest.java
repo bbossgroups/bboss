@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 public class RetryUtilTest {
     private static Logger logger = org.slf4j.LoggerFactory.getLogger(RetryUtilTest.class);
     public static void main(String[] args){
-        RetryUtil.executeWithRetry("ddd",3, 1000, () -> {
+        RetryUtil.executeWithRetry("ddd",3, 1000, (throwable,retrycount,retryContext) -> {
             throw new RuntimeException("test");
         });
     }

@@ -35,9 +35,13 @@ public class RetryUtil {
 
     public static <T> T executeWithRetry(String label,int retry, long retryInterval, RetryCallback<T> retryCallback) throws RetryException {
 		Throwable exception = null;
+		Throwable firstException = null;
         T ret = null;
         int i = 0;
         int max = retry;
+		RetryContext retryContext = retryCallback.getRetryContext();
+		if(retryContext == null) 
+			retryContext =	 new RetryContext();
         
         do {
             try{
@@ -53,8 +57,12 @@ public class RetryUtil {
                     if(retryInterval > 0L)
                         Thread.sleep(retryInterval);
                 }
-                ret = retryCallback.doRetry(exception,i);
+                ret = retryCallback.doRetry(exception,i,retryContext);
+				if(retryContext.isTerminateRetry()){
+					break;
+				}
                 exception = null;
+				firstException = null;
                 break;
             }
             catch (InterruptedException ex) {
@@ -65,11 +73,16 @@ public class RetryUtil {
                 else{
                     logger.warn("{} retry times:{}/{} ,retryInterval:{}ms",label,i,max,retryInterval,ex);
                 }
-                
+                if(firstException== null){
+					firstException = ex;
+				}
                 break;
             }
             catch (Exception ex) {
                 exception = ex;
+				if(firstException== null){
+					firstException = ex;
+				}
 				if(!retryCallback.assertRetryException(exception)){
 					break;
 				}
@@ -77,19 +90,22 @@ public class RetryUtil {
             }
 			catch (Throwable ex) {
 				exception = ex;
+				if(firstException== null){
+					firstException = ex;
+				}
 				if(!retryCallback.assertRetryException(exception)){
 					break;
 				}
 				retry --;
 			}
 
-        }while (retry > 0);
-        if(exception != null) {
-            if(exception instanceof RuntimeException){
-                throw (RuntimeException)exception;
+        }while (retry >= 0);
+        if(firstException != null) {
+            if(firstException instanceof RuntimeException){
+                throw (RuntimeException)firstException;
             }
             else {
-                throw new RetryException(exception);
+                throw new RetryException(firstException);
             }
         }
         return ret;

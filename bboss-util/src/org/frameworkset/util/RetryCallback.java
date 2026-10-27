@@ -26,7 +26,7 @@ public interface RetryCallback<T> {
 	 * @param retryCount 0 表示第一次正常执行，> 0 表示重试执行
 	 * @return
 	 */
-    T doRetry(Throwable throwable,int retryCount);
+    T doRetry(Throwable throwable,int retryCount,RetryContext retryContext);
 	
 	/**
 	 * 判断异常是否需要重试，无需重试时，返回false，需要重试时返回true， 默认所有异常都重试
@@ -35,5 +35,9 @@ public interface RetryCallback<T> {
 	 */
 	default boolean assertRetryException(Throwable throwable){
 		return true;
+	}
+	
+	default RetryContext getRetryContext(){
+		return null;
 	}
 }
