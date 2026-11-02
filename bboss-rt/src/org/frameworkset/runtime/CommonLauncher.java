@@ -233,13 +233,14 @@ public class CommonLauncher {
 		InputStream in = null;
 		Reader read = null;
 		try {
-			boolean isYaml = isYaml(propertfile);	
+			
 			File propertiesFile = new File(appDir, propertfile);
 			System.setProperty("bboss.boot.propertfile","file:"+propertiesFile.getCanonicalPath());
 			in = new FileInputStream(propertiesFile);
 			read = new InputStreamReader(in, "UTF-8");
 			System.out.println("Load properties from file:" + propertiesFile);
 			properts = new Properties();
+			boolean isYaml = isYaml(propertfile);
 			if(!isYaml) {
 				properts.load(read);
 			}

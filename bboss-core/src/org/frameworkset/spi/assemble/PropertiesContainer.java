@@ -8,6 +8,7 @@ import org.frameworkset.spi.support.EnvUtil;
 import org.frameworkset.util.io.ClassPathResource;
 import org.frameworkset.util.tokenizer.TextGrammarParser;
 import org.frameworkset.util.tokenizer.TextGrammarParser.GrammarToken;
+import org.frameworkset.util.yml.FlatYamlParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1048,10 +1049,13 @@ public class PropertiesContainer extends AbstractGetProperties{
         }
         return contain;
     }
+	private static boolean isYaml(String file){
+		return file.endsWith(".yaml") || file.endsWith(".yml");
+	}
     private void evalfile(Map currentProperties,String configPropertiesFile,LinkConfigFile linkfile)
     {
     	Properties properties = new java.util.Properties();
-    	
+		
     	InputStream input = null;
 		Reader read = null;
     	try
@@ -1120,8 +1124,17 @@ public class PropertiesContainer extends AbstractGetProperties{
 				}
     		}
     		if(input != null) {
-				read = new InputStreamReader(input, "UTF-8");
-				properties.load(read);
+				boolean isYaml = isYaml(configPropertiesFile);
+				
+				if(!isYaml) {
+					read = new InputStreamReader(input, "UTF-8");
+					properties.load(read);
+				}
+				else{
+					Map<String, Object> yaml = FlatYamlParser.parseFlatStream(input);
+					properties.putAll(yaml);
+				}
+				
 			}
 			if(!properties.isEmpty()) {
                 //加载include.files中的配置

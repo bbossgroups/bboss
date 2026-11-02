@@ -21,6 +21,9 @@ import org.frameworkset.spi.assemble.PropertiesContainer;
 import java.util.Map;
 
 public interface PropertiesFilePlugin {
+	default boolean isYaml(String configFileFormat){
+		return configFileFormat != null && (configFileFormat.equals("yaml") || configFileFormat.equals("yml"));
+	}
 	/**
 	 * 返回多个属性配置文件，对应的路径格式为（多个用逗号分隔）：
 	 * conf/elasticsearch.properties,application.properties,config/application.properties
@@ -54,4 +57,8 @@ public interface PropertiesFilePlugin {
 
 
 	void afterLoaded(GetProperties applicationContext, PropertiesContainer propertiesContainer);
+	
+	default String getConfigFileFormat(){
+		return "properties";
+	}
 }
