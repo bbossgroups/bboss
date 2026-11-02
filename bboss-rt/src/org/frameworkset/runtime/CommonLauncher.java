@@ -1,14 +1,13 @@
 package org.frameworkset.runtime;
 
+import org.frameworkset.yml.FlatYamlParser;
+
 import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * <p>
@@ -227,19 +226,27 @@ public class CommonLauncher {
 		}
 		return false;
 	}
-
+ 
+	
 	private static void loadConfig(File appDir) throws IOException {
 		System.out.println("appDir:" + appDir);
 		InputStream in = null;
 		Reader read = null;
 		try {
+			boolean isYaml = isYaml(propertfile);	
 			File propertiesFile = new File(appDir, propertfile);
 			System.setProperty("bboss.boot.propertfile","file:"+propertiesFile.getCanonicalPath());
 			in = new FileInputStream(propertiesFile);
 			read = new InputStreamReader(in, "UTF-8");
 			System.out.println("Load properties from file:" + propertiesFile);
 			properts = new Properties();
-			properts.load(read);
+			if(!isYaml) {
+				properts.load(read);
+			}
+			else{
+				Map<String, Object> yaml = FlatYamlParser.parseFlatFile(propertiesFile.getAbsolutePath());
+				properts.putAll(yaml);
+			}
 			mainclass = properts.getProperty("mainclass");
 			System.out.println("Configed main class:" + mainclass);
 			//如果mainclass是变量定义格式，则从系统属性和系统环境变量中解析mainclass
@@ -248,7 +255,7 @@ public class CommonLauncher {
 				throw new java.lang.IllegalArgumentException("配置文件config.properties 中没有正确设置mainclass属性.");
 			System.out.println("Use mainclass:" + mainclass);
 			String extlib = properts.getProperty("extlibs");
-
+			
 			if (extlib != null) {
 				extlibs = extlib.split(";");
 				for (int i = 0; i < extlibs.length; i++) {
@@ -271,8 +278,8 @@ public class CommonLauncher {
 					extresources[i] = extresources[i].trim();
 				}
 			}
-
-
+			
+			
 		} finally {
 			if (in != null)
 				try {
@@ -286,10 +293,12 @@ public class CommonLauncher {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
+			
 		}
 	}
-	
+	private static boolean isYaml(String file){
+		return file.endsWith(".yaml") || file.endsWith(".yml");
+	}
 	public static void run(String[] args)
 			throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchMethodException,
 			IllegalAccessException, InvocationTargetException, InstantiationException, IOException {
