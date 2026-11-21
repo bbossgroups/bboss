@@ -4,6 +4,7 @@ sourceSets {
             srcDirs 'src' exclude 'log4j.properties'
 //            srcDirs 'src-asm'
             srcDirs 'src-charset'
+            srcDirs '../bboss-yaml/src/main/java'
         }
         resources{
             srcDir 'resources'
@@ -33,6 +34,7 @@ sourceSets {
 dependencies {
     api project(":bboss-core-entity")
 	api project(":bboss-velocity")
+//    api project(":bboss-yaml")  
 
 
     api(

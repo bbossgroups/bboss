@@ -1,6 +1,6 @@
 package org.frameworkset.runtime;
 
-import org.frameworkset.yml.FlatYamlParser;
+import org.frameworkset.util.yml.FlatYamlParser;
 
 import java.io.*;
 import java.lang.management.ManagementFactory;

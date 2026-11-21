@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.frameworkset.yml.FlatYamlParser;
+import org.frameworkset.util.yml.FlatYamlParser;
 
 import java.io.IOException;
 import java.util.Map;
@@ -34,9 +34,9 @@ public class YamlTest {
 		Map<String, Object> flat = FlatYamlParser.parseFlatFile("docker-compose.yml");
 		flat.forEach((k, v) -> System.out.println(k + " = " + v));
 		
-		Properties properties = new Properties();
-		properties.load(FlatYamlParser.class.getClassLoader().getResourceAsStream("docker-compose.yml"));
-		properties.forEach((k, v) -> System.out.println(k + " = " + v));
+//		Properties properties = new Properties();
+//		properties.load(FlatYamlParser.class.getClassLoader().getResourceAsStream("docker-compose.yml"));
+//		properties.forEach((k, v) -> System.out.println(k + " = " + v));
 //// 打印结果：
 //		server.port                                = "8080"
 //		spring.application.name                    = "szop-gateway"

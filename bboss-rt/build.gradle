@@ -3,6 +3,8 @@ sourceSets {
     main {
         java {
             srcDirs 'src'
+
+            srcDirs '../bboss-yaml/src/main/java'
         }
         //compileClasspath = configurations.compileOnly
     }

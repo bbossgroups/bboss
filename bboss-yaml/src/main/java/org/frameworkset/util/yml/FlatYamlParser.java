@@ -1,4 +1,4 @@
-package org.frameworkset.yml;
+package org.frameworkset.util.yml;
 /**
  * Copyright 2026 bboss
  * <p>
@@ -44,6 +44,8 @@ public class FlatYamlParser {
 	/** 最近一次 skipBlankAndComments 后内容行的缩进宽度（tab 计 2 列） */
 	private int lineIndent;
 	private final Map<String, Object> anchors = new HashMap<>();
+	/** YAML 合并键：plain scalar <<（tag:yaml.org,2002:merge），引号包裹的 "<<" 不参与合并 */
+	private static final String MERGE_KEY = "<<";
 	
 	private FlatYamlParser(String src) { this.src = src; this.len = src.length(); }
 	
@@ -191,8 +193,11 @@ public class FlatYamlParser {
 		return bos.toByteArray();
 	}
 	
-	/** 解析全部文档（每文档一个嵌套 Map，不做扁平化），主要用于内部/多文档聚合 */
-	@SuppressWarnings("unchecked")
+	/**
+	 * 解析全部文档（每文档一个嵌套 Map，不做扁平化），主要用于内部/多文档聚合。
+	 * 采用下标扫描直接定位文档分隔符（--- / ...），避免 split 生成全量行数组、
+	 * 再 String.join 拼回文档带来的 2~3 倍全文内存拷贝。
+	 */
 	public static List<Map<String, Object>> parseAll(String yaml) {
 		List<Map<String, Object>> result = new ArrayList<>();
 		if (yaml == null) return result;
@@ -200,33 +205,71 @@ public class FlatYamlParser {
 		if (!yaml.isEmpty() && yaml.charAt(0) == '\uFEFF') {
 			yaml = yaml.substring(1);
 		}
-		String[] lines = yaml.split("\r?\n", -1);
-		List<String> cur = new ArrayList<>();
-		for (String ln : lines) {
-			String t = ln.trim();
-			if (t.equals("---") || t.equals("...")) {
-				flushDoc(cur, result);
-				cur.clear();
-			} else {
-				cur.add(ln);
+		int length = yaml.length();
+		int docStart = 0;
+		int lineStart = 0;
+		while (lineStart < length) {
+			int lineEnd = lineStart;
+			while (lineEnd < length && yaml.charAt(lineEnd) != '\n' && yaml.charAt(lineEnd) != '\r') lineEnd++;
+			if (isDocSeparatorLine(yaml, lineStart, lineEnd)) {
+				flushDoc(yaml, docStart, lineStart, result);
+				docStart = skipLineBreak(yaml, lineEnd);
 			}
+			int nextLine = skipLineBreak(yaml, lineEnd);
+			if (nextLine <= lineStart) break; // 防御：异常输入时避免死循环
+			lineStart = nextLine;
 		}
-		flushDoc(cur, result);
+		flushDoc(yaml, docStart, length, result);
 		return result;
 	}
-	
+
+	/** 判断 [start, end) 行内容（忽略首尾空白）是否为 YAML 文档分隔符 --- / ... */
+	private static boolean isDocSeparatorLine(String text, int start, int end) {
+		int s = start;
+		int e = end;
+		while (s < e && Character.isWhitespace(text.charAt(s))) s++;
+		while (e > s && Character.isWhitespace(text.charAt(e - 1))) e--;
+		if (e - s != 3) return false;
+		char c0 = text.charAt(s);
+		return (c0 == '-' || c0 == '.') && text.charAt(s + 1) == c0 && text.charAt(s + 2) == c0;
+	}
+
+	/** 跳过行结束符（\r\n / \r / \n），返回下一行起始下标 */
+	private static int skipLineBreak(String text, int index) {
+		int length = text.length();
+		int i = index;
+		if (i < length && text.charAt(i) == '\r') i++;
+		if (i < length && text.charAt(i) == '\n') i++;
+		return i;
+	}
+
+	/** 解析 [start, end) 区间内的文档；区间内仅有空行/注释行时忽略 */
 	@SuppressWarnings("unchecked")
-	private static void flushDoc(List<String> cur, List<Map<String, Object>> result) {
-		if (cur.isEmpty()) return;
-		boolean blank = cur.stream().allMatch(s -> s.trim().isEmpty() || s.trim().startsWith("#"));
-		if (blank) { cur.clear(); return; }
-		Object o = parseDoc(String.join("\n", cur));
+	private static void flushDoc(String yaml, int start, int end, List<Map<String, Object>> result) {
+		if (!hasContentLine(yaml, start, end)) return;
+		Object o = parseDoc(yaml.substring(start, end));
 		if (o instanceof Map) result.add((Map<String, Object>) o);
 		else {
 			Map<String, Object> wrap = new LinkedHashMap<>();
 			wrap.put("", o);
 			result.add(wrap);
 		}
+	}
+
+	/** 判断 [start, end) 区间是否存在有效内容行（既非空行也非注释行） */
+	private static boolean hasContentLine(String text, int start, int end) {
+		int i = start;
+		while (i < end) {
+			int lineEnd = i;
+			while (lineEnd < end && text.charAt(lineEnd) != '\n' && text.charAt(lineEnd) != '\r') lineEnd++;
+			int p = i;
+			while (p < lineEnd && (text.charAt(p) == ' ' || text.charAt(p) == '\t')) p++;
+			if (p < lineEnd && text.charAt(p) != '#') return true;
+			int next = skipLineBreak(text, lineEnd);
+			if (next <= i) break;
+			i = next;
+		}
+		return false;
 	}
 	
 	private static Object parseDoc(String doc) {
@@ -319,6 +362,30 @@ public class FlatYamlParser {
 		}
 		return value;
 	}
+
+	/**
+	 * YAML 合并键 << 语义：把来源映射中当前映射尚不存在的 key 注入目标映射。
+	 * - 显式定义的 key 优先（无论写在 << 之前还是之后）；
+	 * - 来源为映射序列（<<: [*a, *b]）时，靠前的映射优先；
+	 * - 来源不是映射/映射序列（如标量、非映射别名）时忽略。
+	 */
+	@SuppressWarnings("unchecked")
+	private void mergeMapping(Map<String, Object> target, Object source) {
+		if (source instanceof Map) {
+			mergeEntries(target, (Map<String, Object>) source);
+		} else if (source instanceof List) {
+			for (Object item : (List<Object>) source) {
+				if (item instanceof Map) mergeEntries(target, (Map<String, Object>) item);
+			}
+		}
+	}
+
+	/** 把 source 中目标映射缺失的 key/value 注入 target，已存在的 key 不覆盖 */
+	private static void mergeEntries(Map<String, Object> target, Map<String, Object> source) {
+		for (Map.Entry<String, Object> e : source.entrySet()) {
+			if (!target.containsKey(e.getKey())) target.put(e.getKey(), e.getValue());
+		}
+	}
 	
 	// ==================== 核心解析 ====================
 	
@@ -353,6 +420,8 @@ public class FlatYamlParser {
 			if (c == '{' || c == '[') break;
 			
 			int save = pos;
+			// 引号包裹的 "<<" 是普通 key，只有未加引号的 << 才是 YAML 合并键
+			boolean quotedKey = pos < len && (src.charAt(pos) == '"' || src.charAt(pos) == '\'');
 			String key = readKey();
 			if (key == null) { pos = save; break; }
 			hasKey = true;
@@ -372,10 +441,13 @@ public class FlatYamlParser {
 						else value = null;
 					} else value = null;
 				} else {
-					value = parseInlineValue();
-					consumeToLineEnd();
+					value = parseInlineValueOrAnchoredBlock(indent);
 				}
-				map.put(key, value);
+				if (!quotedKey && MERGE_KEY.equals(key)) {
+					mergeMapping(map, value);
+				} else {
+					map.put(key, value);
+				}
 			} else {
 				pos = save;
 				Object inline = parseInlineValue();
@@ -396,8 +468,11 @@ public class FlatYamlParser {
 			if (pos >= len) break;
 			if (lineIndent != indent) break;
 			if (!(src.charAt(pos) == '-' && isDashSeq())) break;
+			int dashPos = pos;
 			pos++;
 			skipInlineSpaces();
+			// 序列项内 key 的列位置（- 之后），用于判断锚点绑定的块是否属于该项
+			int itemIndent = indent + (pos - dashPos);
 			if (pos >= len || src.charAt(pos) == '\n' || src.charAt(pos) == '\r') {
 				consumeNewline();
 				list.add(parseNode(indent));
@@ -407,6 +482,8 @@ public class FlatYamlParser {
 				else if (c == '|' || c == '>') { list.add(parseBlockScalar(indent + 2)); consumeToLineEnd(); }
 				else {
 					int save = pos;
+					// 引号包裹的 "<<" 是普通 key，只有未加引号的 << 才是 YAML 合并键
+					boolean quotedKey = pos < len && (src.charAt(pos) == '"' || src.charAt(pos) == '\'');
 					String k = tryReadKey();
 					if (k != null && pos < len && src.charAt(pos) == ':') {
 						pos++;
@@ -419,7 +496,7 @@ public class FlatYamlParser {
 						} else if (src.charAt(pos) == '|' || src.charAt(pos) == '>') {
 							v = parseBlockScalar(indent + 2); consumeToLineEnd();
 						} else {
-							v = parseInlineValue(); consumeToLineEnd();
+							v = parseInlineValueOrAnchoredBlock(itemIndent);
 							skipBlankAndComments();
 							if (pos < len) {
 								int ni = lineIndent;
@@ -429,12 +506,15 @@ public class FlatYamlParser {
 								}
 							}
 						}
-						item.put(k, v);
+						if (!quotedKey && MERGE_KEY.equals(k)) {
+							mergeMapping(item, v);
+						} else {
+							item.put(k, v);
+						}
 						list.add(item);
 					} else {
 						pos = save;
-						list.add(parseInlineValue());
-						consumeToLineEnd();
+						list.add(parseInlineValueOrAnchoredBlock(indent));
 					}
 				}
 			}
@@ -459,6 +539,53 @@ public class FlatYamlParser {
 		if (anchor != null) anchors.put(anchor, v);
 		return v;
 	}
+
+	/**
+	 * 解析映射值 / 序列项：
+	 * - 当前值仅为行尾锚点声明（如 "base: &amp;b"）时，锚点绑定后续缩进更深的块节点（映射或序列）；
+	 * - 否则按普通行内值解析（行内锚点、flow、标量、块标量等）。
+	 * 锚点后无块内容时保持原行为：值为空字符串。
+	 *
+	 * @param parentIndent 当前所在的映射/序列项缩进，只有缩进更深的行才归属于该锚点
+	 */
+	private Object parseInlineValueOrAnchoredBlock(int parentIndent) {
+		String anchor = tryReadLineEndAnchor();
+		if (anchor == null) {
+			Object value = parseInlineValue();
+			consumeToLineEnd();
+			return value;
+		}
+		skipBlankAndComments();
+		Object value = "";
+		if (pos < len) {
+			if (lineIndent > parentIndent) {
+				value = parseNode(parentIndent);
+			} else if (lineIndent == parentIndent && src.charAt(pos) == '-' && isDashSeq()) {
+				value = parseSequence(lineIndent);
+			}
+		}
+		anchors.put(anchor, value);
+		return value;
+	}
+
+	/**
+	 * 识别独占行尾的锚点声明（如 "base: &amp;b"、"base: &amp;b # note"）。
+	 * 命中时消费到换行之后并返回锚点名；未命中时恢复 pos 并返回 null。
+	 */
+	private String tryReadLineEndAnchor() {
+		if (pos >= len || src.charAt(pos) != '&') return null;
+		int save = pos;
+		pos++;
+		String name = readWord();
+		skipInlineSpaces();
+		boolean atLineEnd = pos >= len || src.charAt(pos) == '\n' || src.charAt(pos) == '\r' || src.charAt(pos) == '#';
+		if (name.isEmpty() || !atLineEnd) { pos = save; return null; }
+		if (pos < len && src.charAt(pos) == '#') {
+			while (pos < len && src.charAt(pos) != '\n' && src.charAt(pos) != '\r') pos++;
+		}
+		if (pos < len) consumeNewline();
+		return name;
+	}
 	
 	private String parseBlockScalar(int hintIndent) {
 		char style = src.charAt(pos);
@@ -476,68 +603,91 @@ public class FlatYamlParser {
 		if (pos < len && src.charAt(pos) == '#') { while (pos < len && src.charAt(pos) != '\n' && src.charAt(pos) != '\r') pos++; }
 		if (pos < len && (src.charAt(pos) == '\r' || src.charAt(pos) == '\n')) consumeNewline();
 		
-		List<String> raw = new ArrayList<>();
+		int bodyStart = pos;
+		// 第一遍扫描：只记录行边界与块缩进，不创建任何临时字符串
 		int blockIndent = -1;
-		while (pos < len) {
-			int lineStart = pos;
-			int lineEnd = pos;
+		int lastContentEnd = -1;
+		int trailingBlank = 0;
+		int blockStop = len;
+		int scan = bodyStart;
+		while (scan < len) {
+			int lineEnd = scan;
 			while (lineEnd < len && src.charAt(lineEnd) != '\n' && src.charAt(lineEnd) != '\r') lineEnd++;
-			String line = src.substring(lineStart, lineEnd);
-			int ind = 0; int p = 0;
-			while (p < line.length() && line.charAt(p) == ' ') { ind++; p++; }
-			boolean blankLine = line.trim().isEmpty();
+			int indentWidth = 0;
+			while (scan + indentWidth < lineEnd && src.charAt(scan + indentWidth) == ' ') indentWidth++;
+			boolean blankLine = skipIndent(scan, lineEnd) >= lineEnd;
 			if (!blankLine) {
 				if (blockIndent < 0) {
-					if (explicitIndent > 0) {
-						int base = Math.max(0, hintIndent);
-						blockIndent = base + explicitIndent;
-					} else {
-						blockIndent = ind;
-					}
-					if (ind < blockIndent) { pos = lineStart; break; }
+					blockIndent = explicitIndent > 0 ? Math.max(0, hintIndent) + explicitIndent : indentWidth;
 				}
-				if (ind < blockIndent) { pos = lineStart; break; }
-				raw.add(line.substring(Math.min(blockIndent, line.length())));
+				if (indentWidth < blockIndent) { blockStop = scan; break; }
+				lastContentEnd = lineEnd;
+				trailingBlank = 0;
 			} else {
-				raw.add("");
+				trailingBlank++;
 			}
-			pos = lineEnd;
-			if (pos < len) consumeNewline();
+			int nextLine = skipLineBreak(src, lineEnd);
+			if (nextLine <= scan) { blockStop = lineEnd; break; }
+			scan = nextLine;
 		}
-		
-		int trailingBlank = 0;
-		while (!raw.isEmpty() && raw.get(raw.size() - 1).isEmpty()) { raw.remove(raw.size() - 1); trailingBlank++; }
-		
-		String body;
-		if (style == '|') {
-			body = String.join("\n", raw);
-		} else {
-			StringBuilder sb = new StringBuilder();
-			boolean prevBlank = false;
-			for (int i = 0; i < raw.size(); i++) {
-				String ln = raw.get(i);
-				boolean blank = ln.isEmpty();
-				if (i == 0) sb.append(ln);
-				else if (blank) { sb.append("\n"); prevBlank = true; }
-				else if (prevBlank) { sb.append(ln); prevBlank = false; }
-				else sb.append(' ').append(ln);
+
+		// 第二遍扫描：按下标区间直接写入 StringBuilder，避免逐行 substring + String.join
+		StringBuilder sb = new StringBuilder(Math.max(0, lastContentEnd - bodyStart));
+		int lineStart = bodyStart;
+		boolean prevBlank = false;
+		while (lineStart < lastContentEnd) {
+			int lineEnd = lineStart;
+			while (lineEnd < lastContentEnd && src.charAt(lineEnd) != '\n' && src.charAt(lineEnd) != '\r') lineEnd++;
+			boolean blankLine = skipIndent(lineStart, lineEnd) >= lineEnd;
+			if (style == '|') {
+				if (lineStart > bodyStart) sb.append('\n');
+				if (!blankLine) sb.append(src, lineStart + blockIndent, lineEnd);
+			} else if (lineStart == bodyStart) {
+				if (!blankLine) sb.append(src, lineStart + blockIndent, lineEnd);
+			} else if (blankLine) {
+				sb.append('\n');
+				prevBlank = true;
+			} else if (prevBlank) {
+				sb.append(src, lineStart + blockIndent, lineEnd);
+				prevBlank = false;
+			} else {
+				sb.append(' ').append(src, lineStart + blockIndent, lineEnd);
 			}
-			body = sb.toString();
+			int nextLine = skipLineBreak(src, lineEnd);
+			if (nextLine <= lineStart) break;
+			lineStart = nextLine;
 		}
-		
-		if (strip) {
-			while (body.endsWith("\n")) body = body.substring(0, body.length() - 1);
-		} else if (keep) {
-			// JDK 8 兼容：String.repeat 替换为循环
-			StringBuilder sb = new StringBuilder(body);
-			for (int i = 0; i < trailingBlank; i++) sb.append('\n');
-			body = sb.toString();
+
+		// 尾部换行裁剪单遍完成，避免反复 substring 产生 O(k²) 拷贝
+		String body = trimTrailingNewlines(sb.toString());
+		if (keep) {
+			if (trailingBlank > 0) {
+				// JDK 8 兼容：String.repeat 替换为循环
+				StringBuilder kept = new StringBuilder(body.length() + trailingBlank);
+				kept.append(body);
+				for (int i = 0; i < trailingBlank; i++) kept.append('\n');
+				body = kept.toString();
+			}
 			if (!body.endsWith("\n")) body = body + "\n";
-		} else {
-			while (body.endsWith("\n")) body = body.substring(0, body.length() - 1);
-			if (!raw.isEmpty() || trailingBlank > 0) body = body + "\n";
+		} else if (!strip) {
+			if (lastContentEnd >= 0 || trailingBlank > 0) body = body + "\n";
 		}
+		pos = blockStop;
 		return body;
+	}
+
+	/** 跳过行首空白（空格/制表符），返回首个非空白字符下标 */
+	private int skipIndent(int from, int to) {
+		int p = from;
+		while (p < to && (src.charAt(p) == ' ' || src.charAt(p) == '\t')) p++;
+		return p;
+	}
+
+	/** 去掉字符串末尾所有换行符（单遍扫描，替代反复 substring 的 O(k²) 写法） */
+	private static String trimTrailingNewlines(String value) {
+		int end = value.length();
+		while (end > 0 && value.charAt(end - 1) == '\n') end--;
+		return end == value.length() ? value : value.substring(0, end);
 	}
 	
 	private Object parseFlow() {
@@ -713,9 +863,11 @@ public class FlatYamlParser {
 			if (c == ' ' || c == '\t') {
 				if (!isLineStart(pos)) { pos++; continue; } // 行中空白，直接跳过
 				int ind = 0;
-				while (pos < len && (src.charAt(pos) == ' ' || src.charAt(pos) == '\t')) {
-					ind += src.charAt(pos) == '\t' ? 2 : 1;
-					pos++;
+				while (pos < len) {
+					char w = src.charAt(pos);
+					if (w == ' ') { ind++; pos++; }
+					else if (w == '\t') { ind += 2; pos++; }
+					else break;
 				}
 				if (pos >= len) { lineIndent = ind; return; }
 				char n = src.charAt(pos);
